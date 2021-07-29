@@ -19,3 +19,5 @@ gem "rspec"
 gem "rubocop-govuk", "~> 3.17"
 gem "rubocop-performance", require: false
 gem "zeitwerk", "~> 2.4.1"
+gem 'erb', '~> 2.2', '>= 2.2.3'
+gem 'yaml', '~> 0.1.1'

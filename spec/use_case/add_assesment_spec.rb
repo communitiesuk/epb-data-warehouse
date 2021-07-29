@@ -1,6 +1,6 @@
 describe UseCase::AddAssessment do
 
-  context "when calling object in the class librray" do
+  context "when calling object in the class library" do
     subject { described_class.new}
 
     it 'can execute the method' do
