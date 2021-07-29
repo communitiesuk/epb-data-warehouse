@@ -1,4 +1,4 @@
-class CreateAssessmentAttributeValues < ActiveRecord::Migration
+class CreateAssessmentAttributeValues < ActiveRecord::Migration[6.1]
   def change
     create_table :assessment_attribute_values, { primary_key: nil } do |t|
       t.integer :attribute_id, null: false, index: true

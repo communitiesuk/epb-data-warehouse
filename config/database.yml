@@ -6,6 +6,6 @@ default: &default
   port: 5432
   encoding: unicode
 
-  development:
-    <<: *default
-    database: epb_eav_development
+development:
+  <<: *default
+  database: epb_eav_development
