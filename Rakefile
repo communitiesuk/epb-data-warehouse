@@ -1,11 +1,19 @@
-load 'app.rb'
+require 'pg' # postgresql
+require 'erb'
+require 'yaml'
+require 'active_record'
 
 task :environment do
   RAKE_PATH = File.expand_path('.')
   RAKE_ENV  = ENV.fetch('APP_ENV', 'development')
   ENV['RAILS_ENV'] = RAKE_ENV
 
+
   Bundler.require :default, RAKE_ENV
+
+  db_config =YAML::load(File.open("config/database.yml"))
+
+  ActiveRecord::Base.establish_connection(db_config)
 
   ActiveRecord::Tasks::DatabaseTasks.database_configuration = ActiveRecord::Base.configurations
   ActiveRecord::Tasks::DatabaseTasks.root             = RAKE_PATH
