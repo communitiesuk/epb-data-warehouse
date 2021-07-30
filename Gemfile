@@ -18,6 +18,7 @@ gem "ougai", "~> 2.0"
 gem "pg"
 gem "pry", "~> 0.14.1"
 gem "rake"
+gem "redis", "~> 4.3.1"
 gem "rspec"
 gem "rubocop-govuk", "~> 3.17"
 gem "rubocop-performance", require: false
@@ -26,7 +27,6 @@ gem "timecop", "~> 0.9.4"
 gem "webmock", "~> 3.13"
 gem "yaml", "~> 0.1.1"
 gem "zeitwerk", "~> 2.4.1"
-gem "redis", "~> 4.3.1"
 
 group :worker do
   gem "sidekiq", "~> 6.2.1"
