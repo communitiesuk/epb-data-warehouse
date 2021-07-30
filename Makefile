@@ -8,3 +8,4 @@ help:
 .PHONY: format
 format:
 	@bundle exec rubocop --auto-correct --format offenses || true
+
