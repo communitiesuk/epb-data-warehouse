@@ -9,16 +9,17 @@ class HttpStub
     stub =
       WebMock.stub_request(
         :get,
-        "http://test-register/api/#{endpoint}").
-        with(
+        "http://test-register/api/#{endpoint}",
+      )
+        .with(
           headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby'
-          }).to_return status: 200,
+            "Accept" => "*/*",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "User-Agent" => "Ruby",
+          },
+        ).to_return status: 200,
                     body: "",
                     headers: {}
-
     end
 
   def self.failed_lodgement(
@@ -32,7 +33,7 @@ class HttpStub
       WebMock.stub_request(
         :post,
         "http://test-register/api/assessments?migrated&assessor_created=#{assessor_created}",
-        )
+      )
 
     if error
       stub.to_raise error
@@ -65,17 +66,17 @@ class HttpStub
       .stub_request(
         :post,
         "http://test-register/api/assessments/#{assessment_id}/status",
-        )
+      )
       .with(
         body: JSON.generate(status: status),
         headers: {
           "Authorization" => "Bearer #{OAUTH_TOKEN}",
         },
-        ).to_return status: 200,
-                    body: JSON.generate(status: status),
-                    headers: {
-                      "Content-Type" => "application/json",
-                    }
+      ).to_return status: 200,
+                  body: JSON.generate(status: status),
+                  headers: {
+                    "Content-Type" => "application/json",
+                  }
   end
 
   def self.unsuccessful_status_update(assessment_id, status)
@@ -85,24 +86,24 @@ class HttpStub
       .stub_request(
         :post,
         "http://test-register/api/assessments/#{assessment_id}/status",
-        )
+      )
       .with(
         body: JSON.generate(status: status),
         headers: {
           "Authorization" => "Bearer #{OAUTH_TOKEN}",
         },
-        ).to_return status: 404,
-                    body:
+      ).to_return status: 404,
+                  body:
                       JSON.generate(
                         {
                           errors: [
                             { code: "NOT_FOUND", title: "Assessment not found" },
                           ],
                         },
-                        ),
-                    headers: {
-                      "Content-Type" => "application/json",
-                    }
+                      ),
+                  headers: {
+                    "Content-Type" => "application/json",
+                  }
   end
 
   def self.successful_token
@@ -111,8 +112,8 @@ class HttpStub
     WebMock.stub_request(
       :post,
       "http://test-auth/oauth/token",
-      ).to_return status: 200,
-                  body:
+    ).to_return status: 200,
+                body:
                     JSON
                       .generate(
                         access_token:
@@ -121,11 +122,11 @@ class HttpStub
                           3_600,
                         token_type:
                           "bearer",
-                        ),
-                  headers: {
-                    "Content-Type" =>
-                      "application/json",
-                  }
+                      ),
+                headers: {
+                  "Content-Type" =>
+                    "application/json",
+                }
   end
 
   def self.failed_token
@@ -134,19 +135,18 @@ class HttpStub
     WebMock.stub_request(
       :post,
       "http://test-auth/oauth/token",
-      ).to_return status: 401,
-                  body:
+    ).to_return status: 401,
+                body:
                     JSON
                       .generate(
                         code:
                           "NOT_AUTHENTICATED",
                         message:
                           "Boundary::NotAuthenticatedError",
-                        ),
-                  headers: {
-                    "Content-Type" =>
-                      "application/json",
-                  }
+                      ),
+                headers: {
+                  "Content-Type" =>
+                    "application/json",
+                }
   end
-
 end

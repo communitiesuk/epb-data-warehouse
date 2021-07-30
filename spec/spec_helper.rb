@@ -3,8 +3,8 @@ require "rspec"
 require "database_cleaner"
 require "sinatra/activerecord"
 require "zeitwerk"
-require 'webmock'
-require 'webmock/rspec'
+require "webmock"
+require "webmock/rspec"
 
 ENV["STAGE"] = "test"
 
