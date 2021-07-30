@@ -33,7 +33,7 @@ module Gateway
                 asessement_id,
                 attribute_id,
                 attribute_value,
-                )
+              )
             end
           rescue ActiveRecord::RecordNotUnique
             raise Boundary::DuplicateAttribute, attribute_name
@@ -56,7 +56,7 @@ module Gateway
           "assessment_id",
           assessment_id,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
@@ -148,7 +148,7 @@ module Gateway
           "attribute_name",
           attribute_name,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first[
@@ -169,7 +169,7 @@ module Gateway
           "attribute_name",
           attribute_name,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first[
@@ -177,7 +177,7 @@ module Gateway
       ]
     end
 
-    private
+  private
 
     def attribute_where_clause
       new_array = @attribute_columns_array.clone
@@ -244,7 +244,7 @@ module Gateway
             "parent_name",
             parent_name,
             ActiveRecord::Type::String.new,
-            )
+          )
       end
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first
@@ -256,7 +256,7 @@ module Gateway
           "attribute_name",
           attribute_name,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
     end
 
@@ -268,7 +268,7 @@ module Gateway
           "parent_name",
           parent_name,
           ActiveRecord::Type::String.new,
-          )
+        )
 
       insert_sql = <<-SQL
               INSERT INTO assessment_attributes(attribute_name,parent_name )
@@ -282,7 +282,7 @@ module Gateway
         nil,
         nil,
         bindings,
-        )
+      )
     end
 
     def insert_attribute_value(assessment_id, attribute_id, attribute_value)
@@ -306,27 +306,27 @@ module Gateway
           "assessment_id",
           assessment_id,
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_id",
           attribute_id,
           ActiveRecord::Type::BigInteger.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_value",
           attribute_value,
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_int",
           attribute_int,
           ActiveRecord::Type::BigInteger.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_float",
           attribute_float,
           ActiveRecord::Type::Decimal.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.insert(sql, nil, nil, nil, nil, bindings)

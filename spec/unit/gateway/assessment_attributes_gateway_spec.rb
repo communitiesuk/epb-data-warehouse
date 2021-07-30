@@ -1,23 +1,21 @@
 describe Gateway::AssessmentAttributesGateway do
   context "when there are no attributes reseed the table and insert test data" do
     let(:gateway) { Gateway::AssessmentAttributesGateway.new }
-
-    before(:each) do
-      ActiveRecord::Base.connection.reset_pk_sequence!("assessment_attributes")
-      gateway.add_attribute("test")
-      gateway.add_attribute("test1")
-    end
-
     let(:attributes) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT attribute_id, attribute_name FROM assessment_attributes",
-        )
+      )
     end
-
     let(:attribute_values) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT * FROM assessment_attribute_values",
-        )
+      )
+    end
+
+    before do
+      ActiveRecord::Base.connection.reset_pk_sequence!("assessment_attributes")
+      gateway.add_attribute("test")
+      gateway.add_attribute("test1")
     end
 
     it "returns a row from the database for each inserted value " do
@@ -39,8 +37,8 @@ describe Gateway::AssessmentAttributesGateway do
       gateway.add_attribute_value("0000-0000-0000-0000-0001", "a", "b")
       expect(attribute_values.rows.length).to eq(1)
       expect(attribute_values.first["assessment_id"]).to eq(
-                                                           "0000-0000-0000-0000-0001",
-                                                           )
+        "0000-0000-0000-0000-0001",
+      )
       expect(attribute_values.first["attribute_value"]).to eq("b")
       expect(attribute_values.first["attribute_id"]).to eq(3)
       expect(attribute_values.first["attribute_value_int"]).to be_nil
@@ -56,7 +54,7 @@ describe Gateway::AssessmentAttributesGateway do
       let!(:attributes) do
         ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM assessment_attributes WHERE attribute_name = 'attr_parent'",
-          )
+        )
       end
 
       it "attribute table has a row for the same attribute " do
@@ -74,30 +72,30 @@ describe Gateway::AssessmentAttributesGateway do
           "0000-0000-0000-0000-0001",
           "construction_age_band",
           "England and Wales: 2007-2011",
-          )
+        )
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0001",
           "glazed_type",
           "test",
-          )
+        )
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0001",
           "current_energy_efficiency",
           "50",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0001",
           "heating_cost_current",
           "365.98",
-          )
+        )
       end
 
       let(:assessement_attribute_values) do
         ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM assessment_attribute_values WHERE assessment_id= '0000-0000-0000-0000-0001'
           ORDER BY attribute_id",
-          )
+        )
       end
 
       it "returns a row for every attributes" do
@@ -110,11 +108,11 @@ describe Gateway::AssessmentAttributesGateway do
 
       it "row 4 will have a value in the float column for the heating_cost_current" do
         expect(assessement_attribute_values[3]["attribute_value_int"]).to eq(
-                                                                            365,
-                                                                            )
+          365,
+        )
         expect(assessement_attribute_values[3]["attribute_value_float"]).to eq(
-                                                                              365.98,
-                                                                              )
+          365.98,
+        )
       end
     end
 
@@ -124,12 +122,12 @@ describe Gateway::AssessmentAttributesGateway do
           "0000-0000-0000-0000-0001",
           "glazed_type",
           "another test",
-          )
+        )
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0002",
           "glazed_type",
           "test",
-          )
+        )
       end
 
       it "the attribute table only increments by one" do
@@ -147,59 +145,59 @@ describe Gateway::AssessmentAttributesGateway do
           "0000-0000-0000-0000-0001",
           "construction_age_band",
           "England and Wales: 2007-2011",
-          )
+        )
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0001",
           "glazed_type",
           "test 1",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0001",
           "heating_cost_current",
           "10.98",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0002",
           "construction_age_band",
           "England: 1865",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0002",
           "current_energy_efficiency",
           "40",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0002",
           "heating_cost_current",
           "12.55",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0003",
           "construction_age_band",
           "England and Wales: 1971-1987",
-          )
+        )
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0003",
           "glazed_type",
           "test 3",
-          )
+        )
 
         gateway.add_attribute_value(
           "0000-0000-0000-0000-0003",
           "heating_cost_current",
           "9.45",
-          )
+        )
       end
 
       let(:assessement_attribute_values) do
         ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM assessment_attribute_values",
-          )
+        )
       end
 
       it "returns 4 rows for the 2nd assessments" do
@@ -210,7 +208,7 @@ describe Gateway::AssessmentAttributesGateway do
         let(:pivoted_data) do
           gateway.fetch_assessment_attributes(
             %w[construction_age_band glazed_type],
-            )
+          )
         end
 
         it "has the correct number of rows, one for each assessment" do
@@ -219,38 +217,38 @@ describe Gateway::AssessmentAttributesGateway do
 
         it "has the correct assessments" do
           expect(pivoted_data[0]["assessment_id"]).to eq(
-                                                        "0000-0000-0000-0000-0001",
-                                                        )
+            "0000-0000-0000-0000-0001",
+          )
           expect(pivoted_data[1]["assessment_id"]).to eq(
-                                                        "0000-0000-0000-0000-0002",
-                                                        )
+            "0000-0000-0000-0000-0002",
+          )
           expect(pivoted_data[2]["assessment_id"]).to eq(
-                                                        "0000-0000-0000-0000-0003",
-                                                        )
+            "0000-0000-0000-0000-0003",
+          )
         end
 
         it "has a single column for each of the attributes with the relevant values" do
           expect(pivoted_data[0]["construction_age_band"]).to eq(
-                                                                "England and Wales: 2007-2011",
-                                                                )
+            "England and Wales: 2007-2011",
+          )
           expect(pivoted_data[1]["construction_age_band"]).to eq(
-                                                                "England: 1865",
-                                                                )
+            "England: 1865",
+          )
           expect(pivoted_data[2]["construction_age_band"]).to eq(
-                                                                "England and Wales: 1971-1987",
-                                                                )
+            "England and Wales: 1971-1987",
+          )
         end
 
         it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' " do
           expect(gateway.fetch_sum("heating_cost_current", "float")).to eq(
-                                                                          32.98,
-                                                                          )
+            32.98,
+          )
         end
 
         it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' " do
           expect(
             gateway.fetch_average("heating_cost_current", "float").to_f,
-            ).to eq(10.99)
+          ).to eq(10.99)
         end
       end
 
@@ -259,14 +257,14 @@ describe Gateway::AssessmentAttributesGateway do
           gateway.fetch_assessment_attributes(
             %w[construction_age_band glazed_type],
             { heating_cost_current: "9.45" },
-            )
+          )
         end
 
         it "returns only the row for the assessments with that attibute" do
           expect(pivoted_data.count).to eq(1)
           expect(pivoted_data[0]["assessment_id"]).to eq(
-                                                        "0000-0000-0000-0000-0003",
-                                                        )
+            "0000-0000-0000-0000-0003",
+          )
         end
       end
 
@@ -281,10 +279,10 @@ describe Gateway::AssessmentAttributesGateway do
               .connection
               .exec_query(
                 "SELECT * FROM assessment_attribute_values WHERE assessment_id ='0000-0000-0000-0000-0002'",
-                )
+              )
               .rows
               .count,
-            ).to eq(0)
+          ).to eq(0)
         end
 
         it "there are attributes for other assessments " do
@@ -293,10 +291,10 @@ describe Gateway::AssessmentAttributesGateway do
               .connection
               .exec_query(
                 "SELECT * FROM assessment_attribute_values WHERE assessment_id ='0000-0000-0000-0000-0001'",
-                )
+              )
               .rows
               .count,
-            ).not_to eq(0)
+          ).not_to eq(0)
         end
       end
 
@@ -312,7 +310,7 @@ describe Gateway::AssessmentAttributesGateway do
             "SELECT * FROM assessment_attribute_values
           WHERE assessment_id= '0000-0000-0000-0000-0001'
           ",
-            )
+          )
           .first
       end
 
@@ -321,10 +319,10 @@ describe Gateway::AssessmentAttributesGateway do
           "0000-0000-0000-0000-0001",
           "transaction_type",
           { "description": "marketed sale", "value": "1" },
-          )
+        )
         expect(assessement_attribute_values["attribute_value"]).to eq(
-                                                                     "marketed sale",
-                                                                     )
+          "marketed sale",
+        )
         expect(assessement_attribute_values["attribute_value_int"]).to eq(1)
       end
 
@@ -333,10 +331,10 @@ describe Gateway::AssessmentAttributesGateway do
           "0000-0000-0000-0000-0001",
           "transaction_type",
           { "description": "marketed sale", "value": "10.0" },
-          )
+        )
         expect(assessement_attribute_values["attribute_value"]).to eq(
-                                                                     "marketed sale",
-                                                                     )
+          "marketed sale",
+        )
         expect(assessement_attribute_values["attribute_value_int"]).to eq(10)
       end
     end

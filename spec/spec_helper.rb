@@ -6,7 +6,6 @@ require "zeitwerk"
 
 ENV["STAGE"] = "test"
 
-
 class TestLoader
   def self.setup
     @loader = Zeitwerk::Loader.new
@@ -53,7 +52,6 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-
   if config.files_to_run.one?
     # Use the documentation formatter for detailed output,
     # unless a formatter has already been configured
@@ -65,7 +63,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-
   config.before { DatabaseCleaner.strategy = :transaction }
 
   config.before { DatabaseCleaner.start }
@@ -75,5 +72,4 @@ RSpec.configure do |config|
   config.before(:all) { DatabaseCleaner.start }
 
   config.after(:all) { DatabaseCleaner.clean }
-
 end
