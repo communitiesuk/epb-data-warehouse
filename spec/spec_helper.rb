@@ -3,6 +3,8 @@ require "rspec"
 require "database_cleaner"
 require "sinatra/activerecord"
 require "zeitwerk"
+require 'webmock'
+require 'webmock/rspec'
 
 ENV["STAGE"] = "test"
 
@@ -10,6 +12,7 @@ class TestLoader
   def self.setup
     @loader = Zeitwerk::Loader.new
     @loader.push_dir("#{__dir__}/../lib/")
+    @loader.push_dir("#{__dir__}/../spec/test_doubles/")
     @loader.setup
   end
 
