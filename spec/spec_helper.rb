@@ -1,10 +1,7 @@
-
 ENV["STAGE"] = "test"
-
 
 require "rake"
 require "zeitwerk"
-
 
 class TestLoader
   def self.setup
@@ -19,7 +16,6 @@ class TestLoader
 end
 
 TestLoader.setup
-
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -81,12 +77,12 @@ RSpec.configure do |config|
   #   # Many RSpec users commonly either run the entire suite or an individual
   #   # file, and it's useful to allow more verbose output when running an
   #   # individual spec file.
-    if config.files_to_run.one?
-      # Use the documentation formatter for detailed output,
-      # unless a formatter has already been configured
-      # (e.g. via a command-line flag).
-      config.default_formatter = "doc"
-    end
+  if config.files_to_run.one?
+    # Use the documentation formatter for detailed output,
+    # unless a formatter has already been configured
+    # (e.g. via a command-line flag).
+    config.default_formatter = "doc"
+  end
   #
   #   # Print the 10 slowest examples and example groups at the
   #   # end of the spec run, to help surface which specs are running
