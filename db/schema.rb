@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_083249) do
+ActiveRecord::Schema.define(version: 2021_07_30_110111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "tablefunc"
 
   create_table "assessment_attribute_values", id: false, force: :cascade do |t|
     t.integer "attribute_id", null: false

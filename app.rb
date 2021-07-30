@@ -2,8 +2,8 @@ require "pg" # postgresql
 require "erb"
 require "yaml"
 require "active_record"
+require "sinatra/activerecord"
 
-APP_ENV = ENV.fetch("APP_ENV", "development")
 
-db_config = YAML.load(File.open("config/database.yml"))
-ActiveRecord::Base.establish_connection(db_config)
+
+pp ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_look_ups")
