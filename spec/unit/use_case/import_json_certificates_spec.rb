@@ -33,7 +33,7 @@ describe UseCase::ImportJsonCertificates do
           UseCase::ImportJsonCertificates.new(
             directory_gateway,
             Gateway::AssessmentAttributesGateway.new,
-            )
+          )
         use_case.execute
       end
 
@@ -42,20 +42,20 @@ describe UseCase::ImportJsonCertificates do
           UseCase::ImportJsonCertificates.new(
             directory_gateway,
             Gateway::AssessmentAttributesGateway.new,
-            )
+          )
         use_case.execute
 
         ActiveRecord::Base.connection.exec_query(
           'SELECT aa.*, aav.attribute_value,  aav.attribute_value_int, aav.attribute_value_float, aav.assessment_id
             FROM assessment_attribute_values aav
             JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id',
-          )
+        )
       end
 
       it "the assessment_attribute_values table has data for each of the 3 test assessments" do
         expect(
           imported_data.group_by { |item| item["assessment_id"] }.count,
-          ).to eq(3)
+        ).to eq(3)
       end
 
       it "the assessment_attribute_values has one entry for each type of assessment" do
@@ -64,8 +64,8 @@ describe UseCase::ImportJsonCertificates do
             item["attribute_name"] == "type_of_assessment"
           end
         expect(select.map { |item| item["attribute_value"] }).to eq(
-                                                                   %w[RdSAP CEPC SAP],
-                                                                   )
+          %w[RdSAP CEPC SAP],
+        )
       end
 
       it "the assessment_attribute_values table has CEPC data for asset_rating" do

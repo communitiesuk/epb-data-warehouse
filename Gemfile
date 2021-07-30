@@ -26,3 +26,9 @@ gem "timecop", "~> 0.9.4"
 gem "webmock", "~> 3.13"
 gem "yaml", "~> 0.1.1"
 gem "zeitwerk", "~> 2.4.1"
+gem "redis", "~> 4.3.1"
+
+group :worker do
+  gem "sidekiq", "~> 6.2.1"
+  gem "sidekiq-cron", "~> 1.2.0"
+end
