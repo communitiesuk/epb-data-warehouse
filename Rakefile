@@ -1,4 +1,7 @@
-load 'app.rb'
+require "pg" # postgresql
+require "erb"
+require "yaml"
+require "active_record"
 
 task :environment do
   RAKE_PATH = File.expand_path('.')

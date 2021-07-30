@@ -1,6 +1,11 @@
-adapter: 'postgresql'
-host: 'localhost'
-username: 'epbr_eav_user'
-password: 'password'
-port: '5432'
-database: 'epb_eav_development'
+default: &default
+  adapter: postgresql
+  host: 127.0.0.1
+  username: postgres
+  password: mysecretpassword
+  port: 5432
+  encoding: unicode
+
+development:
+  <<: *default
+  database: epb_eav_development
