@@ -5,7 +5,14 @@ default: &default
   password: mysecretpassword
   port: 5432
   encoding: unicode
-
 development:
   <<: *default
   database: epb_eav_development
+test:
+  adapter: postgresql
+  host: 127.0.0.1
+  username: postgres
+  password: mysecretpassword
+  port: 5432
+  encoding: unicode
+  database: epb_eav_test

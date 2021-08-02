@@ -24,6 +24,8 @@ describe UseCase::ImportJsonCertificates do
     end
 
     it "imports 3 files from the fixtures" do
+      pp ENV["STAGE"]
+      pp ActiveRecord::Base.connection.config
       expect(files.count).to eq(3)
     end
 

@@ -2,11 +2,20 @@ require "pg" # postgresql
 require "erb"
 require "yaml"
 require "active_record"
+require 'sinatra/activerecord'
+require "zeitwerk"
+
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/lib/")
+loader.setup
+
 
 task :environment do
+
   RAKE_PATH = File.expand_path(".")
   RAKE_ENV  = ENV.fetch("APP_ENV", "development")
   ENV["RAILS_ENV"] = RAKE_ENV
+
 
   Bundler.require :default, RAKE_ENV
 
@@ -17,6 +26,8 @@ task :environment do
   ActiveRecord::Tasks::DatabaseTasks.migrations_paths = ["db/migrate"]
   ActiveRecord::Tasks::DatabaseTasks.seed_loader      = OpenStruct.new(load_seed: nil)
 end
+
+Dir.glob("lib/tasks/*.rake").each { |r| load r }
 
 # Use Rails 6 migrations
 load "active_record/railties/databases.rake"

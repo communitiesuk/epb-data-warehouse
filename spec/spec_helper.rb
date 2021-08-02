@@ -1,3 +1,6 @@
+ENV["RACK_ENV"] = "test"
+ENV["STAGE"] = "test"
+
 require "rake"
 require "rspec"
 require "database_cleaner"
@@ -5,8 +8,6 @@ require "sinatra/activerecord"
 require "zeitwerk"
 require "webmock"
 require "webmock/rspec"
-
-ENV["STAGE"] = "test"
 
 class TestLoader
   def self.setup
