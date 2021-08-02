@@ -26,7 +26,14 @@ You can re-run the seed command independently using the following cmd:
 
 `rake seed_test_data`
 
-Code Formatting
+Once that database is set up and seed data has been imported you can use the crosstab function of postgres to extract data into a 2-d dataset. Examples can be found in `lib/gateway/assessment_attributes_gateway.rb`
+A more comprehensive example can be found in the db migrations `db/migrate/20210802122736_add_open_data_export_view.rb` This creates a postgres view called 
+
+that export the data in the format required by Open Data Communities. The run this view use the following psql command:
+
+`SELECT * FROM vw_open_data_export`
+
+## Code Formatting
 
 To run Rubocop on its own, run:
 
