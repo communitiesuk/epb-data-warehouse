@@ -5,7 +5,7 @@ describe UseCase::ImportXmlCertificate do
     end
 
     let!(:use_case) do
-      UseCase::ImportXmlCertificate.newgateway
+      UseCase::ImportXmlCertificate.new(gateway)
     end
 
     let!(:sample) do

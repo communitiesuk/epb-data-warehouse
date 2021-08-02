@@ -1,5 +1,5 @@
 module UseCase
-  class ImportXmlCertificate
+  class ImportXmlCertificate < UseCase::ImportBase
     attr_accessor :assessment_attribute_gateway
     def initialize(assessment_gateway)
       @assessment_attribute_gateway = assessment_gateway
@@ -11,7 +11,13 @@ module UseCase
           xml,
           schema_type,
         )
-      wrapper.to_report
+      certificate =  wrapper.to_report
+      assessment_id = certificate["assessment_id"]
+      begin
+        save_attributes(assessment_id, certificate)
+      rescue Boundary::DuplicateAttribute
+      rescue Boundary::JsonAttributeSave
+      end
     end
   end
 end

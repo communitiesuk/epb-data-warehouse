@@ -13,6 +13,8 @@ format:
 .PHONY: setup-db
 setup-db:
 	@bundle exec rake db:create
+
+	@bundle exec rake db:migrate
 	@bundle exec rake db:migrate
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake seed_test_data
