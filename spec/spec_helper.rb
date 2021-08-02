@@ -1,6 +1,7 @@
 ENV["RACK_ENV"] = "test"
 ENV["STAGE"] = "test"
 
+
 require "rake"
 require "rspec"
 require "database_cleaner"
@@ -8,6 +9,9 @@ require "sinatra/activerecord"
 require "zeitwerk"
 require "webmock"
 require "webmock/rspec"
+require "samples"
+require 'epb_view_models'
+require 'nokogiri'
 
 class TestLoader
   def self.setup
@@ -21,6 +25,10 @@ class TestLoader
     load path
   end
 end
+
+
+
+
 
 TestLoader.setup
 
