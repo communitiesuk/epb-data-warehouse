@@ -2,20 +2,17 @@ require "pg" # postgresql
 require "erb"
 require "yaml"
 require "active_record"
-require 'sinatra/activerecord'
+require "sinatra/activerecord"
 require "zeitwerk"
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib/")
 loader.setup
 
-
 task :environment do
-
   RAKE_PATH = File.expand_path(".")
   RAKE_ENV  = ENV.fetch("APP_ENV", "development")
   ENV["RAILS_ENV"] = RAKE_ENV
-
 
   Bundler.require :default, RAKE_ENV
 
