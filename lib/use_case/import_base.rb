@@ -1,9 +1,8 @@
 class UseCase::ImportBase
-
   def save_attributes(assessment_id, certificate, parent_name = nil)
     certificate.each do |_key, _value|
       if _value.class == Hash &&
-        _value.symbolize_keys.keys != %i[description value]
+          _value.symbolize_keys.keys != %i[description value]
         save_attributes(assessment_id, _value, _key.to_s)
       else
         attribute = {
@@ -23,7 +22,6 @@ class UseCase::ImportBase
       attribute[:attribute],
       attribute[:value],
       attribute[:parent_name],
-      )
+    )
   end
-
 end

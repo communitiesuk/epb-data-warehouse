@@ -20,5 +20,4 @@ module UseCase
       end
     end
     end
-
 end

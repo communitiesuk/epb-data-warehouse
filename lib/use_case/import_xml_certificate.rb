@@ -11,7 +11,7 @@ module UseCase
           xml,
           schema_type,
         )
-      certificate =  wrapper.to_report
+      certificate = wrapper.to_report
       assessment_id = certificate["assessment_id"]
       begin
         save_attributes(assessment_id, certificate)
