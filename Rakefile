@@ -9,6 +9,7 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib/")
 loader.setup
 
+desc "Sets up environment"
 task :environment do
   RAKE_PATH = File.expand_path(".")
   RAKE_ENV  = ENV.fetch("APP_ENV", "development")
@@ -38,14 +39,14 @@ namespace :db do
     migration_class = name.split("_").map(&:capitalize).join
 
     File.open(path, "w") do |file|
-      file.write <<-EOF
+      file.write <<-FILE
         class #{migration_class} < ActiveRecord::Migration
           def self.up
           end
           def self.down
           end
         end
-      EOF
+      FILE
     end
 
     puts "Migration #{path} created"

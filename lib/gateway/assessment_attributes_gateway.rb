@@ -125,7 +125,7 @@ module Gateway
     end
 
     def filter_assesements_where_clause(where_clause_hash)
-      sql = <<-SQL
+      <<-SQL
         JOIN (SELECT  aav.assessment_id
               FROM assessment_attributes aa
                JOIN assessment_attribute_values aav on aa.attribute_id = aav.attribute_id
@@ -217,7 +217,7 @@ module Gateway
       position = column_array.find_index(RRN)
       if position.nil?
         column_array.insert(0, RRN)
-      elsif position > 0
+      elsif position.positive?
         column_array.insert(0, column_array.delete_at(position))
       end
       column_array
@@ -251,13 +251,11 @@ module Gateway
     end
 
     def attribute_name_binding(attribute_name)
-      bindings = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "attribute_name",
-          attribute_name,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
+      [ActiveRecord::Relation::QueryAttribute.new(
+        "attribute_name",
+        attribute_name,
+        ActiveRecord::Type::String.new,
+      )]
     end
 
     def insert_attribute(attribute_name, parent_name)
@@ -333,13 +331,13 @@ module Gateway
     end
 
     def attribute_value_int(attribute_value)
-      attribute_value.to_i == 0 ? nil : attribute_value.to_i
+      attribute_value.to_i.zero? ? nil : attribute_value.to_i
     rescue StandardError
       nil
     end
 
     def attribute_value_float(attribute_value)
-      attribute_value.to_f == 0 ? nil : attribute_value.to_f
+      attribute_value.to_f.zero? ? nil : attribute_value.to_f
     rescue StandardError
       nil
     end

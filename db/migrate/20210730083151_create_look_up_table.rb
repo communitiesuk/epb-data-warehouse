@@ -7,5 +7,5 @@ class CreateLookUpTable < ActiveRecord::Migration[6.1]
       t.string   :schema, null: false
       t.string   :schema_version, null: true
     end
-    end
+  end
 end

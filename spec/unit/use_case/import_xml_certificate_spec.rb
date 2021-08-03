@@ -9,7 +9,7 @@ describe UseCase::ImportXmlCertificate do
     end
 
     let!(:use_case) do
-      UseCase::ImportXmlCertificate.new(gateway)
+      described_class.new(gateway)
     end
 
     let!(:sample) do

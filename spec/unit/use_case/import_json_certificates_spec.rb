@@ -30,7 +30,7 @@ describe UseCase::ImportJsonCertificates do
     context "when use case uses the actual attribute gateway" do
       before do
         use_case =
-          UseCase::ImportJsonCertificates.new(
+          described_class.new(
             directory_gateway,
             Gateway::AssessmentAttributesGateway.new,
           )
@@ -39,7 +39,7 @@ describe UseCase::ImportJsonCertificates do
 
       let!(:imported_data) do
         use_case =
-          UseCase::ImportJsonCertificates.new(
+          described_class.new(
             directory_gateway,
             Gateway::AssessmentAttributesGateway.new,
           )

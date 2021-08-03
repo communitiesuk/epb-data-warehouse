@@ -16,7 +16,9 @@ module UseCase
       begin
         save_attributes(assessment_id, certificate)
       rescue Boundary::DuplicateAttribute
+        # do nothing
       rescue Boundary::JsonAttributeSave
+        # do nothing
       end
     end
   end

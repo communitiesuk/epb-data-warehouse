@@ -1,6 +1,6 @@
 describe Gateway::AssessmentAttributesGateway do
   context "when there are no attributes reseed the table and insert test data" do
-    let(:gateway) { Gateway::AssessmentAttributesGateway.new }
+    let(:gateway) { described_class.new }
     let(:attributes) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT attribute_id, attribute_name FROM assessment_attributes",

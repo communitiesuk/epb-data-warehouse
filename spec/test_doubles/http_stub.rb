@@ -6,11 +6,10 @@ class HttpStub
       .freeze
 
   def self.call_api(endpoint)
-    stub =
-      WebMock.stub_request(
-        :get,
-        "http://test-register/api/#{endpoint}",
-      )
+    WebMock.stub_request(
+      :get,
+      "http://test-register/api/#{endpoint}",
+    )
         .with(
           headers: {
             "Accept" => "*/*",
@@ -20,7 +19,7 @@ class HttpStub
         ).to_return status: 200,
                     body: "",
                     headers: {}
-    end
+  end
 
   def self.failed_lodgement(
     error = nil,
