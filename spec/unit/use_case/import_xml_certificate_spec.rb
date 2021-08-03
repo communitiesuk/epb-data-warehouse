@@ -4,9 +4,9 @@ describe UseCase::ImportXmlCertificate do
       Gateway::AssessmentAttributesGateway.new
     end
 
-    let!(:assessment_id) {
+    let!(:assessment_id) do
       "0000-0000-0000-0000-0000"
-    }
+    end
 
     let!(:use_case) do
       UseCase::ImportXmlCertificate.new(gateway)
@@ -29,7 +29,7 @@ describe UseCase::ImportXmlCertificate do
       expect(transformed_certificate[:assessment_id]).to eq("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a")
     end
 
-    it 'the attributes have been saved in the correct format' do
+    it "the attributes have been saved in the correct format" do
       use_case.execute(sample, "RdSAP-Schema-20.0.0")
       expect(saved_data.rows.length).not_to eq(0)
     end
