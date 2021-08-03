@@ -13,8 +13,8 @@ format: ## Runs Rubocop with the GOV.UK rules
 setup-db: ## Creates local development and test databases
 	@bundle exec rake db:create
 
-	@bundle exec rake db:migrate
-	@bundle exec rake db:migrate
+	@bundle exec rake db:migrate APP_ENV=test
+	@bundle exec rake db:migrate APP_ENV=development
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake seed_test_data
-	@echo ">>>>> Seeded DB"
+	@echo ">>>>> Seeded development DB"
