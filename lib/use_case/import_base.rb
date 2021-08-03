@@ -5,6 +5,7 @@ class UseCase::ImportBase
           _value.symbolize_keys.keys != %i[description value]
         save_attributes(assessment_id, _value, _key.to_s)
       else
+
         attribute = {
           attribute: _key.to_s,
           value: _value.class == Array ? _value.join("|") : _value,

@@ -11,8 +11,8 @@ module UseCase
           xml,
           schema_type,
         )
+      assessment_id = wrapper.view_model.assessment_id
       certificate = wrapper.to_report
-      assessment_id = certificate["assessment_id"]
       begin
         save_attributes(assessment_id, certificate)
       rescue Boundary::DuplicateAttribute
