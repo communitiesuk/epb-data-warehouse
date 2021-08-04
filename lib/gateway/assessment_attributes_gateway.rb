@@ -57,12 +57,12 @@ module Gateway
           "attribute_name",
           attribute,
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "assessment_id",
           assessment_id,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["attribute_value"]
@@ -201,7 +201,6 @@ module Gateway
     end
 
     def update_assessment_attribute(assessment_id, attribute, value)
-
       sql = <<-SQL
            UPDATE assessment_attribute_values aav
             SET attribute_value  = $1
@@ -215,23 +214,22 @@ module Gateway
           "attribute_value",
           value,
           ActiveRecord::Type::String.new,
-          ),
+        ),
 
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_name",
           attribute,
           ActiveRecord::Type::String.new,
-          ),
+        ),
 
         ActiveRecord::Relation::QueryAttribute.new(
           "assessment_id",
           assessment_id,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
-
     end
 
   private

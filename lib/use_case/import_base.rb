@@ -1,6 +1,4 @@
 class UseCase::ImportBase
-
-
   def save_attributes(assessment_id, certificate, parent_name = nil)
     certificate.each do |key, value|
       if value.class == Hash &&
