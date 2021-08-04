@@ -246,7 +246,7 @@ describe Gateway::AssessmentAttributesGateway do
 
       it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' when value is a float" do
         expect(gateway.fetch_sum("heating_cost_current", "float")).to eq(
-          32.980000000000004,
+          32.98,
         )
       end
 

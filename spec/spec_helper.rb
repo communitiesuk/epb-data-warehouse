@@ -11,6 +11,15 @@ require "webmock/rspec"
 require "samples"
 require "epb_view_models"
 require "nokogiri"
+require "epb-auth-tools"
+
+
+AUTH_URL = "http://test-auth-server.gov.uk"
+ENV["EPB_AUTH_CLIENT_ID"] = "test.id"
+ENV["EPB_AUTH_CLIENT_SECRET"] = "test.client.secret"
+ENV["EPB_AUTH_SERVER"] = AUTH_URL
+ENV["EPB_API_URL"] = "http://test-api.gov.uk"
+
 
 class TestLoader
   def self.setup
@@ -22,6 +31,18 @@ class TestLoader
 
   def self.override(path)
     load path
+  end
+end
+
+module RSpecUnitMixin
+  include Helper
+  def get_api_client
+    @get_api_client ||=
+      Auth::HttpClient.new ENV["EPB_AUTH_CLIENT_ID"],
+                           ENV["EPB_AUTH_CLIENT_SECRET"],
+                           ENV["EPB_AUTH_SERVER"],
+                           ENV["EPB_API_URL"],
+                           OAuth2::Client
   end
 end
 
@@ -65,6 +86,14 @@ RSpec.configure do |config|
     # (e.g. via a command-line flag).
     config.default_formatter = "doc"
   end
+
+  WebMock.disable_net_connect!(
+    allow_localhost: true,
+    allow: %w[
+      find-energy-certificate.local.gov.uk
+      getting-new-energy-certificate.local.gov.uk
+    ],
+    )
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
