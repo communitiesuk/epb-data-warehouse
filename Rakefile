@@ -6,8 +6,6 @@ require "sinatra/activerecord"
 require "zeitwerk"
 require "redis"
 
-
-
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib/")
 loader.setup
