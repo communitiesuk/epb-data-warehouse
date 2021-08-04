@@ -12,6 +12,7 @@ require "samples"
 require "epb_view_models"
 require "nokogiri"
 require "epb-auth-tools"
+require "redis"
 
 AUTH_URL = "http://test-auth-server.gov.uk".freeze
 ENV["EPB_AUTH_CLIENT_ID"] = "test.id"
