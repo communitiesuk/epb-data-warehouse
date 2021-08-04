@@ -13,13 +13,11 @@ require "epb_view_models"
 require "nokogiri"
 require "epb-auth-tools"
 
-
-AUTH_URL = "http://test-auth-server.gov.uk"
+AUTH_URL = "http://test-auth-server.gov.uk".freeze
 ENV["EPB_AUTH_CLIENT_ID"] = "test.id"
 ENV["EPB_AUTH_CLIENT_SECRET"] = "test.client.secret"
 ENV["EPB_AUTH_SERVER"] = AUTH_URL
 ENV["EPB_API_URL"] = "http://test-api.gov.uk"
-
 
 class TestLoader
   def self.setup
@@ -93,7 +91,7 @@ RSpec.configure do |config|
       find-energy-certificate.local.gov.uk
       getting-new-energy-certificate.local.gov.uk
     ],
-    )
+  )
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

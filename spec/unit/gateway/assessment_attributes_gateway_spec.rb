@@ -113,6 +113,13 @@ describe Gateway::AssessmentAttributesGateway do
         365.98,
       )
     end
+
+    context "when extracting a single atttribute value for an assessment" do
+      it "returns a row for every attributes" do
+        expect(gateway.fetch_attribute_by_assessment( "0000-0000-0000-0000-0001", "construction_age_band")).to eq("England and Wales: 2007-2011")
+      end
+
+    end
   end
 
   context "when we insert the same attribute for many assessments" do
@@ -338,6 +345,33 @@ describe Gateway::AssessmentAttributesGateway do
         "marketed sale",
       )
       expect(assessement_attribute_values["attribute_value_int"]).to eq(10)
+    end
+  end
+
+
+
+  context 'when updating an existing certificiate as opt-out' do
+
+    before do
+      gateway.add_attribute_value(
+        "0000-0000-0000-0000-0001",
+        "opt-out",
+        "false",
+        )
+
+      gateway.add_attribute_value(
+        "0000-0000-0000-0000-0002",
+        "opt-out",
+        "false",
+        )
+      gateway.update_assessment_attribute("0000-0000-0000-0000-0001", 'opt-out', 'true')
+    end
+
+    it 'updates only the relevant certificate to be true' do
+
+      expect(gateway.fetch_attribute_by_assessment( "0000-0000-0000-0000-0001", "opt-out" )).to eq("true")
+      expect(gateway.fetch_attribute_by_assessment( "0000-0000-0000-0000-0002", "opt-out" )).to eq("false")
+
     end
   end
 end

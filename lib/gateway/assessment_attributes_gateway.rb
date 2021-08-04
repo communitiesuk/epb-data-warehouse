@@ -45,6 +45,29 @@ module Gateway
       end
     end
 
+    def fetch_attribute_by_assessment(assessment_id, attribute)
+      sql = <<-SQL
+           SELECT aav.attribute_value
+            FROM assessment_attribute_values aav
+            JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id
+            AND aa.attribute_name = $1 AND aav.assessment_id = $2
+      SQL
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_name",
+          attribute,
+          ActiveRecord::Type::String.new,
+          ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["attribute_value"]
+    end
+
     def delete_attributes_by_assessment(assessment_id)
       sql = <<-SQL
               DELETE FROM assessment_attribute_values
@@ -175,6 +198,40 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first[
         attribute_name
       ]
+    end
+
+    def update_assessment_attribute(assessment_id, attribute, value)
+
+      sql = <<-SQL
+           UPDATE assessment_attribute_values aav
+            SET attribute_value  = $1
+            FROM assessment_attributes aa
+            WHERE  aav.attribute_id = aa.attribute_id
+            AND aa.attribute_name = $2 AND aav.assessment_id = $3
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_value",
+          value,
+          ActiveRecord::Type::String.new,
+          ),
+
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_name",
+          attribute,
+          ActiveRecord::Type::String.new,
+          ),
+
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+
     end
 
   private

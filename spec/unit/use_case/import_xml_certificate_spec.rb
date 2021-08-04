@@ -1,6 +1,10 @@
 describe UseCase::ImportXmlCertificate do
-  let(:gateway) do
+  let(:database_gateway) do
     Gateway::AssessmentAttributesGateway.new
+  end
+
+  let(:certificate_gateway) do
+     instance_double(Gateway::CertificateGateway)
   end
 
   let!(:assessment_id) do
@@ -8,7 +12,7 @@ describe UseCase::ImportXmlCertificate do
   end
 
   let!(:use_case) do
-    described_class.new(gateway)
+    described_class.new(database_gateway, certificate_gateway)
   end
 
   let!(:sample) do
@@ -16,7 +20,8 @@ describe UseCase::ImportXmlCertificate do
   end
 
   let!(:transformed_certificate) do
-    use_case.execute(sample, "RdSAP-Schema-20.0.0")
+    allow(certificate_gateway).to receive(:fetch).and_return(sample)
+    use_case.execute(assessment_id, "RdSAP-Schema-20.0.0")
   end
 
   let(:saved_data) do

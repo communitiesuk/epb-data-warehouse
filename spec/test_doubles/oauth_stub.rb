@@ -2,15 +2,16 @@
 
 class OauthStub
   def self.token
-    WebMock.stub_request(:post, "http://test-auth-server.gov.uk/oauth/token").
-      with(
-        body: {"client_id"=>"test.id", "client_secret"=>"test.client.secret", "grant_type"=>"client_credentials"},
+    WebMock.stub_request(:post, "http://test-auth-server.gov.uk/oauth/token")
+      .with(
+        body: { "client_id" => "test.id", "client_secret" => "test.client.secret", "grant_type" => "client_credentials" },
         headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'Content-Type'=>'application/x-www-form-urlencoded',
-          'User-Agent'=>'Faraday v1.5.1'
-        })
+          "Accept" => "*/*",
+          "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+          "Content-Type" => "application/x-www-form-urlencoded",
+          "User-Agent" => "Faraday v1.5.1",
+        },
+      )
       .to_return(
         status: 200,
         body: {
@@ -21,6 +22,6 @@ class OauthStub
         headers: {
           "Content-Type" => "application/json",
         },
-        )
+      )
   end
 end

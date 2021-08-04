@@ -21,10 +21,7 @@ describe Gateway::CertificateGateway do
     end
 
     it "returns the requested certificate from the api" do
-
-      expect(Nokogiri.XML response).not_to be_nil
+      expect(Nokogiri.XML(response)).not_to be_nil
     end
-
-
   end
 end

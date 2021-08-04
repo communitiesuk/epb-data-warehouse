@@ -1,11 +1,14 @@
 module UseCase
   class ImportXmlCertificate < UseCase::ImportBase
-    attr_accessor :assessment_attribute_gateway
-    def initialize(assessment_gateway)
-      @assessment_attribute_gateway = assessment_gateway
+
+    def initialize(eav_gateway, certificate_gateway)
+      @assessment_attribute_gateway = eav_gateway
+      @certificate_gateway = certificate_gateway
     end
 
-    def execute(xml, schema_type)
+    def execute(assessment_id, schema_type)
+      xml = @certificate_gateway.fetch(assessment_id)
+
       wrapper =
         ViewModel::Factory.new.create(
           xml,

@@ -19,7 +19,7 @@ module UseCase
 
       raise Errors::UnknownErrorResponseError,
             "Unknown error response from internal API; errors sent were: " %
-              response[:errors].to_s
+        response[:errors].to_s
     end
   end
 end
