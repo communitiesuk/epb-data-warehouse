@@ -5,7 +5,13 @@ require:
 inherit_gem:
   rubocop-govuk:
     - config/default.yml
-    
+
 inherit_mode:
   merge:
     - Exclude
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
