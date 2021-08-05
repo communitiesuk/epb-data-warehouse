@@ -2,6 +2,9 @@ describe UseCase::ImportCertificates do
   let(:database_gateway) do
     instance_double(Gateway::AssessmentAttributesGateway)
   end
+  let(:import_xml_certificate_use_case) do
+    instance_double(UseCase::ImportXmlCertificate)
+  end
 
   let(:certificate_gateway) do
     instance_double(Gateway::CertificateGateway)
@@ -21,32 +24,27 @@ describe UseCase::ImportCertificates do
 
   let(:schema_type) { "TODO" }
 
-   before do
-     allow(Gateway::AssessmentAttributesGateway).to receive(:new).and_return(database_gateway)
-     allow(database_gateway).to receive(:add_attribute_value).and_return(1)
+  before do
+    allow(Gateway::AssessmentAttributesGateway).to receive(:new).and_return(database_gateway)
+    allow(database_gateway).to receive(:add_attribute_value).and_return(1)
 
-     allow(Gateway::CertificateGateway).to receive(:new).and_return(certificate_gateway)
-     allow(certificate_gateway).to receive(:fetch).and_return(sample)
+    allow(Gateway::CertificateGateway).to receive(:new).and_return(certificate_gateway)
+    allow(certificate_gateway).to receive(:fetch).and_return(sample)
 
-     allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
-     allow(redis_gateway).to receive(:fetch_queue).and_return([
-       "0000-0000-0000-0000-0000",
-       "0000-0000-0000-0000-0001",
-       "0000-0000-0000-0000-0002"
-       ])
-     allow(redis_gateway).to receive(:remove_from_queue)
-     allow(UseCase::ImportXmlCertificate).to receive(:new).and_return(import_xml_certificate_use_case)
-   end
-
-  let(:import_xml_certificate_use_case) {
-    instance_double(UseCase::ImportXmlCertificate)
-  }
+    allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
+    allow(redis_gateway).to receive(:fetch_queue).and_return(%w[
+      0000-0000-0000-0000-0000
+      0000-0000-0000-0000-0001
+      0000-0000-0000-0000-0002
+    ])
+    allow(redis_gateway).to receive(:remove_from_queue)
+    allow(UseCase::ImportXmlCertificate).to receive(:new).and_return(import_xml_certificate_use_case)
+  end
 
   it "calls the import XML certificate use case" do
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000", schema_type)
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", schema_type)
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
-
 
     use_case.execute
   end
@@ -57,7 +55,5 @@ describe UseCase::ImportCertificates do
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
     expect(redis_gateway).to receive(:remove_from_queue).exactly(3).times
     use_case.execute
-
-
   end
 end

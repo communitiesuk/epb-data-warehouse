@@ -16,17 +16,17 @@ module UseCase
         @redis_gateway.remove_from_queue(
           assessment_id: assessment_id,
           queue: "queues",
-          child_queue: "assessments"
+          child_queue: "assessments",
         )
       end
     end
 
-    private
+  private
 
     def import_xml_certificate_use_case
       @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new(
         @assessment_attribute_gateway,
-        @certificate_gateway
+        @certificate_gateway,
       )
     end
   end
