@@ -18,8 +18,7 @@ module UseCase
       end
 
       raise Errors::UnknownErrorResponseError,
-            "Unknown error response from internal API; errors sent were: " %
-        response[:errors].to_s
+            "Unknown error response from internal API; errors sent were: #{response[:errors]}"
     end
   end
 end

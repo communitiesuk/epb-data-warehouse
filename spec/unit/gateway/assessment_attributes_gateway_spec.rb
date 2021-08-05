@@ -369,7 +369,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
   end
 
-  context "When there is no data present" do
+  context "when there is no data present" do
     it "returns false when cheking a certificate has attribute data" do
       expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to eq(false)
     end
