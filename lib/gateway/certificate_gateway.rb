@@ -17,5 +17,5 @@ module Gateway
 
       response.body
     end
-    end
   end
+end
