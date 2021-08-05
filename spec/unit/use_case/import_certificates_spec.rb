@@ -35,20 +35,29 @@ describe UseCase::ImportCertificates do
        "0000-0000-0000-0000-0002"
        ])
      allow(redis_gateway).to receive(:remove_from_queue)
+     allow(UseCase::ImportXmlCertificate).to receive(:new).and_return(import_xml_certificate_use_case)
    end
 
-  it "calls the import XML certificate use case" do
-    import_xml_certificate_use_case = instance_double(UseCase::ImportXmlCertificate)
-    allow(UseCase::ImportXmlCertificate).to receive(:new).and_return(import_xml_certificate_use_case)
+  let(:import_xml_certificate_use_case) {
+    instance_double(UseCase::ImportXmlCertificate)
+  }
 
+  it "calls the import XML certificate use case" do
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000", schema_type)
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", schema_type)
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
 
+
     use_case.execute
   end
 
-  # it "removes the assessment id from the assessments queue" do
-  #   # TODO
-  # end
+  it "calls the method to removes the assessment id from the redis queue" do
+    expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000", schema_type)
+    expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", schema_type)
+    expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
+    expect(redis_gateway).to receive(:remove_from_queue).exactly(3).times
+    use_case.execute
+
+
+  end
 end

@@ -8,6 +8,7 @@ module UseCase
 
     def execute
       assessment_ids = @redis_gateway.fetch_queue("queues", "assessments")
+      # TODO: Decide where we are getting the schema from , either a new end point or add it to the queue?
       schema_type = "TODO"
 
       assessment_ids.each do |assessment_id|
