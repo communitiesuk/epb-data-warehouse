@@ -1,9 +1,4 @@
 describe Gateway::AssessmentAttributesGateway do
-
-
-
-
-
   let(:gateway) { described_class.new }
   let(:attributes) do
     ActiveRecord::Base.connection.exec_query(
@@ -375,21 +370,17 @@ describe Gateway::AssessmentAttributesGateway do
   end
 
   context "When there is no data present" do
-    it 'returns false when cheking a certificate has attribute data' do
+    it "returns false when cheking a certificate has attribute data" do
       expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to eq(false)
     end
 
-
-    it 'returns true when we add certificate data' do
+    it "returns true when we add certificate data" do
       gateway.add_attribute_value(
         "0000-0000-0000-0000-0001",
         "transaction_type",
         { "description": "marketed sale", "value": "10.0" },
-        )
+      )
       expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to eq(true)
     end
-
   end
-
 end
-

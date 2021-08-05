@@ -78,11 +78,10 @@ module Gateway
           "assessment_id",
           assessment_id,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["bool"]
-
     end
 
     def delete_attributes_by_assessment(assessment_id)

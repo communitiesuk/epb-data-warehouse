@@ -12,7 +12,6 @@ module UseCase
         @assessment_attribute_gateway.delete_attributes_by_assessment(assessment_id)
       end
 
-
       wrapper =
         ViewModel::Factory.new.create(
           xml,
