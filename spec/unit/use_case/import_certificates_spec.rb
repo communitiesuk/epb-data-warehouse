@@ -46,7 +46,7 @@ describe UseCase::ImportCertificates do
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", schema_type)
     expect(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
 
-    expect {use_case.execute }.not_to raise_error
+    expect { use_case.execute }.not_to raise_error
   end
 
   it "calls the method to removes the assessment id from the redis queue" do
@@ -54,6 +54,6 @@ describe UseCase::ImportCertificates do
     allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", schema_type)
     allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
     expect(redis_gateway).to receive(:remove_from_queue).exactly(3).times
-    expect {use_case.execute }.not_to raise_error
+    expect { use_case.execute }.not_to raise_error
   end
 end
