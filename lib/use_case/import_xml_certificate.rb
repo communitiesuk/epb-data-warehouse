@@ -8,6 +8,11 @@ module UseCase
     def execute(assessment_id, schema_type)
       xml = @certificate_gateway.fetch(assessment_id)
 
+      if @assessment_attribute_gateway.assessment_exists(assessment_id)
+        @assessment_attribute_gateway.delete_attributes_by_assessment(assessment_id)
+      end
+
+
       wrapper =
         ViewModel::Factory.new.create(
           xml,

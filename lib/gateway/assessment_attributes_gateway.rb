@@ -68,6 +68,23 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["attribute_value"]
     end
 
+    def assessment_exists(assessment_id)
+      sql = <<-SQL
+         SELECT EXISTS (SELECT * FROM assessment_attribute_values WHERE assessment_id = $1) as bool;
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["bool"]
+
+    end
+
     def delete_attributes_by_assessment(assessment_id)
       sql = <<-SQL
               DELETE FROM assessment_attribute_values
