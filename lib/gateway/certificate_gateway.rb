@@ -25,7 +25,6 @@ module Gateway
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
       JSON.parse(response.body, symbolize_names: true)[:data]
-
     end
   end
 end

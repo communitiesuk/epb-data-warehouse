@@ -25,7 +25,7 @@ describe Gateway::CertificateGateway do
     end
   end
 
-  context 'when calling the api to get the meta data for an assessment' do
+  context "when calling the api to get the meta data for an assessment" do
     let(:meta_data) { subject.fetch_meta_data("0000-0000-0000-0000-0003") }
 
     let(:sample) do
@@ -38,9 +38,9 @@ describe Gateway::CertificateGateway do
           "cancelledAt": nil,
           "notForIssueAt": nil,
           "schemaType": "RdSAP-Schema-20.0.0",
-          "addressId": "UPRN-000000000001"
+          "addressId": "UPRN-000000000001",
         },
-        "meta": {}
+        "meta": {},
       }.to_json
     end
 
@@ -50,18 +50,16 @@ describe Gateway::CertificateGateway do
         .stub_request(
           :get,
           "http://test-api.gov.uk/api/assessments/0000-0000-0000-0000-0003/meta-data",
-          )
+        )
         .to_return(status: 200, body: sample)
     end
 
-    it 'make an http GET to the expected end point' do
-      expect{meta_data}.not_to raise_error
+    it "make an http GET to the expected end point" do
+      expect { meta_data }.not_to raise_error
     end
 
-    it 'checks the rteurned value is in the expected format' do
+    it "checks the rteurned value is in the expected format" do
       expect(meta_data).to match a_hash_including(assessmentId: "0000-0000-0000-0000-0003")
     end
-
   end
-
 end

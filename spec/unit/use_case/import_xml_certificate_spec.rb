@@ -21,7 +21,7 @@ describe UseCase::ImportXmlCertificate do
 
   let!(:transformed_certificate) do
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
-    allow(certificate_gateway).to receive(:fetch_meta_data).and_return({schemaType: "RdSAP-Schema-20.0.0", addressId: "UPRN-000000000001",  assessmentId: "0000-0000-0000-0000-0003", })
+    allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0", addressId: "UPRN-000000000001", assessmentId: "0000-0000-0000-0000-0003" })
     use_case.execute(assessment_id)
   end
 
