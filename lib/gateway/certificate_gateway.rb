@@ -17,5 +17,15 @@ module Gateway
 
       response.body
     end
+
+    def fetch_meta_data(assessment_id)
+      route = "/api/assessments/#{CGI.escape(assessment_id)}/meta-data"
+
+      response =
+        Helper::Response.ensure_good { @internal_api_client.get(route) }
+
+      JSON.parse(response.body, symbolize_names: true)[:data]
+
+    end
   end
 end

@@ -45,15 +45,15 @@ describe UseCase::ImportCertificates do
   it "calls the import XML certificate use case" do
     expect { use_case.execute }.not_to raise_error
 
-    expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0000", schema_type)
-    expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0001", schema_type)
-    expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0002", schema_type)
+    expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0000")
+    expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0001")
+    expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0002")
   end
 
   it "calls the method to removes the assessment id from the redis queue" do
-    allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000", schema_type)
-    allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", schema_type)
-    allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", schema_type)
+    allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000")
+    allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001")
+    allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002")
 
     expect { use_case.execute }.not_to raise_error
 

@@ -21,7 +21,8 @@ describe UseCase::ImportXmlCertificate do
 
   let!(:transformed_certificate) do
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
-    use_case.execute(assessment_id, "RdSAP-Schema-20.0.0")
+    allow(certificate_gateway).to receive(:fetch_meta_data).and_return({schemaType: "RdSAP-Schema-20.0.0", addressId: "UPRN-000000000001",  assessmentId: "0000-0000-0000-0000-0003", })
+    use_case.execute(assessment_id)
   end
 
   let(:saved_data) do
@@ -34,7 +35,7 @@ describe UseCase::ImportXmlCertificate do
   end
 
   it "the attributes have been saved in the correct format" do
-    use_case.execute(sample, "RdSAP-Schema-20.0.0")
+    use_case.execute(sample)
     expect(saved_data.rows.length).not_to eq(0)
   end
 end
