@@ -116,7 +116,7 @@ describe Gateway::AssessmentAttributesGateway do
 
     context "when extracting a single atttribute value for an assessment" do
       it "returns a row for every attributes" do
-        expect(gateway.fetch_attribute_by_assessment( assessment_id: "0000-0000-0000-0000-0001", attribute: "construction_age_band")).to eq("England and Wales: 2007-2011")
+        expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute: "construction_age_band")).to eq("England and Wales: 2007-2011")
       end
     end
   end
@@ -212,7 +212,7 @@ describe Gateway::AssessmentAttributesGateway do
     context "when fetching the pivoted data" do
       let(:pivoted_data) do
         gateway.fetch_assessment_attributes(
-          attribute_column_array:  %w[construction_age_band glazed_type],
+          attribute_column_array: %w[construction_age_band glazed_type],
         )
       end
 
@@ -251,14 +251,14 @@ describe Gateway::AssessmentAttributesGateway do
       end
 
       it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' when value is a float" do
-        expect(gateway.fetch_sum(attribute_name: "heating_cost_current",value_type:"float").round(2)).to eq(
+        expect(gateway.fetch_sum(attribute_name: "heating_cost_current", value_type: "float").round(2)).to eq(
           32.98,
         )
       end
 
       it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' " do
         expect(
-          gateway.fetch_average(attribute_name: "heating_cost_current",value_type:"float").to_f,
+          gateway.fetch_average(attribute_name: "heating_cost_current", value_type: "float").to_f,
         ).to eq(10.99)
       end
     end
@@ -364,7 +364,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "updates only the relevant certificate to be true" do
-      expect(gateway.fetch_attribute_by_assessment(assessment_id:"0000-0000-0000-0000-0001", attribute: "opt-out")).to eq("true")
+      expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute: "opt-out")).to eq("true")
       expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0002", attribute: "opt-out")).to eq("false")
     end
   end

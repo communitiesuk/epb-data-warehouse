@@ -10,7 +10,7 @@ module Gateway
     end
 
     def add_attribute(attribute_name:, parent_name: nil)
-      attribute_data = fetch_attribute_id(attribute_name:attribute_name , parent_name:parent_name)
+      attribute_data = fetch_attribute_id(attribute_name: attribute_name, parent_name: parent_name)
       if attribute_data.nil?
         insert_attribute(attribute_name: attribute_name, parent_name: parent_name)
       else
@@ -28,7 +28,7 @@ module Gateway
         unless attribute_name.to_s == RRN
           begin
             ActiveRecord::Base.transaction do
-              attribute_id = add_attribute(attribute_name:attribute_name, parent_name: parent_name)
+              attribute_id = add_attribute(attribute_name: attribute_name, parent_name: parent_name)
               insert_attribute_value(
                 assessment_id: assessment_id,
                 attribute_id: attribute_id,
