@@ -32,12 +32,11 @@ describe UseCase::ImportCertificates do
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
 
     allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
-    allow(redis_gateway).to receive(:fetch_queue).and_return(%w[
+    allow(redis_gateway).to receive(:consume_queue).and_return(%w[
       0000-0000-0000-0000-0000
       0000-0000-0000-0000-0001
       0000-0000-0000-0000-0002
     ])
-    allow(redis_gateway).to receive(:remove_from_queue)
     allow(UseCase::ImportXmlCertificate).to receive(:new).and_return(import_xml_certificate_use_case)
     allow(import_xml_certificate_use_case).to receive(:execute)
   end
@@ -56,7 +55,5 @@ describe UseCase::ImportCertificates do
     allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002")
 
     expect { use_case.execute }.not_to raise_error
-
-    expect(redis_gateway).to have_received(:remove_from_queue).exactly(3).times
   end
 end

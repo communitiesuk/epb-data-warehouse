@@ -1,65 +1,50 @@
+require "securerandom"
+
 describe Gateway::RedisGateway do
-  let(:gateway) { described_class.new }
-
-  describe ".fetch_queue" do
-    context "when processing simple string objects" do
-      before do
-        gateway.redis.set "assessments", "0000-0000-0000-0000-0000"
-      end
-
-      it "can fetch a single assessment id" do
-        expect(gateway.fetch_queue("assessments")).to eq("0000-0000-0000-0000-0000")
-      end
-    end
-
-    context "when processing complex objects" do
-      before do
-        gateway.redis.set "assessments", %w[0000-0000-0000-0000-0000].to_json
-      end
-
-      it "can fetch a single assessment id as an array" do
-        expect(gateway.fetch_queue("assessments")).to eq(%w[0000-0000-0000-0000-0000])
-      end
-    end
-
-    context "when can store complex data of many queues" do
-      let(:queues) do
-        { assessments: %w[5555-0000-0000-0000-0000 5555-0000-0000-0000-0001],
-          opt_outs: %w[9999-0000-0000-0000-5444 9999-0000-0000-0000-4444] }
-      end
-
-      before do
-        gateway.redis.flushall
-        gateway.redis.set("queues", queues.to_json)
-      end
-
-      it "can fetch a single assessment id as an array" do
-        expect(gateway.fetch_queue("queues", "assessments")).to eq(%w[5555-0000-0000-0000-0000 5555-0000-0000-0000-0001])
-      end
-    end
+  let(:redis) do
+    redis = Redis.new(db: 12)
+    redis.flushdb
+    redis
   end
 
-  describe ".update_queue" do
-    context "when can store complex data of many queues" do
-      let(:queues) do
-        { assessments: %w[5555-0000-0000-0000-0000 5555-0000-0000-0000-0001],
-          opt_outs: %w[9999-0000-0000-0000-5444 9999-0000-0000-0000-4444] }
-      end
+  let(:gateway) do
+    described_class.new redis_client: redis
+  end
 
+  let(:ids) do
+    %w[9999-0000-0000-0000-5444 9999-0000-0000-0000-4444]
+  end
+
+  after do
+    redis.flushdb
+  end
+
+  context "when processing a queue of IDs" do
+    it "can consume the IDs back out of the queue when pushed on in one push" do
+      gateway.push_to_queue "assessments", ids
+      expect(gateway.consume_queue("assessments")).to eq ids
+    end
+
+    it "can consume the IDs back out of the queue when pushed onto the queue one by one" do
+      ids.each { |id| gateway.push_to_queue "assessments", id }
+      expect(gateway.consume_queue("assessments")).to eq ids
+    end
+
+    it "leaves an empty queue once a relatively small queue has been consumed" do
+      gateway.push_to_queue "assessments", ids
+      gateway.consume_queue("assessments")
+      expect(gateway.consume_queue("assessments")).to eq []
+    end
+
+    context "when queue is populated with more IDs than the default consume count of 50" do
       before do
-        gateway.redis.flushall
-        gateway.redis.set("queues", queues.to_json)
+        gateway.push_to_queue("assessments", (1..75).collect { |_| SecureRandom.uuid })
       end
 
-      it "updates the queue values" do
-        expect(gateway.fetch_queue("queues", "assessments")).to eq(%w[5555-0000-0000-0000-0000 5555-0000-0000-0000-0001])
-        gateway.remove_from_queue(
-          assessment_id: "5555-0000-0000-0000-0000",
-          queue: "queues",
-          child_queue: "assessments",
-        )
-
-        expect(gateway.fetch_queue("queues", "assessments")).to eq(%w[5555-0000-0000-0000-0001])
+      it "consumes the default consume count of 50, leaving the expected remainder on the queue" do
+        consumed = gateway.consume_queue("assessments").length
+        remainder = redis.llen("assessments").to_i
+        expect([consumed, remainder]).to eq [50, 25]
       end
     end
   end

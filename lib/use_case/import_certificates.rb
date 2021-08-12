@@ -7,16 +7,11 @@ module UseCase
     end
 
     def execute
-      assessment_ids = @redis_gateway.fetch_queue("queues", "assessments")
+      assessment_ids = @redis_gateway.consume_queue "assessments"
       # TODO: Decide where we are getting the schema from , either a new end point or add it to the queue?
 
       assessment_ids.each do |assessment_id|
         import_xml_certificate_use_case.execute(assessment_id)
-        @redis_gateway.remove_from_queue(
-          assessment_id: assessment_id,
-          queue: "queues",
-          child_queue: "assessments",
-        )
       end
     end
 

@@ -15,10 +15,10 @@ describe UseCase::OptOutCertificate do
 
   before do
     allow(database_gateway).to receive(:add_attribute_value).and_return(true)
-    allow(redis_gateway).to receive(:fetch_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
+    allow(redis_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
   end
 
-  context "When marking existing certs as opted out" do
+  context "when marking existing certs as opted out" do
     before do
       allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ optOut: true })
     end
@@ -28,7 +28,7 @@ describe UseCase::OptOutCertificate do
     end
   end
 
-  context "When marking existing certs as opted in" do
+  context "when marking existing certs as opted in" do
     before do
       allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ optOut: false })
       allow(database_gateway).to receive(:delete_attribute_value)
