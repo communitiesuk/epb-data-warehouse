@@ -19,10 +19,10 @@ module Gateway
     end
 
     def add_attribute_value(
-      asessement_id,
-      attribute_name,
-      attribute_value,
-      parent_name = nil
+      assessment_id:,
+      attribute_name:,
+      attribute_value:,
+      parent_name: nil
     )
       unless attribute_value.to_s.empty?
         unless attribute_name.to_s == RRN
@@ -30,7 +30,7 @@ module Gateway
             ActiveRecord::Base.transaction do
               attribute_id = add_attribute(attribute_name, parent_name)
               insert_attribute_value(
-                asessement_id,
+                assessment_id,
                 attribute_id,
                 attribute_value,
               )
@@ -96,6 +96,30 @@ module Gateway
           assessment_id,
           ActiveRecord::Type::String.new,
         ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
+
+    def delete_attribute_value(attribute_name:, assessment_id:)
+      sql = <<-SQL
+             DELETE FROM assessment_attribute_values
+              USING assessment_attributes
+              WHERE  assessment_attribute_values.attribute_id = assessment_attributes.attribute_Id
+              AND assessment_id = $1 AND attribute_name = $2
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_name",
+          attribute_name,
+          ActiveRecord::Type::String.new,
+          ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
@@ -216,7 +240,7 @@ module Gateway
       ]
     end
 
-    def update_assessment_attribute(assessment_id, attribute, value)
+    def update_assessment_attribute(assessment_id:, attribute:, value:)
       sql = <<-SQL
            UPDATE assessment_attribute_values aav
             SET attribute_value  = $1

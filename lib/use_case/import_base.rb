@@ -19,10 +19,10 @@ class UseCase::ImportBase
 
   def save_attribute_data(attribute)
     @assessment_attribute_gateway.add_attribute_value(
-      attribute[:assessment_id],
-      attribute[:attribute],
-      attribute[:value],
-      attribute[:parent_name],
+      assessment_id: attribute[:assessment_id],
+      attribute_name: attribute[:attribute],
+      attribute_value: attribute[:value],
+      parent_name: attribute[:parent_name],
     )
   end
 end

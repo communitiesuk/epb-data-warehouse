@@ -33,7 +33,7 @@ describe Gateway::AssessmentAttributesGateway do
   end
 
   it "inserts the attribute value into the database" do
-    gateway.add_attribute_value("0000-0000-0000-0000-0001", "a", "b")
+    gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "a", attribute_value: "b")
     expect(attribute_values.rows.length).to eq(1)
     expect(attribute_values.first["assessment_id"]).to eq(
       "0000-0000-0000-0000-0001",
@@ -68,29 +68,29 @@ describe Gateway::AssessmentAttributesGateway do
   context "when we insert many attributes for one assessment" do
     before do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "construction_age_band",
-        "England and Wales: 2007-2011",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "construction_age_band",
+        attribute_value: "England and Wales: 2007-2011",
       )
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "glazed_type",
-        "test",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "glazed_type",
+        attribute_value: "test",
       )
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "current_energy_efficiency",
-        "50",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "current_energy_efficiency",
+        attribute_value: "50",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "heating_cost_current",
-        "365.98",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "heating_cost_current",
+        attribute_value: "365.98",
       )
     end
 
-    let(:assessement_attribute_values) do
+    let(:assessment_attribute_values) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT * FROM assessment_attribute_values WHERE assessment_id= '0000-0000-0000-0000-0001'
         ORDER BY attribute_id",
@@ -98,18 +98,18 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "returns a row for every attributes" do
-      expect(assessement_attribute_values.rows.length).to eq(4)
+      expect(assessment_attribute_values.rows.length).to eq(4)
     end
 
     it "row 3 will have a value in the integer column for the current_energy_efficiency" do
-      expect(assessement_attribute_values[2]["attribute_value_int"]).to eq(50)
+      expect(assessment_attribute_values[2]["attribute_value_int"]).to eq(50)
     end
 
     it "row 4 will have a value in the float column for the heating_cost_current" do
-      expect(assessement_attribute_values[3]["attribute_value_int"]).to eq(
+      expect(assessment_attribute_values[3]["attribute_value_int"]).to eq(
         365,
       )
-      expect(assessement_attribute_values[3]["attribute_value_float"]).to eq(
+      expect(assessment_attribute_values[3]["attribute_value_float"]).to eq(
         365.98,
       )
     end
@@ -124,14 +124,14 @@ describe Gateway::AssessmentAttributesGateway do
   context "when we insert the same attribute for many assessments" do
     before do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "glazed_type",
-        "another test",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "glazed_type",
+        attribute_value: "another test",
       )
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0002",
-        "glazed_type",
-        "test",
+        assessment_id: "0000-0000-0000-0000-0002",
+        attribute_name: "glazed_type",
+        attribute_value: "test",
       )
     end
 
@@ -147,66 +147,66 @@ describe Gateway::AssessmentAttributesGateway do
   context "when we add multiple attributes for 3 assessments" do
     before do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "construction_age_band",
-        "England and Wales: 2007-2011",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "construction_age_band",
+        attribute_value: "England and Wales: 2007-2011",
       )
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "glazed_type",
-        "test 1",
-      )
-
-      gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "heating_cost_current",
-        "10.98",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "glazed_type",
+        attribute_value: "test 1",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0002",
-        "construction_age_band",
-        "England: 1865",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "heating_cost_current",
+        attribute_value: "10.98",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0002",
-        "current_energy_efficiency",
-        "40",
+        assessment_id: "0000-0000-0000-0000-0002",
+        attribute_name: "construction_age_band",
+        attribute_value: "England: 1865",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0002",
-        "heating_cost_current",
-        "12.55",
+        assessment_id: "0000-0000-0000-0000-0002",
+        attribute_name: "current_energy_efficiency",
+        attribute_value: "40",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0003",
-        "construction_age_band",
-        "England and Wales: 1971-1987",
-      )
-      gateway.add_attribute_value(
-        "0000-0000-0000-0000-0003",
-        "glazed_type",
-        "test 3",
+        assessment_id: "0000-0000-0000-0000-0002",
+        attribute_name: "heating_cost_current",
+        attribute_value: "12.55",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0003",
-        "heating_cost_current",
-        "9.45",
+        assessment_id: "0000-0000-0000-0000-0003",
+        attribute_name: "construction_age_band",
+        attribute_value: "England and Wales: 1971-1987",
+      )
+      gateway.add_attribute_value(
+        assessment_id: "0000-0000-0000-0000-0003",
+        attribute_name: "glazed_type",
+        attribute_value: "test 3",
+      )
+
+      gateway.add_attribute_value(
+        assessment_id: "0000-0000-0000-0000-0003",
+        attribute_name: "heating_cost_current",
+        attribute_value: "9.45",
       )
     end
 
-    let(:assessement_attribute_values) do
+    let(:assessment_attribute_values) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT * FROM assessment_attribute_values",
       )
     end
 
     it "returns 4 rows for the 2nd assessments" do
-      expect(assessement_attribute_values.rows.count).to eq(9)
+      expect(assessment_attribute_values.rows.count).to eq(9)
     end
 
     context "when fetching the pivoted data" do
@@ -311,7 +311,7 @@ describe Gateway::AssessmentAttributesGateway do
   end
 
   context "when we pass an enum value as a hash to the assessment attributes" do
-    let(:assessement_attribute_values) do
+    let(:assessment_attribute_values) do
       ActiveRecord::Base
         .connection
         .exec_query(
@@ -324,43 +324,43 @@ describe Gateway::AssessmentAttributesGateway do
 
     it "returns the description and int value in the assessment_attribute_values table w" do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "transaction_type",
-        { "description": "marketed sale", "value": "1" },
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "transaction_type",
+        attribute_value: { "description": "marketed sale", "value": "1" },
       )
-      expect(assessement_attribute_values["attribute_value"]).to eq(
+      expect(assessment_attribute_values["attribute_value"]).to eq(
         "marketed sale",
       )
-      expect(assessement_attribute_values["attribute_value_int"]).to eq(1)
+      expect(assessment_attribute_values["attribute_value_int"]).to eq(1)
     end
 
     it "returns the description and int value in the assessment_attribute_values table" do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "transaction_type",
-        { "description": "marketed sale", "value": "10.0" },
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "transaction_type",
+        attribute_value: { "description": "marketed sale", "value": "10.0" },
       )
-      expect(assessement_attribute_values["attribute_value"]).to eq(
+      expect(assessment_attribute_values["attribute_value"]).to eq(
         "marketed sale",
       )
-      expect(assessement_attribute_values["attribute_value_int"]).to eq(10)
+      expect(assessment_attribute_values["attribute_value_int"]).to eq(10)
     end
   end
 
   context "when updating an existing certificiate as opt-out" do
     before do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "opt-out",
-        "false",
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "opt-out",
+        attribute_value: "false",
       )
 
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0002",
-        "opt-out",
-        "false",
+        assessment_id: "0000-0000-0000-0000-0002",
+        attribute_name: "opt-out",
+        attribute_value: "false",
       )
-      gateway.update_assessment_attribute("0000-0000-0000-0000-0001", "opt-out", "true")
+      gateway.update_assessment_attribute(assessment_id: "0000-0000-0000-0000-0001", attribute: "opt-out", value: "true")
     end
 
     it "updates only the relevant certificate to be true" do
@@ -376,11 +376,53 @@ describe Gateway::AssessmentAttributesGateway do
 
     it "returns true when we add certificate data" do
       gateway.add_attribute_value(
-        "0000-0000-0000-0000-0001",
-        "transaction_type",
-        { "description": "marketed sale", "value": "10.0" },
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "transaction_type",
+        attribute_value: { "description": "marketed sale", "value": "10.0" },
       )
       expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to eq(true)
+    end
+
+    context "when deleting an attribute value by name and assessment" do
+      before do
+        gateway.add_attribute_value(
+          assessment_id: "0000-0000-0000-0000-0001",
+          attribute_name: "opt-out",
+          attribute_value: "true",
+        )
+
+        gateway.add_attribute_value(
+          assessment_id: "0000-0000-0000-0000-0001",
+          attribute_name: "test",
+          attribute_value: "test",
+          )
+
+        gateway.delete_attribute_value(attribute_name: "opt-out", assessment_id: "0000-0000-0000-0000-0001" )
+      end
+
+
+      it 'has no records for the opt out attribute' do
+        sql = <<-SQL
+            SELECT COUNT(*) cnt 
+            FROM assessment_attribute_values aav
+            INNER JOIN assessment_attributes aa USING(attribute_id) 
+            WHERE aa.attribute_name = 'opt-out'
+        SQL
+
+        expect(ActiveRecord::Base.connection.exec_query(sql, "SQL").first["cnt"]).to eq(0)
+      end
+
+
+      it 'still has a record for the test attribute' do
+        sql = <<-SQL
+            SELECT COUNT(*) cnt 
+            FROM assessment_attribute_values aav
+            INNER JOIN assessment_attributes aa USING(attribute_id) 
+            WHERE aa.attribute_name = 'test'
+        SQL
+
+        expect(ActiveRecord::Base.connection.exec_query(sql, "SQL").first["cnt"]).to eq(1)
+      end
     end
   end
 end

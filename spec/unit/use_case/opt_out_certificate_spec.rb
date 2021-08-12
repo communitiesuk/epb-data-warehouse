@@ -1,16 +1,41 @@
 describe UseCase::OptOutCertificate do
-  subject(:use_case) { described_class.new(database_gateway) }
+  subject(:use_case) { described_class.new(database_gateway, redis_gateway, certificate_gateway) }
 
   let(:database_gateway) do
-    instance_double("Gateway::AssessmentAttributesGateway")
+    instance_double(Gateway::AssessmentAttributesGateway)
   end
 
-  it "loads the use case" do
-    expect { use_case }.not_to raise_error
+  let(:redis_gateway) do
+    instance_double(Gateway::RedisGateway)
   end
 
-  it "updates the certificate and returns true" do
-    allow(database_gateway).to receive(:update_assessment_attribute).and_return(true)
-    expect(use_case.execute("0000-0000-0000-0000-0000")).to eq(true)
+  let(:certificate_gateway) do
+    instance_double(Gateway::CertificateGateway)
+  end
+
+  before do
+    allow(database_gateway).to receive(:add_attribute_value).and_return(true)
+    allow(redis_gateway).to receive(:fetch_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
+  end
+
+  context "When marking existing certs as opted out" do
+    before do
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ optOut: true })
+    end
+
+    it "executes the update use case without error" do
+      expect { use_case.execute }.not_to raise_error
+    end
+  end
+
+  context "When marking existing certs as opted in" do
+    before do
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ optOut: false })
+      allow(database_gateway).to receive(:delete_attribute_value)
+    end
+
+    it "executes the update use case by deleting a record without error" do
+      expect { use_case.execute }.not_to raise_error
+    end
   end
 end
