@@ -10,7 +10,7 @@ module UseCase
 
     def execute
       assessment_ids = @redis_gateway.fetch_queue("opt-out")
-      assessment_ids.each do | assessment_id|
+      assessment_ids.each do |assessment_id|
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
         if meta_data[:optOut]
           @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: OPT_OUT, attribute_value: true)

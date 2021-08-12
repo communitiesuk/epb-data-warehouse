@@ -395,13 +395,12 @@ describe Gateway::AssessmentAttributesGateway do
           assessment_id: "0000-0000-0000-0000-0001",
           attribute_name: "test",
           attribute_value: "test",
-          )
+        )
 
-        gateway.delete_attribute_value(attribute_name: "opt-out", assessment_id: "0000-0000-0000-0000-0001" )
+        gateway.delete_attribute_value(attribute_name: "opt-out", assessment_id: "0000-0000-0000-0000-0001")
       end
 
-
-      it 'has no records for the opt out attribute' do
+      it "has no records for the opt out attribute" do
         sql = <<-SQL
             SELECT COUNT(*) cnt 
             FROM assessment_attribute_values aav
@@ -412,8 +411,7 @@ describe Gateway::AssessmentAttributesGateway do
         expect(ActiveRecord::Base.connection.exec_query(sql, "SQL").first["cnt"]).to eq(0)
       end
 
-
-      it 'still has a record for the test attribute' do
+      it "still has a record for the test attribute" do
         sql = <<-SQL
             SELECT COUNT(*) cnt 
             FROM assessment_attribute_values aav
