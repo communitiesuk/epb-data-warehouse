@@ -9,10 +9,10 @@ module Gateway
       @attribute_columns_array = []
     end
 
-    def add_attribute(attribute_name, parent_name = nil)
-      attribute_data = fetch_attribute_id(attribute_name, parent_name)
+    def add_attribute(attribute_name:, parent_name: nil)
+      attribute_data = fetch_attribute_id(attribute_name:attribute_name , parent_name:parent_name)
       if attribute_data.nil?
-        insert_attribute(attribute_name, parent_name)
+        insert_attribute(attribute_name: attribute_name, parent_name: parent_name)
       else
         attribute_data["attribute_id"]
       end
@@ -28,11 +28,11 @@ module Gateway
         unless attribute_name.to_s == RRN
           begin
             ActiveRecord::Base.transaction do
-              attribute_id = add_attribute(attribute_name, parent_name)
+              attribute_id = add_attribute(attribute_name:attribute_name, parent_name: parent_name)
               insert_attribute_value(
-                assessment_id,
-                attribute_id,
-                attribute_value,
+                assessment_id: assessment_id,
+                attribute_id: attribute_id,
+                attribute_value: attribute_value,
               )
             end
           rescue ActiveRecord::RecordNotUnique
@@ -45,7 +45,7 @@ module Gateway
       end
     end
 
-    def fetch_attribute_by_assessment(assessment_id, attribute)
+    def fetch_attribute_by_assessment(assessment_id:, attribute:)
       sql = <<-SQL
            SELECT aav.attribute_value
             FROM assessment_attribute_values aav
@@ -141,8 +141,8 @@ module Gateway
     end
 
     def fetch_assessment_attributes(
-      attribute_column_array,
-      where_clause_hash = ""
+      attribute_column_array:,
+      where_clause_hash: ""
     )
       # SELECT assessment_id, COALESCE(address1, '') as address1, COALESCE(address2, '') as address2, COALESCE(address3, '') as address3, , COALESCE(building_reference_number, '') as building_reference_number
       # FROM crosstab($$
@@ -198,7 +198,7 @@ module Gateway
       SQL
     end
 
-    def fetch_sum(attribute_name, value_type = "int")
+    def fetch_sum(attribute_name:, value_type: "int")
       sql = <<-SQL
         SELECT SUM(eav.attribute_value_#{value_type}) as #{attribute_name}
         FROM assessment_attributes a
@@ -219,7 +219,7 @@ module Gateway
       ]
     end
 
-    def fetch_average(attribute_name, value_type = "int")
+    def fetch_average(attribute_name:, value_type: "int")
       sql = <<-SQL
         SELECT   to_char( AVG(attribute_value_#{value_type}), 'FM999999999.00') as #{attribute_name}
         FROM assessment_attributes a
@@ -318,7 +318,7 @@ module Gateway
       column_array
     end
 
-    def fetch_attribute_id(attribute_name, parent_name)
+    def fetch_attribute_id(attribute_name:, parent_name:)
       bindings = attribute_name_binding(attribute_name)
 
       if parent_name.nil? || parent_name.empty?
@@ -353,7 +353,7 @@ module Gateway
       )]
     end
 
-    def insert_attribute(attribute_name, parent_name)
+    def insert_attribute(attribute_name:, parent_name:)
       bindings = attribute_name_binding(attribute_name)
 
       bindings <<
@@ -378,7 +378,7 @@ module Gateway
       )
     end
 
-    def insert_attribute_value(assessment_id, attribute_id, attribute_value)
+    def insert_attribute_value(assessment_id:, attribute_id:, attribute_value:)
       sql = <<-SQL
               INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float)
               VALUES($1, $2, $3, $4, $5)

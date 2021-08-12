@@ -13,8 +13,8 @@ describe Gateway::AssessmentAttributesGateway do
 
   before do
     ActiveRecord::Base.connection.reset_pk_sequence!("assessment_attributes")
-    gateway.add_attribute("test")
-    gateway.add_attribute("test1")
+    gateway.add_attribute(attribute_name: "test")
+    gateway.add_attribute(attribute_name: "test1")
   end
 
   it "returns a row from the database for each inserted value" do
@@ -24,12 +24,12 @@ describe Gateway::AssessmentAttributesGateway do
   end
 
   it "does not return an additional row where a duplication has been entered" do
-    expect(gateway.add_attribute("test")).to eq(1)
+    expect(gateway.add_attribute(attribute_name: "test")).to eq(1)
     expect(attributes.rows.length).to eq(2)
   end
 
   it "can access the id of the insert regardless of whether it is created or not" do
-    expect(gateway.add_attribute("new one")).to eq(3)
+    expect(gateway.add_attribute(attribute_name: "new one")).to eq(3)
   end
 
   it "inserts the attribute value into the database" do
@@ -46,8 +46,8 @@ describe Gateway::AssessmentAttributesGateway do
 
   context "when inserting a parent attribute name" do
     before do
-      gateway.add_attribute("attr_parent")
-      gateway.add_attribute("attr_parent", "my_parent")
+      gateway.add_attribute(attribute_name: "attr_parent")
+      gateway.add_attribute(attribute_name: "attr_parent", parent_name: "my_parent")
     end
 
     let!(:attributes) do
@@ -116,7 +116,7 @@ describe Gateway::AssessmentAttributesGateway do
 
     context "when extracting a single atttribute value for an assessment" do
       it "returns a row for every attributes" do
-        expect(gateway.fetch_attribute_by_assessment("0000-0000-0000-0000-0001", "construction_age_band")).to eq("England and Wales: 2007-2011")
+        expect(gateway.fetch_attribute_by_assessment( assessment_id: "0000-0000-0000-0000-0001", attribute: "construction_age_band")).to eq("England and Wales: 2007-2011")
       end
     end
   end
@@ -212,7 +212,7 @@ describe Gateway::AssessmentAttributesGateway do
     context "when fetching the pivoted data" do
       let(:pivoted_data) do
         gateway.fetch_assessment_attributes(
-          %w[construction_age_band glazed_type],
+          attribute_column_array:  %w[construction_age_band glazed_type],
         )
       end
 
@@ -245,20 +245,20 @@ describe Gateway::AssessmentAttributesGateway do
       end
 
       it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' when value is an integer" do
-        expect(gateway.fetch_sum("heating_cost_current")).to eq(
+        expect(gateway.fetch_sum(attribute_name: "heating_cost_current")).to eq(
           31,
         )
       end
 
       it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' when value is a float" do
-        expect(gateway.fetch_sum("heating_cost_current", "float").round(2)).to eq(
+        expect(gateway.fetch_sum(attribute_name: "heating_cost_current",value_type:"float").round(2)).to eq(
           32.98,
         )
       end
 
       it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' " do
         expect(
-          gateway.fetch_average("heating_cost_current", "float").to_f,
+          gateway.fetch_average(attribute_name: "heating_cost_current",value_type:"float").to_f,
         ).to eq(10.99)
       end
     end
@@ -266,8 +266,8 @@ describe Gateway::AssessmentAttributesGateway do
     context "when fetching the pivoted data based on the value of an attribute" do
       let(:pivoted_data) do
         gateway.fetch_assessment_attributes(
-          %w[construction_age_band glazed_type],
-          { heating_cost_current: "9.45" },
+          attribute_column_array: %w[construction_age_band glazed_type],
+          where_clause_hash: { heating_cost_current: "9.45" },
         )
       end
 
@@ -364,8 +364,8 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "updates only the relevant certificate to be true" do
-      expect(gateway.fetch_attribute_by_assessment("0000-0000-0000-0000-0001", "opt-out")).to eq("true")
-      expect(gateway.fetch_attribute_by_assessment("0000-0000-0000-0000-0002", "opt-out")).to eq("false")
+      expect(gateway.fetch_attribute_by_assessment(assessment_id:"0000-0000-0000-0000-0001", attribute: "opt-out")).to eq("true")
+      expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0002", attribute: "opt-out")).to eq("false")
     end
   end
 
