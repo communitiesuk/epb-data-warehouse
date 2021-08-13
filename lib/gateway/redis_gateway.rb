@@ -6,8 +6,12 @@ module Gateway
       @redis = redis_client || Redis.new
     end
 
-    def consume_queue(queue_name)
-      redis.rpop(queue_name)
+    def consume_queue(queue_name, count: 50)
+      futures = []
+      redis.pipelined do
+        count.to_i.times { futures << redis.rpop(queue_name) }
+      end
+      futures.map(&:value).compact
     end
 
     def push_to_queue(queue_name, data)
