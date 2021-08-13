@@ -1,7 +1,7 @@
 describe Gateway::RegisterApiGateway do
-  include RSpecUnitMixin
+  subject { described_class.new(api_client) }
 
-  subject { described_class.new(get_api_client) }
+  let(:api_client) { Gateway::ApiClient.new }
 
   context "when getting an assessment using the api endpoint" do
     let(:response) { subject.fetch("0000-0000-0000-0000-0666") }
