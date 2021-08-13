@@ -1,5 +1,0 @@
-my_first_job:
-  cron: "0 9-17 * * 1-5"
-  class: "Worker::TestWorker"
-  name: "Little worker -- every hour Mon-Fri"
-  queue: default
