@@ -7,7 +7,7 @@ describe UseCase::ImportCertificates do
   end
 
   let(:certificate_gateway) do
-    instance_double(Gateway::CertificateGateway)
+    instance_double(Gateway::RegisterApiGateway)
   end
 
   let(:redis_gateway) do
@@ -28,7 +28,7 @@ describe UseCase::ImportCertificates do
     allow(Gateway::AssessmentAttributesGateway).to receive(:new).and_return(database_gateway)
     allow(database_gateway).to receive(:add_attribute_value).and_return(1)
 
-    allow(Gateway::CertificateGateway).to receive(:new).and_return(certificate_gateway)
+    allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
 
     allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)

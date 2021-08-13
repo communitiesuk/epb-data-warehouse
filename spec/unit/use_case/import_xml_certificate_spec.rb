@@ -4,7 +4,7 @@ describe UseCase::ImportXmlCertificate do
   end
 
   let(:certificate_gateway) do
-    instance_double(Gateway::CertificateGateway)
+    instance_double(Gateway::RegisterApiGateway)
   end
 
   let!(:assessment_id) do

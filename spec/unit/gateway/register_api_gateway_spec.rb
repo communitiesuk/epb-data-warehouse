@@ -1,7 +1,7 @@
-describe Gateway::CertificateGateway do
-  subject { described_class.new(api_client) }
+describe Gateway::RegisterApiGateway do
+  include RSpecUnitMixin
 
-  let(:api_client) { Gateway::ApiClient.new }
+  subject { described_class.new(get_api_client) }
 
   context "when getting an assessment using the api endpoint" do
     let(:response) { subject.fetch("0000-0000-0000-0000-0666") }

@@ -10,7 +10,7 @@ describe UseCase::OptOutCertificate do
   end
 
   let(:certificate_gateway) do
-    instance_double(Gateway::CertificateGateway)
+    instance_double(Gateway::RegisterApiGateway)
   end
 
   before do

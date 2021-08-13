@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Gateway
-  class CertificateGateway
+  class RegisterApiGateway
     class AssessmentNotFound < StandardError
     end
 
