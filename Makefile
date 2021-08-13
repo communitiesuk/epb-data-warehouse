@@ -1,7 +1,17 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: help format test run setup-db seed-test-data
+.PHONY: help format test run setup-db seed-test-data generate-manifest deploy-app
+
+PAAS_API ?= api.london.cloud.service.gov.uk
+PAAS_ORG ?= mhclg-energy-performance
+PAAS_SPACE ?= ${STAGE}
+
+define check_space
+	@echo "Checking PaaS space is active..."
+	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
+	@[ $$(cf target | grep -i 'space' | cut -d':' -f2) = "${PAAS_SPACE}" ] || (echo "${PAAS_SPACE} is not currently active cf space" && exit 1)
+endef
 
 help: ## Print help documentation
 	@echo -e "Makefile Help for epb-data-warehouse"
@@ -25,3 +35,22 @@ test:
 
 run:
 	@bundle exec ruby app.rb
+
+generate-manifest: ## Generate manifest file for PaaS
+	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
+	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
+	@scripts/generate-manifest.sh ${DEPLOY_APPNAME} ${PAAS_SPACE} > manifest.yml
+
+
+deploy-app: ## Deploys the app to PaaS
+	$(call check_space)
+	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
+
+	@$(MAKE) generate-manifest
+
+	cf apply-manifest -f manifest.yml
+
+	cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
+	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
+
+	cf push "${DEPLOY_APPNAME}" --strategy rolling
