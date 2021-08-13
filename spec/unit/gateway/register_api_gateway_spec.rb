@@ -31,14 +31,13 @@ describe Gateway::RegisterApiGateway do
     let(:sample) do
       {
         "data": {
-          "assessmentId": "0000-0000-0000-0000-0003",
           "typeOfAssessment": "RdSAP",
           "optOut": false,
           "createdAt": "2021-08-09T15:30:13.724Z",
           "cancelledAt": nil,
           "notForIssueAt": nil,
           "schemaType": "RdSAP-Schema-20.0.0",
-          "addressId": "UPRN-000000000001",
+          "assessmentAddressId": "UPRN-000000000001",
         },
         "meta": {},
       }.to_json
@@ -54,12 +53,12 @@ describe Gateway::RegisterApiGateway do
         .to_return(status: 200, body: sample)
     end
 
-    it "make an http GET to the expected end point" do
+    it "makes an http GET to the expected end point" do
       expect { meta_data }.not_to raise_error
     end
 
-    it "checks the rteurned value is in the expected format" do
-      expect(meta_data).to match a_hash_including(assessmentId: "0000-0000-0000-0000-0003")
+    it "checks the returned value is in the expected format" do
+      expect(meta_data).to match a_hash_including(assessmentAddressId: "UPRN-000000000001")
     end
   end
 end
