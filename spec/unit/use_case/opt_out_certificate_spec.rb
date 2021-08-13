@@ -38,7 +38,6 @@ describe UseCase::OptOutCertificate do
       allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ optOut: true })
       allow(database_gateway).to receive(:delete_attribute_value)
       use_case.execute
-
     end
 
     it "performs a save for each of the 3 certificates " do
@@ -48,6 +47,5 @@ describe UseCase::OptOutCertificate do
     it "executes the update use case by deleting one record " do
       expect(database_gateway).to have_received(:delete_attribute_value).exactly(1).times
     end
-
   end
 end
