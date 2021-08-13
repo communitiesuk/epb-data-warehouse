@@ -1,7 +1,10 @@
-require "pg" # postgresql
-require "erb"
-require "yaml"
 require "active_record"
-require "sinatra/activerecord"
+require "active_support"
+require "zeitwerk"
 
-pp ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_look_ups")
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/lib")
+loader.setup
+
+# DATABASE_URL is defined by default on GOV PaaS if there is a bound PostgreSQL database
+ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])

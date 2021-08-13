@@ -6,12 +6,12 @@ module Gateway
       @redis = redis_client || Redis.new
     end
 
-    def consume_queue(queue_name, count: 50)
-      [*redis.rpop(queue_name, count)]
+    def consume_queue(queue_name)
+      redis.rpop(queue_name)
     end
 
     def push_to_queue(queue_name, data)
-      redis.lpush queue_name, data
+      redis.lpush(queue_name, data)
     end
 
   private

@@ -1,51 +1,34 @@
-ENV["RACK_ENV"] = "test"
-ENV["STAGE"] = "test"
+# frozen_string_literal: true
 
-require "rake"
-require "rspec"
-require "database_cleaner"
-require "sinatra/activerecord"
-require "zeitwerk"
-require "webmock"
-require "webmock/rspec"
-require "samples"
 require "epb_view_models"
-require "nokogiri"
 require "epb-auth-tools"
-require "redis"
+require "active_record"
+require "active_support"
+require "database_cleaner/active_record"
+require "nokogiri"
+require "mock_redis"
+require "webmock/rspec"
 
-AUTH_URL = "http://test-auth-server.gov.uk".freeze
+require_relative "samples"
+require_relative "test_loader"
+
+# See Gateway::ApiClient
 ENV["EPB_AUTH_CLIENT_ID"] = "test.id"
 ENV["EPB_AUTH_CLIENT_SECRET"] = "test.client.secret"
-ENV["EPB_AUTH_SERVER"] = AUTH_URL
+ENV["EPB_AUTH_SERVER"] = "http://test-auth-server.gov.uk"
+ENV["EPB_API_URL"] = "http://test-api.gov.uk"
 ENV["EPB_API_URL"] = "http://test-api.gov.uk"
 
-class TestLoader
-  def self.setup
-    @loader = Zeitwerk::Loader.new
-    @loader.push_dir("#{__dir__}/../lib/")
-    @loader.push_dir("#{__dir__}/../spec/test_doubles/")
-    @loader.setup
-  end
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: %w[
+    find-energy-certificate.local.gov.uk
+    getting-new-energy-certificate.local.gov.uk
+  ],
+)
 
-  def self.override(path)
-    load path
-  end
-end
-
-module RSpecUnitMixin
-  include Helper
-  def get_api_client
-    @get_api_client ||=
-      Auth::HttpClient.new ENV["EPB_AUTH_CLIENT_ID"],
-                           ENV["EPB_AUTH_CLIENT_SECRET"],
-                           ENV["EPB_AUTH_SERVER"],
-                           ENV["EPB_API_URL"],
-                           OAuth2::Client
-  end
-end
-
-TestLoader.setup
+ENV["DATABASE_URL"] = "postgresql://postgres@localhost:5432/epb_eav_test"
+ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -86,25 +69,10 @@ RSpec.configure do |config|
     config.default_formatter = "doc"
   end
 
-  WebMock.disable_net_connect!(
-    allow_localhost: true,
-    allow: %w[
-      find-energy-certificate.local.gov.uk
-      getting-new-energy-certificate.local.gov.uk
-    ],
-  )
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
+  config.before do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
   end
 
-  config.before { DatabaseCleaner.strategy = :transaction }
-
-  config.before { DatabaseCleaner.start }
-
   config.after { DatabaseCleaner.clean }
-
-  config.before(:all) { DatabaseCleaner.start }
-
-  config.after(:all) { DatabaseCleaner.clean }
 end

@@ -402,9 +402,9 @@ describe Gateway::AssessmentAttributesGateway do
 
       it "has no records for the opt out attribute" do
         sql = <<-SQL
-            SELECT COUNT(*) cnt 
+            SELECT COUNT(*) cnt#{' '}
             FROM assessment_attribute_values aav
-            INNER JOIN assessment_attributes aa USING(attribute_id) 
+            INNER JOIN assessment_attributes aa USING(attribute_id)#{' '}
             WHERE aa.attribute_name = 'opt-out'
         SQL
 
@@ -413,9 +413,9 @@ describe Gateway::AssessmentAttributesGateway do
 
       it "still has a record for the test attribute" do
         sql = <<-SQL
-            SELECT COUNT(*) cnt 
+            SELECT COUNT(*) cnt#{' '}
             FROM assessment_attribute_values aav
-            INNER JOIN assessment_attributes aa USING(attribute_id) 
+            INNER JOIN assessment_attributes aa USING(attribute_id)#{' '}
             WHERE aa.attribute_name = 'test'
         SQL
 

@@ -1,17 +1,11 @@
 require:
-  - rubocop-rspec
   - rubocop-performance
 
 inherit_gem:
   rubocop-govuk:
     - config/default.yml
+    - config/rspec.yml
 
 inherit_mode:
   merge:
     - Exclude
-
-RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false

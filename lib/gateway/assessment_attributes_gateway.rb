@@ -2,8 +2,7 @@ module Gateway
   class AssessmentAttributesGateway
     # TODO: Add rrn constant and set to "asessement_id"
     RRN = "assessment_id".freeze
-    attr_accessor :attribute_columns_array
-    attr_accessor :bindings
+    attr_accessor :attribute_columns_array, :bindings
 
     def initialize
       @attribute_columns_array = []
@@ -24,24 +23,22 @@ module Gateway
       attribute_value:,
       parent_name: nil
     )
-      unless attribute_value.to_s.empty?
-        unless attribute_name.to_s == RRN
-          begin
-            ActiveRecord::Base.transaction do
-              attribute_id = add_attribute(attribute_name: attribute_name, parent_name: parent_name)
-              insert_attribute_value(
-                assessment_id: assessment_id,
-                attribute_id: attribute_id,
-                attribute_value: attribute_value,
-              )
-            end
-          rescue ActiveRecord::RecordNotUnique
-            raise Boundary::DuplicateAttribute, attribute_name
-          rescue ActiveRecord::NotNullViolation
-            raise Boundary::JsonAttributeSave, attribute_name
+      if !attribute_value.to_s.empty? && attribute_name.to_s != RRN
+        begin
+          ActiveRecord::Base.transaction do
+            attribute_id = add_attribute(attribute_name: attribute_name, parent_name: parent_name)
+            insert_attribute_value(
+              assessment_id: assessment_id,
+              attribute_id: attribute_id,
+              attribute_value: attribute_value,
+            )
           end
-
+        rescue ActiveRecord::RecordNotUnique
+          raise Boundary::DuplicateAttribute, attribute_name
+        rescue ActiveRecord::NotNullViolation
+          raise Boundary::JsonAttributeSave, attribute_name
         end
+
       end
     end
 
@@ -283,7 +280,7 @@ module Gateway
     def virtual_column_types
       new_array = @attribute_columns_array.clone
       new_array = rrn_into_array(new_array)
-      new_array.map! { |name| name + " varchar" }
+      new_array.map! { |name| "#{name} varchar" }
       new_array.join(", ")
     end
 
@@ -303,7 +300,7 @@ module Gateway
     def order_sequence
       order_by_string = "CASE attribute_name "
       @attribute_columns_array.each_with_index do |value, index|
-        order_by_string << " WHEN '#{value}' THEN #{(index + 1)}"
+        order_by_string << " WHEN '#{value}' THEN #{index + 1}"
       end
       order_by_string << +" ELSE #{@attribute_columns_array.count + 1} END"
     end
@@ -384,7 +381,7 @@ module Gateway
               VALUES($1, $2, $3, $4, $5)
       SQL
 
-      if attribute_value.class == Hash
+      if attribute_value.instance_of?(Hash)
         hashed_attribute = attribute_value.clone.symbolize_keys
         attribute_value = hashed_attribute[:description]
         attribute_int = attribute_value_float(hashed_attribute[:value])

@@ -1,6 +1,7 @@
 module UseCase
   class ImportXmlCertificate < UseCase::ImportBase
     def initialize(eav_gateway, certificate_gateway)
+      super()
       @assessment_attribute_gateway = eav_gateway
       @certificate_gateway = certificate_gateway
     end
@@ -8,7 +9,7 @@ module UseCase
     def execute(assessment_id)
       xml = @certificate_gateway.fetch(assessment_id)
       meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
-      additional_data = { created_at: meta_data[:createdAt], address_id: meta_data[:addressId] }
+      # additional_data = { created_at: meta_data[:createdAt], address_id: meta_data[:addressId] }
 
       if @assessment_attribute_gateway.assessment_exists(assessment_id)
         @assessment_attribute_gateway.delete_attributes_by_assessment(assessment_id)

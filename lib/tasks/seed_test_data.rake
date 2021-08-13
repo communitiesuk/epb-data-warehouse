@@ -1,5 +1,4 @@
 desc "Import assessments fixture into to the dev database for testing"
-
 task :seed_test_data do
   json_dir_path = File.join(Dir.pwd, "spec/fixtures/json_export/")
   certificates_gateway = Gateway::JsonCertificates.new(json_dir_path)

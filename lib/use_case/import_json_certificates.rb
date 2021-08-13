@@ -1,8 +1,11 @@
+require "json"
+
 module UseCase
   class ImportJsonCertificates < UseCase::ImportBase
     attr_accessor :file_gateway, :assessment_attribute_gateway
 
     def initialize(file_gateway, assessment_gateway)
+      super()
       @file_gateway = file_gateway
       @assessment_attribute_gateway = assessment_gateway
     end
