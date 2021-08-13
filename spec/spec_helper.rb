@@ -27,7 +27,7 @@ WebMock.disable_net_connect!(
   ],
 )
 
-ENV["DATABASE_URL"] = "postgresql://postgres@localhost:5432/epb_eav_test"
+ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
