@@ -1,8 +1,9 @@
 describe UseCase::CancelCertificate do
-  subject(:use_case) do described_class.new(
-    eav_gateway: database_gateway,
-    redis_gateway: redis_gateway,
-    api_gateway: api_gateway,
+  subject(:use_case) do
+    described_class.new(
+      eav_gateway: database_gateway,
+      redis_gateway: redis_gateway,
+      api_gateway: api_gateway,
     )
   end
 
@@ -28,11 +29,10 @@ describe UseCase::CancelCertificate do
       allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: "2021-08-13T08:12:51.205Z" })
     end
 
-    it 'saves the relevants certificates to database' do
-      expect{ use_case.execute }.not_to raise_error
+    it "saves the relevants certificates to database" do
+      expect { use_case.execute }.not_to raise_error
       expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
     end
-
   end
 
   context "when processing cancellations where there is  a certificate without a cancelled at date" do
@@ -43,10 +43,8 @@ describe UseCase::CancelCertificate do
       use_case.execute
     end
 
-    it 'skips over the certificate whose cancellation date is null' do
+    it "skips over the certificate whose cancellation date is null" do
       expect(database_gateway).to have_received(:add_attribute_value).exactly(2).times
     end
-
   end
-
 end
