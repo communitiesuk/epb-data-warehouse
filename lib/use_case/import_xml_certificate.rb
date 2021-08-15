@@ -9,7 +9,6 @@ module UseCase
     def execute(assessment_id)
       xml = @certificate_gateway.fetch(assessment_id)
       meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
-      # additional_data = { created_at: meta_data[:createdAt], address_id: meta_data[:addressId] }
 
       if @assessment_attribute_gateway.assessment_exists(assessment_id)
         @assessment_attribute_gateway.delete_attributes_by_assessment(assessment_id)
@@ -24,6 +23,8 @@ module UseCase
       certificate = wrapper.to_report
 
       certificate[:schema_type] = meta_data[:schemaType]
+      certificate[:assessment_address_id] = meta_data[:assessmentAddressId]
+      certificate[:created_at] = meta_data[:createdAt]
 
       begin
         save_attributes(assessment_id, certificate)
