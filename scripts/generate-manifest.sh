@@ -13,13 +13,12 @@ cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
-    command: null
+     command: make run
     memory: $MEMORY
     buildpacks:
       - ruby_buildpack
-    health-check-type: http
-    health-check-http-endpoint: /healthcheck
+    health-check-type: process
     services:
-      - mhclg-epb-db-$STAGE
-
+      - mhclg-epb-data-warehouse-db-$STAGE
+      - mhclg-epb-redis-data-warehouse-$STAGE
 EOF

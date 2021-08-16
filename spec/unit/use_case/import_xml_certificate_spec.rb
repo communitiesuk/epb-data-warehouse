@@ -29,5 +29,4 @@ describe UseCase::ImportXmlCertificate do
     expect(transformed_certificate).to be_a(Hash)
     expect(transformed_certificate[:assessment_id]).to eq("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a")
   end
-
 end
