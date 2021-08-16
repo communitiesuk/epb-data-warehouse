@@ -1,5 +1,6 @@
 require "active_record"
 require "active_support"
+require "active_support/core_ext/uri"
 require "zeitwerk"
 
 loader = Zeitwerk::Loader.new
