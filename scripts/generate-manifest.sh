@@ -13,7 +13,7 @@ cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
-     command: make run
+    command: make run
     memory: $MEMORY
     buildpacks:
       - ruby_buildpack
