@@ -348,7 +348,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
   end
 
-  context "when updating an existing certificiate as opt-out" do
+  context "when updating an existing certificate as opt-out" do
     before do
       gateway.add_attribute_value(
         assessment_id: "0000-0000-0000-0000-0001",
