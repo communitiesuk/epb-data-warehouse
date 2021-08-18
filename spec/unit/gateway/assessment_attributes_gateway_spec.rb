@@ -206,7 +206,7 @@ describe Gateway::AssessmentAttributesGateway do
       )
     end
 
-    it "returns 4 rows for the 2nd assessments" do
+    it "returns 9 rows" do
       expect(assessment_attribute_values.rows.count).to eq(9)
     end
 
