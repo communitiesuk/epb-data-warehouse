@@ -26,7 +26,7 @@ setup-db: ## Creates local development and test databases
 	@bundle exec rake db:create DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_development"
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake db:migrate DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_test"
-	@bundle exec rake db:create DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_development"
+	@bundle exec rake db:migrate DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_development"
 
 seed-test-data:
 	@echo ">>>>> Seeding DB with test data"
