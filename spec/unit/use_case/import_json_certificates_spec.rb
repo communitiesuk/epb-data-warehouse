@@ -62,7 +62,7 @@ describe UseCase::ImportJsonCertificates do
         imported_data.select do |item|
           item["attribute_name"] == "type_of_assessment"
         end
-      expect(select.map { |item| item["attribute_value"] }).to match_array(%w[RdSAP CEPC SAP] )
+      expect(select.map { |item| item["attribute_value"] }).to match_array(%w[RdSAP CEPC SAP])
     end
 
     it "the assessment_attribute_values table has CEPC data for asset_rating" do
