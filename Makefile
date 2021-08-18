@@ -23,12 +23,14 @@ format: ## Runs Rubocop with the GOV.UK rules
 setup-db: ## Creates local development and test databases
 	@echo ">>>>> Creating DB"
 	@bundle exec rake db:create DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_test"
+	@bundle exec rake db:create DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_development"
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake db:migrate DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_test"
+	@bundle exec rake db:create DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_development"
 
 seed-test-data:
 	@echo ">>>>> Seeding DB with test data"
-	@bundle exec rake seed_test_data
+	@bundle exec rake seed_test_data DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5432/epb_eav_development"
 
 test:
 	@bundle exec rspec
