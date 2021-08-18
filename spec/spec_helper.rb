@@ -72,6 +72,7 @@ RSpec.configure do |config|
   config.before do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
+
   end
 
   config.after { DatabaseCleaner.clean }

@@ -50,7 +50,7 @@ describe Gateway::AssessmentAttributesGateway do
       gateway.add_attribute(attribute_name: "attr_parent", parent_name: "my_parent")
     end
 
-    let!(:attributes) do
+    let(:attributes) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT * FROM assessment_attributes WHERE attribute_name = 'attr_parent'",
       )
