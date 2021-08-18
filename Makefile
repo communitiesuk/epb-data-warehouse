@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
-.PHONY: help format test run setup-db seed-test-data generate-manifest deploy-app
+.PHONY: help format test run setup-db seed-test-data generate-manifest deploy-app migrate-db-and-wait-for-success
 
 PAAS_API ?= api.london.cloud.service.gov.uk
 PAAS_ORG ?= mhclg-energy-performance
@@ -43,7 +43,6 @@ generate-manifest: ## Generate manifest file for PaaS
 	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
 	@scripts/generate-manifest.sh ${DEPLOY_APPNAME} ${PAAS_SPACE} > manifest.yml
 
-
 deploy-app: ## Deploys the app to PaaS
 	$(call check_space)
 	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
@@ -56,3 +55,8 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
+
+migrate-db-and-wait-for-success:
+	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
+	cf run-task ${DEPLOY_APPNAME} --command "rake db:migrate" --name migrate
+	@scripts/check-for-migration-result.sh
