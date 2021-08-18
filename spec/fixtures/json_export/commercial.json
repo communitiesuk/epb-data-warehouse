@@ -40,13 +40,6 @@
   ],
   "floor_area": "403",
   "main_heating_fuel": "Natural Gas",
-  "metadata": {
-    "address_id": "RRN-0000-0000-0000-0000-0000",
-    "cancelled_at": null,
-    "created_at": "2021-05-10T16:45:00+00:00",
-    "not_for_issue_at": null,
-    "opt_out": false
-  },
   "new_build_band": "b",
   "new_build_rating": "28",
   "other_fuel_description": "Test",
