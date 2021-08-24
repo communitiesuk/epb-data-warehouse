@@ -14,7 +14,7 @@ describe Gateway::AssessmentLookUpsGateway do
   context "when there is a matching lookup" do
     let(:lookup) do
       Domain::AssessmentLookup.new(
-        lookup_name: "my_lookup",
+        lookup_key: "my_lookup",
         lookup_value: "my_value",
         attribute_id: 1,
         schema: "RdSAP",

@@ -1,11 +1,11 @@
 module Domain
   class AssessmentLookup
-    attr_reader :lookup_name, :lookup_value, :attribute_id, :schema, :schema_version
+    attr_reader :lookup_key, :lookup_value, :attribute_id, :schema, :schema_version
     attr_accessor :id
 
-    def initialize(lookup_name:, lookup_value:, attribute_id:, schema:, schema_version: nil, id: 0)
+    def initialize(lookup_key:, lookup_value:, attribute_id:, schema:, schema_version: nil, id: 0)
       @id = id
-      @lookup_name = lookup_name
+      @lookup_key = lookup_key
       @lookup_value = lookup_value
       @attribute_id = attribute_id
       @schema = schema
@@ -14,7 +14,7 @@ module Domain
 
     def ==(other)
       @id == other.id &&
-        @lookup_name == other.lookup_name &&
+        @lookup_key == other.lookup_key &&
         @lookup_value == other.lookup_value &&
         @attribute_id == other.attribute_id &&
         @schema == other.schema &&

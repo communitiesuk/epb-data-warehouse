@@ -8,7 +8,7 @@ module Gateway
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "look_up_name",
-          assessment_lookup.lookup_name,
+          assessment_lookup.lookup_key,
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
@@ -63,7 +63,7 @@ module Gateway
       results.each do |result|
         assessment_lookups << Domain::AssessmentLookup.new(
           id: result["id"],
-          lookup_name: result["look_up_name"],
+          lookup_key: result["look_up_name"],
           lookup_value: result["look_up_value"],
           attribute_id: result["attribute_id"],
           schema: result["schema"],
