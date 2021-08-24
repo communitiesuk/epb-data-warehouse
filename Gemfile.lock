@@ -32,7 +32,7 @@ GEM
     epb_view_models (1.0.2)
       nokogiri (~> 1.11)
       zeitwerk (~> 2.4.2)
-    faraday (1.7.0)
+    faraday (1.5.1)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -40,7 +40,6 @@ GEM
       faraday-net_http (~> 1.0)
       faraday-net_http_persistent (~> 1.1)
       faraday-patron (~> 1.0)
-      faraday-rack (~> 1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords (>= 0.0.4)
     faraday-em_http (1.0.0)
@@ -50,7 +49,6 @@ GEM
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
-    faraday-rack (1.0.0)
     hashdiff (1.0.1)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
@@ -154,4 +152,4 @@ DEPENDENCIES
   zeitwerk (~> 2.4, >= 2.4.2)!
 
 BUNDLED WITH
-   2.2.21
+   2.2.16
