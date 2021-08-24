@@ -2,6 +2,9 @@ require "json"
 
 module UseCase
   class ImportJsonCertificates < UseCase::ImportBase
+    # @deprecated
+    # This is used only to seed dev data and is not a core part of the data warehouse.
+    # It should be removed when the seed_test_data task is updated to use XML.
     attr_accessor :file_gateway, :assessment_attribute_gateway
 
     def initialize(file_gateway, assessment_gateway)
