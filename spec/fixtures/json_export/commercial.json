@@ -13,10 +13,10 @@
   "aircon_kw_rating": "100",
   "aircon_present": "No",
   "assessor": {
-    "email": "REDACTED",
-    "name": "REDACTED",
-    "scheme_assessor_id": "REDACTED",
-    "telephone": "REDACTED"
+    "email": "assessor@example.com",
+    "name": "Test A. Sessor",
+    "scheme_assessor_id": "TEST0000001",
+    "telephone": "0555 123 4567"
   },
   "asset_rating": "80",
   "asset_rating_band": "d",

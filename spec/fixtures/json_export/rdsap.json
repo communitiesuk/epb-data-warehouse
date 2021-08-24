@@ -18,10 +18,10 @@
   },
   "assessment_id": "0000-0000-0000-0000-0001",
   "assessor": {
-    "scheme_assessor_id": "REDACTED",
-    "name": "REDACTED",
-    "email": "REDACTED",
-    "telephone": "REDACTED"
+    "scheme_assessor_id": "TEST000001",
+    "name": "Test A. Sessor",
+    "email": "assessor@example.com",
+    "telephone": "0555 123 4567"
   },
   "built_form": {
     "description": "Semi-Detached",
