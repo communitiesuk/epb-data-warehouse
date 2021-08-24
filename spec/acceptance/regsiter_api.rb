@@ -16,4 +16,6 @@ describe "HTTP requests made to the register API", type: :feature do
   it "can convert the json received when making a request to the register API for an assessment" do
     expect(Net::HTTP.get("test-register/api/assessments/0000-0000-0000-0001/summary", "/")).to be_truthy
   end
+
+
 end
