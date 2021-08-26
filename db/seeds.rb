@@ -167,10 +167,8 @@ class LookupSeed
       "J" => "England and Wales: 2003-2006",
       "K" => "England and Wales: 2007-2011",
     }.freeze
-    construction_age_band.each do |key, value|
-      save_lookup_value("construction_age_band", key, value, "RdSAP")
-      save_lookup_value("construction_age_band", key, value, "SAP")
-    end
+    save_lookup_values("construction_age_band", construction_age_band, "RdSAP")
+    save_lookup_values("construction_age_band", construction_age_band, "SAP")
   end
 
   def energy_tariff
@@ -359,9 +357,9 @@ class LookupSeed
     save_lookup_values("mechanical_ventilation", mechanical_ventilation_enum, "RdSAP")
 
     mechanical_ventilation_pre12_enum = {
-      "0-pre12.0" => "none",
-      "1-pre12.0" => "mechanical - heat recovering",
-      "2-pre12.0" => "mechanical - non recovering",
+      "0" => "none",
+      "1" => "mechanical - heat recovering",
+      "2" => "mechanical - non recovering",
     }.freeze
     types_of_sap_pre12 = %w[
       SAP-Schema-11.2
@@ -370,7 +368,7 @@ class LookupSeed
     ].freeze
 
     types_of_sap_pre12.each do |schema_version|
-      save_lookup_values("mechanical_ventilation", mechanical_ventilation_pre12_enum, "RdSAP", schema_version: schema_version)
+      save_lookup_values("mechanical_ventilation", mechanical_ventilation_pre12_enum, "RdSAP", schema_version)
     end
   end
 
