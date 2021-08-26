@@ -23,7 +23,7 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "schema",
-          assessment_lookup.schema,
+          assessment_lookup.type_of_assessment,
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
@@ -66,7 +66,7 @@ module Gateway
           lookup_key: result["look_up_name"],
           lookup_value: result["look_up_value"],
           attribute_id: result["attribute_id"],
-          schema: result["schema"],
+          type_of_assessment: result["schema"],
           schema_version: result["schema_version"],
         )
       end

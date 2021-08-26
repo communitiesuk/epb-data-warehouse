@@ -17,7 +17,7 @@ describe Gateway::AssessmentLookUpsGateway do
         lookup_key: "my_lookup",
         lookup_value: "my_value",
         attribute_id: 1,
-        schema: "RdSAP",
+        type_of_assessment: "RdSAP",
       )
     end
 
