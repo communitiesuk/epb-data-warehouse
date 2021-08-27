@@ -1,4 +1,9 @@
 class LookupSeed
+  SAP_TYPE = "SAP".freeze
+  RDSAP_TYPE = "RdSAP".freeze
+  private_constant :SAP_TYPE
+  private_constant :RDSAP_TYPE
+
   def initialize
     @assessment_attribute = Gateway::AssessmentAttributesGateway.new
     @assessment_lookup_gateway = Gateway::AssessmentLookUpsGateway.new
@@ -59,12 +64,12 @@ class LookupSeed
       "6" => "Enclosed Mid-Terrace",
       "NR" => "Not Recorded",
     }.freeze
-    save_lookup_values("built_form", enum, "RdSAP")
+    save_lookup_values("built_form", enum, RDSAP_TYPE)
   end
 
   def construction_age_band
     # K-12.0 (RdSAP Only)
-    save_lookup_value("construction_age_band", "K", "Post-2006", "RdSAP", "SAP-Schema-12.0")
+    save_lookup_value("construction_age_band", "K", "Post-2006", RDSAP_TYPE, "SAP-Schema-12.0")
 
     # K-pre-17.0
     types_of_sap_pre17 = %w[
@@ -82,8 +87,8 @@ class LookupSeed
       SAP-Schema-11.0
     ].freeze
     types_of_sap_pre17.each do |schema_version|
-      save_lookup_value("construction_age_band", "K", "England and Wales: 2007 onwards", "RdSAP", schema_version)
-      save_lookup_value("construction_age_band", "K", "England and Wales: 2007 onwards", "SAP", schema_version)
+      save_lookup_value("construction_age_band", "K", "England and Wales: 2007 onwards", RDSAP_TYPE, schema_version)
+      save_lookup_value("construction_age_band", "K", "England and Wales: 2007 onwards", SAP_TYPE, schema_version)
     end
 
     # NR - RdSAP Only
@@ -103,7 +108,7 @@ class LookupSeed
       RdSAP-Schema-NI-17.3
     ]
     schemes_that_use_not_recorded.each do |schema_version|
-      save_lookup_value("construction_age_band", "NR", "Not recorded", "RdSAP", schema_version)
+      save_lookup_value("construction_age_band", "NR", "Not recorded", RDSAP_TYPE, schema_version)
     end
 
     # L - SAP and RdSAP
@@ -123,8 +128,8 @@ class LookupSeed
       RdSAP-Schema-NI-17.3
     ]
     schemes_that_use_l.each do |schema_version|
-      save_lookup_value("construction_age_band", "L", "England and Wales: 2012 onwards", "RdSAP", schema_version)
-      save_lookup_value("construction_age_band", "L", "England and Wales: 2012 onwards", "SAP", schema_version)
+      save_lookup_value("construction_age_band", "L", "England and Wales: 2012 onwards", RDSAP_TYPE, schema_version)
+      save_lookup_value("construction_age_band", "L", "England and Wales: 2012 onwards", SAP_TYPE, schema_version)
     end
 
     # 0 - RdSAP Only
@@ -151,7 +156,7 @@ class LookupSeed
       RdSAP-Schema-NI-17.3
     ]
     schemes_that_use_0.each do |schema_version|
-      save_lookup_value("construction_age_band", "0", "Not applicable", "RdSAP", schema_version)
+      save_lookup_value("construction_age_band", "0", "Not applicable", RDSAP_TYPE, schema_version)
     end
 
     construction_age_band = {
@@ -167,8 +172,8 @@ class LookupSeed
       "J" => "England and Wales: 2003-2006",
       "K" => "England and Wales: 2007-2011",
     }.freeze
-    save_lookup_values("construction_age_band", construction_age_band, "RdSAP")
-    save_lookup_values("construction_age_band", construction_age_band, "SAP")
+    save_lookup_values("construction_age_band", construction_age_band, RDSAP_TYPE)
+    save_lookup_values("construction_age_band", construction_age_band, SAP_TYPE)
   end
 
   def energy_tariff
@@ -179,7 +184,7 @@ class LookupSeed
       "4" => "dual (24 hour)",
       "5" => "off-peak 18 hour",
     }.freeze
-    save_lookup_values("energy_tariff", rdsap_enum, "RdSAP")
+    save_lookup_values("energy_tariff", rdsap_enum, RDSAP_TYPE)
 
     sap_enum = {
       "1" => "standard tariff",
@@ -188,7 +193,7 @@ class LookupSeed
       "4" => "24 hour",
       "ND" => "not applicable",
     }.freeze
-    save_lookup_values("energy_tariff", sap_enum, "SAP")
+    save_lookup_values("energy_tariff", sap_enum, SAP_TYPE)
   end
 
   def ratings
@@ -200,7 +205,7 @@ class LookupSeed
       "4" => "Good",
       "5" => "Very Good",
     }.freeze
-    save_lookup_values("ratings", enum, "RdSAP")
+    save_lookup_values("ratings", enum, RDSAP_TYPE)
   end
 
   def glazed_area_rdsap
@@ -212,7 +217,7 @@ class LookupSeed
       "5" => "Much Less Than Typical",
       "ND" => "Not Defined",
     }.freeze
-    save_lookup_values("glazed_area_rdsap", rdsap_enum, "RdSAP")
+    save_lookup_values("glazed_area_rdsap", rdsap_enum, RDSAP_TYPE)
   end
 
   def glazed_type_rdsap
@@ -227,7 +232,7 @@ class LookupSeed
       "8" => "triple, known data",
       "ND" => "not defined",
     }.freeze
-    save_lookup_values("glazed_type_rdsap", rdsap_enum, "RdSAP")
+    save_lookup_values("glazed_type_rdsap", rdsap_enum, RDSAP_TYPE)
   end
 
   def heat_loss_corridor
@@ -236,7 +241,7 @@ class LookupSeed
       "1" => "heated corridor",
       "2" => "unheated corridor",
     }.freeze
-    save_lookup_values("heat_loss_corridor", enum, "RdSAP")
+    save_lookup_values("heat_loss_corridor", enum, RDSAP_TYPE)
   end
 
   def main_fuel
@@ -296,7 +301,7 @@ class LookupSeed
       "58" => "biodiesel from vegetable oil only (community)",
       "99" => "from heat network data (community)",
     }.freeze
-    save_lookup_values("rdsap_main_fuel", rdsap_enum, "RdSAP")
+    save_lookup_values("rdsap_main_fuel", rdsap_enum, RDSAP_TYPE)
 
     sap_enum = {
       "1" => "Gas: mains gas",
@@ -345,7 +350,7 @@ class LookupSeed
       "76" => "bioethanol from any biomass source",
       "99" => "Community heating schemes: special fuel",
     }.freeze
-    save_lookup_values("sap_main_fuel", sap_enum, "SAP")
+    save_lookup_values("sap_main_fuel", sap_enum, SAP_TYPE)
   end
 
   def mechanical_ventilation
@@ -354,7 +359,7 @@ class LookupSeed
       "1" => "mechanical, supply and extract",
       "2" => "mechanical, extract only",
     }.freeze
-    save_lookup_values("mechanical_ventilation", mechanical_ventilation_enum, "RdSAP")
+    save_lookup_values("mechanical_ventilation", mechanical_ventilation_enum, RDSAP_TYPE)
 
     mechanical_ventilation_pre12_enum = {
       "0" => "none",
@@ -368,7 +373,7 @@ class LookupSeed
     ].freeze
 
     types_of_sap_pre12.each do |schema_version|
-      save_lookup_values("mechanical_ventilation", mechanical_ventilation_pre12_enum, "RdSAP", schema_version)
+      save_lookup_values("mechanical_ventilation", mechanical_ventilation_pre12_enum, RDSAP_TYPE, schema_version)
     end
   end
 
@@ -380,7 +385,7 @@ class LookupSeed
       "3" => "Maisonette",
       "4" => "Park home",
     }.freeze
-    save_lookup_values("property_type", enum, "RdSAP")
+    save_lookup_values("property_type", enum, RDSAP_TYPE)
   end
 
   def tenure
@@ -391,10 +396,39 @@ class LookupSeed
       "ND" =>
         "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
     }.freeze
-    save_lookup_values("tenure", enum, "RdSAP")
+    save_lookup_values("tenure", enum, RDSAP_TYPE)
   end
 
-  def transaction_type; end
+  def transaction_type
+    shared_transaction_type = {
+      "1" => "marketed sale",
+      "2" => "non marketed sale",
+      "3" =>
+        "rental (social) - this is for backwards compatibility only and should not be used",
+      "4" =>
+        "rental (private) - this is for backwards compatibility only and should not be used",
+      "5" => "not sale or rental",
+      "6" => "new dwelling",
+      "7" =>
+        "not recorded - this is for backwards compatibility only and should not be used",
+      "8" => "rental",
+      "9" => "assessment for green deal",
+      "10" => "following green deal",
+      "11" => "FiT application",
+    }
+    sap_transaction_type = {
+      "12" => "Stock condition survey",
+    }
+    rdsap_transaction_type = {
+      "12" => "RHI application",
+      "13" => "ECO assessment",
+      "14" => "Stock condition survey",
+    }
+    save_lookup_values("tenure", shared_transaction_type, SAP_TYPE)
+    save_lookup_values("tenure", sap_transaction_type, SAP_TYPE)
+    save_lookup_values("tenure", shared_transaction_type, RDSAP_TYPE)
+    save_lookup_values("tenure", rdsap_transaction_type, RDSAP_TYPE)
+  end
 
   def cepc_transaction_type; end
 end
