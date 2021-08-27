@@ -12,6 +12,7 @@ class LookupSeed
   def run!
     ActiveRecord::Base.transaction do
       built_form
+      # SAP / RSAP
       construction_age_band
       energy_tariff
       ratings
@@ -20,7 +21,9 @@ class LookupSeed
       heat_loss_corridor
       main_fuel
       mechanical_ventilation
+      # SAP / RSAP
       property_type
+      # SAP / RSAP
       tenure
       transaction_type
       cepc_transaction_type
@@ -386,6 +389,7 @@ class LookupSeed
       "4" => "Park home",
     }.freeze
     save_lookup_values("property_type", enum, RDSAP_TYPE)
+    save_lookup_values("property_type", enum, SAP_TYPE)
   end
 
   def tenure
@@ -397,6 +401,7 @@ class LookupSeed
         "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
     }.freeze
     save_lookup_values("tenure", enum, RDSAP_TYPE)
+    save_lookup_values("tenure", enum, SAP_TYPE)
   end
 
   def transaction_type
