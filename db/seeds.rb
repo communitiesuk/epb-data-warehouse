@@ -6,10 +6,10 @@ class LookupSeed
 
   def initialize
     @assessment_attribute = Gateway::AssessmentAttributesGateway.new
-    @assessment_lookup_gateway = Gateway::AssessmentLookUpsGateway.new
+    @assessment_lookup_gateway = Gateway::AssessmentLookupsGateway.new
   end
 
-  def run!
+  def load_seed
     ActiveRecord::Base.transaction do
       built_form
       # SAP / RSAP
@@ -437,5 +437,3 @@ class LookupSeed
 
   def cepc_transaction_type; end
 end
-
-LookupSeed.new.run!

@@ -5,4 +5,5 @@ task :environment do
   ActiveRecord::Tasks::DatabaseTasks.env = "default_env"
   ActiveRecord::Tasks::DatabaseTasks.migrations_paths = "db/migrate"
   ActiveRecord::Tasks::DatabaseTasks.database_configuration = DATABASE_CONFIG.to_hash
+  ActiveRecord::Tasks::DatabaseTasks.seed_loader = LookupSeed.new
 end

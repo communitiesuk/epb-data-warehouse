@@ -3,6 +3,8 @@ require "active_support"
 require "active_support/core_ext/uri"
 require "zeitwerk"
 
+require_relative "db/seeds"
+
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib")
 loader.setup
@@ -15,3 +17,4 @@ Rake.load_rakefile("active_record/railties/databases.rake")
 
 DATABASE_CONFIG = ActiveRecord::DatabaseConfigurations::ConnectionUrlResolver.new(ENV["DATABASE_URL"])
 ActiveRecord::Base.establish_connection(DATABASE_CONFIG.to_hash)
+

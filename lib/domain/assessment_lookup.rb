@@ -13,8 +13,7 @@ module Domain
     end
 
     def ==(other)
-      @id == other.id &&
-        @lookup_key == other.lookup_key &&
+      @lookup_key == other.lookup_key &&
         @lookup_value == other.lookup_value &&
         @attribute_id == other.attribute_id &&
         @type_of_assessment == other.type_of_assessment &&
