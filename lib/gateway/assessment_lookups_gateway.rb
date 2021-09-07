@@ -15,6 +15,32 @@ module Gateway
       end
     end
 
+    def get_value_by_key(attribute_name:, lookup_key:, type_of_assessment: nil, schema: nil )
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_name",
+            attribute_name,
+            ActiveRecord::Type::String.new,
+          ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "lookup_key",
+          lookup_key,
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+
+      sql = <<-SQL
+       SELECT DISTINCT lookup_value
+        FROM assessment_attribute_lookups aal
+        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+        WHERE attribute_name = $1 and lookup_key = $2
+      SQL
+
+       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
+    end
+
     def get_lookups_by_attribute_and_key(attribute_id:, lookup_key:)
       sql = <<-SQL
         SELECT *
