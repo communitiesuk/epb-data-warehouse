@@ -78,11 +78,22 @@ module Gateway
         ),
       ]
 
-      attribute_lookups_insert = <<-SQL
+      lookup_select = <<-SQL
+          SELECT id FROM assessment_attribute_lookups
+          WHERE lookup_id = $1 AND attribute_id = $2 AND type_of_assessment = $3 AND schema_version = $4
+      SQL
+
+      lookup = ActiveRecord::Base.connection.exec_query(lookup_select, "SQL", bindings).first
+
+      if lookup.nil?
+        attribute_lookups_insert = <<-SQL
           INSERT INTO assessment_attribute_lookups(lookup_id, attribute_id, type_of_assessment, schema_version)
           VALUES($1, $2, $3, $4)
-      SQL
-      ActiveRecord::Base.connection.insert(attribute_lookups_insert, nil, nil, nil, nil, bindings)
+        SQL
+        ActiveRecord::Base.connection.insert(attribute_lookups_insert, nil, nil, nil, nil, bindings)
+      else
+        lookup["id"]
+      end
     end
 
     def insert_or_get_lookup(lookup_key, lookup_value)
@@ -100,7 +111,7 @@ module Gateway
       ]
 
       lookup_select = <<-SQL
-          SELECT * FROM assessment_lookups
+          SELECT id FROM assessment_lookups
           WHERE lookup_key = $1
           AND lookup_value = $2
       SQL
