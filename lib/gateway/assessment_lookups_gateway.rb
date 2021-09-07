@@ -15,20 +15,19 @@ module Gateway
       end
     end
 
-    def get_value_by_key(attribute_name:, lookup_key:, type_of_assessment: nil, schema: nil )
+    def get_value_by_key(attribute_name:, lookup_key:, type_of_assessment: nil, schema_version: nil)
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_name",
-            attribute_name,
-            ActiveRecord::Type::String.new,
-          ),
+          attribute_name,
+          ActiveRecord::Type::String.new,
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "lookup_key",
           lookup_key,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
-
 
       sql = <<-SQL
        SELECT DISTINCT lookup_value
@@ -38,7 +37,28 @@ module Gateway
         WHERE attribute_name = $1 and lookup_key = $2
       SQL
 
-       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
+      unless type_of_assessment.nil?
+        sql << " AND type_of_assessment = $3"
+
+        bindings <<
+          ActiveRecord::Relation::QueryAttribute.new(
+            "type_of_assessment",
+            type_of_assessment,
+            ActiveRecord::Type::String.new,
+          )
+      end
+
+      unless schema_version.nil?
+        sql << " AND schema_version = $#{bindings.length + 1}"
+
+        bindings <<
+          ActiveRecord::Relation::QueryAttribute.new(
+            "schema_version",
+            schema_version,
+            ActiveRecord::Type::String.new,
+          )
+      end
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
     end
 
     def get_lookups_by_attribute_and_key(attribute_id:, lookup_key:)
