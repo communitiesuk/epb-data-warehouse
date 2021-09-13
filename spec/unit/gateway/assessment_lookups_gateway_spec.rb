@@ -1,5 +1,4 @@
 describe Gateway::AssessmentLookupsGateway do
-
   subject(:gateway) { described_class.new }
 
   let(:attributes_gateway) { Gateway::AssessmentAttributesGateway.new }
@@ -51,12 +50,12 @@ describe Gateway::AssessmentLookupsGateway do
         assessment_attribute = Gateway::AssessmentAttributesGateway.new
         attribute_id = assessment_attribute.add_attribute(attribute_name: "built_form")
         enum.each do |key, value|
-          gateway.add_lookup( Domain::AssessmentLookup.new(
-            lookup_key: key,
-            lookup_value: value,
-            attribute_id: attribute_id,
-            type_of_assessment: "RdSAP",
-            ))
+          gateway.add_lookup(Domain::AssessmentLookup.new(
+                               lookup_key: key,
+                               lookup_value: value,
+                               attribute_id: attribute_id,
+                               type_of_assessment: "RdSAP",
+                             ))
         end
       end
 

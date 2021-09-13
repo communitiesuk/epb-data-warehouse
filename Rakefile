@@ -17,4 +17,3 @@ Rake.load_rakefile("active_record/railties/databases.rake")
 
 DATABASE_CONFIG = ActiveRecord::DatabaseConfigurations::ConnectionUrlResolver.new(ENV["DATABASE_URL"])
 ActiveRecord::Base.establish_connection(DATABASE_CONFIG.to_hash)
-
