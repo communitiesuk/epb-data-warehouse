@@ -8,7 +8,7 @@ module UseCase
     end
 
     def execute
-      assessment_ids = @redis_gateway.consume_queue "assessments"
+      assessment_ids = @redis_gateway.consume_queue(:assessments)
       # TODO: Decide where we are getting the schema from , either a new end point or add it to the queue?
 
       assessment_ids.each do |assessment_id|

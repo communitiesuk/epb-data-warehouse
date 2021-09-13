@@ -33,6 +33,15 @@ describe Gateway::RedisGateway do
       expect(gateway.consume_queue(:assessments)).to eq []
     end
 
+    it "raises an error for an invalid queue name" do
+      expect { gateway.push_to_queue(:none_exisitng_queue, ids) }.to raise_error(
+        Gateway::RedisGateway::InvalidRedisQueueNameError,
+      )
+      expect { gateway.consume_queue(:none_exisitng_queue) }.to raise_error(
+        Gateway::RedisGateway::InvalidRedisQueueNameError,
+      )
+    end
+
     context "when queue is populated with more IDs than the default consume count of 50" do
       before do
         gateway.push_to_queue(:assessments, (1..75).collect { |_| SecureRandom.uuid })
