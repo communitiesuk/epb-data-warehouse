@@ -7,7 +7,7 @@ module UseCase
     end
 
     def execute
-      assessment_ids = @redis_gateway.consume_queue "cancelled"
+      assessment_ids = @redis_gateway.consume_queue(:cancelled)
       assessment_ids.each do |assessment_id|
         meta_data = @api_gateway.fetch_meta_data(assessment_id)
         next if meta_data[:cancelledAt].nil?
