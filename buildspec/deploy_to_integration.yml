@@ -27,7 +27,6 @@ phases:
     commands:
       - make deploy-app
       - make migrate-db-and-wait-for-success
-      - cf run-task ${DEPLOY_APPNAME} --command "rake seed_test_data" --name seed-db
   post_build:
     commands:
       - cf logout
