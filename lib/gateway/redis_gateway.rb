@@ -4,7 +4,7 @@ module Gateway
   class RedisGateway
     class InvalidRedisQueueNameError < StandardError; end
 
-    QUEUE_NAMES = %i[assessments cancelled opt_outs].freeze
+    QUEUE_NAMES = %i[:temp_queue assessments cancelled opt_outs].freeze
 
     def initialize(redis_client: nil)
       @redis = redis_client || Redis.new

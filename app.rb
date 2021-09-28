@@ -26,7 +26,7 @@ class QueueWorker
 private
 
   def pull_queues
-    ids = @redis_gateway.consume_queue("temp_queue")
+    ids = @redis_gateway.consume_queue(:temp_queue)
     unless ids.empty?
       pp ids
     end
