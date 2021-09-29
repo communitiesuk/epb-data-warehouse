@@ -18,6 +18,6 @@ Rake.load_rakefile("active_record/railties/databases.rake")
 pp "Rake reading db config"
 DATABASE_CONFIG = ActiveRecord::DatabaseConfigurations::ConnectionUrlResolver.new(ENV["DATABASE_URL"])
 pp "Rake got DATABASE_CONFIG with keys #{DATABASE_CONFIG.to_hash.keys}"
+pp "Adapter: #{DATABASE_CONFIG.to_hash[:adapter]}, Username: #{DATABASE_CONFIG.to_hash[:username]}, Host: #{DATABASE_CONFIG.to_hash[:host]}, Database: #{DATABASE_CONFIG.to_hash[:database]}"
 ActiveRecord::Base.establish_connection(DATABASE_CONFIG.to_hash)
 pp "Rake established connection"
-pp "Tables: #{ActiveRecord::Base.connection.tables}"
