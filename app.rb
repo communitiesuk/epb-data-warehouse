@@ -16,7 +16,6 @@ class QueueWorker
       set_redis_connection
       pull_queues
 
-      puts "Waiting 5 seconds for next check"
       sleep 5
     end
   rescue Interrupt
