@@ -5,14 +5,17 @@ require "zeitwerk"
 
 require_relative "db/seeds"
 
+pp "RAKE setting up loader"
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib")
 loader.setup
 
 # Adds project rake files
+pp "RAKE add lib/tasks"
 Rake.add_rakelib("lib/tasks")
 
 # Loads Rails database tasks
+pp "RAKE load rakefile"
 Rake.load_rakefile("active_record/railties/databases.rake")
 
 pp "Rake reading db config"
