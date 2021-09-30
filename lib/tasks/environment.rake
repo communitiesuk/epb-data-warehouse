@@ -4,7 +4,7 @@ task :environment do
   pp "TASK ENVIRONMENT START; ENV="
   ActiveRecord::Tasks::DatabaseTasks.db_dir = "db"
   pp "  Done db_dir"
-  ActiveRecord::Tasks::DatabaseTasks.env = ENV["RAILS_ENV"]
+  ActiveRecord::Tasks::DatabaseTasks.env = ENV["RAILS_ENV"] || "default_env"
   pp "  Done env"
   ActiveRecord::Tasks::DatabaseTasks.migrations_paths = "db/migrate"
   pp "  Done migrations paths"
