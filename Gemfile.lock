@@ -29,7 +29,7 @@ GEM
     epb-auth-tools (1.0.8)
       jwt (~> 2.2)
       oauth2 (~> 1.4)
-    epb_view_models (1.0.2)
+    epb_view_models (1.0.9)
       nokogiri (~> 1.11)
       zeitwerk (~> 2.4.2)
     faraday (1.5.1)
@@ -59,7 +59,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    nokogiri (1.12.3-x86_64-darwin)
+    nokogiri (1.12.5-x86_64-darwin)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -140,7 +140,7 @@ DEPENDENCIES
   activesupport (~> 6.1, >= 6.1.4)!
   database_cleaner-active_record (~> 2.0, >= 2.0.1)!
   epb-auth-tools (~> 1.0, >= 1.0.8)!
-  epb_view_models (~> 1.0, >= 1.0.2)!
+  epb_view_models (~> 1.0, >= 1.0.9)!
   mock_redis (~> 0.28.0)!
   pg (~> 1.2, >= 1.2.3)!
   rake (~> 13.0, >= 13.0.6)!
