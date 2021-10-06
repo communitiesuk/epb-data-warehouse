@@ -115,6 +115,12 @@ describe Gateway::AssessmentAttributesGateway do
       )
     end
 
+    describe "#get_attribute_id" do
+      it "returns the relevant int value for an attribute string" do
+        expect(gateway.get_attribute_id("glazed_type")).to eq(4)
+      end
+    end
+
     context "when extracting a single atttribute value for an assessment" do
       it "returns a row for every attributes" do
         expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute: "construction_age_band")).to eq("England and Wales: 2007-2011")

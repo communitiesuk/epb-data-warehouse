@@ -8,6 +8,24 @@ module Gateway
       @attribute_columns_array = []
     end
 
+    def get_attribute_id(attribute_name)
+      sql = <<-SQL
+           SELECT attribute_id
+            FROM assessment_attributes#{' '}
+            WHERE attribute_name = $1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_name",
+          attribute_name,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["attribute_id"]
+    end
+
     def add_attribute(attribute_name:, parent_name: nil)
       attribute_data = fetch_attribute_id(attribute_name: attribute_name, parent_name: parent_name)
       if attribute_data.nil?
