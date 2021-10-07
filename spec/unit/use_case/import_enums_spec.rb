@@ -23,23 +23,23 @@ describe UseCase::ImportEnums do
 
     before do
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
-      allow(attribute_gateway).to receive(:get_attribute_id).and_return("a")
+      allow(attribute_gateway).to receive(:get_attribute_id).and_return("1")
 
       allow(presenter).to receive(:get_enums_by_type).with("SAP-BuiltForm").and_return(
         { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
-          "RdSap-17.0.0" => { "1" => "a1", "2" => "b1",  "3" => "c1", "nr" => "other1" } },
+          "RdSap-17.0.0" => { "1" => "a1", "2" => "b1", "3" => "c1", "nr" => "other1" } },
       )
 
       allow(presenter).to receive(:get_enums_by_type).with("Tranasction-Type").and_return(
-        { "RdSap-18.0.0" => { "1" => "a", "2" => "b",  "3" => "c", "nr" => "other" },
-          "RdSap-17.0.0" => { "1" => "a", "2" => "b",  "3" => "c", "nr" => "other" } },
+        { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
+          "RdSap-17.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" } },
       )
     end
 
     it "receive the array and loop over it the correct number of times" do
       use_case.execute(enum_domains)
       expect(presenter).to have_received(:get_enums_by_type).exactly(2).times
-      expect(gateway).to have_received(:add_lookup).exactly(16).times
+      expect(gateway).to have_received(:add_lookup).exactly(12).times
     end
   end
 end
