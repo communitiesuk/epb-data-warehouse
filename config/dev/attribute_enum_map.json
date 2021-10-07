@@ -1,0 +1,9 @@
+[{
+  "attribute_name": "built_form",
+  "type_of_assessment": "RdSap",
+  "xsd_node_name": "SAP-BuiltForm"
+}, {
+  "attribute_name": "tranasction_type",
+  "type_of_assessment": "RdSap",
+  "xsd_node_name": "Tranasction-Type"
+}]

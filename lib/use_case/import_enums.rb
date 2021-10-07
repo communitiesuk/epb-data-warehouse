@@ -6,10 +6,10 @@ module UseCase
       @xsd_presenter = xsd_presenter
     end
 
-    def execute(enums_to_import)
-      enums_to_import.each do |domain|
-        attribute_id = @assessment_attribute_gateway.get_attribute_id(domain.attribute_name)
-        enum_hashes = @xsd_presenter.get_enums_by_type(domain.xsd_node_name)
+    def execute(attribute_mappings)
+      attribute_mappings.each do |attribute|
+        attribute_id = @assessment_attribute_gateway.get_attribute_id(attribute["attribute_name"])
+        enum_hashes = @xsd_presenter.get_enums_by_type(attribute["xsd_node_name"])
         if @xsd_presenter.variation_between_schema_versions?(enum_hashes)
           enum_hashes.each do |schema_version, values|
             values.each do |key, value|
@@ -17,7 +17,7 @@ module UseCase
                                                        lookup_key: key,
                                                        lookup_value: value,
                                                        attribute_id: attribute_id,
-                                                       type_of_assessment: domain.type_of_assessment,
+                                                       type_of_assessment: attribute["type_of_assessment"],
                                                        schema_version: schema_version,
                                                      ))
             end

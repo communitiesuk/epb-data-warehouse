@@ -12,9 +12,8 @@ describe UseCase::ImportEnums do
       instance_double(Gateway::AssessmentAttributesGateway)
     end
 
-    let(:enum_domains) do
-      [Domain::EnumArguments.new(attribute_name: "built_form", type_of_assessment: "RdSap", xsd_node_name: "SAP-BuiltForm"),
-       Domain::EnumArguments.new(attribute_name: "tranasction_type", type_of_assessment: "RdSap", xsd_node_name: "Tranasction-Type")]
+    let(:attribute_mappings) do
+      JSON.parse(File.read("config/dev/attribute_enum_map.json"))
     end
 
     let(:presenter) do
@@ -36,8 +35,16 @@ describe UseCase::ImportEnums do
       )
     end
 
+    it "can read json mapping" do
+      expect(attribute_mappings).to be_a(Array)
+      expect(attribute_mappings.length).to eq(2)
+      expect(attribute_mappings.first).to match hash_including({ "attribute_name" => "built_form",
+                                                                 "type_of_assessment" => "RdSap",
+                                                                 "xsd_node_name" => "SAP-BuiltForm" })
+    end
+
     it "receive the array and loop over it the correct number of times" do
-      use_case.execute(enum_domains)
+      use_case.execute(attribute_mappings)
       expect(presenter).to have_received(:get_enums_by_type).exactly(2).times
       expect(gateway).to have_received(:add_lookup).exactly(12).times
     end
