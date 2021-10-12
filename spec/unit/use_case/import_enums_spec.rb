@@ -99,7 +99,7 @@ describe UseCase::ImportEnums do
     end
   end
 
-  context "when calling the real Presenter" do
+  context "when calling the real presenter" do
     let(:arguments) do
       [{
         "attribute_name" => "construction_age_band",
@@ -108,9 +108,17 @@ describe UseCase::ImportEnums do
       }]
     end
 
+    let(:use_case) do
+      described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new)
+    end
+
     it "the presenter raises an error which is bubbled up to the use case and rethrown" do
-      use_case = described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new)
       expect { use_case.execute(arguments) }.to raise_error(ViewModelBoundary::NodeNotFound)
+    end
+
+    xit "extracts construction age band and save the data with all the variations" do
+      arguments.first["xsd_node_name"] = "ConstructionDateCode"
+      use_case.execute(arguments)
     end
   end
 end

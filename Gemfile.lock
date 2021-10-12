@@ -1,16 +1,5 @@
-GIT
-  remote: https://github.com/communitiesuk/epb-view-models
-  revision: 1d91babed9dd9f558b1ee9d64017e5a0afbcb5b6
-  specs:
-    epb_view_models (1.0.9)
-      nokogiri (~> 1.11)
-      zeitwerk (~> 2.4.2)
-
 GEM
   specs:
-    nokogiri (1.12.5-x86_64-darwin)
-      racc (~> 1.4)
-    racc (1.5.2)
 
 GEM
   remote: https://rubygems.org/
@@ -40,6 +29,9 @@ GEM
     epb-auth-tools (1.0.8)
       jwt (~> 2.2)
       oauth2 (~> 1.4)
+    epb_view_models (1.0.10)
+      nokogiri (~> 1.11)
+      zeitwerk (~> 2.4.2)
     faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -69,6 +61,8 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    nokogiri (1.12.5-x86_64-darwin)
+      racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -80,6 +74,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.2.3)
     public_suffix (4.0.6)
+    racc (1.5.2)
     rack (2.2.3)
     rainbow (3.0.0)
     rake (13.0.6)
@@ -147,7 +142,7 @@ DEPENDENCIES
   activesupport (~> 6.1, >= 6.1.4)!
   database_cleaner-active_record (~> 2.0, >= 2.0.1)!
   epb-auth-tools (~> 1.0, >= 1.0.8)!
-  epb_view_models (~> 1.0)!
+  epb_view_models (~> 1.0, >= 1.0.10)!
   mock_redis (~> 0.28.0)!
   pg (~> 1.2, >= 1.2.3)!
   rake (~> 13.0, >= 13.0.6)!
