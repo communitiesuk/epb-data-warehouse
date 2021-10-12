@@ -47,7 +47,7 @@ describe UseCase::ImportEnums do
   context "when receiving enums that have variations between schema versions for an attribute" do
     before do
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
-      allow(attribute_gateway).to receive(:get_attribute_id).and_return("1")
+      allow(attribute_gateway).to receive(:add_attribute).and_return("1")
 
       allow(presenter).to receive(:get_enums_by_type).and_return(
         { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
@@ -75,7 +75,7 @@ describe UseCase::ImportEnums do
   context "when receiving enums that have no variations between schema versions for an attribute" do
     before do
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
-      allow(attribute_gateway).to receive(:get_attribute_id).and_return("1")
+      allow(attribute_gateway).to receive(:add_attribute).and_return("1")
       allow(presenter).to receive(:get_enums_by_type).and_return(
         { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
           "RdSap-17.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" } },
@@ -118,7 +118,7 @@ describe UseCase::ImportEnums do
 
     xit "extracts construction age band and save the data with all the variations" do
       arguments.first["xsd_node_name"] = "ConstructionDateCode"
-      use_case.execute(arguments)
+      # use_case.execute(arguments)
     end
   end
 end

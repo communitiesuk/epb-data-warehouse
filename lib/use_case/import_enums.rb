@@ -28,7 +28,7 @@ module UseCase
   private
 
     def save_lookup(values:, attribute:, schema_version: nil)
-      attribute_id = attribute_id(attribute)
+      attribute_id = @assessment_attribute_gateway.add_attribute(attribute_name: attribute["attribute_name"])
 
       values.each do |key, value|
         @assessment_lookups_gateway.add_lookup(Domain::AssessmentLookup.new(
@@ -39,10 +39,6 @@ module UseCase
                                                  schema_version: schema_version,
                                                ))
       end
-    end
-
-    def attribute_id(attribute)
-      @assessment_attribute_gateway.get_attribute_id(attribute["attribute_name"])
     end
   end
 end
