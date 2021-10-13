@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ruby "2.7.3"
+
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 source "https://rubygems.org" do
