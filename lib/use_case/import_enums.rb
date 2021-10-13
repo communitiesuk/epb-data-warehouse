@@ -1,16 +1,19 @@
 module UseCase
   class ImportEnums
-    def initialize(assessment_lookups_gateway:, xsd_presenter:, assessment_attribute_gateway:)
+    def initialize(assessment_lookups_gateway:, xsd_presenter:, assessment_attribute_gateway:, xsd_config_gateway:)
       @assessment_lookups_gateway = assessment_lookups_gateway
       @assessment_attribute_gateway = assessment_attribute_gateway
       @xsd_presenter = xsd_presenter
+      @xsd_config_gateway = xsd_config_gateway
       # pp "#{ENV["GEM_HOME"]}/epb_view_models-1.0.9/lib/
     end
 
-    def execute(attribute_mappings)
-      attribute_mappings.each do |attribute|
+    def execute
+      @xsd_config_gateway.nodes_and_paths.each do |attribute|
         begin
-          enum_hashes = @xsd_presenter.get_enums_by_type(ViewModelDomain::XsdArguments.new(simple_type: attribute["xsd_node_name"], assessment_type: attribute["type_of_assessment"]))
+          enum_hashes = @xsd_presenter.get_enums_by_type(ViewModelDomain::XsdArguments.new(simple_type: attribute["xsd_node_name"],
+                                                                                           assessment_type: attribute["type_of_assessment"],
+                                                                                           xsd_dir_path: attribute["xsd_path"]))
         rescue StandardError => e
           raise e.class, "Message: #{e.message}"
         end

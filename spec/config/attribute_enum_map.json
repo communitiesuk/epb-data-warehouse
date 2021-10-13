@@ -1,0 +1,17 @@
+{
+  "nodes" : [{
+    "attribute_name": "built_form",
+    "type_of_assessment": "RdSap",
+    "xsd_node_name": "SAP-BuiltForm"
+  }, {
+    "attribute_name": "tranasction_type",
+    "type_of_assessment": "SAP",
+    "xsd_node_name": "Tranasction-Type"
+  }],
+  "paths" : {
+    "rdsap" : "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+    "sap"  : "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
+    "cepc" : "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd"
+  }
+}
+
