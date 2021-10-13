@@ -35,8 +35,8 @@ module UseCase
 
       values.each do |key, value|
         @assessment_lookups_gateway.add_lookup(Domain::AssessmentLookup.new(
-                                                 lookup_key: key,
-                                                 lookup_value: value,
+                                                 lookup_key: key.to_s,
+                                                 lookup_value: value.to_s,
                                                  attribute_id: attribute_id,
                                                  type_of_assessment: attribute["type_of_assessment"] || nil,
                                                  schema_version: schema_version,

@@ -47,16 +47,6 @@ describe UseCase::ImportEnums do
       )
     end
 
-    let(:attribute_mappings) do
-      [
-        {
-          "attribute_name" => "tranasction_type",
-          "type_of_assessment" => "RdSap",
-          "xsd_node_name" => "Tranasction-Type",
-        },
-      ]
-    end
-
     it "receive the array and loop over it the correct number of times" do
       use_case.execute
       expect(presenter).to have_received(:get_enums_by_type).exactly(2).times
@@ -87,7 +77,7 @@ describe UseCase::ImportEnums do
     end
   end
 
-  context "when calling the real presenter" do
+  context "when calling the presenter with a non existing node name" do
     let(:arguments) do
       [{
         "attribute_name" => "construction_age_band",
@@ -113,10 +103,29 @@ describe UseCase::ImportEnums do
     it "the presenter raises an error which is bubbled up to the use case and rethrown" do
       expect { use_case.execute }.to raise_error(ViewModelBoundary::NodeNotFound)
     end
+  end
 
-    xit "extracts construction age band and save the data with all the variations" do
-      arguments.first["xsd_node_name"] = "ConstructionDateCode"
-      # use_case.execute(arguments)
+  context "when calling the presenter with an existing node name" do
+
+    let(:xsd_config) do
+      instance_double(Gateway::XsdConfigGateway)
+    end
+
+    let(:use_case) do
+      described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new,
+                          xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+    end
+
+    before do
+      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
+                                                                   "type_of_assessment" => "RdSAP",
+                                                                   "xsd_node_name" => "ConstructionDateCode",
+                                                                   "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+                                                                 }])
+    end
+
+    it "saves the variations in construction age band enums" do
+      expect { use_case.execute }.not_to raise_error
     end
   end
 end
