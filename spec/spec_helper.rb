@@ -5,6 +5,7 @@ require "epb-auth-tools"
 require "active_record"
 require "active_support"
 require "database_cleaner/active_record"
+require "rake"
 require "nokogiri"
 require "mock_redis"
 require "webmock/rspec"
@@ -25,6 +26,13 @@ WebMock.disable_net_connect!(
     getting-new-energy-certificate.local.gov.uk
   ],
 )
+
+def get_task(name)
+  rake = Rake::Application.new
+  Rake.application = rake
+  rake.load_rakefile
+  rake.tasks.find { |task| task.to_s == name }
+end
 
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])

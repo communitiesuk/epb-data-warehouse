@@ -19,23 +19,6 @@ describe UseCase::ImportEnums do
     Presenter::Xsd.new
   end
 
-  context "when calling the use case to process the enums" do
-    before do
-      allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
-      allow(attribute_gateway).to receive(:get_attribute_id).and_return("1")
-
-      allow(presenter).to receive(:get_enums_by_type).and_return(
-        { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
-          "RdSap-17.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" } },
-      )
-
-      allow(presenter).to receive(:get_enums_by_type).and_return(
-        { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
-          "RdSap-17.0.0" => { "1" => "a1", "2" => "b1", "3" => "c1", "nr" => "other1" } },
-      )
-    end
-  end
-
   context "when receiving enums that have variations between schema versions for an attribute" do
     before do
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)

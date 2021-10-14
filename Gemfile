@@ -21,5 +21,6 @@ source "https://rubygems.org" do
   gem "pg", "~> 1.2", ">= 1.2.3"
   gem "rake", "~> 13.0", ">= 13.0.6"
   gem "redis", "~> 4.4"
+  gem "rexml", "~> 3.2", ">= 3.2.4"
   gem "zeitwerk", "~> 2.4", ">= 2.4.2"
 end

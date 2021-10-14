@@ -12,6 +12,7 @@ describe Gateway::AssessmentAttributesGateway do
   end
 
   before do
+    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attributes CASCADE;")
     ActiveRecord::Base.connection.reset_pk_sequence!("assessment_attributes")
     gateway.add_attribute(attribute_name: "test")
     gateway.add_attribute(attribute_name: "test1")

@@ -1,13 +1,16 @@
 {
   "nodes" : [{
     "attribute_name": "built_form",
-    "type_of_assessment": "RdSap",
-    "xsd_node_name": "SAP-BuiltForm"
-  }, {
-    "attribute_name": "tranasction_type",
-    "type_of_assessment": "RdSap",
-    "xsd_node_name": "Tranasction-Type"
-  }],
+    "type_of_assessment": "SAP",
+    "xsd_node_name": "SAP-BuiltFormCode"
+  },
+    {
+      "attribute_name": "construction_age_band",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "ConstructionDateCode"
+    }
+  ],
+
   "paths" : {
     "rdsap" : "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
      "sap"  : "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",

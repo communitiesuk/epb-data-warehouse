@@ -2,12 +2,16 @@ require "active_record"
 require "active_support"
 require "active_support/core_ext/uri"
 require "zeitwerk"
+require "epb_view_models"
 
 require_relative "db/seeds"
 
-loader = Zeitwerk::Loader.new
-loader.push_dir("#{__dir__}/lib")
-loader.setup
+unless defined? TestLoader
+  require "zeitwerk"
+  loader = Zeitwerk::Loader.new
+  loader.push_dir("#{__dir__}/lib/")
+  loader.setup
+end
 
 # Adds project rake files
 Rake.add_rakelib("lib/tasks")
