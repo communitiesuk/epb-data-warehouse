@@ -7,9 +7,8 @@ describe "ImportEnumsXsd Rake" do
       allow($stdout).to receive(:write)
     end
 
-
     it "runs the task without raising any errors" do
-      expect { task.invoke }.not_to raise_error
+      expect { task.invoke("spec/config/task_attribute_enum_map.json") }.not_to raise_error
     end
   end
 end
