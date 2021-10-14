@@ -9,6 +9,7 @@ module UseCase
     end
 
     def execute
+      @assessment_lookups_gateway.truncate_tables
       @xsd_config_gateway.nodes_and_paths.each do |attribute|
         begin
           enum_hashes = @xsd_presenter.get_enums_by_type(ViewModelDomain::XsdArguments.new(simple_type: attribute["xsd_node_name"],

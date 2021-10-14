@@ -23,6 +23,7 @@ describe UseCase::ImportEnums do
     before do
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
       allow(attribute_gateway).to receive(:add_attribute).and_return("1")
+      allow(gateway).to receive(:truncate_tables)
 
       allow(presenter).to receive(:get_enums_by_type).and_return(
         { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
@@ -32,6 +33,7 @@ describe UseCase::ImportEnums do
 
     it "receive the array and loop over it the correct number of times" do
       use_case.execute
+      expect(gateway).to have_received(:truncate_tables).exactly(1).times
       expect(presenter).to have_received(:get_enums_by_type).exactly(2).times
       expect(gateway).to have_received(:add_lookup).exactly(16).times
     end
@@ -46,6 +48,7 @@ describe UseCase::ImportEnums do
         "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
       }])
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
+      allow(gateway).to receive(:truncate_tables)
       allow(attribute_gateway).to receive(:add_attribute).and_return("1")
       allow(presenter).to receive(:get_enums_by_type).and_return(
         { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },

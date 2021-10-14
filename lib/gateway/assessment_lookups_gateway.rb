@@ -61,6 +61,12 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
     end
 
+    def truncate_tables
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_lookups CASCADE;")
+
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attribute_lookups")
+    end
+
     def get_lookups_by_attribute_and_key(attribute_id:, lookup_key:)
       sql = <<-SQL
         SELECT *
