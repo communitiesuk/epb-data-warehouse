@@ -106,13 +106,8 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving the construction age band enums" do
-    let(:xsd_config) do
-      instance_double(Gateway::XsdConfigGateway)
-    end
-
-    let(:use_case) do
-      described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new,
-                          xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+    let(:lookups_gateway)  do
+      Gateway::AssessmentLookupsGateway.new
     end
 
     let(:saved_data) do
@@ -120,30 +115,27 @@ describe UseCase::ImportEnums do
                 FROM assessment_lookups")
     end
 
-    let(:enum_data) do
-      ActiveRecord::Base.connection.exec_query("SELECT DISTINCT  lookup_value
-        FROM assessment_attribute_lookups aal
-        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
-        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        INNER JOIN assessment_attributes a on a.attribute_id = aal.attribute_id
-        WHERE a.attribute_name = 'construction_age_band' AND schema_version = 'RdSAP-Schema-17.0' AND lookup_key = 'L'")
+    before(:all) do
+      RSpec::Mocks.with_temporary_scope do
+        lookups_gateway = Gateway::AssessmentLookupsGateway.new
+
+        xsd_config = instance_double(Gateway::XsdConfigGateway)
+        allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
+                                                                     "type_of_assessment" => "RdSAP",
+                                                                     "xsd_node_name" => "ConstructionDateCode",
+                                                                     "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd" }])
+        use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+        use_case.execute
+      end
     end
 
-    before do
-      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
-                                                                   "type_of_assessment" => "RdSAP",
-                                                                   "xsd_node_name" => "ConstructionDateCode",
-                                                                   "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd" }])
-    end
 
-    it "saves the variations in construction age band enums" do
-      expect { use_case.execute }.not_to raise_error
-    end
 
     it "returns the expected enum value for a L in England and Northern Ireland" do
-      use_case.execute
-      expect(enum_data.first["lookup_value"].split(";\n").first).to eq("England and Wales: 2012 onwards")
-      expect(enum_data.first["lookup_value"].split(";\n").last).to eq("Northern Ireland: 2014 onwards")
+      enum_value = lookups_gateway.get_value_by_key(attribute_name: "construction_age_band", lookup_key: "L", type_of_assessment: "RdSAP",
+                                                    schema_version: "RdSAP-Schema-17.0")
+      expect(enum_value.split(";\n").first).to eq("England and Wales: 2012 onwards")
+      expect(enum_value.split(";\n").last).to eq("Northern Ireland: 2014 onwards")
     end
   end
 end

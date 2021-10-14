@@ -38,23 +38,23 @@ module Gateway
       SQL
 
       unless type_of_assessment.nil?
-        sql << " AND type_of_assessment = $3"
+        sql << " AND LOWER(type_of_assessment) = $3"
 
         bindings <<
           ActiveRecord::Relation::QueryAttribute.new(
             "type_of_assessment",
-            type_of_assessment,
+            type_of_assessment.downcase,
             ActiveRecord::Type::String.new,
           )
       end
 
       unless schema_version.nil?
-        sql << " AND schema_version = $#{bindings.length + 1}"
+        sql << " AND LOWER(schema_version) = $#{bindings.length + 1}"
 
         bindings <<
           ActiveRecord::Relation::QueryAttribute.new(
             "schema_version",
-            schema_version,
+            schema_version.downcase,
             ActiveRecord::Type::String.new,
           )
       end
