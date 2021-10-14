@@ -116,20 +116,16 @@ describe UseCase::ImportEnums do
     end
 
     before do
-        lookups_gateway = Gateway::AssessmentLookupsGateway.new
-        xsd_config = instance_double(Gateway::XsdConfigGateway)
-        allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
-                                                                     "type_of_assessment" => "RdSAP",
-                                                                     "xsd_node_name" => "ConstructionDateCode",
-                                                                     "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd" }])
-        use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      lookups_gateway = Gateway::AssessmentLookupsGateway.new
+      xsd_config = instance_double(Gateway::XsdConfigGateway)
+      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
+                                                                   "type_of_assessment" => "RdSAP",
+                                                                   "xsd_node_name" => "ConstructionDateCode",
+                                                                   "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd" }])
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
 
-        use_case.execute
+      use_case.execute
     end
-
-
-
-
 
     it "returns the expected enum value for a L in England and Northern Ireland" do
       enum_value = lookups_gateway.get_value_by_key(attribute_name: "construction_age_band", lookup_key: "L", type_of_assessment: "RdSAP",
@@ -159,29 +155,29 @@ describe UseCase::ImportEnums do
       expect(data.rows.flatten - expected_versions).to eq([])
     end
 
-    it 'checks the schemas that use 0' do
+    it "checks the schemas that use 0" do
       schemes_that_use_0 = %w[
-                            SAP-Schema-16.3
-                            SAP-Schema-16.2
-                            SAP-Schema-16.1
-                            SAP-Schema-16.0
-                            SAP-Schema-15.0
-                            SAP-Schema-14.2
-                            SAP-Schema-14.1
-                            SAP-Schema-14.0
-                            SAP-Schema-13.0
-                            SAP-Schema-12.0
-                            RdSAP-Schema-20.0.0
-                            RdSAP-Schema-19.0
-                            RdSAP-Schema-18.0
-                            RdSAP-Schema-17.1
-                            RdSAP-Schema-17.0
-                            RdSAP-Schema-NI-20.0.0
-                            RdSAP-Schema-NI-19.0
-                            RdSAP-Schema-NI-18.0
-                            RdSAP-Schema-NI-17.4
-                            RdSAP-Schema-NI-17.3
-                            ]
+        SAP-Schema-16.3
+        SAP-Schema-16.2
+        SAP-Schema-16.1
+        SAP-Schema-16.0
+        SAP-Schema-15.0
+        SAP-Schema-14.2
+        SAP-Schema-14.1
+        SAP-Schema-14.0
+        SAP-Schema-13.0
+        SAP-Schema-12.0
+        RdSAP-Schema-20.0.0
+        RdSAP-Schema-19.0
+        RdSAP-Schema-18.0
+        RdSAP-Schema-17.1
+        RdSAP-Schema-17.0
+        RdSAP-Schema-NI-20.0.0
+        RdSAP-Schema-NI-19.0
+        RdSAP-Schema-NI-18.0
+        RdSAP-Schema-NI-17.4
+        RdSAP-Schema-NI-17.3
+      ]
 
       data = ActiveRecord::Base.connection.exec_query("SELECT DISTINCT schema_version
         FROM assessment_attribute_lookups aal
