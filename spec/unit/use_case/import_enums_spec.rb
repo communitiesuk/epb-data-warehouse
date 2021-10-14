@@ -115,19 +115,19 @@ describe UseCase::ImportEnums do
                 FROM assessment_lookups")
     end
 
-    before(:all) do
-      RSpec::Mocks.with_temporary_scope do
+    before do
         lookups_gateway = Gateway::AssessmentLookupsGateway.new
-
         xsd_config = instance_double(Gateway::XsdConfigGateway)
         allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
                                                                      "type_of_assessment" => "RdSAP",
                                                                      "xsd_node_name" => "ConstructionDateCode",
                                                                      "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd" }])
         use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+
         use_case.execute
-      end
     end
+
+
 
 
 
@@ -136,6 +136,27 @@ describe UseCase::ImportEnums do
                                                     schema_version: "RdSAP-Schema-17.0")
       expect(enum_value.split(";\n").first).to eq("England and Wales: 2012 onwards")
       expect(enum_value.split(";\n").last).to eq("Northern Ireland: 2014 onwards")
+    end
+
+    it "only has L values for the expected schema versions" do
+      expected_versions = %w[RdSAP-Schema-20.0.0
+                             RdSAP-Schema-19.0
+                             RdSAP-Schema-18.0
+                             RdSAP-Schema-17.1
+                             RdSAP-Schema-17.0
+                             RdSAP-Schema-NI-20.0.0
+                             RdSAP-Schema-NI-19.0
+                             RdSAP-Schema-NI-18.0
+                             RdSAP-Schema-NI-17.4
+                             RdSAP-Schema-NI-17.3]
+
+      data = ActiveRecord::Base.connection.exec_query("SELECT DISTINCT schema_version
+        FROM assessment_attribute_lookups aal
+        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = 'L' AND aal.type_of_assessment='RdSAP'")
+
+      expect(data.rows.flatten - expected_versions).to eq([])
     end
   end
 end
