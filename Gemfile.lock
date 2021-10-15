@@ -55,13 +55,15 @@ GEM
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jwt (2.3.0)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     mock_redis (0.28.0)
       ruby2_keywords
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    nokogiri (1.12.5-x86_64-darwin)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -135,7 +137,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  x86_64-darwin-20
+  ruby
 
 DEPENDENCIES
   activerecord (~> 6.1, >= 6.1.4)!
