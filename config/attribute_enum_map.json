@@ -1,13 +1,69 @@
 {
   "nodes" : [{
-    "attribute_name": "built_form",
+    "attribute_name": "energy_tariff",
     "type_of_assessment": "SAP",
-    "xsd_node_name": "SAP-BuiltFormCode"
+    "xsd_node_name": "SAP-ElectricityTariffCode"
   },
+    {
+      "attribute_name": "glazed_area",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "GlazedAreaCode"
+    },
+    {
+      "attribute_name": "glazed_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "SAP-GlazingTypeCode"
+    },
+    {
+      "attribute_name": "heat_loss_corridor",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "HeatLossCorridorCode"
+    },
+    {
+      "attribute_name": "main_fuel",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "HeatingFuelTypeCode"
+    },
+    {
+      "attribute_name": "main_fuel",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "HeatingFuelTypeCode"
+    },
     {
       "attribute_name": "construction_age_band",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "ConstructionDateCode"
+    },
+    {
+      "attribute_name": "mechanical_ventilation",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "SAP-DataSourceCode"
+    },
+    {
+      "attribute_name": "mechanical_ventilation",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "VentilationTypeCode"
+    },
+    {
+      "attribute_name": "property_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "PropertyTypeCode"
+    },
+    {
+      "attribute_name": "property_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "PropertyTypeCode"
+    },
+    {
+      "attribute_name": "tenure",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "TenureCode",
+      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/UDT/ExternalDefinition.xsd"
+    },
+    {
+      "attribute_name": "tenure",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "TenureCode",
     }
   ],
 
