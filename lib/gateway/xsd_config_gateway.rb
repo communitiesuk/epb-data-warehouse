@@ -17,10 +17,9 @@ module Gateway
     def nodes_and_paths
       nodes_hash = nodes
       nodes_hash.each do |attribute|
-        if !attribute.key?("xsd_path")
+        unless attribute.key?("xsd_path")
           attribute["xsd_path"] = paths[attribute["type_of_assessment"].downcase]
         end
-        nodes_hash
       end
     end
   end

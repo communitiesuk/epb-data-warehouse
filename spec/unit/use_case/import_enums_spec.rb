@@ -174,4 +174,42 @@ describe UseCase::ImportEnums do
       expect(data.rows.flatten - schemes_that_use_0).to eq([])
     end
   end
+
+  context "when saving transaction types for RdSAP" do
+    let(:lookups_gateway) do
+      Gateway::AssessmentLookupsGateway.new
+    end
+
+    let(:saved_data) do
+      ActiveRecord::Base.connection.exec_query("SELECT lookup_key, lookup_value
+                FROM assessment_lookups ")
+    end
+
+    before do
+      lookups_gateway = Gateway::AssessmentLookupsGateway.new
+      xsd_config = instance_double(Gateway::XsdConfigGateway)
+      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "tranasction_type",
+                                                                   "type_of_assessment" => "RdSAP",
+                                                                   "xsd_node_name" => "//Transaction-Type",
+                                                                   "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
+                                                                   "node_hash" => { "Transaction-Code" => "Transaction-Text" } }])
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+
+      use_case.execute
+    end
+
+    it "save the enums from the xml definitions" do
+      expect(saved_data.rows.to_h).to eq({ "6" => "New dwelling",
+                                           "1" => "Marketed sale",
+                                           "2" => "Non-marketed sale",
+                                           "8" => "Rental",
+                                           "14" => "Stock condition survey",
+                                           "9" => "Assessment for Green Deal",
+                                           "10" => "Following Green Deal",
+                                           "11" => "FiT application",
+                                           "12" => "RHI application",
+                                           "13" => "ECO assessment",
+                                           "5" => "None of the above" })
+    end
+  end
 end

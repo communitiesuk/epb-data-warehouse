@@ -13,6 +13,15 @@ describe Gateway::XsdConfigGateway do
                                                           "xsd_node_name" => "SAP-BuiltForm" })
   end
 
+  it "produces a hash of attributes nodes containing a hash of xml nodes" do
+    expected = { "attribute_name" => "tranasction_type",
+                 "type_of_assessment" => "SAP",
+                 "xsd_node_name" => "Transaction-Type",
+                 "node_hash" => { "Transaction-Code" => "Transaction-Text" } }
+
+    expect(gateway.nodes.last).to match hash_including(expected)
+  end
+
   it "produces a hash of paths " do
     expect(gateway.paths).to match hash_including({ "rdsap" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
                                                     "sap" => "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
@@ -47,7 +56,7 @@ describe Gateway::XsdConfigGateway do
       ]
     end
 
-    let(:return_hash){
+    let(:return_hash) do
       [
         {
           "attribute_name" => "built_form",
@@ -62,7 +71,7 @@ describe Gateway::XsdConfigGateway do
           "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
         },
       ]
-    }
+    end
 
     before do
       allow(gateway).to receive(:nodes).and_return(nodes)

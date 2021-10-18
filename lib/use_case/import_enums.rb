@@ -14,7 +14,8 @@ module UseCase
         begin
           enum_hashes = @xsd_presenter.get_enums_by_type(ViewModelDomain::XsdArguments.new(simple_type: attribute["xsd_node_name"],
                                                                                            assessment_type: attribute["type_of_assessment"],
-                                                                                           xsd_dir_path: attribute["xsd_path"]))
+                                                                                           xsd_dir_path: attribute["xsd_path"],
+                                                                                           node_hash: attribute["node_hash"]))
         rescue StandardError => e
           raise e.class, "Message: #{e.message}"
         end
