@@ -82,8 +82,29 @@
     {
       "attribute_name": "transaction_type",
       "type_of_assessment": "CEPC",
-      "xsd_node_name": "Transaction-Type",
+      "xsd_node_name": "Transaction-Type"
+    },
+    {
+      "attribute_name": "ventilation_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "SAP-VentilationTypeCode"
+    },
 
+    {
+      "attribute_name": "cylinder_insulation_thickness",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "CylinderThicknessCode"
+    },
+    {
+      "attribute_name": "water_heating_fuel",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "HeatingFuelTypeCode"
+    },
+
+    {
+      "attribute_name": "water_heating_fuel",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "HeatingFuelTypeCode"
     }
   ],
 
