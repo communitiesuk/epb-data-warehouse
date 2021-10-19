@@ -81,7 +81,7 @@
     {
       "attribute_name": "transaction_type",
       "type_of_assessment": "CEPC",
-      "xsd_node_name": "Transaction-Type"
+      "xsd_node_name": "TransactionType"
     },
     {
       "attribute_name": "ventilation_type",
