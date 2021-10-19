@@ -57,7 +57,7 @@
     {
       "attribute_name": "tenure",
       "type_of_assessment": "RdSAP",
-      "xsd_node_name": "TenureCode",
+      "xsd_node_name": "TenureCode"
     },
     {
       "attribute_name": "tenure",

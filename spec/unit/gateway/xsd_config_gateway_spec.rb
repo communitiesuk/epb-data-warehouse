@@ -84,4 +84,12 @@ describe Gateway::XsdConfigGateway do
       expect(gateway.nodes_and_paths).to eq(return_hash)
     end
   end
+
+  context "when loading the production json file" do
+    let(:prod_gateway) { described_class.new("config/attribute_enum_map.json") }
+
+    it "does not raise an error due the the json being mistyped" do
+      expect { prod_gateway }.not_to raise_error
+    end
+  end
 end
