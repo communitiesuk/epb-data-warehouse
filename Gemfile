@@ -23,4 +23,5 @@ source "https://rubygems.org" do
   gem "redis", "~> 4.4"
   gem "rexml", "~> 3.2", ">= 3.2.4"
   gem "zeitwerk", "~> 2.4", ">= 2.4.2"
+  gem "nokogiri", "~> 1.12", ">= 1.12.5"
 end

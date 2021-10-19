@@ -75,7 +75,7 @@
       "attribute_name": "transaction_type",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "//Transaction-Type",
-      "xsd_path": "/api/schemas/xml/RdSAP**/SAP/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
       "node_hash": { "Transaction-Code": "Transaction-Text" }
     },
     {
