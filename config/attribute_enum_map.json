@@ -58,7 +58,6 @@
       "attribute_name": "tenure",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "TenureCode",
-      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/UDT/ExternalDefinition.xsd"
     },
     {
       "attribute_name": "tenure",
@@ -76,7 +75,7 @@
       "attribute_name": "transaction_type",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "//Transaction-Type",
-      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/RdSAP**/SAP/ExternalDefinitions.xml",
       "node_hash": { "Transaction-Code": "Transaction-Text" }
     },
     {

@@ -87,7 +87,35 @@ describe UseCase::ImportEnums do
     end
 
     it "the presenter raises an error which is bubbled up to the use case and rethrown" do
-      expect { use_case.execute }.to raise_error(ViewModelBoundary::NodeNotFound)
+      expect { use_case.execute }.to raise_error(Boundary::EnumImportError, /Unable to import attribute blah/)
+    end
+  end
+
+  context "when calling the presenter with a an incorrect path" do
+    let(:arguments) do
+      [{
+        "attribute_name" => "tenure",
+        "type_of_assessment" => "RdSAP",
+        "xsd_node_name" => "TenureCode",
+        "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-test.xsd",
+      }]
+    end
+
+    let(:xsd_config) do
+      instance_double(Gateway::XsdConfigGateway)
+    end
+
+    let(:use_case) do
+      described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new,
+                          xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+    end
+
+    before do
+      allow(xsd_config).to receive(:nodes_and_paths).and_return(arguments)
+    end
+
+    it "the presenter raises an error which is bubbled up to the use case and rethrown" do
+      expect { use_case.execute }.to raise_error(Boundary::EnumImportError, /Unable to import attribute TenureCode : No xsd files were found in /)
     end
   end
 

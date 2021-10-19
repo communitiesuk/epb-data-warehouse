@@ -17,7 +17,7 @@ module UseCase
                                                                                            xsd_dir_path: attribute["xsd_path"],
                                                                                            node_hash: attribute["node_hash"]))
         rescue StandardError => e
-          raise e.class, "Message: #{e.message}"
+          raise Boundary::EnumImportError.new(attribute["xsd_node_name"], e.message)
         end
 
         if @xsd_presenter.variation_between_schema_versions?(enum_hashes)
