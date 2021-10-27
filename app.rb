@@ -29,6 +29,8 @@ private
     unless ids.empty?
       pp ids
     end
+  rescue StandardError
+    puts "Error consuming queue on Redis database"
   end
 
   def register_signal_handlers
