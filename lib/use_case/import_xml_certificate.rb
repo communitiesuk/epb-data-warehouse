@@ -1,8 +1,8 @@
 module UseCase
-  class ImportXmlCertificate < UseCase::ImportBase
-    def initialize(eav_gateway, certificate_gateway)
-      super()
-      @assessment_attribute_gateway = eav_gateway
+  class ImportXmlCertificate
+    def initialize(import_certificate_data_use_case, assessment_attribute_gateway, certificate_gateway)
+      @import_certificate_data_use_case = import_certificate_data_use_case
+      @assessment_attribute_gateway = assessment_attribute_gateway
       @certificate_gateway = certificate_gateway
     end
 
@@ -27,7 +27,7 @@ module UseCase
       certificate[:created_at] = meta_data[:createdAt]
 
       begin
-        save_attributes(assessment_id, certificate)
+        @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
       rescue Boundary::DuplicateAttribute
         # do nothing
       rescue Boundary::JsonAttributeSave

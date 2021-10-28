@@ -12,7 +12,7 @@ describe UseCase::ImportXmlCertificate do
   end
 
   let(:use_case) do
-    described_class.new(database_gateway, certificate_gateway)
+    described_class.new(UseCase::ImportCertificateData.new(assessment_attribute_gateway: database_gateway), database_gateway, certificate_gateway)
   end
 
   let(:sample) do

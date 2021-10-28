@@ -1,6 +1,6 @@
 describe UseCase::ImportJsonCertificates do
   subject do
-    described_class.new(directory_gateway, assessment_attribute_gateway)
+    described_class.new(directory_gateway, UseCase::ImportCertificateData.new(assessment_attribute_gateway: assessment_attribute_gateway))
   end
 
   let(:directory_gateway) { instance_double(Gateway::JsonCertificates) }
@@ -31,7 +31,7 @@ describe UseCase::ImportJsonCertificates do
       use_case =
         described_class.new(
           directory_gateway,
-          Gateway::AssessmentAttributesGateway.new,
+          UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new),
         )
       use_case.execute
     end
@@ -40,7 +40,7 @@ describe UseCase::ImportJsonCertificates do
       use_case =
         described_class.new(
           directory_gateway,
-          Gateway::AssessmentAttributesGateway.new,
+          UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new),
         )
       use_case.execute
 

@@ -1,16 +1,15 @@
 require "json"
 
 module UseCase
-  class ImportJsonCertificates < UseCase::ImportBase
+  class ImportJsonCertificates
     # @deprecated
     # This is used only to seed dev data and is not a core part of the data warehouse.
     # It should be removed when the seed_test_data task is updated to use XML.
-    attr_accessor :file_gateway, :assessment_attribute_gateway
+    attr_accessor :file_gateway, :import_certificate_data_use_case
 
-    def initialize(file_gateway, assessment_gateway)
-      super()
+    def initialize(file_gateway, import_certificate_data_use_case)
       @file_gateway = file_gateway
-      @assessment_attribute_gateway = assessment_gateway
+      @import_certificate_data_use_case = import_certificate_data_use_case
     end
 
     def execute
@@ -19,7 +18,7 @@ module UseCase
         certificate = JSON.parse(File.read(f))
         assessment_id = certificate["assessment_id"]
         begin
-          save_attributes(assessment_id, certificate)
+          import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
         rescue Boundary::DuplicateAttribute
           # do nothing
         rescue Boundary::JsonAttributeSave

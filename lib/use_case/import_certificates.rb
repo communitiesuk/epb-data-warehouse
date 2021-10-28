@@ -1,7 +1,6 @@
 module UseCase
-  class ImportCertificates < UseCase::ImportBase
+  class ImportCertificates
     def initialize(eav_gateway, certificate_gateway, redis_gateway)
-      super()
       @assessment_attribute_gateway = eav_gateway
       @certificate_gateway = certificate_gateway
       @redis_gateway = redis_gateway
@@ -20,6 +19,7 @@ module UseCase
 
     def import_xml_certificate_use_case
       @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new(
+        UseCase::ImportCertificateData.new(assessment_attribute_gateway: @assessment_attribute_gateway),
         @assessment_attribute_gateway,
         @certificate_gateway,
       )
