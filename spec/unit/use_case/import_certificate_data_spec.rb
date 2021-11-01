@@ -45,6 +45,22 @@ describe UseCase::ImportCertificateData do
     end
   end
 
+  context "when a double nested attribute is passed to the usecase" do
+    certificate_data = {
+      "building_parts" => {
+        "building_part" => { "wall" => "brick" },
+      },
+    }
+
+    assessment_id = "0000-0000-0000-0000-0000"
+
+    it "passes the attributes and values to the gateway" do
+      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "wall", attribute_value: "brick", parent_name: "building_part")
+    end
+  end
+
   context "when an array of scalars is passed to the usecase" do
     certificate_data = {
       "1" => %w[
@@ -62,4 +78,21 @@ describe UseCase::ImportCertificateData do
       expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1", attribute_value: "1|2|3", parent_name: nil)
     end
   end
+
+  # context "when an array of hashes is passed to the usecase" do
+  #   certificate_data = {
+  #     "1" => [
+  #       { "1a" => "one a" },
+  #       { "1b" => "one b" },
+  #     ],
+  #   }
+  #
+  #   assessment_id = "0000-0000-0000-0000-0000"
+  #
+  #   it "passes the attributes and values to the gateway" do
+  #     use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+  #
+  #     expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1a", attribute_value: "one a", parent_name: "1-index-0")
+  #   end
+  # end
 end
