@@ -10,6 +10,31 @@ describe Gateway::AssessmentAttributesGateway do
       "SELECT * FROM assessment_attribute_values",
     )
   end
+  let(:json_blob) do
+    '{"schema_version_original": "LIG-19.0",
+                          "sap_version": 9.94,
+                          "calculation_software_name": "Elmhurst Energy Systems RdSAP Calculator",
+                          "calculation_software_version": "4.05r0005",
+                          "rrn": "8570-6826-6530-4969-0202",
+                          "inspection_date": "2020-06-01",
+                          "report_type": 2,
+                          "completion_date": "2020-06-01",
+                          "registration_date": "2020-06-01",
+                          "status": "entered",
+                          "language_code": 1,
+                          "tenure": 1,
+                          "transaction_type":1,
+                          "property_type": 0,
+                          "scheme_assessor_id": "EES/008538",
+                          "property":
+                            {"address":
+                               {"address_line_1": "25, Marlborough Place",
+                                "post_town": "LONDON",
+                                "postcode": "NW8 0PG"},
+                             "uprn": 7435089668},
+                          "region_code": 17,
+                          "country_code": "EAW"}'
+  end
 
   before do
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attributes CASCADE;")
@@ -90,6 +115,12 @@ describe Gateway::AssessmentAttributesGateway do
         attribute_name: "heating_cost_current",
         attribute_value: "365.98",
       )
+
+      gateway.add_attribute_value(
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "json",
+        attribute_value: json_blob
+        )
     end
 
     let(:assessment_attribute_values) do
@@ -100,7 +131,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "returns a row for every attributes" do
-      expect(assessment_attribute_values.rows.length).to eq(4)
+      expect(assessment_attribute_values.rows.length).to eq(5)
     end
 
     it "row 3 will have a value in the integer column for the current_energy_efficiency" do
@@ -114,6 +145,13 @@ describe Gateway::AssessmentAttributesGateway do
       expect(assessment_attribute_values[3]["attribute_value_float"]).to eq(
         365.98,
       )
+    end
+
+    it "row 5 will have a json object in the json column" do
+
+      result = JSON.parse(assessment_attribute_values[4]["json"])
+
+      expect(result).to eq(json_blob)
     end
 
     describe "#get_attribute_id" do

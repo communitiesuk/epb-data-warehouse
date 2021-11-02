@@ -393,11 +393,21 @@ module Gateway
       )
     end
 
+    def valid_json?(input)
+      JSON.parse(input)
+      return true
+    rescue StandardError => e
+    rescue JSON::ParserError => e
+      return false
+    end
+
     def insert_attribute_value(assessment_id:, attribute_id:, attribute_value:)
       sql = <<-SQL
-              INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float)
-              VALUES($1, $2, $3, $4, $5)
+              INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json)
+              VALUES($1, $2, $3, $4, $5, $6)
       SQL
+
+      json_value = attribute_value if valid_json?(attribute_value)
 
       if attribute_value.instance_of?(Hash)
         hashed_attribute = attribute_value.clone.symbolize_keys
@@ -434,6 +444,11 @@ module Gateway
           "attribute_float",
           attribute_float,
           ActiveRecord::Type::Decimal.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "json",
+          json_value,
+          ActiveRecord::Type::Json.new,
         ),
       ]
 

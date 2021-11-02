@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_31_092100) do
+ActiveRecord::Schema.define(version: 2021_11_01_163600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_092100) do
     t.string "attribute_value", null: false
     t.integer "attribute_value_int"
     t.float "attribute_value_float"
+    t.jsonb "json"
     t.index ["assessment_id", "attribute_id"], name: "index_assessment_id_attribute_id_on_aav", unique: true
     t.index ["assessment_id"], name: "index_assessment_attribute_values_on_assessment_id"
     t.index ["attribute_id"], name: "index_assessment_attribute_values_on_attribute_id"
