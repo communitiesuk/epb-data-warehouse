@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/communitiesuk/epb-view-models
-  revision: 9c79d3c755558eb08d424601b1a4a147d985ac84
-  specs:
-    epb_view_models (1.0.14)
-      nokogiri (~> 1.11)
-      zeitwerk (~> 2.4.2)
-
 GEM
   specs:
 
@@ -37,6 +29,9 @@ GEM
     epb-auth-tools (1.0.8)
       jwt (~> 2.2)
       oauth2 (~> 1.4)
+    epb_view_models (1.0.14)
+      nokogiri (~> 1.11)
+      zeitwerk (~> 2.4.2)
     faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -118,7 +113,7 @@ GEM
       rubocop-rails (= 2.12.2)
       rubocop-rake (= 0.6.0)
       rubocop-rspec (= 2.4.0)
-    rubocop-performance (1.11.5)
+    rubocop-performance (1.12.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.12.2)
@@ -149,7 +144,7 @@ DEPENDENCIES
   activesupport (~> 6.1, >= 6.1.4)!
   database_cleaner-active_record (~> 2.0, >= 2.0.1)!
   epb-auth-tools (~> 1.0, >= 1.0.8)!
-  epb_view_models (~> 1.0)!
+  epb_view_models (~> 1.0, >= 1.0.14)!
   mock_redis (~> 0.28.0)!
   nokogiri (~> 1.12, >= 1.12.5)!
   pg (~> 1.2, >= 1.2.3)!
