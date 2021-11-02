@@ -12,19 +12,15 @@ module UseCase
 
     def save_attributes(assessment_id, certificate, parent_name = nil)
       certificate.each do |key, value|
-        if value.instance_of?(Hash) &&
-            value.symbolize_keys.keys != %i[description value]
-          save_attributes(assessment_id, value, key.to_s)
-        else
+        value = JSON.generate(value) if value.instance_of?(Hash) || value.instance_of?(Array)
 
-          attribute = {
-            attribute: key.to_s,
-            value: value.instance_of?(Array) ? value.join("|") : value,
-            assessment_id: assessment_id,
-            parent_name: parent_name,
-          }
-          save_attribute_data(attribute)
-        end
+        attribute = {
+          attribute: key.to_s,
+          value: value,
+          assessment_id: assessment_id,
+          parent_name: parent_name,
+        }
+        save_attribute_data(attribute)
       end
     end
 

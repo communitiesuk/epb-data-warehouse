@@ -3,7 +3,7 @@ require "active_support"
 require "active_support/core_ext/uri"
 require "zeitwerk"
 require "epb_view_models"
-require 'nokogiri'
+require "nokogiri"
 
 require_relative "db/seeds"
 

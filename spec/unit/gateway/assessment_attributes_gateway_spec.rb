@@ -119,8 +119,8 @@ describe Gateway::AssessmentAttributesGateway do
       gateway.add_attribute_value(
         assessment_id: "0000-0000-0000-0000-0001",
         attribute_name: "json",
-        attribute_value: json_blob
-        )
+        attribute_value: json_blob,
+      )
     end
 
     let(:assessment_attribute_values) do
@@ -148,7 +148,6 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "row 5 will have a json object in the json column" do
-
       result = JSON.parse(assessment_attribute_values[4]["json"])
 
       expect(result).to eq(json_blob)

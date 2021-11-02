@@ -86,10 +86,8 @@ describe UseCase::ImportJsonCertificates do
     end
 
     it "the attribute table should contain one hash for the town with a parent of address" do
-      arr =
-        imported_data.select { |result| result["attribute_name"] == "town" }
-      expect(arr[0]["attribute_value"]).to eq("Whitbury")
-      expect(arr[0]["parent_name"]).to eq("address")
+      arr = imported_data.select { |result| result["attribute_name"] == "address" }
+      expect(JSON.parse(arr[0]["attribute_value"])["town"]).to eq("Whitbury")
     end
   end
 end

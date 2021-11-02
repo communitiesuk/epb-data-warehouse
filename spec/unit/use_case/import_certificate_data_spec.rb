@@ -40,8 +40,11 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "one", attribute_value: "1", parent_name: "1")
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "two", attribute_value: "2", parent_name: "1")
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1", attribute_value: {
+        "one" => "1",
+        "two" => "2",
+      }.to_json, parent_name: nil)
+      # expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "two", attribute_value: "2", parent_name: "1")
     end
   end
 
@@ -57,7 +60,8 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "wall", attribute_value: "brick", parent_name: "building_part")
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "building_parts",
+                                                                                        attribute_value: { "building_part" => { "wall" => "brick" } }.to_json, parent_name: nil)
     end
   end
 
@@ -75,24 +79,43 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1", attribute_value: "1|2|3", parent_name: nil)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1",
+                                                                                        attribute_value: %w[1 2 3].to_json, parent_name: nil)
     end
   end
 
-  # context "when an array of hashes is passed to the usecase" do
-  #   certificate_data = {
-  #     "1" => [
-  #       { "1a" => "one a" },
-  #       { "1b" => "one b" },
-  #     ],
-  #   }
-  #
-  #   assessment_id = "0000-0000-0000-0000-0000"
-  #
-  #   it "passes the attributes and values to the gateway" do
-  #     use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
-  #
-  #     expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1a", attribute_value: "one a", parent_name: "1-index-0")
-  #   end
-  # end
+  context "when an array of hashes is passed to the usecase" do
+    certificate_data = {
+      "1" => [
+        { "1a" => "one a" },
+        { "1b" => "one b" },
+      ],
+
+    }
+
+    assessment_id = "0000-0000-0000-0000-0000"
+
+    it "passes the attributes and values to the gateway" do
+      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1",
+                                                                                        attribute_value: certificate_data["1"].to_json, parent_name: nil)
+    end
+
+    it "receives the hashes only twice, one for each key" do
+      certificate_data = {
+        "1" => [
+          { "1a" => "one a" },
+          { "1b" => "one b" },
+        ],
+        "2" => [
+          { "1a" => "one a" },
+          { "1b" => "one b" },
+        ],
+
+      }
+      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).exactly(2).times
+    end
+  end
 end

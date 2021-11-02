@@ -7,14 +7,14 @@ namespace :db do
     migration_class = name.split("_").map(&:capitalize).join
 
     File.open(path, "w") do |file|
-      file.write <<~EOF
+      file.write <<~MIGRATION
         class #{migration_class} < ActiveRecord::Migration
           def self.up
           end
           def self.down
           end
         end
-      EOF
+      MIGRATION
     end
 
     puts "Migration #{path} created"

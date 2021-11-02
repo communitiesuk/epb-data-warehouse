@@ -395,10 +395,9 @@ module Gateway
 
     def valid_json?(input)
       JSON.parse(input)
-      return true
-    rescue StandardError => e
-    rescue JSON::ParserError => e
-      return false
+      true
+    rescue StandardError
+      false
     end
 
     def insert_attribute_value(assessment_id:, attribute_id:, attribute_value:)
