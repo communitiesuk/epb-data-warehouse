@@ -14,17 +14,13 @@ module UseCase
         @assessment_attribute_gateway.delete_attributes_by_assessment(assessment_id)
       end
 
-      wrapper =
-        ViewModel::Factory.new.create(
-          xml,
-          meta_data[:schemaType],
-        )
-      assessment_id = wrapper.view_model.assessment_id
-      certificate = wrapper.to_report
+      export_config = export_configuration(meta_data[:schemaType]).new
+      parser = XmlPresenter::Parser.new(**export_config.to_args)
+      certificate = parser.parse(xml)
 
-      certificate[:schema_type] = meta_data[:schemaType]
-      certificate[:assessment_address_id] = meta_data[:assessmentAddressId]
-      certificate[:created_at] = meta_data[:createdAt]
+      certificate["schema_type"] = meta_data[:schemaType]
+      certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
+      certificate["created_at"] = meta_data[:createdAt]
 
       begin
         @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
@@ -32,6 +28,14 @@ module UseCase
         # do nothing
       rescue Boundary::JsonAttributeSave
         # do nothing
+      end
+    end
+
+  private
+
+    def export_configuration(schema_type)
+      if schema_type == "RdSAP-Schema-20.0.0"
+        XmlPresenter::Rdsap::Rdsap20ExportConfiguration
       end
     end
   end

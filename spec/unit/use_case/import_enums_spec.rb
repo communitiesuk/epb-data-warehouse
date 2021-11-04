@@ -63,7 +63,7 @@ describe UseCase::ImportEnums do
     end
   end
 
-  context "when calling the presenter with a non existing node name" do
+  context "when calling the xml_presenter with a non existing node name" do
     let(:arguments) do
       [{
         "attribute_name" => "construction_age_band",
@@ -86,12 +86,12 @@ describe UseCase::ImportEnums do
       allow(xsd_config).to receive(:nodes_and_paths).and_return(arguments)
     end
 
-    it "the presenter raises an error which is bubbled up to the use case and rethrown" do
+    it "the xml_presenter raises an error which is bubbled up to the use case and rethrown" do
       expect { use_case.execute }.to raise_error(Boundary::EnumImportError, /Unable to import attribute blah/)
     end
   end
 
-  context "when calling the presenter with a an incorrect path" do
+  context "when calling the xml_presenter with a an incorrect path" do
     let(:arguments) do
       [{
         "attribute_name" => "tenure",
@@ -114,7 +114,7 @@ describe UseCase::ImportEnums do
       allow(xsd_config).to receive(:nodes_and_paths).and_return(arguments)
     end
 
-    it "the presenter raises an error which is bubbled up to the use case and rethrown" do
+    it "the xml_presenter raises an error which is bubbled up to the use case and rethrown" do
       expect { use_case.execute }.to raise_error(Boundary::EnumImportError, /Unable to import attribute TenureCode : No xsd files were found in /)
     end
   end
