@@ -1,6 +1,6 @@
 module XmlPresenter
   module Rdsap
-    class Rdsap20ExportConfiguration < Presenter::ToWarehouse::BaseConfiguration
+    class Rdsap20ExportConfiguration < XmlPresenter::ToWarehouse::BaseConfiguration
       excludes %w[
         ExternalDefinitions-Revision-Number
         User-Interface-Name
