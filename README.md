@@ -16,7 +16,7 @@ Ensure you have Postgres 11 installed. If you are working on a Mac, [this tutori
 
 Be sure that `DATABASE_URL` is set, for example
 ```
-DATABASE_URL = "postgresql://postgres@localhost:5432/epb_eav_development"
+DATABASE_URL="postgresql://postgres@localhost:5432/epb_eav_development"
 ```
 
 Once you have set this up, run the command
