@@ -2,14 +2,14 @@ module UseCase
   class OptOutCertificate
     OPT_OUT = "opt_out".freeze
 
-    def initialize(eav_gateway, redis_gateway, certificate_gateway)
+    def initialize(eav_gateway:, queues_gateway:, certificate_gateway:)
       @assessment_attribute_gateway = eav_gateway
-      @redis_gateway = redis_gateway
+      @queues_gateway = queues_gateway
       @certificate_gateway = certificate_gateway
     end
 
     def execute
-      assessment_ids = @redis_gateway.consume_queue(:opt_outs)
+      assessment_ids = @queues_gateway.consume_queue(:opt_outs)
       assessment_ids.each do |assessment_id|
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
         if meta_data[:optOut]

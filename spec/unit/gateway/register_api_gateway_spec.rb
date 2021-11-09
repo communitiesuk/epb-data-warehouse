@@ -1,5 +1,5 @@
 describe Gateway::RegisterApiGateway do
-  subject { described_class.new(api_client) }
+  subject { described_class.new(api_client: api_client) }
 
   let(:api_client) { Gateway::ApiClient.new }
 

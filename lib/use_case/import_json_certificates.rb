@@ -7,7 +7,7 @@ module UseCase
     # It should be removed when the seed_test_data task is updated to use XML.
     attr_accessor :file_gateway, :import_certificate_data_use_case
 
-    def initialize(file_gateway, import_certificate_data_use_case)
+    def initialize(file_gateway:, import_certificate_data_use_case:)
       @file_gateway = file_gateway
       @import_certificate_data_use_case = import_certificate_data_use_case
     end

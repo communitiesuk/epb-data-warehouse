@@ -1,6 +1,8 @@
 describe "Acceptance::ImportCertificate" do
   subject(:usecase) do
-    UseCase::ImportCertificates.new(Gateway::AssessmentAttributesGateway.new, certificate_gateway, redis_gateway)
+    UseCase::ImportCertificates.new eav_gateway: Gateway::AssessmentAttributesGateway.new,
+                                    certificate_gateway: certificate_gateway,
+                                    queues_gateway: queues_gateway
   end
 
   def attributes_values_from_database(column, attribute)
@@ -13,7 +15,7 @@ describe "Acceptance::ImportCertificate" do
     instance_double(Gateway::RegisterApiGateway)
   end
 
-  let(:redis_gateway) do
+  let(:queues_gateway) do
     Gateway::RedisGateway.new(redis_client: redis)
   end
 
@@ -47,12 +49,11 @@ describe "Acceptance::ImportCertificate" do
     allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
     allow(certificate_gateway).to receive(:fetch).and_return(xml_sample)
     allow(certificate_gateway).to receive(:fetch_meta_data).and_return(meta_data_sample)
-    redis_gateway.push_to_queue(:assessments, ids)
+    queues_gateway.push_to_queue(:assessments, ids)
     usecase.execute
   end
 
   context "when an assessment id is provided to the queue" do
-
     it "saves the relevant attributes values to the database" do
       response = attributes_values_from_database("attribute_value", "'RdSAP-Schema-20.0.0'")
       expect(response.length).to be >= 1

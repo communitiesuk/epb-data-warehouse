@@ -1,6 +1,6 @@
 module UseCase
   class ImportXmlCertificate
-    def initialize(import_certificate_data_use_case, assessment_attribute_gateway, certificate_gateway)
+    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:)
       @import_certificate_data_use_case = import_certificate_data_use_case
       @assessment_attribute_gateway = assessment_attribute_gateway
       @certificate_gateway = certificate_gateway

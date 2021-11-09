@@ -1,13 +1,13 @@
 module UseCase
   class CancelCertificate
-    def initialize(eav_gateway:, redis_gateway:, api_gateway:)
+    def initialize(eav_gateway:, queues_gateway:, api_gateway:)
       @assessment_attribute_gateway = eav_gateway
-      @redis_gateway = redis_gateway
+      @queues_gateway = queues_gateway
       @api_gateway = api_gateway
     end
 
     def execute
-      assessment_ids = @redis_gateway.consume_queue(:cancelled)
+      assessment_ids = @queues_gateway.consume_queue(:cancelled)
       assessment_ids.each do |assessment_id|
         meta_data = @api_gateway.fetch_meta_data(assessment_id)
         next if meta_data[:cancelledAt].nil?

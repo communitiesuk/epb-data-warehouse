@@ -2,8 +2,8 @@
 
 module UseCase
   class FetchBase
-    def initialize(gateway)
-      @gateway = gateway
+    def initialize(certificate_gateway:)
+      @gateway = certificate_gateway
     end
 
     def raise_errors_if_exists(response)

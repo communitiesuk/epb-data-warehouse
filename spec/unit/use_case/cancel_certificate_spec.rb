@@ -1,17 +1,15 @@
 describe UseCase::CancelCertificate do
   subject(:use_case) do
-    described_class.new(
-      eav_gateway: eav_database_gateway,
-      redis_gateway: redis_gateway,
-      api_gateway: api_gateway,
-    )
+    described_class.new eav_gateway: eav_database_gateway,
+                        queues_gateway: queues_gateway,
+                        api_gateway: api_gateway
   end
 
   let(:eav_database_gateway) do
     instance_double(Gateway::AssessmentAttributesGateway)
   end
 
-  let(:redis_gateway) do
+  let(:queues_gateway) do
     instance_double(Gateway::RedisGateway)
   end
 
@@ -21,7 +19,7 @@ describe UseCase::CancelCertificate do
 
   before do
     allow(eav_database_gateway).to receive(:add_attribute_value).and_return(true)
-    allow(redis_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
+    allow(queues_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
   end
 
   context "when processing cancellations where there is a cancelled_at attribute present" do

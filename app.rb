@@ -25,7 +25,7 @@ class QueueWorker
 private
 
   def pull_queues
-    ids = @redis_gateway.consume_queue(:assessments)
+    ids = @queues_gateway.consume_queue(:assessments)
     pp "Queues were read!"
     unless ids.empty?
       pp ids
@@ -47,7 +47,7 @@ private
       redis_url = RedisConfigurationReader.read_configuration_url(redis_instance_name)
     end
 
-    @redis_gateway = Gateway::RedisGateway.new(redis_client: Redis.new(url: redis_url))
+    @queues_gateway = Gateway::RedisGateway.new(redis_client: Redis.new(url: redis_url))
   end
 
   def set_postgres_connection

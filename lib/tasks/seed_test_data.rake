@@ -5,7 +5,10 @@ task :seed_test_data do
 
   certificates_gateway = Gateway::JsonCertificates.new(json_dir_path)
 
-  use_case = UseCase::ImportJsonCertificates.new(certificates_gateway, UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new))
+  use_case = UseCase::ImportJsonCertificates.new file_gateway: certificates_gateway,
+                                                 import_certificate_data_use_case: UseCase::ImportCertificateData.new(
+                                                   assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new,
+                                                 )
 
   use_case.execute
   pp "seed data added to database"

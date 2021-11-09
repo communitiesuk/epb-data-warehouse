@@ -10,12 +10,14 @@ describe UseCase::ImportCertificates do
     instance_double(Gateway::RegisterApiGateway)
   end
 
-  let(:redis_gateway) do
+  let(:queues_gateway) do
     instance_double(Gateway::RedisGateway)
   end
 
   let!(:use_case) do
-    described_class.new(database_gateway, certificate_gateway, redis_gateway)
+    described_class.new eav_gateway: database_gateway,
+                        certificate_gateway: certificate_gateway,
+                        queues_gateway: queues_gateway
   end
 
   let!(:sample) do
@@ -31,8 +33,8 @@ describe UseCase::ImportCertificates do
     allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
 
-    allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
-    allow(redis_gateway).to receive(:consume_queue).and_return(%w[
+    allow(Gateway::RedisGateway).to receive(:new).and_return(queues_gateway)
+    allow(queues_gateway).to receive(:consume_queue).and_return(%w[
       0000-0000-0000-0000-0000
       0000-0000-0000-0000-0001
       0000-0000-0000-0000-0002

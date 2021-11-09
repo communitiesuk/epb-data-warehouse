@@ -12,7 +12,9 @@ describe UseCase::ImportXmlCertificate do
   end
 
   let(:use_case) do
-    described_class.new(UseCase::ImportCertificateData.new(assessment_attribute_gateway: database_gateway), database_gateway, certificate_gateway)
+    described_class.new import_certificate_data_use_case: UseCase::ImportCertificateData.new(assessment_attribute_gateway: database_gateway),
+                        assessment_attribute_gateway: database_gateway,
+                        certificate_gateway: certificate_gateway
   end
 
   let(:sample) do
@@ -25,7 +27,7 @@ describe UseCase::ImportXmlCertificate do
                                                                          assessmentAddressId: "UPRN-000000000000",
                                                                          "typeOfAssessment": "RdSAP",
                                                                          "optOut": false,
-                                                                         "createdAt": "2021-07-21T11:26:28.045Z"})
+                                                                         "createdAt": "2021-07-21T11:26:28.045Z" })
     use_case.execute(assessment_id)
   end
 

@@ -5,7 +5,7 @@ module Gateway
     class AssessmentNotFound < StandardError
     end
 
-    def initialize(api_client)
+    def initialize(api_client:)
       @internal_api_client = api_client
     end
 
