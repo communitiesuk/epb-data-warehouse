@@ -406,16 +406,15 @@ module Gateway
               VALUES($1, $2, $3, $4, $5, $6)
       SQL
 
-      json_value = attribute_value if valid_json?(attribute_value)
-
-      if attribute_value.instance_of?(Hash)
-        hashed_attribute = attribute_value.clone.symbolize_keys
-        attribute_value = hashed_attribute[:description]
-        attribute_int = attribute_value_float(hashed_attribute[:value])
-        attribute_float = attribute_value_float(hashed_attribute[:value])
+      if attribute_value.respond_to?(:to_h)
+        json_value = attribute_value
+        attribute_value = nil
+        attribute_int = nil
+        attribute_float = nil
       else
         attribute_int = attribute_value_int(attribute_value)
         attribute_float = attribute_value_float(attribute_value)
+        json_value = nil
       end
 
       bindings = [

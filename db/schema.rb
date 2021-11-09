@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_01_163600) do
+ActiveRecord::Schema.define(version: 2021_11_08_124841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_163600) do
   create_table "assessment_attribute_values", id: false, force: :cascade do |t|
     t.bigint "attribute_id", null: false
     t.string "assessment_id", null: false
-    t.string "attribute_value", null: false
+    t.string "attribute_value"
     t.integer "attribute_value_int"
     t.float "attribute_value_float"
     t.jsonb "json"

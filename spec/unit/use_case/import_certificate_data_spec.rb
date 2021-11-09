@@ -43,7 +43,7 @@ describe UseCase::ImportCertificateData do
       expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1", attribute_value: {
         "one" => "1",
         "two" => "2",
-      }.to_json, parent_name: nil)
+      }, parent_name: nil)
       # expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "two", attribute_value: "2", parent_name: "1")
     end
   end
@@ -61,7 +61,7 @@ describe UseCase::ImportCertificateData do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "building_parts",
-                                                                                        attribute_value: { "building_part" => { "wall" => "brick" } }.to_json, parent_name: nil)
+                                                                                        attribute_value: { "building_part" => { "wall" => "brick" } }, parent_name: nil)
     end
   end
 
@@ -80,7 +80,7 @@ describe UseCase::ImportCertificateData do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1",
-                                                                                        attribute_value: %w[1 2 3].to_json, parent_name: nil)
+                                                                                        attribute_value: %w[1 2 3], parent_name: nil)
     end
   end
 
@@ -99,7 +99,7 @@ describe UseCase::ImportCertificateData do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1",
-                                                                                        attribute_value: certificate_data["1"].to_json, parent_name: nil)
+                                                                                        attribute_value: certificate_data["1"], parent_name: nil)
     end
 
     it "receives the hashes only twice, one for each key" do

@@ -11,29 +11,29 @@ describe Gateway::AssessmentAttributesGateway do
     )
   end
   let(:json_blob) do
-    '{"schema_version_original": "LIG-19.0",
-                          "sap_version": 9.94,
-                          "calculation_software_name": "Elmhurst Energy Systems RdSAP Calculator",
-                          "calculation_software_version": "4.05r0005",
-                          "rrn": "8570-6826-6530-4969-0202",
-                          "inspection_date": "2020-06-01",
-                          "report_type": 2,
-                          "completion_date": "2020-06-01",
-                          "registration_date": "2020-06-01",
-                          "status": "entered",
-                          "language_code": 1,
-                          "tenure": 1,
-                          "transaction_type":1,
-                          "property_type": 0,
-                          "scheme_assessor_id": "EES/008538",
-                          "property":
-                            {"address":
-                               {"address_line_1": "25, Marlborough Place",
-                                "post_town": "LONDON",
-                                "postcode": "NW8 0PG"},
-                             "uprn": 7435089668},
-                          "region_code": 17,
-                          "country_code": "EAW"}'
+    { "schema_version_original" => "LIG-19.0",
+      "sap_version" => 9.94,
+      "calculation_software_name" => "Elmhurst Energy Systems RdSAP Calculator",
+      "calculation_software_version" => "4.05r0005",
+      "rrn" => "8570-6826-6530-4969-0202",
+      "inspection_date" => "2020-06-01",
+      "report_type" => 2,
+      "completion_date" => "2020-06-01",
+      "registration_date" => "2020-06-01",
+      "status" => "entered",
+      "language_code" => 1,
+      "tenure" => 1,
+      "transaction_type" => 1,
+      "property_type" => 0,
+      "scheme_assessor_id" => "EES/008538",
+      "property" =>
+                            { "address" =>
+                               { "address_line_1" => "25, Marlborough Place",
+                                 "post_town" => "LONDON",
+                                 "postcode" => "NW8 0PG" },
+                              "uprn" => 7_435_089_668 },
+      "region_code" => 17,
+      "country_code" => "EAW" }
   end
 
   before do
@@ -352,43 +352,6 @@ describe Gateway::AssessmentAttributesGateway do
             .count,
         ).not_to eq(0)
       end
-    end
-  end
-
-  context "when we pass an enum value as a hash to the assessment attributes" do
-    let(:assessment_attribute_values) do
-      ActiveRecord::Base
-        .connection
-        .exec_query(
-          "SELECT * FROM assessment_attribute_values
-        WHERE assessment_id= '0000-0000-0000-0000-0001'
-        ",
-        )
-        .first
-    end
-
-    it "returns the description and int value in the assessment_attribute_values table w" do
-      gateway.add_attribute_value(
-        assessment_id: "0000-0000-0000-0000-0001",
-        attribute_name: "transaction_type",
-        attribute_value: { "description": "marketed sale", "value": "1" },
-      )
-      expect(assessment_attribute_values["attribute_value"]).to eq(
-        "marketed sale",
-      )
-      expect(assessment_attribute_values["attribute_value_int"]).to eq(1)
-    end
-
-    it "returns the description and int value in the assessment_attribute_values table" do
-      gateway.add_attribute_value(
-        assessment_id: "0000-0000-0000-0000-0001",
-        attribute_name: "transaction_type",
-        attribute_value: { "description": "marketed sale", "value": "10.0" },
-      )
-      expect(assessment_attribute_values["attribute_value"]).to eq(
-        "marketed sale",
-      )
-      expect(assessment_attribute_values["attribute_value_int"]).to eq(10)
     end
   end
 

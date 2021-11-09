@@ -45,7 +45,7 @@ describe UseCase::ImportJsonCertificates do
       use_case.execute
 
       ActiveRecord::Base.connection.exec_query(
-        'SELECT aa.*, aav.attribute_value,  aav.attribute_value_int, aav.attribute_value_float, aav.assessment_id
+        'SELECT aa.*, aav.attribute_value,  aav.attribute_value_int, aav.attribute_value_float, aav.assessment_id, aav.json
             FROM assessment_attribute_values aav
             JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id',
       )
@@ -87,7 +87,7 @@ describe UseCase::ImportJsonCertificates do
 
     it "the attribute table should contain one hash for the town with a parent of address" do
       arr = imported_data.select { |result| result["attribute_name"] == "address" }
-      expect(JSON.parse(arr[0]["attribute_value"])["town"]).to eq("Whitbury")
+      expect(JSON.parse(arr[0]["json"])["town"]).to eq("Whitbury")
     end
   end
 end
