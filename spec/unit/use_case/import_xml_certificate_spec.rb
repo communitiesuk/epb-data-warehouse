@@ -31,9 +31,14 @@ describe UseCase::ImportXmlCertificate do
     use_case.execute(assessment_id)
   end
 
-  it "transforms the xml using the view model to_report method " do
-    expect(transformed_certificate).to be_a(Hash)
-    expect(transformed_certificate["calculation_software_version"]).to eq("13.05r16")
-    expect(transformed_certificate["created_at"]).to eq("2021-07-21T11:26:28.045Z")
+  context "when transforming the epc xml using the parser " do
+    it "creates a ruby hash of the nodes " do
+      expect(transformed_certificate).to be_a(Hash)
+    end
+
+    it "the hash contains the some of expected keys" do
+      expect(transformed_certificate["calculation_software_version"]).to eq("13.05r16")
+      expect(transformed_certificate["created_at"]).to eq("2021-07-21T11:26:28.045Z")
+    end
   end
 end
