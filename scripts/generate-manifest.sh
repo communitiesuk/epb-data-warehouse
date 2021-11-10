@@ -20,5 +20,5 @@ applications:
     health-check-type: process
     services:
       - mhclg-epb-data-warehouse-db-$STAGE
-      - mhclg-epb-redis-data-warehouse-$STAGE
+      - dluhc-epb-redis-data-warehouse-$STAGE
 EOF

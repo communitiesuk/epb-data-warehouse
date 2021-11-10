@@ -43,7 +43,7 @@ private
     if ENV.key? "EPB_QUEUES_URI"
       redis_url = ENV["EPB_QUEUES_URI"]
     else
-      redis_instance_name = "mhclg-epb-redis-data-warehouse-#{environment}"
+      redis_instance_name = "dluhc-epb-redis-data-warehouse-#{environment}"
       redis_url = RedisConfigurationReader.read_configuration_url(redis_instance_name)
     end
 
