@@ -11,11 +11,12 @@ unless defined? TestLoader
   require "zeitwerk"
   loader = Zeitwerk::Loader.new
   loader.push_dir("#{__dir__}/lib/")
+  loader.push_dir("#{__dir__}/lib/helper", namespace: Helper)
   loader.setup
 end
 
 # Adds project rake files
-Rake.add_rakelib("lib/tasks")
+Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
 
 # Loads Rails database tasks
 Rake.load_rakefile("active_record/railties/databases.rake")

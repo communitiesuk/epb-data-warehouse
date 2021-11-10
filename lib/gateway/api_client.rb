@@ -1,3 +1,5 @@
+require "epb-auth-tools"
+
 module Gateway
   class ApiClient
     def initialize
