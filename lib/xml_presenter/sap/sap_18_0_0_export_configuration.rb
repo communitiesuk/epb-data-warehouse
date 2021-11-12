@@ -65,7 +65,7 @@ module XmlPresenter
                             "Main-Heating" => { parents: %w[Property-Summary], key: "main_heating" },
                             "Main-Heating-Controls" => "main_heating_controls",
                             "Addendum-Number" => "addendum_numbers",
-                            "SAP-Thermal-Bridge" => "sap_thermal_bridges",
+                            "SAP-Thermal-Bridge" => "thermal_bridges",
                           })
     end
   end

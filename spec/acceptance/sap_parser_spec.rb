@@ -283,7 +283,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                               "u_value" => 0 }],
                           "sap_thermal_bridges" =>
                            { "thermal_bridge_code" => 5,
-                             "sap_thermal_bridges" =>
+                             "thermal_bridges" =>
                               [{ "thermal_bridge_type" => "E2",
                                  "length" => 13.13,
                                  "psi_value" => 0.07,
