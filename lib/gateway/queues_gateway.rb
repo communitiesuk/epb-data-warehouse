@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Gateway
-  class RedisGateway
+  class QueuesGateway
     class InvalidRedisQueueNameError < StandardError; end
 
     QUEUE_NAMES = %i[assessments cancelled opt_outs].freeze

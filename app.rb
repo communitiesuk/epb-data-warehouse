@@ -47,7 +47,7 @@ private
       redis_url = RedisConfigurationReader.read_configuration_url(redis_instance_name)
     end
 
-    @queues_gateway = Gateway::RedisGateway.new(redis_client: Redis.new(url: redis_url))
+    @queues_gateway = Gateway::QueuesGateway.new(redis_client: Redis.new(url: redis_url))
   end
 
   def set_postgres_connection

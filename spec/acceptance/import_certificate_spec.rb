@@ -16,7 +16,7 @@ describe "Acceptance::ImportCertificate" do
   end
 
   let(:queues_gateway) do
-    Gateway::RedisGateway.new(redis_client: redis)
+    Gateway::QueuesGateway.new(redis_client: redis)
   end
 
   let(:redis) { MockRedis.new }

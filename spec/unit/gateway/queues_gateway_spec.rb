@@ -1,6 +1,6 @@
 require "securerandom"
 
-describe Gateway::RedisGateway do
+describe Gateway::QueuesGateway do
   subject(:gateway) do
     described_class.new(redis_client: redis)
   end
@@ -35,10 +35,10 @@ describe Gateway::RedisGateway do
 
     it "raises an error for an invalid queue name" do
       expect { gateway.push_to_queue(:none_exisitng_queue, ids) }.to raise_error(
-        Gateway::RedisGateway::InvalidRedisQueueNameError,
+        Gateway::QueuesGateway::InvalidRedisQueueNameError,
       )
       expect { gateway.consume_queue(:none_exisitng_queue) }.to raise_error(
-        Gateway::RedisGateway::InvalidRedisQueueNameError,
+        Gateway::QueuesGateway::InvalidRedisQueueNameError,
       )
     end
 

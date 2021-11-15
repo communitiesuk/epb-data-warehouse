@@ -11,7 +11,7 @@ describe UseCase::ImportCertificates do
   end
 
   let(:queues_gateway) do
-    instance_double(Gateway::RedisGateway)
+    instance_double(Gateway::QueuesGateway)
   end
 
   let!(:use_case) do
@@ -33,7 +33,7 @@ describe UseCase::ImportCertificates do
     allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
 
-    allow(Gateway::RedisGateway).to receive(:new).and_return(queues_gateway)
+    allow(Gateway::QueuesGateway).to receive(:new).and_return(queues_gateway)
     allow(queues_gateway).to receive(:consume_queue).and_return(%w[
       0000-0000-0000-0000-0000
       0000-0000-0000-0000-0001

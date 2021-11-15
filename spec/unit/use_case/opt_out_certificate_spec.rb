@@ -10,7 +10,7 @@ describe UseCase::OptOutCertificate do
   end
 
   let(:queues_gateway) do
-    instance_double(Gateway::RedisGateway)
+    instance_double(Gateway::QueuesGateway)
   end
 
   let(:certificate_gateway) do
