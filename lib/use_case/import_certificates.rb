@@ -9,19 +9,11 @@ module UseCase
     def execute
       assessment_ids = @queues_gateway.consume_queue(:assessments)
 
+      import_xml_certificate = use_case :import_xml_certificate
+
       assessment_ids.each do |assessment_id|
-        import_xml_certificate_use_case.execute(assessment_id)
+        import_xml_certificate.execute(assessment_id)
       end
-    end
-
-  private
-
-    def import_xml_certificate_use_case
-      @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new(
-        import_certificate_data_use_case: UseCase::ImportCertificateData.new(assessment_attribute_gateway: @assessment_attribute_gateway),
-        assessment_attribute_gateway: @assessment_attribute_gateway,
-        certificate_gateway: @certificate_gateway,
-      )
     end
   end
 end

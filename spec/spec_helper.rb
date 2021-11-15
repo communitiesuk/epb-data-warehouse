@@ -34,6 +34,14 @@ def get_task(name)
   rake.tasks.find { |task| task.to_s == name }
 end
 
+def use_case(name)
+  Services.use_case name
+end
+
+def gateway(name)
+  Services.gateway name
+end
+
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
@@ -79,6 +87,10 @@ RSpec.configure do |config|
   config.before do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
+  end
+
+  config.before do
+    Container.reset!
   end
 
   config.after { DatabaseCleaner.clean }

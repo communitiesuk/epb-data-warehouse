@@ -15,6 +15,14 @@ unless defined? TestLoader
   loader.setup
 end
 
+def use_case(name)
+  Services.use_case name
+end
+
+def gateway(name)
+  Services.gateway name
+end
+
 # Adds project rake files
 Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
 

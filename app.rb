@@ -8,6 +8,14 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib")
 loader.setup
 
+def use_case(name)
+  Services.use_case name
+end
+
+def gateway(name)
+  Services.gateway name
+end
+
 class QueueWorker
   def start!
     loop do
@@ -40,7 +48,7 @@ private
   end
 
   def set_redis_connection
-    @queues_gateway = Gateway::QueuesGateway.new
+    @queues_gateway = gateway :queues
   end
 
   def set_postgres_connection
