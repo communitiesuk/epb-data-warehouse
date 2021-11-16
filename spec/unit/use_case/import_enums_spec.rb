@@ -124,20 +124,10 @@ describe UseCase::ImportEnums do
       Gateway::AssessmentLookupsGateway.new
     end
 
-    let(:saved_data) do
-      ActiveRecord::Base.connection.exec_query("SELECT *
-                FROM assessment_lookups")
-    end
-
-    before do
+    before(:all) do
       lookups_gateway = Gateway::AssessmentLookupsGateway.new
-      xsd_config = instance_double(Gateway::XsdConfigGateway)
-      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "construction_age_band",
-                                                                   "type_of_assessment" => "RdSAP",
-                                                                   "xsd_node_name" => "ConstructionDateCode",
-                                                                   "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd" }])
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/construction_age_band.json")
       use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
-
       use_case.execute
     end
 

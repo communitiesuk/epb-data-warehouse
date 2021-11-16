@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_124841) do
+ActiveRecord::Schema.define(version: 2021_11_16_112101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(version: 2021_11_08_124841) do
     t.string "type_of_assessment", null: false
     t.string "schema_version"
     t.index ["attribute_id", "lookup_id", "type_of_assessment", "schema_version"], name: "attribute_lookup_index", unique: true
+    t.index ["lookup_id"], name: "index_assessment_attribute_lookups_on_lookup_id"
+    t.index ["schema_version"], name: "index_assessment_attribute_lookups_on_schema_version"
+    t.index ["type_of_assessment"], name: "index_assessment_attribute_lookups_on_type_of_assessment"
   end
 
   create_table "assessment_attribute_values", id: false, force: :cascade do |t|
