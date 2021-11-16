@@ -32,8 +32,8 @@ module XmlPresenter
       ]
       # preferred keys is a hash containing the original name of a data node as the key and the new name you have chosen for the node as the value.
       preferred_keys({
-                       "Certificate-Number" => "scheme_assessor_id",
-                     })
+        "Certificate-Number" => "scheme_assessor_id",
+      })
       # list nodes are data node which contain and array. This helps ensure they are correctly formatted.
       list_nodes %w[
         SAP-Floor-Dimensions
@@ -59,14 +59,14 @@ module XmlPresenter
       ]
       # rootless lists is a hash containing the names of data nodes which can appear multiple times but are not given a parent node (for example wall in the property summary). These node are listed as the keys and the name of the parent node we wish to give their list is added as the value.
       rootless_list_nodes({
-                            "Walls" => "walls",
-                            "Roof" => "roofs",
-                            "Floor" => { parents: %w[Property-Summary], key: "floors" },
-                            "Main-Heating" => { parents: %w[Property-Summary], key: "main_heating" },
-                            "Main-Heating-Controls" => "main_heating_controls",
-                            "Addendum-Number" => "addendum_numbers",
-                            "SAP-Thermal-Bridge" => "thermal_bridges",
-                          })
+        "Walls" => "walls",
+        "Roof" => "roofs",
+        "Floor" => { parents: %w[Property-Summary], key: "floors" },
+        "Main-Heating" => { parents: %w[Property-Summary], key: "main_heating" },
+        "Main-Heating-Controls" => "main_heating_controls",
+        "Addendum-Number" => "addendum_numbers",
+        "SAP-Thermal-Bridge" => "thermal_bridges",
+      })
     end
   end
 end
