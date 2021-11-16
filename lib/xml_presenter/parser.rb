@@ -247,7 +247,7 @@ module XmlPresenter
     end
 
     def set_up_list
-      return if @output_position.any? { |x| x.is_a? Integer } && !at_list_node_item?
+      return if (@output_position.any? { |x| x.is_a? Integer } && !at_list_node_item?) || (@is_excluding && !@is_including)
 
       candidate_list = value_at @output_position[..-2]
 

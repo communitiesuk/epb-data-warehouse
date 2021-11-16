@@ -245,4 +245,16 @@ RSpec.describe XmlPresenter::Parser do
       expect(parser.parse(xml)).to eq expected
     end
   end
+
+  context "with an excluded node containing multiple scalars" do
+    let(:parser) { described_class.new(excludes: %w[id]) }
+
+    it "should not add in random crap" do
+      xml = "<Report><id><name>item one</name><name>item two</name><name>item three</name></id><boop>hello</boop></Report>"
+      expected = {
+        "boop" => "hello",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end

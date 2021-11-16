@@ -6,6 +6,7 @@ module XmlPresenter
         EPC-Related-Party-Disclosure
         Energy-Assessor
         Unstructured-Data
+EPC-Rating-Scale
       ]
       includes %w[
         Certificate-Number
@@ -32,7 +33,6 @@ module XmlPresenter
         AC-Sub-Systems
         AR-Questions
         Renewable-Energy-Source
-        Summary-Of-Performance
       ]
       rootless_list_nodes({
         "Short-Payback" => "short_payback",
@@ -52,6 +52,7 @@ module XmlPresenter
         "Specials" => "specials",
         "Answer" => "answers",
         "Benchmarks" => "benchmarks",
+        "Building-Data" => "building_data",
       })
       pick_root_node(root_node: "Report", sub_node: "RRN")
     end
