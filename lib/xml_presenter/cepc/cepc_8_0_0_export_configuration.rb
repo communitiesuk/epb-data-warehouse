@@ -6,7 +6,7 @@ module XmlPresenter
         EPC-Related-Party-Disclosure
         Energy-Assessor
         Unstructured-Data
-EPC-Rating-Scale
+        EPC-Rating-Scale
       ]
       includes %w[
         Certificate-Number
