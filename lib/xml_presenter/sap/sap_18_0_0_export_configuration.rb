@@ -24,7 +24,6 @@ module XmlPresenter
         Energy-Assessment
         Property-Summary
         Energy-Use
-        SAP-Data
         SAP-Property-Details
         Identification-Number
         Property
