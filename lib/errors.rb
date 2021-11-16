@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 module Errors
-  class AssessmentGone < RuntimeError
+  class AssessmentDoesNotExist < RuntimeError
   end
 
-  class AssessmentNotFound < RuntimeError
+  class AssessmentGone < AssessmentDoesNotExist
+  end
+
+  class AssessmentNotFound < AssessmentDoesNotExist
   end
 
   class AuthTokenMissing < RuntimeError

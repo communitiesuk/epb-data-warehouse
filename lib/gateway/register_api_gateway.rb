@@ -2,9 +2,6 @@
 
 module Gateway
   class RegisterApiGateway
-    class AssessmentNotFound < StandardError
-    end
-
     def initialize(api_client:)
       @internal_api_client = api_client
     end
@@ -15,6 +12,8 @@ module Gateway
       response =
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
+      check_errors_on response
+
       response.body
     end
 
@@ -24,7 +23,22 @@ module Gateway
       response =
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
+      check_errors_on response
+
       JSON.parse(response.body, symbolize_names: true)[:data]
+    end
+
+  private
+
+    def check_errors_on(response)
+      case response.status
+      when 400
+        raise Errors::AssessmentNotFound
+      when 404
+        raise Errors::AssessmentNotFound
+      when 410
+        raise Errors::AssessmentGone
+      end
     end
   end
 end
