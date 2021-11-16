@@ -232,4 +232,17 @@ RSpec.describe XmlPresenter::Parser do
       end
     end
   end
+
+  context "with more than one report type present in the xml" do
+    let(:parser) { described_class.new(specified_report: { root_node: "Report", sub_node: "id", sub_node_value: "1" }) }
+
+    it "parses the report with the specified id" do
+      xml = "<Reports><Report><id>1</id><name>item one</name></Report><Report><id>2</id><name>item two</name></Report><Report><id>3</id><name>item three</name></Report></Reports>"
+      expected = {
+        "id" => 1,
+        "name" => "item one",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end

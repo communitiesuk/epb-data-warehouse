@@ -1,26 +1,37 @@
 module XmlPresenter
   class Parser
-    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {})
+    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, specified_report: nil)
       @excludes = excludes
       @includes = includes
       @bases = bases
       @preferred_keys = preferred_keys
       @list_nodes = list_nodes
       @rootless_list_nodes = rootless_list_nodes
+      @specified_report = specified_report
     end
 
     def parse(xml)
-      sax_parser.parse xml
+      sax_parser(xml).parse xml
       last_output
     end
 
-    def sax_parser
+    def root_node_option(xml)
+      if @specified_report
+        {
+          index: find_index(xml),
+          name: @specified_report[:root_node],
+        }
+      end
+    end
+
+    def sax_parser(xml)
       @assessment_document ||= AssessmentDocument.new excludes: @excludes,
                                                       includes: @includes,
                                                       bases: @bases,
                                                       preferred_keys: @preferred_keys,
                                                       list_nodes: @list_nodes,
-                                                      rootless_list_nodes: @rootless_list_nodes
+                                                      rootless_list_nodes: @rootless_list_nodes,
+                                                      root_node: root_node_option(xml)
       @sax_parser ||= Nokogiri::XML::SAX::Parser.new @assessment_document
     end
 
@@ -29,22 +40,68 @@ module XmlPresenter
     def last_output
       @assessment_document.output
     end
+
+    def find_index(xml)
+      report_index = ReportIndex.new(**@specified_report)
+      Nokogiri::XML::SAX::Parser.new(report_index).parse(xml)
+      report_index.correct_index
+    end
+  end
+
+  class ReportIndex < Nokogiri::XML::SAX::Document
+    def initialize(root_node:, sub_node:, sub_node_value:)
+      @root_node = root_node
+      @sub_node = sub_node
+      @sub_node_value = sub_node_value
+      super()
+    end
+
+    def start_document
+      @node_index = -1
+    end
+
+    def start_element_namespace(name, _attrs = nil, _prefix = nil, _uri = nil, _namespace = nil)
+      if name == @root_node
+        @node_index += 1
+      end
+
+      if name == @sub_node
+        @in_subnode = true
+      end
+    end
+
+    def end_element_namespace(name, _prefix = nil, _uri = nil)
+      if name == @sub_node
+        @in_subnode = false
+      end
+    end
+
+    def characters(string)
+      if @in_subnode == true && @sub_node_value == string.strip
+        @correct_index = @node_index
+      end
+    end
+
+    attr_reader :correct_index
   end
 
   class AssessmentDocument < Nokogiri::XML::SAX::Document
-    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {})
+    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, root_node: nil)
       @excludes = excludes
       @includes = includes
       @bases = bases
       @preferred_keys = preferred_keys
       @list_nodes = list_nodes
       @rootless_list_nodes = rootless_list_nodes
+      @root_node = root_node
       super()
     end
 
     def start_document
       init!
       @output = {}
+      @is_reading = @root_node.nil?
+      @node_index = -1
     end
 
     def end_document
@@ -52,6 +109,14 @@ module XmlPresenter
     end
 
     def start_element_namespace(name, attrs = nil, _prefix = nil, _uri = nil, _namespace = nil)
+      if @root_node && name == @root_node[:name]
+        @node_index += 1
+        if @node_index == @root_node[:index]
+          @is_reading = true
+        end
+      end
+      return unless @is_reading
+
       @source_position << name
       @output_position << root_key_for_list if at_rootless_list_node_item?
       @output_position << as_key(name) unless is_base?(name)
@@ -69,6 +134,9 @@ module XmlPresenter
     end
 
     def end_element_namespace(name, _prefix = nil, _uri = nil)
+      if @root_node && name == @root_node[:name]
+        @is_reading = false
+      end
       @output_position.pop unless is_base?(name)
       @output_position.pop if at_rootless_list_node_item?
       @source_position.pop
@@ -77,7 +145,7 @@ module XmlPresenter
     end
 
     def characters(string)
-      if @is_excluding && !@is_including
+      if (@is_excluding && !@is_including) || !@is_reading
         return
       end
 

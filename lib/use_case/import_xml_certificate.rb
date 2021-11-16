@@ -34,9 +34,11 @@ module UseCase
   private
 
     def export_configuration(schema_type)
-      if schema_type == "RdSAP-Schema-20.0.0"
-        XmlPresenter::Rdsap::Rdsap20ExportConfiguration
-      end
+      export_config_file = {
+        "RdSAP-Schema-20.0.0" => XmlPresenter::Rdsap::Rdsap20ExportConfiguration,
+        "SAP-Schema-18.0.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
+      }
+      export_config_file[schema_type]
     end
   end
 end
