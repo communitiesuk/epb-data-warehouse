@@ -15,7 +15,7 @@ module UseCase
       end
 
       export_config = export_configuration(meta_data[:schemaType]).new
-      parser = XmlPresenter::Parser.new(**export_config.to_args)
+      parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: assessment_id))
       certificate = parser.parse(xml)
 
       certificate["schema_type"] = meta_data[:schemaType]
@@ -37,6 +37,7 @@ module UseCase
       export_config_file = {
         "RdSAP-Schema-20.0.0" => XmlPresenter::Rdsap::Rdsap20ExportConfiguration,
         "SAP-Schema-18.0.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
+        "CEPC-8.0.0" => XmlPresenter::Cepc::Cepc800ExportConfiguration,
       }
       export_config_file[schema_type]
     end
