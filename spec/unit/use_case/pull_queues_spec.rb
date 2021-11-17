@@ -1,5 +1,5 @@
 describe UseCase::PullQueues do
-  subject(:use_case) { UseCase::PullQueues.new }
+  subject(:use_case) { described_class.new }
 
   use_case_classes = [
     UseCase::ImportCertificates,
@@ -21,9 +21,7 @@ describe UseCase::PullQueues do
     it "executes all of the sub use cases" do
       use_case.execute
 
-      instances.each do |use_case_instance|
-        expect(use_case_instance).to have_received(:execute)
-      end
+      expect(instances).to all(have_received(:execute))
     end
   end
 end
