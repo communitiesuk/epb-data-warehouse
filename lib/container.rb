@@ -44,10 +44,10 @@ class Container
                                                                            certificate_gateway: register_api_gateway
   end
 
-  def self.opt_out_certificate_use_case
-    @opt_out_certificate_use_case = UseCase::OptOutCertificate.new eav_gateway: assessment_attributes_gateway,
-                                                                   queues_gateway: queues_gateway,
-                                                                   certificate_gateway: register_api_gateway
+  def self.opt_out_certificates_use_case
+    @opt_out_certificates_use_case = UseCase::OptOutCertificates.new eav_gateway: assessment_attributes_gateway,
+                                                                     queues_gateway: queues_gateway,
+                                                                     certificate_gateway: register_api_gateway
   end
 
   def self.pull_queues_use_case

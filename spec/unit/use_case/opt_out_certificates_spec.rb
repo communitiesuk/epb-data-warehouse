@@ -1,4 +1,4 @@
-describe UseCase::OptOutCertificate do
+describe UseCase::OptOutCertificates do
   subject(:use_case) do
     described_class.new eav_gateway: database_gateway,
                         queues_gateway: queues_gateway,

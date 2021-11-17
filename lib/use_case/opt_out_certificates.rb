@@ -1,5 +1,5 @@
 module UseCase
-  class OptOutCertificate
+  class OptOutCertificates
     OPT_OUT = "opt_out".freeze
 
     def initialize(eav_gateway:, queues_gateway:, certificate_gateway:)

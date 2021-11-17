@@ -4,6 +4,7 @@ describe UseCase::PullQueues do
   use_case_classes = [
     UseCase::ImportCertificates,
     UseCase::CancelCertificates,
+    UseCase::OptOutCertificates,
   ]
 
   context "when executing the use case" do
