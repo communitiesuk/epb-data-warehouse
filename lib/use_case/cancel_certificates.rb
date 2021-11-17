@@ -1,5 +1,5 @@
 module UseCase
-  class CancelCertificate
+  class CancelCertificates
     def initialize(eav_gateway:, queues_gateway:, api_gateway:)
       @assessment_attribute_gateway = eav_gateway
       @queues_gateway = queues_gateway

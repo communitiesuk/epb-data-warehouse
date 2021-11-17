@@ -1,4 +1,4 @@
-describe UseCase::CancelCertificate do
+describe UseCase::CancelCertificates do
   subject(:use_case) do
     described_class.new eav_gateway: eav_database_gateway,
                         queues_gateway: queues_gateway,

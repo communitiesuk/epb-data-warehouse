@@ -33,13 +33,7 @@ class QueueWorker
 private
 
   def pull_queues
-    ids = @queues_gateway.consume_queue(:assessments)
-    pp "Queues were read!"
-    unless ids.empty?
-      pp ids
-    end
-  rescue StandardError
-    puts "Error consuming queue on Redis database"
+    use_case(:pull_queues).execute
   end
 
   def register_signal_handlers
