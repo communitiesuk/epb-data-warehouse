@@ -1,7 +1,6 @@
 describe "Acceptance::ImportCertificate" do
   subject(:usecase) do
-    UseCase::ImportCertificates.new eav_gateway: Gateway::AssessmentAttributesGateway.new,
-                                    certificate_gateway: certificate_gateway,
+    UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
                                     queues_gateway: queues_gateway
   end
 
@@ -9,6 +8,14 @@ describe "Acceptance::ImportCertificate" do
     ActiveRecord::Base.connection.exec_query(
       "SELECT * FROM assessment_attribute_values WHERE #{column} = #{attribute}",
     )
+  end
+
+  let(:import_xml_certificate_use_case) do
+    eav_gateway = Gateway::AssessmentAttributesGateway.new
+    certificate_data_use_case = UseCase::ImportCertificateData.new assessment_attribute_gateway: eav_gateway
+    UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
+                                      assessment_attribute_gateway: eav_gateway,
+                                      certificate_gateway: certificate_gateway
   end
 
   let(:certificate_gateway) do

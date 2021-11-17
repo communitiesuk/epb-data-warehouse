@@ -12,10 +12,6 @@ describe UseCase::ImportCertificates do
     instance_double(Gateway::QueuesGateway)
   end
 
-  let!(:sample) do
-    Samples.xml("RdSAP-Schema-20.0.0")
-  end
-
   let(:schema_type) { "TODO" }
 
   before do
