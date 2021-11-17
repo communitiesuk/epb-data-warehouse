@@ -2,9 +2,9 @@ describe UseCase::PullQueues do
   subject(:use_case) { UseCase::PullQueues.new }
 
   use_case_classes = [
-      UseCase::ImportCertificates,
-      UseCase::CancelCertificates,
-    ]
+    UseCase::ImportCertificates,
+    UseCase::CancelCertificates,
+  ]
 
   context "when executing the use case" do
     instances = []

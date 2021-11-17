@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'redis'
+
+require "redis"
 
 module Gateway
   class QueuesGateway
