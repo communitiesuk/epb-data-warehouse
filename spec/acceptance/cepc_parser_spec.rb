@@ -111,6 +111,83 @@ RSpec.describe "the parser and the rdsap configuration" do
     end
   end
 
+  context "when loading xml from Cepc-RR" do
+    let(:config) do
+      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
+    end
+
+    let(:parser) do
+      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0001" }, **config.to_args)
+    end
+
+    let(:cepc_rr) do
+      Samples.xml("CEPC-8.0.0", "cepc+rr")
+    end
+
+    it "doesn't error" do
+      expect { parser.parse(cepc_rr) }.not_to raise_error
+    end
+
+    it "parses the document in the expected format" do
+      expectation = { "rrn" => "0000-0000-0000-0000-0001",
+                      "issue_date" => "2021-03-19",
+                      "report_type" => 4,
+                      "valid_until" => "2031-03-18",
+                      "related_rrn" => "0000-0000-0000-0000-0000",
+                      "inspection_date" => "2021-03-19",
+                      "registration_date" => "2021-03-19",
+                      "status" => "entered",
+                      "language_code" => 1,
+                      "scheme_assessor_id" => "EES/024389",
+                      "building_complexity" => "Level 3",
+                      "address_line_1" => "60 Maple Syrup",
+                      "address_line_2" => "Big Rock",
+                      "post_town" => "Candy Mountain",
+                      "postcode" => "NE0 0AA",
+                      "property_type" => "A1/A2 Retail and Financial/Professional services",
+                      "is_heritage_site" => "N",
+                      "uprn" => "UPRN-00000000000",
+                      "methodology" => "SBEM",
+                      "calculation_tool" => "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.b.0",
+                      "output_engine" => "EPCgen, v5.6.b.0",
+                      "inspection_type" => "Physical",
+                      "short_payback" =>
+                       [{ "recommendation_code" => "EPC-L5",
+                          "recommendation" =>
+                           "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+                          "co2_impact" => "MEDIUM" },
+                        { "recommendation_code" => "EPC-L7",
+                          "recommendation" =>
+                           "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "EPC-V1",
+                          "recommendation" =>
+                           "In some spaces, the solar gain limit defined in the NCM is exceeded, which might cause overheating. Consider solar control measures such as the application of reflective coating or shading devices to windows.",
+                          "co2_impact" => "MEDIUM" }],
+                      "long_payback" =>
+                       [{ "recommendation_code" => "EPC-R2",
+                          "recommendation" => "Consider installing building mounted wind turbine(s).",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "EPC-R3",
+                          "recommendation" => "Consider installing solar water heating.",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "EPC-R4",
+                          "recommendation" => "Consider installing PV.",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "EPC-H2",
+                          "recommendation" => "Add time control to heating system.",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "EPC-H7",
+                          "recommendation" => "Add optimum start/stop to the heating system.",
+                          "co2_impact" => "LOW" }],
+                      "technical_information" =>
+                       { "building_environment" => "Air Conditioning",
+                         "floor_area" => 951,
+                         "building_level" => 3 } }
+      expect(parser.parse(cepc_rr)).to eq(expectation)
+    end
+  end
+
   context "when loading xml from Dec" do
     let(:config) do
       XmlPresenter::Cepc::Cepc800ExportConfiguration.new

@@ -23,6 +23,8 @@ module XmlPresenter
         Energy-Performance-Certificate
         OR-Operational-Rating
         Display-Certificate
+        Recommendations-Report
+        RR-Recommendations
       ]
       preferred_keys({
         "Certificate-Number" => "scheme_assessor_id",
