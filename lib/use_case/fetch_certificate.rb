@@ -3,20 +3,10 @@
 module UseCase
   class FetchCertificate < UseCase::FetchBase
     def execute(assessment_id)
-      response = @gateway.fetch(assessment_id.strip)
-
-      raise_errors_if_exists(response) do |error|
-        raise Errors::AssessmentNotFound if error[:code] == "NOT_FOUND"
-        raise Errors::AssessmentGone if error[:code] == "GONE"
-        raise Errors::AssessmentNotFound if error[:code] == "INVALID_QUERY"
-      end
-
-      if response.dig(:data, :recommendedImprovements)
-        response[:data][:recommendedImprovements] =
-          response[:data][:recommendedImprovements].sort_by { |a| a[:sequence] }
-      end
-
-      response
+      @gateway.fetch(assessment_id.strip)
+    rescue Errors::AssessmentDoesNotExist
+      # this might be replaced by a logger object
+      puts "The assessment #{assessment_id} could not be found on the register."
     end
   end
 end
