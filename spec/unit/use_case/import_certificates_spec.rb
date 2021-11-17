@@ -1,23 +1,15 @@
 describe UseCase::ImportCertificates do
-  let(:database_gateway) do
-    instance_double(Gateway::AssessmentAttributesGateway)
+  subject(:use_case) do
+    described_class.new import_xml_certificate_use_case: import_xml_certificate_use_case,
+                        queues_gateway: queues_gateway
   end
+
   let(:import_xml_certificate_use_case) do
     instance_double(UseCase::ImportXmlCertificate)
   end
 
-  let(:certificate_gateway) do
-    instance_double(Gateway::RegisterApiGateway)
-  end
-
   let(:queues_gateway) do
     instance_double(Gateway::QueuesGateway)
-  end
-
-  let!(:use_case) do
-    described_class.new eav_gateway: database_gateway,
-                        certificate_gateway: certificate_gateway,
-                        queues_gateway: queues_gateway
   end
 
   let!(:sample) do
@@ -27,12 +19,6 @@ describe UseCase::ImportCertificates do
   let(:schema_type) { "TODO" }
 
   before do
-    allow(Gateway::AssessmentAttributesGateway).to receive(:new).and_return(database_gateway)
-    allow(database_gateway).to receive(:add_attribute_value).and_return(1)
-
-    allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
-    allow(certificate_gateway).to receive(:fetch).and_return(sample)
-
     allow(Gateway::QueuesGateway).to receive(:new).and_return(queues_gateway)
     allow(queues_gateway).to receive(:consume_queue).and_return(%w[
       0000-0000-0000-0000-0000

@@ -34,8 +34,7 @@ class Container
   end
 
   def self.import_certificates_use_case
-    @import_certificates_use_case ||= UseCase::ImportCertificates.new eav_gateway: assessment_attributes_gateway,
-                                                                      certificate_gateway: register_api_gateway,
+    @import_certificates_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
                                                                       queues_gateway: queues_gateway
   end
 
