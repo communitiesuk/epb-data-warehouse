@@ -1,0 +1,1804 @@
+<CEPC:Reports xmlns:CEPC="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-8.0.0/Reports/CEPC-Reports.xsd">
+  <CEPC:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
+      <CEPC:Issue-Date>2020-12-12</CEPC:Issue-Date>
+      <CEPC:Report-Type>6</CEPC:Report-Type>
+      <CEPC:Valid-Until>2025-12-12</CEPC:Valid-Until>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
+      <CEPC:Inspection-Date>2020-12-12</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-12-12</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>TEST000001</CEPC:Certificate-Number>
+        <CEPC:Name>Testy Testerson</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Scheme Limited</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Trading-Address>Building, Place, Town, Postcode</CEPC:Trading-Address>
+        <CEPC:Company-Name>Company Ltd</CEPC:Company-Name>
+        <CEPC:Qualifications>SP3</CEPC:Qualifications>
+        <CEPC:Qualifications>CC4</CEPC:Qualifications>
+        <CEPC:E-Mail>Info@company.com</CEPC:E-Mail>
+        <CEPC:Telephone-Number />
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:UPRN>UPRN-00000000000</CEPC:UPRN>
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>24 Some Street</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2 />
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>NE0 0AA</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Property-Type />
+        <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Calculation-Tool>Some Accreditation, Sterling e-Volve, v1.2</CEPC:Calculation-Tool>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Insurance-Details>
+      <CEPC:Insurer>Insurance Limited</CEPC:Insurer>
+      <CEPC:Policy-No>00000000000</CEPC:Policy-No>
+      <CEPC:Effective-Date>2020-01-01</CEPC:Effective-Date>
+      <CEPC:Expiry-Date>2021-01-01</CEPC:Expiry-Date>
+      <CEPC:PI-Limit>1000000</CEPC:PI-Limit>
+    </CEPC:Insurance-Details>
+    <CEPC:Air-Conditioning-Inspection-Certificate>
+      <CEPC:Equipment-Owner>
+        <CEPC:Equipment-Owner-Name>Manager</CEPC:Equipment-Owner-Name>
+        <CEPC:Telephone-Number>00000000000</CEPC:Telephone-Number>
+        <CEPC:Organisation-Name>Organisation Plc</CEPC:Organisation-Name>
+        <CEPC:Registered-Address>
+          <CEPC:Address-Line-1>Organisation House</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2>Business Park</CEPC:Address-Line-2>
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>NE0 0AA</CEPC:Postcode>
+        </CEPC:Registered-Address>
+      </CEPC:Equipment-Owner>
+      <CEPC:Equipment-Operator>
+        <CEPC:Responsible-Person>Operator Person</CEPC:Responsible-Person>
+        <CEPC:Telephone-Number>000000000</CEPC:Telephone-Number>
+        <CEPC:Organisation-Name>Organisation Plc</CEPC:Organisation-Name>
+        <CEPC:Registered-Address>
+          <CEPC:Address-Line-1 />
+          <CEPC:Address-Line-2 />
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town />
+          <CEPC:Postcode>NE0 0AA</CEPC:Postcode>
+        </CEPC:Registered-Address>
+      </CEPC:Equipment-Operator>
+      <CEPC:Building-Name>24 Some Street</CEPC:Building-Name>
+      <CEPC:F-Gas-Compliant-Date>Not Provided</CEPC:F-Gas-Compliant-Date>
+      <CEPC:AC-Rated-Output>
+        <CEPC:AC-kW-Rating>28</CEPC:AC-kW-Rating>
+      </CEPC:AC-Rated-Output>
+      <CEPC:Random-Sampling-Flag>N</CEPC:Random-Sampling-Flag>
+      <CEPC:Treated-Floor-Area>141</CEPC:Treated-Floor-Area>
+      <CEPC:AC-System-Metered-Flag>1</CEPC:AC-System-Metered-Flag>
+      <CEPC:Refrigerant-Charge-Total>10</CEPC:Refrigerant-Charge-Total>
+      <CEPC:AC-Sub-Systems>
+        <CEPC:AC-Sub-System>
+          <CEPC:Sub-System-Number>VOL001/SYS001</CEPC:Sub-System-Number>
+          <CEPC:Sub-System-Description>Mitsubishi split system</CEPC:Sub-System-Description>
+          <CEPC:Refrigerant-Type>R410A</CEPC:Refrigerant-Type>
+          <CEPC:Sub-System-Age>2016</CEPC:Sub-System-Age>
+        </CEPC:AC-Sub-System>
+        <CEPC:AC-Sub-System>
+          <CEPC:Sub-System-Number>VOL001/SYS002</CEPC:Sub-System-Number>
+          <CEPC:Sub-System-Description>Mitsubishi split system</CEPC:Sub-System-Description>
+          <CEPC:Refrigerant-Type>R410A</CEPC:Refrigerant-Type>
+          <CEPC:Sub-System-Age>2015</CEPC:Sub-System-Age>
+        </CEPC:AC-Sub-System>
+      </CEPC:AC-Sub-Systems>
+    </CEPC:Air-Conditioning-Inspection-Certificate>
+  </CEPC:Report>
+  <CEPC:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0001</CEPC:RRN>
+      <CEPC:Issue-Date>2020-12-23</CEPC:Issue-Date>
+      <CEPC:Report-Type>5</CEPC:Report-Type>
+      <CEPC:Valid-Until>2025-12-22</CEPC:Valid-Until>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0000</CEPC:Related-RRN>
+      <CEPC:Inspection-Date>2020-12-22</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-12-22</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>TEST000001</CEPC:Certificate-Number>
+        <CEPC:Name>Testy Testerson</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Scheme Limited</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Trading-Address>Building, Place, Town, Postcode</CEPC:Trading-Address>
+        <CEPC:Company-Name>Company Ltd</CEPC:Company-Name>
+        <CEPC:Qualifications>SP3</CEPC:Qualifications>
+        <CEPC:Qualifications>CC4</CEPC:Qualifications>
+        <CEPC:E-Mail>Info@company.com</CEPC:E-Mail>
+        <CEPC:Telephone-Number />
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:UPRN>UPRN-00000000000</CEPC:UPRN>
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>24 Some Street</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2 />
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>NE0 0AA</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Property-Type />
+        <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Calculation-Tool>Some Accreditation, Sterling e-Volve, v1.2</CEPC:Calculation-Tool>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Insurance-Details>
+      <CEPC:Insurer>Insurance Limited</CEPC:Insurer>
+      <CEPC:Policy-No>00000000000</CEPC:Policy-No>
+      <CEPC:Effective-Date>2020-01-01</CEPC:Effective-Date>
+      <CEPC:Expiry-Date>2021-01-01</CEPC:Expiry-Date>
+      <CEPC:PI-Limit>1000000</CEPC:PI-Limit>
+    </CEPC:Insurance-Details>
+    <CEPC:Air-Conditioning-Inspection-Report>
+      <CEPC:ACI-Related-Party-Disclosure>1</CEPC:ACI-Related-Party-Disclosure>
+      <CEPC:Executive-Summary>
+        The following outdoor units were inspected:-
+
+        Volume 001 System 001 (Serial no Not available) is a Mitsubishi split unit serving the Retail and has a cooling capacity of 14kW. The indoor terminal units were ceiling mounted cassettes. The indoor units were not clean, which does not maintain effectiveness and efficiency. The outdoor unit could not be accessed.
+
+        Volume 001 System 002 (Serial no Not available) is a Mitsubishi split unit serving the Prep and has a cooling capacity of 14kW. The indoor terminal unit was a ceiling mounted cassette. The indoor unit was clean, which does maintain effectiveness and efficiency. The outdoor unit could not be accessed.
+
+        Building owners and managers who operate Air conditioning systems have a statutory obligation under the Energy Performance of Building Directive (EPBD) to ensure that Air conditioning inspections are conducted by a qualified and accredited Air conditioning energy assessor.
+
+        All Air conditioning systems with an effective rated output of over 12kW must be inspected by an energy assessor at intervals no greater than 5 years.
+
+        The plant uses refrigerant controlled under the F-Gas Regulations, which places an obligation on the responsible person to prevent, and to have regular checks carried out for leaks. Other obligations, such as maintaining records, proper recovery of refrigerant, labelling, and the use of qualified personnel apply.
+
+        Maintenance records were not retained on site
+        F-Gas register was not available.
+
+        The advice provided in recommendation reports is intended to be for information only.
+
+        Recipients of the recommendation report are advised to seek further detailed and professional advice prior to reaching any decision on improvements regarding the energy performance of the building.
+
+        An external Air conditioning contractor Cool Check is utilised for the Air conditioning equipment maintenance. The condition of the equipment shows that the maintenance regime is carried out to a good standard but more frequent maintenance is required(6 monthly).
+
+        The Air conditioning system could also be controlled by a PIR system to detect the presence or not of personnel and further reduce energy usage.
+
+        The recommendation is that any equipment that has a heat exchanger, condenser or the possibility of standing water accumulating, should be risk assessed for the presence of Legionella or similar.
+
+        Posting notices in served spaces with the aim of reducing bad practices and encouraging good practices, advising on temperature settings would be beneficial in terms of energy savings and personnel morale.
+
+        The installation and monitoring of sub meters for the Air conditioning systems would allow monitoring and control over energy usage.
+
+        The compilation of a Building Log Book is recommended and should include, Major plant design and control. Building Regs Part L 2010 is now law for new buildings and existing buildings that have undergone major refurbishment work and is aimed at ensuring facilities teams have a single point of reference document that encompasses the general operation of equipment. This enables the team to optimise settings and keep energy costs to a minimum.
+
+      </CEPC:Executive-Summary>
+      <CEPC:Building-Name>Building</CEPC:Building-Name>
+      <CEPC:ACI-Key-Recommendations>
+        <CEPC:Sub-System-Efficiency-Capacity-Cooling-Loads>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>1</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Review the Air conditioning control on times to assess if they can be reduced.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>2</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>The cleanliness of all filters is of paramount importance for minimising the energy usage of Air conditioning equipment</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>3</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Reduced system efficiency results in an increase in energy costs and carbon emissions. </CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>4</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Modern inverter drive systems can be more energy efficient</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>5</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>6</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>7</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>8</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+        </CEPC:Sub-System-Efficiency-Capacity-Cooling-Loads>
+        <CEPC:Improvement-Options>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>1</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Maintenance carried out according to the OEM's instructions leads to equipment longevity and good efficiency.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>2</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>To ensure the reliability and longevity of equipment the maintenance should be carried out by competent personnel at regular intervals</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>3</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Indoor units and filters must be maintained to a clean and efficient standard from a hygiene and efficiency perspective.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>4</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Area around outdoor units must be kept clear of debris to prevent inadequate airflow problems</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>5</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Outdoor units heat exchangers and pipework insulation should be inspected/cleaned/replaced to ensure energy efficiency is maintained.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>6</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+        </CEPC:Improvement-Options>
+        <CEPC:Alternative-Solutions>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>1</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Installation of sub metering would allow accurate monitoring of the  condensers and personnel lifts, actual energy usage and subsequently give the responsible person the tools to monitor and reduce energy consumption.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>2</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Free overnight cooling should be considered with a view of utilising the lower ambient overnight temperatures to pre cool the served spaces and lower overall energy costs.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>3</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Review the temperature settings of Air conditioning equipment and consider 23°C +/- 2°C as a good benchmark when system is in cooling mode and 19°C +/- 2°C, which if implemented throughout the site will show benefits in reduced energy usage.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>4</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Advise personnel that the closing of doors and windows when Air conditioning system is operating is of paramount importance in reducing energy wastage.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>5</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Review the Air conditioning control strategy and the controllers set times to establish if on times can be reduced.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>6</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Sensors must be appropriate for cooling and heating in the zone or space</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>7</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Metering can be beneficial to monitor and control air conditioning energy consumption and costs.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>8</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>9</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>10</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>11</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>12</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>13</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+        </CEPC:Alternative-Solutions>
+        <CEPC:Other-Recommendations>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>1</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Recommend a temperature setting of 23°C +/- 2 in cooling mode to reduce energy consumption whilst maintaining suitable conditions for occupants.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>2</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Recommended that training is carried out in the efficient control of the following:-  Air conditioning systems, lighting, heating and energy conservation for all employees to ensure system effectiveness and efficiency. This will in turn show tangible energy cost savings.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>3</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Recommend a policy of replacing existing light fittings with high efficiency LED units controlled by PIR controllers where possible to reduce the electrical energy usage. </CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>4</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>PIR control of the Air conditioning systems could be considered to ensure that systems do not operate when there is zero occupancy of served spaces and good energy savings are possible from this initiative.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>5</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Encourage personnel to adopt an energy saving mentality by encouraging them to switch off unnecessary lighting, heating and cooling. The closing of door and windows whilst Air conditioning systems are operating should be enforced to reduce energy losses.</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>6</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text>Signage, stating the temperature set point s for A/C equipment, ensure that doors and windows are closed when Air conditioning systems are in operation, some energy efficiency information ( switch off lights were possible, run printers in eco/standby mode to reduce energy usage where possible , do not use stand alone heaters. etc)</CEPC:Text>
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>7</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+          <CEPC:ACI-Recommendation>
+            <CEPC:Seq-Number>8</CEPC:Seq-Number>
+            <CEPC:Code>OTHER</CEPC:Code>
+            <CEPC:Text />
+          </CEPC:ACI-Recommendation>
+        </CEPC:Other-Recommendations>
+      </CEPC:ACI-Key-Recommendations>
+      <CEPC:ACI-Sub-Systems>
+        <CEPC:ACI-Sub-System>
+          <CEPC:Sub-System-Volume-Definitions>VOL001</CEPC:Sub-System-Volume-Definitions>
+          <CEPC:Sub-System-ID>VOL001/SYS001</CEPC:Sub-System-ID>
+          <CEPC:Sub-System-Description>Mitsubishi split system</CEPC:Sub-System-Description>
+          <CEPC:Sub-System-Cooling-Output>14</CEPC:Sub-System-Cooling-Output>
+          <CEPC:Sub-System-Area-Served-Description>Retail</CEPC:Sub-System-Area-Served-Description>
+          <CEPC:Sub-System-Inspection-Date>2020-12-22</CEPC:Sub-System-Inspection-Date>
+          <CEPC:Sub-System-Cooling-Plant-Count>1</CEPC:Sub-System-Cooling-Plant-Count>
+          <CEPC:Sub-System-AHU-Count>0</CEPC:Sub-System-AHU-Count>
+          <CEPC:Sub-System-Terminal-Units-Count>2</CEPC:Sub-System-Terminal-Units-Count>
+          <CEPC:Sub-System-Controls-Count>1</CEPC:Sub-System-Controls-Count>
+        </CEPC:ACI-Sub-System>
+        <CEPC:ACI-Sub-System>
+          <CEPC:Sub-System-Volume-Definitions>VOL001</CEPC:Sub-System-Volume-Definitions>
+          <CEPC:Sub-System-ID>VOL001/SYS002</CEPC:Sub-System-ID>
+          <CEPC:Sub-System-Description>Mitsubishi split system</CEPC:Sub-System-Description>
+          <CEPC:Sub-System-Cooling-Output>14</CEPC:Sub-System-Cooling-Output>
+          <CEPC:Sub-System-Area-Served-Description>Prep</CEPC:Sub-System-Area-Served-Description>
+          <CEPC:Sub-System-Inspection-Date>2020-12-22</CEPC:Sub-System-Inspection-Date>
+          <CEPC:Sub-System-Cooling-Plant-Count>1</CEPC:Sub-System-Cooling-Plant-Count>
+          <CEPC:Sub-System-AHU-Count>0</CEPC:Sub-System-AHU-Count>
+          <CEPC:Sub-System-Terminal-Units-Count>1</CEPC:Sub-System-Terminal-Units-Count>
+          <CEPC:Sub-System-Controls-Count>1</CEPC:Sub-System-Controls-Count>
+        </CEPC:ACI-Sub-System>
+      </CEPC:ACI-Sub-Systems>
+      <CEPC:ACI-Pre-Inspection-Information>
+        <CEPC:ACI-Pre-Inspection-Essential>
+          <CEPC:List-Of-Systems>No</CEPC:List-Of-Systems>
+          <CEPC:Cooling-Capacities>No</CEPC:Cooling-Capacities>
+          <CEPC:Control-Zones>No</CEPC:Control-Zones>
+          <CEPC:Temperature-Controls>No</CEPC:Temperature-Controls>
+          <CEPC:Operation-Controls>No</CEPC:Operation-Controls>
+          <CEPC:Schematics>No</CEPC:Schematics>
+        </CEPC:ACI-Pre-Inspection-Essential>
+        <CEPC:ACI-Pre-Inspection-Desirable>
+          <CEPC:Previous-Reports>Yes</CEPC:Previous-Reports>
+          <CEPC:Refrigeration-Maintenance>No</CEPC:Refrigeration-Maintenance>
+          <CEPC:Delivery-System-Maintenance>No</CEPC:Delivery-System-Maintenance>
+          <CEPC:Control-System-Maintenance>No</CEPC:Control-System-Maintenance>
+          <CEPC:Consumption-Records>No</CEPC:Consumption-Records>
+          <CEPC:Commissioning-Results>No</CEPC:Commissioning-Results>
+        </CEPC:ACI-Pre-Inspection-Desirable>
+        <CEPC:ACI-Pre-Inspection-Optional>
+          <CEPC:Cooling-Load-Estimate>No</CEPC:Cooling-Load-Estimate>
+          <CEPC:Complaint-Records>No</CEPC:Complaint-Records>
+          <CEPC:BMS-Capability>No</CEPC:BMS-Capability>
+          <CEPC:Monitoring-Capability>No</CEPC:Monitoring-Capability>
+        </CEPC:ACI-Pre-Inspection-Optional>
+      </CEPC:ACI-Pre-Inspection-Information>
+      <CEPC:ACI-Cooling-Plant>
+        <CEPC:System-Number>VOL001/SYS001</CEPC:System-Number>
+        <CEPC:System-Component-Identifier>VOL001/SYS001/CP1</CEPC:System-Component-Identifier>
+        <CEPC:ACI-Cooling-Plant-Equipment>
+          <CEPC:Manufacturer>Mitsubishi</CEPC:Manufacturer>
+          <CEPC:Description>Multi-Split</CEPC:Description>
+          <CEPC:Model-Reference>PUHZZRP140</CEPC:Model-Reference>
+          <CEPC:Serial-Number>Not obtainable</CEPC:Serial-Number>
+          <CEPC:Year-Installed>2016</CEPC:Year-Installed>
+          <CEPC:Cooling-Capacity>14</CEPC:Cooling-Capacity>
+          <CEPC:Refrigerant-Type>
+            <CEPC:Type>R410A</CEPC:Type>
+          </CEPC:Refrigerant-Type>
+          <CEPC:Refrigerant-Charge>5</CEPC:Refrigerant-Charge>
+          <CEPC:Location>No access to condenser</CEPC:Location>
+          <CEPC:Area-Served>Retail</CEPC:Area-Served>
+          <CEPC:Discrepancy-Note>Access to outdoor units must be made available for maintenance and future inspections</CEPC:Discrepancy-Note>
+        </CEPC:ACI-Cooling-Plant-Equipment>
+        <CEPC:ACI-Cooling-Plant-Inspection>
+          <CEPC:Heat-Rejection-Operational>
+            <CEPC:Note>Heat rejection plant should be maintained in an efficient and operational condition</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Heat-Rejection-Operational>
+          <CEPC:Heat-Rejection-Area-Clear>
+            <CEPC:Note>Area around the plant must be kept clear of excessive debris</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Heat-Rejection-Area-Clear>
+          <CEPC:Chiller-Plant-Operational>
+            <CEPC:Note>Regular maintenance ensures that plant is operational and efficient</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Regular and scheduled maintenance which is carried out by qualified personnel ensures that equipment is fully operational.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Plant-Operational>
+          <CEPC:Chiller-Plant-Area-Clear>
+            <CEPC:Note>Area should be clear of debris to prevent airflow disturbance or possible equipment damage</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Area around outdoor units must be kept clear of debris to prevent inadequate airflow problems</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Plant-Area-Clear>
+          <CEPC:Air-Recirculation>
+            <CEPC:Note>Recirculation must be avoided.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Recirculation>
+          <CEPC:Chiller-Plant-OK>
+            <CEPC:Note>Refrigeration and associated plant must be maintained in good order to ensure good reliability and efficiency.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Plant-OK>
+          <CEPC:Heat-Exchanger-OK>
+            <CEPC:Note>Heat exchangers must be kept clean to ensure good airflow and unit efficiency</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Heat-Exchanger-OK>
+          <CEPC:Pipe-Insulation-OK>
+            <CEPC:Note>Insulation requires regular checks to maintain good efficiency</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Pipe-Insulation-OK>
+          <CEPC:Chiller-Placement-OK>
+            <CEPC:Note>Condenser should be not positioned in close proximity to any heat sources.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Placement-OK>
+          <CEPC:Compressors-Operational>
+            <CEPC:Note>Equipment should be maintained in an efficient and operational condition</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Compressors-Operational>
+        </CEPC:ACI-Cooling-Plant-Inspection>
+        <CEPC:ACI-Cooling-Plant-Sizing>
+          <CEPC:Total-Occupants>12</CEPC:Total-Occupants>
+          <CEPC:Total-Floor-Area>70</CEPC:Total-Floor-Area>
+          <CEPC:Occupant-Density>6</CEPC:Occupant-Density>
+          <CEPC:Upper-Heat-Gain>90</CEPC:Upper-Heat-Gain>
+          <CEPC:Installed-Capacity>14</CEPC:Installed-Capacity>
+          <CEPC:Acceptable-Installed-Size>0</CEPC:Acceptable-Installed-Size>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Figure is the total number of occupants in the served space</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>3</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Total floor area for served space</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>4</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>5</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Occupancy density from floor area and occupancy</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>6</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>7</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Calculation technology.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>8</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>9</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Cooling capacity should match the cooling requirement as excess capacity can be inefficient</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>10</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>11</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Modern Inverter drive technology allows good efficiency control at low flow conditions where the older Non inverter drive systems are not capable of this control.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>12</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Cooling-Plant-Sizing>
+        <CEPC:ACI-Cooling-Plant-Refrigeration>
+          <CEPC:Refrigerant-Name>R410A</CEPC:Refrigerant-Name>
+          <CEPC:F-Gas-Inspection>
+            <CEPC:Note>The F-Gas Regulations place an obligation on the responsible person to prevent, and to have regular checks carried out for leaks. Other obligations, such as maintaining records, proper recovery of refrigerant, labelling, and the use of qualified personnel apply.</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:F-Gas-Inspection>
+          <CEPC:Pre-Compressor>54</CEPC:Pre-Compressor>
+          <CEPC:Post-Processor>18</CEPC:Post-Processor>
+          <CEPC:Ambient>10</CEPC:Ambient>
+          <CEPC:Acceptable-Temperature>0</CEPC:Acceptable-Temperature>
+          <CEPC:Compressor-Control>
+            <CEPC:Note>Temperature lift is as expected and unit does benefit from an inverter drive.</CEPC:Note>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Modern inverter drive systems can be more energy efficient</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Compressor-Control>
+          <CEPC:Refrigerant-Leak>
+            <CEPC:Note>Any signs of a refrigerant leak, such as staining around pipe work joints, ceiling tiles etc should be investigated.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Refrigerant-Leak>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Temperature taken with an infrared temperature gun, heat mode</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>3</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Temperature taken with an infrared temperature gun</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>4</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>5</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Outdoor temperature</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>6</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>7</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Based on the above temperature readings</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>8</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Cooling-Plant-Refrigeration>
+        <CEPC:ACI-Cooling-Plant-Chillers>
+          <CEPC:Water-Cooled>
+            <CEPC:Note>Not applicable</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Cooled>
+          <CEPC:Water-Treatment>
+            <CEPC:Note>Legionella risk assessment and documentation must be retained on site</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Treatment>
+        </CEPC:ACI-Cooling-Plant-Chillers>
+        <CEPC:ACI-Cooling-Plant-Maintenance>
+          <CEPC:Records-Kept>
+            <CEPC:Note>To ensure the reliability and longevity of equipment the maintenance should be carried out by competent personnel at regular, scheduled intervals</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>To ensure the reliability and longevity of equipment the maintenance should be carried out by competent personnel at regular intervals</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Records-Kept>
+          <CEPC:Competent-Person>
+            <CEPC:Note>Maintenance must be carried out by competent person(s) in accordance with industry guidelines to ensure safety, efficiency and reliability of equipment</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Competent-Person>
+        </CEPC:ACI-Cooling-Plant-Maintenance>
+        <CEPC:ACI-Cooling-Plant-Metering>
+          <CEPC:Metering-Installed>
+            <CEPC:Note />
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Metering can be beneficial to monitor and control air conditioning energy consumption and costs.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Metering-Installed>
+          <CEPC:BEM-Installed>
+            <CEPC:Note>Monitoring of out of range alarms is crucial to ensure a fast response to energy sapping, electrical or mechanical problems.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:BEM-Installed>
+          <CEPC:Usage-Records>
+            <CEPC:Note>Metering can be beneficial to monitor and control air conditioning energy consumption and costs.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Usage-Records>
+          <CEPC:Excessive-Use>
+            <CEPC:Note>Recommend that consideration be given to the installation and usage of metering to monitor and control air conditioning energy consumption and costs.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Excessive-Use>
+        </CEPC:ACI-Cooling-Plant-Metering>
+        <CEPC:ACI-Cooling-Plant-Humidity-Control>
+          <CEPC:Humidity-Control>
+            <CEPC:Note>Humidifiers should be regularly maintained as per manufacturers instructions</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Humidity-Control>
+        </CEPC:ACI-Cooling-Plant-Humidity-Control>
+      </CEPC:ACI-Cooling-Plant>
+      <CEPC:ACI-Cooling-Plant>
+        <CEPC:System-Number>VOL001/SYS002</CEPC:System-Number>
+        <CEPC:System-Component-Identifier>VOL001/SYS002/CP1</CEPC:System-Component-Identifier>
+        <CEPC:ACI-Cooling-Plant-Equipment>
+          <CEPC:Manufacturer>Mitsubishi</CEPC:Manufacturer>
+          <CEPC:Description>Single Split</CEPC:Description>
+          <CEPC:Model-Reference>PUHZZRP140</CEPC:Model-Reference>
+          <CEPC:Serial-Number>No access</CEPC:Serial-Number>
+          <CEPC:Year-Installed>2016</CEPC:Year-Installed>
+          <CEPC:Cooling-Capacity>14</CEPC:Cooling-Capacity>
+          <CEPC:Refrigerant-Type>
+            <CEPC:Type>R410A</CEPC:Type>
+          </CEPC:Refrigerant-Type>
+          <CEPC:Refrigerant-Charge>5</CEPC:Refrigerant-Charge>
+          <CEPC:Location>No access</CEPC:Location>
+          <CEPC:Area-Served>Prep</CEPC:Area-Served>
+          <CEPC:Discrepancy-Note>None</CEPC:Discrepancy-Note>
+        </CEPC:ACI-Cooling-Plant-Equipment>
+        <CEPC:ACI-Cooling-Plant-Inspection>
+          <CEPC:Heat-Rejection-Operational>
+            <CEPC:Note>Heat rejection plant should be maintained in an efficient and operational condition</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Heat-Rejection-Operational>
+          <CEPC:Heat-Rejection-Area-Clear>
+            <CEPC:Note>Area around the plant must be kept clear of excessive debris</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Heat-Rejection-Area-Clear>
+          <CEPC:Chiller-Plant-Operational>
+            <CEPC:Note>Regular maintenance ensures that plant is operational and efficient</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Regular and scheduled maintenance which is carried out by qualified personnel ensures that equipment is fully operational.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Plant-Operational>
+          <CEPC:Chiller-Plant-Area-Clear>
+            <CEPC:Note>Area should be clear of debris to prevent airflow disturbance or possible equipment damage</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Area around outdoor units must be kept clear of debris to prevent inadequate airflow problems</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Plant-Area-Clear>
+          <CEPC:Air-Recirculation>
+            <CEPC:Note>Recirculation must be avoided.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Recirculation>
+          <CEPC:Chiller-Plant-OK>
+            <CEPC:Note>Refrigeration and associated plant must be maintained in good order to ensure good reliability and efficiency.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Plant-OK>
+          <CEPC:Heat-Exchanger-OK>
+            <CEPC:Note>Heat exchangers must be kept clean to ensure good airflow and unit efficiency</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Heat-Exchanger-OK>
+          <CEPC:Pipe-Insulation-OK>
+            <CEPC:Note>Insulation requires regular checks to maintain good efficiency</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Pipe-Insulation-OK>
+          <CEPC:Chiller-Placement-OK>
+            <CEPC:Note>Condenser should be not positioned in close proximity to any heat sources.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Chiller-Placement-OK>
+          <CEPC:Compressors-Operational>
+            <CEPC:Note>Equipment should be maintained in an efficient and operational condition</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Compressors-Operational>
+        </CEPC:ACI-Cooling-Plant-Inspection>
+        <CEPC:ACI-Cooling-Plant-Sizing>
+          <CEPC:Total-Occupants>4</CEPC:Total-Occupants>
+          <CEPC:Total-Floor-Area>71</CEPC:Total-Floor-Area>
+          <CEPC:Occupant-Density>18</CEPC:Occupant-Density>
+          <CEPC:Upper-Heat-Gain>37</CEPC:Upper-Heat-Gain>
+          <CEPC:Installed-Capacity>14</CEPC:Installed-Capacity>
+          <CEPC:Acceptable-Installed-Size>0</CEPC:Acceptable-Installed-Size>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Figure is the total number of occupants in the served space</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>3</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Total floor area for served space</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>4</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>5</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Occupancy density from floor area and occupancy</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>6</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>7</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Calculation technology.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>8</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>9</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Cooling capacity should match the cooling requirement as excess capacity can be inefficient</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>10</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>11</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Modern Inverter drive technology allows good efficiency control at low flow conditions where the older Non inverter drive systems are not capable of this control.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>12</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Cooling-Plant-Sizing>
+        <CEPC:ACI-Cooling-Plant-Refrigeration>
+          <CEPC:Refrigerant-Name>R410A</CEPC:Refrigerant-Name>
+          <CEPC:F-Gas-Inspection>
+            <CEPC:Note>The F-Gas Regulations place an obligation on the responsible person to prevent, and to have regular checks carried out for leaks. Other obligations, such as maintaining records, proper recovery of refrigerant, labelling, and the use of qualified personnel apply.</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:F-Gas-Inspection>
+          <CEPC:Pre-Compressor>18</CEPC:Pre-Compressor>
+          <CEPC:Post-Processor>9</CEPC:Post-Processor>
+          <CEPC:Ambient>10</CEPC:Ambient>
+          <CEPC:Acceptable-Temperature>0</CEPC:Acceptable-Temperature>
+          <CEPC:Compressor-Control>
+            <CEPC:Note>Temperature lift is as expected and unit does benefit from an inverter drive.</CEPC:Note>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Modern inverter drive systems can be more energy efficient</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Compressor-Control>
+          <CEPC:Refrigerant-Leak>
+            <CEPC:Note>Any signs of a refrigerant leak, such as staining around pipe work joints, ceiling tiles etc should be investigated, particularly if the stain has an "oil" like look to it. Any leaks must be rectified by a qualified person as soon as possible to minimise any release of refrigerant into the atmosphere.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Refrigerant-Leak>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Temperature taken with an infrared temperature gun</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>3</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Temperature taken with an infrared temperature gun</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>4</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>5</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Outdoor temperature</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>6</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>7</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Based on the above temperature readings</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>8</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Cooling-Plant-Refrigeration>
+        <CEPC:ACI-Cooling-Plant-Chillers>
+          <CEPC:Water-Cooled>
+            <CEPC:Note>Not applicable</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Cooled>
+          <CEPC:Water-Treatment>
+            <CEPC:Note>Legionella risk assessment and documentation must be retained on site</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Treatment>
+        </CEPC:ACI-Cooling-Plant-Chillers>
+        <CEPC:ACI-Cooling-Plant-Maintenance>
+          <CEPC:Records-Kept>
+            <CEPC:Note>To ensure the reliability and longevity of equipment the maintenance should be carried out by competent personnel at regular, scheduled intervals</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>To ensure the reliability and longevity of equipment the maintenance should be carried out by competent personnel at regular intervals</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Records-Kept>
+          <CEPC:Competent-Person>
+            <CEPC:Note>Maintenance must be carried out by competent person(s) in accordance with industry guidelines to ensure safety, efficiency and reliability of equipment</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Competent-Person>
+        </CEPC:ACI-Cooling-Plant-Maintenance>
+        <CEPC:ACI-Cooling-Plant-Metering>
+          <CEPC:Metering-Installed>
+            <CEPC:Note />
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Metering can be beneficial to monitor and control air conditioning energy consumption and costs.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Metering-Installed>
+          <CEPC:BEM-Installed>
+            <CEPC:Note>Monitoring of out of range alarms is crucial to ensure a fast response to energy sapping, electrical or mechanical problems.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:BEM-Installed>
+          <CEPC:Usage-Records>
+            <CEPC:Note>Metering can be beneficial to monitor and control air conditioning energy consumption and costs.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Usage-Records>
+          <CEPC:Excessive-Use>
+            <CEPC:Note>Recommend that consideration be given to the installation and usage of metering to monitor and control air conditioning energy consumption and costs.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Excessive-Use>
+        </CEPC:ACI-Cooling-Plant-Metering>
+        <CEPC:ACI-Cooling-Plant-Humidity-Control>
+          <CEPC:Humidity-Control>
+            <CEPC:Note>Humidifiers should be regularly maintained as per manufacturers instructions</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Humidity-Control>
+        </CEPC:ACI-Cooling-Plant-Humidity-Control>
+      </CEPC:ACI-Cooling-Plant>
+      <CEPC:ACI-Terminal-Unit>
+        <CEPC:System-Number>VOL001/SYS001</CEPC:System-Number>
+        <CEPC:System-Identifier>Ceiling mounted cassette</CEPC:System-Identifier>
+        <CEPC:System-Component-Identifier>VOL001/SYS001/TU1</CEPC:System-Component-Identifier>
+        <CEPC:ACI-Terminal-Unit-Inspection>
+          <CEPC:Systems-Served>VOL001/SYS001/CP1</CEPC:Systems-Served>
+          <CEPC:Manufacturer>Mitsubishi</CEPC:Manufacturer>
+          <CEPC:Year-Installed>2016</CEPC:Year-Installed>
+          <CEPC:Location>Retail</CEPC:Location>
+          <CEPC:Area-Served>Retail</CEPC:Area-Served>
+          <CEPC:Discrepancy-Note>Indoor unit filter very dirty</CEPC:Discrepancy-Note>
+        </CEPC:ACI-Terminal-Unit-Inspection>
+        <CEPC:ACI-Terminal-Unit-Notes>
+          <CEPC:Pipe-Insulation-OK>
+            <CEPC:Note>Pipe work must be appropriately insulated to maintain good system efficiency</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+          </CEPC:Pipe-Insulation-OK>
+          <CEPC:Ductwork-Insulated-OK>
+            <CEPC:Note>Ducting must be appropriately insulated to maintain good system efficiency</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+          </CEPC:Ductwork-Insulated-OK>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Terminal-Unit-Notes>
+        <CEPC:ACI-Terminal-Unit-Condition>
+          <CEPC:Unit-Condition-OK>
+            <CEPC:Note>Terminal units should be maintained in a clean and efficient condition.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Indoor units must be maintained to a clean and efficient standard.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Unit-Condition-OK>
+        </CEPC:ACI-Terminal-Unit-Condition>
+        <CEPC:ACI-Terminal-Unit-Grilles>
+          <CEPC:Air-Flow-Distribution-OK>
+            <CEPC:Note>Even distribution of air is of paramount importance</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Distribution-OK>
+          <CEPC:Air-Flow-Tampering-Issues>
+            <CEPC:Note>Diffusers should be maintained as the manufacturer intended.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Tampering-Issues>
+          <CEPC:Water-Supply-OK>
+            <CEPC:Note>The simultaneous supply of chilled and hot water should not be allowed and monitoring should highlight a problem.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Supply-OK>
+          <CEPC:Air-Flow-Issues>
+            <CEPC:Note>Encourage occupants to report problems with the Air conditioning system to ensure that faults are rectified as soon as possible and equipment runs as efficiently as possible</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Issues>
+        </CEPC:ACI-Terminal-Unit-Grilles>
+        <CEPC:ACI-Terminal-Unit-Diffuser>
+          <CEPC:Diffuser-Positions-Issues>
+            <CEPC:Note>Any short circuiting potential should be investigated and rectified</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Diffuser-Positions-Issues>
+          <CEPC:Partitioning-Issues>
+            <CEPC:Note>Partitioning or furniture should not adversely affect the system performance performance or air distribution</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Partitioning-Issues>
+          <CEPC:Control-Operation-OK>
+            <CEPC:Note>Control and operation should be reviewed and monitored for occupancy comfort and energy efficiency.</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Control-Operation-OK>
+        </CEPC:ACI-Terminal-Unit-Diffuser>
+      </CEPC:ACI-Terminal-Unit>
+      <CEPC:ACI-Terminal-Unit>
+        <CEPC:System-Number>VOL001/SYS001</CEPC:System-Number>
+        <CEPC:System-Identifier>Ceiling mounted cassette</CEPC:System-Identifier>
+        <CEPC:System-Component-Identifier>VOL001/SYS001/TU2</CEPC:System-Component-Identifier>
+        <CEPC:ACI-Terminal-Unit-Inspection>
+          <CEPC:Systems-Served>VOL001/SYS001/CP1</CEPC:Systems-Served>
+          <CEPC:Manufacturer>Mitsubishi</CEPC:Manufacturer>
+          <CEPC:Year-Installed>2016</CEPC:Year-Installed>
+          <CEPC:Location>Retail</CEPC:Location>
+          <CEPC:Area-Served>Retail</CEPC:Area-Served>
+          <CEPC:Discrepancy-Note>Indoor unit filter very dirty</CEPC:Discrepancy-Note>
+        </CEPC:ACI-Terminal-Unit-Inspection>
+        <CEPC:ACI-Terminal-Unit-Notes>
+          <CEPC:Pipe-Insulation-OK>
+            <CEPC:Note>Pipe work must be appropriately insulated to maintain good system efficiency</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+          </CEPC:Pipe-Insulation-OK>
+          <CEPC:Ductwork-Insulated-OK>
+            <CEPC:Note>Ducting must be appropriately insulated to maintain good system efficiency</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+          </CEPC:Ductwork-Insulated-OK>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Terminal-Unit-Notes>
+        <CEPC:ACI-Terminal-Unit-Condition>
+          <CEPC:Unit-Condition-OK>
+            <CEPC:Note>Terminal units should be maintained in a clean and efficient condition.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Indoor units must be maintained to a clean and efficient standard.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Unit-Condition-OK>
+        </CEPC:ACI-Terminal-Unit-Condition>
+        <CEPC:ACI-Terminal-Unit-Grilles>
+          <CEPC:Air-Flow-Distribution-OK>
+            <CEPC:Note>Even distribution of air is of paramount importance</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Distribution-OK>
+          <CEPC:Air-Flow-Tampering-Issues>
+            <CEPC:Note>Diffusers should be maintained as the manufacturer intended.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Tampering-Issues>
+          <CEPC:Water-Supply-OK>
+            <CEPC:Note>The simultaneous supply of chilled and hot water should not be allowed and monitoring should highlight a problem.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Supply-OK>
+          <CEPC:Air-Flow-Issues>
+            <CEPC:Note>Encourage occupants to report problems with the Air conditioning system to ensure that faults are rectified as soon as possible and equipment runs as efficiently as possible</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Issues>
+        </CEPC:ACI-Terminal-Unit-Grilles>
+        <CEPC:ACI-Terminal-Unit-Diffuser>
+          <CEPC:Diffuser-Positions-Issues>
+            <CEPC:Note>Any short circuiting potential should be investigated and rectified</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Diffuser-Positions-Issues>
+          <CEPC:Partitioning-Issues>
+            <CEPC:Note>Partitioning or furniture should not adversely affect the system performance performance or air distribution</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Partitioning-Issues>
+          <CEPC:Control-Operation-OK>
+            <CEPC:Note>Control and operation should be reviewed and monitored for occupancy comfort and energy efficiency.</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Control-Operation-OK>
+        </CEPC:ACI-Terminal-Unit-Diffuser>
+      </CEPC:ACI-Terminal-Unit>
+      <CEPC:ACI-Terminal-Unit>
+        <CEPC:System-Number>VOL001/SYS002</CEPC:System-Number>
+        <CEPC:System-Identifier>Ceiling mounted cassette</CEPC:System-Identifier>
+        <CEPC:System-Component-Identifier>VOL001/SYS002/TU1</CEPC:System-Component-Identifier>
+        <CEPC:ACI-Terminal-Unit-Inspection>
+          <CEPC:Systems-Served>VOL001/SYS002/CP1</CEPC:Systems-Served>
+          <CEPC:Manufacturer>Mitsubishi</CEPC:Manufacturer>
+          <CEPC:Year-Installed>2016</CEPC:Year-Installed>
+          <CEPC:Location>Prep</CEPC:Location>
+          <CEPC:Area-Served>Prep</CEPC:Area-Served>
+          <CEPC:Discrepancy-Note>No access to outdoor units</CEPC:Discrepancy-Note>
+        </CEPC:ACI-Terminal-Unit-Inspection>
+        <CEPC:ACI-Terminal-Unit-Notes>
+          <CEPC:Pipe-Insulation-OK>
+            <CEPC:Note>Pipe work must be appropriately insulated to maintain good system efficiency</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+          </CEPC:Pipe-Insulation-OK>
+          <CEPC:Ductwork-Insulated-OK>
+            <CEPC:Note>Ducting must be appropriately insulated to maintain good system efficiency</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+          </CEPC:Ductwork-Insulated-OK>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>2</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:ACI-Terminal-Unit-Notes>
+        <CEPC:ACI-Terminal-Unit-Condition>
+          <CEPC:Unit-Condition-OK>
+            <CEPC:Note>Terminal units should be maintained in a clean and efficient condition.</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text>Indoor units must be maintained to a clean and efficient standard.</CEPC:Text>
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Unit-Condition-OK>
+        </CEPC:ACI-Terminal-Unit-Condition>
+        <CEPC:ACI-Terminal-Unit-Grilles>
+          <CEPC:Air-Flow-Distribution-OK>
+            <CEPC:Note>Even distribution of air is of paramount importance</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Distribution-OK>
+          <CEPC:Air-Flow-Tampering-Issues>
+            <CEPC:Note>Diffusers should be maintained as the manufacturer intended.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Tampering-Issues>
+          <CEPC:Water-Supply-OK>
+            <CEPC:Note>The simultaneous supply of chilled and hot water should not be allowed and monitoring should highlight a problem.</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Water-Supply-OK>
+          <CEPC:Air-Flow-Issues>
+            <CEPC:Note>Encourage occupants to report problems with the Air conditioning system to ensure that faults are rectified as soon as possible and equipment runs as efficiently as possible</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Air-Flow-Issues>
+        </CEPC:ACI-Terminal-Unit-Grilles>
+        <CEPC:ACI-Terminal-Unit-Diffuser>
+          <CEPC:Diffuser-Positions-Issues>
+            <CEPC:Note>Any short circuiting potential should be investigated and rectified</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Diffuser-Positions-Issues>
+          <CEPC:Partitioning-Issues>
+            <CEPC:Note>Partitioning or furniture should not adversely affect the system performance performance or air distribution</CEPC:Note>
+            <CEPC:Flag>No</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Partitioning-Issues>
+          <CEPC:Control-Operation-OK>
+            <CEPC:Note>Control and operation should be reviewed and monitored for occupancy comfort and energy efficiency.</CEPC:Note>
+            <CEPC:Flag>Yes</CEPC:Flag>
+            <CEPC:Guidance>
+              <CEPC:ACI-Recommendation>
+                <CEPC:Seq-Number>1</CEPC:Seq-Number>
+                <CEPC:Code>OTHER</CEPC:Code>
+                <CEPC:Text />
+              </CEPC:ACI-Recommendation>
+            </CEPC:Guidance>
+          </CEPC:Control-Operation-OK>
+        </CEPC:ACI-Terminal-Unit-Diffuser>
+      </CEPC:ACI-Terminal-Unit>
+      <CEPC:ACI-System-Control>
+        <CEPC:Sub-System-ID>VOL001/SYS001</CEPC:Sub-System-ID>
+        <CEPC:System-Component-Identifier>VOL001/SYS001/SC1</CEPC:System-Component-Identifier>
+        <CEPC:Zoning-Assessment>
+          <CEPC:Note>Zoning should be appropriate for the area</CEPC:Note>
+          <CEPC:Flag>Yes</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Zoning-Assessment>
+        <CEPC:Current-Indicated-Time>
+          <CEPC:Note>11:11 for 10:03 hrs</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Correct time and date should be maintained</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Current-Indicated-Time>
+        <CEPC:Set-On-Period>
+          <CEPC:Note>Manually controlled</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Recommend a review of Air conditioning equipment running schedule with a view to reduce the "On" time each day where possible. A reduction of 2 hours per day for comfort cooling would reap very good energy saving benefits.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Set-On-Period>
+        <CEPC:Timer-Shortfall>
+          <CEPC:Note>Timer capabilities should be suitable for the present application.</CEPC:Note>
+          <CEPC:Flag>No</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Timer-Shortfall>
+        <CEPC:Sensors-Appropriate>
+          <CEPC:Note>Sensors must be appropriate for cooling and heating in the zone or space</CEPC:Note>
+          <CEPC:Flag>Yes</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Sensors-Appropriate>
+        <CEPC:Set-Temperature>
+          <CEPC:Note>28 degrees C, heat mode</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>23 degrees C  +/ 2  is the recommended setting for optimum efficiency.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Set-Temperature>
+        <CEPC:Use-Guidance-Or-Controls>
+          <CEPC:Note>Recommend that Guidance signage is placed at strategic points in the served space</CEPC:Note>
+          <CEPC:Flag>No</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Use-Guidance-Or-Controls>
+        <CEPC:Dead-Band-Set>
+          <CEPC:Note>Not set</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Recommend a dead band of 3 degrees between heat and cool modes to prevent system hunting and wasting energy.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Dead-Band-Set>
+        <CEPC:Equipment-Capacity>
+          <CEPC:Note />
+          <CEPC:Flag>Yes</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Sensors must be appropriate for cooling and heating in the zone or space</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Equipment-Capacity>
+        <CEPC:Airflow-Modulation>
+          <CEPC:Note>No mechanical ventilation</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Controlling the airflow through supply and extract ducting to optimise the system is recommended</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Airflow-Modulation>
+      </CEPC:ACI-System-Control>
+      <CEPC:ACI-System-Control>
+        <CEPC:Sub-System-ID>VOL001/SYS002</CEPC:Sub-System-ID>
+        <CEPC:System-Component-Identifier>VOL001/SYS002/SC1</CEPC:System-Component-Identifier>
+        <CEPC:Zoning-Assessment>
+          <CEPC:Note>Zoning should be appropriate for the area</CEPC:Note>
+          <CEPC:Flag>Yes</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Zoning-Assessment>
+        <CEPC:Current-Indicated-Time>
+          <CEPC:Note>Not set for 9:56 hrs</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Correct time and date should be maintained</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Current-Indicated-Time>
+        <CEPC:Set-On-Period>
+          <CEPC:Note>Manually controlled</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Recommend a review of Air conditioning equipment running schedule with a view to reduce the "On" time each day where possible. A reduction of 2 hours per day for comfort cooling would reap very good energy saving benefits.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Set-On-Period>
+        <CEPC:Timer-Shortfall>
+          <CEPC:Note>Timer capabilities should be suitable for the present application.</CEPC:Note>
+          <CEPC:Flag>No</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Timer-Shortfall>
+        <CEPC:Sensors-Appropriate>
+          <CEPC:Note>Sensors must be appropriate for cooling and heating in the zone or space</CEPC:Note>
+          <CEPC:Flag>Yes</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Sensors-Appropriate>
+        <CEPC:Set-Temperature>
+          <CEPC:Note>22 degrees C</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>23 degrees C  +/ 2  is the recommended setting for optimum efficiency.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Set-Temperature>
+        <CEPC:Use-Guidance-Or-Controls>
+          <CEPC:Note>Recommend that Guidance signage is placed at strategic points in the served space</CEPC:Note>
+          <CEPC:Flag>No</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text />
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Use-Guidance-Or-Controls>
+        <CEPC:Dead-Band-Set>
+          <CEPC:Note>Not set</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Recommend a dead band of 3 degrees between heat and cool modes to prevent system hunting and wasting energy.</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Dead-Band-Set>
+        <CEPC:Equipment-Capacity>
+          <CEPC:Note />
+          <CEPC:Flag>Yes</CEPC:Flag>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Sensors must be appropriate for cooling and heating in the zone or space</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Equipment-Capacity>
+        <CEPC:Airflow-Modulation>
+          <CEPC:Note>No mechanical ventilation</CEPC:Note>
+          <CEPC:Guidance>
+            <CEPC:ACI-Recommendation>
+              <CEPC:Seq-Number>1</CEPC:Seq-Number>
+              <CEPC:Code>OTHER</CEPC:Code>
+              <CEPC:Text>Controlling the airflow through supply and extract ducting to optimise the system is recommended</CEPC:Text>
+            </CEPC:ACI-Recommendation>
+          </CEPC:Guidance>
+        </CEPC:Airflow-Modulation>
+      </CEPC:ACI-System-Control>
+    </CEPC:Air-Conditioning-Inspection-Report>
+  </CEPC:Report>
+</CEPC:Reports>

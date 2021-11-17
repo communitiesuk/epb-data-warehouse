@@ -28,6 +28,7 @@ module XmlPresenter
         RR-Recommendations
         Advisory-Report
         AR-Recommendations
+        Air-Conditioning-Inspection-Certificate
       ]
       preferred_keys({
         "Certificate-Number" => "scheme_assessor_id",

@@ -390,4 +390,73 @@ RSpec.describe "the parser and the rdsap configuration" do
       expect(parser.parse(dec_rr)).to eq(expectation)
     end
   end
+
+  context "when loading xml from AC-Cert" do
+    let(:config) do
+      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
+    end
+
+    let(:parser) do
+      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0000" }, **config.to_args)
+    end
+
+    let(:ac_cert) do
+      Samples.xml("CEPC-8.0.0", "ac-cert+rr")
+    end
+
+    it "doesn't error" do
+      expect { parser.parse(ac_cert) }.not_to raise_error
+    end
+
+    it "parses the document in the expected format" do
+      expectation = { "rrn" => "0000-0000-0000-0000-0000",
+                      "issue_date" => "2020-12-12",
+                      "report_type" => 6,
+                      "valid_until" => "2025-12-12",
+                      "related_rrn" => "0000-0000-0000-0000-0001",
+                      "inspection_date" => "2020-12-12",
+                      "registration_date" => "2020-12-12",
+                      "status" => "entered",
+                      "language_code" => 1,
+                      "building_complexity" => "Level 3",
+                      "scheme_assessor_id" => "TEST000001",
+                      "uprn" => "UPRN-00000000000",
+                      "address_line_1" => "24 Some Street",
+                      "post_town" => "Town",
+                      "postcode" => "NE0 0AA",
+                      "is_heritage_site" => "N",
+                      "calculation_tool" => "Some Accreditation, Sterling e-Volve, v1.2",
+                      "equipment_owner" =>
+                       { "equipment_owner_name" => "Manager",
+                         "telephone_number" => 0,
+                         "organisation_name" => "Organisation Plc",
+                         "registered_address" =>
+                          { "address_line_1" => "Organisation House",
+                            "address_line_2" => "Business Park",
+                            "post_town" => "Town",
+                            "postcode" => "NE0 0AA" } },
+                      "equipment_operator" =>
+                       { "responsible_person" => "Operator Person",
+                         "telephone_number" => 0,
+                         "organisation_name" => "Organisation Plc",
+                         "registered_address" => { "postcode" => "NE0 0AA" } },
+                      "building_name" => "24 Some Street",
+                      "f_gas_compliant_date" => "Not Provided",
+                      "ac_rated_output" => { "ac_kw_rating" => 28 },
+                      "random_sampling_flag" => "N",
+                      "treated_floor_area" => 141,
+                      "ac_system_metered_flag" => 1,
+                      "refrigerant_charge_total" => 10,
+                      "ac_sub_systems" =>
+                       [{ "sub_system_number" => "VOL001/SYS001",
+                          "sub_system_description" => "Mitsubishi split system",
+                          "refrigerant_types" => %w[R410A],
+                          "sub_system_age" => 2016 },
+                        { "sub_system_number" => "VOL001/SYS002",
+                          "sub_system_description" => "Mitsubishi split system",
+                          "refrigerant_types" => %w[R410A],
+                          "sub_system_age" => 2015 }] }
+      expect(parser.parse(ac_cert)).to eq(expectation)
+    end
+  end
 end
