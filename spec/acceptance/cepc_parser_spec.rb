@@ -198,7 +198,7 @@ RSpec.describe "the parser and the rdsap configuration" do
     end
 
     let(:dec) do
-      Samples.xml("CEPC-8.0.0", "dec")
+      Samples.xml("CEPC-8.0.0", "dec+rr")
     end
 
     it "doesn't error" do
@@ -296,6 +296,98 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "ac_rated_output" => { "ac_kw_rating" => 30 },
                          "ac_inspection_commissioned" => 1 } }
       expect(parser.parse(dec)).to eq(expectation)
+    end
+  end
+
+  context "when loading xml from Dec-RR" do
+    let(:config) do
+      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
+    end
+
+    let(:parser) do
+      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0001" }, **config.to_args)
+    end
+
+    let(:dec_rr) do
+      Samples.xml("CEPC-8.0.0", "dec+rr")
+    end
+
+    it "doesn't error" do
+      expect { parser.parse(dec_rr) }.not_to raise_error
+    end
+
+    it "parses the document in the expected format" do
+      expectation = { "rrn" => "0000-0000-0000-0000-0001",
+                      "issue_date" => "2021-11-12",
+                      "valid_until" => "2031-11-11",
+                      "report_type" => 2,
+                      "inspection_date" => "2021-08-02",
+                      "registration_date" => "2021-11-12",
+                      "status" => "entered",
+                      "related_rrn" => "0000-0000-0000-0000-0000",
+                      "language_code" => 1,
+                      "scheme_assessor_id" => "TEST000000",
+                      "location_description" => "Swimming pool with gumnasium.",
+                      "uprn" => "RRN-0000-0000-0000-0000-0000",
+                      "address_line_1" => "Fitness Centre",
+                      "address_line_2" => "Swimming Lane",
+                      "post_town" => "Floatering",
+                      "postcode" => "A00 0AA",
+                      "is_heritage_site" => "Y",
+                      "property_type" => "Fitness And Health Centre; Swimming Pool Centre",
+                      "occupier" => "Swimming corp",
+                      "methodology" => "ORCalc",
+                      "calculation_tool" => "CLG, ORCalc, v4.0.4",
+                      "inspection_type" => "Physical",
+                      "output_engine" => "ORGen v4.0.4",
+                      "short_payback" =>
+                       [{ "recommendation_code" => "X17",
+                          "recommendation" =>
+                           "Consider a programme of fitting energy meters to the pool complex as part of the service and maintenance regime.",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "CON15",
+                          "recommendation" =>
+                           "Consider installing weather compensator controls on heating and cooling systems.",
+                          "co2_impact" => "LOW" },
+                        { "recommendation_code" => "P1",
+                          "recommendation" => "Ensure pool covers are in place whenever possible.",
+                          "co2_impact" => "MEDIUM" },
+                        { "recommendation_code" => "HW20",
+                          "recommendation" =>
+                           "Consider fitting 24 hour/7 day time controls onto electric HWS cylinders.",
+                          "co2_impact" => "MEDIUM" }],
+                      "medium_payback" =>
+                       [{ "recommendation_code" => "BF9",
+                          "recommendation" =>
+                           "Consider introducing or improving cavity wall insulation.",
+                          "co2_impact" => "MEDIUM" },
+                        { "recommendation_code" => "X18",
+                          "recommendation" =>
+                           "Consider with experts how the pool complex air tightness can be improved, for example sealed better and fitted with air lock or revolving doors.",
+                          "co2_impact" => "MEDIUM" },
+                        { "recommendation_code" => "P3",
+                          "recommendation" =>
+                           "Consider with experts the benefits of installing a heat recovery system to pool water and pool hall heating.",
+                          "co2_impact" => "MEDIUM" }],
+                      "long_payback" =>
+                       [{ "recommendation_code" => "AE1",
+                          "recommendation" => "Consider installing building mounted wind turbine(s).",
+                          "co2_impact" => "MEDIUM" }],
+                      "other_payback" =>
+                       [{ "recommendation_code" => "None",
+                          "recommendation" =>
+                           "The pool cover is currently out of order, consider getting it fixed as soon as possible.",
+                          "co2_impact" => "HIGH" }],
+                      "technical_information" =>
+                       { "main_heating_fuel" => "Natural Gas",
+                         "building_environment" => "Heating and Mechanical Ventilation",
+                         "floor_area" => 1469.318,
+                         "renewable_sources" => "CHP: 24,656.55 kWh Electricity" },
+                      "site_services" =>
+                       { "service_1" => { "description" => "Natural Gas", "quantity" => 806_390 },
+                         "service_2" => { "description" => "Electricity", "quantity" => 126_508 },
+                         "service_3" => { "description" => "Not used", "quantity" => 0 } } }
+      expect(parser.parse(dec_rr)).to eq(expectation)
     end
   end
 end

@@ -7,7 +7,8 @@ module XmlPresenter
         Energy-Assessor
         Unstructured-Data
         EPC-Rating-Scale
-        dec_related_party_disclosure
+        Dec-Related-Party-Disclosure
+        AR-Questions
       ]
       includes %w[
         Certificate-Number
@@ -25,6 +26,8 @@ module XmlPresenter
         Display-Certificate
         Recommendations-Report
         RR-Recommendations
+        Advisory-Report
+        AR-Recommendations
       ]
       preferred_keys({
         "Certificate-Number" => "scheme_assessor_id",
