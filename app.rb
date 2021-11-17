@@ -60,10 +60,6 @@ private
     ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
   end
 
-  def environment
-    ENV["STAGE"]
-  end
-
   def interrupt
     raise Interrupt
   end
