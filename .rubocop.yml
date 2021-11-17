@@ -12,3 +12,6 @@ inherit_mode:
 
 Style/EmptyElse:
   EnforcedStyle: empty
+
+RSpec/BeforeAfterAll:
+  Enabled: false
