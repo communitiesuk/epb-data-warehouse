@@ -18,7 +18,6 @@ RSpec.describe "the parser and the rdsap configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2021-03-19",
-                      "rrn" => "0000-0000-0000-0000-0000",
                       "report_type" => 3,
                       "valid_until" => "2031-03-18",
                       "inspection_date" => "2021-03-19",
@@ -129,29 +128,29 @@ RSpec.describe "the parser and the rdsap configuration" do
     end
 
     it "parses the document in the expected format" do
-      expectation = { "rrn" => "0000-0000-0000-0000-0001",
-                      "issue_date" => "2021-03-19",
-                      "report_type" => 4,
-                      "valid_until" => "2031-03-18",
-                      "related_rrn" => "0000-0000-0000-0000-0000",
-                      "inspection_date" => "2021-03-19",
-                      "registration_date" => "2021-03-19",
-                      "status" => "entered",
-                      "language_code" => 1,
-                      "scheme_assessor_id" => "EES/024389",
-                      "building_complexity" => "Level 3",
-                      "address_line_1" => "60 Maple Syrup",
-                      "address_line_2" => "Big Rock",
-                      "post_town" => "Candy Mountain",
-                      "postcode" => "NE0 0AA",
-                      "property_type" => "A1/A2 Retail and Financial/Professional services",
-                      "is_heritage_site" => "N",
-                      "uprn" => "UPRN-00000000000",
-                      "methodology" => "SBEM",
-                      "calculation_tool" => "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.b.0",
-                      "output_engine" => "EPCgen, v5.6.b.0",
-                      "inspection_type" => "Physical",
-                      "short_payback" =>
+      expectation = {
+        "issue_date" => "2021-03-19",
+        "report_type" => 4,
+        "valid_until" => "2031-03-18",
+        "related_rrn" => "0000-0000-0000-0000-0000",
+        "inspection_date" => "2021-03-19",
+        "registration_date" => "2021-03-19",
+        "status" => "entered",
+        "language_code" => 1,
+        "scheme_assessor_id" => "EES/024389",
+        "building_complexity" => "Level 3",
+        "address_line_1" => "60 Maple Syrup",
+        "address_line_2" => "Big Rock",
+        "post_town" => "Candy Mountain",
+        "postcode" => "NE0 0AA",
+        "property_type" => "A1/A2 Retail and Financial/Professional services",
+        "is_heritage_site" => "N",
+        "uprn" => "UPRN-00000000000",
+        "methodology" => "SBEM",
+        "calculation_tool" => "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.b.0",
+        "output_engine" => "EPCgen, v5.6.b.0",
+        "inspection_type" => "Physical",
+        "short_payback" =>
                        [{ "recommendation_code" => "EPC-L5",
                           "recommendation" =>
                            "Consider replacing T8 lamps with retrofit T5 conversion kit.",
@@ -164,7 +163,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                           "recommendation" =>
                            "In some spaces, the solar gain limit defined in the NCM is exceeded, which might cause overheating. Consider solar control measures such as the application of reflective coating or shading devices to windows.",
                           "co2_impact" => "MEDIUM" }],
-                      "long_payback" =>
+        "long_payback" =>
                        [{ "recommendation_code" => "EPC-R2",
                           "recommendation" => "Consider installing building mounted wind turbine(s).",
                           "co2_impact" => "LOW" },
@@ -180,10 +179,11 @@ RSpec.describe "the parser and the rdsap configuration" do
                         { "recommendation_code" => "EPC-H7",
                           "recommendation" => "Add optimum start/stop to the heating system.",
                           "co2_impact" => "LOW" }],
-                      "technical_information" =>
+        "technical_information" =>
                        { "building_environment" => "Air Conditioning",
                          "floor_area" => 951,
-                         "building_level" => 3 } }
+                         "building_level" => 3 },
+      }
       expect(parser.parse(cepc_rr)).to eq(expectation)
     end
   end
@@ -206,35 +206,35 @@ RSpec.describe "the parser and the rdsap configuration" do
     end
 
     it "parses the document in the expected format" do
-      expectation = { "rrn" => "0000-0000-0000-0000-0000",
-                      "issue_date" => "2021-10-12",
-                      "valid_until" => "2022-01-31",
-                      "report_type" => 1,
-                      "inspection_date" => "2021-09-02",
-                      "registration_date" => "2021-10-12",
-                      "status" => "entered",
-                      "related_rrn" => "0000-0000-0000-0000-0001",
-                      "language_code" => 1,
-                      "scheme_assessor_id" => "TEST000000",
-                      "location_description" => "Swimming pool with gumnasium.",
-                      "uprn" => "RRN-0000-0000-0000-0000-0000",
-                      "address_line_1" => "Fitness Centre",
-                      "address_line_2" => "Swimming Lane",
-                      "post_town" => "Floatering",
-                      "postcode" => "A00 0AA",
-                      "property_type" => "Fitness And Health Centre; Swimming Pool Centre",
-                      "occupier" => "Swimming corp",
-                      "methodology" => "ORCalc",
-                      "calculation_tool" => "CLG, ORCalc, v4.0.4",
-                      "output_engine" => "ORGen v4.0.4",
-                      "or_assessment_start_date" => "2020-08-31",
-                      "or_assessment_end_date" => "2021-08-31",
-                      "building_category" => "H7; H6;",
-                      "or_building_data" =>
+      expectation = {
+        "issue_date" => "2021-10-12",
+        "valid_until" => "2022-01-31",
+        "report_type" => 1,
+        "inspection_date" => "2021-09-02",
+        "registration_date" => "2021-10-12",
+        "status" => "entered",
+        "related_rrn" => "0000-0000-0000-0000-0001",
+        "language_code" => 1,
+        "scheme_assessor_id" => "TEST000000",
+        "location_description" => "Swimming pool with gumnasium.",
+        "uprn" => "RRN-0000-0000-0000-0000-0000",
+        "address_line_1" => "Fitness Centre",
+        "address_line_2" => "Swimming Lane",
+        "post_town" => "Floatering",
+        "postcode" => "A00 0AA",
+        "property_type" => "Fitness And Health Centre; Swimming Pool Centre",
+        "occupier" => "Swimming corp",
+        "methodology" => "ORCalc",
+        "calculation_tool" => "CLG, ORCalc, v4.0.4",
+        "output_engine" => "ORGen v4.0.4",
+        "or_assessment_start_date" => "2020-08-31",
+        "or_assessment_end_date" => "2021-08-31",
+        "building_category" => "H7; H6;",
+        "or_building_data" =>
                        { "internal_environment" => "Heating and Mechanical Ventilation",
                          "assessment_period_alignment" => "End Of Main Heating Fuel Period",
                          "hvac_system" => "Radiators" },
-                      "or_benchmark_data" =>
+        "or_benchmark_data" =>
                        { "main_benchmark" => "Swimming Pool Centre",
                          "benchmarks" =>
                           [{ "benchmark" =>
@@ -246,7 +246,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                                 "tufa" => 1358.936,
                                 "benchmark" => "Swimming Pool Centre",
                                 "occupancy_level" => "Standard Occupancy" } }] },
-                      "or_energy_consumption" =>
+        "or_energy_consumption" =>
                        { "electricity" =>
                           { "consumption" => 126_161,
                             "start_date" => "2020-09-01",
@@ -257,44 +257,45 @@ RSpec.describe "the parser and the rdsap configuration" do
                             "start_date" => "2020-09-01",
                             "end_date" => "2021-08-31",
                             "estimate" => 0 } },
-                      "or_usable_floor_area" =>
+        "or_usable_floor_area" =>
                        { "ufa_1" => { "name" => "Basement Plant", "floor_area" => 118.16 },
                          "ufa_2" => { "name" => "Basement void around pool", "floor_area" => 179.673 },
                          "ufa_3" => { "name" => "Ground Plant", "floor_area" => 146.223 },
                          "ufa_4" => { "name" => "First Floor Plant", "floor_area" => 49.807 },
                          "total_ufa" => 493.863 },
-                      "or_previous_data" => { "asset_rating" => 45 },
-                      "renewable_energy_source" =>
+        "or_previous_data" => { "asset_rating" => 45 },
+        "renewable_energy_source" =>
                        [{ "start_date" => "2020-09-01",
                           "end_date" => "2021-08-31",
                           "name" => "CHP",
                           "generation" => 24_589,
                           "energy_type" => 0 }],
-                      "dec_annual_energy_summary" =>
+        "dec_annual_energy_summary" =>
                        { "annual_energy_use_electrical" => 86.1,
                          "annual_energy_use_fuel_thermal" => 548.82,
                          "renewables_fuel_thermal" => 0,
                          "renewables_electrical" => 16.3,
                          "typical_thermal_use" => 1196.24,
                          "typical_electrical_use" => 238.61 },
-                      "dec_status" => 0,
-                      "reason_type" => 1,
-                      "dec_related_party_disclosure" => 1,
-                      "this_assessment" =>
+        "dec_status" => 0,
+        "reason_type" => 1,
+        "dec_related_party_disclosure" => 1,
+        "this_assessment" =>
                        { "nominated_date" => "2021-09-01",
                          "energy_rating" => 42,
                          "electricity_co2" => 70,
                          "heating_co2" => 156,
                          "renewables_co2" => 13 },
-                      "technical_information" =>
+        "technical_information" =>
                        { "main_heating_fuel" => "Natural Gas",
                          "building_environment" => "Heating and Mechanical Ventilation",
                          "floor_area" => 1469.318,
                          "separately_metered_electric_heating" => 0 },
-                      "ac_questionnaire" =>
+        "ac_questionnaire" =>
                        { "ac_present" => "Yes",
                          "ac_rated_output" => { "ac_kw_rating" => 30 },
-                         "ac_inspection_commissioned" => 1 } }
+                         "ac_inspection_commissioned" => 1 },
+      }
       expect(parser.parse(dec)).to eq(expectation)
     end
   end
@@ -317,30 +318,30 @@ RSpec.describe "the parser and the rdsap configuration" do
     end
 
     it "parses the document in the expected format" do
-      expectation = { "rrn" => "0000-0000-0000-0000-0001",
-                      "issue_date" => "2021-11-12",
-                      "valid_until" => "2031-11-11",
-                      "report_type" => 2,
-                      "inspection_date" => "2021-08-02",
-                      "registration_date" => "2021-11-12",
-                      "status" => "entered",
-                      "related_rrn" => "0000-0000-0000-0000-0000",
-                      "language_code" => 1,
-                      "scheme_assessor_id" => "TEST000000",
-                      "location_description" => "Swimming pool with gumnasium.",
-                      "uprn" => "RRN-0000-0000-0000-0000-0000",
-                      "address_line_1" => "Fitness Centre",
-                      "address_line_2" => "Swimming Lane",
-                      "post_town" => "Floatering",
-                      "postcode" => "A00 0AA",
-                      "is_heritage_site" => "Y",
-                      "property_type" => "Fitness And Health Centre; Swimming Pool Centre",
-                      "occupier" => "Swimming corp",
-                      "methodology" => "ORCalc",
-                      "calculation_tool" => "CLG, ORCalc, v4.0.4",
-                      "inspection_type" => "Physical",
-                      "output_engine" => "ORGen v4.0.4",
-                      "short_payback" =>
+      expectation = {
+        "issue_date" => "2021-11-12",
+        "valid_until" => "2031-11-11",
+        "report_type" => 2,
+        "inspection_date" => "2021-08-02",
+        "registration_date" => "2021-11-12",
+        "status" => "entered",
+        "related_rrn" => "0000-0000-0000-0000-0000",
+        "language_code" => 1,
+        "scheme_assessor_id" => "TEST000000",
+        "location_description" => "Swimming pool with gumnasium.",
+        "uprn" => "RRN-0000-0000-0000-0000-0000",
+        "address_line_1" => "Fitness Centre",
+        "address_line_2" => "Swimming Lane",
+        "post_town" => "Floatering",
+        "postcode" => "A00 0AA",
+        "is_heritage_site" => "Y",
+        "property_type" => "Fitness And Health Centre; Swimming Pool Centre",
+        "occupier" => "Swimming corp",
+        "methodology" => "ORCalc",
+        "calculation_tool" => "CLG, ORCalc, v4.0.4",
+        "inspection_type" => "Physical",
+        "output_engine" => "ORGen v4.0.4",
+        "short_payback" =>
                        [{ "recommendation_code" => "X17",
                           "recommendation" =>
                            "Consider a programme of fitting energy meters to the pool complex as part of the service and maintenance regime.",
@@ -356,7 +357,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                           "recommendation" =>
                            "Consider fitting 24 hour/7 day time controls onto electric HWS cylinders.",
                           "co2_impact" => "MEDIUM" }],
-                      "medium_payback" =>
+        "medium_payback" =>
                        [{ "recommendation_code" => "BF9",
                           "recommendation" =>
                            "Consider introducing or improving cavity wall insulation.",
@@ -369,24 +370,25 @@ RSpec.describe "the parser and the rdsap configuration" do
                           "recommendation" =>
                            "Consider with experts the benefits of installing a heat recovery system to pool water and pool hall heating.",
                           "co2_impact" => "MEDIUM" }],
-                      "long_payback" =>
+        "long_payback" =>
                        [{ "recommendation_code" => "AE1",
                           "recommendation" => "Consider installing building mounted wind turbine(s).",
                           "co2_impact" => "MEDIUM" }],
-                      "other_payback" =>
+        "other_payback" =>
                        [{ "recommendation_code" => "None",
                           "recommendation" =>
                            "The pool cover is currently out of order, consider getting it fixed as soon as possible.",
                           "co2_impact" => "HIGH" }],
-                      "technical_information" =>
+        "technical_information" =>
                        { "main_heating_fuel" => "Natural Gas",
                          "building_environment" => "Heating and Mechanical Ventilation",
                          "floor_area" => 1469.318,
                          "renewable_sources" => "CHP: 24,656.55 kWh Electricity" },
-                      "site_services" =>
+        "site_services" =>
                        { "service_1" => { "description" => "Natural Gas", "quantity" => 806_390 },
                          "service_2" => { "description" => "Electricity", "quantity" => 126_508 },
-                         "service_3" => { "description" => "Not used", "quantity" => 0 } } }
+                         "service_3" => { "description" => "Not used", "quantity" => 0 } },
+      }
       expect(parser.parse(dec_rr)).to eq(expectation)
     end
   end
@@ -409,8 +411,7 @@ RSpec.describe "the parser and the rdsap configuration" do
     end
 
     it "parses the document in the expected format" do
-      expectation = { "rrn" => "0000-0000-0000-0000-0000",
-                      "issue_date" => "2020-12-12",
+      expectation = { "issue_date" => "2020-12-12",
                       "report_type" => 6,
                       "valid_until" => "2025-12-12",
                       "related_rrn" => "0000-0000-0000-0000-0001",
