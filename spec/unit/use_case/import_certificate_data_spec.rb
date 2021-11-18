@@ -3,12 +3,16 @@ describe UseCase::ImportCertificateData do
     instance_double(Gateway::AssessmentAttributesGateway)
   end
 
+  let(:documents_gateway) { instance_double(Gateway::DocumentsGateway) }
+
   let!(:use_case) do
-    described_class.new(assessment_attribute_gateway: assessment_attributes_gateway)
+    described_class.new assessment_attribute_gateway: assessment_attributes_gateway,
+                        documents_gateway: documents_gateway
   end
 
   before do
     allow(assessment_attributes_gateway).to receive(:add_attribute_value)
+    allow(documents_gateway).to receive(:add_assessment)
   end
 
   context "when a simple attribute is passed to the usecase" do
@@ -116,6 +120,28 @@ describe UseCase::ImportCertificateData do
       }
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
       expect(assessment_attributes_gateway).to have_received(:add_attribute_value).exactly(2).times
+    end
+  end
+
+  context "when attribute data is passed to the use case" do
+    assessment_id = "0000-0000-0000-0000-0000"
+    certificate_data = {
+      "1" => [
+        { "1a" => "one a" },
+        { "1b" => "one b" },
+      ],
+      "2" => [
+        { "1a" => "one a" },
+        { "1b" => "one b" },
+      ],
+    }
+
+    before do
+      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+    end
+
+    it "passes the attribute data to the documents gateway for saving" do
+      expect(documents_gateway).to have_received(:add_assessment).with(assessment_id: assessment_id, document: certificate_data)
     end
   end
 end

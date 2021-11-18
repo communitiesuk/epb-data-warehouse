@@ -55,15 +55,13 @@ GEM
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     jwt (2.3.0)
-    mini_portile2 (2.6.1)
     minitest (5.14.4)
     mock_redis (0.28.0)
       ruby2_keywords
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.12.5-x86_64-darwin)
       racc (~> 1.4)
     oauth2 (1.4.7)
       faraday (>= 0.8, < 2.0)
@@ -126,6 +124,7 @@ GEM
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
@@ -136,7 +135,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-20
 
 DEPENDENCIES
   activerecord (~> 6.1, >= 6.1.4)!
@@ -153,6 +152,7 @@ DEPENDENCIES
   rspec (~> 3.10)!
   rubocop-govuk (~> 4.0)!
   rubocop-performance (~> 1.11, >= 1.11.4)!
+  timecop (~> 0.9.4)!
   webmock (~> 3.14)!
   zeitwerk (~> 2.4, >= 2.4.2)!
 

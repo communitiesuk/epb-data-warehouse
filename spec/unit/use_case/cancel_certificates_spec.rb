@@ -2,11 +2,18 @@ describe UseCase::CancelCertificates do
   subject(:use_case) do
     described_class.new eav_gateway: eav_database_gateway,
                         queues_gateway: queues_gateway,
-                        api_gateway: api_gateway
+                        api_gateway: api_gateway,
+                        documents_gateway: documents_gateway
   end
 
   let(:eav_database_gateway) do
     instance_double(Gateway::AssessmentAttributesGateway)
+  end
+
+  let(:documents_gateway) do
+    documents_gateway = instance_double(Gateway::DocumentsGateway)
+    allow(documents_gateway).to receive(:set_top_level_attribute)
+    documents_gateway
   end
 
   let(:queues_gateway) do
@@ -30,6 +37,11 @@ describe UseCase::CancelCertificates do
     it "saves the relevant certificates to database" do
       expect { use_case.execute }.not_to raise_error
       expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(3).times
+    end
+
+    it "passes the relevant certificates to the documents gateway" do
+      use_case.execute
+      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
     end
   end
 

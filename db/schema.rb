@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_112101) do
+ActiveRecord::Schema.define(version: 2021_11_18_101811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 2021_11_16_112101) do
     t.string "parent_name"
     t.index ["attribute_name"], name: "index_assessment_attributes_on_attribute_name"
     t.index ["parent_name"], name: "index_assessment_attributes_on_parent_name"
+  end
+
+  create_table "assessment_documents", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.jsonb "document", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "assessment_lookups", force: :cascade do |t|

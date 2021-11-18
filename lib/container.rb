@@ -19,10 +19,15 @@ class Container
     @queues_gateway ||= Gateway::QueuesGateway.new
   end
 
+  def self.documents_gateway
+    @documents_gateway ||= Gateway::DocumentsGateway.new
+  end
+
   def self.cancel_certificates_use_case
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                       queues_gateway: queues_gateway,
-                                                                      api_gateway: register_api_gateway
+                                                                      api_gateway: register_api_gateway,
+                                                                      documents_gateway: documents_gateway
   end
 
   def self.fetch_certificate_use_case
@@ -30,7 +35,8 @@ class Container
   end
 
   def self.import_certificate_data_use_case
-    @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway
+    @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway,
+                                                                             documents_gateway: documents_gateway
   end
 
   def self.import_certificates_use_case
@@ -46,6 +52,7 @@ class Container
 
   def self.opt_out_certificates_use_case
     @opt_out_certificates_use_case = UseCase::OptOutCertificates.new eav_gateway: assessment_attributes_gateway,
+                                                                     documents_gateway: documents_gateway,
                                                                      queues_gateway: queues_gateway,
                                                                      certificate_gateway: register_api_gateway
   end

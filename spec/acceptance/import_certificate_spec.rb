@@ -12,7 +12,8 @@ describe "Acceptance::ImportCertificate" do
 
   let(:import_xml_certificate_use_case) do
     eav_gateway = Gateway::AssessmentAttributesGateway.new
-    certificate_data_use_case = UseCase::ImportCertificateData.new assessment_attribute_gateway: eav_gateway
+    certificate_data_use_case = UseCase::ImportCertificateData.new assessment_attribute_gateway: eav_gateway,
+                                                                   documents_gateway: Gateway::DocumentsGateway.new
     UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
                                       assessment_attribute_gateway: eav_gateway,
                                       certificate_gateway: certificate_gateway
