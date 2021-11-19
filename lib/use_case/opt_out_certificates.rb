@@ -13,10 +13,10 @@ module UseCase
       assessment_ids.each do |assessment_id|
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
         if meta_data[:optOut]
-          @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: OPT_OUT, attribute_value: Time.now)
+          @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: OPT_OUT, attribute_value: Time.now.utc)
         else
           @assessment_attribute_gateway.delete_attribute_value(assessment_id: assessment_id, attribute_name: OPT_OUT)
-          @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: "opt_in", attribute_value: Time.now)
+          @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: "opt_in", attribute_value: Time.now.utc)
         end
       end
     end
