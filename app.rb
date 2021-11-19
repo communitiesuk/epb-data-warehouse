@@ -21,7 +21,6 @@ class QueueWorker
     loop do
       register_signal_handlers
       set_postgres_connection
-      set_redis_connection
       pull_queues
 
       sleep 5
@@ -39,10 +38,6 @@ private
   def register_signal_handlers
     trap("INT") { interrupt }
     trap("TERM") { interrupt }
-  end
-
-  def set_redis_connection
-    @queues_gateway = gateway :queues
   end
 
   def set_postgres_connection
