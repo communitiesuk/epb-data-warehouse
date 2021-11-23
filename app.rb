@@ -32,7 +32,9 @@ class QueueWorker
 private
 
   def pull_queues
-    use_case(:pull_queues).execute
+    Helper::Toggles.enabled?("data_warehouse_consumes_queues") do
+      use_case(:pull_queues).execute
+    end
   end
 
   def register_signal_handlers
