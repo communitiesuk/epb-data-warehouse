@@ -5,7 +5,7 @@ runtime-versions:
 
 env:
   variables:
-    DEPLOY_APPNAME: "mhclg-epb-data-warehouse-integration"
+    DEPLOY_APPNAME: "dluhc-epb-data-warehouse-integration"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-integration-login"

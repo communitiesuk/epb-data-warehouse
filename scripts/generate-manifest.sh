@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #define parameters which are passed in.
-APPLICATION_NAME=$1  # e.g. mhclg-epb-something-api-integration
+APPLICATION_NAME=$1  # e.g. dluhc-epb-something-api-integration
 STAGE=$2 # i.e. [integration, staging, production]
 
 case "$STAGE" in
@@ -20,6 +20,6 @@ applications:
     no-route: true
     health-check-type: process
     services:
-      - mhclg-epb-data-warehouse-db-$STAGE
+      - dluhc-epb-data-warehouse-db-$STAGE
       - dluhc-epb-redis-data-warehouse-$STAGE
 EOF
