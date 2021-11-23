@@ -17,6 +17,7 @@ applications:
     memory: $MEMORY
     buildpacks:
       - ruby_buildpack
+    no-route: true
     health-check-type: process
     services:
       - mhclg-epb-data-warehouse-db-$STAGE

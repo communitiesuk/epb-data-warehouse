@@ -16,7 +16,6 @@ module UseCase
 
     def save_eav_attributes(assessment_id:, certificate:)
       certificate.each do |key, value|
-        # value = value if value.instance_of?(Hash) || value.instance_of?(Array)
 
         attribute = {
           attribute: key.to_s,
