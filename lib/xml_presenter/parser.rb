@@ -1,3 +1,5 @@
+require "nokogiri"
+
 module XmlPresenter
   class Parser
     def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, specified_report: nil)
