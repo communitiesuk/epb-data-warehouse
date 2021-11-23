@@ -5,6 +5,7 @@ runtime-versions:
 
 env:
   parameter-store:
+    EPB_UNLEASH_URI: "epbr-unleash-integration-uri"
     STAGE: "epbr-govpaas-integration-space"
     DOCKER_POSTGRES_PASSWORD: "docker-postgres-password"
 

@@ -54,6 +54,9 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
 
+	cf set-env "${DEPLOY_APPNAME}" EPB_UNLEASH_AUTH_TOKEN "${EPB_UNLEASH_AUTH_TOKEN}"
+	cf set-env "${DEPLOY_APPNAME}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
+
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
 
 migrate-db-and-wait-for-success:
