@@ -5,16 +5,16 @@ runtime-versions:
 
 env:
   variables:
-    DEPLOY_APPNAME: "dluhc-epb-data-warehouse-integration"
+    DEPLOY_APPNAME: "dluhc-epb-data-warehouse-production"
 
   parameter-store:
-    PAAS_LOGIN: "epbr-govpaas-integration-login"
-    PAAS_PW: "epbr-govpaas-integration-pw"
-    PAAS_SPACE: "epbr-govpaas-integration-space"
+    PAAS_LOGIN: "epbr-govpaas-production-login"
+    PAAS_PW: "epbr-govpaas-production-pw"
+    PAAS_SPACE: "epbr-govpaas-production-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
-    EPB_UNLEASH_URI: "epbr-unleash-integration-uri"
-    EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-integration-auth-token"
+    EPB_UNLEASH_URI: "epbr-unleash-production-uri"
+    EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-production-auth-token"
 
 phases:
   install:
@@ -22,7 +22,7 @@ phases:
       ruby: 2.7
   pre_build:
     commands:
-      - echo ">>>>>>>> DEPLOY TO INTEGRATION ENV"
+      - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN -p "$PAAS_PW" -o $PAAS_ORG -s $PAAS_SPACE
       - cf cancel-deployment ${DEPLOY_APPNAME} || true
   build:
