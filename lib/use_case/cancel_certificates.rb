@@ -1,10 +1,11 @@
 module UseCase
   class CancelCertificates
-    def initialize(eav_gateway:, queues_gateway:, api_gateway:, documents_gateway:)
+    def initialize(eav_gateway:, queues_gateway:, api_gateway:, documents_gateway:, logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @queues_gateway = queues_gateway
       @api_gateway = api_gateway
       @documents_gateway = documents_gateway
+      @logger = logger
     end
 
     def execute
@@ -18,6 +19,8 @@ module UseCase
                                                    top_level_attribute: "cancelled_at",
                                                    new_value: meta_data[:cancelledAt]
       end
+    rescue StandardError => e
+      @logger.error "Error of type #{e.class} when importing cancellations of certificates: '#{e.message}'" if @logger.respond_to?(:error)
     end
   end
 end

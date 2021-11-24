@@ -3,11 +3,12 @@ module UseCase
     OPT_OUT = "opt_out".freeze
     OPT_IN = "opt_in".freeze
 
-    def initialize(eav_gateway:, documents_gateway:, queues_gateway:, certificate_gateway:)
+    def initialize(eav_gateway:, documents_gateway:, queues_gateway:, certificate_gateway:, logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @documents_gateway = documents_gateway
       @queues_gateway = queues_gateway
       @certificate_gateway = certificate_gateway
+      @logger = logger
     end
 
     def execute
@@ -27,6 +28,8 @@ module UseCase
                                    value: Time.now.utc
         end
       end
+    rescue StandardError => e
+      @logger.error "Error of type #{e.class} when importing changes of opt-out status: '#{e.message}'" if @logger.respond_to?(:error)
     end
 
   private

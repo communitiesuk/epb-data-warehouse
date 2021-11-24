@@ -27,7 +27,8 @@ class Container
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                       queues_gateway: queues_gateway,
                                                                       api_gateway: register_api_gateway,
-                                                                      documents_gateway: documents_gateway
+                                                                      documents_gateway: documents_gateway,
+                                                                      logger: logger
   end
 
   def self.fetch_certificate_use_case
@@ -41,7 +42,8 @@ class Container
 
   def self.import_certificates_use_case
     @import_certificates_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
-                                                                      queues_gateway: queues_gateway
+                                                                      queues_gateway: queues_gateway,
+                                                                      logger: logger
   end
 
   def self.import_xml_certificate_use_case
@@ -54,11 +56,20 @@ class Container
     @opt_out_certificates_use_case = UseCase::OptOutCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                      documents_gateway: documents_gateway,
                                                                      queues_gateway: queues_gateway,
-                                                                     certificate_gateway: register_api_gateway
+                                                                     certificate_gateway: register_api_gateway,
+                                                                     logger: logger
   end
 
   def self.pull_queues_use_case
     @pull_queues_use_case ||= UseCase::PullQueues.new
+  end
+
+  def self.logger
+    return @logger if @logger
+
+    @logger = Logger.new($stdout)
+    @logger.level = Logger::ERROR
+    @logger
   end
 
   def self.reset!

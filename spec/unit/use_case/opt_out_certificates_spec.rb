@@ -3,7 +3,8 @@ describe UseCase::OptOutCertificates do
     described_class.new eav_gateway: database_gateway,
                         documents_gateway: documents_gateway,
                         queues_gateway: queues_gateway,
-                        certificate_gateway: certificate_gateway
+                        certificate_gateway: certificate_gateway,
+                        logger: logger
   end
 
   let(:database_gateway) do
@@ -27,52 +28,72 @@ describe UseCase::OptOutCertificates do
     instance_double(Gateway::RegisterApiGateway)
   end
 
-  before do
-    allow(database_gateway).to receive(:add_attribute_value).and_return(true)
-    allow(queues_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
+  let(:logger) do
+    logger = instance_double(Logger)
+    allow(logger).to receive(:error)
+    logger
   end
 
-  context "when marking existing certs as opted out" do
+  context "when queues gateway is functioning correctly" do
     before do
-      allow(certificate_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ optOut: true })
-      allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ optOut: true })
-      allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ optOut: true })
-      use_case.execute
+      allow(database_gateway).to receive(:add_attribute_value).and_return(true)
+      allow(queues_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
     end
 
-    it "saves 3 opted out certificate to the EAV store" do
-      expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
+    context "when marking existing certs as opted out" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ optOut: true })
+        allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ optOut: true })
+        allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ optOut: true })
+        use_case.execute
+      end
+
+      it "saves 3 opted out certificate to the EAV store" do
+        expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
+      end
+
+      it "saves 3 opted out certificates to the document store" do
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+        expect(documents_gateway).not_to have_received(:delete_top_level_attribute)
+      end
     end
 
-    it "saves 3 opted out certificates to the document store" do
-      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
-      expect(documents_gateway).not_to have_received(:delete_top_level_attribute)
+    context "when marking 1 existing cert as opted in" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ optOut: true })
+        allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ optOut: false })
+        allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ optOut: true })
+        allow(database_gateway).to receive(:delete_attribute_value)
+        use_case.execute
+      end
+
+      it "performs a save for each of the 3 certificates on the EAV store" do
+        expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
+      end
+
+      it "executes the update use case by deleting one attribute value on the EAV store" do
+        expect(database_gateway).to have_received(:delete_attribute_value).exactly(1).times
+      end
+
+      it "performs a save for each of the 3 certificates on the document store" do
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+      end
+
+      it "executes the update use case by deleting one attribute value on the document store" do
+        expect(documents_gateway).to have_received(:delete_top_level_attribute).exactly(1).times
+      end
     end
   end
 
-  context "when marking 1 existing cert as opted in" do
+  context "when the queues gateway is not functioning correctly" do
     before do
-      allow(certificate_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ optOut: true })
-      allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ optOut: false })
-      allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ optOut: true })
-      allow(database_gateway).to receive(:delete_attribute_value)
+      allow(queues_gateway).to receive(:consume_queue).and_raise("bang!")
+    end
+
+    it "logs out an error containing the underlying error message" do
       use_case.execute
-    end
 
-    it "performs a save for each of the 3 certificates on the EAV store" do
-      expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
-    end
-
-    it "executes the update use case by deleting one attribute value on the EAV store" do
-      expect(database_gateway).to have_received(:delete_attribute_value).exactly(1).times
-    end
-
-    it "performs a save for each of the 3 certificates on the document store" do
-      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
-    end
-
-    it "executes the update use case by deleting one attribute value on the document store" do
-      expect(documents_gateway).to have_received(:delete_top_level_attribute).exactly(1).times
+      expect(logger).to have_received(:error).with(include "bang!")
     end
   end
 end
