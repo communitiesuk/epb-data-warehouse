@@ -15,10 +15,10 @@ env:
     PAAS_ORG: "epbr-govpaas-orgname"
     EPB_UNLEASH_URI: "epbr-unleash-integration-uri"
     EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-integration-auth-token"
-#    Need to create the clients and add the permissions for the data warehouse pipeline add to the Makefile to copy to cloud foundry
     EPB_AUTH_CLIENT_ID: "epbr-data-warehouse-auth-client-id-integration"
     EPB_AUTH_CLIENT_SECRET: "epbr-data-warehouse-auth-client-secret-integration"
     EPB_AUTH_SERVER: "epbr-auth-server-integration"
+    EPB_API_URL: "epbr-api-url-integration"
 
 phases:
   install:
