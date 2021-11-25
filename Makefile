@@ -62,6 +62,8 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" EPB_AUTH_SERVER "${EPB_AUTH_SERVER}"
 	cf set-env "${DEPLOY_APPNAME}" EPB_API_URL "${EPB_API_URL}"
 
+	cf set-env "${DEPLOY_APPNAME}" SENTRY_DSN "${SENTRY_DSN}"
+
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
 
 migrate-db-and-wait-for-success:

@@ -13,6 +13,7 @@ module UseCase
         @import_xml_certificate_use_case.execute(assessment_id)
       end
     rescue StandardError => e
+      report_to_sentry(e)
       @logger.error "Error of type #{e.class} when importing certificates: '#{e.message}'" if @logger.respond_to?(:error)
     end
   end

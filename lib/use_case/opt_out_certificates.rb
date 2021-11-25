@@ -29,6 +29,7 @@ module UseCase
         end
       end
     rescue StandardError => e
+      report_to_sentry(e)
       @logger.error "Error of type #{e.class} when importing changes of opt-out status: '#{e.message}'" if @logger.respond_to?(:error)
     end
 

@@ -20,6 +20,7 @@ module UseCase
                                                    new_value: meta_data[:cancelledAt]
       end
     rescue StandardError => e
+      report_to_sentry(e)
       @logger.error "Error of type #{e.class} when importing cancellations of certificates: '#{e.message}'" if @logger.respond_to?(:error)
     end
   end

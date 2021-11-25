@@ -127,6 +127,13 @@ GEM
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    sentry-ruby (4.8.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      faraday (>= 1.0)
+      sentry-ruby-core (= 4.8.1)
+    sentry-ruby-core (4.8.1)
+      concurrent-ruby
+      faraday
     timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -158,6 +165,7 @@ DEPENDENCIES
   rspec (~> 3.10)!
   rubocop-govuk (~> 4.0)!
   rubocop-performance (~> 1.11, >= 1.11.4)!
+  sentry-ruby (~> 4.8.1)!
   timecop (~> 0.9.4)!
   unleash (~> 3.2.4)!
   webmock (~> 3.14)!

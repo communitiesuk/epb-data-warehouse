@@ -4,6 +4,7 @@ require "active_support/core_ext/uri"
 require "zeitwerk"
 require "epb_view_models"
 require "nokogiri"
+require "sentry-ruby"
 
 require_relative "db/seeds"
 
@@ -21,6 +22,10 @@ end
 
 def gateway(name)
   Services.gateway name
+end
+
+def report_to_sentry(exception)
+  Sentry.capture_exception(exception) if defined?(Sentry)
 end
 
 # Adds project rake files

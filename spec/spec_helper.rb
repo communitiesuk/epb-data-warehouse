@@ -43,6 +43,8 @@ def gateway(name)
   Services.gateway name
 end
 
+def report_to_sentry(_); end
+
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 

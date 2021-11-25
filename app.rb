@@ -3,10 +3,16 @@ require "active_support"
 require "active_support/core_ext/uri"
 require "redis"
 require "zeitwerk"
+require "sentry-ruby"
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib")
 loader.setup
+
+Sentry.init do |config|
+  config.environment = ENV["STAGE"]
+  config.capture_exception_frame_locals = true
+end
 
 def use_case(name)
   Services.use_case name
@@ -14,6 +20,10 @@ end
 
 def gateway(name)
   Services.gateway name
+end
+
+def report_to_sentry(exception)
+  Sentry.capture_exception(exception) if defined?(Sentry)
 end
 
 class QueueWorker
