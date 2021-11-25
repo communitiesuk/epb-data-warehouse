@@ -15,6 +15,9 @@ env:
     PAAS_ORG: "epbr-govpaas-orgname"
     EPB_UNLEASH_URI: "epbr-unleash-production-uri"
     EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-production-auth-token"
+    EPB_AUTH_CLIENT_ID: "epbr-data-warehouse-auth-client-id-production"
+    EPB_AUTH_CLIENT_SECRET: "epbr-data-warehouse-auth-client-secret-production"
+    EPB_AUTH_SERVER: "epbr-auth-server-production"
 
 phases:
   install:

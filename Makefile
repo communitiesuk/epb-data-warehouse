@@ -51,6 +51,10 @@ deploy-app: ## Deploys the app to PaaS
 
 	cf apply-manifest -f manifest.yml
 
+    cf set-env "${DEPLOY_APPNAME}" EPB_AUTH_CLIENT_ID "${EPB_AUTH_CLIENT_ID}"
+    cf set-env "${DEPLOY_APPNAME}" EPB_AUTH_CLIENT_SECRET "${EPB_AUTH_CLIENT_SECRET}"
+    cf set-env "${DEPLOY_APPNAME}" EPB_AUTH_SERVER "${EPB_AUTH_SERVER}"
+
 	cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
 

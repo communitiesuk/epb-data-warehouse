@@ -15,6 +15,9 @@ env:
     PAAS_ORG: "epbr-govpaas-orgname"
     EPB_UNLEASH_URI: "epbr-unleash-staging-uri"
     EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-staging-auth-token"
+    EPB_AUTH_CLIENT_ID: "epbr-data-warehouse-auth-client-id-staging"
+    EPB_AUTH_CLIENT_SECRET: "epbr-data-warehouse-auth-client-secret-staging"
+    EPB_AUTH_SERVER: "epbr-auth-server-staging"
 
 phases:
   install:
