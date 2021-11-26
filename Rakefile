@@ -28,6 +28,11 @@ def report_to_sentry(exception)
   Sentry.capture_exception(exception) if defined?(Sentry)
 end
 
+Sentry.init do |config|
+  config.environment = ENV["STAGE"]
+  config.capture_exception_frame_locals = true
+end
+
 # Adds project rake files
 Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
 
