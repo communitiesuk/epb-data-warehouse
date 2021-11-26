@@ -14,7 +14,10 @@ module UseCase
         @assessment_attribute_gateway.delete_attributes_by_assessment(assessment_id)
       end
 
-      export_config = export_configuration(meta_data[:schemaType]).new
+      configuration_class = export_configuration(meta_data[:schemaType])
+      return if configuration_class.nil?
+
+      export_config = configuration_class.new
       parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: assessment_id))
       certificate = parser.parse(xml)
 

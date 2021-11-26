@@ -31,23 +31,43 @@ describe UseCase::ImportXmlCertificate do
 
   before do
     allow(certificate_gateway).to receive(:fetch).and_return(sample)
-    allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
-                                                                         assessmentAddressId: "UPRN-000000000000",
-                                                                         "typeOfAssessment": "RdSAP",
-                                                                         "optOut": false,
-                                                                         "createdAt": "2021-07-21T11:26:28.045Z" })
-    use_case.execute(assessment_id)
   end
 
   context "when transforming the epc xml using the parser" do
-    it "forms together certificate data and passes it into the import certificate data use case" do
-      expect(import_certificate_data_use_case).to have_received(:execute).with(
-        assessment_id: assessment_id,
-        certificate_data: include({
-          "calculation_software_version" => "13.05r16",
-          "created_at" => "2021-07-21T11:26:28.045Z",
-        }),
-      )
+    context "when the schema type is known" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             "typeOfAssessment": "RdSAP",
+                                                                             "optOut": false,
+                                                                             "createdAt": "2021-07-21T11:26:28.045Z" })
+      end
+
+      it "forms together certificate data and passes it into the import certificate data use case" do
+        use_case.execute(assessment_id)
+        expect(import_certificate_data_use_case).to have_received(:execute).with(
+          assessment_id: assessment_id,
+          certificate_data: include({
+            "calculation_software_version" => "13.05r16",
+            "created_at" => "2021-07-21T11:26:28.045Z",
+          }),
+        )
+      end
+    end
+
+    context "when the schema type is not known" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "SAP-Schema-NI-18.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             "typeOfAssessment": "RdSAP",
+                                                                             "optOut": false,
+                                                                             "createdAt": "2021-07-21T11:26:28.045Z" })
+      end
+
+      it "does not trigger an import" do
+        use_case.execute(assessment_id)
+        expect(import_certificate_data_use_case).not_to have_received(:execute)
+      end
     end
   end
 end
