@@ -66,7 +66,7 @@ module Gateway
         ActiveRecord::Relation::QueryAttribute.new(
           "new_value",
           new_value,
-          ActiveRecord::Type::String.new,
+          ActiveRecord::Type::Json.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "updated_at",

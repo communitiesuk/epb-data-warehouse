@@ -102,13 +102,26 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
   end
 
   context "when adding a record and then setting an individual attribute on the record" do
-    before do
-      gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
-      gateway.set_top_level_attribute(assessment_id: assessment_id, top_level_attribute: "tenure", new_value: "5")
+    context "with a simple attribute value" do
+      before do
+        gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
+        gateway.set_top_level_attribute(assessment_id: assessment_id, top_level_attribute: "tenure", new_value: "5")
+      end
+
+      it "updates the record so the stored data is the updated version" do
+        expect(tenure).to eq "5"
+      end
     end
 
-    it "updates the record so the stored data is the updated version" do
-      expect(tenure).to eq "5"
+    context "with a datetime attribute value" do
+      before do
+        gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
+        gateway.set_top_level_attribute(assessment_id: assessment_id, top_level_attribute: "tenure", new_value: "2021-11-26T14:13:11.000Z")
+      end
+
+      it "updates the record so the stored data is the updated version" do
+        expect(tenure).to eq "2021-11-26T14:13:11.000Z"
+      end
     end
   end
 
