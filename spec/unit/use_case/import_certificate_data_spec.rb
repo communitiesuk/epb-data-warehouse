@@ -123,6 +123,26 @@ describe UseCase::ImportCertificateData do
     end
   end
 
+  context "when several attributes are passed to the use case and one raises a duplicate error" do
+    certificate_data = {
+      "bad" => "i am bad",
+      "good" => "i am good",
+    }
+
+    assessment_id = "0000-0000-0001-0000-0000"
+
+    before do
+      allow(assessment_attributes_gateway).to receive(:add_attribute_value) do |attribute_name:, **_|
+        raise Boundary::DuplicateAttribute, attribute_name if attribute_name == "bad"
+      end
+    end
+
+    it "tries to save all of the attributes" do
+      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).exactly(certificate_data.keys.length).times
+    end
+  end
+
   context "when attribute data is passed to the use case" do
     assessment_id = "0000-0000-0000-0000-0000"
     certificate_data = {

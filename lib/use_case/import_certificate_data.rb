@@ -33,6 +33,8 @@ module UseCase
         attribute_value: value,
         parent_name: parent_name,
       )
+    rescue Boundary::DuplicateAttribute
+      # do nothing
     end
 
     def save_document_data(assessment_id:, certificate:)

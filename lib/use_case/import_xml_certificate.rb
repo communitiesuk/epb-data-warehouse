@@ -25,11 +25,7 @@ module UseCase
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
       certificate["created_at"] = meta_data[:createdAt]
 
-      begin
-        @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
-      rescue Boundary::DuplicateAttribute
-        # do nothing
-      end
+      @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
     end
 
   private

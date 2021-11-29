@@ -17,11 +17,7 @@ module UseCase
       files.each do |f|
         certificate = JSON.parse(File.read(f))
         assessment_id = certificate["assessment_id"]
-        begin
-          import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
-        rescue Boundary::DuplicateAttribute
-          # do nothing
-        end
+        import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
       end
     end
   end
