@@ -1,7 +1,7 @@
 describe Helper::Stopwatch do
   let(:logger) do
     logger = instance_double(Logger)
-    allow(logger).to receive(:info)
+    allow(logger).to receive(:error)
     logger
   end
 
@@ -22,7 +22,7 @@ describe Helper::Stopwatch do
     end
 
     it "logs out with a message contained" do
-      expect(logger).to have_received(:info).with(include message)
+      expect(logger).to have_received(:error).with(include message)
     end
   end
 

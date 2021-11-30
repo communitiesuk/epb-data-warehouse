@@ -13,7 +13,7 @@ module Helper
 
       stopwatch = new
       rtn = yield if block_given?
-      logger.info "#{message} in #{stopwatch.elapsed_time}s" if logger.respond_to?(:info)
+      logger.error "#{message} in #{stopwatch.elapsed_time}s" if logger.respond_to?(:error)
       rtn if defined?(rtn)
     end
   end
