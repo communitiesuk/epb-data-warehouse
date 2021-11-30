@@ -49,7 +49,8 @@ class Container
   def self.import_xml_certificate_use_case
     @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case: import_certificate_data_use_case,
                                                                            assessment_attribute_gateway: assessment_attributes_gateway,
-                                                                           certificate_gateway: register_api_gateway
+                                                                           certificate_gateway: register_api_gateway,
+                                                                           logger: logger
   end
 
   def self.opt_out_certificates_use_case

@@ -4,6 +4,7 @@ describe UseCase::ImportXmlCertificate do
       import_certificate_data_use_case: import_certificate_data_use_case,
       assessment_attribute_gateway: database_gateway,
       certificate_gateway: certificate_gateway,
+      logger: logger,
     )
   end
 
@@ -19,6 +20,12 @@ describe UseCase::ImportXmlCertificate do
     data_use_case = instance_double(UseCase::ImportCertificateData)
     allow(data_use_case).to receive(:execute)
     data_use_case
+  end
+
+  let(:logger) do
+    logger = instance_double(Logger)
+    allow(logger).to receive(:error)
+    logger
   end
 
   let(:assessment_id) do
@@ -68,6 +75,21 @@ describe UseCase::ImportXmlCertificate do
         use_case.execute(assessment_id)
         expect(import_certificate_data_use_case).not_to have_received(:execute)
       end
+    end
+  end
+
+  context "when the certificate gateway is not functioning to return items" do
+    before do
+      allow(certificate_gateway).to receive(:fetch).and_raise(StandardError)
+      use_case.execute(assessment_id)
+    end
+
+    it "does not trigger an import" do
+      expect(import_certificate_data_use_case).not_to have_received(:execute)
+    end
+
+    it "logs out an error" do
+      expect(logger).to have_received(:error)
     end
   end
 end

@@ -58,7 +58,7 @@ describe UseCase::OptOutCertificates do
       end
     end
 
-    context "when marking 1 existing cert as opted in" do
+    context "when marking one existing cert as opted in" do
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ optOut: true })
         allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ optOut: false })
@@ -81,6 +81,25 @@ describe UseCase::OptOutCertificates do
 
       it "executes the update use case by deleting one attribute value on the document store" do
         expect(documents_gateway).to have_received(:delete_top_level_attribute).exactly(1).times
+      end
+    end
+
+    context "when marking existing certs as opted out but one triggers an error" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data) do |rrn|
+          raise StandardError, "could not save for that RRN" if rrn == "1235-0000-0000-0000-0000"
+
+          { optOut: true }
+        end
+        use_case.execute
+      end
+
+      it "saves the two non-erroring opted out certificates to the EAV store" do
+        expect(database_gateway).to have_received(:add_attribute_value).exactly(2).times
+      end
+
+      it "saves the two non-erroring opted out certificates to the document store" do
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
       end
     end
   end

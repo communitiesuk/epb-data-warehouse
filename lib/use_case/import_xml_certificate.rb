@@ -1,9 +1,10 @@
 module UseCase
   class ImportXmlCertificate
-    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:)
+    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:, logger: nil)
       @import_certificate_data_use_case = import_certificate_data_use_case
       @assessment_attribute_gateway = assessment_attribute_gateway
       @certificate_gateway = certificate_gateway
+      @logger = logger
     end
 
     def execute(assessment_id)
@@ -26,6 +27,9 @@ module UseCase
       certificate["created_at"] = meta_data[:createdAt]
 
       @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
+    rescue StandardError => e
+      report_to_sentry e
+      @logger.error "Error of type #{e.class} when importing RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
     end
 
   private

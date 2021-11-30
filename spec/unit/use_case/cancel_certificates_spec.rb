@@ -65,6 +65,25 @@ describe UseCase::CancelCertificates do
         expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(2).times
       end
     end
+
+    context "when processing cancellations where fetching metadata for one of them fails" do
+      before do
+        allow(api_gateway).to receive(:fetch_meta_data) do |rrn|
+          raise StandardError, "fetching metadata for this RRN failed" if rrn == "1235-0000-0000-0000-0000"
+
+          { cancelledAt: Time.now.utc }
+        end
+        use_case.execute
+      end
+
+      it "sends the updates for the other two certificates to the EAV store" do
+        expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(2).times
+      end
+
+      it "sends the updates for the other two certificates to the document store" do
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
+      end
+    end
   end
 
   context "when the queues gateway is not functioning correctly" do

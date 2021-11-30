@@ -27,9 +27,12 @@ module UseCase
                                    attribute: OPT_IN,
                                    value: Time.now.utc
         end
+      rescue StandardError => e
+        report_to_sentry e
+        @logger.error "Error of type #{e.class} when importing change of opt-out status for RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
       end
     rescue StandardError => e
-      report_to_sentry(e)
+      report_to_sentry e
       @logger.error "Error of type #{e.class} when importing changes of opt-out status: '#{e.message}'" if @logger.respond_to?(:error)
     end
 

@@ -18,9 +18,12 @@ module UseCase
         @documents_gateway.set_top_level_attribute assessment_id: assessment_id,
                                                    top_level_attribute: "cancelled_at",
                                                    new_value: meta_data[:cancelledAt]
+      rescue StandardError => e
+        report_to_sentry e
+        @logger.error "Error of type #{e.class} when importing cancellation for the RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
       end
     rescue StandardError => e
-      report_to_sentry(e)
+      report_to_sentry e
       @logger.error "Error of type #{e.class} when importing cancellations of certificates: '#{e.message}'" if @logger.respond_to?(:error)
     end
   end
