@@ -53,8 +53,6 @@ module Gateway
           end
         rescue ActiveRecord::RecordNotUnique
           raise Boundary::DuplicateAttribute, attribute_name
-        rescue ActiveRecord::NotNullViolation
-          raise Boundary::JsonAttributeSave, attribute_name
         end
 
       end

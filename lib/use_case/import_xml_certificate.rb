@@ -29,8 +29,6 @@ module UseCase
         @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
       rescue Boundary::DuplicateAttribute
         # do nothing
-      rescue Boundary::JsonAttributeSave
-        # do nothing
       end
     end
 
