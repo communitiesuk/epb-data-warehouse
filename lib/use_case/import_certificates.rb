@@ -7,10 +7,14 @@ module UseCase
     end
 
     def execute
-      assessment_ids = @queues_gateway.consume_queue(:assessments)
+      assessment_ids = Helper::Stopwatch.log_elapsed_time @logger, "Batch fetched from queue" do
+        @queues_gateway.consume_queue(:assessments)
+      end
 
-      assessment_ids.each do |assessment_id|
-        @import_xml_certificate_use_case.execute(assessment_id)
+      Helper::Stopwatch.log_elapsed_time @logger, "Batch of size #{assessment_ids.length} imported" do
+        assessment_ids.each do |assessment_id|
+          @import_xml_certificate_use_case.execute(assessment_id)
+        end
       end
     rescue StandardError => e
       report_to_sentry(e)

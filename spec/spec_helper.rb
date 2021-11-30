@@ -93,6 +93,10 @@ RSpec.configure do |config|
   end
 
   config.before do
+    allow(Helper::Toggles).to receive(:enabled?).and_return(true)
+  end
+
+  config.before do
     Container.reset!
   end
 

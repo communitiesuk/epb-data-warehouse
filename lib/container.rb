@@ -37,7 +37,8 @@ class Container
 
   def self.import_certificate_data_use_case
     @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway,
-                                                                             documents_gateway: documents_gateway
+                                                                             documents_gateway: documents_gateway,
+                                                                             logger: logger
   end
 
   def self.import_certificates_use_case

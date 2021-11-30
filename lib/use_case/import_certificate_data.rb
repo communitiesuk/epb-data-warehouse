@@ -1,8 +1,9 @@
 module UseCase
   class ImportCertificateData
-    def initialize(assessment_attribute_gateway:, documents_gateway:)
+    def initialize(assessment_attribute_gateway:, documents_gateway:, logger: nil)
       @assessment_attribute_gateway = assessment_attribute_gateway
       @documents_gateway = documents_gateway
+      @logger = logger
     end
 
     def execute(assessment_id:, certificate_data:)
@@ -27,18 +28,22 @@ module UseCase
     end
 
     def save_eav_attribute_data(assessment_id:, attribute:, value:, parent_name:)
-      assessment_attribute_gateway.add_attribute_value(
-        assessment_id: assessment_id,
-        attribute_name: attribute,
-        attribute_value: value,
-        parent_name: parent_name,
-      )
+      Helper::Stopwatch.log_elapsed_time @logger, "save EAV attribute '#{attribute}' for assessment #{assessment_id}" do
+        assessment_attribute_gateway.add_attribute_value(
+          assessment_id: assessment_id,
+          attribute_name: attribute,
+          attribute_value: value,
+          parent_name: parent_name,
+        )
+      end
     rescue Boundary::DuplicateAttribute
       # do nothing
     end
 
     def save_document_data(assessment_id:, certificate:)
-      documents_gateway.add_assessment(assessment_id: assessment_id, document: certificate)
+      Helper::Stopwatch.log_elapsed_time @logger, "save document for assessment #{assessment_id}" do
+        documents_gateway.add_assessment(assessment_id: assessment_id, document: certificate)
+      end
     end
   end
 end
