@@ -452,8 +452,8 @@ module Gateway
     end
 
     def attribute_value_int(attribute_value)
-      attribute_value.to_i.zero? ? nil : attribute_value.to_i
-    rescue StandardError
+      within_integer_range?(attribute_value) ? attribute_value.to_i : nil
+    rescue StandardError => e
       nil
     end
 
@@ -461,6 +461,10 @@ module Gateway
       attribute_value.to_f.zero? ? nil : attribute_value.to_f
     rescue StandardError
       nil
+    end
+
+    def within_integer_range?(number)
+      !number.to_i.zero? && number.to_i < ((2**32) - 1) && number.to_i > -(2**32)
     end
   end
 end

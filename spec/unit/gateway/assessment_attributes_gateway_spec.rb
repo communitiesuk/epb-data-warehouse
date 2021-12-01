@@ -92,6 +92,26 @@ describe Gateway::AssessmentAttributesGateway do
     end
   end
 
+  context "when inserting an attribute with a numeric value that is out of integer range" do
+    let(:stored_int) do
+      ActiveRecord::Base.connection.exec_query(
+        "SELECT attribute_value_int FROM assessment_attribute_values AS aav INNER JOIN assessment_attributes AS aa ON aa.attribute_id=aav.attribute_id WHERE assessment_id= '0000-0000-0000-0000-0001' AND attribute_name='out_of_range_numeric'",
+      ).first["attribute_value_int"]
+    end
+
+    before do
+      gateway.add_attribute_value(
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "out_of_range_numeric",
+        attribute_value: "100041171491",
+      )
+    end
+
+    it "does not store a numeric value as an integer that is out of range for a PostgreSQL integer data type" do
+      expect(stored_int).to be nil
+    end
+  end
+
   context "when we insert many attributes for one assessment" do
     before do
       gateway.add_attribute_value(
