@@ -67,11 +67,7 @@ class Container
   end
 
   def self.logger
-    return @logger if @logger
-
-    @logger = Logger.new($stdout)
-    @logger.level = Logger::ERROR
-    @logger
+    @logger ||= Logger.new($stdout, level: Logger::ERROR)
   end
 
   def self.reset!
