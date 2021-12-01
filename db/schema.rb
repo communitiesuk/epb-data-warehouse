@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_101811) do
+ActiveRecord::Schema.define(version: 2021_12_01_180010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_101811) do
   create_table "assessment_attributes", primary_key: "attribute_id", force: :cascade do |t|
     t.string "attribute_name", null: false
     t.string "parent_name"
+    t.index ["attribute_name", "parent_name"], name: "index_assessment_attribute_group", unique: true
     t.index ["attribute_name"], name: "index_assessment_attributes_on_attribute_name"
     t.index ["parent_name"], name: "index_assessment_attributes_on_parent_name"
   end
