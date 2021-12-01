@@ -116,7 +116,7 @@ describe Gateway::AssessmentAttributesGateway do
     let(:stored_int) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT attribute_value_int FROM assessment_attribute_values AS aav INNER JOIN assessment_attributes AS aa ON aa.attribute_id=aav.attribute_id WHERE assessment_id= '0000-0000-0000-0000-0001' AND attribute_name='zero'",
-        ).first["attribute_value_int"]
+      ).first["attribute_value_int"]
     end
 
     before do

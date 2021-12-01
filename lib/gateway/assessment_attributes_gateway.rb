@@ -453,7 +453,7 @@ module Gateway
 
     def attribute_value_int(attribute_value)
       within_integer_range?(attribute_value) ? attribute_value.to_i : nil
-    rescue StandardError => e
+    rescue StandardError
       nil
     end
 
