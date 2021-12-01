@@ -1,3 +1,5 @@
+require "parallel"
+
 module UseCase
   class ImportXmlCertificate
     def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:, logger: nil)
@@ -26,11 +28,13 @@ module UseCase
       configuration_class = export_configuration(meta_data[:schemaType])
       return if configuration_class.nil?
 
-      export_config = configuration_class.new
-      parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: assessment_id))
-      certificate = Helper::Stopwatch.log_elapsed_time @logger, "parsed XML for assessment #{assessment_id}" do
-        parser.parse(xml)
-      end
+      certificate = Parallel.map([0]) do |_|
+        export_config = configuration_class.new
+        parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: assessment_id))
+        Helper::Stopwatch.log_elapsed_time @logger, "parsed XML for assessment #{assessment_id}" do
+          parser.parse(xml)
+        end
+      end.first
 
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
