@@ -112,6 +112,26 @@ describe Gateway::AssessmentAttributesGateway do
     end
   end
 
+  context "when inserting an attribute with a value of 0 (zero)" do
+    let(:stored_int) do
+      ActiveRecord::Base.connection.exec_query(
+        "SELECT attribute_value_int FROM assessment_attribute_values AS aav INNER JOIN assessment_attributes AS aa ON aa.attribute_id=aav.attribute_id WHERE assessment_id= '0000-0000-0000-0000-0001' AND attribute_name='zero'",
+        ).first["attribute_value_int"]
+    end
+
+    before do
+      gateway.add_attribute_value(
+        assessment_id: "0000-0000-0000-0000-0001",
+        attribute_name: "zero",
+        attribute_value: 0,
+      )
+    end
+
+    it "stores zero as an integer" do
+      expect(stored_int).to eq 0
+    end
+  end
+
   context "when we insert many attributes for one assessment" do
     before do
       gateway.add_attribute_value(
