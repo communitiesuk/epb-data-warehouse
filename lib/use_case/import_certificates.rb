@@ -13,7 +13,9 @@ module UseCase
 
       Helper::Stopwatch.log_elapsed_time @logger, "Batch of size #{assessment_ids.length} imported" do
         assessment_ids.each do |assessment_id|
-          @import_xml_certificate_use_case.execute(assessment_id)
+          Helper::Stopwatch.log_elapsed_time @logger, "Assessment #{assessment_id} imported" do
+            @import_xml_certificate_use_case.execute(assessment_id)
+          end
         end
       end
     rescue StandardError => e
