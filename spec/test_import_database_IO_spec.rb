@@ -109,4 +109,19 @@ RETURNING attribute_id, attribute_name "
     end
   end
 
+  context "test the existing db speed" do
+    before do
+      use_case = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
+      certificate =  parse_xml(xml, "0000-0000-0000-0000-0001")
+      10.times { |n|
+        use_case.execute(assessment_id: "0000-0000-0000-0000-000#{n}", certificate_data: certificate)
+      }
+    end
+
+    it 'runs the test with logged table' do
+      expect(1).to eq(1)
+    end
+
+  end
+
 end
