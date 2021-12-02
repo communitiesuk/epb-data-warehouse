@@ -28,14 +28,12 @@ module UseCase
     end
 
     def save_eav_attribute_data(assessment_id:, attribute:, value:, parent_name:)
-      Helper::Stopwatch.log_elapsed_time @logger, "save EAV attribute '#{attribute}' for assessment #{assessment_id}" do
-        assessment_attribute_gateway.add_attribute_value(
-          assessment_id: assessment_id,
-          attribute_name: attribute,
-          attribute_value: value,
-          parent_name: parent_name,
-        )
-      end
+      assessment_attribute_gateway.add_attribute_value(
+        assessment_id: assessment_id,
+        attribute_name: attribute,
+        attribute_value: value,
+        parent_name: parent_name,
+      )
     rescue Boundary::DuplicateAttribute
       # do nothing
     end
