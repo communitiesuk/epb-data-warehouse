@@ -32,6 +32,8 @@ module UseCase
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
       certificate["created_at"] = meta_data[:createdAt]
+      certificate["schema_type"] = meta_data[:schemaType]
+      certificate["assessment_type"] = meta_data[:typeOfAssessment]
 
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
         @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)

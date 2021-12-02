@@ -57,6 +57,8 @@ describe UseCase::ImportXmlCertificate do
           certificate_data: include({
             "calculation_software_version" => "13.05r16",
             "created_at" => "2021-07-21T11:26:28.045Z",
+            "schema_type" => "RdSAP-Schema-20.0.0",
+            "assessment_type" => "RdSAP",
           }),
         )
       end
