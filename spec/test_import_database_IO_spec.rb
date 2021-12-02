@@ -3,13 +3,20 @@ RSpec.describe "Test load times of copy import" do
     Samples.xml("RdSAP-Schema-20.0.0")
   end
 
+  def valid_json?(input)
+    JSON.parse(input)
+    true
+  rescue StandardError
+    false
+  end
+
   def parse_xml(xml, id)
     export_config = XmlPresenter::Rdsap::Rdsap20ExportConfiguration.new
     parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: id))
     certificate = parser.parse(xml)
 
     certificate["schema_type"] = "RdSAP-Schema-20.0.0"
-    certificate["assessment_address_id"] = "meta_data[:assessmentAddressId]"
+    certificate["assessment_address_id"] = "124895312"
     certificate["created_at"] = Time.now
     certificate
   end
@@ -42,18 +49,64 @@ RSpec.describe "Test load times of copy import" do
     ActiveRecord::Base.connection.exec_query(sql)
   end
 
+  def attribute_value_int(attribute_value)
+    within_integer_range?(attribute_value) ? attribute_value.to_i : nil
+  rescue StandardError
+    nil
+  end
+
+  def attribute_value_float(attribute_value)
+    attribute_value.to_f.zero? ? nil : attribute_value.to_f
+  rescue StandardError
+    nil
+  end
+
+  def within_integer_range?(number)
+    (["0", 0, 0.0].include?(number) || !number.to_i.zero?) && number.to_i < ((2**32) - 1) && number.to_i > -(2**32)
+  end
+
   def create_insert(assessment_id, hash, attributes)
-    sql = "INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value)  VALUES"
+    sql = "INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json )  VALUES"
     values_array = []
     hash.each do |item|
-      id =  get_attribute_id(item[0], attributes)
+      id = get_attribute_id(item[0], attributes)
       unless id.nil?
-        values_array << "('#{assessment_id}', #{id},  '#{item[1]}' )"
+        values_array << set_insert_value(assessment_id, id, item[1])
       end
     end
     sql += values_array.join(",")
 
     ActiveRecord::Base.connection.exec_query(sql)
+  rescue ActiveRecord::StatementInvalid => e
+    pp sql
+    pp e.message
+    nil
+  end
+
+  def set_insert_value(assessment_id, id, attribute_value)
+    if attribute_value.respond_to?(:to_h)
+      json_value = attribute_value
+      attribute_value = "null"
+    else
+      attribute_int = attribute_value_int(attribute_value)
+      attribute_float = attribute_value_float(attribute_value)
+    end
+
+    if attribute_int.nil?
+      attribute_int = "null"
+    end
+
+    if attribute_float.nil?
+      attribute_float = "null"
+    end
+
+    json_value = if json_value.nil?
+                   "null"
+                 else
+                   "cast('#{json_value.to_json}' AS json)"
+                 end
+
+    "('#{assessment_id}', #{id},  '#{attribute_value}', #{attribute_int}, #{attribute_float},  #{json_value} )"
   end
 
   def get_attribute_id(attribute_name, ids)
@@ -70,10 +123,9 @@ RSpec.describe "Test load times of copy import" do
     sql += "ON CONFLICT (attribute_name,parent_name )  DO UPDATE SET attribute_id=EXCLUDED.attribute_id, attribute_name=EXCLUDED.attribute_name
 RETURNING attribute_id, attribute_name "
     ActiveRecord::Base.connection.exec_query(sql)
-
   end
 
-  it "sets the table to be unloggded before import" do
+  it "sets the table to be unlogged before import" do
     expect { alter_table }.not_to raise_error
   end
 
@@ -92,18 +144,21 @@ RETURNING attribute_id, attribute_name "
 
   context "test the time for saving 10 RdSAP" do
     before do
+      documents_gateway = Gateway::DocumentsGateway.new
       attributes = save_attributes(parse_xml(xml, "0000-0000-0000-0000-0001").keys)
-      certificate =  parse_xml(xml, "0000-0000-0000-0000-0001")
-      10.times { |n|
-        create_insert("0000-0000-0000-0000-000#{n}", certificate, attributes)
-      }
+      certificate = parse_xml(xml, "0000-0000-0000-0000-0001")
+      10.times do |n|
+        assessment_id = "0000-0000-0000-0000-000#{n}"
+        documents_gateway.add_assessment(assessment_id: assessment_id, document: certificate)
+        create_insert(assessment_id, certificate, attributes)
+      end
     end
 
-    it 'runs the test with logged table' do
+    it "runs the test with logged table" do
       expect(1).to eq(1)
     end
 
-    it 'runs the test without a logging on the table' do
+    it "runs the test without a logging on the table" do
       alter_table
       expect(1).to eq(1)
     end
@@ -112,16 +167,14 @@ RETURNING attribute_id, attribute_name "
   context "test the existing db speed" do
     before do
       use_case = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
-      certificate =  parse_xml(xml, "0000-0000-0000-0000-0001")
-      10.times { |n|
+      certificate = parse_xml(xml, "0000-0000-0000-0000-0001")
+      10.times do |n|
         use_case.execute(assessment_id: "0000-0000-0000-0000-000#{n}", certificate_data: certificate)
-      }
+      end
     end
 
-    it 'runs the test with logged table' do
+    it "runs the test with logged table" do
       expect(1).to eq(1)
     end
-
   end
-
 end
