@@ -115,6 +115,15 @@ RSpec.describe "Test load times of copy import" do
     nil
   end
 
+  def update_foreign_key(drop=true)
+    if drop
+      ActiveRecord::Base.connection.exec_query("ALTER TABLE assessment_attribute_values DROP CONSTRAINT fk_attribute_id")
+    else
+      ActiveRecord::Base.connection.exec_query("ALTER TABLE assessment_attribute_values ADD CONSTRAINT fk_attribute_id FOREIGN KEY (attribute_id)
+        REFERENCES assessment_attributes (attribute_id) ")
+      end
+  end
+
   def save_attributes(attributes)
     sql = "INSERT INTO assessment_attributes(attribute_name,parent_name ) VALUES "
     values_array = []
@@ -142,17 +151,24 @@ RETURNING attribute_id, attribute_name "
     expect { create_insert("0000-0000-0000-0000-0001", parse_xml(xml, "0000-0000-0000-0000-0001"), attributes) }.not_to raise_error
   end
 
+
   context "test the time for saving 10 RdSAP" do
     before do
       documents_gateway = Gateway::DocumentsGateway.new
-      attributes = save_attributes(parse_xml(xml, "0000-0000-0000-0000-0001").keys)
       certificate = parse_xml(xml, "0000-0000-0000-0000-0001")
+      # update_foreign_key
       10.times do |n|
+        attributes = save_attributes(parse_xml(xml, "0000-0000-0000-0000-0001").keys)
         assessment_id = "0000-0000-0000-0000-000#{n}"
         documents_gateway.add_assessment(assessment_id: assessment_id, document: certificate)
         create_insert(assessment_id, certificate, attributes)
       end
+      # update_foreign_key(false)
     end
+
+    # after do
+    #   update_foreign_key(false)
+    # end
 
     it "runs the test with logged table" do
       expect(1).to eq(1)
