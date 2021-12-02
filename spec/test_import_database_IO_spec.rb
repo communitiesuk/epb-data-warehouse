@@ -1,3 +1,5 @@
+require "parallel"
+
 RSpec.describe "Test load times of copy import" do
   let(:xml) do
     Samples.xml("RdSAP-Schema-20.0.0")
@@ -11,9 +13,11 @@ RSpec.describe "Test load times of copy import" do
   end
 
   def parse_xml(xml, id)
-    export_config = XmlPresenter::Rdsap::Rdsap20ExportConfiguration.new
-    parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: id))
-    certificate = parser.parse(xml)
+    certificate = Parallel.map([0]) { |_|
+      export_config = XmlPresenter::Rdsap::Rdsap20ExportConfiguration.new
+      parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: id))
+      parser.parse(xml)
+    }.first
 
     certificate["schema_type"] = "RdSAP-Schema-20.0.0"
     certificate["assessment_address_id"] = "124895312"
@@ -115,13 +119,13 @@ RSpec.describe "Test load times of copy import" do
     nil
   end
 
-  def update_foreign_key(drop=true)
+  def update_foreign_key(drop = true)
     if drop
       ActiveRecord::Base.connection.exec_query("ALTER TABLE assessment_attribute_values DROP CONSTRAINT fk_attribute_id")
     else
       ActiveRecord::Base.connection.exec_query("ALTER TABLE assessment_attribute_values ADD CONSTRAINT fk_attribute_id FOREIGN KEY (attribute_id)
         REFERENCES assessment_attributes (attribute_id) ")
-      end
+    end
   end
 
   def save_attributes(attributes)
@@ -150,7 +154,6 @@ RETURNING attribute_id, attribute_name "
     attributes = save_attributes(parse_xml(xml, "0000-0000-0000-0000-0001").keys)
     expect { create_insert("0000-0000-0000-0000-0001", parse_xml(xml, "0000-0000-0000-0000-0001"), attributes) }.not_to raise_error
   end
-
 
   context "test the time for saving 10 RdSAP" do
     before do
