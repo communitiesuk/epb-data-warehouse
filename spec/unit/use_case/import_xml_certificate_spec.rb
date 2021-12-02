@@ -45,9 +45,9 @@ describe UseCase::ImportXmlCertificate do
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
                                                                              assessmentAddressId: "UPRN-000000000000",
-                                                                             "typeOfAssessment": "RdSAP",
-                                                                             "optOut": false,
-                                                                             "createdAt": "2021-07-21T11:26:28.045Z" })
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: false,
+                                                                             createdAt: "2021-07-21T11:26:28.045Z" })
       end
 
       it "forms together certificate data and passes it into the import certificate data use case" do
@@ -66,9 +66,9 @@ describe UseCase::ImportXmlCertificate do
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "SAP-Schema-NI-18.0.0",
                                                                              assessmentAddressId: "UPRN-000000000000",
-                                                                             "typeOfAssessment": "RdSAP",
-                                                                             "optOut": false,
-                                                                             "createdAt": "2021-07-21T11:26:28.045Z" })
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: false,
+                                                                             createdAt: "2021-07-21T11:26:28.045Z" })
       end
 
       it "does not trigger an import" do
