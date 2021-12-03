@@ -1,4 +1,4 @@
-describe UseCase::OptOutCertificates do
+describe UseCase::OptOutCertificates, set_with_timecop: true do
   subject(:use_case) do
     described_class.new eav_gateway: database_gateway,
                         documents_gateway: documents_gateway,
@@ -81,6 +81,10 @@ describe UseCase::OptOutCertificates do
 
       it "executes the update use case by deleting one attribute value on the document store" do
         expect(documents_gateway).to have_received(:delete_top_level_attribute).exactly(1).times
+      end
+
+      it "uses the expected XXXX-XX-XX XX:XX:XX format for saving the datetime of the opt-out/in" do
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times.with(include(new_value: Time.now.utc.strftime("%F %T")))
       end
     end
 

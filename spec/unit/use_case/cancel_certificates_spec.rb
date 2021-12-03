@@ -1,3 +1,5 @@
+require "time"
+
 describe UseCase::CancelCertificates do
   subject(:use_case) do
     described_class.new eav_gateway: eav_database_gateway,
@@ -51,6 +53,11 @@ describe UseCase::CancelCertificates do
         use_case.execute
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
       end
+
+      it "passes the cancelled_at value in expected datetime format (converted from ISO-8601)" do
+        use_case.execute
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times.with(include(new_value: "2021-08-13 08:12:51"))
+      end
     end
 
     context "when processing cancellations where there is a certificate without a cancelled_at date" do
@@ -71,7 +78,7 @@ describe UseCase::CancelCertificates do
         allow(api_gateway).to receive(:fetch_meta_data) do |rrn|
           raise StandardError, "fetching metadata for this RRN failed" if rrn == "1235-0000-0000-0000-0000"
 
-          { cancelledAt: Time.now.utc }
+          { cancelledAt: Time.now.utc.iso8601(3) }
         end
         use_case.execute
       end

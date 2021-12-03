@@ -18,14 +18,14 @@ module UseCase
         if meta_data[:optOut]
           save_attribute_to_stores assessment_id: assessment_id,
                                    attribute: OPT_OUT,
-                                   value: Time.now.utc
+                                   value: now_in_db_format
         else
           delete_attribute_from_stores assessment_id: assessment_id,
                                        attribute: OPT_OUT
 
           save_attribute_to_stores assessment_id: assessment_id,
                                    attribute: OPT_IN,
-                                   value: Time.now.utc
+                                   value: now_in_db_format
         end
       rescue StandardError => e
         report_to_sentry e
@@ -46,6 +46,10 @@ module UseCase
     def delete_attribute_from_stores(assessment_id:, attribute:)
       @assessment_attribute_gateway.delete_attribute_value(assessment_id: assessment_id, attribute_name: attribute)
       @documents_gateway.delete_top_level_attribute(assessment_id: assessment_id, top_level_attribute: attribute)
+    end
+
+    def now_in_db_format
+      Time.now.utc.strftime("%F %T")
     end
   end
 end

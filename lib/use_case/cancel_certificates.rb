@@ -17,7 +17,7 @@ module UseCase
         @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: "cancelled_at", attribute_value: meta_data[:cancelledAt])
         @documents_gateway.set_top_level_attribute assessment_id: assessment_id,
                                                    top_level_attribute: "cancelled_at",
-                                                   new_value: meta_data[:cancelledAt]
+                                                   new_value: Helper::DateTime.convert_atom_to_db_datetime(meta_data[:cancelledAt])
       rescue StandardError => e
         report_to_sentry e
         @logger.error "Error of type #{e.class} when importing cancellation for the RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
