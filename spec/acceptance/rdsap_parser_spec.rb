@@ -6,14 +6,6 @@ RSpec.describe "the parser and the rdsap configuration" do
       Samples.xml("RdSAP-Schema-20.0.0")
     end
 
-    it "doesn't error" do
-      expect {
-        use_case.execute xml: rdsap,
-                         schema_type: "RdSAP-Schema-20.0.0",
-                         assessment_id: "0000-0000-0000-0000-0000"
-      }.not_to raise_error
-    end
-
     it "parses the document in the expected format" do
       expectation = { "calculation_software_name" => "SomeSoft RdSAP Calculator",
                       "calculation_software_version" => "13.05r16",

@@ -6,14 +6,6 @@ RSpec.describe "parsing with an NI RdSAP configuration" do
       Samples.xml("RdSAP-Schema-NI-20.0.0")
     end
 
-    it "doesn't error" do
-      expect {
-        use_case.execute xml: rdsap,
-                         schema_type: "RdSAP-Schema-NI-20.0.0",
-                         assessment_id: "0000-0000-0000-0000-0000"
-      }.not_to raise_error
-    end
-
     it "parses the document in the expected format" do
       expectation = { "schema_version_original" => "LIG-19.0",
                       "sap_version" => 9.94,

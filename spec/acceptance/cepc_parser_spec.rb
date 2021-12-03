@@ -6,14 +6,6 @@ RSpec.describe "the parser and the CEPC configuration" do
       Samples.xml("CEPC-8.0.0", "cepc")
     end
 
-    it "doesn't error" do
-      expect {
-        use_case.execute xml: cepc,
-                         schema_type: "CEPC-8.0.0",
-                         assessment_id: "0000-0000-0000-0000-0000"
-      }.not_to raise_error
-    end
-
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2021-03-19",
                       "report_type" => 3,
