@@ -1,19 +1,17 @@
-RSpec.describe "the parser and the rdsap configuration" do
+RSpec.describe "the parser and the CEPC configuration" do
+  let(:use_case) { UseCase::ParseXmlCertificate.new }
+
   context "when loading xml from Cepc" do
-    let(:config) do
-      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
-    end
-
-    let(:parser) do
-      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0000" }, **config.to_args)
-    end
-
     let(:cepc) do
       Samples.xml("CEPC-8.0.0", "cepc")
     end
 
     it "doesn't error" do
-      expect { parser.parse(cepc) }.not_to raise_error
+      expect {
+        use_case.execute xml: cepc,
+                         schema_type: "CEPC-8.0.0",
+                         assessment_id: "0000-0000-0000-0000-0000"
+      }.not_to raise_error
     end
 
     it "parses the document in the expected format" do
@@ -106,25 +104,23 @@ RSpec.describe "the parser and the rdsap configuration" do
                        { "ac_present" => "No",
                          "ac_rated_output" => { "ac_rating_unknown_flag" => 1 },
                          "ac_inspection_commissioned" => 4 } }
-      expect(parser.parse(cepc)).to eq(expectation)
+      expect(use_case.execute(xml: cepc,
+                              schema_type: "CEPC-8.0.0",
+                              assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)
     end
   end
 
   context "when loading xml from Cepc-RR" do
-    let(:config) do
-      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
-    end
-
-    let(:parser) do
-      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0001" }, **config.to_args)
-    end
-
     let(:cepc_rr) do
       Samples.xml("CEPC-8.0.0", "cepc+rr")
     end
 
     it "doesn't error" do
-      expect { parser.parse(cepc_rr) }.not_to raise_error
+      expect {
+        use_case.execute xml: cepc_rr,
+                         schema_type: "CEPC-8.0.0",
+                         assessment_id: "0000-0000-0000-0000-0001"
+      }.not_to raise_error
     end
 
     it "parses the document in the expected format" do
@@ -184,25 +180,23 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "floor_area" => 951,
                          "building_level" => 3 },
       }
-      expect(parser.parse(cepc_rr)).to eq(expectation)
+      expect(use_case.execute(xml: cepc_rr,
+                              schema_type: "CEPC-8.0.0",
+                              assessment_id: "0000-0000-0000-0000-0001")).to eq(expectation)
     end
   end
 
   context "when loading xml from Dec" do
-    let(:config) do
-      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
-    end
-
-    let(:parser) do
-      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0000" }, **config.to_args)
-    end
-
     let(:dec) do
       Samples.xml("CEPC-8.0.0", "dec+rr")
     end
 
     it "doesn't error" do
-      expect { parser.parse(dec) }.not_to raise_error
+      expect {
+        use_case.execute xml: dec,
+                         schema_type: "CEPC-8.0.0",
+                         assessment_id: "0000-0000-0000-0000-0000"
+      }.not_to raise_error
     end
 
     it "parses the document in the expected format" do
@@ -296,25 +290,23 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "ac_rated_output" => { "ac_kw_rating" => 30 },
                          "ac_inspection_commissioned" => 1 },
       }
-      expect(parser.parse(dec)).to eq(expectation)
+      expect(use_case.execute(xml: dec,
+                              schema_type: "CEPC-8.0.0",
+                              assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)
     end
   end
 
   context "when loading xml from Dec-RR" do
-    let(:config) do
-      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
-    end
-
-    let(:parser) do
-      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0001" }, **config.to_args)
-    end
-
     let(:dec_rr) do
       Samples.xml("CEPC-8.0.0", "dec+rr")
     end
 
     it "doesn't error" do
-      expect { parser.parse(dec_rr) }.not_to raise_error
+      expect {
+        use_case.execute xml: dec_rr,
+                         schema_type: "CEPC-8.0.0",
+                         assessment_id: "0000-0000-0000-0000-0000"
+      }.not_to raise_error
     end
 
     it "parses the document in the expected format" do
@@ -389,25 +381,23 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "service_2" => { "description" => "Electricity", "quantity" => 126_508 },
                          "service_3" => { "description" => "Not used", "quantity" => 0 } },
       }
-      expect(parser.parse(dec_rr)).to eq(expectation)
+      expect(use_case.execute(xml: dec_rr,
+                              schema_type: "CEPC-8.0.0",
+                              assessment_id: "0000-0000-0000-0000-0001")).to eq(expectation)
     end
   end
 
   context "when loading xml from AC-Cert" do
-    let(:config) do
-      XmlPresenter::Cepc::Cepc800ExportConfiguration.new
-    end
-
-    let(:parser) do
-      XmlPresenter::Parser.new(specified_report: { root_node: "Report", sub_node: "RRN", sub_node_value: "0000-0000-0000-0000-0000" }, **config.to_args)
-    end
-
     let(:ac_cert) do
       Samples.xml("CEPC-8.0.0", "ac-cert+rr")
     end
 
     it "doesn't error" do
-      expect { parser.parse(ac_cert) }.not_to raise_error
+      expect {
+        use_case.execute xml: ac_cert,
+                         schema_type: "CEPC-8.0.0",
+                         assessment_id: "0000-0000-0000-0000-0000"
+      }.not_to raise_error
     end
 
     it "parses the document in the expected format" do
@@ -457,7 +447,9 @@ RSpec.describe "the parser and the rdsap configuration" do
                           "sub_system_description" => "Mitsubishi split system",
                           "refrigerant_types" => %w[R410A],
                           "sub_system_age" => 2015 }] }
-      expect(parser.parse(ac_cert)).to eq(expectation)
+      expect(use_case.execute(xml: ac_cert,
+                              schema_type: "CEPC-8.0.0",
+                              assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)
     end
   end
 end

@@ -1,19 +1,17 @@
 RSpec.describe "the parser and the rdsap configuration" do
+  let(:use_case) { UseCase::ParseXmlCertificate.new }
+
   context "when loading xml from RdSap" do
-    let(:config) do
-      XmlPresenter::Sap::Sap1800ExportConfiguration.new
-    end
-
-    let(:parser) do
-      XmlPresenter::Parser.new(**config.to_args)
-    end
-
     let(:sap) do
       Samples.xml("SAP-Schema-18.0.0")
     end
 
     it "doesn't error" do
-      expect { parser.parse(sap) }.not_to raise_error
+      expect {
+        use_case.execute xml: sap,
+                         schema_type: "SAP-Schema-18.0.0",
+                         assessment_id: "0000-0000-0000-0000-0000"
+      }.not_to raise_error
     end
 
     it "parses the document in the expected format" do
@@ -375,7 +373,9 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "low_energy_fixed_lighting_outlets_count" => 20,
                          "low_energy_fixed_lighting_outlets_percentage" => 100,
                          "electricity_tariff" => 1 } }
-      expect(parser.parse(sap)).to eq(expectation)
+      expect(use_case.execute(xml: sap,
+                              schema_type: "SAP-Schema-18.0.0",
+                              assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)
     end
   end
 end
