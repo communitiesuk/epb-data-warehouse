@@ -27,4 +27,6 @@ source "https://rubygems.org" do
   gem "sentry-ruby", "~> 4.8.1"
   gem "unleash", "~> 3.2.4"
   gem "zeitwerk", "~> 2.4", ">= 2.4.2"
+  gem "memoist", "~> 0.16.2"
+
 end

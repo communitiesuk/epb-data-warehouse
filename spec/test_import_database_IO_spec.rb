@@ -1,4 +1,5 @@
 require "parallel"
+require "memoist"
 
 RSpec.describe "Test load times of copy import" do
   let(:xml) do
@@ -196,4 +197,65 @@ RETURNING attribute_id, attribute_name "
       expect(1).to eq(1)
     end
   end
+
+  let(:obj){
+     Attributes.new
+  }
+
+  context "test attribute saves with memoization" do
+    10.times {
+      it "savs the attributes for every epc" do
+           expect{save_attributes(parse_xml(xml, "0000-0000-0000-0000-0001"))}.not_to raise_error
+      end
+    }
+
+
+
+    it "reads the same data from memory" do
+      10.times {
+        expect{obj.save_attributes}.not_to raise_error
+      }
+    end
+
+
+  end
+end
+
+
+class Attributes
+  extend Memoist
+
+
+  def initialize
+    @xml = Samples.xml("RdSAP-Schema-20.0.0")
+  end
+
+  def save_attributes
+    puts "execute"
+    attributes = parse_xml(@xml, "0000-0000-0000-0000-0001")
+    sql = "INSERT INTO assessment_attributes(attribute_name,parent_name ) VALUES "
+    values_array = []
+    attributes.each { |i| values_array << " ('#{i}', '') " }
+    sql += values_array.join(",")
+    sql += "ON CONFLICT (attribute_name,parent_name )  DO UPDATE SET attribute_id=EXCLUDED.attribute_id, attribute_name=EXCLUDED.attribute_name
+RETURNING attribute_id, attribute_name "
+    ActiveRecord::Base.connection.exec_query(sql)
+  end
+
+  memoize :save_attributes
+
+  private
+  def parse_xml(xml, id)
+    certificate = Parallel.map([0]) { |_|
+      export_config = XmlPresenter::Rdsap::Rdsap20ExportConfiguration.new
+      parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: id))
+      parser.parse(xml)
+    }.first
+
+    certificate["schema_type"] = "RdSAP-Schema-20.0.0"
+    certificate["assessment_address_id"] = "124895312"
+    certificate["created_at"] = Time.now
+    certificate
+  end
+
 end
