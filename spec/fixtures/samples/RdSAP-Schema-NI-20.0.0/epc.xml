@@ -1,0 +1,247 @@
+<RdSAP-Report xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap RdSAP-Report.xsd" xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Schema-Version-Original>LIG-19.0</Schema-Version-Original>
+  <SAP-Version>9.94</SAP-Version>
+  <PCDF-Revision-Number>462</PCDF-Revision-Number>
+  <Previous-EPC-Check>
+    <Previous-EPC-Checked>Y</Previous-EPC-Checked>
+    <Previous-EPC-Exists>Y</Previous-EPC-Exists>
+    <Previous-EPC-Reason-Code>3</Previous-EPC-Reason-Code>
+  </Previous-EPC-Check>
+  <ExternalDefinitions-Revision-Number>6.1</ExternalDefinitions-Revision-Number>
+  <Calculation-Software-Name>iQ-Engine</Calculation-Software-Name>
+  <Calculation-Software-Version>v94.0.1.1</Calculation-Software-Version>
+  <User-Interface-Name>iQ-Energy</User-Interface-Name>
+  <User-Interface-Version>V5.0.0.1</User-Interface-Version>
+  <Report-Header>
+    <RRN>0000-0000-0000-0000-0000</RRN>
+    <Inspection-Date>2020-09-28</Inspection-Date>
+    <Report-Type>2</Report-Type>
+    <Completion-Date>2020-09-28</Completion-Date>
+    <Registration-Date>2020-09-28</Registration-Date>
+    <Status>entered</Status>
+    <Language-Code>1</Language-Code>
+    <Tenure>2</Tenure>
+    <Transaction-Type>8</Transaction-Type>
+    <Property-Type>2</Property-Type>
+    <Energy-Assessor>
+      <Name>Janice Assessor</Name>
+      <Notify-Lodgement>Y</Notify-Lodgement>
+      <Contact-Address>
+        <Address-Line-1>999 Letsbe Avenue</Address-Line-1>
+        <Post-Town>Anytown</Post-Town>
+        <Postcode>AN1 0AN</Postcode>
+      </Contact-Address>
+      <Web-Site></Web-Site>
+      <E-Mail>janice.assessor@assessors-r-us.com</E-Mail>
+      <Telephone>07522739577</Telephone>
+      <Company-Name>ASSESSORS R US</Company-Name>
+      <Scheme-Name>SCHEME TEAM</Scheme-Name>
+      <Scheme-Web-Site>www.schemeteam.biz</Scheme-Web-Site>
+      <Identification-Number>
+        <Certificate-Number>SCH555555</Certificate-Number>
+      </Identification-Number>
+    </Energy-Assessor>
+    <Property>
+      <Address>
+        <Address-Line-1>34 CENTRAL ROAD</Address-Line-1>
+        <Post-Town>FABRICATED TOWN</Post-Town>
+        <Postcode>BT20 1AA</Postcode>
+      </Address>
+      <UPRN>UPRN-000011112222</UPRN>
+    </Property>
+    <Region-Code>10</Region-Code>
+    <Country-Code>NIR</Country-Code>
+    <Related-Party-Disclosure>
+      <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
+    </Related-Party-Disclosure>
+  </Report-Header>
+  <Energy-Assessment>
+    <Property-Summary>
+      <Wall>
+        <Description language="1">Cavity wall, filled cavity</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+      </Wall>
+      <Roof>
+        <Description language="1">(another dwelling above)</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Roof>
+      <Floor>
+        <Description language="1">(another dwelling below)</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Floor>
+      <Window>
+        <Description language="1">Fully double glazed</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+      </Window>
+      <Main-Heating>
+        <Description language="1">Electric storage heaters</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
+      </Main-Heating>
+      <Main-Heating-Controls>
+        <Description language="1">Manual charge control</Description>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
+      </Main-Heating-Controls>
+      <Hot-Water>
+        <Description language="1">Electric immersion, off-peak</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
+      </Hot-Water>
+      <Lighting>
+        <Description language="1">Low energy lighting in all fixed outlets</Description>
+        <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
+      </Lighting>
+      <Secondary-Heating>
+        <Description language="1">Portable electric heaters (assumed)</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Secondary-Heating>
+      <Has-Hot-Water-Cylinder>true</Has-Hot-Water-Cylinder>
+      <Has-Heated-Separate-Conservatory>false</Has-Heated-Separate-Conservatory>
+      <Dwelling-Type language="1">Mid-floor flat</Dwelling-Type>
+      <Total-Floor-Area>41</Total-Floor-Area>
+      <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
+      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
+    </Property-Summary>
+    <Energy-Use>
+      <Energy-Rating-Average>60</Energy-Rating-Average>
+      <Energy-Rating-Current>75</Energy-Rating-Current>
+      <Energy-Rating-Potential>75</Energy-Rating-Potential>
+      <Environmental-Impact-Current>61</Environmental-Impact-Current>
+      <Environmental-Impact-Potential>61</Environmental-Impact-Potential>
+      <Energy-Consumption-Current>359</Energy-Consumption-Current>
+      <Energy-Consumption-Potential>359</Energy-Consumption-Potential>
+      <CO2-Emissions-Current>2.5</CO2-Emissions-Current>
+      <CO2-Emissions-Potential>2.5</CO2-Emissions-Potential>
+      <CO2-Emissions-Current-Per-Floor-Area>61</CO2-Emissions-Current-Per-Floor-Area>
+      <Lighting-Cost-Current currency="GBP">41</Lighting-Cost-Current>
+      <Lighting-Cost-Potential currency="GBP">41</Lighting-Cost-Potential>
+      <Heating-Cost-Current currency="GBP">325</Heating-Cost-Current>
+      <Heating-Cost-Potential currency="GBP">325</Heating-Cost-Potential>
+      <Hot-Water-Cost-Current currency="GBP">163</Hot-Water-Cost-Current>
+      <Hot-Water-Cost-Potential currency="GBP">163</Hot-Water-Cost-Potential>
+    </Energy-Use>
+  </Energy-Assessment>
+  <SAP-Data>
+    <SAP-Property-Details>
+      <Property-Type>2</Property-Type>
+      <Built-Form>5</Built-Form>
+      <Extensions-Count>0</Extensions-Count>
+      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
+      <Multiple-Glazing-Type>3</Multiple-Glazing-Type>
+      <Glazing-Gap>12</Glazing-Gap>
+      <PVC-Window-Frames>true</PVC-Window-Frames>
+      <Glazed-Area>1</Glazed-Area>
+      <Door-Count>1</Door-Count>
+      <Insulated-Door-Count>0</Insulated-Door-Count>
+      <Percent-Draughtproofed>100</Percent-Draughtproofed>
+      <Habitable-Room-Count>3</Habitable-Room-Count>
+      <Heated-Room-Count>3</Heated-Room-Count>
+      <Fixed-Lighting-Outlets-Count>6</Fixed-Lighting-Outlets-Count>
+      <Low-Energy-Fixed-Lighting-Outlets-Count>6</Low-Energy-Fixed-Lighting-Outlets-Count>
+      <Low-Energy-Lighting>100</Low-Energy-Lighting>
+      <Measurement-Type>1</Measurement-Type>
+      <Mechanical-Ventilation>0</Mechanical-Ventilation>
+      <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+      <Solar-Water-Heating>N</Solar-Water-Heating>
+      <Conservatory-Type>1</Conservatory-Type>
+      <SAP-Flat-Details>
+        <Level>2</Level>
+        <Flat-Location>01</Flat-Location>
+        <Top-Storey>N</Top-Storey>
+        <Heat-Loss-Corridor>2</Heat-Loss-Corridor>
+        <Unheated-Corridor-Length>1.2</Unheated-Corridor-Length>
+      </SAP-Flat-Details>
+      <SAP-Building-Parts>
+        <SAP-Building-Part>
+          <Building-Part-Number>1</Building-Part-Number>
+          <Identifier>Main Dwelling</Identifier>
+          <Construction-Age-Band>E</Construction-Age-Band>
+          <SAP-Floor-Dimensions>
+            <SAP-Floor-Dimension>
+              <Floor>0</Floor>
+              <Heat-Loss-Perimeter quantity="metres">20</Heat-Loss-Perimeter>
+              <Party-Wall-Length quantity="metres">5.8</Party-Wall-Length>
+              <Total-Floor-Area quantity="square metres">41.18</Total-Floor-Area>
+              <Room-Height quantity="metres">2.4</Room-Height>
+            </SAP-Floor-Dimension>
+          </SAP-Floor-Dimensions>
+          <Floor-Heat-Loss>6</Floor-Heat-Loss>
+          <Roof-Construction>3</Roof-Construction>
+          <Roof-Insulation-Location>ND</Roof-Insulation-Location>
+          <Roof-Insulation-Thickness>ND</Roof-Insulation-Thickness>
+          <Wall-Construction>4</Wall-Construction>
+          <Wall-Insulation-Type>2</Wall-Insulation-Type>
+          <Wall-Thickness-Measured>Y</Wall-Thickness-Measured>
+          <Wall-Thickness>300</Wall-Thickness>
+          <Wall-Dry-Lined>N</Wall-Dry-Lined>
+          <Wall-Insulation-Thickness>NI</Wall-Insulation-Thickness>
+          <Party-Wall-Construction>0</Party-Wall-Construction>
+          <SAP-Alternative-Wall>
+            <Wall-Construction>4</Wall-Construction>
+            <Wall-Insulation-Type>4</Wall-Insulation-Type>
+            <Wall-Area>2.88</Wall-Area>
+            <Wall-Thickness-Measured>N</Wall-Thickness-Measured>
+            <Wall-Insulation-Thickness>NI</Wall-Insulation-Thickness>
+            <Wall-Dry-Lined>N</Wall-Dry-Lined>
+            <Sheltered-Wall>Y</Sheltered-Wall>
+          </SAP-Alternative-Wall>
+        </SAP-Building-Part>
+      </SAP-Building-Parts>
+      <SAP-Heating>
+        <Main-Heating-Details>
+          <Main-Heating>
+            <Main-Heating-Number>1</Main-Heating-Number>
+            <Main-Heating-Category>7</Main-Heating-Category>
+            <Main-Fuel-Type>29</Main-Fuel-Type>
+            <Main-Heating-Control>2401</Main-Heating-Control>
+            <Main-Heating-Data-Source>2</Main-Heating-Data-Source>
+            <SAP-Main-Heating-Code>401</SAP-Main-Heating-Code>
+            <Heat-Emitter-Type>0</Heat-Emitter-Type>
+            <Main-Heating-Fraction>1</Main-Heating-Fraction>
+            <Has-FGHRS>N</Has-FGHRS>
+            <Emitter-Temperature>NA</Emitter-Temperature>
+            <MCS-Installed-Heat-Pump>false</MCS-Installed-Heat-Pump>
+          </Main-Heating>
+        </Main-Heating-Details>
+        <Water-Heating-Code>903</Water-Heating-Code>
+        <Water-Heating-Fuel>29</Water-Heating-Fuel>
+        <Immersion-Heating-Type>1</Immersion-Heating-Type>
+        <Cylinder-Size>2</Cylinder-Size>
+        <Cylinder-Insulation-Type>1</Cylinder-Insulation-Type>
+        <Cylinder-Insulation-Thickness>38</Cylinder-Insulation-Thickness>
+        <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
+        <Instantaneous-WWHRS>
+          <Rooms-With-Bath-And-Or-Shower>1</Rooms-With-Bath-And-Or-Shower>
+          <Rooms-With-Mixer-Shower-No-Bath>0</Rooms-With-Mixer-Shower-No-Bath>
+          <Rooms-With-Bath-And-Mixer-Shower>0</Rooms-With-Bath-And-Mixer-Shower>
+        </Instantaneous-WWHRS>
+      </SAP-Heating>
+      <SAP-Energy-Source>
+        <Meter-Type>3</Meter-Type>
+        <Mains-Gas>N</Mains-Gas>
+        <Wind-Turbines-Count>0</Wind-Turbines-Count>
+        <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
+        <Photovoltaic-Supply>
+          <None-Or-No-Details>
+            <Percent-Roof-Area>0</Percent-Roof-Area>
+            <PV-Connection>0</PV-Connection>
+          </None-Or-No-Details>
+        </Photovoltaic-Supply>
+      </SAP-Energy-Source>
+    </SAP-Property-Details>
+  </SAP-Data>
+  <Insurance-Details>
+    <Insurer>Acme Insurance</Insurer>
+    <Policy-No>ACME-000011111</Policy-No>
+    <Effective-Date>2020-08-05</Effective-Date>
+    <Expiry-Date>2021-08-04</Expiry-Date>
+    <PI-Limit>500000</PI-Limit>
+  </Insurance-Details>
+</RdSAP-Report>

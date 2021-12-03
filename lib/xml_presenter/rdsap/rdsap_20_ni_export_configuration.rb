@@ -1,6 +1,6 @@
 module XmlPresenter
   module Rdsap
-    class Rdsap20ExportConfiguration < Rdsap20Base
+    class Rdsap20NiExportConfiguration < Rdsap20Base
       setup
     end
   end
