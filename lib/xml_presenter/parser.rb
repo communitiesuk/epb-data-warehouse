@@ -84,6 +84,12 @@ module XmlPresenter
       end
     end
 
+    ###
+    # Handle cdata_blocks containing +string+
+    def cdata_block(string)
+      characters string
+    end
+
     attr_reader :correct_index
   end
 
@@ -163,6 +169,12 @@ module XmlPresenter
       end
 
       set_value value
+    end
+
+    ###
+    # Handle cdata_blocks containing +string+
+    def cdata_block(string)
+      characters string
     end
 
     attr_reader :output

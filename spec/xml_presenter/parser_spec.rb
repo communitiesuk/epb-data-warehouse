@@ -257,4 +257,29 @@ RSpec.describe XmlPresenter::Parser do
       expect(parser.parse(xml)).to eq expected
     end
   end
+
+  context "with CDATA blocks" do
+    let(:parser) { described_class.new }
+
+    it "reads the content of CDATA blocks and adds them to the data structure" do
+      xml = "<Report><Data-Within-Cdata><![CDATA[hey i'm in a CDATA block]]></Data-Within-Cdata></Report>"
+      expected = {
+        "data_within_cdata" => "hey i'm in a CDATA block",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
+
+  context "with the ID provided in a CDATA block" do
+    let(:parser) { described_class.new(specified_report: { root_node: "Report", sub_node: "id", sub_node_value: "1" }) }
+
+    it "parses the report with the specified id" do
+      xml = "<Reports><Report><id><![CDATA[1]]></id><name>item one</name></Report><Report><id><![CDATA[2]]></id><name>item two</name></Report><Report><id><![CDATA[3]]></id><name>item three</name></Report></Reports>"
+      expected = {
+        "id" => 1,
+        "name" => "item one",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end
