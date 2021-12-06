@@ -32,6 +32,7 @@ module UseCase
         "SAP-Schema-18.0.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-NI-18.0.0" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
         "CEPC-8.0.0" => XmlPresenter::Cepc::Cepc800ExportConfiguration,
+        "CEPC-NI-8.0.0" => XmlPresenter::Cepc::Cepc800NiExportConfiguration,
       }
       export_config_file[schema_type]
     end
