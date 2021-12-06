@@ -66,7 +66,7 @@ describe UseCase::ImportXmlCertificate do
 
     context "when the schema type is not known" do
       before do
-        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "SAP-Schema-NI-18.0.0",
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "SAP-Schema-Rockall-18.0.0",
                                                                              assessmentAddressId: "UPRN-000000000000",
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: false,

@@ -1,7 +1,7 @@
-RSpec.describe "the parser and the rdsap configuration" do
+RSpec.describe "the parser and the SAP configuration" do
   let(:use_case) { UseCase::ParseXmlCertificate.new }
 
-  context "when loading xml from RdSap" do
+  context "when loading xml from SAP" do
     let(:sap) do
       Samples.xml("SAP-Schema-18.0.0")
     end
