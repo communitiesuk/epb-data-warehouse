@@ -106,6 +106,26 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
       end
     end
+
+    context "when marking existing certs as opted out but one has type AC-REPORT" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data) do |rrn|
+          {
+            optOut: true,
+            typeOfAssessment: rrn == "1235-0000-0000-0000-0000" ? "AC-REPORT" : "CEPC",
+          }
+        end
+        use_case.execute
+      end
+
+      it "saves the two non-AC-REPORT opted out certificates to the EAV store" do
+        expect(database_gateway).to have_received(:add_attribute_value).exactly(2).times
+      end
+
+      it "saves the two non-AC_REPORT opted out certificates to the document store" do
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
+      end
+    end
   end
 
   context "when the queues gateway is not functioning correctly" do

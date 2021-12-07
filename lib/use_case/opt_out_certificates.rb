@@ -1,5 +1,7 @@
 module UseCase
   class OptOutCertificates
+    include Helper::MetaDataRule
+
     OPT_OUT = "opt_out".freeze
     OPT_IN = "opt_in".freeze
 
@@ -15,6 +17,8 @@ module UseCase
       assessment_ids = @queues_gateway.consume_queue(:opt_outs)
       assessment_ids.each do |assessment_id|
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
+        next if should_exclude(meta_data: meta_data)
+
         if meta_data[:optOut]
           save_attribute_to_stores assessment_id: assessment_id,
                                    attribute: OPT_OUT,

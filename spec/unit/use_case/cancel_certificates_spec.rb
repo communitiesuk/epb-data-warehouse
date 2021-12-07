@@ -73,6 +73,19 @@ describe UseCase::CancelCertificates do
       end
     end
 
+    context "when processing cancellations where one of the cancellations is of type AC-REPORT and therefore excluded" do
+      before do
+        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "AC-REPORT" })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC" })
+        use_case.execute
+      end
+
+      it "skips over the certificate whose cancellation date is null" do
+        expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(1).times
+      end
+    end
+
     context "when processing cancellations where fetching metadata for one of them fails" do
       before do
         allow(api_gateway).to receive(:fetch_meta_data) do |rrn|

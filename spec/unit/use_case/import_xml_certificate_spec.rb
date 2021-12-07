@@ -114,6 +114,21 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
         expect(import_certificate_data_use_case).not_to have_received(:execute)
       end
     end
+
+    context "when the type of assessment is AC-REPORT" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "SAP-Schema-18.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "AC-REPORT",
+                                                                             optOut: false,
+                                                                             createdAt: "2021-07-21T11:26:28.045Z" })
+      end
+
+      it "does not trigger an import" do
+        use_case.execute(assessment_id)
+        expect(import_certificate_data_use_case).not_to have_received(:execute)
+      end
+    end
   end
 
   context "when the certificate gateway is not functioning to return items" do
