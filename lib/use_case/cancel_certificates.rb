@@ -14,7 +14,9 @@ module UseCase
         meta_data = @api_gateway.fetch_meta_data(assessment_id)
         next if meta_data[:cancelledAt].nil?
 
-        @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: "cancelled_at", attribute_value: meta_data[:cancelledAt])
+        @assessment_attribute_gateway.add_attribute_value assessment_id: assessment_id,
+                                                          attribute_name: "cancelled_at",
+                                                          attribute_value: Helper::DateTime.convert_atom_to_db_datetime(meta_data[:cancelledAt])
         @documents_gateway.set_top_level_attribute assessment_id: assessment_id,
                                                    top_level_attribute: "cancelled_at",
                                                    new_value: Helper::DateTime.convert_atom_to_db_datetime(meta_data[:cancelledAt])

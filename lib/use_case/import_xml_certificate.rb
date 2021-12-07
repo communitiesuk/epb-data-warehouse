@@ -35,6 +35,9 @@ module UseCase
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_type"] = meta_data[:typeOfAssessment]
 
+      certificate["cancelled_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:cancelledAt]) unless meta_data[:cancelledAt].nil?
+      certificate["opt_out"] = Time.now.utc.strftime("%F %T") if meta_data[:optOut]
+
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
         @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
       end

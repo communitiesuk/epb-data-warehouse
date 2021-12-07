@@ -6,4 +6,10 @@ describe Helper::DateTime do
       expect(described_class.convert_atom_to_db_datetime(atom)).to eq "2021-07-21 11:26:28"
     end
   end
+
+  context "when nil is given as the date" do
+    it "returns nil" do
+      expect(described_class.convert_atom_to_db_datetime(nil)).to be nil
+    end
+  end
 end
