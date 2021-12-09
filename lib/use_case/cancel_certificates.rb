@@ -14,7 +14,7 @@ module UseCase
       assessment_ids = @queues_gateway.consume_queue(:cancelled)
       assessment_ids.each do |assessment_id|
         meta_data = @api_gateway.fetch_meta_data(assessment_id)
-        next if meta_data[:cancelledAt].nil? || should_exclude(meta_data: meta_data)
+        next if meta_data[:cancelledAt].nil? || should_exclude?(meta_data: meta_data)
 
         @assessment_attribute_gateway.add_attribute_value assessment_id: assessment_id,
                                                           attribute_name: "cancelled_at",

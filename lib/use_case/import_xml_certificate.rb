@@ -18,7 +18,7 @@ module UseCase
         @certificate_gateway.fetch_meta_data(assessment_id)
       end
 
-      return if should_exclude meta_data: meta_data
+      return if should_exclude?(meta_data: meta_data)
 
       if @assessment_attribute_gateway.assessment_exists(assessment_id)
         Helper::Stopwatch.log_elapsed_time @logger, "deleted EAV attributes for assessment #{assessment_id}" do
