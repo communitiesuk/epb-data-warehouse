@@ -464,7 +464,7 @@ module Gateway
     end
 
     def within_integer_range?(number)
-      (["0", 0, 0.0].include?(number) || !number.to_i.zero?) && number.to_i < ((2**32) - 1) && number.to_i > -(2**32)
+      (["0", 0, 0.0].include?(number) || !number.to_i.zero?) && number.to_i < ((2**31) - 1) && number.to_i > -(2**31)
     end
   end
 end
