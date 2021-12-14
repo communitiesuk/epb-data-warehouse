@@ -2,6 +2,11 @@
 
 module Errors
   class AssessmentDoesNotExist < RuntimeError
+    def initialize(rrn)
+      super(<<~MSG.strip)
+        The assessment #{rrn} could not be found on the API.
+      MSG
+    end
   end
 
   class AssessmentGone < AssessmentDoesNotExist

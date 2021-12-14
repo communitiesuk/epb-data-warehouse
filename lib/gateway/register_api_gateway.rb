@@ -12,7 +12,7 @@ module Gateway
       response =
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
-      check_errors_on response
+      check_errors_on response, assessment_id: assessment_id
 
       response.body
     end
@@ -23,21 +23,21 @@ module Gateway
       response =
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
-      check_errors_on response
+      check_errors_on response, assessment_id: assessment_id
 
       JSON.parse(response.body, symbolize_names: true)[:data]
     end
 
   private
 
-    def check_errors_on(response)
+    def check_errors_on(response, assessment_id:)
       case response.status
       when 400
-        raise Errors::AssessmentNotFound
+        raise Errors::AssessmentNotFound, assessment_id
       when 404
-        raise Errors::AssessmentNotFound
+        raise Errors::AssessmentNotFound, assessment_id
       when 410
-        raise Errors::AssessmentGone
+        raise Errors::AssessmentGone, assessment_id
       end
     end
   end
