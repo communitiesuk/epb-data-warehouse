@@ -88,7 +88,7 @@ RSpec.configure do |config|
   end
 
   config.before do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = [:truncation, { only: %w[assessment_attribute_values assessment_documents] }]
     DatabaseCleaner.start
   end
 
