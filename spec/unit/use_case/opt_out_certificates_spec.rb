@@ -36,7 +36,8 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
 
   context "when queues gateway is functioning correctly" do
     before do
-      allow(database_gateway).to receive(:add_attribute_value).and_return(true)
+      allow(database_gateway).to receive(:add_attribute_value)
+      allow(database_gateway).to receive(:delete_attribute_value)
       allow(queues_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
     end
 
@@ -49,6 +50,7 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
       end
 
       it "saves 3 opted out certificate to the EAV store" do
+        expect(database_gateway).to have_received(:delete_attribute_value).exactly(3).times
         expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
       end
 
@@ -63,7 +65,6 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
         allow(certificate_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ optOut: true })
         allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ optOut: false })
         allow(certificate_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ optOut: true })
-        allow(database_gateway).to receive(:delete_attribute_value)
         use_case.execute
       end
 
@@ -71,8 +72,8 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
         expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
       end
 
-      it "executes the update use case by deleting one attribute value on the EAV store" do
-        expect(database_gateway).to have_received(:delete_attribute_value).exactly(1).times
+      it "performs a delete for each of the 3 certificates to ensure it can write a value, plus a delete of the opt_out attribute for one certificate" do
+        expect(database_gateway).to have_received(:delete_attribute_value).exactly(4).times
       end
 
       it "performs a save for each of the 3 certificates on the document store" do
