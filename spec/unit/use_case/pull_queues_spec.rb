@@ -19,10 +19,22 @@ describe UseCase::PullQueues do
       end
     end
 
-    it "executes all of the sub use cases" do
-      use_case.execute
+    after { instances = [] }
 
-      expect(instances).to all(have_received(:execute))
+    context "when not specifying the from_recovery_list option" do
+      it "executes all of the sub use cases" do
+        use_case.execute
+
+        expect(instances).to all(have_received(:execute))
+      end
+    end
+
+    context "when specifying the from_recovery_list option" do
+      it "executes all of the sub use cases specifying the from_recovery_list option" do
+        use_case.execute from_recovery_list: true
+
+        expect(instances).to all(have_received(:execute).with(from_recovery_list: true))
+      end
     end
   end
 end

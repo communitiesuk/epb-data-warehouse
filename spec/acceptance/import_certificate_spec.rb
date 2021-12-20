@@ -1,6 +1,7 @@
 describe "Acceptance::ImportCertificate" do
   subject(:usecase) do
     UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
+                                    recovery_list_gateway: recovery_list_gateway,
                                     queues_gateway: queues_gateway
   end
 
@@ -16,7 +17,8 @@ describe "Acceptance::ImportCertificate" do
                                                                    documents_gateway: Gateway::DocumentsGateway.new
     UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
                                       assessment_attribute_gateway: eav_gateway,
-                                      certificate_gateway: certificate_gateway
+                                      certificate_gateway: certificate_gateway,
+                                      recovery_list_gateway: recovery_list_gateway
   end
 
   let(:certificate_gateway) do
@@ -25,6 +27,10 @@ describe "Acceptance::ImportCertificate" do
 
   let(:queues_gateway) do
     Gateway::QueuesGateway.new(redis_client: redis)
+  end
+
+  let(:recovery_list_gateway) do
+    Gateway::RecoveryListGateway.new(redis_client: redis)
   end
 
   let(:redis) { MockRedis.new }

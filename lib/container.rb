@@ -19,6 +19,10 @@ class Container
     @queues_gateway ||= Gateway::QueuesGateway.new
   end
 
+  def self.recovery_list_gateway
+    @recovery_list_gateway ||= Gateway::RecoveryListGateway.new
+  end
+
   def self.documents_gateway
     @documents_gateway ||= Gateway::DocumentsGateway.new
   end
@@ -28,6 +32,7 @@ class Container
                                                                       queues_gateway: queues_gateway,
                                                                       api_gateway: register_api_gateway,
                                                                       documents_gateway: documents_gateway,
+                                                                      recovery_list_gateway: recovery_list_gateway,
                                                                       logger: logger
   end
 
@@ -44,6 +49,7 @@ class Container
   def self.import_certificates_use_case
     @import_certificates_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
                                                                       queues_gateway: queues_gateway,
+                                                                      recovery_list_gateway: recovery_list_gateway,
                                                                       logger: logger
   end
 
@@ -51,6 +57,7 @@ class Container
     @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case: import_certificate_data_use_case,
                                                                            assessment_attribute_gateway: assessment_attributes_gateway,
                                                                            certificate_gateway: register_api_gateway,
+                                                                           recovery_list_gateway: recovery_list_gateway,
                                                                            logger: logger
   end
 
@@ -59,6 +66,7 @@ class Container
                                                                      documents_gateway: documents_gateway,
                                                                      queues_gateway: queues_gateway,
                                                                      certificate_gateway: register_api_gateway,
+                                                                     recovery_list_gateway: recovery_list_gateway,
                                                                      logger: logger
   end
 

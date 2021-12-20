@@ -4,6 +4,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
       import_certificate_data_use_case: import_certificate_data_use_case,
       assessment_attribute_gateway: database_gateway,
       certificate_gateway: certificate_gateway,
+      recovery_list_gateway: recovery_list_gateway,
       logger: logger,
     )
   end
@@ -14,6 +15,13 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
 
   let(:certificate_gateway) do
     instance_double(Gateway::RegisterApiGateway)
+  end
+
+  let(:recovery_list_gateway) do
+    gateway = instance_double(Gateway::RecoveryListGateway)
+    allow(gateway).to receive(:clear_assessment)
+    allow(gateway).to receive(:register_attempt)
+    gateway
   end
 
   let(:import_certificate_data_use_case) do
@@ -48,6 +56,19 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
 
   context "when transforming the epc xml using the parser" do
     context "when the schema type is known" do
+      it "clears the assessment from the recovery list" do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({
+          schemaType: "RdSAP-Schema-20.0.0",
+          assessmentAddressId: "UPRN-000000000000",
+          typeOfAssessment: "RdSAP",
+          optOut: false,
+          createdAt: "2021-07-21T11:26:28.045Z",
+          cancelledAt: "2021-09-05T14:34:56.634Z",
+        })
+        use_case.execute(assessment_id)
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(assessment_id, queue: :assessments)
+      end
+
       context "when the certificate is opted out" do
         before do
           allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
@@ -107,11 +128,15 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: false,
                                                                              createdAt: "2021-07-21T11:26:28.045Z" })
+        use_case.execute(assessment_id)
       end
 
       it "does not trigger an import" do
-        use_case.execute(assessment_id)
         expect(import_certificate_data_use_case).not_to have_received(:execute)
+      end
+
+      it "clears the assessment from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(assessment_id, queue: :assessments)
       end
     end
 
@@ -122,11 +147,15 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
                                                                              typeOfAssessment: "AC-REPORT",
                                                                              optOut: false,
                                                                              createdAt: "2021-07-21T11:26:28.045Z" })
+        use_case.execute(assessment_id)
       end
 
       it "does not trigger an import" do
-        use_case.execute(assessment_id)
         expect(import_certificate_data_use_case).not_to have_received(:execute)
+      end
+
+      it "clears the assessment from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(assessment_id, queue: :assessments)
       end
     end
   end
@@ -143,6 +172,14 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
 
     it "logs out an error" do
       expect(logger).to have_received(:error)
+    end
+
+    it "does not clear the assessment from the recovery list" do
+      expect(recovery_list_gateway).not_to have_received(:clear_assessment)
+    end
+
+    it "reports an attempt to process the assessment onto the recovery list" do
+      expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id: assessment_id, queue: :assessments)
     end
   end
 end

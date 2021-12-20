@@ -2,10 +2,13 @@ module UseCase
   class ImportXmlCertificate
     include Helper::MetaDataRule
 
-    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:, logger: nil)
+    class UnimportableAssessment < RuntimeError; end
+
+    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:, recovery_list_gateway:, logger: nil)
       @import_certificate_data_use_case = import_certificate_data_use_case
       @assessment_attribute_gateway = assessment_attribute_gateway
       @certificate_gateway = certificate_gateway
+      @recovery_list_gateway = recovery_list_gateway
       @logger = logger
     end
 
@@ -18,7 +21,7 @@ module UseCase
         @certificate_gateway.fetch_meta_data(assessment_id)
       end
 
-      return if should_exclude?(meta_data: meta_data)
+      raise UnimportableAssessment if should_exclude?(meta_data: meta_data)
 
       if @assessment_attribute_gateway.assessment_exists(assessment_id)
         Helper::Stopwatch.log_elapsed_time @logger, "deleted EAV attributes for assessment #{assessment_id}" do
@@ -31,7 +34,7 @@ module UseCase
       certificate = parse.execute xml: xml,
                                   schema_type: meta_data[:schemaType],
                                   assessment_id: assessment_id
-      return if certificate.nil?
+      raise UnimportableAssessment if certificate.nil?
 
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
@@ -45,9 +48,24 @@ module UseCase
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
         @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
       end
+
+      clear_from_recovery_list assessment_id
+    rescue UnimportableAssessment
+      clear_from_recovery_list assessment_id
     rescue StandardError => e
       report_to_sentry e
       @logger.error "Error of type #{e.class} when importing RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
+      register_attempt_to_recovery_list assessment_id
+    end
+
+  private
+
+    def clear_from_recovery_list(assessment_id)
+      @recovery_list_gateway.clear_assessment assessment_id, queue: :assessments
+    end
+
+    def register_attempt_to_recovery_list(assessment_id)
+      @recovery_list_gateway.register_attempt(assessment_id: assessment_id, queue: :assessments)
     end
   end
 end

@@ -6,11 +6,14 @@ describe UseCase::CancelCertificates do
                         queues_gateway: queues_gateway,
                         api_gateway: api_gateway,
                         documents_gateway: documents_gateway,
+                        recovery_list_gateway: recovery_list_gateway,
                         logger: logger
   end
 
   let(:eav_database_gateway) do
-    instance_double(Gateway::AssessmentAttributesGateway)
+    eav_database_gateway = instance_double(Gateway::AssessmentAttributesGateway)
+    allow(eav_database_gateway).to receive(:add_attribute_value)
+    eav_database_gateway
   end
 
   let(:documents_gateway) do
@@ -24,7 +27,17 @@ describe UseCase::CancelCertificates do
   end
 
   let(:api_gateway) do
-    instance_double(Gateway::RegisterApiGateway)
+    gateway = instance_double(Gateway::RegisterApiGateway)
+    allow(gateway).to receive(:fetch_meta_data)
+    gateway
+  end
+
+  let(:recovery_list_gateway) do
+    gateway = instance_double(Gateway::RecoveryListGateway)
+    allow(gateway).to receive(:clear_assessment)
+    allow(gateway).to receive(:register_attempt)
+    allow(gateway).to receive(:register_assessments)
+    gateway
   end
 
   let(:logger) do
@@ -58,6 +71,11 @@ describe UseCase::CancelCertificates do
         use_case.execute
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times.with(include(new_value: "2021-08-13 08:12:51"))
       end
+
+      it "clears the assessments from the recovery list" do
+        use_case.execute
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
+      end
     end
 
     context "when processing cancellations where there is a certificate without a cancelled_at date" do
@@ -70,6 +88,10 @@ describe UseCase::CancelCertificates do
 
       it "skips over the certificate whose cancellation date is null" do
         expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(2).times
+      end
+
+      it "clears all the assessments from the recovery list regardless of cancelled_at date" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
       end
     end
 
@@ -84,12 +106,18 @@ describe UseCase::CancelCertificates do
       it "skips over the certificate whose cancellation date is null" do
         expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(1).times
       end
+
+      it "clears all the assessments from the recovery list regardless of type of assessment" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
+      end
     end
 
     context "when processing cancellations where fetching metadata for one of them fails" do
+      failed_assessment = "1235-0000-0000-0000-0000"
+
       before do
         allow(api_gateway).to receive(:fetch_meta_data) do |rrn|
-          raise StandardError, "fetching metadata for this RRN failed" if rrn == "1235-0000-0000-0000-0000"
+          raise StandardError, "fetching metadata for this RRN failed" if rrn == failed_assessment
 
           { cancelledAt: Time.now.utc.iso8601(3) }
         end
@@ -103,6 +131,14 @@ describe UseCase::CancelCertificates do
       it "sends the updates for the other two certificates to the document store" do
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
       end
+
+      it "clears the other two certificates/ assessments from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(2).times
+      end
+
+      it "registers an attempt for the assessment that failed" do
+        expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id: failed_assessment, queue: :cancelled)
+      end
     end
   end
 
@@ -115,6 +151,26 @@ describe UseCase::CancelCertificates do
       use_case.execute
 
       expect(logger).to have_received(:error).with(include "bang!")
+    end
+  end
+
+  context "when assessments are being fetched from the recovery list" do
+    before do
+      allow(recovery_list_gateway).to receive(:assessments).with(queue: :cancelled).and_return(%w[
+        0000-0000-0000-0000-0000
+        0000-0000-0000-0000-0001
+        0000-0000-0000-0000-0002
+      ])
+      allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC" })
+      use_case.execute from_recovery_list: true
+    end
+
+    it "sends updates for all three certificates from the recovery list" do
+      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+    end
+
+    it "does not register the assessments onto the recovery list" do
+      expect(recovery_list_gateway).not_to have_received(:register_assessments)
     end
   end
 end

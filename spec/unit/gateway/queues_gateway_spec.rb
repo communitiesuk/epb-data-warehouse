@@ -34,11 +34,11 @@ describe Gateway::QueuesGateway do
     end
 
     it "raises an error for an invalid queue name" do
-      expect { gateway.push_to_queue(:none_exisitng_queue, ids) }.to raise_error(
-        Gateway::QueuesGateway::InvalidRedisQueueNameError,
+      expect { gateway.push_to_queue(:none_existing_queue, ids) }.to raise_error(
+        Gateway::QueueNames::InvalidNameError,
       )
-      expect { gateway.consume_queue(:none_exisitng_queue) }.to raise_error(
-        Gateway::QueuesGateway::InvalidRedisQueueNameError,
+      expect { gateway.consume_queue(:none_existing_queue) }.to raise_error(
+        Gateway::QueueNames::InvalidNameError,
       )
     end
 

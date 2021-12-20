@@ -43,7 +43,9 @@ private
 
   def pull_queues
     Helper::Toggles.enabled?("data_warehouse_consumes_queues") do
-      use_case(:pull_queues).execute
+      pull_use_case = use_case :pull_queues
+      pull_use_case.execute from_recovery_list: true
+      pull_use_case.execute from_recovery_list: false
     end
   end
 

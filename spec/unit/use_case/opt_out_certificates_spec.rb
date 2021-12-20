@@ -4,11 +4,15 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
                         documents_gateway: documents_gateway,
                         queues_gateway: queues_gateway,
                         certificate_gateway: certificate_gateway,
+                        recovery_list_gateway: recovery_list_gateway,
                         logger: logger
   end
 
   let(:database_gateway) do
-    instance_double(Gateway::AssessmentAttributesGateway)
+    database_gateway = instance_double(Gateway::AssessmentAttributesGateway)
+    allow(database_gateway).to receive(:add_attribute_value)
+    allow(database_gateway).to receive(:delete_attribute_value)
+    database_gateway
   end
 
   let(:documents_gateway) do
@@ -25,7 +29,17 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
   end
 
   let(:certificate_gateway) do
-    instance_double(Gateway::RegisterApiGateway)
+    certificate_gateway = instance_double(Gateway::RegisterApiGateway)
+    allow(certificate_gateway).to receive(:fetch_meta_data)
+    certificate_gateway
+  end
+
+  let(:recovery_list_gateway) do
+    gateway = instance_double Gateway::RecoveryListGateway
+    allow(gateway).to receive(:clear_assessment)
+    allow(gateway).to receive(:register_attempt)
+    allow(gateway).to receive(:register_assessments)
+    gateway
   end
 
   let(:logger) do
@@ -35,10 +49,15 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
   end
 
   context "when queues gateway is functioning correctly" do
+    assessment_ids = %w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002]
+
     before do
-      allow(database_gateway).to receive(:add_attribute_value)
-      allow(database_gateway).to receive(:delete_attribute_value)
-      allow(queues_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
+      allow(queues_gateway).to receive(:consume_queue).and_return(assessment_ids)
+    end
+
+    it "stores the certificates onto the recovery list" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:register_assessments).with(*assessment_ids, queue: :opt_outs)
     end
 
     context "when marking existing certs as opted out" do
@@ -57,6 +76,10 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
       it "saves 3 opted out certificates to the document store" do
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
         expect(documents_gateway).not_to have_received(:delete_top_level_attribute)
+      end
+
+      it "clears 3 certificates from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
       end
     end
 
@@ -90,9 +113,11 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
     end
 
     context "when marking existing certs as opted out but one triggers an error" do
+      erroring_assessment = "1235-0000-0000-0000-0000"
+
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data) do |rrn|
-          raise StandardError, "could not save for that RRN" if rrn == "1235-0000-0000-0000-0000"
+          raise StandardError, "could not save for that RRN" if rrn == erroring_assessment
 
           { optOut: true }
         end
@@ -105,6 +130,14 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
 
       it "saves the two non-erroring opted out certificates to the document store" do
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
+      end
+
+      it "clears the two non-erroring assessments from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(2).times
+      end
+
+      it "registers a processing attempt on the recovery list for the erroring assessment" do
+        expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id: erroring_assessment, queue: :opt_outs)
       end
     end
 
@@ -126,6 +159,10 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
       it "saves the two non-AC_REPORT opted out certificates to the document store" do
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
       end
+
+      it "clears all three certificates from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
+      end
     end
   end
 
@@ -138,6 +175,23 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
       use_case.execute
 
       expect(logger).to have_received(:error).with(include "bang!")
+    end
+  end
+
+  context "when the assessments are being fetched from the recovery list" do
+    before do
+      allow(recovery_list_gateway).to receive(:assessments).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ optOut: true })
+
+      use_case.execute from_recovery_list: true
+    end
+
+    it "saves the certificates from the recovery list to the document store" do
+      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+    end
+
+    it "does not register the assessments onto the recovery list" do
+      expect(recovery_list_gateway).not_to have_received(:register_assessments)
     end
   end
 end
