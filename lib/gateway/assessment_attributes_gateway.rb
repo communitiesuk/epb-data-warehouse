@@ -2,7 +2,7 @@ module Gateway
   class AssessmentAttributesGateway
     # TODO: Add rrn constant and set to "asessement_id"
     RRN = "assessment_id".freeze
-    attr_accessor :attribute_columns_array, :bindings
+    attr_accessor :attribute_columns_array
 
     def initialize
       @attribute_columns_array = []
