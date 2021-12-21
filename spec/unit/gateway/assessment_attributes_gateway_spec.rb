@@ -39,6 +39,7 @@ describe Gateway::AssessmentAttributesGateway do
   before do
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attributes CASCADE;")
     ActiveRecord::Base.connection.reset_pk_sequence!("assessment_attributes")
+    described_class.reset!
     gateway.add_attribute(attribute_name: "test")
     gateway.add_attribute(attribute_name: "test1")
   end
@@ -423,7 +424,7 @@ describe Gateway::AssessmentAttributesGateway do
         attribute_value: "false",
       )
 
-      gateway.add_attribute_value(
+      gateway.add_attribute_value(\
         assessment_id: "0000-0000-0000-0000-0002",
         attribute_name: "opt-out",
         attribute_value: "false",
@@ -489,6 +490,29 @@ describe Gateway::AssessmentAttributesGateway do
 
         expect(ActiveRecord::Base.connection.exec_query(sql, "SQL").first["cnt"]).to eq(1)
       end
+    end
+  end
+
+  context "when the attributes object is fetched" do
+    it "contains all of the currently stored attributes" do
+      expect(described_class::Attributes.singleton.attributes.keys).to eq [["test", nil], ["test1", nil]]
+    end
+
+    it "can fetch out an ID using brace syntax" do
+      expect(described_class::Attributes.singleton[["test", nil]]).to eq 1
+    end
+
+    it "can fetch out an ID using #id_for when present" do
+      expect(described_class::Attributes.singleton.id_for("test", parent_name: nil)).to eq 1
+    end
+
+    it "stores an attribute where it does not currently exist and returns the new ID" do
+      expect(described_class::Attributes.singleton.id_for("test2")).to eq 3
+    end
+
+    it "fetches the same ID out the second time calling #id_for" do
+      described_class::Attributes.singleton.id_for("test2")
+      expect(described_class::Attributes.singleton.id_for("test2")).to eq 3
     end
   end
 end

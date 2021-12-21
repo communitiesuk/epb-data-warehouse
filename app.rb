@@ -3,6 +3,7 @@ require "active_support"
 require "active_support/core_ext/uri"
 require "redis"
 require "zeitwerk"
+require "concurrent"
 require "sentry-ruby"
 
 loader = Zeitwerk::Loader.new

@@ -44,7 +44,7 @@ module Gateway
       if !attribute_value.to_s.empty? && attribute_name.to_s != RRN
         begin
           ActiveRecord::Base.transaction do
-            attribute_id = add_attribute(attribute_name: attribute_name, parent_name: parent_name)
+            attribute_id = attributes.id_for attribute_name, parent_name: parent_name
             insert_attribute_value(
               assessment_id: assessment_id,
               attribute_id: attribute_id,
@@ -465,6 +465,78 @@ module Gateway
 
     def within_integer_range?(number)
       (["0", 0, 0.0].include?(number) || !number.to_i.zero?) && number.to_i < ((2**31) - 1) && number.to_i > -(2**31)
+    end
+
+    def attributes
+      Attributes.singleton
+    end
+
+    class Attributes
+      class << self
+        def singleton
+          @singleton ||= fetch_attributes
+        end
+
+        def fetch_attributes
+          sql = "SELECT attribute_id, attribute_name, parent_name FROM assessment_attributes"
+          new(
+            Concurrent::Map.new.marshal_load(
+              Hash[
+                ActiveRecord::Base.connection.exec_query(sql).map do |row|
+                  [[row["attribute_name"], row["parent_name"]], row["attribute_id"]]
+                end,
+              ],
+            ),
+          )
+        end
+
+        def reset!
+          @singleton = nil
+        end
+      end
+
+      def initialize(attributes)
+        raise ArgumentError unless attributes.is_a?(Concurrent::Map)
+
+        @attributes = attributes
+      end
+
+      def [](key)
+        attributes[key]
+      end
+
+      def id_for(attribute_name, parent_name: nil)
+        attributes.compute_if_absent([attribute_name, parent_name]) do
+          insert(attribute: attribute_name, parent: parent_name)
+        end
+      end
+
+      attr_reader :attributes
+
+    private
+
+      def insert(attribute:, parent:)
+        sql = "INSERT INTO assessment_attributes (attribute_name, parent_name) VALUES ($1, $2)"
+        bindings = [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "attribute_name",
+            attribute,
+            ActiveRecord::Type::String.new,
+          ),
+          ActiveRecord::Relation::QueryAttribute.new(
+            "parent_name",
+            parent,
+            ActiveRecord::Type::String.new,
+          ),
+        ]
+        ActiveRecord::Base.connection.insert(sql, nil, nil, nil, nil, bindings)
+      end
+    end
+
+    class << self
+      def reset!
+        Attributes.reset!
+      end
     end
   end
 end
