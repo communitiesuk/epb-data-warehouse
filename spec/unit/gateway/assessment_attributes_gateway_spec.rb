@@ -493,6 +493,56 @@ describe Gateway::AssessmentAttributesGateway do
     end
   end
 
+  context "when adding values using #add_attribute_values" do
+    before do
+      gateway.add_attribute_values(
+        AttributeValue.new("construction_age_band", "England and Wales: 2007-2011", nil),
+        AttributeValue.new("glazed_type", "test", nil),
+        AttributeValue.new("current_energy_efficiency", "50", nil),
+        AttributeValue.new("heating_cost_current", "365.98", nil),
+        AttributeValue.new("json", json_blob, nil),
+        assessment_id: "0000-0000-0000-0000-0001",
+      )
+    end
+
+    let(:assessment_attribute_values) do
+      ActiveRecord::Base.connection.exec_query(
+        "SELECT * FROM assessment_attribute_values WHERE assessment_id= '0000-0000-0000-0000-0001'
+        ORDER BY attribute_id",
+      )
+    end
+
+    it "returns a row for every attributes" do
+      expect(assessment_attribute_values.rows.length).to eq(5)
+    end
+
+    it "row 3 will have a value in the integer column for the current_energy_efficiency" do
+      expect(assessment_attribute_values[2]["attribute_value_int"]).to eq(50)
+    end
+
+    it "row 4 will have a value in the float column for the heating_cost_current", :aggregate_failures do
+      expect(assessment_attribute_values[3]["attribute_value_int"]).to eq 365
+      expect(assessment_attribute_values[3]["attribute_value_float"]).to eq 365.98
+    end
+
+    it "row 5 will have a json object in the json column" do
+      result = JSON.parse(assessment_attribute_values[4]["json"])
+
+      expect(result).to eq(json_blob)
+    end
+
+    context "with multiple entries for the same attribute" do
+      it "raises a BadAttributesWrite error" do
+        expect {
+          gateway.add_attribute_values(
+            AttributeValue.new("glazed_type", "test2", nil),
+            assessment_id: "0000-0000-0000-0000-0001",
+          )
+        }.to raise_error Boundary::BadAttributesWrite
+      end
+    end
+  end
+
   context "when the attributes object is fetched" do
     it "contains all of the currently stored attributes" do
       expect(described_class::Attributes.singleton.attributes.keys).to eq [["test", nil], ["test1", nil]]
@@ -515,4 +565,48 @@ describe Gateway::AssessmentAttributesGateway do
       expect(described_class::Attributes.singleton.id_for("test2")).to eq 3
     end
   end
+
+  context "when using the CastValues class" do
+    context "when the value is a simple string" do
+      it "only keeps the string value, all other methods returning nil", :aggregate_failures do
+        cast = described_class::CastValue.new "ND"
+        expect(cast.string).to eq "ND"
+        expect(cast.int).to be nil
+        expect(cast.float).to be nil
+        expect(cast.json).to be nil
+      end
+    end
+
+    context "when the value is an integer-like number string" do
+      it "casts the number correctly, and returns nil for the JSON", :aggregate_failures do
+        cast = described_class::CastValue.new "42"
+        expect(cast.string).to eq "42"
+        expect(cast.int).to eq 42
+        expect(cast.float).to eq 42.0
+        expect(cast.json).to be nil
+      end
+    end
+
+    context "when the value is a float-like number string" do
+      it "casts the number correctly, losing accuracy with the integer" do
+        cast = described_class::CastValue.new "3.14"
+        expect(cast.string).to eq "3.14"
+        expect(cast.int).to eq 3
+        expect(cast.float).to eq 3.14
+        expect(cast.json).to be nil
+      end
+    end
+
+    context "when the value is a hash" do
+      it "makes the hash available through the #json method, with everything else returning nil" do
+        cast = described_class::CastValue.new({ code: "NGL" })
+        expect(cast.string).to be nil
+        expect(cast.int).to be nil
+        expect(cast.float).to be nil
+        expect(cast.json).to eq({ code: "NGL" })
+      end
+    end
+  end
 end
+
+AttributeValue = Struct.new :name, :value, :parent_name

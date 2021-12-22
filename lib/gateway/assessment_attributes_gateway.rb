@@ -54,8 +54,21 @@ module Gateway
         rescue ActiveRecord::RecordNotUnique
           raise Boundary::DuplicateAttribute, attribute_name
         end
-
       end
+    end
+
+    def add_attribute_values(*attribute_values, assessment_id:)
+      values = attribute_values.reduce([]) do |carry, value|
+        cast_value = CastValue.new value.value
+        carry + [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.fast_generate(cast_value.json) : nil]
+      end
+      sql = ActiveRecord::Base.send(
+        :sanitize_sql_array,
+        ["INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json) VALUES #{['(?,?,?,?,?,?)'] * attribute_values.length * ','}"] + values,
+      )
+      ActiveRecord::Base.connection.exec_query(sql)
+    rescue ActiveRecord::RecordNotUnique
+      raise Boundary::BadAttributesWrite, "Error writing attributes for RRN #{assessment_id}"
     end
 
     def fetch_attribute_by_assessment(assessment_id:, attribute:)
@@ -404,16 +417,7 @@ module Gateway
               VALUES($1, $2, $3, $4, $5, $6)
       SQL
 
-      if attribute_value.respond_to?(:to_h)
-        json_value = attribute_value
-        attribute_value = nil
-        attribute_int = nil
-        attribute_float = nil
-      else
-        attribute_int = attribute_value_int(attribute_value)
-        attribute_float = attribute_value_float(attribute_value)
-        json_value = nil
-      end
+      cast_value = CastValue.new attribute_value
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -428,43 +432,27 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_value",
-          attribute_value,
+          cast_value.string,
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_int",
-          attribute_int,
+          cast_value.int,
           ActiveRecord::Type::BigInteger.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "attribute_float",
-          attribute_float,
+          cast_value.float,
           ActiveRecord::Type::Decimal.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "json",
-          json_value,
+          cast_value.json,
           ActiveRecord::Type::Json.new,
         ),
       ]
 
       ActiveRecord::Base.connection.insert(sql, nil, nil, nil, nil, bindings)
-    end
-
-    def attribute_value_int(attribute_value)
-      within_integer_range?(attribute_value) ? attribute_value.to_i : nil
-    rescue StandardError
-      nil
-    end
-
-    def attribute_value_float(attribute_value)
-      attribute_value.to_f.zero? ? nil : attribute_value.to_f
-    rescue StandardError
-      nil
-    end
-
-    def within_integer_range?(number)
-      (["0", 0, 0.0].include?(number) || !number.to_i.zero?) && number.to_i < ((2**31) - 1) && number.to_i > -(2**31)
     end
 
     def attributes
@@ -536,6 +524,52 @@ module Gateway
     class << self
       def reset!
         Attributes.reset!
+      end
+    end
+
+    class CastValue
+      def initialize(value)
+        @value = value
+      end
+
+      def string
+        value unless is_hash
+      end
+
+      def int
+        value_as_int unless is_hash
+      end
+
+      def float
+        value_as_float unless is_hash
+      end
+
+      def json
+        value if is_hash
+      end
+
+    private
+
+      attr_reader :value
+
+      def value_as_int
+        within_integer_range? ? value.to_i : nil
+      rescue StandardError
+        nil
+      end
+
+      def value_as_float
+        value.to_f.zero? ? nil : value.to_f
+      rescue StandardError
+        nil
+      end
+
+      def within_integer_range?
+        (["0", 0, 0.0].include?(value) || !value.to_i.zero?) && value.to_i < ((2**31) - 1) && value.to_i > -(2**31)
+      end
+
+      def is_hash
+        value.respond_to?(:to_h)
       end
     end
   end

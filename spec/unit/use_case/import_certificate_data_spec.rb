@@ -12,6 +12,7 @@ describe UseCase::ImportCertificateData do
 
   before do
     allow(assessment_attributes_gateway).to receive(:add_attribute_value)
+    allow(assessment_attributes_gateway).to receive(:add_attribute_values)
     allow(documents_gateway).to receive(:add_assessment)
   end
 
@@ -26,8 +27,11 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway unchanged" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1", attribute_value: "A", parent_name: nil)
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "2", attribute_value: "B", parent_name: nil)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+        described_class::AttributeValue.new("1", "A", nil),
+        described_class::AttributeValue.new("2", "B", nil),
+        assessment_id: "0000-0000-0000-0000-0000",
+      )
     end
   end
 
@@ -44,11 +48,10 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1", attribute_value: {
-        "one" => "1",
-        "two" => "2",
-      }, parent_name: nil)
-      # expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "two", attribute_value: "2", parent_name: "1")
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+        described_class::AttributeValue.new("1", { "one" => "1", "two" => "2" }, nil),
+        assessment_id: "0000-0000-0000-0000-0000",
+      )
     end
   end
 
@@ -64,8 +67,10 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "building_parts",
-                                                                                        attribute_value: { "building_part" => { "wall" => "brick" } }, parent_name: nil)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+        described_class::AttributeValue.new("building_parts", { "building_part" => { "wall" => "brick" } }, nil),
+        assessment_id: "0000-0000-0000-0000-0000",
+      )
     end
   end
 
@@ -83,8 +88,10 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1",
-                                                                                        attribute_value: %w[1 2 3], parent_name: nil)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+        described_class::AttributeValue.new("1", %w[1 2 3], nil),
+        assessment_id: "0000-0000-0000-0000-0000",
+      )
     end
   end
 
@@ -94,7 +101,6 @@ describe UseCase::ImportCertificateData do
         { "1a" => "one a" },
         { "1b" => "one b" },
       ],
-
     }
 
     assessment_id = "0000-0000-0000-0000-0000"
@@ -102,8 +108,10 @@ describe UseCase::ImportCertificateData do
     it "passes the attributes and values to the gateway" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
 
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).with(assessment_id: "0000-0000-0000-0000-0000", attribute_name: "1",
-                                                                                        attribute_value: certificate_data["1"], parent_name: nil)
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+        described_class::AttributeValue.new("1", certificate_data["1"], nil),
+        assessment_id: "0000-0000-0000-0000-0000",
+      )
     end
 
     it "receives the hashes only twice, one for each key" do
@@ -119,11 +127,15 @@ describe UseCase::ImportCertificateData do
 
       }
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).exactly(2).times
+      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+        described_class::AttributeValue.new("1", [{ "1a" => "one a" }, { "1b" => "one b" }], nil),
+        described_class::AttributeValue.new("2", [{ "1a" => "one a" }, { "1b" => "one b" }], nil),
+        assessment_id: assessment_id,
+      )
     end
   end
 
-  context "when several attributes are passed to the use case and one raises a duplicate error" do
+  context "when several attributes are passed to the use case and a bad write error is raised" do
     certificate_data = {
       "bad" => "i am bad",
       "good" => "i am good",
@@ -132,14 +144,13 @@ describe UseCase::ImportCertificateData do
     assessment_id = "0000-0000-0001-0000-0000"
 
     before do
-      allow(assessment_attributes_gateway).to receive(:add_attribute_value) do |attribute_name:, **_|
-        raise Boundary::DuplicateAttribute, attribute_name if attribute_name == "bad"
+      allow(assessment_attributes_gateway).to receive(:add_attribute_values) do |**_|
+        raise Boundary::BadAttributesWrite
       end
     end
 
-    it "tries to save all of the attributes" do
+    it "runs the use case without erroring" do
       use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_value).exactly(certificate_data.keys.length).times
     end
   end
 

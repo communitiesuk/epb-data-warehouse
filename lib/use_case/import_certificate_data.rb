@@ -1,5 +1,7 @@
 module UseCase
   class ImportCertificateData
+    AttributeValue = Struct.new :name, :value, :parent_name
+
     def initialize(assessment_attribute_gateway:, documents_gateway:, logger: nil)
       @assessment_attribute_gateway = assessment_attribute_gateway
       @documents_gateway = documents_gateway
@@ -16,26 +18,14 @@ module UseCase
     attr_accessor :assessment_attribute_gateway, :documents_gateway
 
     def save_eav_attributes(assessment_id:, certificate:)
-      certificate.each do |key, value|
-        attribute = {
-          attribute: key.to_s,
-          value: value,
-          assessment_id: assessment_id,
-          parent_name: nil,
-        }
-        save_eav_attribute_data(**attribute)
-      end
-    end
-
-    def save_eav_attribute_data(assessment_id:, attribute:, value:, parent_name:)
-      assessment_attribute_gateway.add_attribute_value(
+      assessment_attribute_gateway.add_attribute_values(
+        *certificate.map do |key, value|
+          AttributeValue.new key.to_s, value, nil
+        end,
         assessment_id: assessment_id,
-        attribute_name: attribute,
-        attribute_value: value,
-        parent_name: parent_name,
       )
-    rescue Boundary::DuplicateAttribute
-      # do nothing
+    rescue Boundary::BadAttributesWrite => e
+      report_to_sentry e
     end
 
     def save_document_data(assessment_id:, certificate:)
