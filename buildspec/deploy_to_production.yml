@@ -1,7 +1,7 @@
 version: 0.2
 
 runtime-versions:
-  ruby: 2.7
+  ruby: 3.0.3
 
 env:
   variables:
@@ -24,7 +24,7 @@ env:
 phases:
   install:
     runtime-versions:
-      ruby: 2.7
+      ruby: 3.0.3
   pre_build:
     commands:
       - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
