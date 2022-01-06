@@ -2,7 +2,7 @@
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-ruby "3.0.3"
+ruby "3.0.2"
 
 source "https://rubygems.org" do
   group :test do
