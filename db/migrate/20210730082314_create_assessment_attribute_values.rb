@@ -1,6 +1,6 @@
 class CreateAssessmentAttributeValues < ActiveRecord::Migration[6.1]
   def change
-    create_table :assessment_attribute_values, { primary_key: nil } do |t|
+    create_table :assessment_attribute_values, primary_key: nil do |t|
       t.integer :attribute_id, null: false, index: true
       t.string :assessment_id, null: false, index: true
       t.string :attribute_value, null: false, index: true
