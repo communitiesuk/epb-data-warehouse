@@ -13,13 +13,36 @@ module UseCase
     end
 
     def execute(assessment_id)
-      xml = Helper::Stopwatch.log_elapsed_time @logger, "XML for #{assessment_id} fetched" do
-        @certificate_gateway.fetch(assessment_id)
+      xml = nil
+      meta_data = nil
+
+      fetch_error = nil
+
+      Helper::Stopwatch.log_elapsed_time @logger, "combined API fetches for #{assessment_id}" do
+        Async annotation: "API fetches" do |task|
+          task.async annotation: "fetch XML" do
+            xml = Helper::Stopwatch.log_elapsed_time @logger, "XML for #{assessment_id} fetched" do
+              @certificate_gateway.fetch(assessment_id)
+            end
+          rescue StandardError => e
+            fetch_error = e
+            task.stop
+          end
+
+          task.async annotation: "fetch metadata" do
+            meta_data = Helper::Stopwatch.log_elapsed_time @logger, "metadata for #{assessment_id} fetched" do
+              @certificate_gateway.fetch_meta_data(assessment_id)
+            end
+          rescue StandardError => e
+            fetch_error = e
+            task.stop
+          end
+        end
       end
 
-      meta_data = Helper::Stopwatch.log_elapsed_time @logger, "metadata for #{assessment_id} fetched" do
-        @certificate_gateway.fetch_meta_data(assessment_id)
-      end
+      raise fetch_error if fetch_error
+
+      raise StandardError if xml.nil? || meta_data.nil?
 
       raise UnimportableAssessment if should_exclude?(meta_data: meta_data)
 

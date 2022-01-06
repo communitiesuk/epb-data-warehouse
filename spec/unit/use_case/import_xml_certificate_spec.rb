@@ -163,6 +163,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
   context "when the certificate gateway is not functioning to return items" do
     before do
       allow(certificate_gateway).to receive(:fetch).and_raise(StandardError)
+      allow(certificate_gateway).to receive(:fetch_meta_data)
       use_case.execute(assessment_id)
     end
 
@@ -171,7 +172,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
     end
 
     it "logs out an error" do
-      expect(logger).to have_received(:error)
+      expect(logger).to have_received(:error).at_least(:once)
     end
 
     it "does not clear the assessment from the recovery list" do

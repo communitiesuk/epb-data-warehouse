@@ -17,6 +17,7 @@ source "https://rubygems.org" do
 
   gem "activerecord", "~> 6.1", ">= 6.1.4"
   gem "activesupport", "~> 6.1", ">= 6.1.4"
+  gem "async", "~> 1.30", ">= 1.30.1"
   gem "concurrent-ruby", "~> 1.1", ">= 1.1.9"
   gem "epb-auth-tools", "~> 1.0", ">= 1.0.8"
   gem "epb_view_models", "~> 1.0", ">= 1.0.14"

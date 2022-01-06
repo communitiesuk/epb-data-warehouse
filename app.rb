@@ -1,6 +1,7 @@
 require "active_record"
 require "active_support"
 require "active_support/core_ext/uri"
+require "async"
 require "redis"
 require "zeitwerk"
 require "concurrent"
