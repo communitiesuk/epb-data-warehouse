@@ -35,7 +35,7 @@ class QueueWorker
       set_postgres_connection
       pull_queues
 
-      sleep 5
+      sleep 1
     end
   rescue Interrupt
     shutdown
