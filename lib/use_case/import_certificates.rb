@@ -19,6 +19,8 @@ module UseCase
         register_to_recovery_list assessment_ids
       end
 
+      return if assessment_ids.empty?
+
       Helper::Stopwatch.log_elapsed_time @logger, "Batch of size #{assessment_ids.length} imported" do
         assessment_ids.each do |assessment_id|
           Helper::Stopwatch.log_elapsed_time @logger, "Assessment #{assessment_id} imported" do
