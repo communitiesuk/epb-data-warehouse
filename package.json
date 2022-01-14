@@ -1,0 +1,32 @@
+{
+  "name": "epb-data-warehouse-utils",
+  "version": "1.0.0",
+  "description": "Some node.js utilities for tasks useful to the data warehouse app",
+  "directories": {
+    "lib": "lib"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "populate_onsud": "npm i && node lib/tasks/populate_onsud.js",
+    "fmt": "npx standard --fix lib/tasks"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/communitiesuk/epb-data-warehouse.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/communitiesuk/epb-data-warehouse/issues"
+  },
+  "homepage": "https://github.com/communitiesuk/epb-data-warehouse#readme",
+  "dependencies": {
+    "csv-stream": "^0.2.0",
+    "fast-xml-parser": "^4.0.1",
+    "node-fetch": "^3.2.0",
+    "pg": "^8.7.1",
+    "pg-promise": "^10.11.1",
+    "request": "^2.88.2",
+    "unzipper": "^0.10.11"
+  }
+}
