@@ -40,6 +40,8 @@ module UseCase
         end
       end
 
+      raise UnimportableAssessment if fetch_error.is_a?(Errors::AssessmentGone)
+
       raise fetch_error if fetch_error
 
       raise StandardError if xml.nil? || meta_data.nil?
