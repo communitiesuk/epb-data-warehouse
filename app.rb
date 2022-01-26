@@ -1,6 +1,6 @@
-require "active_record"
 require "active_support"
-require "active_support/core_ext/uri"
+require "active_support/core_ext"
+require "active_record"
 require "async"
 require "redis"
 require "zeitwerk"

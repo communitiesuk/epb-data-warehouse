@@ -15,8 +15,8 @@ source "https://rubygems.org" do
     gem "webmock", "~> 3.14"
   end
 
-  gem "activerecord", "~> 6.1", ">= 6.1.4"
-  gem "activesupport", "~> 6.1", ">= 6.1.4"
+  gem "activerecord", "~> 7.0"
+  gem "activesupport", "~> 7.0"
   gem "async", "~> 1.30", ">= 1.30.1"
   gem "concurrent-ruby", "~> 1.1", ">= 1.1.9"
   gem "epb-auth-tools", "~> 1.0", ">= 1.0.8"

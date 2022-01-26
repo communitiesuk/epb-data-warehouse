@@ -2,9 +2,9 @@
 
 require "epb_view_models"
 require "epb-auth-tools"
-require "active_record"
 require "active_support"
-require "active_support/core_ext/uri"
+require "active_support/core_ext"
+require "active_record"
 require "async"
 require "database_cleaner/active_record"
 require "rake"
