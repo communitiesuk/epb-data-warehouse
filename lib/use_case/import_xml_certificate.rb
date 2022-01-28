@@ -44,7 +44,7 @@ module UseCase
 
       raise fetch_error if fetch_error
 
-      raise StandardError if xml.nil? || meta_data.nil?
+      raise StandardError, "No XML or meta data" if xml.nil? || meta_data.nil?
 
       raise UnimportableAssessment if should_exclude?(meta_data: meta_data)
 
