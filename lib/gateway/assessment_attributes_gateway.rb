@@ -62,8 +62,7 @@ module Gateway
         cast_value = CastValue.new value.value
         carry + [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.fast_generate(cast_value.json) : nil]
       end
-      sql = ActiveRecord::Base.send(
-        :sanitize_sql_array,
+      sql = ActiveRecord::Base.sanitize_sql_array(
         ["INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json) VALUES #{['(?,?,?,?,?,?)'] * attribute_values.length * ','}"] + values,
       )
       ActiveRecord::Base.connection.exec_query(sql)
@@ -73,7 +72,7 @@ module Gateway
 
     def fetch_attribute_by_assessment(assessment_id:, attribute:)
       sql = <<-SQL
-           SELECT aav.attribute_value
+           SELECT aav.attribute_valuerake#{' '}
             FROM assessment_attribute_values aav
             JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id
             AND aa.attribute_name = $1 AND aav.assessment_id = $2
