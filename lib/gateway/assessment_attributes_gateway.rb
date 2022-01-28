@@ -72,7 +72,7 @@ module Gateway
 
     def fetch_attribute_by_assessment(assessment_id:, attribute:)
       sql = <<-SQL
-           SELECT aav.attribute_valuerake#{' '}
+           SELECT aav.attribute_value#{' '}
             FROM assessment_attribute_values aav
             JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id
             AND aa.attribute_name = $1 AND aav.assessment_id = $2
