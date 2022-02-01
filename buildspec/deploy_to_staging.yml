@@ -25,6 +25,7 @@ phases:
   install:
     runtime-versions:
       ruby: 3.0
+      nodejs: 14
   pre_build:
     commands:
       - echo ">>>>>>>> DEPLOY TO STAGING ENV"
