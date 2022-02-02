@@ -135,4 +135,16 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
       expect(document.key?("language_code")).to be false
     end
   end
+
+  context "when adding a record and then deleting it" do
+    before do
+      gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
+      gateway.delete_assessment(assessment_id: assessment_id)
+    end
+
+    it "deletes the whole assessment" do
+      response = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_documents WHERE assessment_id='#{assessment_id}'")
+      expect(response.count).to eq 0
+    end
+  end
 end

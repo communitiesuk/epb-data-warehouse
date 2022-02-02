@@ -12,13 +12,13 @@ describe UseCase::CancelCertificates do
 
   let(:eav_database_gateway) do
     eav_database_gateway = instance_double(Gateway::AssessmentAttributesGateway)
-    allow(eav_database_gateway).to receive(:add_attribute_value)
+    allow(eav_database_gateway).to receive(:delete_attributes_by_assessment)
     eav_database_gateway
   end
 
   let(:documents_gateway) do
     documents_gateway = instance_double(Gateway::DocumentsGateway)
-    allow(documents_gateway).to receive(:set_top_level_attribute)
+    allow(documents_gateway).to receive(:delete_assessment)
     documents_gateway
   end
 
@@ -48,7 +48,7 @@ describe UseCase::CancelCertificates do
 
   context "when the queues gateway is functioning correctly" do
     before do
-      allow(eav_database_gateway).to receive(:add_attribute_value).and_return(true)
+      allow(eav_database_gateway).to receive(:delete_attributes_by_assessment).and_return(true)
       allow(queues_gateway).to receive(:consume_queue).and_return(%w[1235-0000-0000-0000-0000 0000-9999-0000-0000-0001 0000-0000-0000-0000-0002])
     end
 
@@ -59,17 +59,12 @@ describe UseCase::CancelCertificates do
 
       it "saves the relevant certificates to database" do
         expect { use_case.execute }.not_to raise_error
-        expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(3).times
+        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(3).times
       end
 
       it "passes the relevant certificates to the documents gateway" do
         use_case.execute
-        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
-      end
-
-      it "passes the cancelled_at value in expected datetime format (converted from ISO-8601)" do
-        use_case.execute
-        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times.with(include(new_value: "2021-08-13 08:12:51"))
+        expect(documents_gateway).to have_received(:delete_assessment).exactly(3).times
       end
 
       it "clears the assessments from the recovery list" do
@@ -87,7 +82,7 @@ describe UseCase::CancelCertificates do
       end
 
       it "skips over the certificate whose cancellation date is null" do
-        expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(2).times
+        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(2).times
       end
 
       it "clears all the assessments from the recovery list regardless of cancelled_at date" do
@@ -104,7 +99,7 @@ describe UseCase::CancelCertificates do
       end
 
       it "skips over the certificate whose cancellation date is null" do
-        expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(1).times
+        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(1).times
       end
 
       it "clears all the assessments from the recovery list regardless of type of assessment" do
@@ -125,11 +120,11 @@ describe UseCase::CancelCertificates do
       end
 
       it "sends the updates for the other two certificates to the EAV store" do
-        expect(eav_database_gateway).to have_received(:add_attribute_value).exactly(2).times
+        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(2).times
       end
 
       it "sends the updates for the other two certificates to the document store" do
-        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(2).times
+        expect(documents_gateway).to have_received(:delete_assessment).exactly(2).times
       end
 
       it "clears the other two certificates/ assessments from the recovery list" do
@@ -166,7 +161,7 @@ describe UseCase::CancelCertificates do
     end
 
     it "sends updates for all three certificates from the recovery list" do
-      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+      expect(documents_gateway).to have_received(:delete_assessment).exactly(3).times
     end
 
     it "does not register the assessments onto the recovery list" do

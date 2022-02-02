@@ -78,5 +78,22 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(sql, "SET_ATTR_SQL", bindings)
     end
+
+    def delete_assessment(assessment_id:)
+      sql = <<-SQL
+              DELETE FROM assessment_documents
+              WHERE assessment_id=$1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
   end
 end
