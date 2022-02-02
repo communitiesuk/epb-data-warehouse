@@ -16,7 +16,7 @@ applications:
     command: make run
     memory: $MEMORY
     buildpacks:
-      - node_buildpack
+      - nodejs_buildpack
       - ruby_buildpack
     no-route: true
     health-check-type: process
