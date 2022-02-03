@@ -9,6 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "populate_onsud": "npm i && node lib/tasks/populate_onsud.js",
+    "list_onsud_versions": "npm i && node lib/tasks/list_onsud_versions.js",
     "fmt": "npx standard --fix lib/tasks"
   },
   "repository": {
