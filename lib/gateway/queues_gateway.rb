@@ -15,8 +15,8 @@ module Gateway
       validate_queue_name(queue_name)
 
       futures = []
-      redis.pipelined do
-        count.to_i.times { futures << redis.rpop(queue_name.to_s) }
+      redis.pipelined do |pipeline|
+        count.to_i.times { futures << pipeline.rpop(queue_name.to_s) }
       end
       futures.map(&:value).compact
     end
