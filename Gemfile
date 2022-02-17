@@ -28,6 +28,6 @@ source "https://rubygems.org" do
   gem "redis", "~> 4.4"
   gem "rexml", "~> 3.2", ">= 3.2.4"
   gem "sentry-ruby", "~> 4.8.1"
-  gem "unleash", "~> 3.2.4"
+  gem "unleash", "~> 4.1.0"
   gem "zeitwerk", "~> 2.4", ">= 2.4.2"
 end
