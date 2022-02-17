@@ -19,7 +19,7 @@ source "https://rubygems.org" do
   gem "activesupport", "~> 7.0"
   gem "async", "~> 1.30", ">= 1.30.1"
   gem "concurrent-ruby", "~> 1.1", ">= 1.1.9"
-  gem "epb-auth-tools", "~> 1.0", ">= 1.0.8"
+  gem "epb-auth-tools", "~> 1.0"
   gem "epb_view_models", "~> 1.0", ">= 1.0.14"
   gem "nokogiri", "~> 1.12", ">= 1.12.5"
   gem "parallel", "~> 1.21"

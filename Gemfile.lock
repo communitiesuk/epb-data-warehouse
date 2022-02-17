@@ -31,13 +31,13 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     diff-lcs (1.5.0)
-    epb-auth-tools (1.0.8)
-      jwt (~> 2.2)
+    epb-auth-tools (1.0.9)
+      jwt (~> 2.3)
       oauth2 (~> 1.4)
     epb_view_models (1.0.14)
       nokogiri (~> 1.11)
       zeitwerk (~> 2.4.2)
-    faraday (1.9.3)
+    faraday (1.10.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -169,7 +169,7 @@ DEPENDENCIES
   async (~> 1.30, >= 1.30.1)!
   concurrent-ruby (~> 1.1, >= 1.1.9)!
   database_cleaner-active_record (~> 2.0, >= 2.0.1)!
-  epb-auth-tools (~> 1.0, >= 1.0.8)!
+  epb-auth-tools (~> 1.0)!
   epb_view_models (~> 1.0, >= 1.0.14)!
   mock_redis (~> 0.30.0)!
   nokogiri (~> 1.12, >= 1.12.5)!
