@@ -138,13 +138,11 @@ GEM
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sentry-ruby (4.8.3)
+    sentry-ruby (5.1.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      faraday (~> 1.0)
-      sentry-ruby-core (= 4.8.3)
-    sentry-ruby-core (4.8.3)
+      sentry-ruby-core (= 5.1.0)
+    sentry-ruby-core (5.1.0)
       concurrent-ruby
-      faraday
     timecop (0.9.4)
     timers (4.3.3)
     tzinfo (2.0.4)
@@ -165,7 +163,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 7.0)!
-  activesupport (= 7.0.2.2)!
+  activesupport (~> 7.0)!
   async (~> 1.30, >= 1.30.1)!
   concurrent-ruby (~> 1.1, >= 1.1.9)!
   database_cleaner-active_record (~> 2.0, >= 2.0.1)!
@@ -181,7 +179,7 @@ DEPENDENCIES
   rspec (~> 3.10)!
   rubocop-govuk (~> 4.0)!
   rubocop-performance (~> 1.11, >= 1.11.4)!
-  sentry-ruby (~> 4.8.1)!
+  sentry-ruby (~> 5.1.0)!
   timecop (~> 0.9.4)!
   unleash (~> 4.1.0)!
   webmock (~> 3.14)!
