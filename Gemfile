@@ -7,7 +7,7 @@ ruby "3.0.3"
 source "https://rubygems.org" do
   group :test do
     gem "database_cleaner-active_record", "~> 2.0", ">= 2.0.1"
-    gem "mock_redis", "~> 0.28.0"
+    gem "mock_redis", "~> 0.30.0"
     gem "rspec", "~> 3.10"
     gem "rubocop-govuk", "~> 4.0", require: false
     gem "rubocop-performance", "~> 1.11", ">= 1.11.4", require: false
@@ -19,7 +19,7 @@ source "https://rubygems.org" do
   gem "activesupport", "~> 7.0"
   gem "async", "~> 1.30", ">= 1.30.1"
   gem "concurrent-ruby", "~> 1.1", ">= 1.1.9"
-  gem "epb-auth-tools", "~> 1.0", ">= 1.0.8"
+  gem "epb-auth-tools", "~> 1.0"
   gem "epb_view_models", "~> 1.0", ">= 1.0.14"
   gem "nokogiri", "~> 1.12", ">= 1.12.5"
   gem "parallel", "~> 1.21"
