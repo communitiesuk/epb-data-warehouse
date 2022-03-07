@@ -10,7 +10,7 @@ source "https://rubygems.org" do
     gem "mock_redis", "~> 0.30.0"
     gem "rspec", "~> 3.10"
     gem "rubocop-govuk", "~> 4.0", require: false
-    gem "rubocop-performance", "~> 1.11", ">= 1.11.4", require: false
+    gem "rubocop-performance", "~> 1.13", require: false
     gem "timecop", "~> 0.9.4"
     gem "webmock", "~> 3.14"
   end
