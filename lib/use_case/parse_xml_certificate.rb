@@ -28,7 +28,9 @@ module UseCase
     def export_configuration(schema_type)
       export_config_file = {
         "RdSAP-Schema-20.0.0" => XmlPresenter::Rdsap::Rdsap20ExportConfiguration,
+        "RdSAP-Schema-19.0" => XmlPresenter::Rdsap::Rdsap19ExportConfiguration,
         "RdSAP-Schema-NI-20.0.0" => XmlPresenter::Rdsap::Rdsap20NiExportConfiguration,
+        "RdSAP-Schema-NI-19.0" => XmlPresenter::Rdsap::Rdsap19NiExportConfiguration,
         "SAP-Schema-18.0.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-NI-18.0.0" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
         "CEPC-8.0.0" => XmlPresenter::Cepc::Cepc800ExportConfiguration,
