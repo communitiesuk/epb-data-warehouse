@@ -62,7 +62,7 @@ module UseCase
       raise UnimportableAssessment if certificate.nil?
 
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
-      certificate["created_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:createdAt])
+      certificate["created_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:createdAt]) if meta_data[:createdAt]
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_type"] = meta_data[:typeOfAssessment]
 

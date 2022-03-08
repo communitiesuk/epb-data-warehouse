@@ -140,6 +140,24 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
       end
     end
 
+    context "when the createdAt property in the metadata response is null" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: false,
+                                                                             createdAt: nil })
+        use_case.execute assessment_id
+      end
+
+      it "does not produce a data structure containing a created_at key" do
+        expect(import_certificate_data_use_case).to have_received(:execute).with(
+          assessment_id: assessment_id,
+          certificate_data: match(does_not_contain_key("created_at")),
+        )
+      end
+    end
+
     context "when the type of assessment is AC-REPORT" do
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "SAP-Schema-18.0.0",
