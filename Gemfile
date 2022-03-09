@@ -27,7 +27,7 @@ source "https://rubygems.org" do
   gem "rake", "~> 13.0", ">= 13.0.6"
   gem "redis", "~> 4.4"
   gem "rexml", "~> 3.2", ">= 3.2.4"
-  gem "sentry-ruby", "~> 5.1.1"
+  gem "sentry-ruby", "~> 5.2.0"
   gem "unleash", "~> 4.1.0"
   gem "zeitwerk", "~> 2.4", ">= 2.4.2"
 end
