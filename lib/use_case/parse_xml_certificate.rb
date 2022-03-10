@@ -34,7 +34,8 @@ module UseCase
         "SAP-Schema-18.0.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-17.1" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-NI-18.0.0" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
-        "SAP-Schema-NI-17.4" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
+        "SAP-Schema-NI-17.4" => XmlPresenter::Sap::Sap174NiExportConfiguration,
+        "SAP-Schema-NI-17.3" => XmlPresenter::Sap::Sap173NiExportConfiguration,
         "CEPC-8.0.0" => XmlPresenter::Cepc::Cepc800ExportConfiguration,
         "CEPC-NI-8.0.0" => XmlPresenter::Cepc::Cepc800NiExportConfiguration,
       }
