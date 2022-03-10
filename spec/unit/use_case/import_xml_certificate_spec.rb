@@ -21,6 +21,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
     gateway = instance_double(Gateway::RecoveryListGateway)
     allow(gateway).to receive(:clear_assessment)
     allow(gateway).to receive(:register_attempt)
+    allow(gateway).to receive(:retries_left).and_return(1)
     gateway
   end
 
