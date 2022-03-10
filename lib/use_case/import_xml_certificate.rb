@@ -77,7 +77,7 @@ module UseCase
     rescue UnimportableAssessment
       clear_from_recovery_list assessment_id
     rescue StandardError => e
-      report_to_sentry e
+      report_to_sentry(e) if is_on_last_attempt(assessment_id)
       @logger.error "Error of type #{e.class} when importing RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
       register_attempt_to_recovery_list assessment_id
     end
@@ -90,6 +90,10 @@ module UseCase
 
     def register_attempt_to_recovery_list(assessment_id)
       @recovery_list_gateway.register_attempt(assessment_id: assessment_id, queue: :assessments)
+    end
+
+    def is_on_last_attempt(assessment_id)
+      @recovery_list_gateway.retries_left(assessment_id: assessment_id, queue: :assessments) >= 1
     end
   end
 end
