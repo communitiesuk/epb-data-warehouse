@@ -1,0 +1,2608 @@
+<Reports xmlns="DCLG-CEPC">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-7777</RRN>
+      <Issue-Date>2017-10-01</Issue-Date>
+      <Report-Type>6</Report-Type>
+      <Valid-Until>2022-07-12</Valid-Until>
+      <Related-RRN>0000-0000-0000-0000-6666</Related-RRN>
+      <Inspection-Date>2017-07-13</Inspection-Date>
+      <Registration-Date>2017-07-13</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Building-Complexity>Level 3</Building-Complexity>
+      <Energy-Assessor>
+        <Certificate-Number>EMP/000044</Certificate-Number>
+        <Name>A Sessor</Name>
+        <Accreditation-Scheme-Name>Energy Scheme</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>www.energy.co.uk</Accreditation-Scheme-Website>
+        <Trading-Address>36 Address Lane, Town A1 1AA</Trading-Address>
+        <Company-Name>EPCs and DECs 4 U</Company-Name>
+        <Qualifications>SP3</Qualifications>
+        <Qualifications>CC4</Qualifications>
+        <E-Mail>a.sessor@gmail.co.uk</E-Mail>
+        <Telephone-Number>01700000000</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>000000000000</UPRN>
+        <Property-Address>
+          <Address-Line-1/>
+          <Address-Line-2>Place County Council</Address-Line-2>
+          <Address-Line-3>Place Fire Station</Address-Line-3>
+          <Address-Line-4>Location Avenue</Address-Line-4>
+          <Post-Town>Town</Post-Town>
+          <Postcode>A1 1AA</Postcode>
+        </Property-Address>
+        <Property-Type/>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Sterling Accreditation, Sterling e-Volve, v1.2</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Insurance-Details>
+      <Insurer>Insurer</Insurer>
+      <Policy-No>Policy 2</Policy-No>
+      <Effective-Date>2015-07-01</Effective-Date>
+      <Expiry-Date>2016-06-30</Expiry-Date>
+      <PI-Limit>5000000</PI-Limit>
+    </Insurance-Details>
+    <Air-Conditioning-Inspection-Certificate>
+      <Equipment-Owner>
+        <Equipment-Owner-Name>Own Er</Equipment-Owner-Name>
+        <Telephone-Number>0100000000</Telephone-Number>
+        <Organisation-Name>Place County Council</Organisation-Name>
+        <Registered-Address>
+          <Address-Line-1>Place County Council</Address-Line-1>
+          <Address-Line-2>County Offices</Address-Line-2>
+          <Address-Line-3>Location</Address-Line-3>
+          <Address-Line-4/>
+          <Post-Town>Town</Post-Town>
+          <Postcode>A1 1AA</Postcode>
+        </Registered-Address>
+      </Equipment-Owner>
+      <Equipment-Operator>
+        <Responsible-Person>Own Er</Responsible-Person>
+        <Telephone-Number>0100000000</Telephone-Number>
+        <Organisation-Name>Place County Council</Organisation-Name>
+        <Registered-Address>
+          <Address-Line-1>Place County Council</Address-Line-1>
+          <Address-Line-2>County Offices</Address-Line-2>
+          <Address-Line-3>Location</Address-Line-3>
+          <Address-Line-4/>
+          <Post-Town>Town</Post-Town>
+          <Postcode>A1 1AA</Postcode>
+        </Registered-Address>
+      </Equipment-Operator>
+      <Building-Name>Place Fire Brigade HQ Fire Station</Building-Name>
+      <F-Gas-Compliant-Date>11/12/2015</F-Gas-Compliant-Date>
+      <AC-Rated-Output>
+        <AC-kW-Rating>140</AC-kW-Rating>
+      </AC-Rated-Output>
+      <Random-Sampling-Flag>Y</Random-Sampling-Flag>
+      <Treated-Floor-Area>3771</Treated-Floor-Area>
+      <AC-System-Metered-Flag>1</AC-System-Metered-Flag>
+      <Refrigerant-Charge-Total>145</Refrigerant-Charge-Total>
+      <AC-Sub-Systems>
+        <AC-Sub-System>
+          <Sub-System-Number>VOL001/SYS001</Sub-System-Number>
+          <Sub-System-Description>Multi split VRF System</Sub-System-Description>
+          <Refrigerant-Type>R22</Refrigerant-Type>
+          <Sub-System-Age>1998</Sub-System-Age>
+        </AC-Sub-System>
+        <AC-Sub-System>
+          <Sub-System-Number>VOL001/SYS002 Unit 18</Sub-System-Number>
+          <Sub-System-Description>Split System</Sub-System-Description>
+          <Refrigerant-Type>R22</Refrigerant-Type>
+          <Sub-System-Age>1997</Sub-System-Age>
+        </AC-Sub-System>
+        <AC-Sub-System>
+          <Sub-System-Number>VOL001/SYS003 Unit 16</Sub-System-Number>
+          <Sub-System-Description>Split System</Sub-System-Description>
+          <Refrigerant-Type>R22</Refrigerant-Type>
+          <Sub-System-Age>1998</Sub-System-Age>
+        </AC-Sub-System>
+      </AC-Sub-Systems>
+    </Air-Conditioning-Inspection-Certificate>
+  </Report>
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-6666</RRN>
+      <Issue-Date>2017-10-01</Issue-Date>
+      <Report-Type>5</Report-Type>
+      <Valid-Until>2022-07-12</Valid-Until>
+      <Related-RRN>0000-0000-0000-0000-7777</Related-RRN>
+      <Inspection-Date>2017-07-13</Inspection-Date>
+      <Registration-Date>2017-07-13</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Building-Complexity>Level 3</Building-Complexity>
+      <Energy-Assessor>
+        <Certificate-Number>EMP/000044</Certificate-Number>
+        <Name>A Sessor</Name>
+        <Accreditation-Scheme-Name>Energy Scheme</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>www.energy.co.uk</Accreditation-Scheme-Website>
+        <Trading-Address>36 Address Lane, Town A1 1AA</Trading-Address>
+        <Company-Name>EPCs and DECs 4 U</Company-Name>
+        <Qualifications>SP3</Qualifications>
+        <Qualifications>CC4</Qualifications>
+        <E-Mail>a.sessor@gmail.co.uk</E-Mail>
+        <Telephone-Number>01000000000</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>000000000000</UPRN>
+        <Property-Address>
+          <Address-Line-1/>
+          <Address-Line-2>Place County Council</Address-Line-2>
+          <Address-Line-3>Place Fire Station</Address-Line-3>
+          <Address-Line-4>Location Avenue</Address-Line-4>
+          <Post-Town>Town</Post-Town>
+          <Postcode>A1 1AA</Postcode>
+        </Property-Address>
+        <Property-Type/>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Sterling Accreditation, Sterling e-Volve, v1.2</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Insurance-Details>
+      <Insurer>Insurer</Insurer>
+      <Policy-No>Policy 2</Policy-No>
+      <Effective-Date>2015-07-01</Effective-Date>
+      <Expiry-Date>2016-06-30</Expiry-Date>
+      <PI-Limit>5000000</PI-Limit>
+    </Insurance-Details>
+    <Air-Conditioning-Inspection-Report>
+      <ACI-Related-Party-Disclosure>1</ACI-Related-Party-Disclosure>
+      <Executive-Summary>Executive Summary
+        Novus Compliance Services were commissioned to carry out a TM44 Air Conditioning Inspection in accordance with Part 4 of the Energy Performance of Buildings.  We would like to take this opportunity to thank members of staff who support the inspection on site during this survey.
+        On the 4th January 2003 the European Parliament and the Council of the European Union published Directive 2002/91/EC on the Energy Performance of Buildings (EPBD). This requires member states to bring into force the necessary laws, regulations and administration provisions to comply with the Directive. Article 9 requires member states to introduce measures to establish regular inspections of Air Conditioning systems.
+        In England and Wales the Energy Performance of Buildings (Certificates and Inspections) (England and Wales) Regulations 2007 implemented Articles 7-9 of the Directive.  They require inspections of all air conditioning systems with rated outputs over 12kW at intervals not greater than 5 years.  To minimise the impact of the introduction of this regulation, the first such inspections applied to systems with a capacity of over 250kW and needed to be completed by 4th January 2009.  The remaining systems over 12kW must have had the first inspection completed by 4th January 2011.  New systems brought into use after January 2008 will not require inspection until they have been in use for a maximum of 5 years.
+        These inspections may only be completed by an accredited Air Conditioning Systems Energy Assessor (ACSEA).
+        The EPBD Regulations define an "air conditioning system" as a combination of all components required to provide a form of air treatment in which the temperature is controlled or can be lowered and includes systems, which combine such air treatment with the control of ventilation, humidity and air cleanliness.
+        The rated cooling output of an air conditioning system could exceed 12kW where a number of individual units of less than 12kW rated cooling load output are installed to provide distributed cooling within the building under the operator's demise irrespective whether or not individual units are linked to a common control system.  Low capacity packaged units such as "through the wall" units may therefore need to be assessed where the total cooling capacity in the building exceeds 12kW.
+        The assessor / consultant shall not be liable for any use of this report and the contents within, beyond the purpose for which the report was originally prepared.
+        Air conditioning systems in buildings can account for as much as a third of the total energy costs, older poorly maintained or oversized air conditioning systems can dramatically increase those costs, in fact energy consumption can increase by as much as 60% as a result of poorly maintained and dirty components with obvious effects on business bottom line and its carbon footprint. Therefore regular maintenance coupled with independent inspections can help make a real difference to the efficiency of air conditioning systems as well as producing tangible business benefits.
+        Scope of the Inspection required by the EPBD Regulations:
+        Novus Compliance  Ltd have been contracted to carry out the Air Conditioning Inspection (Level 3) to comply with the EU Energy Performance of Building Directive for the comfort cooling systems located within the Lincoln County Council Fire Brigade Headquarters.
+        The primary aim of the inspection is to give building owners and operators information about the performance of their buildings and plant, and to identify opportunities to save energy and cut operating costs.
+        Included within this report will be a description of the air conditioning services at this site, system efficiencies and approximate sizing of the system compared to industry guidelines and suggested improvements, which could be made to increase efficiency.
+        The inspection and report were undertaken in accordance with CIBSE's methodology, Inspections of Air Conditioning Systems TM44: 2007 by an inspector accredited to the National Occupational Standard and accredited by CIBSE Certification.
+        The inspection is as far as possible is carried out by making visual observations of representative sample of the air conditioning equipment and other visual indicators such as refrigerant sight glasses, pressure, temperature or filter gauges, although where these are not available the inspector may have taken some test readings.  The inspection also includes an examination of records of design construction and maintenance where made available
+        Whilst some items with regard to Health and Safety may have been noted, this should not be taken as a complete report on Health and Safety.  Similarly, whilst some items may refer to replacement of life expired plants, this should not be taken as a complete life cycle replacement report.  For the purpose of the report, samples have been taken in accordance with CIBSE TM44 guidelines.  Samples taken from each area demonstrate the age, condition and method of control.  The Report is based on a visual inspection only.  No equipment or plant was removed or stripped down.
+        In some cases the cost of providing both heating and cooling may be reduced, where it may have been identified that the two systems are unnecessarily in use at the same time due to inappropriate controls or settings.
+        It is extremely difficult to assess actual financial benefit for the client and the inspector has not set out to do so. One of the main purposes of the inspection is to encourage the client to start to operate a management process of self determination in energy saving, based on the ideas laid out in the report.
+        Health and Safety:
+        Inspectors have a duty to comply with relevant health and safety legislation. This includes the duty to draw the building owner or managers attention to obvious instances of inadequate maintenance or neglect, where these might have implications for the health and safety of building occupants or
+        members of the public.
+        The Building:
+        Grid Reference: SK 97604 69876
+        The Lincoln Fire brigade Headquarters in South Park Avenue The service employs approximately 900 firefighters and staff, with around 250 full-time firefighters. The county's 38 fire stations are allocated to one of three Divisions (East, West and South). The majority of Lincolnshire is covered by retained duty staff (RDS), who attend on a call-out basis. The retained staff are supported by full-time firefighters (wholetime) based at 9 different stations around the county. The building is constricted of sand coloured bricks and blockwork with concrete and steel construction with a minimum amount of glazed panels as a strong hold bunker type design.
+        Lighting installed throughout these buildings is a fluorescent modular type of lighting, locally and manually controlled.
+        Occupancy profile:
+        The occupancy profile has a bearing on the loading for the air conditioned spaces due to heat emitted by the occupants, the standard occupancy profile is rated at 1 person per 10m2 which is considered to be a standard occupancy level for heat loading, reducing the area per person will significantly increase the loading on the cooling system.
+        Cooling load to cooling capacity comparison summary:
+        A sizing assessment will help to inform the owner about the cost saving and energy saving opportunities that may be available by replacing system components by those of lower cooling capacity systems .It may indicate that there is a specific and localised load, for example a server room, that requires special cooling measures.
+        The cooling capacity  of  the  air  conditioning  systems  inspected  in relation to the area  served based on the usage of the room served and  is calculated on a room by room basis with examples given of industry benchmarks for occupied areas for comfort cooling and process cooling systems within this report.
+        Sampling:
+        Sampling of the comfort cooling systems was carried out in accordance with TM44 (2.1.5.2) guidelines.  The primary purpose of the air conditioning inspection is to assess the relative energy efficiency of the installation, and to identify where there may be scope for energy savings.  For larger installations it is not cost effective to inspect every component and so in these cases it may be appropriate to inspect a sample number of components of certain types.
+        Air Conditioning System comprises:
+        2 Toshiba Single Split type systems
+        2 Toshiba VRF Multi Split type systems
+        8 Fujitsu Single Split type systems
+        4 Daikin Single Split type systems
+        Sampled systems:
+        1 Toshiba VRF Multi Split type systems
+        1 Fujitsu Single Split type systems
+        1 Daikin Single Split type systems
+        Cooling Equipment inspected:
+        The air conditioning plant is installed to an adequate standard with the installed equipment utilised being engineered to a high standard. The maintenance practice of which records were viewed during this inspection however, and was found to be carried to industry standards.
+        The older generation split type systems installed within the building are a single split direct expansion system, which are a lower  energy efficient type of cooling system utilising a fixed speed compressor drive system which consume full power during operation,which is unlike modern energy efficient system which will monitor the cooling demand and digitally drive the compressor motor speed to meet the cooling providing an minimum of cooling capacity to the served area and at the same time minimising the power consumed.
+        The air cooled outdoor units are mounted around the perimeter of the building which are interconnected to the indoor wall or ceiling terminal unit with a signalling cable and thermally insulated refrigerant graded copper tubing, which are controlled via a digital remote controller device within the store or remotely off site .
+        The indoor terminal units maintain the comfort levels within the occupied spaces by re-circulating the room air allowing it to pass through a finned heat exchanger which, can be in heating or cooling mode depending on what the temperature set point is set for and, the room conditions at any one time.
+        The comfort conditions are maintained via  the single split direct expansion air conditioning system which are equipped to provide heating or cooling to the occupied spaces, depending on the room conditions and temperature set points.
+        The air conditioning systems are controlled locally via the fixed wall mounted or portable digital remote controller which are operated via the end users.
+        R22 Refrigerant utilised:
+        Chlorodifluoromethane or difluoromonochloromethane is a hydrochlorofluorocarbon (HCFC). This colorless gas is better known as HCFC-22, or R-22. It is commonly used as a propellant and refrigerant. These applications are being phased out in developed countries due to the compound's ozone depletion potential (ODP) and high global warming potential (GWP), although global use of R-22 continues to increase because of high demand in developing countries.
+        The R22 Refrigerant was phased out in January 2010 in the UK due to its high ozone depleting properties.
+        The Refrigeration Cycle:
+        The cooling cycle for the systems installed :- refrigerant vapour which is produced by the boiling action in the cooler (evaporator) flows to the compressors where its pressure and temperature increases and is discharged into the condenser.  Ambient air via the condenser fans is drawn in and passed across the condenser where it absorbs heat from the refrigerant vapour causing it to condense.  The cycle then begins again.
+        The installed direct expansion cooling systems are based on the vapour compression displacement cycle using a dry air cooled condenser which is less efficient than an evaporative type of cooling method for the condenser water which will operate at a lower condensing temperature in comparison that an air cooled condenser system as the dry air cooled condenser will operate the system temperature higher and, therefore reduce the efficiency and increase running costs in comparison to a water cooled system.
+        The typical and good practice performance indicators for conventional systems are detailed below for energy efficient benchmark for a prestigious air conditioned building:
+        Source of data: CIBSE Energy Efficiency Guide F -                  Good practice                     Typical
+        Installed capacity -                                                                  100 (W-m2)                       135
+        Split type system  Average Coefficient of Performance -            3.0 plus                          2.5
+        Running Hours (h/yr) -                                                                  2500                            3000
+        Energy Use indicator (kW-h)-m2)/yr -                                            21                                 41
+        It is not uncommon to find large refrigeration/air conditioning systems operating inefficiently while meeting small cooling loads. This often involves multiple compressors all operating at part load and the associated auxiliaries operating at full load. Effective sequence control can achieve significant savings in multiple cooling plant installations by minimising excessive part load operation of compressors.
+        For example operating two chillers at three quarter load can be more efficient than running one at full load and one at half load, the loading characteristic of the chiller should be used to determine the most efficient combination of chillers and chiller stages. It would be beneficial to be aware that the screw compressors utilised for the water chillers installed consume a significant proportion of full power when operating at part load.
+        Specific Fan Power: Not applicable to this inspection
+        As part of the scope of this report the Specific Fan Power (SFP) is calculated which is the calculation of electrical power consumed to deliver a specific amount of air (a litre of air) by the installed fan motors and fans utilising the total air volume from the commissioning data and compare results by the Non Domestic Communities and Local Government (DCLG) Guide for existing buildings with a heating and cooling heat exchanger are benchmarked at 2.2 W/l/s for this type of air handling unit system. The majority of the air handling units installed on site are consuming less than 2 Watts per litre of air per second, this is within the recommended SFP and is therefore acceptable for energy efficiency.
+        Specific Fan Power is not applicable to this system installed as mechanical ventilation plant is not installed within the buildings open able windows only.
+        Terminal Units:
+        The  ceiling mounted terminal direct expansion fan coil units delivering a direct discharged conditioned air to the occupied  space. The terminal units are a local cooling device which are installed across the estate predominantly within the designated areas. These units  were  found  to  be  in an adequate condition with no obstructions to the airflows.
+        Control System:
+        The air conditioning control systems viewed were found to be a local source of digital remote control with a comprehensive timer schedule programme availability installed within the thermal space for appropriate control method foe efficient operation.
+        Sub-Metering:
+        If the   BMS provides  some  sub-metering  of  major  HVAC  plant  It  is  essential  to  identify  where potential savings can be made with recorded results taken. The aim for buildings as a whole is to enable building occupiers to assign at least 90% of the estimated annual energy consumption of fuel  to  the  various  end-use  categories  (heating,  cooling,  lighting  etc.)  Sub-metering  should  be implemented  across  all  new  HVAC  installations  in  the  future  as  standard. It  will  be  difficult  to measure  any  impact  on  carbon  dioxide  emissions  if  accurate  readings  cannot  be  monitored, recorded and compared.  The key benefit of sub metering and monitoring is that businesses are made instantly  aware  of  what?s  happening  on  site.  i.e.  the  true  amount  and  value  of  energy consumption, as well as building or equipment performance, providing a facility to remotely keep track of assets at any time of the day.
+        There is a direct relationship between energy consumption and  equipment  operating  efficiency  and  this  will  enable  management  to  closely  monitor energy consumption on a regular basis.
+        Monitoring the energy consumed within the school can be compared to Energy Benchmarks based on CIBSE TM46 for Electrical and Gas energy consumption and carbon emissions for each store as an  indication for  the efficiency of the building.
+        Documentation:
+        The F-gas register and service records were made available during the inspection and the required service accreditation and preventative planned maintenance planner
+        This  information can  help  determine  the efficient  management  and  operation  of  the  HVAC  systems  installed  in  this  building and,  it  is suggested that every effort is given to locating and utilizing this information to ensure the systems are  fully  optimized  and  working  most  efficiently.  This  information  is  identified in  the  ?Record Checklist Pre Inspection Information? section as detailed below and located in the main body of the DCLG output document that accompanies this report.
+        Design floor plan documents were available as the air conditioning units are an additional system installed to meet a later than construction need.
+        Maintenance:
+        From the data gathered whilst on site for this inspection it was viewed that a specialist contractor
+        the Facilities Management company " Vinci" are carrying out the air conditioning  maintenance regime and following the site survey it is evident that the HVAC equipment on site is maintained to a satisfactory level. The engineers Safe Handling of Refrigerants Accreditation were viewed along with the  company REFCOM current Certificates.
+        Health and Safety Issues: None to report
+        Inspection Observations and Recommendations:
+        The R22 refrigerant utilised within the older generation systems has a High Global warming Potential therefore is no longer installed within the UK ,our inspection would advise to remove the ozone depleting refrigerant and install a direct replacement with lower ozone depleting properties.
+        Our inspection to minimise the electrical energy consumed by restricting the temperature range to the end users by programming the remote control devices.
+        Our inspection would advise to install timer scheduling for the systems installed to avoid the systems remaining operative during non occupied periods.
+        It would beneficial to minimise the energy consumption from programming the timer schedules in-line with the occupancy periods. Our inspection would recommend that the systems are started when ambient and internal conditions permit shutting down the plant 1 hour before closure, and start 1 hour after occupancy to minimise the operation and significantly reducing the energy consumed.
+        Our inspection viewed an F-Gas register/log on site which is a mandatory requirement and forms part of the maintenance report.
+        The temperature settings viewed were found to be set at significantly lower settings  than recommended for efficient operation at 21 and 19 Degrees C which is advised at 23 Degrees C for cooling mode and 19 Degrees C for heating mode to minimise energy wastage.
+        The air conditioning  systems appear to be in an efficient condition as the method of maintenance regime was viewed during the inspection.
+        The older generation single split systems installed are utilising a fixed speed compressor drive which are no longer available as this type of system will consume 35% more power than modern air conditioning systems which utilise a variable speed compressor drive.
+        Our inspection would advise to relocate the air temperature sensors serving the ceiling terminal units to a lower position within the occupied areas ,this will optimise the temperature control
+        method and reduce running costs and energy consumption.
+        Energy Funding:
+        There are further schemes introduced by the Government in 2001 to encourage businesses to invest in low carbon energy saving equipment.  Further information can be found on their website www.gov.uk/enhanced-capital-allowance-ecas.  This website will also give recommended Air Conditioning manufactures who qualify for the Enhanced Capital Allowance Scheme.
+        Green finance deal launched 4th April 2011 - this dedicated low carbon finance scheme is a first and enables business to invest in cost effective energy efficiency equipment, or other low carbon technologies for example, lighting and biomass heating.  This is a joint partnership between the Carbon Trust and Siemens to provide UK businesses with green equipment finance.
+        All businesses have been able to apply for the green growth finance since 4th April 2011 and further information can be found on www.carbontrust.co.uk (finance).
+      </Executive-Summary>
+      <Building-Name>Place Fire Brigade HQ Fire Station</Building-Name>
+      <ACI-Key-Recommendations>
+        <Sub-System-Efficiency-Capacity-Cooling-Loads>
+          <ACI-Recommendation>
+            <Seq-Number>1</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection did not view any metering method within the building it s advisable and falls under modern building regulations to meter energy absorbing plant for monitoring purposes to aid energy reduction on a year on year programmed to be concluded.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>2</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection would advise that it would be beneficial to increase the temperature set point as recommended for 23 Degrees C  for the air conditioning to improve efficiency and reduce the energy consumed by 10% in comparison to the viewed temperature setting at 19 Degrees C.</Text>
+          </ACI-Recommendation>
+        </Sub-System-Efficiency-Capacity-Cooling-Loads>
+        <Improvement-Options>
+          <ACI-Recommendation>
+            <Seq-Number>1</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Maintenance regime was viewed during this inspection illustrating a method of best practice regime for the systems installed . </Text>
+          </ACI-Recommendation>
+        </Improvement-Options>
+        <Alternative-Solutions>
+          <ACI-Recommendation>
+            <Seq-Number>1</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection would advise that the air temperature sensors are calibrated on an annual basis to maintain efficient operation.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>2</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>It is advisable to install a timer schedule programme to avoid the systems operating during non occupancy periods to minimise he electrical energy consumption.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>3</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>As an advisory - It would be beneficial to ensure optimum conditions are maintained by relocating the air temperature sensors to a remote position at a lower level within the area served avoiding draughts and heat sources.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>4</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>At 21 Degrees C set point viewed this will consume an additional 10% more electrical power in comparison to the recommended set of of 23 Degrees C in Cooling Mode.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>5</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection advises for a more accurate temperature control by relocating the air temperature sensor to remote position on a walled surface at a lower position avoiding draughts and heat sources as complaints were witnessed during this inspection by occupants of temperature control.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>6</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection to minimise the electrical energy consumed by restricting the temperature range to the end users  by programming the remote control devices.</Text>
+          </ACI-Recommendation>
+        </Alternative-Solutions>
+        <Other-Recommendations>
+          <ACI-Recommendation>
+            <Seq-Number>1</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>It would be advisable for locally controlled systems to maintain the recommended temperature set points as advised within the report for 23 Deg C for cooling mode and 19 deg C For heating mode.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>2</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>It would be beneficial to install guidance notices to advise end users not to open the windows whilst the air conditioning is operative.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>3</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection advises to keep a file on site for the engineers competency within the refrigerant.</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>4</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>Our inspection advises to consider installing when replacing cooling plant with a variable speed compressor drive or cooling capacity control systems which are standard on modern air conditioning equipment to minimise the energy consumption to match the cooling loads.</Text>
+          </ACI-Recommendation>
+        </Other-Recommendations>
+      </ACI-Key-Recommendations>
+      <ACI-Sub-Systems>
+        <ACI-Sub-System>
+          <Sub-System-Volume-Definitions>VOL001</Sub-System-Volume-Definitions>
+          <Sub-System-ID>VOL001/SYS001</Sub-System-ID>
+          <Sub-System-Description>Multi split VRF System</Sub-System-Description>
+          <Sub-System-Cooling-Output>28</Sub-System-Cooling-Output>
+          <Sub-System-Area-Served-Description>Various rooms</Sub-System-Area-Served-Description>
+          <Sub-System-Inspection-Date>2017-07-13</Sub-System-Inspection-Date>
+          <Sub-System-Cooling-Plant-Count>1</Sub-System-Cooling-Plant-Count>
+          <Sub-System-AHU-Count>0</Sub-System-AHU-Count>
+          <Sub-System-Terminal-Units-Count>4</Sub-System-Terminal-Units-Count>
+          <Sub-System-Controls-Count>1</Sub-System-Controls-Count>
+        </ACI-Sub-System>
+        <ACI-Sub-System>
+          <Sub-System-Volume-Definitions>VOL001</Sub-System-Volume-Definitions>
+          <Sub-System-ID>VOL001/SYS002 Unit 18</Sub-System-ID>
+          <Sub-System-Description>Split System</Sub-System-Description>
+          <Sub-System-Cooling-Output>4</Sub-System-Cooling-Output>
+          <Sub-System-Area-Served-Description>Meeting room</Sub-System-Area-Served-Description>
+          <Sub-System-Inspection-Date>2017-07-13</Sub-System-Inspection-Date>
+          <Sub-System-Cooling-Plant-Count>1</Sub-System-Cooling-Plant-Count>
+          <Sub-System-AHU-Count>0</Sub-System-AHU-Count>
+          <Sub-System-Terminal-Units-Count>1</Sub-System-Terminal-Units-Count>
+          <Sub-System-Controls-Count>1</Sub-System-Controls-Count>
+        </ACI-Sub-System>
+        <ACI-Sub-System>
+          <Sub-System-Volume-Definitions>VOL001</Sub-System-Volume-Definitions>
+          <Sub-System-ID>VOL001/SYS003 Unit 16</Sub-System-ID>
+          <Sub-System-Description>Split System</Sub-System-Description>
+          <Sub-System-Cooling-Output>4</Sub-System-Cooling-Output>
+          <Sub-System-Area-Served-Description>Lecture Room 3</Sub-System-Area-Served-Description>
+          <Sub-System-Inspection-Date>2017-07-13</Sub-System-Inspection-Date>
+          <Sub-System-Cooling-Plant-Count>1</Sub-System-Cooling-Plant-Count>
+          <Sub-System-AHU-Count>0</Sub-System-AHU-Count>
+          <Sub-System-Terminal-Units-Count>1</Sub-System-Terminal-Units-Count>
+          <Sub-System-Controls-Count>1</Sub-System-Controls-Count>
+        </ACI-Sub-System>
+      </ACI-Sub-Systems>
+      <ACI-Pre-Inspection-Information>
+        <ACI-Pre-Inspection-Essential>
+          <List-Of-Systems>No</List-Of-Systems>
+          <Cooling-Capacities>No</Cooling-Capacities>
+          <Control-Zones>No</Control-Zones>
+          <Temperature-Controls>Yes</Temperature-Controls>
+          <Operation-Controls>No</Operation-Controls>
+          <Schematics>No</Schematics>
+        </ACI-Pre-Inspection-Essential>
+        <ACI-Pre-Inspection-Desirable>
+          <Previous-Reports>No</Previous-Reports>
+          <Refrigeration-Maintenance>Yes</Refrigeration-Maintenance>
+          <Delivery-System-Maintenance>Yes</Delivery-System-Maintenance>
+          <Control-System-Maintenance>No</Control-System-Maintenance>
+          <Consumption-Records>No</Consumption-Records>
+          <Commissioning-Results>No</Commissioning-Results>
+        </ACI-Pre-Inspection-Desirable>
+        <ACI-Pre-Inspection-Optional>
+          <Cooling-Load-Estimate>No</Cooling-Load-Estimate>
+          <Complaint-Records>No</Complaint-Records>
+          <BMS-Capability>No</BMS-Capability>
+          <Monitoring-Capability>No</Monitoring-Capability>
+        </ACI-Pre-Inspection-Optional>
+      </ACI-Pre-Inspection-Information>
+      <ACI-Cooling-Plant>
+        <System-Number>VOL001/SYS001</System-Number>
+        <System-Component-Identifier>VOL001/SYS001/CP1</System-Component-Identifier>
+        <ACI-Cooling-Plant-Equipment>
+          <Manufacturer>Toshiba</Manufacturer>
+          <Description>Variable refrigerant flow</Description>
+          <Model-Reference>MAR-F101HTM8</Model-Reference>
+          <Serial-Number>30610015</Serial-Number>
+          <Year-Installed>1995</Year-Installed>
+          <Cooling-Capacity>28</Cooling-Capacity>
+          <Refrigerant-Type>
+            <Type>R22</Type>
+          </Refrigerant-Type>
+          <Refrigerant-Charge>22</Refrigerant-Charge>
+          <Location>Ground level at side of building</Location>
+          <Area-Served>Ground floor meeting rooms</Area-Served>
+          <Discrepancy-Note>The provided information was assessed and compared and found to be accurate to survey findings.</Discrepancy-Note>
+        </ACI-Cooling-Plant-Equipment>
+        <ACI-Cooling-Plant-Inspection>
+          <Heat-Rejection-Operational>
+            <Note>The heat rejection plant was found to be operational.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Rejection-Operational>
+          <Heat-Rejection-Area-Clear>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Rejection-Area-Clear>
+          <Chiller-Plant-Operational>
+            <Note>The air conditioning plant was found to be in an operational condition and manually controlled via the localised remote control device.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-Operational>
+          <Chiller-Plant-Area-Clear>
+            <Note>The standalone systems  were found to be free of obstruction and debris maximising the air flow across the heat exchangers.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-Area-Clear>
+          <Air-Recirculation>
+            <Note>The condenser integral to the outdoor unit was not found to be at risk of warm discharge air recirculation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Recirculation>
+          <Chiller-Plant-OK>
+            <Note>The plant in general was found to be in a condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-OK>
+          <Heat-Exchanger-OK>
+            <Note>The condensers were found to be in a clean and efficient condition maximising the heat exchange effect.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Exchanger-OK>
+          <Pipe-Insulation-OK>
+            <Note>The viewed thermal insulation around the units interconnecting pipe work was found to be in a complete and good condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Pipe-Insulation-OK>
+          <Chiller-Placement-OK>
+            <Note>No warm air discharge louvers were viewed in close proximity to the unit.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Placement-OK>
+          <Compressors-Operational>
+            <Note>The compressors were brought in to operation during this inspection.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Compressors-Operational>
+        </ACI-Cooling-Plant-Inspection>
+        <ACI-Cooling-Plant-Sizing>
+          <Total-Occupants>42</Total-Occupants>
+          <Total-Floor-Area>220</Total-Floor-Area>
+          <Occupant-Density>5.0</Occupant-Density>
+          <Upper-Heat-Gain>100.0</Upper-Heat-Gain>
+          <Installed-Capacity>28.0</Installed-Capacity>
+          <Acceptable-Installed-Size>0</Acceptable-Installed-Size>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The total seated capacity was taken into account during this inspection.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>3</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The total room area measured</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>4</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>5</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Occupant density will vary marginally and the industry standard equates to 1 person per 10 sqm,therefore this room will have increased internal gain by the high number of occupants.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>6</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>7</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The standard benchmark for a cooling plant within a class based environment is rated equal to commercial office at 100 to 160W/m2 ,therefore the combined cooling capacity of the plant is considered to be suitably sized for the usage and area served.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>8</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>9</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>This is the total cooling capacity of the two systems serving this area is suitably sized for the cooling load.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>10</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Our inspection to minimise the electrical energy consumed by restricting the temperature range to the end users  by programming the remote control devices.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>11</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The cooling capacity installed available is considered to be suitably sized for the cooling load in comparison to the rated benchmark for this application  -rated at 100 -125 W/m2</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>12</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Cooling-Plant-Sizing>
+        <ACI-Cooling-Plant-Refrigeration>
+          <Refrigerant-Name>R22</Refrigerant-Name>
+          <F-Gas-Inspection>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text>It would be advisable to ensure the F Gas Records are available for future audits.</Text>
+              </ACI-Recommendation>
+            </Guidance>
+          </F-Gas-Inspection>
+          <Pre-Compressor>8</Pre-Compressor>
+          <Post-Processor>43</Post-Processor>
+          <Ambient>18</Ambient>
+          <Acceptable-Temperature>0</Acceptable-Temperature>
+          <Compressor-Control>
+            <Note>The method of capacity control is  applicable to this variable speed compressor drive therefore will absorb minimum power during operation according to the cooling loads .</Note>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Compressor-Control>
+          <Refrigerant-Leak>
+            <Note>No indications on the cooling plant were viewed to indicate the presence of a refrigerant leak.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Refrigerant-Leak>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>3</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>4</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Cooling-Plant-Refrigeration>
+        <ACI-Cooling-Plant-Chillers>
+          <Water-Cooled>
+            <Note>Not applicable to an air cooled  direct expansion refrigerant charged system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Cooled>
+          <Water-Treatment>
+            <Note>Not applicable to an air cooled  refrigerant charged system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Treatment>
+        </ACI-Cooling-Plant-Chillers>
+        <ACI-Cooling-Plant-Maintenance>
+          <Records-Kept>
+            <Note>Our inspection viewed records of regular maintenance activity during this inspection.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Records-Kept>
+          <Competent-Person>
+            <Note>Our inspection did not view the engineers certification of competence for the refrigeration industry or safe handling of refrigerants.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text>Our inspection advises to keep a file on site for the engineers competency within the refrigerant.</Text>
+              </ACI-Recommendation>
+            </Guidance>
+          </Competent-Person>
+        </ACI-Cooling-Plant-Maintenance>
+        <ACI-Cooling-Plant-Metering>
+          <Metering-Installed>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text>Our inspection did not view any metering method within the store.</Text>
+              </ACI-Recommendation>
+              <ACI-Recommendation>
+                <Seq-Number>2</Seq-Number>
+                <Code>OTHER</Code>
+                <Text>It would be advisable to monitor the energy consumption from the non critical cooling plant to allow analysis of the energy consumed in the building.</Text>
+              </ACI-Recommendation>
+            </Guidance>
+          </Metering-Installed>
+          <BEM-Installed>
+            <Note>The systems are controlled locally via a remote control panel for the end users benefit.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text>Our inspection would advise to improve the energy efficient to remove the localised end user ability to control the systems and to link the systems to a remote centralised control network.</Text>
+              </ACI-Recommendation>
+            </Guidance>
+          </BEM-Installed>
+          <Usage-Records>
+            <Note>Not viewed any recorded data to analyse.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Usage-Records>
+          <Excessive-Use>
+            <Note>Not viewed to analyse</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Excessive-Use>
+        </ACI-Cooling-Plant-Metering>
+        <ACI-Cooling-Plant-Humidity-Control>
+          <Humidity-Control>
+            <Note>Humidifier plant is not installed within this system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Humidity-Control>
+        </ACI-Cooling-Plant-Humidity-Control>
+      </ACI-Cooling-Plant>
+      <ACI-Cooling-Plant>
+        <System-Number>VOL001/SYS002 Unit 18</System-Number>
+        <System-Component-Identifier>VOL001/SYS002/CP1</System-Component-Identifier>
+        <ACI-Cooling-Plant-Equipment>
+          <Manufacturer>Daikin</Manufacturer>
+          <Description>Single Split</Description>
+          <Model-Reference>R45DB7V1</Model-Reference>
+          <Serial-Number>371497</Serial-Number>
+          <Year-Installed>1997</Year-Installed>
+          <Cooling-Capacity>5</Cooling-Capacity>
+          <Refrigerant-Type>
+            <Type>R22</Type>
+          </Refrigerant-Type>
+          <Refrigerant-Charge>2</Refrigerant-Charge>
+          <Location>Ground level at rear of building</Location>
+          <Area-Served>Meeting room</Area-Served>
+          <Discrepancy-Note>The provided information was assessed on site and compared and found to be accurate to survey findings.</Discrepancy-Note>
+        </ACI-Cooling-Plant-Equipment>
+        <ACI-Cooling-Plant-Inspection>
+          <Heat-Rejection-Operational>
+            <Note>The heat rejection plant was found to be operational.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Rejection-Operational>
+          <Heat-Rejection-Area-Clear>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Rejection-Area-Clear>
+          <Chiller-Plant-Operational>
+            <Note>The air conditioning plant was found to be in an operational condition and manually controlled via the localised remote control device.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-Operational>
+          <Chiller-Plant-Area-Clear>
+            <Note>The standalone systems  were found to be free of obstruction and debris maximising the air flow across the heat exchangers.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-Area-Clear>
+          <Air-Recirculation>
+            <Note>The condenser integral to the outdoor unit was not found to be at risk of warm discharge air recirculation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Recirculation>
+          <Chiller-Plant-OK>
+            <Note>The plant in general was found to be in a condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-OK>
+          <Heat-Exchanger-OK>
+            <Note>The condensers were found to be in a clean and efficient condition maximising the heat exchange effect.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Exchanger-OK>
+          <Pipe-Insulation-OK>
+            <Note>The viewed thermal insulation around the units interconnecting pipe work was found to be in a complete and good condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Pipe-Insulation-OK>
+          <Chiller-Placement-OK>
+            <Note>No warm air discharge louvers were viewed in close proximity to the unit.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Placement-OK>
+          <Compressors-Operational>
+            <Note>The compressors were brought in to operation during this inspection.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Compressors-Operational>
+        </ACI-Cooling-Plant-Inspection>
+        <ACI-Cooling-Plant-Sizing>
+          <Total-Occupants>6</Total-Occupants>
+          <Total-Floor-Area>40</Total-Floor-Area>
+          <Occupant-Density>6.0</Occupant-Density>
+          <Upper-Heat-Gain>100.0</Upper-Heat-Gain>
+          <Installed-Capacity>5.0</Installed-Capacity>
+          <Acceptable-Installed-Size>0</Acceptable-Installed-Size>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The total seated capacity was taken into account during this inspection.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>3</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The total room area measured</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>4</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>5</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Occupant density will vary marginally and the industry standard equates to 1 person per 10 sqm,therefore this room will have increased internal gain by the high number of occupants.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>6</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>7</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The standard benchmark for a cooling plant within a class based environment is rated equal to commercial office at 100 to 160W/m2 ,therefore the combined cooling capacity of the plant is considered to be suitably sized for the usage and area served.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>8</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>9</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>This is the total cooling capacity of the system serving this area is suitably sized for the cooling load.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>10</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>11</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The cooling capacity installed available is considered to be suitably sized for the cooling load in comparison to the rated benchmark for this application  -rated at 100 -125 W/m2</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>12</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Cooling-Plant-Sizing>
+        <ACI-Cooling-Plant-Refrigeration>
+          <Refrigerant-Name>R22</Refrigerant-Name>
+          <F-Gas-Inspection>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </F-Gas-Inspection>
+          <Pre-Compressor>6</Pre-Compressor>
+          <Post-Processor>38</Post-Processor>
+          <Ambient>18</Ambient>
+          <Acceptable-Temperature>0</Acceptable-Temperature>
+          <Compressor-Control>
+            <Note>The method of capacity control is not applicable to this older generation fixed speed compressor drive therefore will absorb full power during operation .</Note>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Compressor-Control>
+          <Refrigerant-Leak>
+            <Note>No indications on the cooling plant were viewed to indicate the presence of a refrigerant leak.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Refrigerant-Leak>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>3</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>4</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Cooling-Plant-Refrigeration>
+        <ACI-Cooling-Plant-Chillers>
+          <Water-Cooled>
+            <Note>Not applicable to an air cooled  direct expansion refrigerant charged system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Cooled>
+          <Water-Treatment>
+            <Note>Not applicable to an air cooled  refrigerant charged system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Treatment>
+        </ACI-Cooling-Plant-Chillers>
+        <ACI-Cooling-Plant-Maintenance>
+          <Records-Kept>
+            <Note>Our inspection viewed records of regular maintenance activity during this inspection.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Records-Kept>
+          <Competent-Person>
+            <Note>Our inspection did not view the engineers certification of competence for the refrigeration industry or safe handling of refrigerants.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Competent-Person>
+        </ACI-Cooling-Plant-Maintenance>
+        <ACI-Cooling-Plant-Metering>
+          <Metering-Installed>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Metering-Installed>
+          <BEM-Installed>
+            <Note>The systems are controlled locally via a remote control panel for the end users benefit.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </BEM-Installed>
+          <Usage-Records>
+            <Note>Not viewed any recorded data to analyse.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Usage-Records>
+          <Excessive-Use>
+            <Note>Not viewed to analyse</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Excessive-Use>
+        </ACI-Cooling-Plant-Metering>
+        <ACI-Cooling-Plant-Humidity-Control>
+          <Humidity-Control>
+            <Note>Humidifier plant is not installed within this system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Humidity-Control>
+        </ACI-Cooling-Plant-Humidity-Control>
+      </ACI-Cooling-Plant>
+      <ACI-Cooling-Plant>
+        <System-Number>VOL001/SYS003 Unit 16</System-Number>
+        <System-Component-Identifier>VOL001/SYS003/CP1</System-Component-Identifier>
+        <ACI-Cooling-Plant-Equipment>
+          <Manufacturer>Fujitsu</Manufacturer>
+          <Description>Single Split</Description>
+          <Model-Reference>AOY14RNE</Model-Reference>
+          <Serial-Number>4032156</Serial-Number>
+          <Year-Installed>1997</Year-Installed>
+          <Cooling-Capacity>4</Cooling-Capacity>
+          <Refrigerant-Type>
+            <Type>R22</Type>
+          </Refrigerant-Type>
+          <Refrigerant-Charge>1</Refrigerant-Charge>
+          <Location>Ground level at rear of building</Location>
+          <Area-Served>Lecture Room 3</Area-Served>
+          <Discrepancy-Note>The provided information was assessed on site and compared and found to be accurate to survey findings.</Discrepancy-Note>
+        </ACI-Cooling-Plant-Equipment>
+        <ACI-Cooling-Plant-Inspection>
+          <Heat-Rejection-Operational>
+            <Note>The heat rejection plant was found to be operational.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Rejection-Operational>
+          <Heat-Rejection-Area-Clear>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Rejection-Area-Clear>
+          <Chiller-Plant-Operational>
+            <Note>The air conditioning plant was found to be in an operational condition and manually controlled via the localised remote control device.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-Operational>
+          <Chiller-Plant-Area-Clear>
+            <Note>The standalone systems  were found to be free of obstruction and debris maximising the air flow across the heat exchangers.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-Area-Clear>
+          <Air-Recirculation>
+            <Note>The condenser integral to the outdoor unit was not found to be at risk of warm discharge air recirculation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Recirculation>
+          <Chiller-Plant-OK>
+            <Note>The plant in general was found to be in a condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Plant-OK>
+          <Heat-Exchanger-OK>
+            <Note>The condensers were found to be in a clean and efficient condition maximising the heat exchange effect.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Heat-Exchanger-OK>
+          <Pipe-Insulation-OK>
+            <Note>The viewed thermal insulation around the units interconnecting pipe work was found to be in a complete and good condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Pipe-Insulation-OK>
+          <Chiller-Placement-OK>
+            <Note>No warm air discharge louvers were viewed in close proximity to the unit.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Chiller-Placement-OK>
+          <Compressors-Operational>
+            <Note>The compressors were brought in to operation during this inspection.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Compressors-Operational>
+        </ACI-Cooling-Plant-Inspection>
+        <ACI-Cooling-Plant-Sizing>
+          <Total-Occupants>6</Total-Occupants>
+          <Total-Floor-Area>32</Total-Floor-Area>
+          <Occupant-Density>5.0</Occupant-Density>
+          <Upper-Heat-Gain>100.0</Upper-Heat-Gain>
+          <Installed-Capacity>4.0</Installed-Capacity>
+          <Acceptable-Installed-Size>0</Acceptable-Installed-Size>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The total seated capacity was taken into account during this inspection.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>3</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The total room area measured</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>4</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>5</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Occupant density will vary marginally and the industry standard equates to 1 person per 10 sqm,therefore this room will have increased internal gain by the high number of occupants.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>6</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>7</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The standard benchmark for a cooling plant within a class based environment is rated equal to commercial office at 100 to 160W/m2 ,therefore the combined cooling capacity of the plant is considered to be suitably sized for the usage and area served.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>8</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>9</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>This is the total cooling capacity of the system serving this area is suitably sized for the cooling load.</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>10</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>11</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>The cooling capacity installed available is considered to be suitably sized for the cooling load in comparison to the rated benchmark for this application  -rated at 100 -125 W/m2</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>12</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Cooling-Plant-Sizing>
+        <ACI-Cooling-Plant-Refrigeration>
+          <Refrigerant-Name>R22</Refrigerant-Name>
+          <F-Gas-Inspection>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </F-Gas-Inspection>
+          <Pre-Compressor>6</Pre-Compressor>
+          <Post-Processor>39</Post-Processor>
+          <Ambient>18</Ambient>
+          <Acceptable-Temperature>0</Acceptable-Temperature>
+          <Compressor-Control>
+            <Note>The method of capacity control is not applicable to this older generation fixed speed compressor drive therefore will absorb full power during operation .</Note>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Compressor-Control>
+          <Refrigerant-Leak>
+            <Note>No indications on the cooling plant were viewed to indicate the presence of a refrigerant leak.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Refrigerant-Leak>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>3</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>4</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Cooling-Plant-Refrigeration>
+        <ACI-Cooling-Plant-Chillers>
+          <Water-Cooled>
+            <Note>Not applicable to an air cooled  direct expansion refrigerant charged system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Cooled>
+          <Water-Treatment>
+            <Note>Not applicable to an air cooled  refrigerant charged system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Treatment>
+        </ACI-Cooling-Plant-Chillers>
+        <ACI-Cooling-Plant-Maintenance>
+          <Records-Kept>
+            <Note>Our inspection viewed records of regular maintenance activity during this inspection.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Records-Kept>
+          <Competent-Person>
+            <Note>Our inspection did not view the engineers certification of competence for the refrigeration industry or safe handling of refrigerants.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Competent-Person>
+        </ACI-Cooling-Plant-Maintenance>
+        <ACI-Cooling-Plant-Metering>
+          <Metering-Installed>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Metering-Installed>
+          <BEM-Installed>
+            <Note>The systems are controlled locally via a remote control panel for the end users benefit.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </BEM-Installed>
+          <Usage-Records>
+            <Note>Not viewed any recorded data to analyse.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Usage-Records>
+          <Excessive-Use>
+            <Note>Not viewed to analyse</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Excessive-Use>
+        </ACI-Cooling-Plant-Metering>
+        <ACI-Cooling-Plant-Humidity-Control>
+          <Humidity-Control>
+            <Note>Humidifier plant is not installed within this system.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Humidity-Control>
+        </ACI-Cooling-Plant-Humidity-Control>
+      </ACI-Cooling-Plant>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL001/SYS001</System-Number>
+        <System-Identifier>Ceiling DX Fan Coil Unit</System-Identifier>
+        <System-Component-Identifier>VOL001/SYS001/TU1</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>VOL001/SYS001/CP1</Systems-Served>
+          <Manufacturer>Toshiba</Manufacturer>
+          <Year-Installed>1995</Year-Installed>
+          <Location>Ceiling cassette terminal unit</Location>
+          <Area-Served>Meeting room</Area-Served>
+          <Discrepancy-Note>No discrepancy was viewed.</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Note>The internal refrigeration pipe work viewed was found to be adequately thermally insulated.</Note>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Note>Ductwork not applicable to the terminal units viewed.</Note>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Note>The terminal units were found in a complete and efficient condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Note>No evidence was viewed of tampering with the diffusers.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Note>The terminal units are utilising a refrigerant only cooling and heating medium .</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Note>No records of complaints were viewed during this inspection.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Note>The  split system is served by a singular  individual digital remote controller device within the thermal zone which is considered to be appropriate for efficient operation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL001/SYS001</System-Number>
+        <System-Identifier>Ceiling DX Fan Coil Unit</System-Identifier>
+        <System-Component-Identifier>VOL001/SYS001/TU2</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>VOL001/SYS001/CP1</Systems-Served>
+          <Manufacturer>Toshiba</Manufacturer>
+          <Year-Installed>1995</Year-Installed>
+          <Location>Ceiling cassette terminal unit</Location>
+          <Area-Served>Meeting Room</Area-Served>
+          <Discrepancy-Note>No discrepancy was viewed.</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Note>The internal refrigeration pipe work viewed was found to be adequately thermally insulated.</Note>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Note>Ductwork not applicable to the terminal units viewed.</Note>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Note>The terminal units were found in a complete and efficient condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Note>No evidence was viewed of tampering with the diffusers.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Note>The terminal units are utilising a refrigerant only cooling and heating medium .</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Note>No records of complaints were viewed during this inspection.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Note>The  split system is served by a singular  individual digital remote controller device within the thermal zone which is considered to be appropriate for efficient operation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL001/SYS001</System-Number>
+        <System-Identifier>Ceiling DX Fan Coil Unit</System-Identifier>
+        <System-Component-Identifier>VOL001/SYS001/TU3</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>VOL001/SYS001/CP1</Systems-Served>
+          <Manufacturer>Toshiba</Manufacturer>
+          <Year-Installed>1995</Year-Installed>
+          <Location>Ceiling cassette terminal unit</Location>
+          <Area-Served>Lecture Room 1</Area-Served>
+          <Discrepancy-Note>No discrepancy was viewed.</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Note>The internal refrigeration pipe work viewed was found to be adequately thermally insulated.</Note>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Note>Ductwork not applicable to the terminal units viewed.</Note>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Note>The terminal units were found in a complete and efficient condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Note>No evidence was viewed of tampering with the diffusers.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Note>The terminal units are utilising a refrigerant only cooling and heating medium .</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Note>No records of complaints were viewed during this inspection.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Note>The  split system is served by a singular  individual digital remote controller device within the thermal zone which is considered to be appropriate for efficient operation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL001/SYS001</System-Number>
+        <System-Identifier>Ceiling DX Fan Coil Unit</System-Identifier>
+        <System-Component-Identifier>VOL001/SYS001/TU4</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>VOL001/SYS001/CP1</Systems-Served>
+          <Manufacturer>Toshiba</Manufacturer>
+          <Year-Installed>1995</Year-Installed>
+          <Location>Ceiling cassette terminal unit</Location>
+          <Area-Served>Lecture Room 1</Area-Served>
+          <Discrepancy-Note>No discrepancy was viewed.</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Note>The internal refrigeration pipe work viewed was found to be adequately thermally insulated.</Note>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Note>Ductwork not applicable to the terminal units viewed.</Note>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Note>The terminal units were found in a complete and efficient condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Note>No evidence was viewed of tampering with the diffusers.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Note>The terminal units are utilising a refrigerant only cooling and heating medium .</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Note>No records of complaints were viewed during this inspection.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Note>The  split system is served by a singular  individual digital remote controller device within the thermal zone which is considered to be appropriate for efficient operation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL001/SYS002 Unit 18</System-Number>
+        <System-Identifier>Ceiling DX Fan Coil Unit</System-Identifier>
+        <System-Component-Identifier>VOL001/SYS002/TU1</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>VOL001/SYS002/CP1</Systems-Served>
+          <Manufacturer>Daikin</Manufacturer>
+          <Year-Installed>1997</Year-Installed>
+          <Location>Ceiling terminal unit</Location>
+          <Area-Served>Meeting room</Area-Served>
+          <Discrepancy-Note>No discrepancy was viewed.</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Note>The internal refrigeration pipe work viewed was found to be adequately thermally insulated.</Note>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Note>Ductwork not applicable to the terminal units viewed.</Note>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Note>The terminal units were found in a complete and efficient condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Note>No evidence was viewed of tampering with the diffusers.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Note>The terminal units are utilising a refrigerant only cooling and heating medium .</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Note>No records of complaints were viewed during this inspection.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Note>The  split system is served by a singular  individual digital remote controller device within the thermal zone which is considered to be appropriate for efficient operation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL001/SYS003 Unit 16</System-Number>
+        <System-Identifier>Ceiling DX Fan Coil Unit</System-Identifier>
+        <System-Component-Identifier>VOL001/SYS003/TU1</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>VOL001/SYS003/CP1</Systems-Served>
+          <Manufacturer>Fujitsu</Manufacturer>
+          <Year-Installed>1997</Year-Installed>
+          <Location>Ceiling cassette  terminal unit</Location>
+          <Area-Served>Lecture Room 3</Area-Served>
+          <Discrepancy-Note>No discrepancy was viewed.</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Note>The internal refrigeration pipe work viewed was found to be adequately thermally insulated.</Note>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Note>Ductwork not applicable to the terminal units viewed.</Note>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>2</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Note>The terminal units were found in a complete and efficient condition.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Note/>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Note>No evidence was viewed of tampering with the diffusers.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Note>The terminal units are utilising a refrigerant only cooling and heating medium .</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Note>No records of complaints were viewed during this inspection.</Note>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Note/>
+            <Flag>No</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Note>The  split system is served by a singular  individual digital remote controller device within the thermal zone which is considered to be appropriate for efficient operation.</Note>
+            <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>1</Seq-Number>
+                <Code>OTHER</Code>
+                <Text/>
+              </ACI-Recommendation>
+            </Guidance>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
+      <ACI-System-Control>
+        <Sub-System-ID>VOL001/SYS001</Sub-System-ID>
+        <System-Component-Identifier>VOL001/SYS001/SC1</System-Component-Identifier>
+        <Zoning-Assessment>
+          <Note>The return air sensor is located within the return air stream of the ceiling mounted units which is not considered to be appropriate for efficient control .</Note>
+          <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Our inspection advises for a more accurate temperature control by relocating the air temperature sensor to remote position on a walled surface at a lower position avoiding draughts and heat sources. </Text>
+            </ACI-Recommendation>
+          </Guidance>
+        </Zoning-Assessment>
+        <Current-Indicated-Time>
+          <Note>The current time display was not viewed within the remote controller.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Current-Indicated-Time>
+        <Set-On-Period>
+          <Note>The time schedules were not viewed.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>It would be beneficial to install timer schedules programmes within the remote controller to avoid the systems operating during non occupancy and wasting energy.</Text>
+            </ACI-Recommendation>
+          </Guidance>
+        </Set-On-Period>
+        <Timer-Shortfall>
+          <Note>The remote controller provides a comprehensive method of timer scheduling.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Timer-Shortfall>
+        <Sensors-Appropriate>
+          <Note>The terminal units air temperature sensors are located within the return air section of the unit.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>As an advisory - It would be beneficial to ensure optimum conditions are maintained by relocating the air temperature sensors to a remote position at a lower level avoiding draughts and heat sources.</Text>
+            </ACI-Recommendation>
+          </Guidance>
+        </Sensors-Appropriate>
+        <Set-Temperature>
+          <Note>The temperature set points were found to be set at an inappropriate temperature of 21 Degrees C in Cooling mode which is not suitable for efficient comfort cooling requirements.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Our inspection would advise that it would be beneficial to increase the temperature set point as recommended for 23 Degrees C  for the air conditioning to improve efficiency and reduce the energy consumed by 10% in comparison to the viewed temperature setting at 19 Degrees C.</Text>
+            </ACI-Recommendation>
+          </Guidance>
+        </Set-Temperature>
+        <Use-Guidance-Or-Controls>
+          <Note>Guidance note for end users are are not required within the area served ,as windows are not applicable .</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Use-Guidance-Or-Controls>
+        <Dead-Band-Set>
+          <Note>The control systems installed are a comprehensive system offering dead bands at a minimum of 4 Degrees C for each controlled mode of operation.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Dead-Band-Set>
+        <Equipment-Capacity>
+          <Note/>
+          <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Equipment-Capacity>
+        <Airflow-Modulation>
+          <Note>The systems offer modulation of air volume by the multiple fan speed adjustment selector mode which is carried out remotely or automatically via the cooling or demand within the area served.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Airflow-Modulation>
+      </ACI-System-Control>
+      <ACI-System-Control>
+        <Sub-System-ID>VOL001/SYS002 Unit 18</Sub-System-ID>
+        <System-Component-Identifier>VOL001/SYS002/SC1</System-Component-Identifier>
+        <Zoning-Assessment>
+          <Note>The return air sensor is located within the return air stream of the ceiling mounted units which is not considered to be appropriate for efficient control .</Note>
+          <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Zoning-Assessment>
+        <Current-Indicated-Time>
+          <Note>The current time display was not viewed within the remote controller.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Current-Indicated-Time>
+        <Set-On-Period>
+          <Note>The time schedules were not viewed.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Set-On-Period>
+        <Timer-Shortfall>
+          <Note>The remote controller provides a comprehensive method of timer scheduling.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Timer-Shortfall>
+        <Sensors-Appropriate>
+          <Note>The terminal units air temperature sensors are located within the return air section of the unit.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Sensors-Appropriate>
+        <Set-Temperature>
+          <Note>The temperature set points were found to be set at an inappropriate temperature of 21 Degrees C in Cooling mode which is not suitable for efficient comfort cooling requirements.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Set-Temperature>
+        <Use-Guidance-Or-Controls>
+          <Note>Guidance note for end users are are not required within the area served, as windows are not applicable .</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Use-Guidance-Or-Controls>
+        <Dead-Band-Set>
+          <Note>The control systems installed are a comprehensive system offering dead bands at a minimum of 4 Degrees C for each controlled mode of operation.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Dead-Band-Set>
+        <Equipment-Capacity>
+          <Note/>
+          <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Equipment-Capacity>
+        <Airflow-Modulation>
+          <Note>The systems offer modulation of air volume by the multiple fan speed adjustment selector mode which is carried out remotely or automatically via the cooling or demand within the area served.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Airflow-Modulation>
+      </ACI-System-Control>
+      <ACI-System-Control>
+        <Sub-System-ID>VOL001/SYS003 Unit 16</Sub-System-ID>
+        <System-Component-Identifier>VOL001/SYS003/SC1</System-Component-Identifier>
+        <Zoning-Assessment>
+          <Note>The return air sensor is located within the return air stream of the ceiling mounted units which is not considered to be appropriate for efficient control .</Note>
+          <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Zoning-Assessment>
+        <Current-Indicated-Time>
+          <Note>The current time display was not viewed within the remote controller.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Current-Indicated-Time>
+        <Set-On-Period>
+          <Note>The time schedules were not viewed.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Set-On-Period>
+        <Timer-Shortfall>
+          <Note>The remote controller provides a comprehensive method of timer scheduling.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Timer-Shortfall>
+        <Sensors-Appropriate>
+          <Note>The terminal units air temperature sensors are located within the return air section of the unit.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Sensors-Appropriate>
+        <Set-Temperature>
+          <Note>The temperature set points were found to be set at an appropriate temperature of 22 Degrees C in heating mode which is suitable for efficient comfort cooling requirements.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Set-Temperature>
+        <Use-Guidance-Or-Controls>
+          <Note>Guidance note for end users are are not required within the area served, as windows are not applicable .</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Use-Guidance-Or-Controls>
+        <Dead-Band-Set>
+          <Note>The control systems installed are a comprehensive system offering dead bands at a minimum of 4 Degrees C for each controlled mode of operation.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Dead-Band-Set>
+        <Equipment-Capacity>
+          <Note/>
+          <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Equipment-Capacity>
+        <Airflow-Modulation>
+          <Note>The systems offer modulation of air volume by the multiple fan speed adjustment selector mode which is carried out remotely or automatically via the cooling or demand within the area served.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text/>
+            </ACI-Recommendation>
+          </Guidance>
+        </Airflow-Modulation>
+      </ACI-System-Control>
+    </Air-Conditioning-Inspection-Report>
+  </Report>
+</Reports>
