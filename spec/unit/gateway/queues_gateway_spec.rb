@@ -53,5 +53,18 @@ describe Gateway::QueuesGateway do
         expect([consumed, remainder]).to eq [50, 25]
       end
     end
+
+    context "when a queue is populated with an RRN that jumps the queue" do
+      assessments = (1..3).collect { |_| SecureRandom.uuid }
+
+      before do
+        gateway.push_to_queue(:assessments, assessments.take(2))
+        gateway.push_to_queue(:assessments, assessments.last, jump_queue: true)
+      end
+
+      it "consumes the queue processing the assessment that jumped the queue first" do
+        expect(gateway.consume_queue(:assessments)).to eq [2, 0, 1].map { |i| assessments[i] }
+      end
+    end
   end
 end

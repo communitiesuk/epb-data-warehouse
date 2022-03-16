@@ -2,6 +2,6 @@ desc "trigger an import of a specific RRN by pushing that RRN onto the import qu
 task :trigger_rrn_import, [:rrn] do |_, args|
   queues = gateway(:queues)
   rrn = args[:rrn]
-  queues.push_to_queue :assessments, rrn
+  queues.push_to_queue :assessments, rrn, jump_queue: true
   puts "pushed to queue!"
 end

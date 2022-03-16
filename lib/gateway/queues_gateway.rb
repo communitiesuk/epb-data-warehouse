@@ -21,9 +21,9 @@ module Gateway
       futures.map(&:value).compact
     end
 
-    def push_to_queue(queue_name, data)
+    def push_to_queue(queue_name, data, jump_queue: false)
       validate_queue_name(queue_name)
-      redis.lpush(queue_name.to_s, data)
+      redis.send(jump_queue ? :rpush : :lpush, queue_name.to_s, data)
     end
 
   private
