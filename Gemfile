@@ -22,7 +22,7 @@ source "https://rubygems.org" do
   gem "epb-auth-tools", "~> 1.0"
   gem "epb_view_models", "~> 1.0", ">= 1.0.14"
   gem "nokogiri", "~> 1.13"
-  gem "parallel", "~> 1.21"
+  gem "parallel", "~> 1.22"
   gem "pg", "~> 1.3"
   gem "rake", "~> 13.0", ">= 13.0.6"
   gem "redis", "~> 4.4"
