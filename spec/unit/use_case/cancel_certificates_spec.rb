@@ -54,7 +54,7 @@ describe UseCase::CancelCertificates do
 
     context "when processing cancellations where there is a cancelled_at attribute present" do
       before do
-        allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: "2021-08-13T08:12:51.205Z" })
+        allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: "2021-08-13T08:12:51.205Z", notForIssueAt: nil })
       end
 
       it "saves the relevant certificates to database" do
@@ -75,9 +75,9 @@ describe UseCase::CancelCertificates do
 
     context "when processing cancellations where there is a certificate without a cancelled_at date" do
       before do
-        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3) })
-        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil })
-        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3) })
+        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3), notForIssueAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil, notForIssueAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3), notForIssueAt: nil })
         use_case.execute
       end
 
@@ -92,9 +92,9 @@ describe UseCase::CancelCertificates do
 
     context "when processing cancellations where one of the cancellations is of type AC-REPORT and therefore excluded" do
       before do
-        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "AC-REPORT" })
-        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil })
-        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC" })
+        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "AC-REPORT", notForIssueAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil, notForIssueAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC", notForIssueAt: nil })
         use_case.execute
       end
 
@@ -103,6 +103,27 @@ describe UseCase::CancelCertificates do
       end
 
       it "clears all the assessments from the recovery list regardless of type of assessment" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
+      end
+    end
+
+    context "when processing cancellations where one of the cancellations is a not-for-issue and therefore has a notForIssueAt rather than a cancelledAt" do
+      before do
+        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC", notForIssueAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil, typeOfAssessment: "DEC", notForIssueAt: Time.now.utc.xmlschema(3) })
+        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC", notForIssueAt: nil })
+        use_case.execute
+      end
+
+      it "deletes all assessments from the EAV store" do
+        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(3).times
+      end
+
+      it "deletes all assessments from the document store" do
+        expect(documents_gateway).to have_received(:delete_assessment).exactly(3).times
+      end
+
+      it "clears all the assessments from the recovery list" do
         expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
       end
     end
@@ -156,7 +177,7 @@ describe UseCase::CancelCertificates do
         0000-0000-0000-0000-0001
         0000-0000-0000-0000-0002
       ])
-      allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC" })
+      allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC", notForIssueAt: nil })
       use_case.execute from_recovery_list: true
     end
 
