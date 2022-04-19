@@ -1,3 +1,4 @@
+--Walsall North  SAP/RdSAP totals
 SELECT  ad.document ->> 'assessment_type' as assessment_type, COUNT(*) as num_epcs
 FROM assessment_documents ad
     JOIN ons_uprn_directory ons ON ad.document ->> 'postcode' = ons.postcode
@@ -5,7 +6,7 @@ WHERE ad.document ->> 'assessment_type' IN ('SAP', 'RdSAP')
   AND (nullif(document->>'registration_date', '')::date) > ('2021-04-01 00:00':: timestamp) AND (nullif(document->>'registration_date', '')::date) < ('2022-03-31 00:00':: timestamp)
   AND ons.areas ->> 'pcon18cd' = 'E14001011'
 GROUP BY  ad.document ->> 'assessment_type';
---number of SAP/RdSAP for walsall still
+
 
 SELECT COUNT(*),  ad.document ->> 'assessment_type'
 FROM assessment_documents ad
@@ -26,7 +27,7 @@ WHERE ad.document ->> 'assessment_type' IN ('SAP', 'RdSAP')
   AND (nullif(document->>'registration_date', '')::date) > ('2021-04-01 00:00':: timestamp) AND (nullif(document->>'registration_date', '')::date) < ('2022-03-31 00:00':: timestamp)
   AND ons.areas ->> 'pcon18cd' = 'E14001011'
 GROUP BY  ad.document ->> 'assessment_type'
-    [2022-04-14 10:46:36] 2 rows retrieved starting from 1 in 5 m 59 s 453 ms (execution: 5 m 59 s 400 ms, fetching: 53 ms)
+
 
 -- totals by month year
 
@@ -42,7 +43,7 @@ WHERE ad.document ->> 'assessment_type' IN ('SAP', 'RdSAP')
 --AND ons.areas ->> 'pcon18cd' = 'E14001011'
 GROUP BY  ad.document ->> 'assessment_type';
 
---Walsall RdSAP breakdown of construction age
+--Walsall North RdSAP breakdown of construction age
 SELECT num_epcs,
        ( SELECT REPLACE((string_to_array(lookup_value, ';'))[1], 'England and Wales: ', '')
          FROM assessment_attribute_lookups aal
@@ -59,4 +60,35 @@ FROM  (
     AND ons.areas ->> 'pcon18cd' = 'E14001011'
     GROUP BY  jsonb_array_elements(ad.document -> ('sap_building_parts')) ->> 'construction_age_band') as c
 
+--Walsall North RdSAP Tenure breakdown
+SELECT
+    COUNT(*) as num_epcs,
+    (COUNT(*) / SUM(COUNT(*)) OVER () ) AS "% of total" ,
+    al.lookup_value
+FROM assessment_documents ad
+         JOIN ons_uprn_directory ons ON ad.document ->> 'postcode' = ons.postcode
+    JOIN assessment_lookups al ON al.lookup_key =   ad.document ->> 'tenure'
+    JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
 
+WHERE ad.document ->> 'assessment_type' IN ('RdSAP')
+  AND (nullif(document->>'registration_date', '')::date) > ('2021-04-01 00:00':: timestamp) AND (nullif(document->>'registration_date', '')::date) < ('2022-03-31 00:00':: timestamp)
+  AND ons.areas ->> 'pcon18cd' = 'E14001011'
+  AND schema_version = 'RdSAP-Schema-20.0.0' and aal.attribute_id = 9
+GROUP BY   al.lookup_value
+
+
+--Walsall North SAP Tenure breakdown
+SELECT
+    COUNT(*) as num_epcs,
+    (COUNT(*) / SUM(COUNT(*)) OVER () ) AS "% of total" ,
+    al.lookup_value as tenure
+FROM assessment_documents ad
+         JOIN ons_uprn_directory ons ON ad.document ->> 'postcode' = ons.postcode
+    JOIN assessment_lookups al ON al.lookup_key =   ad.document ->> 'tenure'
+    JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
+
+WHERE ad.document ->> 'assessment_type' IN ('RdSAP')
+  AND (nullif(document->>'registration_date', '')::date) > ('2021-04-01 00:00':: timestamp) AND (nullif(document->>'registration_date', '')::date) < ('2022-03-31 00:00':: timestamp)
+  AND ons.areas ->> 'pcon18cd' = 'E14001011'
+  AND schema_version = 'SAP-Schema-18.0.0' and aal.attribute_id = 9
+GROUP BY   al.lookup_value
