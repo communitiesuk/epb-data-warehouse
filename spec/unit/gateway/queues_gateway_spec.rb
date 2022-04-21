@@ -63,7 +63,7 @@ describe Gateway::QueuesGateway do
       end
 
       it "consumes the queue processing the assessment that jumped the queue first" do
-        expect(gateway.consume_queue(:assessments)).to eq [2, 0, 1].map { |i| assessments[i] }
+        expect(gateway.consume_queue(:assessments)).to eq([2, 0, 1].map { |i| assessments[i] })
       end
     end
   end
