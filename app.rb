@@ -44,7 +44,7 @@ class QueueWorker
 private
 
   def pull_queues
-    Helper::Toggles.enabled?("data_warehouse_consumes_queues") do
+    Helper::Toggles.enabled?("data_warehouse_consumes_queues", default: true) do
       pull_use_case = use_case :pull_queues
       pull_use_case.execute from_recovery_list: true
       pull_use_case.execute from_recovery_list: false
