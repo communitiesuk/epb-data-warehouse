@@ -17,7 +17,7 @@ end
 
 gem "activerecord", "~> 7.0"
 gem "activesupport", "~> 7.0"
-gem "async", "~> 1.30", ">= 1.30.1"
+gem "async", "~> 1.30"
 gem "concurrent-ruby", "~> 1.1"
 gem "epb-auth-tools", "~> 1.0"
 gem "epb_view_models", "~> 1.0", ">= 1.0.14"
