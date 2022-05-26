@@ -31,7 +31,7 @@ GEM
     epb-auth-tools (1.0.9)
       jwt (~> 2.3)
       oauth2 (~> 1.4)
-    epb_view_models (1.0.16)
+    epb_view_models (1.0.17)
       nokogiri (~> 1.11)
       zeitwerk (~> 2.4.2)
     faraday (1.10.0)
