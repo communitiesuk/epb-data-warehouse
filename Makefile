@@ -18,7 +18,7 @@ help: ## Print help documentation
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 format: ## Runs Rubocop with the GOV.UK rules
-	@bundle exec rubocop --auto-correct
+	@bundle exec rubocop --autocorrect
 
 setup-db: ## Creates local development and test databases
 	@echo ">>>>> Creating DB"
