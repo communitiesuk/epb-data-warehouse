@@ -27,9 +27,9 @@ module Gateway
     end
 
     def add_attribute(attribute_name:, parent_name: nil)
-      attribute_data = fetch_attribute_id(attribute_name: attribute_name, parent_name: parent_name)
+      attribute_data = fetch_attribute_id(attribute_name:, parent_name:)
       if attribute_data.nil?
-        insert_attribute(attribute_name: attribute_name, parent_name: parent_name)
+        insert_attribute(attribute_name:, parent_name:)
       else
         attribute_data["attribute_id"]
       end
@@ -46,9 +46,9 @@ module Gateway
           ActiveRecord::Base.transaction do
             attribute_id = attributes.id_for attribute_name, parent_name: parent_name
             insert_attribute_value(
-              assessment_id: assessment_id,
-              attribute_id: attribute_id,
-              attribute_value: attribute_value,
+              assessment_id:,
+              attribute_id:,
+              attribute_value:,
             )
           end
         rescue ActiveRecord::RecordNotUnique

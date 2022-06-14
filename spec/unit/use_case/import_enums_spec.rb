@@ -1,6 +1,6 @@
 describe UseCase::ImportEnums do
   let(:use_case) do
-    described_class.new(assessment_lookups_gateway: gateway, xsd_presenter: presenter, assessment_attribute_gateway: attribute_gateway, xsd_config_gateway: xsd_config_gateway)
+    described_class.new(assessment_lookups_gateway: gateway, xsd_presenter: presenter, assessment_attribute_gateway: attribute_gateway, xsd_config_gateway:)
   end
 
   let(:gateway) do

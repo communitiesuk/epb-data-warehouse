@@ -7,7 +7,7 @@ describe UseCase::ImportCertificateData do
 
   let!(:use_case) do
     described_class.new assessment_attribute_gateway: assessment_attributes_gateway,
-                        documents_gateway: documents_gateway
+                        documents_gateway:
   end
 
   before do
@@ -25,7 +25,7 @@ describe UseCase::ImportCertificateData do
     assessment_id = "0000-0000-0000-0000-0000"
 
     it "passes the attributes and values to the gateway unchanged" do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("1", "A", nil),
@@ -46,7 +46,7 @@ describe UseCase::ImportCertificateData do
     assessment_id = "0000-0000-0000-0000-0000"
 
     it "passes the attributes and values to the gateway" do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("1", { "one" => "1", "two" => "2" }, nil),
@@ -65,7 +65,7 @@ describe UseCase::ImportCertificateData do
     assessment_id = "0000-0000-0000-0000-0000"
 
     it "passes the attributes and values to the gateway" do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("building_parts", { "building_part" => { "wall" => "brick" } }, nil),
@@ -86,7 +86,7 @@ describe UseCase::ImportCertificateData do
     assessment_id = "0000-0000-0000-0000-0000"
 
     it "passes the attributes and values to the gateway" do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("1", %w[1 2 3], nil),
@@ -106,7 +106,7 @@ describe UseCase::ImportCertificateData do
     assessment_id = "0000-0000-0000-0000-0000"
 
     it "passes the attributes and values to the gateway" do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("1", certificate_data["1"], nil),
@@ -126,11 +126,11 @@ describe UseCase::ImportCertificateData do
         ],
 
       }
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("1", [{ "1a" => "one a" }, { "1b" => "one b" }], nil),
         described_class::AttributeValue.new("2", [{ "1a" => "one a" }, { "1b" => "one b" }], nil),
-        assessment_id: assessment_id,
+        assessment_id:,
       )
     end
   end
@@ -150,7 +150,7 @@ describe UseCase::ImportCertificateData do
     end
 
     it "runs the use case without erroring" do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
     end
   end
 
@@ -168,11 +168,11 @@ describe UseCase::ImportCertificateData do
     }
 
     before do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data)
+      use_case.execute(assessment_id:, certificate_data:)
     end
 
     it "passes the attribute data to the documents gateway for saving" do
-      expect(documents_gateway).to have_received(:add_assessment).with(assessment_id: assessment_id, document: certificate_data)
+      expect(documents_gateway).to have_received(:add_assessment).with(assessment_id:, document: certificate_data)
     end
   end
 end

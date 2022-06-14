@@ -70,17 +70,17 @@ describe Gateway::RecoveryListGateway do
       retries = 42
 
       before do
-        gateway.register_assessments(assessment_id, queue: :assessments, retries: retries)
+        gateway.register_assessments(assessment_id, queue: :assessments, retries:)
       end
 
       it "gives the correct count of retries left" do
-        expect(gateway.retries_left(assessment_id: assessment_id, queue: :assessments)).to eq retries
+        expect(gateway.retries_left(assessment_id:, queue: :assessments)).to eq retries
       end
     end
 
     context "when the assessment does not exist in the queue" do
       it "gives a count of zero retries left" do
-        expect(gateway.retries_left(assessment_id: assessment_id, queue: :assessments)).to eq 0
+        expect(gateway.retries_left(assessment_id:, queue: :assessments)).to eq 0
       end
     end
   end

@@ -13,7 +13,7 @@ describe UseCase::ParseXmlCertificate do
 
   shared_examples "test parse" do |use_subprocess:|
     it "parses out XML into a hash" do
-      expect(use_case.execute(xml: sample, schema_type: schema_type, assessment_id: assessment_id, use_subprocess: use_subprocess)).to include(
+      expect(use_case.execute(xml: sample, schema_type:, assessment_id:, use_subprocess:)).to include(
         "country_code" => "EAW",
         "region_code" => 1,
       )
@@ -30,7 +30,7 @@ describe UseCase::ParseXmlCertificate do
 
   context "when using a schema type that is not parsed" do
     it "returns nil" do
-      expect(use_case.execute(xml: sample, schema_type: "RdSAP-Schema-18.0", assessment_id: assessment_id)).to be nil
+      expect(use_case.execute(xml: sample, schema_type: "RdSAP-Schema-18.0", assessment_id:)).to be nil
     end
   end
 end

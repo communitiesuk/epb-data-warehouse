@@ -46,7 +46,7 @@ module UseCase
 
       raise StandardError if xml.nil? || meta_data.nil?
 
-      raise UnimportableAssessment if should_exclude?(meta_data: meta_data)
+      raise UnimportableAssessment if should_exclude?(meta_data:)
 
       if @assessment_attribute_gateway.assessment_exists(assessment_id)
         Helper::Stopwatch.log_elapsed_time @logger, "deleted EAV attributes for assessment #{assessment_id}" do
@@ -70,7 +70,7 @@ module UseCase
       certificate["opt_out"] = Time.now.utc.strftime("%F %T") if meta_data[:optOut]
 
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
-        @import_certificate_data_use_case.execute(assessment_id: assessment_id, certificate_data: certificate)
+        @import_certificate_data_use_case.execute(assessment_id:, certificate_data: certificate)
       end
 
       clear_from_recovery_list assessment_id
@@ -89,11 +89,11 @@ module UseCase
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt(assessment_id: assessment_id, queue: :assessments)
+      @recovery_list_gateway.register_attempt(assessment_id:, queue: :assessments)
     end
 
     def is_on_last_attempt(assessment_id)
-      @recovery_list_gateway.retries_left(assessment_id: assessment_id, queue: :assessments) >= 1
+      @recovery_list_gateway.retries_left(assessment_id:, queue: :assessments) >= 1
     end
   end
 end

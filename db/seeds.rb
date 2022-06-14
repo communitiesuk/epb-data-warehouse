@@ -39,20 +39,20 @@ class LookupSeed
       Domain::AssessmentLookup.new(
         lookup_key: key,
         lookup_value: value,
-        attribute_id: attribute_id,
-        type_of_assessment: type_of_assessment,
-        schema_version: schema_version,
+        attribute_id:,
+        type_of_assessment:,
+        schema_version:,
       ),
     )
   end
 
   def save_lookup_value(attribute_name, key, value, type_of_assessment, schema_version = nil)
-    attribute_id = @assessment_attribute.add_attribute(attribute_name: attribute_name)
+    attribute_id = @assessment_attribute.add_attribute(attribute_name:)
     add_lookup(attribute_id, key, value, type_of_assessment, schema_version)
   end
 
   def save_lookup_values(attribute_name, enum, type_of_assessment, schema_version = nil)
-    attribute_id = @assessment_attribute.add_attribute(attribute_name: attribute_name)
+    attribute_id = @assessment_attribute.add_attribute(attribute_name:)
     enum.each do |key, value|
       add_lookup(attribute_id, key, value, type_of_assessment, schema_version)
     end

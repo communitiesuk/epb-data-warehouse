@@ -2,7 +2,7 @@ describe UseCase::ImportJsonCertificates do
   subject do
     described_class.new file_gateway: directory_gateway,
                         import_certificate_data_use_case: UseCase::ImportCertificateData.new(
-                          assessment_attribute_gateway: assessment_attribute_gateway,
+                          assessment_attribute_gateway:,
                           documents_gateway: instance_double(Gateway::DocumentsGateway),
                         )
   end

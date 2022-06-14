@@ -21,9 +21,9 @@ module UseCase
 
       assessment_ids.each do |assessment_id|
         meta_data = @api_gateway.fetch_meta_data(assessment_id)
-        unless (meta_data[:cancelledAt].nil? && meta_data[:notForIssueAt].nil?) || should_exclude?(meta_data: meta_data)
+        unless (meta_data[:cancelledAt].nil? && meta_data[:notForIssueAt].nil?) || should_exclude?(meta_data:)
           @assessment_attribute_gateway.delete_attributes_by_assessment assessment_id
-          @documents_gateway.delete_assessment assessment_id: assessment_id
+          @documents_gateway.delete_assessment assessment_id:
         end
 
         clear_assessment_from_recovery_list assessment_id
@@ -44,7 +44,7 @@ module UseCase
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt assessment_id: assessment_id, queue: :cancelled
+      @recovery_list_gateway.register_attempt assessment_id:, queue: :cancelled
     end
 
     def register_assessments_to_recovery_list(assessment_ids)

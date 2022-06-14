@@ -24,7 +24,7 @@ module UseCase
 
       assessment_ids.each do |assessment_id|
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
-        unless should_exclude?(meta_data: meta_data)
+        unless should_exclude?(meta_data:)
           if meta_data[:optOut]
             save_attribute_to_stores assessment_id: assessment_id,
                                      attribute: OPT_OUT,
@@ -33,7 +33,7 @@ module UseCase
             delete_attribute_from_stores assessment_id: assessment_id,
                                          attribute: OPT_OUT
 
-            save_attribute_to_stores assessment_id: assessment_id,
+            save_attribute_to_stores assessment_id:,
                                      attribute: OPT_IN,
                                      value: now_in_db_format
           end
@@ -53,14 +53,14 @@ module UseCase
   private
 
     def save_attribute_to_stores(assessment_id:, attribute:, value:)
-      @assessment_attribute_gateway.delete_attribute_value(assessment_id: assessment_id, attribute_name: attribute)
-      @assessment_attribute_gateway.add_attribute_value(assessment_id: assessment_id, attribute_name: attribute, attribute_value: value)
-      @documents_gateway.set_top_level_attribute(assessment_id: assessment_id, top_level_attribute: attribute, new_value: value)
+      @assessment_attribute_gateway.delete_attribute_value(assessment_id:, attribute_name: attribute)
+      @assessment_attribute_gateway.add_attribute_value(assessment_id:, attribute_name: attribute, attribute_value: value)
+      @documents_gateway.set_top_level_attribute(assessment_id:, top_level_attribute: attribute, new_value: value)
     end
 
     def delete_attribute_from_stores(assessment_id:, attribute:)
-      @assessment_attribute_gateway.delete_attribute_value(assessment_id: assessment_id, attribute_name: attribute)
-      @documents_gateway.delete_top_level_attribute(assessment_id: assessment_id, top_level_attribute: attribute)
+      @assessment_attribute_gateway.delete_attribute_value(assessment_id:, attribute_name: attribute)
+      @documents_gateway.delete_top_level_attribute(assessment_id:, top_level_attribute: attribute)
     end
 
     def now_in_db_format
@@ -72,7 +72,7 @@ module UseCase
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt assessment_id: assessment_id, queue: :opt_outs
+      @recovery_list_gateway.register_attempt assessment_id:, queue: :opt_outs
     end
 
     def register_assessments_to_recovery_list(assessment_ids)

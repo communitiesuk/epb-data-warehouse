@@ -1,11 +1,11 @@
 describe UseCase::ImportXmlCertificate, set_with_timecop: true do
   subject(:use_case) do
     described_class.new(
-      import_certificate_data_use_case: import_certificate_data_use_case,
+      import_certificate_data_use_case:,
       assessment_attribute_gateway: database_gateway,
-      certificate_gateway: certificate_gateway,
-      recovery_list_gateway: recovery_list_gateway,
-      logger: logger,
+      certificate_gateway:,
+      recovery_list_gateway:,
+      logger:,
     )
   end
 
@@ -83,7 +83,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
         it "forms together certificate data and passes it into the import certificate data use case" do
           use_case.execute(assessment_id)
           expect(import_certificate_data_use_case).to have_received(:execute).with(
-            assessment_id: assessment_id,
+            assessment_id:,
             certificate_data: include({
               "calculation_software_version" => "13.05r16",
               "created_at" => "2021-07-21 11:26:28",
@@ -108,14 +108,14 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
 
         it "does not produce a data structure containing a cancelled_at key" do
           expect(import_certificate_data_use_case).to have_received(:execute).with(
-            assessment_id: assessment_id,
+            assessment_id:,
             certificate_data: match(does_not_contain_key("cancelled_at")),
           )
         end
 
         it "does not produce a data structure containing an opt_out key" do
           expect(import_certificate_data_use_case).to have_received(:execute).with(
-            assessment_id: assessment_id,
+            assessment_id:,
             certificate_data: match(does_not_contain_key("opt_out")),
           )
         end
@@ -153,7 +153,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
 
       it "does not produce a data structure containing a created_at key" do
         expect(import_certificate_data_use_case).to have_received(:execute).with(
-          assessment_id: assessment_id,
+          assessment_id:,
           certificate_data: match(does_not_contain_key("created_at")),
         )
       end
@@ -199,7 +199,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
     end
 
     it "reports an attempt to process the assessment onto the recovery list" do
-      expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id: assessment_id, queue: :assessments)
+      expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id:, queue: :assessments)
     end
   end
 end

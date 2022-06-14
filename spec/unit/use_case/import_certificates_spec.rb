@@ -1,9 +1,9 @@
 describe UseCase::ImportCertificates do
   subject(:use_case) do
-    described_class.new import_xml_certificate_use_case: import_xml_certificate_use_case,
-                        queues_gateway: queues_gateway,
-                        recovery_list_gateway: recovery_list_gateway,
-                        logger: logger
+    described_class.new import_xml_certificate_use_case:,
+                        queues_gateway:,
+                        recovery_list_gateway:,
+                        logger:
   end
 
   let(:import_xml_certificate_use_case) do

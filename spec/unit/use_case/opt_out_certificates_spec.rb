@@ -1,11 +1,11 @@
 describe UseCase::OptOutCertificates, set_with_timecop: true do
   subject(:use_case) do
     described_class.new eav_gateway: database_gateway,
-                        documents_gateway: documents_gateway,
-                        queues_gateway: queues_gateway,
-                        certificate_gateway: certificate_gateway,
-                        recovery_list_gateway: recovery_list_gateway,
-                        logger: logger
+                        documents_gateway:,
+                        queues_gateway:,
+                        certificate_gateway:,
+                        recovery_list_gateway:,
+                        logger:
   end
 
   let(:database_gateway) do

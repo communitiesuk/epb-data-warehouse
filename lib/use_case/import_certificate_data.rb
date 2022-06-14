@@ -9,8 +9,8 @@ module UseCase
     end
 
     def execute(assessment_id:, certificate_data:)
-      save_eav_attributes(assessment_id: assessment_id, certificate: certificate_data)
-      save_document_data(assessment_id: assessment_id, certificate: certificate_data)
+      save_eav_attributes(assessment_id:, certificate: certificate_data)
+      save_document_data(assessment_id:, certificate: certificate_data)
     end
 
   private
@@ -22,7 +22,7 @@ module UseCase
         *certificate.map do |key, value|
           AttributeValue.new key.to_s, value, nil
         end,
-        assessment_id: assessment_id,
+        assessment_id:,
       )
     rescue Boundary::BadAttributesWrite => e
       report_to_sentry e
@@ -30,7 +30,7 @@ module UseCase
 
     def save_document_data(assessment_id:, certificate:)
       Helper::Stopwatch.log_elapsed_time @logger, "save document for assessment #{assessment_id}" do
-        documents_gateway.add_assessment(assessment_id: assessment_id, document: certificate)
+        documents_gateway.add_assessment(assessment_id:, document: certificate)
       end
     end
   end

@@ -34,9 +34,9 @@ RSpec.describe XmlPresenter::ToWarehouse::BaseConfiguration do
         preferred_keys: { "Outdated-Term" => "newfangled_term" },
         list_nodes: %w[List-1 List-2],
         rootless_list_nodes: { "A-Random-List-Item" => "random_list" },
-        specified_report: { root_node: "My-Root", sub_node: "Id-Node", sub_node_value: sub_node_value },
+        specified_report: { root_node: "My-Root", sub_node: "Id-Node", sub_node_value: },
       }
-      expect(ExampleConfig.new.to_args(sub_node_value: sub_node_value)).to eq expected_args
+      expect(ExampleConfig.new.to_args(sub_node_value:)).to eq expected_args
     end
   end
 end

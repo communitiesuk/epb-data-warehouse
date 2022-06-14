@@ -7,7 +7,7 @@ describe Gateway::AssessmentLookupsGateway do
   context "when there is no matching lookup" do
     it "returns an empty array" do
       result = gateway.get_lookups_by_attribute_and_key(
-        attribute_id: attribute_id,
+        attribute_id:,
         lookup_key: "my_lookup",
       )
       expect(result).to be_empty
@@ -19,7 +19,7 @@ describe Gateway::AssessmentLookupsGateway do
       Domain::AssessmentLookup.new(
         lookup_key: "my_lookup",
         lookup_value: "my_value",
-        attribute_id: attribute_id,
+        attribute_id:,
         type_of_assessment: "RdSAP",
       )
     end
@@ -30,7 +30,7 @@ describe Gateway::AssessmentLookupsGateway do
 
     it "returns the matching lookup" do
       result = gateway.get_lookups_by_attribute_and_key(
-        attribute_id: attribute_id,
+        attribute_id:,
         lookup_key: "my_lookup",
       )
       expect(result.first).to eq(lookup)
@@ -53,7 +53,7 @@ describe Gateway::AssessmentLookupsGateway do
           gateway.add_lookup(Domain::AssessmentLookup.new(
                                lookup_key: key,
                                lookup_value: value,
-                               attribute_id: attribute_id,
+                               attribute_id:,
                                type_of_assessment: "RdSAP",
                              ))
         end
@@ -81,7 +81,7 @@ describe Gateway::AssessmentLookupsGateway do
           gateway.add_lookup(Domain::AssessmentLookup.new(
                                lookup_key: key,
                                lookup_value: value,
-                               attribute_id: attribute_id,
+                               attribute_id:,
                                type_of_assessment: "RdSAP",
                              ))
           gateway.truncate_tables

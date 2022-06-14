@@ -22,10 +22,10 @@ module UseCase
 
         if @xsd_presenter.variation_between_schema_versions?(enum_hashes)
           enum_hashes.each do |schema_version, values|
-            save_lookup(values: values, attribute: attribute, schema_version: schema_version)
+            save_lookup(values:, attribute:, schema_version:)
           end
         else
-          save_lookup(values: enum_hashes.first[1], attribute: attribute)
+          save_lookup(values: enum_hashes.first[1], attribute:)
         end
       end
     end
@@ -39,9 +39,9 @@ module UseCase
         @assessment_lookups_gateway.add_lookup(Domain::AssessmentLookup.new(
                                                  lookup_key: key.to_s,
                                                  lookup_value: value.to_s,
-                                                 attribute_id: attribute_id,
+                                                 attribute_id:,
                                                  type_of_assessment: attribute["type_of_assessment"] || nil,
-                                                 schema_version: schema_version,
+                                                 schema_version:,
                                                ))
       end
     end

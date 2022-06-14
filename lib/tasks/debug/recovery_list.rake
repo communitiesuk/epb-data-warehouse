@@ -9,13 +9,13 @@ namespace :debug do
       case input
       when "1"
         recovery_list.register_assessments(assessment_id, queue: :assessments)
-        puts "registered! retry count: #{recovery_list.retries_left(assessment_id: assessment_id, queue: :assessments)}"
+        puts "registered! retry count: #{recovery_list.retries_left(assessment_id:, queue: :assessments)}"
       when "2"
-        recovery_list.register_attempt(assessment_id: assessment_id, queue: :assessments)
-        puts "registered attempt! retry count: #{recovery_list.retries_left(assessment_id: assessment_id, queue: :assessments)}"
+        recovery_list.register_attempt(assessment_id:, queue: :assessments)
+        puts "registered attempt! retry count: #{recovery_list.retries_left(assessment_id:, queue: :assessments)}"
       when "3"
         recovery_list.remove_assessment(assessment_id, queue: :assessments)
-        puts "removed! retry count: #{recovery_list.retries_left(assessment_id: assessment_id, queue: :assessments)}"
+        puts "removed! retry count: #{recovery_list.retries_left(assessment_id:, queue: :assessments)}"
       when "4"
         puts "bye!"
         break

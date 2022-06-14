@@ -78,7 +78,7 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
 
   context "when adding a new record to the documents table" do
     before do
-      gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
+      gateway.add_assessment(assessment_id:, document: assessment_data)
     end
 
     it "adds it in a way that can be read back out as a whole hash" do
@@ -92,8 +92,8 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
 
   context "when adding a new record and then updating with a new set of data" do
     before do
-      gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
-      gateway.add_assessment(assessment_id: assessment_id, document: updated_assessment_data)
+      gateway.add_assessment(assessment_id:, document: assessment_data)
+      gateway.add_assessment(assessment_id:, document: updated_assessment_data)
     end
 
     it "updates the record so the stored data is the updated version" do
@@ -104,8 +104,8 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
   context "when adding a record and then setting an individual attribute on the record" do
     context "with a simple attribute value" do
       before do
-        gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
-        gateway.set_top_level_attribute(assessment_id: assessment_id, top_level_attribute: "tenure", new_value: "5")
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        gateway.set_top_level_attribute(assessment_id:, top_level_attribute: "tenure", new_value: "5")
       end
 
       it "updates the record so the stored data is the updated version" do
@@ -115,8 +115,8 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
 
     context "with a datetime attribute value" do
       before do
-        gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
-        gateway.set_top_level_attribute(assessment_id: assessment_id, top_level_attribute: "tenure", new_value: "2021-11-26T14:13:11.000Z")
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        gateway.set_top_level_attribute(assessment_id:, top_level_attribute: "tenure", new_value: "2021-11-26T14:13:11.000Z")
       end
 
       it "updates the record so the stored data is the updated version" do
@@ -127,8 +127,8 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
 
   context "when adding a record and then deleting a top-level attribute" do
     before do
-      gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
-      gateway.delete_top_level_attribute(assessment_id: assessment_id, top_level_attribute: "language_code")
+      gateway.add_assessment(assessment_id:, document: assessment_data)
+      gateway.delete_top_level_attribute(assessment_id:, top_level_attribute: "language_code")
     end
 
     it "deletes the value for the top-level attribute" do
@@ -138,8 +138,8 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
 
   context "when adding a record and then deleting it" do
     before do
-      gateway.add_assessment(assessment_id: assessment_id, document: assessment_data)
-      gateway.delete_assessment(assessment_id: assessment_id)
+      gateway.add_assessment(assessment_id:, document: assessment_data)
+      gateway.delete_assessment(assessment_id:)
     end
 
     it "deletes the whole assessment" do

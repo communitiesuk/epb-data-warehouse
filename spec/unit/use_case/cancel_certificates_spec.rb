@@ -3,11 +3,11 @@ require "time"
 describe UseCase::CancelCertificates do
   subject(:use_case) do
     described_class.new eav_gateway: eav_database_gateway,
-                        queues_gateway: queues_gateway,
-                        api_gateway: api_gateway,
-                        documents_gateway: documents_gateway,
-                        recovery_list_gateway: recovery_list_gateway,
-                        logger: logger
+                        queues_gateway:,
+                        api_gateway:,
+                        documents_gateway:,
+                        recovery_list_gateway:,
+                        logger:
   end
 
   let(:eav_database_gateway) do

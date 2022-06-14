@@ -29,11 +29,11 @@ class Container
 
   def self.cancel_certificates_use_case
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
-                                                                      queues_gateway: queues_gateway,
+                                                                      queues_gateway:,
                                                                       api_gateway: register_api_gateway,
-                                                                      documents_gateway: documents_gateway,
-                                                                      recovery_list_gateway: recovery_list_gateway,
-                                                                      logger: logger
+                                                                      documents_gateway:,
+                                                                      recovery_list_gateway:,
+                                                                      logger:
   end
 
   def self.fetch_certificate_use_case
@@ -42,32 +42,32 @@ class Container
 
   def self.import_certificate_data_use_case
     @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway,
-                                                                             documents_gateway: documents_gateway,
-                                                                             logger: logger
+                                                                             documents_gateway:,
+                                                                             logger:
   end
 
   def self.import_certificates_use_case
-    @import_certificates_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
-                                                                      queues_gateway: queues_gateway,
-                                                                      recovery_list_gateway: recovery_list_gateway,
-                                                                      logger: logger
+    @import_certificates_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case:,
+                                                                      queues_gateway:,
+                                                                      recovery_list_gateway:,
+                                                                      logger:
   end
 
   def self.import_xml_certificate_use_case
-    @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case: import_certificate_data_use_case,
+    @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case:,
                                                                            assessment_attribute_gateway: assessment_attributes_gateway,
                                                                            certificate_gateway: register_api_gateway,
-                                                                           recovery_list_gateway: recovery_list_gateway,
-                                                                           logger: logger
+                                                                           recovery_list_gateway:,
+                                                                           logger:
   end
 
   def self.opt_out_certificates_use_case
     @opt_out_certificates_use_case = UseCase::OptOutCertificates.new eav_gateway: assessment_attributes_gateway,
-                                                                     documents_gateway: documents_gateway,
-                                                                     queues_gateway: queues_gateway,
+                                                                     documents_gateway:,
+                                                                     queues_gateway:,
                                                                      certificate_gateway: register_api_gateway,
-                                                                     recovery_list_gateway: recovery_list_gateway,
-                                                                     logger: logger
+                                                                     recovery_list_gateway:,
+                                                                     logger:
   end
 
   def self.pull_queues_use_case
