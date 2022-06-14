@@ -63,7 +63,7 @@ GEM
       concurrent-ruby (~> 1.0)
     jwt (2.3.0)
     minitest (5.15.0)
-    mock_redis (0.31.0)
+    mock_redis (0.32.0)
       ruby2_keywords
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -166,7 +166,7 @@ DEPENDENCIES
   database_cleaner-active_record (~> 2.0, >= 2.0.1)
   epb-auth-tools (~> 1.0)
   epb_view_models (~> 1.0)
-  mock_redis (~> 0.31.0)
+  mock_redis (~> 0.32.0)
   nokogiri (~> 1.13)
   parallel (~> 1.22)
   pg (~> 1.3)
