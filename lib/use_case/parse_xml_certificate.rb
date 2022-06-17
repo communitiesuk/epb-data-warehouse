@@ -35,6 +35,7 @@ module UseCase
         "RdSAP-Schema-17.1" => XmlPresenter::Rdsap::Rdsap17ExportConfiguration,
         "RdSAP-Schema-17.0" => XmlPresenter::Rdsap::Rdsap17ExportConfiguration,
         "SAP-Schema-18.0.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
+        "SAP-Schema-19.0.0" => XmlPresenter::Sap::Sap1900ExportConfiguration,
         "SAP-Schema-17.1" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-NI-18.0.0" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
         "SAP-Schema-NI-17.4" => XmlPresenter::Sap::Sap174NiExportConfiguration,
