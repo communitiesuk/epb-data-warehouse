@@ -1,0 +1,323 @@
+<RdSAP-Report xmlns="http://www.epcregister.com/xsd/rdsap">
+  <Calculation-Software-Name>NHER EPC Online</Calculation-Software-Name>
+  <Calculation-Software-Version>9.0.0</Calculation-Software-Version>
+  <User-Interface-Name>NES Touch</User-Interface-Name>
+  <User-Interface-Version>2.2</User-Interface-Version>
+  <Schema-Version-Original>LIG-17.0</Schema-Version-Original>
+  <SAP-Version>9.92</SAP-Version>
+  <PCDF-Revision-Number>383</PCDF-Revision-Number>
+  <Energy-Assessment>
+    <Property-Summary>
+      <Wall>
+        <Description language="1">System built, with internal insulation</Description>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+      </Wall>
+      <Roof>
+        <Description language="1">(another dwelling above)</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Roof>
+      <Floor>
+        <Description language="1">(another dwelling below)</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Floor>
+      <Window>
+        <Description language="1">Fully double glazed</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+      </Window>
+      <Main-Heating>
+        <Description language="1">Electric storage heaters</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
+      </Main-Heating>
+      <Main-Heating-Controls>
+        <Description language="1">Manual charge control</Description>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
+      </Main-Heating-Controls>
+      <Hot-Water>
+        <Description language="1">Electric immersion, off-peak</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
+      </Hot-Water>
+      <Lighting>
+        <Description language="1">Low energy lighting in 57% of fixed outlets</Description>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+      </Lighting>
+      <Secondary-Heating>
+        <Description language="1">Portable electric heaters (assumed)</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Secondary-Heating>
+      <Has-Hot-Water-Cylinder>true</Has-Hot-Water-Cylinder>
+      <Has-Heated-Separate-Conservatory>false</Has-Heated-Separate-Conservatory>
+      <Dwelling-Type language="1">Mid-floor flat</Dwelling-Type>
+      <Total-Floor-Area>55</Total-Floor-Area>
+      <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
+      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
+    </Property-Summary>
+    <Energy-Use>
+      <Energy-Rating-Current>66</Energy-Rating-Current>
+      <Energy-Rating-Potential>79</Energy-Rating-Potential>
+      <Environmental-Impact-Current>48</Environmental-Impact-Current>
+      <Environmental-Impact-Potential>66</Environmental-Impact-Potential>
+      <Energy-Consumption-Current>427</Energy-Consumption-Current>
+      <Energy-Consumption-Potential>267</Energy-Consumption-Potential>
+      <CO2-Emissions-Current>3.9</CO2-Emissions-Current>
+      <CO2-Emissions-Current-Per-Floor-Area>72</CO2-Emissions-Current-Per-Floor-Area>
+      <CO2-Emissions-Potential>2.5</CO2-Emissions-Potential>
+      <Lighting-Cost-Current currency="GBP">61</Lighting-Cost-Current>
+      <Lighting-Cost-Potential currency="GBP">42</Lighting-Cost-Potential>
+      <Heating-Cost-Current currency="GBP">214</Heating-Cost-Current>
+      <Heating-Cost-Potential currency="GBP">216</Heating-Cost-Potential>
+      <Hot-Water-Cost-Current currency="GBP">396</Hot-Water-Cost-Current>
+      <Hot-Water-Cost-Potential currency="GBP">154</Hot-Water-Cost-Potential>
+      <Energy-Rating-Average>60</Energy-Rating-Average>
+    </Energy-Use>
+    <Suggested-Improvements>
+      <Improvement>
+        <Sequence>1</Sequence>
+        <Improvement-Category>5</Improvement-Category>
+        <Green-Deal-Category>3</Green-Deal-Category>
+        <Improvement-Type>C</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>1</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">158</Typical-Saving>
+        <Indicative-Cost>£15 - £30</Indicative-Cost>
+        <Energy-Performance-Rating>74</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>60</Environmental-Impact-Rating>
+      </Improvement>
+      <Improvement>
+        <Sequence>2</Sequence>
+        <Improvement-Category>5</Improvement-Category>
+        <Green-Deal-Category>1</Green-Deal-Category>
+        <Improvement-Type>E</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>35</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">14</Typical-Saving>
+        <Indicative-Cost>£15</Indicative-Cost>
+        <Energy-Performance-Rating>74</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>60</Environmental-Impact-Rating>
+      </Improvement>
+      <Improvement>
+        <Sequence>3</Sequence>
+        <Improvement-Category>5</Improvement-Category>
+        <Green-Deal-Category>2</Green-Deal-Category>
+        <Improvement-Type>L2</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>60</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">64</Typical-Saving>
+        <Indicative-Cost>£1,200 - £1,800</Indicative-Cost>
+        <Energy-Performance-Rating>78</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
+      </Improvement>
+      <Improvement>
+        <Sequence>4</Sequence>
+        <Improvement-Category>5</Improvement-Category>
+        <Green-Deal-Category>2</Green-Deal-Category>
+        <Improvement-Type>X</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>48</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">22</Typical-Saving>
+        <Indicative-Cost>£1,000</Indicative-Cost>
+        <Energy-Performance-Rating>79</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>66</Environmental-Impact-Rating>
+      </Improvement>
+    </Suggested-Improvements>
+    <Alternative-Improvements>
+      <Improvement>
+        <Sequence>1</Sequence>
+        <Improvement-Category>6</Improvement-Category>
+        <Green-Deal-Category>NI</Green-Deal-Category>
+        <Improvement-Type>J2</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>54</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">141</Typical-Saving>
+        <Energy-Performance-Rating>81</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>96</Environmental-Impact-Rating>
+      </Improvement>
+      <Improvement>
+        <Sequence>2</Sequence>
+        <Improvement-Category>6</Improvement-Category>
+        <Green-Deal-Category>NI</Green-Deal-Category>
+        <Improvement-Type>Z1</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>51</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">118</Typical-Saving>
+        <Energy-Performance-Rating>80</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>83</Environmental-Impact-Rating>
+      </Improvement>
+    </Alternative-Improvements>
+    <Green-Deal-Package>
+      <Green-Deal-Improvement>
+        <Improvement-Type>C</Improvement-Type>
+        <Improvement-Number>1</Improvement-Number>
+      </Green-Deal-Improvement>
+      <Electricity-Saving currency="GBP">158</Electricity-Saving>
+      <Gas-Saving currency="GBP">0</Gas-Saving>
+      <Other-Fuel-Saving currency="GBP">0</Other-Fuel-Saving>
+    </Green-Deal-Package>
+    <Renewable-Heat-Incentive>
+      <Space-Heating-Existing-Dwelling>2415</Space-Heating-Existing-Dwelling>
+      <Water-Heating>4818</Water-Heating>
+    </Renewable-Heat-Incentive>
+  </Energy-Assessment>
+  <SAP-Data>
+    <SAP-Property-Details>
+      <Property-Type>2</Property-Type>
+      <Built-Form>2</Built-Form>
+      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
+      <Multiple-Glazing-Type>3</Multiple-Glazing-Type>
+      <PVC-Window-Frames>true</PVC-Window-Frames>
+      <Glazing-Gap>16+</Glazing-Gap>
+      <Extensions-Count>0</Extensions-Count>
+      <Glazed-Area>1</Glazed-Area>
+      <Door-Count>2</Door-Count>
+      <Insulated-Door-Count>0</Insulated-Door-Count>
+      <Percent-Draughtproofed>100</Percent-Draughtproofed>
+      <Habitable-Room-Count>3</Habitable-Room-Count>
+      <Heated-Room-Count>1</Heated-Room-Count>
+      <Fixed-Lighting-Outlets-Count>7</Fixed-Lighting-Outlets-Count>
+      <Low-Energy-Fixed-Lighting-Outlets-Count>4</Low-Energy-Fixed-Lighting-Outlets-Count>
+      <Measurement-Type>1</Measurement-Type>
+      <Mechanical-Ventilation>0</Mechanical-Ventilation>
+      <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+      <Solar-Water-Heating>N</Solar-Water-Heating>
+      <Conservatory-Type>1</Conservatory-Type>
+      <SAP-Building-Parts>
+        <SAP-Building-Part>
+          <Building-Part-Number>1</Building-Part-Number>
+          <Construction-Age-Band>D</Construction-Age-Band>
+          <Wall-Construction>8</Wall-Construction>
+          <Wall-Insulation-Type>3</Wall-Insulation-Type>
+          <Wall-Insulation-Thickness>50mm</Wall-Insulation-Thickness>
+          <Wall-Thickness-Measured>Y</Wall-Thickness-Measured>
+          <Wall-Thickness>240</Wall-Thickness>
+          <Party-Wall-Construction>0</Party-Wall-Construction>
+          <Roof-Construction>3</Roof-Construction>
+          <Floor-Heat-Loss>6</Floor-Heat-Loss>
+          <SAP-Floor-Dimensions>
+            <SAP-Floor-Dimension>
+              <Floor>0</Floor>
+              <Heat-Loss-Perimeter quantity="metres">23.3</Heat-Loss-Perimeter>
+              <Total-Floor-Area quantity="square metres">54.6</Total-Floor-Area>
+              <Room-Height quantity="metres">2.4</Room-Height>
+              <Party-Wall-Length quantity="metres">7.3</Party-Wall-Length>
+            </SAP-Floor-Dimension>
+          </SAP-Floor-Dimensions>
+          <Identifier>Main Dwelling</Identifier>
+          <Roof-Insulation-Location>ND</Roof-Insulation-Location>
+          <Roof-Insulation-Thickness>ND</Roof-Insulation-Thickness>
+          <Wall-Dry-Lined>N</Wall-Dry-Lined>
+        </SAP-Building-Part>
+      </SAP-Building-Parts>
+      <SAP-Flat-Details>
+        <Level>2</Level>
+        <Flat-Location>01</Flat-Location>
+        <Heat-Loss-Corridor>0</Heat-Loss-Corridor>
+        <Top-Storey>N</Top-Storey>
+      </SAP-Flat-Details>
+      <SAP-Heating>
+        <Water-Heating-Code>903</Water-Heating-Code>
+        <Water-Heating-Fuel>29</Water-Heating-Fuel>
+        <Immersion-Heating-Type>1</Immersion-Heating-Type>
+        <Cylinder-Size>2</Cylinder-Size>
+        <Cylinder-Insulation-Type>0</Cylinder-Insulation-Type>
+        <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
+        <Main-Heating-Details>
+          <Main-Heating>
+            <Main-Heating-Number>1</Main-Heating-Number>
+            <Main-Heating-Fraction>1</Main-Heating-Fraction>
+            <Main-Heating-Category>7</Main-Heating-Category>
+            <Main-Fuel-Type>29</Main-Fuel-Type>
+            <Main-Heating-Control>2401</Main-Heating-Control>
+            <Main-Heating-Data-Source>2</Main-Heating-Data-Source>
+            <SAP-Main-Heating-Code>402</SAP-Main-Heating-Code>
+            <Has-FGHRS>N</Has-FGHRS>
+            <Emitter-Temperature>NA</Emitter-Temperature>
+            <Heat-Emitter-Type>0</Heat-Emitter-Type>
+          </Main-Heating>
+        </Main-Heating-Details>
+        <Instantaneous-WWHRS>
+          <Rooms-With-Bath-And-Or-Shower>1</Rooms-With-Bath-And-Or-Shower>
+          <Rooms-With-Mixer-Shower-No-Bath>0</Rooms-With-Mixer-Shower-No-Bath>
+          <Rooms-With-Bath-And-Mixer-Shower>0</Rooms-With-Bath-And-Mixer-Shower>
+        </Instantaneous-WWHRS>
+      </SAP-Heating>
+      <SAP-Energy-Source>
+        <Wind-Turbines-Count>0</Wind-Turbines-Count>
+        <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
+        <Meter-Type>1</Meter-Type>
+        <Mains-Gas>N</Mains-Gas>
+        <Photovoltaic-Supply>
+          <None-Or-No-Details>
+            <Percent-Roof-Area>0</Percent-Roof-Area>
+            <PV-Connection>0</PV-Connection>
+          </None-Or-No-Details>
+        </Photovoltaic-Supply>
+      </SAP-Energy-Source>
+      <Low-Energy-Lighting>57</Low-Energy-Lighting>
+    </SAP-Property-Details>
+  </SAP-Data>
+  <Report-Header>
+    <RRN>6666-5555-4444-3333-2222</RRN>
+    <Inspection-Date>2016-01-12</Inspection-Date>
+    <Report-Type>2</Report-Type>
+    <Completion-Date>2016-01-12</Completion-Date>
+    <Registration-Date>2016-01-12</Registration-Date>
+    <Status>entered</Status>
+    <Language-Code>1</Language-Code>
+    <Tenure>2</Tenure>
+    <Transaction-Type>8</Transaction-Type>
+    <Property-Type>2</Property-Type>
+    <Energy-Assessor>
+      <Name>Janice Testerson</Name>
+      <Notify-Lodgement>N</Notify-Lodgement>
+      <Contact-Address>
+        <Address-Line-1>2 Council Bluffs</Address-Line-1>
+        <Address-Line-2>Village</Address-Line-2>
+        <Post-Town>Posttown</Post-Town>
+        <Postcode>PT3 6GS</Postcode>
+      </Contact-Address>
+      <Scheme-Web-Site>www.scheme.co.uk</Scheme-Web-Site>
+      <E-Mail>jtesterson@example.co.uk</E-Mail>
+      <Telephone>07855555555</Telephone>
+      <Company-Name>Scheme</Company-Name>
+      <Scheme-Name>Another Scheme</Scheme-Name>
+      <Identification-Number>
+        <Certificate-Number>SCHE030303</Certificate-Number>
+      </Identification-Number>
+    </Energy-Assessor>
+    <Property>
+      <Address>
+        <Address-Line-1>42, Moria Mines Lane</Address-Line-1>
+        <Post-Town>POSTTOWN</Post-Town>
+        <Postcode>PT5 4RZ</Postcode>
+      </Address>
+      <UPRN>4444444444</UPRN>
+    </Property>
+    <Region-Code>3</Region-Code>
+    <Country-Code>EAW</Country-Code>
+    <Related-Party-Disclosure>
+      <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
+    </Related-Party-Disclosure>
+  </Report-Header>
+  <Insurance-Details>
+    <Insurer>Acme</Insurer>
+    <Policy-No>DFGDFGDF8</Policy-No>
+    <Effective-Date>2012-11-01</Effective-Date>
+    <Expiry-Date>2017-10-30</Expiry-Date>
+    <PI-Limit>1000000</PI-Limit>
+  </Insurance-Details>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
+</RdSAP-Report>
