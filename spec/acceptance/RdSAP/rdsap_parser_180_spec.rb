@@ -1,4 +1,4 @@
-RSpec.describe "the parser and the RdSAP configuration for 18.0.0" do
+RSpec.describe "the parser and the RdSAP configuration for 18.0" do
   let(:use_case) { UseCase::ParseXmlCertificate.new }
 
   context "when loading XML from RdSAP" do
@@ -211,7 +211,7 @@ RSpec.describe "the parser and the RdSAP configuration for 18.0.0" do
                            { "none_or_no_details" => { "percent_roof_area" => 0, "pv_connection" => 0 } } } }
 
       expect(use_case.execute(xml: rdsap,
-                              schema_type: "RdSAP-Schema-19.0",
+                              schema_type: "RdSAP-Schema-18.0",
                               assessment_id: "0000-1111-2222-3333-4444")).to eq(expectation)
     end
   end
