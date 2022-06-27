@@ -5,9 +5,16 @@ describe UseCase::ImportCertificateData do
 
   let(:documents_gateway) { instance_double(Gateway::DocumentsGateway) }
 
+  let(:logger) do
+    logger = instance_double(Logger)
+    allow(logger).to receive(:error)
+    logger
+  end
+
   let!(:use_case) do
     described_class.new assessment_attribute_gateway: assessment_attributes_gateway,
-                        documents_gateway:
+                        documents_gateway:,
+                        logger:
   end
 
   before do

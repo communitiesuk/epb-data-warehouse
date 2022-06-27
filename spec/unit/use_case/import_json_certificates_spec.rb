@@ -4,6 +4,7 @@ describe UseCase::ImportJsonCertificates do
                         import_certificate_data_use_case: UseCase::ImportCertificateData.new(
                           assessment_attribute_gateway:,
                           documents_gateway: instance_double(Gateway::DocumentsGateway),
+                          logger:,
                         )
   end
 
@@ -11,6 +12,12 @@ describe UseCase::ImportJsonCertificates do
 
   let(:assessment_attribute_gateway) do
     instance_double(Gateway::AssessmentAttributesGateway)
+  end
+
+  let(:logger) do
+    logger = instance_double(Logger)
+    allow(logger).to receive(:error)
+    logger
   end
 
   let!(:files) do
@@ -32,6 +39,7 @@ describe UseCase::ImportJsonCertificates do
 
   context "when use case uses the actual attribute gateway" do
     before do
+      allow(Logger).to receive(:new).and_return(logger)
       use_case =
         described_class.new(
           file_gateway: directory_gateway,

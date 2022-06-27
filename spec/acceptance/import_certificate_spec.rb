@@ -13,8 +13,11 @@ describe "Acceptance::ImportCertificate" do
 
   let(:import_xml_certificate_use_case) do
     eav_gateway = Gateway::AssessmentAttributesGateway.new
-    certificate_data_use_case = UseCase::ImportCertificateData.new assessment_attribute_gateway: eav_gateway,
-                                                                   documents_gateway: Gateway::DocumentsGateway.new
+    certificate_data_use_case = UseCase::ImportCertificateData.new(
+      assessment_attribute_gateway: eav_gateway,
+      documents_gateway: Gateway::DocumentsGateway.new,
+      logger:,
+    )
     UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
                                       assessment_attribute_gateway: eav_gateway,
                                       certificate_gateway:,
@@ -31,6 +34,12 @@ describe "Acceptance::ImportCertificate" do
 
   let(:recovery_list_gateway) do
     Gateway::RecoveryListGateway.new(redis_client: redis)
+  end
+
+  let(:logger) do
+    logger = instance_double(Logger)
+    allow(logger).to receive(:error)
+    logger
   end
 
   let(:redis) { MockRedis.new }
