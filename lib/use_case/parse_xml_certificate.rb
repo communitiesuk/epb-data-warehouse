@@ -31,6 +31,7 @@ module UseCase
         "RdSAP-Schema-19.0" => XmlPresenter::Rdsap::Rdsap19ExportConfiguration,
         "RdSAP-Schema-NI-20.0.0" => XmlPresenter::Rdsap::Rdsap20NiExportConfiguration,
         "RdSAP-Schema-NI-19.0" => XmlPresenter::Rdsap::Rdsap19NiExportConfiguration,
+        "RdSAP-Schema-NI-18.0" => XmlPresenter::Rdsap::Rdsap18NiExportConfiguration,
         "RdSAP-Schema-18.0" => XmlPresenter::Rdsap::Rdsap18ExportConfiguration,
         "RdSAP-Schema-17.1" => XmlPresenter::Rdsap::Rdsap17ExportConfiguration,
         "RdSAP-Schema-17.0" => XmlPresenter::Rdsap::Rdsap17ExportConfiguration,
