@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_01_13_151150) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_27_143250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "import_state", ["files_ready_for_import", "imported"]
 
   create_table "assessment_attribute_lookups", force: :cascade do |t|
     t.bigint "attribute_id", null: false
@@ -50,6 +54,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_13_151150) do
     t.jsonb "document", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "((document ->> 'assessment_type'::text))", name: "index_document_assessment_type"
+    t.index "((document ->> 'postcode'::text))", name: "index_document_postcode"
+    t.index "((document ->> 'registration_date'::text))", name: "index_document_registration_date"
+    t.index "((document ->> 'schema_type'::text))", name: "index_document_schema_type"
   end
 
   create_table "assessment_lookups", force: :cascade do |t|
@@ -66,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_13_151150) do
     t.jsonb "areas", null: false
     t.integer "version_id", null: false
     t.index ["uprn"], name: "index_ons_uprn_directory_on_uprn"
+  end
+
+  create_table "ons_uprn_directory_imports", id: :serial, force: :cascade do |t|
+    t.string "version_month", limit: 7, null: false
+    t.enum "import_state", null: false, enum_type: "import_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["version_month"], name: "index_ons_uprn_directory_imports_on_version_month", unique: true
   end
 
   create_table "ons_uprn_directory_versions", id: :serial, force: :cascade do |t|
