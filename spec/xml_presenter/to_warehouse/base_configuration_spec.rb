@@ -6,6 +6,7 @@ class ExampleConfig < XmlPresenter::ToWarehouse::BaseConfiguration
   list_nodes %w[List-1 List-2]
   rootless_list_nodes({ "A-Random-List-Item" => "random_list" })
   pick_root_node root_node: "My-Root", sub_node: "Id-Node"
+  ignored_attributes %w[ignored]
 end
 
 RSpec.describe XmlPresenter::ToWarehouse::BaseConfiguration do
@@ -18,6 +19,7 @@ RSpec.describe XmlPresenter::ToWarehouse::BaseConfiguration do
         preferred_keys: { "Outdated-Term" => "newfangled_term" },
         list_nodes: %w[List-1 List-2],
         rootless_list_nodes: { "A-Random-List-Item" => "random_list" },
+        ignored_attributes: %w[ignored],
       }
       expect(ExampleConfig.new.to_args).to eq expected_args
     end
@@ -35,6 +37,7 @@ RSpec.describe XmlPresenter::ToWarehouse::BaseConfiguration do
         list_nodes: %w[List-1 List-2],
         rootless_list_nodes: { "A-Random-List-Item" => "random_list" },
         specified_report: { root_node: "My-Root", sub_node: "Id-Node", sub_node_value: },
+        ignored_attributes: %w[ignored],
       }
       expect(ExampleConfig.new.to_args(sub_node_value:)).to eq expected_args
     end

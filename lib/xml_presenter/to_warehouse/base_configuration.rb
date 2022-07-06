@@ -8,7 +8,7 @@ module XmlPresenter
       end
 
       class << self
-        KEYS = %i[excludes includes bases preferred_keys list_nodes rootless_list_nodes].freeze
+        KEYS = %i[excludes includes bases preferred_keys list_nodes rootless_list_nodes ignored_attributes].freeze
 
         KEYS.each do |key|
           define_method key do |arg|

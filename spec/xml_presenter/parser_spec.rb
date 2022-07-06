@@ -282,4 +282,20 @@ RSpec.describe XmlPresenter::Parser do
       expect(parser.parse(xml)).to eq expected
     end
   end
+
+  context "with ignored attributes defined" do
+    let(:parser) { described_class.new ignored_attributes: %w[ignored] }
+
+    it "parses the report ignoring the ignored attributes" do
+      xml = '<Root><Money currency="GBP">34.25</Money><Description ignored="ignored">i am the description</Description></Root>'
+      expected = {
+        "money" => {
+          "currency" => "GBP",
+          "value" => 34.25,
+        },
+        "description" => "i am the description",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end
