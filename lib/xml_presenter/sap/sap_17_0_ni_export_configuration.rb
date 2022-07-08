@@ -1,6 +1,6 @@
 module XmlPresenter
   module Sap
-    class Sap172NiExportConfiguration < Sap170NiBase
+    class Sap170NiExportConfiguration < Sap170NiBase
       setup
     end
   end
