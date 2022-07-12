@@ -34,9 +34,9 @@ RSpec.describe "the parser and the SAP configuration" do
                       "region_code" => 16,
                       "country_code" => "ENG",
                       "assessment_date" => "2022-05-09",
-                      "walls" => [{ "description" => "²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
-                      "roofs" => [{ "description" => "²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
-                      "floors" => [{ "description" => "²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
+                      "walls" => [{ "description" => "Average thermal transmittance 0.18 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
+                      "roofs" => [{ "description" => "Average thermal transmittance 0.13 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
+                      "floors" => [{ "description" => "Average thermal transmittance 0.12 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
                       "windows" =>
                        { "description" => "High performance glazing", "energy_efficiency_rating" => 0, "environmental_efficiency_rating" => 5 },
                       "main_heating" =>
@@ -58,7 +58,7 @@ RSpec.describe "the parser and the SAP configuration" do
                          "energy_efficiency_rating" => 5,
                          "environmental_efficiency_rating" => 5 },
                       "air_tightness" =>
-                       { "description" => "³/h.m² (assumed)", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 },
+                       { "description" => "Air permeability 2.0 m³/h.m² (assumed)", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 },
                       "has_fixed_air_conditioning" => "false",
                       "has_hot_water_cylinder" => "false",
                       "has_heated_separate_conservatory" => "false",

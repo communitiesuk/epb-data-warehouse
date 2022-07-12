@@ -32,15 +32,15 @@ RSpec.describe "the parser and the SAP configuration" do
                       "country_code" => "ENG",
                       "assessment_date" => "2021-01-01",
                       "walls" =>
-                       [{ "description" => "²K",
+                       [{ "description" => "Average thermal transmittance 0.10 W/m²K",
                           "energy_efficiency_rating" => 5,
                           "environmental_efficiency_rating" => 5 }],
                       "roofs" =>
-                       [{ "description" => "²K",
+                       [{ "description" => "Average thermal transmittance 0.10 W/m²K",
                           "energy_efficiency_rating" => 5,
                           "environmental_efficiency_rating" => 5 }],
                       "floors" =>
-                       [{ "description" => "²K",
+                       [{ "description" => "Average thermal transmittance 0.09 W/m²K",
                           "energy_efficiency_rating" => 5,
                           "environmental_efficiency_rating" => 5 }],
                       "windows" =>
@@ -68,7 +68,7 @@ RSpec.describe "the parser and the SAP configuration" do
                          "energy_efficiency_rating" => 5,
                          "environmental_efficiency_rating" => 5 },
                       "air_tightness" =>
-                       { "description" => "³/h.m² (as tested)",
+                       { "description" => "Air permeability 0.7 m³/h.m² (as tested)",
                          "energy_efficiency_rating" => 5,
                          "environmental_efficiency_rating" => 5 },
                       "has_fixed_air_conditioning" => "false",

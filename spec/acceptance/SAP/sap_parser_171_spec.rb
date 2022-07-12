@@ -32,15 +32,15 @@ RSpec.describe "the parser and the SAP configuration" do
                       "country_code" => "ENG",
                       "assessment_date" => "2020-08-17",
                       "walls" =>
-                       [{ "description" => "²K",
+                       [{ "description" => "Average thermal transmittance 0.27 W/m²K",
                           "energy_efficiency_rating" => 5,
                           "environmental_efficiency_rating" => 5 }],
                       "roofs" =>
-                       [{ "description" => "²K",
+                       [{ "description" => "Average thermal transmittance 0.11 W/m²K",
                           "energy_efficiency_rating" => 5,
                           "environmental_efficiency_rating" => 5 }],
                       "floors" =>
-                       [{ "description" => "²K",
+                       [{ "description" => "Average thermal transmittance 0.14 W/m²K",
                           "energy_efficiency_rating" => 5,
                           "environmental_efficiency_rating" => 5 }],
                       "windows" =>
@@ -68,7 +68,7 @@ RSpec.describe "the parser and the SAP configuration" do
                          "energy_efficiency_rating" => 5,
                          "environmental_efficiency_rating" => 5 },
                       "air_tightness" =>
-                       { "description" => "³/h.m² (as tested)",
+                       { "description" => "Air permeability 4.9 m³/h.m² (as tested)",
                          "energy_efficiency_rating" => 4,
                          "environmental_efficiency_rating" => 4 },
                       "has_fixed_air_conditioning" => "false",
@@ -273,7 +273,7 @@ RSpec.describe "the parser and the SAP configuration" do
                               "height" => 1.35 }],
                           "sap_floor_dimensions" =>
                            [{ "storey" => 0,
-                              "description" => "B",
+                              "description" => "B&B",
                               "floor_type" => 2,
                               "total_floor_area" => 73.67,
                               "storey_height" => 2.33,

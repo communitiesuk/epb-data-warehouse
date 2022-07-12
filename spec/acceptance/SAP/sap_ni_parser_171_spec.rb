@@ -246,11 +246,11 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                       "country_code" => "NIR",
                       "assessment_date" => "2013-06-10",
                       "walls" =>
-                        [{ "description" => "K",
+                        [{ "description" => "Average thermal transmittance 0.27 W/m²K",
                            "energy_efficiency_rating" => 5,
                            "environmental_efficiency_rating" => 5 }],
                       "roofs" =>
-                        [{ "description" => "K",
+                        [{ "description" => "Average thermal transmittance 0.16 W/m²K",
                            "energy_efficiency_rating" => 4,
                            "environmental_efficiency_rating" => 4 }],
                       "floors" =>
@@ -282,7 +282,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                           "energy_efficiency_rating" => 4,
                           "environmental_efficiency_rating" => 4 },
                       "air_tightness" =>
-                        { "description" => "(as tested)",
+                        { "description" => "Air permeability 5.1 m³/h.m² (as tested)",
                           "energy_efficiency_rating" => 4,
                           "environmental_efficiency_rating" => 4 },
                       "has_fixed_air_conditioning" => "false",
@@ -313,7 +313,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                           "improvement_type" => "E",
                           "improvement_details" => { "improvement_number" => 35 },
                           "typical_saving" => 19,
-                          "indicative_cost" => 15,
+                          "indicative_cost" => "£15",
                           "energy_performance_rating" => 78,
                           "environmental_impact_rating" => 81 }],
                       "data_type" => 2,

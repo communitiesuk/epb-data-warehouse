@@ -103,6 +103,54 @@ RSpec.describe XmlPresenter::Parser do
     end
   end
 
+  context "with node values containing money ranges" do
+    let(:parser) { described_class.new }
+
+    it "recognises values that can be money ranges and leaves them in place" do
+      xml = "<Root><Cost-Range>&#xA3;80 - &#xA3;120</Cost-Range></Root>"
+      expected = {
+        "cost_range" => "£80 - £120",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
+
+  context "with node values containing strings with XML escapes" do
+    let(:parser) { described_class.new }
+
+    it "recognises values with XML escapes and just unescapes them" do
+      xml = "<Root><Escaped>esc&#x61;ped</Escaped></Root>"
+      expected = {
+        "escaped" => "escaped",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
+
+  context "with node values containing strings including a slash character and a superscript character" do
+    let(:parser) { described_class.new }
+
+    it "writes the entire string into the output hash" do
+      xml = "<Root><Description>Average thermal transmittance 0.28 W/m²K</Description></Root>"
+      expected = {
+        "description" => "Average thermal transmittance 0.28 W/m²K",
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
+
+  context "with node values containing strings with an escaped ampersand" do
+    let(:parser) { described_class.new }
+
+    it "writes the string correctly with no dropped spaces" do
+      xml = "<Root><Entertainers>Laurel &amp; Hardy</Entertainers></Root>"
+      expected = {
+        "entertainers" => "Laurel & Hardy",
+      }
+      expect((parser.parse xml)).to eq expected
+    end
+  end
+
   context "with nodes containing attributes" do
     let(:parser) { described_class.new }
 

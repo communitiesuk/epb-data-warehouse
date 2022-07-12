@@ -145,6 +145,7 @@ module XmlPresenter
     end
 
     def end_element_namespace(name, _prefix = nil, _uri = nil)
+      flush_value_buffer
       if @root_node && name == @root_node[:name]
         @is_reading = false
       end
@@ -160,9 +161,15 @@ module XmlPresenter
         return
       end
 
-      stripped = string.strip
-      if stripped.length.zero?
-        return
+      if is_building_buffer?
+        stripped = string
+      else
+        stripped = string.strip
+        if stripped.length.zero?
+          return
+        end
+
+        store_first_chunk string
       end
 
       value = try_as_number stripped
@@ -171,7 +178,7 @@ module XmlPresenter
         value = @attrs.to_h.merge({ "value" => value })
       end
 
-      set_value value
+      buffer_value value
     end
 
     ###
@@ -189,6 +196,8 @@ module XmlPresenter
       @output_position = []
       @is_excluding = false
       @is_including = false
+      @value_buffer = []
+      @unstripped_first_value_chunk = nil
       @attrs = []
       @encountered = []
     end
@@ -199,6 +208,35 @@ module XmlPresenter
       end
 
       name.downcase.tr("-", "_")
+    end
+
+    def buffer_value(value)
+      if @value_buffer.length == 1 && !@unstripped_first_value_chunk.nil?
+        @value_buffer[0] = @unstripped_first_value_chunk
+      end
+      @value_buffer << value
+    end
+
+    def flush_value_buffer
+      @unstripped_first_value_chunk = nil
+      case @value_buffer.length
+      when 0
+        return
+      when 1
+        set_value @value_buffer.first
+      else
+        set_value @value_buffer.join
+      end
+
+      @value_buffer.clear
+    end
+
+    def is_building_buffer?
+      !@value_buffer.empty?
+    end
+
+    def store_first_chunk(chunk)
+      @unstripped_first_value_chunk = chunk.lstrip if chunk.respond_to?(:lstrip)
     end
 
     def set_value(value)
