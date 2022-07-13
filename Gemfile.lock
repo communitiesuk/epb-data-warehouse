@@ -1,12 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.3)
-      activesupport (= 7.0.3)
-    activerecord (7.0.3)
-      activemodel (= 7.0.3)
-      activesupport (= 7.0.3)
-    activesupport (7.0.3)
+    activemodel (7.0.3.1)
+      activesupport (= 7.0.3.1)
+    activerecord (7.0.3.1)
+      activemodel (= 7.0.3.1)
+      activesupport (= 7.0.3.1)
+    activesupport (7.0.3.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -59,11 +59,11 @@ GEM
     faraday-retry (1.0.3)
     fiber-local (1.0.0)
     hashdiff (1.0.1)
-    i18n (1.10.0)
+    i18n (1.11.0)
       concurrent-ruby (~> 1.0)
     io-event (1.0.9)
     jwt (2.3.0)
-    minitest (5.15.0)
+    minitest (5.16.2)
     mock_redis (0.32.0)
       ruby2_keywords
     multi_json (1.15.0)
@@ -160,7 +160,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 7.0)
-  activesupport (~> 7.0)
+  activesupport (= 7.0.3.1)
   async (~> 2.0)
   concurrent-ruby (~> 1.1)
   database_cleaner-active_record (~> 2.0, >= 2.0.1)
