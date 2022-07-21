@@ -9,7 +9,7 @@ group :test do
   gem "database_cleaner-active_record", "~> 2.0", ">= 2.0.1"
   gem "mock_redis", "~> 0.32.0"
   gem "rspec", "~> 3.10"
-  gem "rubocop-govuk", "~> 4.5", require: false
+  gem "rubocop-govuk", "~> 4.6", require: false
   gem "rubocop-performance", "~> 1.14", require: false
   gem "timecop", "~> 0.9.5"
   gem "webmock", "~> 3.14"
