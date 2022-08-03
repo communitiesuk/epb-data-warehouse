@@ -1,0 +1,397 @@
+<ConditionReportCreateRequest_1 xmlns="http://www.epcregister.com" xmlns:SAP="DCLG-SAP" xmlns:HIP="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:CS="DCLG-HIP/CommonStructures" xmlns:ERR="DCLG-HIP/Exceptions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Identification>
+    <CS:ServiceName>SAVA-HCR</CS:ServiceName>
+    <CS:Operation>Create</CS:Operation>
+    <CS:TransactionDetails>
+      <CS:OriginatingID>Unknown</CS:OriginatingID>
+      <CS:RecipientID>Unknown</CS:RecipientID>
+      <CS:Timestamp>2014-12-06T01:01:42</CS:Timestamp>
+      <CS:TransactionID>Unknown</CS:TransactionID>
+    </CS:TransactionDetails>
+  </Identification>
+  <Configuration>
+    <CS:StopOnFirstError>Unknown</CS:StopOnFirstError>
+    <CS:ReasonForChange>Unknown</CS:ReasonForChange>
+  </Configuration>
+  <Content>
+    <EPC-Data>
+      <SAP:Calculation-Software-Name>NHER EPC Online</SAP:Calculation-Software-Name>
+      <SAP:Calculation-Software-Version>8.3</SAP:Calculation-Software-Version>
+      <SAP:SAP-Version>9.91</SAP:SAP-Version>
+      <SAP:BEDF-Revision-Number>370</SAP:BEDF-Revision-Number>
+      <SAP:Energy-Assessment>
+        <HIP:Property-Summary>
+          <HIP:Wall>
+            <HIP:Description>Cavity wall, as built, insulated (assumed)</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>4</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>4</HIP:Environmental-Efficiency-Rating>
+          </HIP:Wall>
+          <HIP:Roof>
+            <HIP:Description>Pitched, 200 mm loft insulation</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>4</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>4</HIP:Environmental-Efficiency-Rating>
+          </HIP:Roof>
+          <HIP:Floor>
+            <HIP:Description>Suspended, no insulation (assumed)</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Floor>
+          <HIP:Window>
+            <HIP:Description>Fully double glazed</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>3</HIP:Environmental-Efficiency-Rating>
+          </HIP:Window>
+          <HIP:Main-Heating>
+            <HIP:Description>Electric storage heaters</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>1</HIP:Environmental-Efficiency-Rating>
+          </HIP:Main-Heating>
+          <HIP:Main-Heating-Controls>
+            <HIP:Description>Manual charge control</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>2</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>2</HIP:Environmental-Efficiency-Rating>
+          </HIP:Main-Heating-Controls>
+          <HIP:Hot-Water>
+            <HIP:Description>Electric immersion, off-peak</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>1</HIP:Environmental-Efficiency-Rating>
+          </HIP:Hot-Water>
+          <HIP:Lighting>
+            <HIP:Description>Low energy lighting in 71% of fixed outlets</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>5</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>5</HIP:Environmental-Efficiency-Rating>
+          </HIP:Lighting>
+          <HIP:Secondary-Heating>
+            <HIP:Description>Room heaters, electric</HIP:Description>
+            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Secondary-Heating>
+          <HIP:Has-Hot-Water-Cylinder>true</HIP:Has-Hot-Water-Cylinder>
+          <HIP:Has-Heated-Separate-Conservatory>false</HIP:Has-Heated-Separate-Conservatory>
+          <HIP:Dwelling-Type>Semi-detached house</HIP:Dwelling-Type>
+          <HIP:Total-Floor-Area>70</HIP:Total-Floor-Area>
+          <HIP:Has-Fixed-Air-Conditioning>false</HIP:Has-Fixed-Air-Conditioning>
+        </HIP:Property-Summary>
+        <HIP:Energy-Use>
+          <HIP:Energy-Rating-Current>59</HIP:Energy-Rating-Current>
+          <HIP:Energy-Rating-Potential>84</HIP:Energy-Rating-Potential>
+          <HIP:Environmental-Impact-Current>37</HIP:Environmental-Impact-Current>
+          <HIP:Environmental-Impact-Potential>63</HIP:Environmental-Impact-Potential>
+          <HIP:Energy-Consumption-Current>473</HIP:Energy-Consumption-Current>
+          <HIP:Energy-Consumption-Potential>247</HIP:Energy-Consumption-Potential>
+          <HIP:CO2-Emissions-Current>5.9</HIP:CO2-Emissions-Current>
+          <HIP:CO2-Emissions-Current-Per-Floor-Area>84</HIP:CO2-Emissions-Current-Per-Floor-Area>
+          <HIP:CO2-Emissions-Potential>3.1</HIP:CO2-Emissions-Potential>
+          <HIP:Lighting-Cost-Current currency="GBP">65</HIP:Lighting-Cost-Current>
+          <HIP:Lighting-Cost-Potential currency="GBP">51</HIP:Lighting-Cost-Potential>
+          <HIP:Heating-Cost-Current currency="GBP">611</HIP:Heating-Cost-Current>
+          <HIP:Heating-Cost-Potential currency="GBP">471</HIP:Heating-Cost-Potential>
+          <HIP:Hot-Water-Cost-Current currency="GBP">226</HIP:Hot-Water-Cost-Current>
+          <HIP:Hot-Water-Cost-Potential currency="GBP">105</HIP:Hot-Water-Cost-Potential>
+          <HIP:Energy-Rating-Average>60</HIP:Energy-Rating-Average>
+        </HIP:Energy-Use>
+        <HIP:Suggested-Improvements>
+          <HIP:Improvement>
+            <HIP:Sequence>1</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>3</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>W</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>47</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">88</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£800 - £1,200</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>63</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>41</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>2</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>3</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>C</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>2</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">35</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£15 - £30</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>65</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>43</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>3</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>1</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>E</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>35</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">11</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£10</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>65</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>44</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>4</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>3</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>L</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>25</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">100</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£900 - £1,200</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>69</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>47</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>5</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>2</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>N</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>19</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">44</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£4,000 - £6,000</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>71</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>52</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>6</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>2</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>U</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>34</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">261</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£9,000 - £14,000</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>83</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>62</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>7</HIP:Sequence>
+            <HIP:Improvement-Category>5</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>2</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>V</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>44</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">22</HIP:Typical-Saving>
+            <HIP:Indicative-Cost>£1,500 - £4,000</HIP:Indicative-Cost>
+            <HIP:Energy-Performance-Rating>84</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>63</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+        </HIP:Suggested-Improvements>
+        <HIP:Alternative-Improvements>
+          <HIP:Improvement>
+            <HIP:Sequence>1</HIP:Sequence>
+            <HIP:Improvement-Category>6</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>NI</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>J2</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>54</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">50</HIP:Typical-Saving>
+            <HIP:Energy-Performance-Rating>68</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>88</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>2</HIP:Sequence>
+            <HIP:Improvement-Category>6</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>NI</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>Z1</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>51</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">178</HIP:Typical-Saving>
+            <HIP:Energy-Performance-Rating>75</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>76</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+          <HIP:Improvement>
+            <HIP:Sequence>3</HIP:Sequence>
+            <HIP:Improvement-Category>6</HIP:Improvement-Category>
+            <HIP:Green-Deal-Category>NI</HIP:Green-Deal-Category>
+            <HIP:Improvement-Type>Z3</HIP:Improvement-Type>
+            <HIP:Improvement-Details>
+              <HIP:Improvement-Number>53</HIP:Improvement-Number>
+            </HIP:Improvement-Details>
+            <HIP:Typical-Saving currency="GBP">179</HIP:Typical-Saving>
+            <HIP:Energy-Performance-Rating>73</HIP:Energy-Performance-Rating>
+            <HIP:Environmental-Impact-Rating>72</HIP:Environmental-Impact-Rating>
+          </HIP:Improvement>
+        </HIP:Alternative-Improvements>
+        <HIP:Green-Deal-Package>
+          <HIP:Green-Deal-Improvement>
+            <HIP:Improvement-Type>W</HIP:Improvement-Type>
+            <HIP:Improvement-Number>47</HIP:Improvement-Number>
+          </HIP:Green-Deal-Improvement>
+          <HIP:Green-Deal-Improvement>
+            <HIP:Improvement-Type>C</HIP:Improvement-Type>
+            <HIP:Improvement-Number>2</HIP:Improvement-Number>
+          </HIP:Green-Deal-Improvement>
+          <HIP:Green-Deal-Improvement>
+            <HIP:Improvement-Type>L</HIP:Improvement-Type>
+            <HIP:Improvement-Number>25</HIP:Improvement-Number>
+          </HIP:Green-Deal-Improvement>
+          <HIP:Electricity-Saving currency="GBP">222</HIP:Electricity-Saving>
+          <HIP:Gas-Saving currency="GBP">0</HIP:Gas-Saving>
+          <HIP:Other-Fuel-Saving currency="GBP">0</HIP:Other-Fuel-Saving>
+        </HIP:Green-Deal-Package>
+        <HIP:Renewable-Heat-Incentive>
+          <HIP:Space-Heating-Existing-Dwelling>7554</HIP:Space-Heating-Existing-Dwelling>
+          <HIP:Water-Heating>3424</HIP:Water-Heating>
+        </HIP:Renewable-Heat-Incentive>
+      </SAP:Energy-Assessment>
+      <SAP:SAP-Data>
+        <HIP:Schema-Version>LIG-16.1</HIP:Schema-Version>
+        <HIP:SAP-Property-Details>
+          <HIP:Property-Type>0</HIP:Property-Type>
+          <HIP:Built-Form>2</HIP:Built-Form>
+          <HIP:Multiple-Glazed-Proportion>100</HIP:Multiple-Glazed-Proportion>
+          <HIP:Multiple-Glazing-Type>1</HIP:Multiple-Glazing-Type>
+          <HIP:Extensions-Count>0</HIP:Extensions-Count>
+          <HIP:Glazed-Area>1</HIP:Glazed-Area>
+          <HIP:Habitable-Room-Count>3</HIP:Habitable-Room-Count>
+          <HIP:Measurement-Type>1</HIP:Measurement-Type>
+          <HIP:Mechanical-Ventilation>0</HIP:Mechanical-Ventilation>
+          <HIP:Open-Fireplaces-Count>0</HIP:Open-Fireplaces-Count>
+          <HIP:Solar-Water-Heating>N</HIP:Solar-Water-Heating>
+          <HIP:Conservatory-Type>1</HIP:Conservatory-Type>
+          <HIP:Fixed-Lighting-Outlets-Count>7</HIP:Fixed-Lighting-Outlets-Count>
+          <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>5</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
+          <HIP:Door-Count>2</HIP:Door-Count>
+          <HIP:Insulated-Door-Count>0</HIP:Insulated-Door-Count>
+          <HIP:Percent-Draughtproofed>100</HIP:Percent-Draughtproofed>
+          <HIP:SAP-Building-Parts>
+            <HIP:SAP-Building-Part>
+              <HIP:Building-Part-Number>1</HIP:Building-Part-Number>
+              <HIP:Construction-Age-Band>H</HIP:Construction-Age-Band>
+              <HIP:Wall-Construction>4</HIP:Wall-Construction>
+              <HIP:Wall-Insulation-Type>4</HIP:Wall-Insulation-Type>
+              <HIP:Roof-Construction>4</HIP:Roof-Construction>
+              <HIP:Roof-Insulation-Location>2</HIP:Roof-Insulation-Location>
+              <HIP:Roof-Insulation-Thickness>200mm</HIP:Roof-Insulation-Thickness>
+              <HIP:Floor-Heat-Loss>7</HIP:Floor-Heat-Loss>
+              <HIP:Wall-Thickness>270</HIP:Wall-Thickness>
+              <HIP:Wall-Thickness-Measured>Y</HIP:Wall-Thickness-Measured>
+              <HIP:SAP-Floor-Dimensions>
+                <HIP:SAP-Floor-Dimension>
+                  <HIP:Floor>0</HIP:Floor>
+                  <HIP:Floor-Construction>3</HIP:Floor-Construction>
+                  <HIP:Floor-Insulation>1</HIP:Floor-Insulation>
+                  <HIP:Heat-Loss-Perimeter>16.837</HIP:Heat-Loss-Perimeter>
+                  <HIP:Total-Floor-Area>35.159</HIP:Total-Floor-Area>
+                  <HIP:Room-Height>2.3</HIP:Room-Height>
+                </HIP:SAP-Floor-Dimension>
+                <HIP:SAP-Floor-Dimension>
+                  <HIP:Floor>1</HIP:Floor>
+                  <HIP:Heat-Loss-Perimeter>16.837</HIP:Heat-Loss-Perimeter>
+                  <HIP:Total-Floor-Area>35.159</HIP:Total-Floor-Area>
+                  <HIP:Room-Height>2.3</HIP:Room-Height>
+                </HIP:SAP-Floor-Dimension>
+              </HIP:SAP-Floor-Dimensions>
+              <HIP:Identifier>Main Dwelling</HIP:Identifier>
+              <HIP:Wall-Dry-Lined>N</HIP:Wall-Dry-Lined>
+            </HIP:SAP-Building-Part>
+          </HIP:SAP-Building-Parts>
+          <HIP:SAP-Heating>
+            <HIP:Secondary-Heating-Type>691</HIP:Secondary-Heating-Type>
+            <HIP:Secondary-Fuel-Type>29</HIP:Secondary-Fuel-Type>
+            <HIP:Water-Heating-Code>903</HIP:Water-Heating-Code>
+            <HIP:Water-Heating-Fuel>29</HIP:Water-Heating-Fuel>
+            <HIP:Immersion-Heating-Type>1</HIP:Immersion-Heating-Type>
+            <HIP:Cylinder-Size>4</HIP:Cylinder-Size>
+            <HIP:Cylinder-Insulation-Type>2</HIP:Cylinder-Insulation-Type>
+            <HIP:Cylinder-Insulation-Thickness>25</HIP:Cylinder-Insulation-Thickness>
+            <HIP:Has-Fixed-Air-Conditioning>false</HIP:Has-Fixed-Air-Conditioning>
+            <HIP:Main-Heating-Details>
+              <HIP:Main-Heating>
+                <HIP:Main-Heating-Number>1</HIP:Main-Heating-Number>
+                <HIP:Main-Heating-Fraction>1</HIP:Main-Heating-Fraction>
+                <HIP:Main-Heating-Category>7</HIP:Main-Heating-Category>
+                <HIP:Main-Fuel-Type>29</HIP:Main-Fuel-Type>
+                <HIP:Main-Heating-Control>2401</HIP:Main-Heating-Control>
+                <HIP:Main-Heating-Data-Source>2</HIP:Main-Heating-Data-Source>
+                <HIP:SAP-Main-Heating-Code>401</HIP:SAP-Main-Heating-Code>
+                <HIP:Has-FGHRS>N</HIP:Has-FGHRS>
+                <HIP:Heat-Emitter-Type>0</HIP:Heat-Emitter-Type>
+              </HIP:Main-Heating>
+            </HIP:Main-Heating-Details>
+            <HIP:WWHRS>
+              <HIP:Rooms-With-Bath-And-Or-Shower>1</HIP:Rooms-With-Bath-And-Or-Shower>
+              <HIP:Rooms-With-Bath-And-Mixer-Shower>0</HIP:Rooms-With-Bath-And-Mixer-Shower>
+              <HIP:Rooms-With-Mixer-Shower-No-Bath>0</HIP:Rooms-With-Mixer-Shower-No-Bath>
+            </HIP:WWHRS>
+          </HIP:SAP-Heating>
+          <HIP:SAP-Energy-Source>
+            <HIP:Wind-Turbines-Count>0</HIP:Wind-Turbines-Count>
+            <HIP:Wind-Turbines-Terrain-Type>2</HIP:Wind-Turbines-Terrain-Type>
+            <HIP:Meter-Type>1</HIP:Meter-Type>
+            <HIP:Main-Gas>N</HIP:Main-Gas>
+            <HIP:Photovoltaic-Supply>
+              <HIP:Percent-Roof-Area>0</HIP:Percent-Roof-Area>
+            </HIP:Photovoltaic-Supply>
+          </HIP:SAP-Energy-Source>
+          <HIP:Heated-Room-Count>3</HIP:Heated-Room-Count>
+          <HIP:Low-Energy-Lighting>71</HIP:Low-Energy-Lighting>
+        </HIP:SAP-Property-Details>
+      </SAP:SAP-Data>
+      <SAP:Report-Header>
+        <SAP:RRN>4321-4321-4321-4321-4321</SAP:RRN>
+        <SAP:Inspection-Date>2014-12-05</SAP:Inspection-Date>
+        <SAP:Report-Type>2</SAP:Report-Type>
+        <SAP:Completion-Date>2014-12-06</SAP:Completion-Date>
+        <SAP:Registration-Date>2014-12-06</SAP:Registration-Date>
+        <SAP:Status>entered</SAP:Status>
+        <SAP:Language-Code>1</SAP:Language-Code>
+        <SAP:Restricted-Access>0</SAP:Restricted-Access>
+        <SAP:Tenure>2</SAP:Tenure>
+        <SAP:Transaction-Type>8</SAP:Transaction-Type>
+        <SAP:Seller-Commission-Report>Y</SAP:Seller-Commission-Report>
+        <SAP:Property-Type>0</SAP:Property-Type>
+        <SAP:Home-Inspector>
+          <SAP:Name>Mr Inn Spector</SAP:Name>
+          <SAP:Notify-Lodgement>N</SAP:Notify-Lodgement>
+          <SAP:Contact-Address>
+            <HIP:Address-Line-1>Energy Services</HIP:Address-Line-1>
+            <HIP:Address-Line-2>Energy Centre</HIP:Address-Line-2>
+            <HIP:Address-Line-3>Some Avenue</HIP:Address-Line-3>
+            <HIP:Post-Town>Some Town</HIP:Post-Town>
+            <HIP:Postcode>AA1 1AA</HIP:Postcode>
+          </SAP:Contact-Address>
+          <SAP:Scheme-Web-Site>www.EPC.co.uk</SAP:Scheme-Web-Site>
+          <SAP:E-Mail>inn.spector@epc.org.uk</SAP:E-Mail>
+          <SAP:Telephone>07777777708</SAP:Telephone>
+          <SAP:Company-Name>Accreditation Scheme</SAP:Company-Name>
+          <SAP:Scheme-Name>Accreditation Scheme</SAP:Scheme-Name>
+          <SAP:Identification-Number>
+            <SAP:Certificate-Number>0000000000</SAP:Certificate-Number>
+          </SAP:Identification-Number>
+        </SAP:Home-Inspector>
+        <SAP:Property>
+          <HIP:Address>
+            <HIP:Address-Line-1>11, Some Close</HIP:Address-Line-1>
+            <HIP:Address-Line-2>Long Itchington</HIP:Address-Line-2>
+            <HIP:Post-Town>Town</HIP:Post-Town>
+            <HIP:Postcode>AA1 1AA</HIP:Postcode>
+          </HIP:Address>
+          <HIP:UPRN>0000000000</HIP:UPRN>
+        </SAP:Property>
+        <SAP:Region-Code>6</SAP:Region-Code>
+        <SAP:Country-Code>EAW</SAP:Country-Code>
+        <SAP:Related-Party-Disclosure>
+          <SAP:Related-Party-Disclosure-Number>1</SAP:Related-Party-Disclosure-Number>
+        </SAP:Related-Party-Disclosure>
+      </SAP:Report-Header>
+      <SAP:Insurance-Details>
+        <SAP:Insurer>Insurer</SAP:Insurer>
+        <SAP:Policy-No>Policy 1</SAP:Policy-No>
+        <SAP:Effective-Date>2011-12-01</SAP:Effective-Date>
+        <SAP:Expiry-Date>2015-01-31</SAP:Expiry-Date>
+        <SAP:PI-Limit>1000000</SAP:PI-Limit>
+      </SAP:Insurance-Details>
+      <SAP:ExternalDefinitions-Revision-Number>4.7</SAP:ExternalDefinitions-Revision-Number>
+    </EPC-Data>
+  </Content>
+</ConditionReportCreateRequest_1>
