@@ -2,17 +2,17 @@ SELECT ad.document ->> 'address_line_1' as ADDRESS1,
     ad.document ->> 'address_line_2'  as ADDRESS2,
     ad.document ->> 'address_line_3'  as ADDRESS3,
     ad.document ->> 'postcode'  POSTCODE,
-    ad.document ->> 'assessment_address_id' as BUILDING_REFERENCE_NUMBER,
-    (ad.document ->> 'this_assessment')::json ->> 'energy_rating' as CURRENT_OPERATIONAL_RATING,
-    (ad.document ->> 'year1_assessment')::json ->> 'energy_rating' as YR1_OPERATIONAL_RATING,
-    (ad.document ->> 'year2_assessment')::json ->> 'energy_rating' as YR2_OPERATIONAL_RATING,
-    CASE  WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int <= 20 THEN 'g'
-    WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 21 AND 38 THEN 'f'
-    WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 39 AND 54 THEN 'e'
-    WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 55 AND 68 THEN 'd'
-    WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 69 AND 80 THEN 'c'
-    WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 81 AND 91 THEN 'b'
-    ELSE 'a' end  OPERATIONAL_RATING_BAND,
+    CASE WHEN   ad.document ->> 'assessment_address_id' LIKE 'UPRN%' THEN   ad.document ->> 'assessment_address_id' ELSE '' END as BUILDING_REFERENCE_NUMBER,
+        (ad.document ->> 'this_assessment')::json ->> 'energy_rating' as CURRENT_OPERATIONAL_RATING,
+        (ad.document ->> 'year1_assessment')::json ->> 'energy_rating' as YR1_OPERATIONAL_RATING,´´
+        (ad.document ->> 'year2_assessment')::json ->> 'energy_rating' as YR2_OPERATIONAL_RATING,
+         CASE  WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int <= 20 THEN 'g'
+               WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 21 AND 38 THEN 'f'
+               WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 39 AND 54 THEN 'e'
+               WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 55 AND 68 THEN 'd'
+                WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 69 AND 80 THEN 'c'
+                WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 81 AND 91 THEN 'b'
+        ELSE 'a' end  OPERATIONAL_RATING_BAND,
          (ad.document ->> 'this_assessment')::json ->> 'electricity_co2' ELECTRIC_CO2,
         (ad.document ->> 'this_assessment')::json ->> 'heating_co2' HEATING_CO2,
           (ad.document ->> 'this_assessment')::json ->> 'renewables_co2' renewables_CO2,
