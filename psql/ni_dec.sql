@@ -13,15 +13,15 @@ SELECT ad.document ->> 'address_line_1' as ADDRESS1,
     WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 69 AND 80 THEN 'c'
     WHEN ((ad.document ->> 'this_assessment')::json ->> 'energy_rating')::int BETWEEN 81 AND 91 THEN 'b'
     ELSE 'a' end  OPERATIONAL_RATING_BAND,
-         (ad.document ->> 'this_assessment')::json ->> 'electricty_co2' ELECTRIC_CO2,
+         (ad.document ->> 'this_assessment')::json ->> 'electricity_co2' ELECTRIC_CO2,
         (ad.document ->> 'this_assessment')::json ->> 'heating_co2' HEATING_CO2,
-          (ad.document ->> 'this_assessment')::json ->> 'renewables_CO2' renewables_CO2,
+          (ad.document ->> 'this_assessment')::json ->> 'renewables_co2' renewables_CO2,
         ad.document ->> 'property_type' PROPERTY_TYPE,
-        ad.document ->> 'inspection-date' Inspection_Date,
-        ad.document ->> 'registration-date'  LODGEMENT_DATE,
+        ad.document ->> 'inspection_date' Inspection_Date,
+        ad.document ->> 'registration_date'  LODGEMENT_DATE,
         (ad.document ->> 'or_benchmark_data')::json ->> 'main_benchmark' MAIN_BENCHMARK,
        (ad.document ->> 'technical_information')::json ->> 'main_heating_fuel' MAIN_HEATING_FUEL,
-        (ad.document ->> 'technical_information')::json ->> 'other_fuel' OTHER_FUEL,
+        (ad.document ->> 'technical_information')::json ->> 'other_fuel_description' OTHER_FUEL,
        nullif((ad.document ->> 'technical_information')::json ->> 'special_energy_uses', '') SPECIAL_ENERGY_USES,
         (ad.document ->> 'dec_annual_energy_summary')::json ->> 'renewables_fuel_thermal' RENEWABLE_SOURCES,
       (ad.document ->> 'technical_information')::json ->> 'floor_area'  TOTAL_FLOOR_AREA,
@@ -39,15 +39,15 @@ SELECT ad.document ->> 'address_line_1' as ADDRESS1,
        (ad.document ->> 'year2_assessment')::json ->> 'renewables_co2' as YR2_renewables_co2,
         (ad.document ->> 'ac_questionnaire')::json ->> 'ac_present' as aircon_present,
        nullif(((ad.document ->> 'ac_questionnaire')::json ->> 'ac_rated_output')::json ->> 'ac_kw_rating', '') AIRCON_KW_RATING,
-       nullif(((ad.document ->> 'ac_questionnaire')::json ->> 'ac_rated_output')::json ->> 'ac_estimated_output', '') AIRCON_KW_RATING,
+       nullif((ad.document ->> 'ac_questionnaire')::json ->> 'ac_estimated_output', '') ESTIMATED_AIRCON_KW_RATING,
         nullif((ad.document ->> 'ac_questionnaire')::json ->> 'ac_inspection_commissioned', '') as AC_INSPECTION_COMMISSIONED,
            (ad.document ->> 'technical_information')::json ->> 'building_environment' BUILDING_ENVIRONMENT,
           ad.document ->> 'building_category'  BUILDING_CATEGORY,
         (ad.document ->> 'this_assessment')::json ->> 'nominated_date' nominated_date,
-        ad.document ->> 'expiry_date' OR_ASSESSMENT_END_DATE,
-       nullif(ad.document ->> 'created_at', '')  LODGEMENT_DATETIME,
-       nullif(((ad.document ->> 'benchmarks')::json ->> 'benchmarks')::json ->> 'occupancy_level', '') OCCUPANCY_LEVEL
+        ad.document ->> 'or_assessment_end_date' OR_ASSESSMENT_END_DATE,
+        nullif(ad.document ->> 'created_at', '')  LODGEMENT_DATETIME,
+        nullif(((json_array_elements( (ad.document -> ('or_benchmark_data') ->> 'benchmarks')::json))::json  ->> 'benchmark')::json ->> 'occupancy_level', '') OCCUPANCY_LEVEL
 FROM assessment_documents ad
 WHERE ad.document ->> 'assessment_type' = 'DEC'
-  AND (nullif(document->>'registration_date', '')::date) > ('2012-01-01 00:00':: timestamp)
+AND (nullif(document->>'registration_date', '')::date) > ('2012-01-01 00:00':: timestamp)
   and   ad.document ->> 'postcode' LIKE 'BT%';
