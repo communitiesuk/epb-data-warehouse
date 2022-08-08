@@ -42,6 +42,7 @@ module UseCase
         "SAP-Schema-17.1" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-17.0" => XmlPresenter::Sap::Sap1800ExportConfiguration,
         "SAP-Schema-16.3" => XmlPresenter::Sap::Sap163ExportConfiguration,
+        "SAP-Schema-16.2" => XmlPresenter::Sap::Sap163ExportConfiguration,
         "SAP-Schema-NI-18.0.0" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
         "SAP-Schema-NI-17.4" => XmlPresenter::Sap::Sap174NiExportConfiguration,
         "SAP-Schema-NI-17.3" => XmlPresenter::Sap::Sap173NiExportConfiguration,
