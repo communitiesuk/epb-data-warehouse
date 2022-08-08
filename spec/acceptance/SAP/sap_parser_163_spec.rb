@@ -485,7 +485,6 @@ RSpec.describe "the parser and the SAP configuration" do
                          "low_energy_fixed_lighting_outlets_count" => 16,
                          "low_energy_fixed_lighting_outlets_percentage" => 100,
                          "electricity_tariff" => 1 } }
-      
 
       expect(use_case.execute(xml: sap,
                               schema_type: "SAP-Schema-16.3",
