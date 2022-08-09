@@ -63,7 +63,7 @@ module Gateway
         carry + [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.fast_generate(cast_value.json) : nil]
       end
       sql = ActiveRecord::Base.sanitize_sql_array(
-        ["INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json) VALUES #{['(?,?,?,?,?,?)'] * attribute_values.length * ','}"] + values,
+        ["INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json) VALUES #{['(?,?,?,?,?,?)'] * attribute_values.length * ','} ON CONFLICT DO NOTHING"] + values,
       )
       ActiveRecord::Base.connection.exec_query(sql)
     rescue ActiveRecord::RecordNotUnique
