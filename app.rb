@@ -11,10 +11,11 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib")
 loader.setup
 
-Sentry.init do |config|
-  config.environment = ENV["STAGE"]
-  config.capture_exception_frame_locals = true
-end
+# temporarily stop reporting to sentry (2022-08-09)
+# Sentry.init do |config|
+#   config.environment = ENV["STAGE"]
+#   config.capture_exception_frame_locals = true
+# end
 
 def use_case(name)
   Services.use_case name
