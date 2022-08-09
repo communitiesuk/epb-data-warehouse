@@ -1,0 +1,389 @@
+<ConditionReportCreateRequest_1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.epcregister.com" xmlns:HIP="DCLG-HIP" xmlns:SAP="DCLG-SAP09" xmlns:CS="DCLG-HIP/CommonStructures">
+  <Identification>
+    <CS:ServiceName>CreateReport</CS:ServiceName>
+    <CS:Operation>Create</CS:Operation>
+    <CS:TransactionDetails>
+      <CS:OriginatingID>NES</CS:OriginatingID>
+      <CS:RecipientID>Landmark</CS:RecipientID>
+      <CS:Timestamp>2012-09-29T22:53:53</CS:Timestamp>
+      <CS:TransactionID>string</CS:TransactionID>
+    </CS:TransactionDetails>
+    <CS:TermsAndConditions>Y</CS:TermsAndConditions>
+  </Identification>
+  <Configuration/>
+  <Content>
+    <SAP-EPC-Data>
+      <SAP:SAP-Version>9.90</SAP:SAP-Version>
+      <SAP:SAP-Data-Version>9.81</SAP:SAP-Data-Version>
+      <SAP:BEDF-Revision-Number>329</SAP:BEDF-Revision-Number>
+      <SAP:Calculation-Software-Name>NHER Plan Assessor</SAP:Calculation-Software-Name>
+      <SAP:Calculation-Software-Version>5.4</SAP:Calculation-Software-Version>
+      <SAP:Report-Header>
+        <SAP:RRN>1234-1234-1234-1234-1234</SAP:RRN>
+        <SAP:Inspection-Date>2012-09-29</SAP:Inspection-Date>
+        <SAP:Report-Type>3</SAP:Report-Type>
+        <SAP:Completion-Date>2012-09-29</SAP:Completion-Date>
+        <SAP:Registration-Date>2012-09-29</SAP:Registration-Date>
+        <SAP:Status>entered</SAP:Status>
+        <SAP:Language-Code>1</SAP:Language-Code>
+        <SAP:Restricted-Access>0</SAP:Restricted-Access>
+        <SAP:Transaction-Type>6</SAP:Transaction-Type>
+        <SAP:Seller-Commission-Report>Y</SAP:Seller-Commission-Report>
+        <SAP:Property-Type>2</SAP:Property-Type>
+        <SAP:Home-Inspector>
+          <SAP:Name>Mr Inn Spector</SAP:Name>
+          <SAP:Notify-Lodgement>N</SAP:Notify-Lodgement>
+          <SAP:Contact-Address>
+            <HIP:Address-Line-1>Energy Services</HIP:Address-Line-1>
+            <HIP:Address-Line-2>Energy Centre</HIP:Address-Line-2>
+            <HIP:Address-Line-3>Some Avenue</HIP:Address-Line-3>
+            <HIP:Post-Town>Some Town</HIP:Post-Town>
+            <HIP:Postcode>AA1 1AA</HIP:Postcode>
+          </SAP:Contact-Address>
+          <SAP:Scheme-Web-Site>www.EPC.co.uk</SAP:Scheme-Web-Site>
+          <SAP:E-Mail>inn.spector@epc.org.uk</SAP:E-Mail>
+          <SAP:Telephone>07777777708</SAP:Telephone>
+          <SAP:Company-Name>Accreditation Scheme</SAP:Company-Name>
+          <SAP:Scheme-Name>Accreditation Scheme</SAP:Scheme-Name>
+          <SAP:Identification-Number>
+            <SAP:Certificate-Number>0000000000</SAP:Certificate-Number>
+          </SAP:Identification-Number>
+        </SAP:Home-Inspector>
+        <SAP:Property>
+          <SAP:Address>
+            <SAP:Address-Line-1>28, Place Drive</SAP:Address-Line-1>
+            <SAP:Post-Town>Town</SAP:Post-Town>
+            <SAP:Postcode>AA1 1AA</SAP:Postcode>
+          </SAP:Address>
+          <SAP:UPRN>90000000000</SAP:UPRN>
+        </SAP:Property>
+        <SAP:Region-Code>17</SAP:Region-Code>
+        <SAP:Country-Code>EAW</SAP:Country-Code>
+        <SAP:Related-Party-Disclosure>
+          <SAP:Related-Party-Disclosure-Number>1</SAP:Related-Party-Disclosure-Number>
+        </SAP:Related-Party-Disclosure>
+      </SAP:Report-Header>
+      <SAP:Energy-Assessment>
+        <SAP:Assessment-Date>2012-09-29</SAP:Assessment-Date>
+        <SAP:Renewable-Heat-Incentive>
+          <SAP:RHI-New-Dwelling>
+            <SAP:Space-Heating>1780</SAP:Space-Heating>
+            <SAP:Water-Heating>2306</SAP:Water-Heating>
+          </SAP:RHI-New-Dwelling>
+        </SAP:Renewable-Heat-Incentive>
+        <SAP:Property-Summary>
+          <SAP:Walls>
+            <SAP:Description>Average thermal transmittance 0.34 W/m²K</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Walls>
+          <SAP:Roof>
+            <SAP:Description>(other premises above)</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Roof>
+          <SAP:Floor>
+            <SAP:Description>Average thermal transmittance 0.25 W/m²K</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Floor>
+          <SAP:Windows>
+            <SAP:Description>Fully double glazed</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Windows>
+          <SAP:Main-Heating>
+            <SAP:Description>Boiler and radiators, mains gas</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Main-Heating>
+          <SAP:Main-Heating-Controls>
+            <SAP:Description>Programmer, room thermostat and TRVs</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Main-Heating-Controls>
+          <SAP:Secondary-Heating>
+            <SAP:Description>None</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Secondary-Heating>
+          <SAP:Hot-Water>
+            <SAP:Description>From main system</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Hot-Water>
+          <SAP:Lighting>
+            <SAP:Description>Low energy lighting in 57% of fixed outlets</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Lighting>
+          <SAP:Air-Tightness>
+            <SAP:Description>Air permeability 2.7 m³/h.m² (as tested)</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>5</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>5</SAP:Environmental-Efficiency-Rating>
+          </SAP:Air-Tightness>
+          <SAP:Has-Fixed-Air-Conditioning>false</SAP:Has-Fixed-Air-Conditioning>
+          <SAP:Has-Hot-Water-Cylinder>true</SAP:Has-Hot-Water-Cylinder>
+          <SAP:Has-Heated-Separate-Conservatory>false</SAP:Has-Heated-Separate-Conservatory>
+          <SAP:Dwelling-Type>Mid-floor flat</SAP:Dwelling-Type>
+          <SAP:Total-Floor-Area>80</SAP:Total-Floor-Area>
+        </SAP:Property-Summary>
+        <SAP:Energy-Use>
+          <SAP:Energy-Rating-Current>82</SAP:Energy-Rating-Current>
+          <SAP:Energy-Rating-Potential>83</SAP:Energy-Rating-Potential>
+          <SAP:Environmental-Impact-Current>86</SAP:Environmental-Impact-Current>
+          <SAP:Environmental-Impact-Potential>87</SAP:Environmental-Impact-Potential>
+          <SAP:Energy-Consumption-Current>87</SAP:Energy-Consumption-Current>
+          <SAP:Energy-Consumption-Potential>82</SAP:Energy-Consumption-Potential>
+          <SAP:CO2-Emissions-Current>1.3</SAP:CO2-Emissions-Current>
+          <SAP:CO2-Emissions-Current-Per-Floor-Area>16</SAP:CO2-Emissions-Current-Per-Floor-Area>
+          <SAP:CO2-Emissions-Potential>1.3</SAP:CO2-Emissions-Potential>
+          <SAP:Lighting-Cost-Current>66</SAP:Lighting-Cost-Current>
+          <SAP:Lighting-Cost-Potential>46</SAP:Lighting-Cost-Potential>
+          <SAP:Heating-Cost-Current>213</SAP:Heating-Cost-Current>
+          <SAP:Heating-Cost-Potential>215</SAP:Heating-Cost-Potential>
+          <SAP:Hot-Water-Cost-Current>94</SAP:Hot-Water-Cost-Current>
+          <SAP:Hot-Water-Cost-Potential>94</SAP:Hot-Water-Cost-Potential>
+          <SAP:Energy-Rating-Average>60</SAP:Energy-Rating-Average>
+        </SAP:Energy-Use>
+        <SAP:Suggested-Improvements>
+          <SAP:Improvement>
+            <SAP:Sequence>1</SAP:Sequence>
+            <SAP:Improvement-Category>1</SAP:Improvement-Category>
+            <SAP:Improvement-Type>E</SAP:Improvement-Type>
+            <SAP:Improvement-Details>
+              <SAP:Improvement-Number>35</SAP:Improvement-Number>
+            </SAP:Improvement-Details>
+            <SAP:Typical-Saving>18</SAP:Typical-Saving>
+            <SAP:Energy-Performance-Rating>83</SAP:Energy-Performance-Rating>
+            <SAP:Environmental-Impact-Rating>87</SAP:Environmental-Impact-Rating>
+            <SAP:Indicative-Cost>£8</SAP:Indicative-Cost>
+          </SAP:Improvement>
+        </SAP:Suggested-Improvements>
+      </SAP:Energy-Assessment>
+      <SAP:SAP09-Data>
+        <SAP:Data-Type>2</SAP:Data-Type>
+        <SAP:Schema-Version>LIG-16.0</SAP:Schema-Version>
+        <SAP:SAP-Property-Details>
+          <SAP:Property-Type>2</SAP:Property-Type>
+          <SAP:Built-Form>1</SAP:Built-Form>
+          <SAP:Living-Area>31.53</SAP:Living-Area>
+          <SAP:Orientation>0</SAP:Orientation>
+          <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
+          <SAP:Is-In-Smoke-Control-Area>unknown</SAP:Is-In-Smoke-Control-Area>
+          <SAP:SAP-Heating>
+            <SAP:Water-Heating-Code>901</SAP:Water-Heating-Code>
+            <SAP:Water-Fuel-Type>1</SAP:Water-Fuel-Type>
+            <SAP:Has-Hot-Water-Cylinder>true</SAP:Has-Hot-Water-Cylinder>
+            <SAP:Secondary-Heating-Category>1</SAP:Secondary-Heating-Category>
+            <SAP:Thermal-Store>1</SAP:Thermal-Store>
+            <SAP:Has-Fixed-Air-Conditioning>false</SAP:Has-Fixed-Air-Conditioning>
+            <SAP:Hot-Water-Store-Size>145</SAP:Hot-Water-Store-Size>
+            <SAP:Hot-Water-Store-Heat-Loss-Source>3</SAP:Hot-Water-Store-Heat-Loss-Source>
+            <SAP:Hot-Water-Store-Insulation-Type>1</SAP:Hot-Water-Store-Insulation-Type>
+            <SAP:Hot-Water-Store-Insulation-Thickness>50</SAP:Hot-Water-Store-Insulation-Thickness>
+            <SAP:Is-Primary-Pipework-Insulated>true</SAP:Is-Primary-Pipework-Insulated>
+            <SAP:Has-Cylinder-Thermostat>true</SAP:Has-Cylinder-Thermostat>
+            <SAP:Is-Cylinder-In-Heated-Space>true</SAP:Is-Cylinder-In-Heated-Space>
+            <SAP:Is-Hot-Water-Separately-Timed>true</SAP:Is-Hot-Water-Separately-Timed>
+            <SAP:Has-Solar-Panel>false</SAP:Has-Solar-Panel>
+            <SAP:Main-Heating-Details>
+              <SAP:Main-Heating>
+                <SAP:Main-Heating-Number>1</SAP:Main-Heating-Number>
+                <SAP:Main-Heating-Category>2</SAP:Main-Heating-Category>
+                <SAP:Main-Heating-Data-Source>1</SAP:Main-Heating-Data-Source>
+                <SAP:Boiler-Index-Number>009206</SAP:Boiler-Index-Number>
+                <SAP:Main-Fuel-Type>1</SAP:Main-Fuel-Type>
+                <SAP:Main-Heating-Control>2106</SAP:Main-Heating-Control>
+                <SAP:Heat-Emitter-Type>1</SAP:Heat-Emitter-Type>
+                <SAP:Is-Flue-Fan-Present>true</SAP:Is-Flue-Fan-Present>
+                <SAP:Is-Central-Heating-Pump-In-Heated-Space>true</SAP:Is-Central-Heating-Pump-In-Heated-Space>
+                <SAP:Is-Interlocked-System>true</SAP:Is-Interlocked-System>
+                <SAP:Has-Delayed-Start-Thermostat>false</SAP:Has-Delayed-Start-Thermostat>
+                <SAP:Load-Or-Weather-Compensation>0</SAP:Load-Or-Weather-Compensation>
+                <SAP:Main-Heating-Fraction>1</SAP:Main-Heating-Fraction>
+              </SAP:Main-Heating>
+            </SAP:Main-Heating-Details>
+          </SAP:SAP-Heating>
+          <SAP:SAP-Energy-Source>
+            <SAP:Wind-Turbines-Count>0</SAP:Wind-Turbines-Count>
+            <SAP:Wind-Turbine-Terrain-Type>1</SAP:Wind-Turbine-Terrain-Type>
+            <SAP:Fixed-Lighting-Outlets-Count>7</SAP:Fixed-Lighting-Outlets-Count>
+            <SAP:Low-Energy-Fixed-Lighting-Outlets-Count>4</SAP:Low-Energy-Fixed-Lighting-Outlets-Count>
+            <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>57</SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
+            <SAP:Electricity-Tariff>1</SAP:Electricity-Tariff>
+          </SAP:SAP-Energy-Source>
+          <SAP:SAP-Building-Parts>
+            <SAP:SAP-Building-Part>
+              <SAP:Building-Part-Number>1</SAP:Building-Part-Number>
+              <SAP:Identifier>Main Dwelling</SAP:Identifier>
+              <SAP:Construction-Year>2011</SAP:Construction-Year>
+              <SAP:Overshading>2</SAP:Overshading>
+              <SAP:SAP-Openings>
+                <SAP:SAP-Opening>
+                  <SAP:Name>1</SAP:Name>
+                  <SAP:Type>1</SAP:Type>
+                  <SAP:Location>Wall 2</SAP:Location>
+                  <SAP:Orientation>0</SAP:Orientation>
+                  <SAP:Width>0.91</SAP:Width>
+                  <SAP:Height>2.1</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.15</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>7</SAP:Orientation>
+                  <SAP:Width>0.9</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.3</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>5</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>5</SAP:Orientation>
+                  <SAP:Width>1.3</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>6</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.15</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>7</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>4</SAP:Orientation>
+                  <SAP:Width>0.55</SAP:Width>
+                  <SAP:Height>1.05</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>4</SAP:Orientation>
+                  <SAP:Width>1.15</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>4</SAP:Orientation>
+                  <SAP:Width>1.15</SAP:Width>
+                  <SAP:Height>1.4</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10</SAP:Name>
+                  <SAP:Type>2</SAP:Type>
+                  <SAP:Location>Wall 1</SAP:Location>
+                  <SAP:Orientation>4</SAP:Orientation>
+                  <SAP:Width>1.3</SAP:Width>
+                  <SAP:Height>1.05</SAP:Height>
+                </SAP:SAP-Opening>
+              </SAP:SAP-Openings>
+              <SAP:SAP-Floor-Dimensions>
+                <SAP:SAP-Floor-Dimension>
+                  <SAP:Storey>1</SAP:Storey>
+                  <SAP:Description>Floor 2</SAP:Description>
+                  <SAP:Floor-Type>4</SAP:Floor-Type>
+                  <SAP:Total-Floor-Area>79.9</SAP:Total-Floor-Area>
+                  <SAP:Storey-Height>2.32</SAP:Storey-Height>
+                  <SAP:Heat-Loss-Area>5.19</SAP:Heat-Loss-Area>
+                  <SAP:U-Value>0.25</SAP:U-Value>
+                </SAP:SAP-Floor-Dimension>
+              </SAP:SAP-Floor-Dimensions>
+              <SAP:SAP-Thermal-Bridges>
+                <SAP:Thermal-Bridge-Code>4</SAP:Thermal-Bridge-Code>
+                <SAP:User-Defined-Y-Value>0.08</SAP:User-Defined-Y-Value>
+                <SAP:Calculation-Reference>SAP 2005 record</SAP:Calculation-Reference>
+              </SAP:SAP-Thermal-Bridges>
+              <SAP:SAP-Walls>
+                <SAP:SAP-Wall>
+                  <SAP:Name>Wall 1</SAP:Name>
+                  <SAP:Description>Wall 5 render</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>58.29</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>Wall 2</SAP:Name>
+                  <SAP:Description>Wall 2 common area</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>9.28</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.27</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>Wall 3</SAP:Name>
+                  <SAP:Description>Wall 3 lift shaft</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>8.9</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                </SAP:SAP-Wall>
+              </SAP:SAP-Walls>
+              <SAP:Thermal-Mass-Parameter>250</SAP:Thermal-Mass-Parameter>
+            </SAP:SAP-Building-Part>
+          </SAP:SAP-Building-Parts>
+          <SAP:SAP-Opening-Types>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>1</SAP:Name>
+              <SAP:Description>Door</SAP:Description>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>2</SAP:Type>
+              <SAP:Glazing-Type>6</SAP:Glazing-Type>
+              <SAP:U-Value>2</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2</SAP:Name>
+              <SAP:Description>Window</SAP:Description>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>6</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.63</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.7</SAP:Frame-Factor>
+              <SAP:U-Value>1.8</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+          </SAP:SAP-Opening-Types>
+          <SAP:SAP-Ventilation>
+            <SAP:Open-Fireplaces-Count>0</SAP:Open-Fireplaces-Count>
+            <SAP:Open-Flues-Count>0</SAP:Open-Flues-Count>
+            <SAP:Flueless-Gas-Fires-Count>0</SAP:Flueless-Gas-Fires-Count>
+            <SAP:Pressure-Test>1</SAP:Pressure-Test>
+            <SAP:Air-Permeability>2.72</SAP:Air-Permeability>
+            <SAP:Sheltered-Sides-Count>2</SAP:Sheltered-Sides-Count>
+            <SAP:Ventilation-Type>1</SAP:Ventilation-Type>
+            <SAP:Extract-Fans-Count>3</SAP:Extract-Fans-Count>
+            <SAP:PSV-Count>0</SAP:PSV-Count>
+          </SAP:SAP-Ventilation>
+          <SAP:SAP-Flat-Details>
+            <SAP:Level>2</SAP:Level>
+          </SAP:SAP-Flat-Details>
+        </SAP:SAP-Property-Details>
+      </SAP:SAP09-Data>
+      <SAP:PDF/>
+      <SAP:ExternalDefinitions-Revision-Number>3.9f</SAP:ExternalDefinitions-Revision-Number>
+    </SAP-EPC-Data>
+  </Content>
+</ConditionReportCreateRequest_1>
