@@ -532,13 +532,13 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     context "with multiple entries for the same attribute" do
-      it "raises a BadAttributesWrite error" do
+      it "does not raise a BadAttributesWrite error as multiple insert attempts are handled" do
         expect {
           gateway.add_attribute_values(
             AttributeValue.new("glazed_type", "test2", nil),
             assessment_id: "0000-0000-0000-0000-0001",
           )
-        }.to raise_error Boundary::BadAttributesWrite
+        }.not_to raise_error
       end
     end
   end
