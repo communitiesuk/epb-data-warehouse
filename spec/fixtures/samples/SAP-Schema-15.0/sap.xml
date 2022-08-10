@@ -1,0 +1,2751 @@
+<ConditionReportCreateRequest_1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.hcrregister.com" xmlns:HIP="DCLG-HIP" xmlns:SAP="DCLG-SAP09" xmlns:CS="DCLG-HIP/CommonStructures">
+  <Identification>
+    <CS:ServiceName>CreateReport</CS:ServiceName>
+    <CS:Operation>Create</CS:Operation>
+    <CS:TransactionDetails>
+      <CS:OriginatingID>Originating ID</CS:OriginatingID>
+      <CS:RecipientID>Recipient ID</CS:RecipientID>
+      <CS:Timestamp>2011-11-15T14:58:02.0Z</CS:Timestamp>
+      <CS:TransactionID>string</CS:TransactionID>
+    </CS:TransactionDetails>
+  </Identification>
+  <Configuration>
+    <CS:StopOnFirstError>No</CS:StopOnFirstError>
+    <CS:ReasonForChange>N/A</CS:ReasonForChange>
+  </Configuration>
+  <Content>
+    <SAP-EPC-Data>
+      <SAP:SAP-Version>9.90</SAP:SAP-Version>
+      <SAP:BEDF-Revision-Number>314</SAP:BEDF-Revision-Number>
+      <SAP:Calculation-Software-Name>Software</SAP:Calculation-Software-Name>
+      <SAP:Calculation-Software-Version>5.02a1</SAP:Calculation-Software-Version>
+      <SAP:Report-Header>
+        <SAP:RRN>1234-1234-1234-1234-1234</SAP:RRN>
+        <SAP:Inspection-Date>2011-11-15</SAP:Inspection-Date>
+        <SAP:Report-Type>3</SAP:Report-Type>
+        <SAP:Completion-Date>2011-11-14</SAP:Completion-Date>
+        <SAP:Registration-Date>2011-11-15</SAP:Registration-Date>
+        <SAP:Status>entered</SAP:Status>
+        <SAP:Language-Code>1</SAP:Language-Code>
+        <SAP:Restricted-Access>0</SAP:Restricted-Access>
+        <SAP:Transaction-Type>6</SAP:Transaction-Type>
+        <SAP:Seller-Commission-Report>N</SAP:Seller-Commission-Report>
+        <SAP:Property-Type>3</SAP:Property-Type>
+        <SAP:Home-Inspector>
+          <SAP:Name>
+            <SAP:Prefix>Mrs</SAP:Prefix>
+            <SAP:First-Name>Jane</SAP:First-Name>
+            <SAP:Surname>Doe</SAP:Surname>
+            <SAP:Suffix>SAP</SAP:Suffix>
+          </SAP:Name>
+          <SAP:Certification-Date>2010-09-09</SAP:Certification-Date>
+          <SAP:Status>Registered</SAP:Status>
+          <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
+          <SAP:Contact-Address>
+            <SAP:Address-Line-1>Energy Services</SAP:Address-Line-1>
+            <SAP:Address-Line-2>Energy Building</SAP:Address-Line-2>
+            <SAP:Address-Line-3/>
+            <SAP:Post-Town>Some Town</SAP:Post-Town>
+            <SAP:Postcode>AA1 1AA</SAP:Postcode>
+          </SAP:Contact-Address>
+          <SAP:Web-Site>www.epc.com</SAP:Web-Site>
+          <SAP:E-Mail>test@test.com</SAP:E-Mail>
+          <SAP:Fax>0000</SAP:Fax>
+          <SAP:Telephone>0111 111 1111</SAP:Telephone>
+          <SAP:Qualifications>#NOS5</SAP:Qualifications>
+          <SAP:Specialisms>Sap</SAP:Specialisms>
+          <SAP:Company-Name>Energy Company Name</SAP:Company-Name>
+          <SAP:Inspector-Report-Types>
+            <SAP:Report-Type>3</SAP:Report-Type>
+          </SAP:Inspector-Report-Types>
+          <SAP:Certification-Scheme>
+            <SAP:Scheme-Name>EPC Certification Scheme</SAP:Scheme-Name>
+            <SAP:Complaints-Address>
+              <SAP:Address-Line-1>Street Name</SAP:Address-Line-1>
+              <SAP:Address-Line-2/>
+              <SAP:Address-Line-3/>
+              <SAP:Post-Town>Some Town</SAP:Post-Town>
+              <SAP:Postcode>AA1 1AA</SAP:Postcode>
+            </SAP:Complaints-Address>
+            <SAP:Contact-Address>
+              <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
+              <SAP:Address-Line-2/>
+              <SAP:Address-Line-3/>
+              <SAP:Post-Town>Some Town</SAP:Post-Town>
+              <SAP:Postcode>AA1 1AA</SAP:Postcode>
+            </SAP:Contact-Address>
+            <SAP:Web-Site>www.EPC.com</SAP:Web-Site>
+            <SAP:E-Mail>test@test.com</SAP:E-Mail>
+            <SAP:Registered-Name>Certification Scheme</SAP:Registered-Name>
+            <SAP:Fax>0111 111 1111</SAP:Fax>
+            <SAP:Telephone>0111 111 1111</SAP:Telephone>
+          </SAP:Certification-Scheme>
+          <SAP:Identification-Number>
+            <SAP:Certificate-Number>123456789</SAP:Certificate-Number>
+          </SAP:Identification-Number>
+        </SAP:Home-Inspector>
+        <SAP:Property>
+          <SAP:Address>
+            <SAP:Address-Line-1>Flat 1</SAP:Address-Line-1>
+            <SAP:Address-Line-2>Block of Flats</SAP:Address-Line-2>
+            <SAP:Address-Line-3/>
+            <SAP:Post-Town>Some Town</SAP:Post-Town>
+            <SAP:Postcode>AAA1 1AA</SAP:Postcode>
+          </SAP:Address>
+          <SAP:UPRN>1111111111</SAP:UPRN>
+        </SAP:Property>
+        <SAP:Region-Code>17</SAP:Region-Code>
+        <SAP:Country-Code>EAW</SAP:Country-Code>
+        <SAP:Related-Party-Disclosure>
+          <SAP:Related-Party-Disclosure-Number>6</SAP:Related-Party-Disclosure-Number>
+        </SAP:Related-Party-Disclosure>
+      </SAP:Report-Header>
+      <SAP:Energy-Assessment>
+        <SAP:Assessment-Date>2011-11-15</SAP:Assessment-Date>
+        <SAP:Property-Summary>
+          <SAP:Walls>
+            <SAP:Description>Average thermal transmittance 0.35 W/m??K</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Walls>
+          <SAP:Roof>
+            <SAP:Description>Average thermal transmittance 0.15 W/m??K</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Roof>
+          <SAP:Floor>
+            <SAP:Description>(other premises below)</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Floor>
+          <SAP:Windows>
+            <SAP:Description>High performance glazing</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>5</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>5</SAP:Environmental-Efficiency-Rating>
+          </SAP:Windows>
+          <SAP:Main-Heating>
+            <SAP:Description>Air source heat pump, warm air, electric</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>5</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Main-Heating>
+          <SAP:Main-Heating>
+            <SAP:Description>Electric underfloor heating</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>1</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>1</SAP:Environmental-Efficiency-Rating>
+          </SAP:Main-Heating>
+          <SAP:Main-Heating-Controls>
+            <SAP:Description>Programmer and at least two room thermostats</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Main-Heating-Controls>
+          <SAP:Main-Heating-Controls>
+            <SAP:Description>Temperature zone control</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Main-Heating-Controls>
+          <SAP:Secondary-Heating>
+            <SAP:Description>None</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Secondary-Heating>
+          <SAP:Hot-Water>
+            <SAP:Description>From main system</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Hot-Water>
+          <SAP:Lighting>
+            <SAP:Description>Low energy lighting in 30% of fixed outlets</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
+          </SAP:Lighting>
+          <SAP:Air-Tightness>
+            <SAP:Description>Air permeability 5.0 m??/h.m?? (as tested)</SAP:Description>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
+          </SAP:Air-Tightness>
+          <SAP:Has-Fixed-Air-Conditioning>true</SAP:Has-Fixed-Air-Conditioning>
+          <SAP:Has-Hot-Water-Cylinder>false</SAP:Has-Hot-Water-Cylinder>
+          <SAP:Has-Heated-Separate-Conservatory>false</SAP:Has-Heated-Separate-Conservatory>
+          <SAP:Dwelling-Type>Top-floor maisonette</SAP:Dwelling-Type>
+          <SAP:Total-Floor-Area>316</SAP:Total-Floor-Area>
+        </SAP:Property-Summary>
+        <SAP:Energy-Use>
+          <SAP:Energy-Rating-Current>82</SAP:Energy-Rating-Current>
+          <SAP:Energy-Rating-Potential>83</SAP:Energy-Rating-Potential>
+          <SAP:Environmental-Impact-Current>74</SAP:Environmental-Impact-Current>
+          <SAP:Environmental-Impact-Potential>75</SAP:Environmental-Impact-Potential>
+          <SAP:Energy-Consumption-Current>126</SAP:Energy-Consumption-Current>
+          <SAP:Energy-Consumption-Potential>123</SAP:Energy-Consumption-Potential>
+          <SAP:CO2-Emissions-Current>7.1</SAP:CO2-Emissions-Current>
+          <SAP:CO2-Emissions-Potential>6.9</SAP:CO2-Emissions-Potential>
+          <SAP:CO2-Emissions-Current-Per-Floor-Area>22</SAP:CO2-Emissions-Current-Per-Floor-Area>
+          <SAP:Lighting-Cost-Current>150</SAP:Lighting-Cost-Current>
+          <SAP:Lighting-Cost-Potential>88</SAP:Lighting-Cost-Potential>
+          <SAP:Heating-Cost-Current>787</SAP:Heating-Cost-Current>
+          <SAP:Heating-Cost-Potential>796</SAP:Heating-Cost-Potential>
+          <SAP:Hot-Water-Cost-Current>92</SAP:Hot-Water-Cost-Current>
+          <SAP:Hot-Water-Cost-Potential>92</SAP:Hot-Water-Cost-Potential>
+        </SAP:Energy-Use>
+        <SAP:Suggested-Improvements>
+          <SAP:Improvement>
+            <SAP:Sequence>1</SAP:Sequence>
+            <SAP:Improvement-Category>1</SAP:Improvement-Category>
+            <SAP:Improvement-Type>E</SAP:Improvement-Type>
+            <SAP:Improvement-Details>
+              <SAP:Improvement-Number>35</SAP:Improvement-Number>
+            </SAP:Improvement-Details>
+            <SAP:Typical-Saving>53</SAP:Typical-Saving>
+            <SAP:Indicative-Cost>??18</SAP:Indicative-Cost>
+            <SAP:Energy-Performance-Rating>83</SAP:Energy-Performance-Rating>
+            <SAP:Environmental-Impact-Rating>75</SAP:Environmental-Impact-Rating>
+          </SAP:Improvement>
+        </SAP:Suggested-Improvements>
+        <SAP:LZC-Energy-Sources>
+          <SAP:LZC-Energy-Source>9</SAP:LZC-Energy-Source>
+        </SAP:LZC-Energy-Sources>
+        <SAP:Renewable-Heat-Incentive>
+          <SAP:RHI-New-Dwelling>
+            <SAP:Space-Heating>14756</SAP:Space-Heating>
+            <SAP:Water-Heating>2178</SAP:Water-Heating>
+          </SAP:RHI-New-Dwelling>
+        </SAP:Renewable-Heat-Incentive>
+      </SAP:Energy-Assessment>
+      <SAP:SAP09-Data>
+        <SAP:Data-Type>2</SAP:Data-Type>
+        <SAP:Schema-Version>LIG-15.0</SAP:Schema-Version>
+        <SAP:SAP-Property-Details>
+          <SAP:Property-Type>3</SAP:Property-Type>
+          <SAP:Living-Area>62.28</SAP:Living-Area>
+          <SAP:Orientation>8</SAP:Orientation>
+          <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
+          <SAP:Is-In-Smoke-Control-Area>unknown</SAP:Is-In-Smoke-Control-Area>
+          <SAP:SAP-Flat-Details>
+            <SAP:Level>3</SAP:Level>
+          </SAP:SAP-Flat-Details>
+          <SAP:Additional-Allowable-Electricity-Generation>0.00</SAP:Additional-Allowable-Electricity-Generation>
+          <SAP:SAP-Heating>
+            <SAP:Main-Heating-Details>
+              <SAP:Main-Heating>
+                <SAP:Main-Heating-Number>1</SAP:Main-Heating-Number>
+                <SAP:Main-Heating-Category>5</SAP:Main-Heating-Category>
+                <SAP:Main-Heating-Fraction>0.70</SAP:Main-Heating-Fraction>
+                <SAP:Main-Heating-Data-Source>3</SAP:Main-Heating-Data-Source>
+                <SAP:Main-Heating-Code>524</SAP:Main-Heating-Code>
+                <SAP:Main-Fuel-Type>39</SAP:Main-Fuel-Type>
+                <SAP:Main-Heating-Control>2505</SAP:Main-Heating-Control>
+                <SAP:Main-Heating-Flue-Type>2</SAP:Main-Heating-Flue-Type>
+                <SAP:Is-Flue-Fan-Present>false</SAP:Is-Flue-Fan-Present>
+                <SAP:Is-Central-Heating-Pump-In-Heated-Space>true</SAP:Is-Central-Heating-Pump-In-Heated-Space>
+                <SAP:Is-Oil-Pump-In-Heated-Space>true</SAP:Is-Oil-Pump-In-Heated-Space>
+                <SAP:Is-Interlocked-System>false</SAP:Is-Interlocked-System>
+                <SAP:Has-Delayed-Start-Thermostat>false</SAP:Has-Delayed-Start-Thermostat>
+                <SAP:Load-Or-Weather-Compensation>0</SAP:Load-Or-Weather-Compensation>
+                <SAP:Has-FGHRS>false</SAP:Has-FGHRS>
+              </SAP:Main-Heating>
+              <SAP:Main-Heating>
+                <SAP:Main-Heating-Number>2</SAP:Main-Heating-Number>
+                <SAP:Main-Heating-Category>8</SAP:Main-Heating-Category>
+                <SAP:Main-Heating-Fraction>0.30</SAP:Main-Heating-Fraction>
+                <SAP:Main-Heating-Data-Source>3</SAP:Main-Heating-Data-Source>
+                <SAP:Main-Heating-Code>424</SAP:Main-Heating-Code>
+                <SAP:Main-Fuel-Type>39</SAP:Main-Fuel-Type>
+                <SAP:Main-Heating-Control>2705</SAP:Main-Heating-Control>
+                <SAP:Has-FGHRS>false</SAP:Has-FGHRS>
+              </SAP:Main-Heating>
+            </SAP:Main-Heating-Details>
+            <SAP:Secondary-Heating-Category>1</SAP:Secondary-Heating-Category>
+            <SAP:Has-Fixed-Air-Conditioning>true</SAP:Has-Fixed-Air-Conditioning>
+            <SAP:Water-Heating-Code>901</SAP:Water-Heating-Code>
+            <SAP:Has-Hot-Water-Cylinder>false</SAP:Has-Hot-Water-Cylinder>
+            <SAP:Is-Heat-Pump-Assisted-By-Immersion>false</SAP:Is-Heat-Pump-Assisted-By-Immersion>
+            <SAP:Is-Immersion-For-Summer-Use>false</SAP:Is-Immersion-For-Summer-Use>
+            <SAP:Hot-Water-Store-Heat-Transfer-Area>0.00</SAP:Hot-Water-Store-Heat-Transfer-Area>
+            <SAP:Thermal-Store>1</SAP:Thermal-Store>
+            <SAP:Hot-Water-Store-Size>110.00</SAP:Hot-Water-Store-Size>
+            <SAP:Hot-Water-Store-Heat-Loss-Source>2</SAP:Hot-Water-Store-Heat-Loss-Source>
+            <SAP:Hot-Water-Store-Heat-Loss>0.03</SAP:Hot-Water-Store-Heat-Loss>
+            <SAP:Is-Primary-Pipework-Insulated>true</SAP:Is-Primary-Pipework-Insulated>
+            <SAP:Has-Cylinder-Thermostat>true</SAP:Has-Cylinder-Thermostat>
+            <SAP:Is-Cylinder-In-Heated-Space>false</SAP:Is-Cylinder-In-Heated-Space>
+            <SAP:Is-Hot-Water-Separately-Timed>true</SAP:Is-Hot-Water-Separately-Timed>
+            <SAP:Has-Solar-Panel>false</SAP:Has-Solar-Panel>
+            <SAP:Has-WWHRS>false</SAP:Has-WWHRS>
+            <SAP:Main-Heating-Systems-Interaction>1</SAP:Main-Heating-Systems-Interaction>
+          </SAP:SAP-Heating>
+          <SAP:SAP-Energy-Source>
+            <SAP:Wind-Turbines-Count>0</SAP:Wind-Turbines-Count>
+            <SAP:Wind-Turbine-Terrain-Type>1</SAP:Wind-Turbine-Terrain-Type>
+            <SAP:Fixed-Lighting-Outlets-Count>10</SAP:Fixed-Lighting-Outlets-Count>
+            <SAP:Low-Energy-Fixed-Lighting-Outlets-Count>3</SAP:Low-Energy-Fixed-Lighting-Outlets-Count>
+            <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>30</SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
+            <SAP:Electricity-Tariff>3</SAP:Electricity-Tariff>
+          </SAP:SAP-Energy-Source>
+          <SAP:SAP-Building-Parts>
+            <SAP:SAP-Building-Part>
+              <SAP:Building-Part-Number>1</SAP:Building-Part-Number>
+              <SAP:Identifier>Flat 693 - penthouse.mit SAP 9.81 Dwelling - SAP 2009 Version 990</SAP:Identifier>
+              <SAP:Construction-Year>2011</SAP:Construction-Year>
+              <SAP:Overshading>2</SAP:Overshading>
+              <SAP:SAP-Openings>
+                <SAP:SAP-Opening>
+                  <SAP:Name>1 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>1 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>1 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.60</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>1 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>1 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>1 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.60</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>1 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>1 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>1 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.52</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>1 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>1 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>1 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.52</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.87</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.13</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.65</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.59</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.59</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.50</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.20</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.84</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.50</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.43</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.83</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.43</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.83</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.59</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.50</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.50</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>2 16 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>2 16 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.73</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.00</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.30</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.41</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.57</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.41</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.57</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.95</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.46</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.95</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.46</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.57</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.57</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.41</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.57</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.42</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.35</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>3 16 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>3 16 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.47</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 0 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 0 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.27</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 1 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 1 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.27</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 2 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 2 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.22</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 3 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 3 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.22</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 4 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 4 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.27</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 5 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 5 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.27</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 6 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 6 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.28</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 7 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 7 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.00</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 8 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 8 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.16</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 9 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 9 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.28</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 10 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 10 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.84</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 11 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 11 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.84</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>4 12 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>4 12 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.28</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>5 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>5 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>5 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>5 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>5 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>5 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>0.09</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>5 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>5 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>5 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>1.39</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>5 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>5 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>5 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>2</SAP:Orientation>
+                  <SAP:Width>2.28</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.05</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.35</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.68</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.60</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.60</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.60</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.24</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.60</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.52</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.02</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.52</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.52</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>8 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>8 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.86</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 0 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 0 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 1 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 1 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.06</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 2 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 2 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 3 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 3 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 4 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 4 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 5 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 5 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.16</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 6 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 6 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.96</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 7 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 7 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.05</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 8 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 8 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.21</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 9 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 9 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.38</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 10 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 10 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.38</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 11 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 11 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.38</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>9 12 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Type>9 12 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Type>
+                  <SAP:Location>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.69</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.12</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.10</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.10</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.12</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 4 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 4 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.12</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 5 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 5 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.10</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 6 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 6 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.10</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 7 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 7 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.12</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 8 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 8 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.61</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 9 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 9 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.61</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 10 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 10 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.61</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 11 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 11 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.61</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 12 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 12 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.94</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 13 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 13 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.94</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 14 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 14 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.94</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>10 15 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>10 15 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.94</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.49</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.06</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.40</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.71</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.40</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.71</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.49</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.06</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.49</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.40</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.40</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.49</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.06</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.71</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>1.71</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>11 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Type>11 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Type>
+                  <SAP:Location>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.06</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>12 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>12 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>12 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>12 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>12 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>12 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>12 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>12 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>12 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.38</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>12 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>12 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>12 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>8</SAP:Orientation>
+                  <SAP:Width>2.38</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.16</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.05</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 4 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 4 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.12</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 5 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 5 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.10</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 6 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 6 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.10</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 7 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 7 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.14</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 8 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 8 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.57</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 9 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 9 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.72</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 10 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 10 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.72</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 11 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 11 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>1.01</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 12 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 12 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.87</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 13 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 13 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>0.79</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 14 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 14 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.36</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 15 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 15 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.36</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+                <SAP:SAP-Opening>
+                  <SAP:Name>13 16 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Type>13 16 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Type>
+                  <SAP:Location>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Location>
+                  <SAP:Orientation>6</SAP:Orientation>
+                  <SAP:Width>2.36</SAP:Width>
+                  <SAP:Height>1.00</SAP:Height>
+                </SAP:SAP-Opening>
+              </SAP:SAP-Openings>
+              <SAP:SAP-Roofs>
+                <SAP:SAP-Roof>
+                  <SAP:Name>0 Roof 0.15, 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>Roof 0.15, 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Roof-Type>2</SAP:Roof-Type>
+                  <SAP:Total-Roof-Area>190.49</SAP:Total-Roof-Area>
+                  <SAP:U-Value>0.15</SAP:U-Value>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Roof>
+              </SAP:SAP-Roofs>
+              <SAP:SAP-Floor-Dimensions>
+                <SAP:SAP-Floor-Dimension>
+                  <SAP:Storey>1</SAP:Storey>
+                  <SAP:Floor-Type>3</SAP:Floor-Type>
+                  <SAP:Total-Floor-Area>161.80</SAP:Total-Floor-Area>
+                  <SAP:Storey-Height>3.30</SAP:Storey-Height>
+                  <SAP:Heat-Loss-Area>0.00</SAP:Heat-Loss-Area>
+                  <SAP:U-Value>0.00</SAP:U-Value>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                  <SAP:Kappa-Value-From-Below>0.00</SAP:Kappa-Value-From-Below>
+                </SAP:SAP-Floor-Dimension>
+              </SAP:SAP-Floor-Dimensions>
+              <SAP:SAP-Thermal-Bridges>
+                <SAP:Thermal-Bridge-Code>4</SAP:Thermal-Bridge-Code>
+                <SAP:User-Defined-Y-Value>0.080</SAP:User-Defined-Y-Value>
+                <SAP:Calculation-Reference>ACD 2006 regulations</SAP:Calculation-Reference>
+              </SAP:SAP-Thermal-Bridges>
+              <SAP:SAP-Walls>
+                <SAP:SAP-Wall>
+                  <SAP:Name>1 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>9.81</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>2 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>37.13</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>3 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>32.13</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>4 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>27.32</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>5 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>6.85</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>6 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>2.28</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>7 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>2.05</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>8 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>28.70</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>9 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>26.42</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>10 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>30.71</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>11 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>30.71</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>12 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>9.81</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+                <SAP:SAP-Wall>
+                  <SAP:Name>13 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+                  <SAP:Description>standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Description>
+                  <SAP:Wall-Type>2</SAP:Wall-Type>
+                  <SAP:Total-Wall-Area>36.69</SAP:Total-Wall-Area>
+                  <SAP:U-Value>0.35</SAP:U-Value>
+                  <SAP:Is-Curtain-Walling>false</SAP:Is-Curtain-Walling>
+                  <SAP:Kappa-Value>0.00</SAP:Kappa-Value>
+                </SAP:SAP-Wall>
+              </SAP:SAP-Walls>
+              <SAP:Thermal-Mass-Parameter>250.00</SAP:Thermal-Mass-Parameter>
+            </SAP:SAP-Building-Part>
+          </SAP:SAP-Building-Parts>
+          <SAP:SAP-Opening-Types>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>1 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>1 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>1 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>1 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>2 16 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>3 16 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 0 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 1 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 2 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 3 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 4 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 5 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 6 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 7 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 8 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 9 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 10 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 11 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>4 12 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>5 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>5 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>5 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>5 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>8 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 0 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 1 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 2 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 3 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 4 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 5 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 6 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 7 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 8 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 9 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 10 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 11 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>9 12 Velfac windows 1.6, 10 F_4B_693_Formal LivR/K, 10F40010 standard wall construction (2002 regs), 10 F_4B_693_Formal LivR/K, 10F40010</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 4 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 5 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 6 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 7 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 8 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 9 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 10 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 11 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 12 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 13 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 14 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>10 15 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 0 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 1 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 2 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 3 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 4 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 5 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 6 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 7 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 8 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 9 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 10 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 11 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 12 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 13 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 14 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>11 15 Velfac windows 1.6, 11 F_4B_693, 11F40002 standard wall construction (2002 regs), 11 F_4B_693, 11F40002</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>12 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>12 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>12 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>12 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 0 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 1 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 2 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 3 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 4 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 5 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 6 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 7 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 8 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 9 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 10 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 11 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 12 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 13 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 14 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 15 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+            <SAP:SAP-Opening-Type>
+              <SAP:Name>13 16 Velfac windows 1.6, 10 F_4B_693, 10F40009 standard wall construction (2002 regs), 10 F_4B_693, 10F40009</SAP:Name>
+              <SAP:Data-Source>2</SAP:Data-Source>
+              <SAP:Type>4</SAP:Type>
+              <SAP:Glazing-Type>3</SAP:Glazing-Type>
+              <SAP:Solar-Transmittance>0.72</SAP:Solar-Transmittance>
+              <SAP:Frame-Factor>0.80</SAP:Frame-Factor>
+              <SAP:U-Value>1.60</SAP:U-Value>
+            </SAP:SAP-Opening-Type>
+          </SAP:SAP-Opening-Types>
+          <SAP:SAP-Ventilation>
+            <SAP:Open-Fireplaces-Count>0</SAP:Open-Fireplaces-Count>
+            <SAP:Open-Flues-Count>0</SAP:Open-Flues-Count>
+            <SAP:Extract-Fans-Count>0</SAP:Extract-Fans-Count>
+            <SAP:PSV-Count>0</SAP:PSV-Count>
+            <SAP:Flueless-Gas-Fires-Count>0</SAP:Flueless-Gas-Fires-Count>
+            <SAP:Pressure-Test>1</SAP:Pressure-Test>
+            <SAP:Air-Permeability>5.00</SAP:Air-Permeability>
+            <SAP:Sheltered-Sides-Count>2</SAP:Sheltered-Sides-Count>
+            <SAP:Ventilation-Type>8</SAP:Ventilation-Type>
+            <SAP:Mechanical-Ventilation-Data-Source>1</SAP:Mechanical-Ventilation-Data-Source>
+            <SAP:Is-Mechanical-Vent-Approved-Installer-Scheme>false</SAP:Is-Mechanical-Vent-Approved-Installer-Scheme>
+            <SAP:Mechanical-Vent-System-Index-Number>500125</SAP:Mechanical-Vent-System-Index-Number>
+            <SAP:Wet-Rooms-Count>2</SAP:Wet-Rooms-Count>
+            <SAP:Mechanical-Vent-Duct-Type>2</SAP:Mechanical-Vent-Duct-Type>
+            <SAP:Mechanical-Vent-Duct-Insulation>2</SAP:Mechanical-Vent-Duct-Insulation>
+          </SAP:SAP-Ventilation>
+          <SAP:SAP-Cooling>
+            <SAP:Cooled-Area>221.41</SAP:Cooled-Area>
+            <SAP:Cooling-System-Data-Source>2</SAP:Cooling-System-Data-Source>
+            <SAP:Cooling-System-Type>1</SAP:Cooling-System-Type>
+            <SAP:Cooling-System-EER>3.50</SAP:Cooling-System-EER>
+            <SAP:Cooling-System-Control>2</SAP:Cooling-System-Control>
+          </SAP:SAP-Cooling>
+        </SAP:SAP-Property-Details>
+      </SAP:SAP09-Data>
+      <SAP:PDF/>
+      <SAP:ExternalDefinitions-Revision-Number>2.9c</SAP:ExternalDefinitions-Revision-Number>
+    </SAP-EPC-Data>
+    <PDF/>
+  </Content>
+</ConditionReportCreateRequest_1>
