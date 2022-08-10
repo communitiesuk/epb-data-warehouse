@@ -14,7 +14,6 @@ loader.setup
 Sentry.init do |config|
   config.environment = ENV["STAGE"]
   config.capture_exception_frame_locals = true
-  config.sample_rate = 0.001
 end
 
 def use_case(name)
