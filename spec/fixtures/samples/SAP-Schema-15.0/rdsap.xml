@@ -333,8 +333,8 @@
 				</HIP:SAP-Property-Details>
 			</HIP:SAP-Data>
 			<HIP:Insurance-Details>
-				<HIP:Insurer>hiscox</HIP:Insurer>
-				<HIP:Policy-No>1620941</HIP:Policy-No>
+				<HIP:Insurer>Insurance Company</HIP:Insurer>
+				<HIP:Policy-No>1234565</HIP:Policy-No>
 				<HIP:Effective-Date>2011-08-13</HIP:Effective-Date>
 				<HIP:Expiry-Date>2012-08-13</HIP:Expiry-Date>
 				<HIP:PI-Limit>2000000</HIP:PI-Limit>
