@@ -17,7 +17,7 @@
     <Tenure>ND</Tenure>
     <Transaction-Type>6</Transaction-Type>
     <Seller-Commission-Report>Y</Seller-Commission-Report>
-    <Property-Type>0</Property-Type>
+    <Property-Type>0</Property-Type>-
     <Home-Inspector>
       <Name>Inspector Bob</Name>
       <Notify-Lodgement>Y</Notify-Lodgement>
@@ -148,6 +148,7 @@
     </Suggested-Improvements>
     <LZC-Energy-Sources>
       <LZC-Energy-Source>11</LZC-Energy-Source>
+      <LZC-Energy-Source>9</LZC-Energy-Source>
     </LZC-Energy-Sources>
     <Renewable-Heat-Incentive>
       <RHI-New-Dwelling>

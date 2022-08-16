@@ -158,6 +158,9 @@
         <Environmental-Impact-Rating>92</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>10</LZC-Energy-Source>
+    </LZC-Energy-Sources>
     <Renewable-Heat-Incentive>
       <RHI-New-Dwelling>
         <Space-Heating>5622</Space-Heating>
