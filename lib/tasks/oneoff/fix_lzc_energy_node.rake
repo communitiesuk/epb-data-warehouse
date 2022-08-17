@@ -1,34 +1,28 @@
 desc "Apply fix for LZC-Energy-Source"
-task :fix_lzc_energy_node do
-
-
-
-  sql = <<-SQL
-       select assessment_id,  
+namespace :one_off do
+  task :fix_lzc_energy_node do
+    sql = <<-SQL
+       select assessment_id,#{'  '}
        document ->> 'lzc_energy_sources' as lsz_node,
        document ->> 'schema_type' as type
-       FROM assessment_documents 
+       FROM assessment_documents#{' '}
        WHERE document ->> 'assessment_type' IN ('SAP', 'RdSAP')
        AND nullif((document ->> 'lzc_energy_sources')::json ->> 'lzc_energy_source', '') != ''
-  SQL
+    SQL
 
-  results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
-  attribute_id = get_attribute_id
+    results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
+    attribute_id = get_attribute_id
     ActiveRecord::Base.transaction do
-    results.each do |row|
-      node_array =[]
-      node_array << JSON.parse(row["lsz_node"])["lzc_energy_source"]
-      update_json(row["assessment_id"], node_array)
-      update_eav(row["assessment_id"], node_array, attribute_id)
+      results.each do |row|
+        node_array = []
+        node_array << JSON.parse(row["lsz_node"])["lzc_energy_source"]
+        update_json(row["assessment_id"], node_array)
+        update_eav(row["assessment_id"], node_array, attribute_id)
+      end
     end
   end
-
-
-
 end
 
-
-private
 def update_json(assessment_id, node_array)
   sql = <<-SQL
       UPDATE assessment_documents
@@ -41,7 +35,8 @@ def update_json(assessment_id, node_array)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-      )]
+    )
+  ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 end
@@ -58,12 +53,12 @@ def update_eav(assessment_id, node_array, attribute_id)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-      ),
+    ),
     ActiveRecord::Relation::QueryAttribute.new(
       "attribute_id",
       attribute_id,
       ActiveRecord::Type::Integer.new,
-      ),
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
