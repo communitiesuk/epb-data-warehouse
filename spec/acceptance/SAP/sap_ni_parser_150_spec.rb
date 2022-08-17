@@ -157,6 +157,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "address_line_1" => "17, Street Lodge",
                       "post_town" => "Town",
                       "postcode" => "BT1 1AA",
+                      "lzc_energy_sources" => [9],
                       "uprn" => { "xmlns" => "DCLG-HIP", "value" => 0 } }
 
       result = use_case.execute(xml: rdsap,
@@ -188,6 +189,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "address_line_1" => "3, Street Close",
                       "post_town" => "FERGUS",
                       "postcode" => "BT1 1AA",
+                      "lzc_energy_sources" => [9],
                       "uprn" => 0,
                       "region_code" => 10,
                       "country_code" => "NIR",

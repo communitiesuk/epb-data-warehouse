@@ -109,6 +109,7 @@ RSpec.describe "the parser and the RdSAP configuration for 18.0" do
                          "impact_of_loft_insulation" => -214,
                          "impact_of_solid_wall_insulation" => -1864,
                          "water_heating" => 2087 },
+                      "lzc_energy_sources" => [11],
                       "built_form" => 4,
                       "extensions_count" => 1,
                       "multiple_glazing_type" => 3,

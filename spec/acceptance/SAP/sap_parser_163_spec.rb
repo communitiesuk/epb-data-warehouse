@@ -9,6 +9,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "calculation_software_version" => 8.3,
                       "sap_version" => 9.91,
                       "bedf_revision_number" => 370,
+                      "lzc_energy_sources" => [9],
                       "walls" =>
                        [{ "description" => "Cavity wall, as built, insulated (assumed)",
                           "energy_efficiency_rating" => 4,
@@ -295,6 +296,7 @@ RSpec.describe "the parser and the SAP configuration" do
                        { "description" => "Air permeability 3.9 m³/h.m² (assumed)",
                          "energy_efficiency_rating" => 4,
                          "environmental_efficiency_rating" => 4 },
+                      "lzc_energy_sources" => [9],
                       "has_fixed_air_conditioning" => "false",
                       "has_hot_water_cylinder" => "true",
                       "has_heated_separate_conservatory" => "false",

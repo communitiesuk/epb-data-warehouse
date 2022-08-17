@@ -79,6 +79,7 @@ RSpec.describe "the parser and the RdSAP configuration for 17.0" do
                           "indicative_cost" => "£1,000",
                           "energy_performance_rating" => 79,
                           "environmental_impact_rating" => 66 }],
+                      "lzc_energy_sources" => [11],
                       "alternative_improvements" =>
                        [{ "sequence" => 1,
                           "improvement_category" => 6,

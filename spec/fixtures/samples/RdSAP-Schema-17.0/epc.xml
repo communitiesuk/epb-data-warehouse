@@ -132,6 +132,9 @@
         <Environmental-Impact-Rating>66</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>11</LZC-Energy-Source>
+    </LZC-Energy-Sources>
     <Alternative-Improvements>
       <Improvement>
         <Sequence>1</Sequence>

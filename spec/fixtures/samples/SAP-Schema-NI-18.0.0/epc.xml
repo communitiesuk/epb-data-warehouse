@@ -140,6 +140,10 @@
       <Dwelling-Type>Mid-floor flat</Dwelling-Type>
       <Total-Floor-Area>90</Total-Floor-Area>
     </Property-Summary>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>11</LZC-Energy-Source>
+      <LZC-Energy-Source>9</LZC-Energy-Source>
+    </LZC-Energy-Sources>
     <Energy-Use>
       <Energy-Rating-Average>60</Energy-Rating-Average>
       <Energy-Rating-Typical-Newbuild>81</Energy-Rating-Typical-Newbuild>

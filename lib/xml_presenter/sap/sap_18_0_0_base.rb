@@ -36,7 +36,7 @@ module XmlPresenter
         # list nodes are data node which contain and array. This helps ensure they are correctly formatted.
         list_nodes %w[
           SAP-Floor-Dimensions
-          LZC-Energy-Source
+          LZC-Energy-Sources
           Suggested-Improvements
           ImprovementTexts
           SAP-Building-Parts

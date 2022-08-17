@@ -14,6 +14,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "calculation_software_version" => "13.05r16",
                       "user_interface_name" => "BRE SAP interface 10.2",
                       "user_interface_version" => "1.0.1-alpha",
+                      "lzc_energy_sources" => [11],
                       "inspection_date" => "2022-05-09",
                       "report_type" => 3,
                       "completion_date" => "2022-05-09",

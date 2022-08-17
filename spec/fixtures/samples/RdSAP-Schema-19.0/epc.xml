@@ -182,6 +182,10 @@
         <Environmental-Impact-Rating>75</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>11</LZC-Energy-Source>
+      <LZC-Energy-Source>9</LZC-Energy-Source>
+    </LZC-Energy-Sources>
     <Renewable-Heat-Incentive>
       <Space-Heating-Existing-Dwelling>9825</Space-Heating-Existing-Dwelling>
       <Impact-Of-Loft-Insulation>-394</Impact-Of-Loft-Insulation>

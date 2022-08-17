@@ -218,6 +218,9 @@
             <SAP09:Environmental-Impact-Rating>95</SAP09:Environmental-Impact-Rating>
           </SAP09:Improvement>
         </SAP09:Suggested-Improvements>
+        <SAP:LZC-Energy-Sources>
+          <SAP:LZC-Energy-Source>9</SAP:LZC-Energy-Source>
+        </SAP:LZC-Energy-Sources>
       </SAP09:Energy-Assessment>
       <SAP09:SAP09-Data>
         <SAP09:Data-Type>2</SAP09:Data-Type>

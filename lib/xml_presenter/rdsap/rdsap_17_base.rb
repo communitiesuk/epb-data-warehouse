@@ -33,7 +33,7 @@ module XmlPresenter
         })
         list_nodes %w[
           SAP-Floor-Dimensions
-          LZC-Energy-Source
+          LZC-Energy-Sources
           Suggested-Improvements
           ImprovementTexts
           SAP-Building-Parts

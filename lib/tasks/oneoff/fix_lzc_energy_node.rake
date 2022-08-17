@@ -1,11 +1,10 @@
-desc "Apply fix for LZC-Energy-Source"
 namespace :one_off do
+  desc "Apply fix for LZC-Energy-Source by updated the document store and EAV table with an array of values"
   task :fix_lzc_energy_node do
     sql = <<-SQL
-       select assessment_id,#{'  '}
-       document ->> 'lzc_energy_sources' as lsz_node,
-       document ->> 'schema_type' as type
-       FROM assessment_documents#{' '}
+       select assessment_id,
+       document ->> 'lzc_energy_sources' as lsz_node
+       FROM assessment_documents
        WHERE document ->> 'assessment_type' IN ('SAP', 'RdSAP')
        AND nullif((document ->> 'lzc_energy_sources')::json ->> 'lzc_energy_source', '') != ''
     SQL
@@ -35,7 +34,7 @@ def update_json(assessment_id, node_array)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-    )
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)

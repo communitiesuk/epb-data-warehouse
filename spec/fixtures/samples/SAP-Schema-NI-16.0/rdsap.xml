@@ -281,6 +281,9 @@
             </HIP:Improvement-Details>
           </HIP:Improvement>
         </HIP:Suggested-Improvements>
+        <HIP:LZC-Energy-Sources>
+          <HIP:LZC-Energy-Source>9</HIP:LZC-Energy-Source>
+        </HIP:LZC-Energy-Sources>
         <HIP:Addendum xmlns:HIP="DCLG-HIP">
           <HIP:Cavity-Fill-Recommended>true</HIP:Cavity-Fill-Recommended>
           <HIP:Stone-Walls>true</HIP:Stone-Walls>

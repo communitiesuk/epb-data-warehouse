@@ -110,7 +110,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                           "indicative_cost" => "£9,000 - £14,000",
                           "energy_performance_rating" => 94,
                           "environmental_impact_rating" => 91 }],
-                      "lzc_energy_sources" => { "lzc_energy_source" => 4 },
+                      "lzc_energy_sources" => [4],
                       "data_type" => 2,
                       "schema_version" => "LIG-17.3",
                       "built_form" => 2,

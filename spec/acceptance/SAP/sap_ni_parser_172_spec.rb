@@ -44,6 +44,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                         { "description" => "None",
                           "energy_efficiency_rating" => 0,
                           "environmental_efficiency_rating" => 0 },
+                      "lzc_energy_sources" => [9],
                       "has_hot_water_cylinder" => "true",
                       "has_heated_separate_conservatory" => "false",
                       "dwelling_type" => "Detached bungalow",
@@ -225,6 +226,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "region_code" => 10,
                       "country_code" => "NIR",
                       "assessment_date" => "2014-02-25",
+                      "lzc_energy_sources" => [9],
                       "walls" =>
                         [{ "description" => "Average thermal transmittance 0.30 W/m²K",
                            "energy_efficiency_rating" => 4,

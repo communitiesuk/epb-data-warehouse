@@ -73,6 +73,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                        { "description" => "(not tested)",
                          "energy_efficiency_rating" => 0,
                          "environmental_efficiency_rating" => 0 },
+        "lzc_energy_sources" => [11, 9],
         "has_fixed_air_conditioning" => "false",
         "has_hot_water_cylinder" => "false",
         "has_heated_separate_conservatory" => "false",

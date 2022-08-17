@@ -7,6 +7,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
     it "parses the document into the expected format" do
       expectation = { "calculation_software_version" => 4.1,
                       "calculation_software_name" => "Epc Reporter",
+                      "lzc_energy_sources" => [9],
                       "sap_version" => 9.91,
                       "walls" =>
                         [{ "description" => "Granite or whinstone, as built, no insulation (assumed)",
@@ -393,6 +394,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "region_code" => 10,
                       "country_code" => "NIR",
                       "assessment_date" => "2012-03-14",
+                      "lzc_energy_sources" => [9],
                       "walls" =>
                        [{ "description" => "Average thermal transmittance 0.31 W/m²K",
                           "energy_efficiency_rating" => 4,

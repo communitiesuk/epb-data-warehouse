@@ -27,6 +27,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "uprn" => 5_555_555_555,
                       "region_code" => 10,
                       "country_code" => "NIR",
+                      "lzc_energy_sources" => [9],
                       "walls" =>
                         [
                           { "description" => "Solid brick, as built, no insulation (assumed)", "energy_efficiency_rating" => 1, "environmental_efficiency_rating" => 1 },
@@ -278,6 +279,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "region_code" => 10,
                       "country_code" => "NIR",
                       "assessment_date" => "2012-10-16",
+                      "lzc_energy_sources" => [9],
                       "walls" =>
                         [{ "description" => "Average thermal transmittance 0.29 W/m²K",
                            "energy_efficiency_rating" => 5,

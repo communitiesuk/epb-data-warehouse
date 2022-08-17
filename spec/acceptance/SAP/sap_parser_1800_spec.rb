@@ -22,6 +22,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "transaction_type" => 6,
                       "seller_commission_report" => "Y",
                       "property_type" => 0,
+                      "name" => "-",
                       "scheme_assessor_id" => "EES/000000",
                       "address_line_1" => "30 Lovely Place",
                       "address_line_2" => "Nice Road",
@@ -102,7 +103,7 @@ RSpec.describe "the parser and the SAP configuration" do
                           "indicative_cost" => "£4,000 - £6,000",
                           "energy_performance_rating" => 93,
                           "environmental_impact_rating" => 94 }],
-                      "lzc_energy_sources" => { "lzc_energy_source" => 11 },
+                      "lzc_energy_sources" => [11, 9],
                       "renewable_heat_incentive" =>
                        { "rhi_new_dwelling" => { "space_heating" => 413, "water_heating" => 1890 } },
                       "addendum" => { "stone_walls" => "true", "system_build" => "true" },
@@ -365,6 +366,7 @@ RSpec.describe "the parser and the SAP configuration" do
                          "low_energy_fixed_lighting_outlets_count" => 20,
                          "low_energy_fixed_lighting_outlets_percentage" => 100,
                          "electricity_tariff" => 1 } }
+
       expect(use_case.execute(xml: sap,
                               schema_type: "SAP-Schema-18.0.0",
                               assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)

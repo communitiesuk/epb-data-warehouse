@@ -222,6 +222,9 @@
         <Environmental-Impact-Rating>55</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>11</LZC-Energy-Source>
+    </LZC-Energy-Sources>
   </Energy-Assessment>
   <SAP-Data>
     <SAP-Property-Details>

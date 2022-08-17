@@ -153,6 +153,9 @@
             </HIP:Improvement-Details>
           </HIP:Improvement>
         </HIP:Suggested-Improvements>
+        <HIP:LZC-Energy-Sources>
+          <HIP:LZC-Energy-Source>9</HIP:LZC-Energy-Source>
+        </HIP:LZC-Energy-Sources>
       </SAP:Energy-Assessment>
       <SAP:SAP-Data xmlns:SAP="DCLG-SAP">
         <HIP:Schema-Version xmlns:HIP="DCLG-HIP">LIG-16.0</HIP:Schema-Version>

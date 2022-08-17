@@ -195,6 +195,9 @@
         <Environmental-Impact-Rating>83</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>11</LZC-Energy-Source>
+    </LZC-Energy-Sources>
     <Green-Deal-Package>
       <Green-Deal-Improvement>
         <Improvement-Type>Q</Improvement-Type>

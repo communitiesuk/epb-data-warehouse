@@ -5,8 +5,8 @@ describe "Fix node Rake" do
     before do
       allow($stdout).to receive(:puts)
       allow($stdout).to receive(:write)
-      save_epc(schema: "SAP-Schema-18.0.0", assessment_id: "0000-0000-0000-0000-0000", type: "SAP", stub: ParsedEpcStub.Sap18_incorret_lzc)
-      save_epc(schema: "SAP-Schema-17.0", assessment_id: "5555-5555-5555-5555-5555", type: "SAP", stub: ParsedEpcStub.Sap17_0_incorret_lzc)
+      save_epc(schema: "SAP-Schema-18.0.0", assessment_id: "0000-0000-0000-0000-0000", type: "SAP", stub: ParsedEpcStub.sap18_incorret_lzc)
+      save_epc(schema: "SAP-Schema-17.0", assessment_id: "5555-5555-5555-5555-5555", type: "SAP", stub: ParsedEpcStub.sap17_0_incorret_lzc)
       save_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-2222", type: "RdSAP")
     end
 
@@ -58,14 +58,14 @@ def save_epc(schema:, assessment_id:, type:, stub: nil)
   if stub.nil?
     sample = Samples.xml(schema)
     use_case = UseCase::ParseXmlCertificate.new
-    parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id: assessment_id)
+    parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
   else
     parsed_epc = stub
   end
   parsed_epc["assessment_type"] = type
   parsed_epc["schema_type"] = schema
   import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
-  import.execute(assessment_id: assessment_id, certificate_data: parsed_epc)
+  import.execute(assessment_id:, certificate_data: parsed_epc)
 end
 
 def get_node_value(assessment_id)
@@ -80,7 +80,7 @@ def get_node_value(assessment_id)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-    )
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["lsz_node"]
@@ -109,7 +109,7 @@ def get_node_value_from_eav(assessment_id)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-    )
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["json"]

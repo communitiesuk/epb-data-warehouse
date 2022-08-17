@@ -108,6 +108,7 @@ RSpec.describe "the parser and the SAP configuration (17.0)" do
                           "indicative_cost" => "£5,000 - £8,000",
                           "energy_performance_rating" => 92,
                           "environmental_impact_rating" => 92 }],
+                      "lzc_energy_sources" => [10],
                       "renewable_heat_incentive" => { "rhi_new_dwelling" => { "space_heating" => 5622, "water_heating" => 2279 } },
                       "data_type" => 2,
                       "built_form" => 1,

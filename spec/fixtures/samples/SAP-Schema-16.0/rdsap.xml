@@ -149,6 +149,9 @@
             <HIP:Environmental-Impact-Rating>86</HIP:Environmental-Impact-Rating>
           </HIP:Improvement>
         </HIP:Suggested-Improvements>
+        <HIP:LZC-Energy-Sources>
+          <HIP:LZC-Energy-Source>11</HIP:LZC-Energy-Source>
+        </HIP:LZC-Energy-Sources>
         <HIP:Renewable-Heat-Incentive>
           <HIP:Space-Heating-Existing-Dwelling>9324</HIP:Space-Heating-Existing-Dwelling>
           <HIP:Water-Heating>2264</HIP:Water-Heating>

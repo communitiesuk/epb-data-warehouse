@@ -144,6 +144,7 @@ RSpec.describe "the parser and the RdSAP configuration for 17.1" do
                         { "space_heating_existing_dwelling" => 11_351,
                           "impact_of_loft_insulation" => -565,
                           "water_heating" => 3301 },
+                      "lzc_energy_sources" => [11],
                       "built_form" => 1,
                       "extensions_count" => 1,
                       "multiple_glazing_type" => 3,

@@ -54,6 +54,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                       "energy_rating_potential" => 73,
                       "environmental_impact_current" => 45,
                       "environmental_impact_potential" => 65,
+                      "lzc_energy_sources" => [9],
                       "energy_consumption_current" => { "quantity" => "kWh/m2 per year", "value" => 297 },
                       "energy_consumption_potential" => { "quantity" => "kWh/m2 per year", "value" => 184 },
                       "co2_emissions_current" => { "quantity" => "tonnes per year", "value" => 4.7 },
@@ -245,6 +246,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                       "region_code" => 10,
                       "country_code" => "NIR",
                       "assessment_date" => "2013-06-10",
+                      "lzc_energy_sources" => [9],
                       "walls" =>
                         [{ "description" => "Average thermal transmittance 0.27 W/m²K",
                            "energy_efficiency_rating" => 5,

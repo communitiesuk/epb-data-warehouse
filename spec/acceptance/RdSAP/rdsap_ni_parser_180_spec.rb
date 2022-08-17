@@ -183,6 +183,7 @@ RSpec.describe "parsing with an NI RdSAP configuration (18.0)" do
                           "indicative_cost" => "£5,000 - £8,000",
                           "energy_performance_rating" => 68,
                           "environmental_impact_rating" => 59 }],
+                      "lzc_energy_sources" => [11],
                       "built_form" => 1,
                       "extensions_count" => 1,
                       "multiple_glazing_type" => "ND",

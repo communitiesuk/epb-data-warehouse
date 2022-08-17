@@ -71,6 +71,7 @@ RSpec.describe "the parser and the SAP configuration" do
                        { "description" => "Air permeability 4.9 m³/h.m² (as tested)",
                          "energy_efficiency_rating" => 4,
                          "environmental_efficiency_rating" => 4 },
+                      "lzc_energy_sources" => [11],
                       "has_fixed_air_conditioning" => "false",
                       "has_hot_water_cylinder" => "true",
                       "has_heated_separate_conservatory" => "false",

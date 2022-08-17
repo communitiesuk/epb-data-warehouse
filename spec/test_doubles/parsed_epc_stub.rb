@@ -1,5 +1,5 @@
 class ParsedEpcStub
-  def self.Sap18_incorret_lzc
+  def self.sap18_incorret_lzc
     { "schema_version_original" => "18.0.0",
       "sap_version" => 9.92,
       "sap_data_version" => 9.92,
@@ -360,7 +360,7 @@ class ParsedEpcStub
           "electricity_tariff" => 1 } }
   end
 
-  def self.Sap17_0_incorret_lzc
+  def self.sap17_0_incorret_lzc
     { "schema_version_original" => "LIG-17.0",
       "sap_version" => 9.92,
       "sap_data_version" => 9.9,

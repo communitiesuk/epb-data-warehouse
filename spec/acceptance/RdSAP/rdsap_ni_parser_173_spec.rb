@@ -143,6 +143,7 @@ RSpec.describe "parsing with an NI RdSAP configuration (17.3)" do
                       "open_fireplaces_count" => 0,
                       "solar_water_heating" => "N",
                       "conservatory_type" => 1,
+                      "lzc_energy_sources" => [11],
                       "sap_building_parts" =>
                        [{ "building_part_number" => 1,
                           "identifier" => "Main Dwelling",

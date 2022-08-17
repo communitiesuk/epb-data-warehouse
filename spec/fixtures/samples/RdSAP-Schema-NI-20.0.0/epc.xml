@@ -127,6 +127,9 @@
       <Hot-Water-Cost-Current currency="GBP">163</Hot-Water-Cost-Current>
       <Hot-Water-Cost-Potential currency="GBP">163</Hot-Water-Cost-Potential>
     </Energy-Use>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>11</LZC-Energy-Source>
+    </LZC-Energy-Sources>
   </Energy-Assessment>
   <SAP-Data>
     <SAP-Property-Details>

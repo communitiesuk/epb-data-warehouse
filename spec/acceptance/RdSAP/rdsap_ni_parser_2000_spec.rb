@@ -27,6 +27,7 @@ RSpec.describe "parsing with an NI RdSAP configuration" do
                       "uprn" => "UPRN-000011112222",
                       "region_code" => 10,
                       "country_code" => "NIR",
+                      "lzc_energy_sources" => [11],
                       "walls" =>
                        [{ "description" => { "language" => "1", "value" => "Cavity wall, filled cavity" },
                           "energy_efficiency_rating" => 3,
@@ -106,6 +107,7 @@ RSpec.describe "parsing with an NI RdSAP configuration" do
                       "open_fireplaces_count" => 0,
                       "solar_water_heating" => "N",
                       "conservatory_type" => 1,
+
                       "sap_flat_details" =>
                        { "level" => 2,
                          "flat_location" => 1,
