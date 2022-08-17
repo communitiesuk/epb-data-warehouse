@@ -39,6 +39,7 @@ Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
 
 # Loads Rails database tasks
 Rake.load_rakefile("active_record/railties/databases.rake")
-
-DATABASE_CONFIG = ActiveRecord::DatabaseConfigurations::ConnectionUrlResolver.new(ENV["DATABASE_URL"])
+unless defined?(DATABASE_CONFIG)
+  DATABASE_CONFIG = ActiveRecord::DatabaseConfigurations::ConnectionUrlResolver.new(ENV["DATABASE_URL"])
+end
 ActiveRecord::Base.establish_connection(DATABASE_CONFIG.to_hash)
