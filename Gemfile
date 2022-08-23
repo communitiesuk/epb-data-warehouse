@@ -7,7 +7,7 @@ ruby "3.1.2"
 source "https://rubygems.org"
 group :test do
   gem "database_cleaner-active_record", "~> 2.0", ">= 2.0.1"
-  gem "mock_redis", "~> 0.32.0"
+  gem "mock_redis", "~> 0.33"
   gem "rspec", "~> 3.10"
   gem "rubocop-govuk", "~> 4.6", require: false
   gem "rubocop-performance", "~> 1.14", require: false
@@ -27,6 +27,6 @@ gem "pg", "~> 1.4"
 gem "rake", "~> 13.0", ">= 13.0.6"
 gem "redis", "~> 4.7"
 gem "rexml", "~> 3.2", ">= 3.2.4"
-gem "sentry-ruby", "~> 5.4.1"
+gem "sentry-ruby", "~> 5.4"
 gem "unleash", "~> 4.3.0"
 gem "zeitwerk", "~> 2.4", ">= 2.4.2"
