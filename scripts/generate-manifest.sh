@@ -6,6 +6,7 @@ STAGE=$2 # i.e. [integration, staging, production]
 
 case "$STAGE" in
  production) MEMORY="2G"; NUMBER_OF_INSTANCES=1 ;;
+ staging) MEMORY="1G"; NUMBER_OF_INSTANCES=3 ;;
  *) MEMORY="1G"; NUMBER_OF_INSTANCES=1 ;;
 esac
 
