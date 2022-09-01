@@ -15,6 +15,9 @@
             FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
             WHERE f.assessment_id=d.assessment_id
             AND items.floor_type=2 LIMIT 1) as ground_floor_heat_loss_area,
+
+
+
         al.lookup_value as home_type
 FROM assessment_documents d
 LEFT JOIN assessment_lookups al ON al.lookup_key = d.document ->> 'property_type'
