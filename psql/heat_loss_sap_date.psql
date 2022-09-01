@@ -1,0 +1,27 @@
+--export SAP heat loss data for this period
+ SELECT assessment_id,
+        d.document ->> 'address_line_1' as address1,
+        d.document ->> 'address_line_2'  as address2,
+        d.document ->> 'address_line_3'  as address3,
+        d.document ->> 'postcode'  postcode,
+        d.document ->> 'post_town'  town,
+        d.document ->> 'total_floor_area' as  total_floor_area,
+        (SELECT items.heat_loss_area
+            FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
+            WHERE f.assessment_id=d.assessment_id
+            AND items.floor_type=1 LIMIT 1) as basement_floor_heat_loss_area,
+
+         (SELECT items.heat_loss_area
+            FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
+            WHERE f.assessment_id=d.assessment_id
+            AND items.floor_type=2 LIMIT 1) as ground_floor_heat_loss_area,
+        al.lookup_value as home_type
+FROM assessment_documents d
+LEFT JOIN assessment_lookups al ON al.lookup_key = d.document ->> 'property_type'
+LEFT JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
+WHERE d.document ->> 'assessment_type' = 'SAP'
+AND (nullif(document->>'registration_date', '')::date) > ('2020-01-09 00:00':: timestamp)
+AND (nullif(document->>'registration_date', '')::date) < ('2022-01-9 00:00':: timestamp)
+AND aal.type_of_assessment = 'SAP'
+AND aal.attribute_id = 8
+LIMIT 10;
