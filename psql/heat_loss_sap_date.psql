@@ -1,5 +1,4 @@
---export SAP heat loss data for this period
- SELECT assessment_id,
+SELECT
         d.document ->> 'address_line_1' as address1,
         d.document ->> 'address_line_2'  as address2,
         d.document ->> 'address_line_3'  as address3,
@@ -16,8 +15,15 @@
             WHERE f.assessment_id=d.assessment_id
             AND items.floor_type=2 LIMIT 1) as ground_floor_heat_loss_area,
 
+        (SELECT items.total_roof_area
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_roofs')::json ) as items(roof_type integer, total_roof_area float)
+WHERE assessment_id=d.assessment_id
+AND items.roof_type=2 LIMIT 1) as exposed_roof_total_area,
 
-
+(SELECT SUM(items.total_wall_area)
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
+WHERE assessment_id=d.assessment_id
+AND items.wall_type IN(1,2,3) LIMIT 1) as total_wall_area,
         al.lookup_value as home_type
 FROM assessment_documents d
 LEFT JOIN assessment_lookups al ON al.lookup_key = d.document ->> 'property_type'
@@ -27,4 +33,4 @@ AND (nullif(document->>'registration_date', '')::date) > ('2020-01-09 00:00':: t
 AND (nullif(document->>'registration_date', '')::date) < ('2022-01-9 00:00':: timestamp)
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
-LIMIT 10;
+LIMIT 100;
