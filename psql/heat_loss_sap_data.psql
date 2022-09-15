@@ -1,3 +1,4 @@
+--export SAP heat loss data for a period of time
 SELECT
         d.document ->> 'address_line_1' as address1,
         d.document ->> 'address_line_2'  as address2,
@@ -8,20 +9,32 @@ SELECT
         al.lookup_value as property_type,
         CASE WHEN jsonb_typeof(d.document -> 'dwelling_type') = 'object' THEN d.document -> 'dwelling_type' ->> 'value' ELSE d.document ->> 'dwelling_type' end as home_type,
 
-        (SELECT items.heat_loss_area
+        (SELECT SUM(items.heat_loss_area)
             FROM assessment_documents b,  json_to_recordset((b.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
             WHERE b.assessment_id=d.assessment_id
             AND items.floor_type=1 LIMIT 1) as basement_floor_heat_loss_area,
 
-         (SELECT items.heat_loss_area
+         (SELECT SUM(items.heat_loss_area)
             FROM assessment_documents g,  json_to_recordset((g.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
             WHERE g.assessment_id=d.assessment_id
             AND items.floor_type=2 LIMIT 1) as ground_floor_heat_loss_area,
 
-        (SELECT items.total_roof_area
+        --only add upper heat loss floor if greater than 0 (see SAP-Floor-TypeCode)
+         (SELECT SUM(items.heat_loss_area)
+            FROM assessment_documents u,  json_to_recordset((u.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
+            WHERE u.assessment_id=d.assessment_id
+            AND items.floor_type=3 and heat_loss_area > 0 LIMIT 1) as upper_floor_heat_loss_area,
+
+            --the sum of upper & ground floors (there are no upper floors with heat_loss_area < 0
+             (SELECT SUM(items.heat_loss_area)
+            FROM assessment_documents u2,  json_to_recordset((u2.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
+            WHERE u2.assessment_id=d.assessment_id
+            AND items.floor_type=2 LIMIT 1) as ground_upper_floor_heat_loss_area,
+
+        (SELECT SUM(items.total_roof_area)
 FROM assessment_documents e,  json_to_recordset((e.document -> ('sap_building_parts') ->0 ->> 'sap_roofs')::json ) as items(roof_type integer, total_roof_area float)
 WHERE e.assessment_id=d.assessment_id
-AND items.roof_type=2 LIMIT 1) as exposed_roof_total_area,
+AND items.roof_type=2) as exposed_roof_total_area,
 
 (SELECT SUM(items.total_wall_area)
 FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
@@ -49,18 +62,20 @@ FROM assessment_documents dso ,
      json_to_recordset((dso.document -> ('sap_building_parts') ->0 ->> 'sap_openings')::json ) as opening_items(type varchar, height float, width float)
 WHERE  dso.assessment_id = d.assessment_id LIMIT 1) as total_openings_sq_m
 
-
-
 FROM assessment_documents d
 JOIN ons_uprn_directory ons ON d.document ->> 'postcode' = ons.postcode
+--use lookup to translate enum values
 LEFT JOIN assessment_lookups al ON al.lookup_key = d.document ->> 'property_type'
 LEFT JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
 WHERE d.document ->> 'assessment_type' = 'SAP'
 AND (nullif(document->>'registration_date', '')::date) > ('2020-01-09 00:00':: timestamp)
 AND (nullif(document->>'registration_date', '')::date) < ('2022-01-9 00:00':: timestamp)
+--limit to England only
 AND ons.areas ->> 'ctry191cd' = 'E92000001'
 AND  ((d.document -> 'sap_heating' -> 'main_heating_details') ->0)::json ->> 'main_heating_fraction' = '1'
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
 GROUP BY d.assessment_id, al.lookup_value
 LIMIT 100;
+
+
