@@ -24,7 +24,7 @@
   "homepage": "https://github.com/communitiesuk/epb-data-warehouse#readme",
   "dependencies": {
     "csv-stream": "^0.2.0",
-    "fast-xml-parser": "^4.0.9",
+    "fast-xml-parser": "^4.0.10",
     "node-fetch": "^3.2.10",
     "pg": "^8.8.0",
     "pg-promise": "^10.12.0",
