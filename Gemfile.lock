@@ -49,7 +49,7 @@ GEM
     jwt (2.4.1)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
-    mock_redis (0.33.0)
+    mock_redis (0.34.0)
       ruby2_keywords
     multi_xml (0.6.0)
     murmurhash3 (0.1.6)
@@ -151,7 +151,7 @@ DEPENDENCIES
   database_cleaner-active_record (~> 2.0, >= 2.0.1)
   epb-auth-tools (~> 1.0.11)
   epb_view_models (~> 1.0)
-  mock_redis (~> 0.33)
+  mock_redis (~> 0.34)
   nokogiri (~> 1.13)
   parallel (~> 1.22)
   pg (~> 1.4)
