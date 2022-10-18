@@ -29,7 +29,7 @@ SELECT
              (SELECT SUM(items.heat_loss_area)
             FROM assessment_documents u2,  json_to_recordset((u2.document -> ('sap_building_parts') ->0 ->> 'sap_floor_dimensions')::json ) as items(floor_type integer, heat_loss_area float)
             WHERE u2.assessment_id=d.assessment_id
-            AND items.floor_type=2 LIMIT 1) as ground_upper_floor_heat_loss_area,
+            AND items.floor_type in (2,3) LIMIT 1) as ground_upper_floor_heat_loss_area,
 
         (SELECT SUM(items.total_roof_area)
 FROM assessment_documents e,  json_to_recordset((e.document -> ('sap_building_parts') ->0 ->> 'sap_roofs')::json ) as items(roof_type integer, total_roof_area float)
@@ -39,20 +39,34 @@ AND items.roof_type=2) as exposed_roof_total_area,
 (SELECT SUM(items.total_wall_area)
 FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
 WHERE assessment_id=d.assessment_id
-AND items.wall_type IN(1,2,3) LIMIT 1) as total_wall_area,
+AND items.wall_type IN(1,2,3) LIMIT 1) as wall_areas_basement_exposed_sheltered,
+
+(SELECT SUM(items.total_wall_area)
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
+WHERE assessment_id=d.assessment_id
+AND items.wall_type =1 LIMIT 1) as basement_wall_area,
+
+(SELECT SUM(items.total_wall_area)
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
+WHERE assessment_id=d.assessment_id
+AND items.wall_type =2 LIMIT 1) as exposed_wall_area,
+
+(SELECT SUM(items.total_wall_area)
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
+WHERE assessment_id=d.assessment_id
+AND items.wall_type =3 LIMIT 1) as sheltered_wall_area,
+
+(SELECT SUM(items.total_wall_area)
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
+WHERE assessment_id=d.assessment_id
+AND items.wall_type =4 LIMIT 1) as party_wall_area,
+
+(SELECT SUM(items.total_wall_area)
+FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(wall_type integer, total_wall_area float)
+WHERE assessment_id=d.assessment_id
+AND items.wall_type =5 LIMIT 1) as internal_wall_area,
 
 
-(SELECT SUM(total_wall_area)
-FROM assessment_documents t,
-     json_to_recordset((t.document -> ('sap_building_parts') ->0 ->> 'sap_walls')::json ) as items(total_wall_area float, wall_type integer)
-WHERE t.assessment_id = d.assessment_id
-AND wall_type = 2 LIMIT 1) as total_exposed_wall_area,
-
-CASE WHEN jsonb_typeof(d.document -> 'main_heating' ->0 -> 'description') = 'object'
-    THEN (d.document -> 'main_heating' ->0 ->> 'description')::json ->> 'value'
-ELSE d.document -> 'main_heating' ->0 ->> 'description' END as  main_heating,
-
-d.document -> 'heating_cost_current' ->> 'value'  as heating_cost_current,
 
    (SELECT SUM(
       (CASE WHEN ((opening_items.height)::int >= 100) THEN  (opening_items.height / 1000) ELSE opening_items.height end) *
@@ -60,7 +74,15 @@ d.document -> 'heating_cost_current' ->> 'value'  as heating_cost_current,
         (CASE WHEN ((opening_items.width)::int >= 100) THEN  (opening_items.width / 1000) ELSE opening_items.width end)) as total_sq_m
 FROM assessment_documents dso ,
      json_to_recordset((dso.document -> ('sap_building_parts') ->0 ->> 'sap_openings')::json ) as opening_items(type varchar, height float, width float)
-WHERE  dso.assessment_id = d.assessment_id LIMIT 1) as total_openings_sq_m
+WHERE  dso.assessment_id = d.assessment_id LIMIT 1) as total_openings_sq_m,
+
+
+CASE WHEN jsonb_typeof(d.document -> 'main_heating' ->0 -> 'description') = 'object'
+    THEN (d.document -> 'main_heating' ->0 ->> 'description')::json ->> 'value'
+ELSE d.document -> 'main_heating' ->0 ->> 'description' END as  main_heating,
+
+d.document -> 'heating_cost_current' ->> 'value'  as heating_cost_current
+
 
 FROM assessment_documents d
 JOIN ons_uprn_directory ons ON d.document ->> 'postcode' = ons.postcode
@@ -76,6 +98,6 @@ AND  ((d.document -> 'sap_heating' -> 'main_heating_details') ->0)::json ->> 'ma
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
 GROUP BY d.assessment_id, al.lookup_value
-LIMIT 100;
+LIMIT 200;
 
 
