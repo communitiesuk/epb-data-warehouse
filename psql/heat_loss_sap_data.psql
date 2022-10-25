@@ -76,14 +76,11 @@ FROM assessment_documents dso ,
      json_to_recordset((dso.document -> ('sap_building_parts') ->0 ->> 'sap_openings')::json ) as opening_items(type varchar, height float, width float)
 WHERE  dso.assessment_id = d.assessment_id LIMIT 1) as total_openings_sq_m,
 
-
 CASE WHEN jsonb_typeof(d.document -> 'main_heating' ->0 -> 'description') = 'object'
     THEN (d.document -> 'main_heating' ->0 ->> 'description')::json ->> 'value'
 ELSE d.document -> 'main_heating' ->0 ->> 'description' END as  main_heating,
-
-d.document -> 'heating_cost_current' ->> 'value'  as heating_cost_current
-
-
+d.document -> 'heating_cost_current' ->> 'value'  as heating_cost_current,
+d.document -> 'renewable_heat_incentive' -> 'rhi_new_dwelling' ->> 'water_heating'  as space_heating
 FROM assessment_documents d
 JOIN ons_uprn_directory ons ON d.document ->> 'postcode' = ons.postcode
 --use lookup to translate enum values
@@ -97,6 +94,8 @@ AND ons.areas ->> 'ctry191cd' = 'E92000001'
 AND  ((d.document -> 'sap_heating' -> 'main_heating_details') ->0)::json ->> 'main_heating_fraction' = '1'
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
+--filter by 'new dwelling as built'
+AND (d.document ->> 'data_type')::int = 2
 GROUP BY d.assessment_id, al.lookup_value
 LIMIT 200;
 
