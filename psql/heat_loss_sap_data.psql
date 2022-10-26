@@ -66,8 +66,6 @@ FROM assessment_documents f,  json_to_recordset((f.document -> ('sap_building_pa
 WHERE assessment_id=d.assessment_id
 AND items.wall_type =5 LIMIT 1) as internal_wall_area,
 
-
-
    (SELECT SUM(
       (CASE WHEN ((opening_items.height)::int >= 100) THEN  (opening_items.height / 1000) ELSE opening_items.height end) *
 
@@ -82,7 +80,6 @@ ELSE d.document -> 'main_heating' ->0 ->> 'description' END as  main_heating,
 d.document -> 'heating_cost_current' ->> 'value'  as heating_cost_current,
 d.document -> 'renewable_heat_incentive' -> 'rhi_new_dwelling' ->> 'water_heating'  as space_heating
 FROM assessment_documents d
-JOIN ons_uprn_directory ons ON d.document ->> 'postcode' = ons.postcode
 --use lookup to translate enum values
 LEFT JOIN assessment_lookups al ON al.lookup_key = d.document ->> 'property_type'
 LEFT JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
@@ -90,13 +87,14 @@ WHERE d.document ->> 'assessment_type' = 'SAP'
 AND (nullif(document->>'registration_date', '')::date) > ('2020-01-09 00:00':: timestamp)
 AND (nullif(document->>'registration_date', '')::date) < ('2022-01-9 00:00':: timestamp)
 --limit to England only
-AND ons.areas ->> 'ctry191cd' = 'E92000001'
+AND EXISTS (SELECT *
+                FROM ons_uprn_directory
+                WHERE  postcode = d.document ->> 'postcode' AND areas ->> 'ctry191cd' = 'E92000001')
 AND  ((d.document -> 'sap_heating' -> 'main_heating_details') ->0)::json ->> 'main_heating_fraction' = '1'
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
 --filter by 'new dwelling as built'
 AND (d.document ->> 'data_type')::int = 2
-GROUP BY d.assessment_id, al.lookup_value
 LIMIT 200;
 
 
