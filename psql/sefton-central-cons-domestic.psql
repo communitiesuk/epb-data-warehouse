@@ -1,0 +1,10 @@
+--count num of domestic epcs for Sefton Central parliamentary constituency that have a rating of 'D' or below
+SELECT COUNT(*)
+FROM assessment_documents ad
+WHERE ad.document ->> 'assessment_type' IN ('SAP', 'RdSAP')
+AND EXISTS (SELECT *
+           FROM ons_uprn_directory ons
+           WHERE  postcode = ad.document ->> 'postcode' AND ons.areas ->> 'pcon18cd' = 'E14000916')
+AND (ad.document ->> 'energy_rating_current')::int <=68
+
+
