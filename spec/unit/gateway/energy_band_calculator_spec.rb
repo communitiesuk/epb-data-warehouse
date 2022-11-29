@@ -17,7 +17,7 @@ describe "energy_band_calculator postgres function" do
       expect(use_postgres_function(92, "sap")).to eq("A")
     end
 
-    it "returns a band of G from a rating of 81" do
+    it "returns a band of B from a rating of 81" do
       expect(use_postgres_function(81, "SAP")).to eq("B")
     end
 
@@ -29,6 +29,19 @@ describe "energy_band_calculator postgres function" do
     context "when getting domestic bands for RdSAP" do
       it "returns a band of A for 103 " do
         expect(use_postgres_function(103, "RdSAP")).to eq("A")
+      end
+
+      it "returns a band of A from  inputs than 91 when RdSAP is incorrectly mixed case" do
+        expect(use_postgres_function(92, "RDsap")).to eq("A")
+      end
+
+      it "returns a band of B from a rating of 81" do
+        expect(use_postgres_function(81, "RdSAP")).to eq("B")
+      end
+
+      it "returns a band of G from from inputs less than or equal to 20 " do
+        expect(use_postgres_function(20, "RdSAP")).to eq("G")
+        expect(use_postgres_function(-1, "RdSAP")).to eq("G")
       end
     end
 
