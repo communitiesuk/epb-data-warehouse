@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_120647) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_161412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "import_state", ["files_ready_for_import", "imported"]
 
   create_table "assessment_attribute_lookups", force: :cascade do |t|
     t.bigint "attribute_id", null: false
@@ -72,6 +76,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_120647) do
     t.index ["uprn"], name: "index_ons_uprn_directory_on_uprn"
   end
 
+  create_table "ons_uprn_directory_imports", id: :serial, force: :cascade do |t|
+    t.string "version_month", limit: 7, null: false
+    t.enum "import_state", null: false, enum_type: "import_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["version_month"], name: "index_ons_uprn_directory_imports_on_version_month", unique: true
+  end
+
+  create_table "ons_uprn_directory_names", force: :cascade do |t|
+    t.string "area_code", null: false
+    t.string "name", null: false
+    t.string "type", null: false
+    t.string "type_code", null: false
+    t.integer "version_id", null: false
+    t.index ["area_code"], name: "index_ons_uprn_directory_names_on_area_code"
+    t.index ["name"], name: "index_ons_uprn_directory_names_on_name"
+    t.index ["type_code"], name: "index_ons_uprn_directory_names_on_type_code"
+  end
+
   create_table "ons_uprn_directory_versions", id: :serial, force: :cascade do |t|
     t.string "version_month", limit: 7, null: false
     t.index ["version_month"], name: "index_ons_uprn_directory_versions_on_version_month", unique: true
@@ -81,4 +104,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_120647) do
   add_foreign_key "assessment_attribute_lookups", "assessment_lookups", column: "lookup_id"
   add_foreign_key "assessment_attribute_values", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
   add_foreign_key "ons_uprn_directory", "ons_uprn_directory_versions", column: "version_id"
+  add_foreign_key "ons_uprn_directory_names", "ons_uprn_directory_versions", column: "version_id"
 end

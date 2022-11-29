@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/communitiesuk/epb-data-warehouse#readme",
   "dependencies": {
+    "csv-parse": "^5.3.3",
     "csv-stream": "^0.2.0",
     "fast-xml-parser": "^4.0.12",
     "node-fetch": "^3.3.0",
