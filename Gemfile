@@ -11,7 +11,7 @@ group :test do
   gem "rspec", "~> 3.12"
   gem "rubocop-govuk", "~> 4.9", require: false
   gem "rubocop-performance", "~> 1.15", require: false
-  gem "timecop", "~> 0.9.5"
+  gem "timecop", "~> 0.9.6"
   gem "webmock", "~> 3.17"
 end
 
