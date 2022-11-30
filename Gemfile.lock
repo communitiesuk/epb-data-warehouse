@@ -127,7 +127,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    timecop (0.9.5)
+    timecop (0.9.6)
     timers (4.3.5)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -163,7 +163,7 @@ DEPENDENCIES
   rubocop-govuk (~> 4.9)
   rubocop-performance (~> 1.15)
   sentry-ruby (~> 5.6)
-  timecop (~> 0.9.5)
+  timecop (~> 0.9.6)
   unleash (~> 4.4.0)
   webmock (~> 3.17)
   zeitwerk (~> 2.6)
