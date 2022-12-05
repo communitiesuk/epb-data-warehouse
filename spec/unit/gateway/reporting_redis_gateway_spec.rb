@@ -27,9 +27,14 @@ describe Gateway::ReportingRedisGateway do
       expect(redis.get("a")).to eq("b")
     end
 
-    it "saves data in the right shape" do
+    it "saves the queried data as json" do
       gateway.save_report("heat_pump_report", expected_data.to_json)
       expect(redis.get("heat_pump_report")).to eq(expected_data.to_json)
+    end
+
+    it "saves data with an expiration date of 60 seconds" do
+      gateway.save_report("heat_pump_report", expected_data.to_json, 60)
+      expect(redis.ttl("heat_pump_report")).to eq 60
     end
 
     #  create an array of hashes that looks like the data from the gateway

@@ -33,7 +33,7 @@ describe UseCase::SaveHeatPumpSapCount do
   end
 
   context "when invoking the use case with no data" do
-    it "raises an no data error" do
+    it "raises a no data error" do
       allow(reporting_gateway).to receive(:heat_pump_count_for_sap).and_return([])
       expect { use_case.execute }.to raise_error(Boundary::NoData)
     end
