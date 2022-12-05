@@ -95,7 +95,7 @@ AND (nullif(document->>'registration_date', '')::date) < ('2022-01-9 00:00':: ti
 --limit to England only
 AND EXISTS (SELECT *
                 FROM ons_uprn_directory
-                WHERE  postcode = d.document ->> 'postcode' AND areas ->> 'ctry191cd' = 'E92000001')
+                WHERE  postcode = d.document ->> 'postcode' AND areas ->> 'ctry22cd' = 'E92000001')
 AND  ((d.document -> 'sap_heating' -> 'main_heating_details') ->0)::json ->> 'main_heating_fraction' = '1'
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
