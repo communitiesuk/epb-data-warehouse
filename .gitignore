@@ -61,3 +61,4 @@ build-iPhoneSimulator/
 
 # node stuff
 node_modules
+/dump.rdb

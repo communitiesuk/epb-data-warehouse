@@ -44,7 +44,7 @@ describe Gateway::ReportingGateway do
       save_assessment_document_store("0000-0000-0000-0000-0004", heat_pump_data)
     end
 
-    it "returns the expected data " do
+    it "returns a count of the 3 SAP saved with heat pump main heating in January 2022 " do
       result = gateway.heat_pump_count_for_sap.map { |hash| hash.transform_keys(&:to_sym) }
       expect(result).to eq expected_data
     end
