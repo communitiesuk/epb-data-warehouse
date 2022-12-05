@@ -17,24 +17,37 @@ describe Gateway::ReportingRedisGateway do
     redis.flushdb
   end
 
+  before(:all) do
+    Timecop.freeze(2022, 11, 30, 0, 0, 0)
+  end
+
+  after(:all) do
+    Timecop.return
+  end
+
   describe "#save_report" do
+    let(:saved_data) do
+      JSON.parse(redis.get("heat_pump_report"))
+    end
+
+    before do
+      gateway.save_report("heat_pump_report", expected_data.to_json)
+    end
+
     it "can call the method" do
       expect(gateway.save_report("key", "report")).to eq("OK")
     end
 
-    it "saves the data to redis" do
-      gateway.save_report("a", "b")
-      expect(redis.get("a")).to eq("b")
+    it "saves the queried data to redis" do
+      expect(saved_data).to be_a Hash
     end
 
-    it "saves the queried data as json" do
-      gateway.save_report("heat_pump_report", expected_data.to_json)
-      expect(redis.get("heat_pump_report")).to eq(expected_data.to_json)
+    it "saves the query results in a key called data" do
+      expect(saved_data["data"]).to eq(expected_data.to_json)
     end
 
-    it "saves data with an expiration date of 60 seconds" do
-      gateway.save_report("heat_pump_report", expected_data.to_json, 60)
-      expect(redis.ttl("heat_pump_report")).to eq 60
+    it "saves the data with a key for the date now" do
+      expect(saved_data["date_created"].to_date.strftime("%Y-%m-%d %H:%M")).to eq(Time.now.strftime("%Y-%m-%d %H:%M"))
     end
 
     #  create an array of hashes that looks like the data from the gateway
