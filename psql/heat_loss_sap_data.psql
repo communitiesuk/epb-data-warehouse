@@ -99,6 +99,6 @@ AND EXISTS (SELECT *
 AND  ((d.document -> 'sap_heating' -> 'main_heating_details') ->0)::json ->> 'main_heating_fraction' = '1'
 AND aal.type_of_assessment = 'SAP'
 AND aal.attribute_id = 8
-LIMIT 200;
+AND  (d.document ->>  'schema_type')::text NOT LIKE '%-NI-%';
 
 
