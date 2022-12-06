@@ -49,15 +49,5 @@ describe Gateway::ReportingRedisGateway do
     it "saves the data with a key for the date now" do
       expect(saved_data["date_created"].to_date.strftime("%Y-%m-%d %H:%M")).to eq(Time.now.strftime("%Y-%m-%d %H:%M"))
     end
-
-    #  create an array of hashes that looks like the data from the gateway
-    # turn it into json
-    # save it to redis
-    # pull it out and make sure it looks the same
-
-    #  in the use case have both gateways, pull it out and send it in
-    # have a test for that
-
-    #  ask douglas are we just setting these as keys, or do we do it in a more formalised way
   end
 end
