@@ -34,6 +34,7 @@ class QueueWorker
       register_signal_handlers
       set_postgres_connection
       pull_queues
+      run_reports
 
       sleep 1
     end
@@ -48,6 +49,13 @@ private
       pull_use_case = use_case :pull_queues
       pull_use_case.execute from_recovery_list: true
       pull_use_case.execute from_recovery_list: false
+    end
+  end
+
+  def run_reports
+    Helper::Toggles.enabled?("data-warehouse-run-reports") do
+      reports_use_case = use_case :run_reports_from_triggers
+      reports_use_case.execute
     end
   end
 
