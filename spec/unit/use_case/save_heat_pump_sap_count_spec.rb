@@ -3,7 +3,7 @@ describe UseCase::SaveHeatPumpSapCount do
 
   let(:reporting_gateway) { instance_double(Gateway::ReportingGateway) }
   let(:reporting_redis_gateway) { instance_double(Gateway::ReportingRedisGateway) }
-  let(:report_name) { "heat_pump_count_for_sap" }
+  let(:report_name) { :heat_pump_count_for_sap }
 
   let(:expected_data) do
     [{ month_year: "01-2022", num_epcs: 3 },
