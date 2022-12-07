@@ -1,7 +1,7 @@
 shared_context "when saving json" do
-  def save_assessment_document_store(assessment_id, assessment_data)
-    doc_gateway = Gateway::DocumentsGateway.new
-    doc_gateway.add_assessment(assessment_id:, document: assessment_data)
+  def save_assessment(assessment_id, assessment_data)
+    import_use_case = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
+    import_use_case.execute(assessment_id:, certificate_data: assessment_data)
   end
 
   def get_fixture(fixture_file)
@@ -32,16 +32,16 @@ describe Gateway::ReportingGateway do
     end
 
     before do
-      save_assessment_document_store("0000-0000-0000-0000-0000", get_fixture("sap-18.0.0.json"))
+      save_assessment("0000-0000-0000-0000-0000", get_fixture("sap-18.0.0.json"))
       heat_pump_data["main_heating"][0]["description"] = "Ground source heat pump, underfloor, electric"
-      save_assessment_document_store("0000-0000-0000-0000-0001", heat_pump_data)
+      save_assessment("0000-0000-0000-0000-0001", heat_pump_data)
       heat_pump_data["main_heating"][0]["description"] = "Air source heat pump, warm air, electric"
-      save_assessment_document_store("0000-0000-0000-0000-0002", heat_pump_data)
+      save_assessment("0000-0000-0000-0000-0002", heat_pump_data)
       heat_pump_data["main_heating"][0]["description"] = "Air source heat pump, warm air, electric"
-      save_assessment_document_store("0000-0000-0000-0000-0003", heat_pump_data)
+      save_assessment("0000-0000-0000-0000-0003", heat_pump_data)
       heat_pump_data["registration_date"] = "2020-12-07"
       heat_pump_data["main_heating"][0]["description"] = "Ground source heat pump, underfloor, electric"
-      save_assessment_document_store("0000-0000-0000-0000-0004", heat_pump_data)
+      save_assessment("0000-0000-0000-0000-0004", heat_pump_data)
     end
 
     it "returns a count of the 3 SAP saved with heat pump main heating in January 2022 " do
@@ -52,7 +52,7 @@ describe Gateway::ReportingGateway do
     it "has another row for data lodged in October 2022" do
       heat_pump_data["registration_date"] = "2022-10-30"
       heat_pump_data["main_heating"][0]["description"] = "Ground source heat pump, underfloor, electric"
-      save_assessment_document_store("0000-0000-0000-0000-0005", heat_pump_data)
+      save_assessment("0000-0000-0000-0000-0005", heat_pump_data)
       expect(gateway.heat_pump_count_for_sap.length).to eq(2)
       expect(gateway.heat_pump_count_for_sap[1]["month_year"]).to eq("10-2022")
       expect(gateway.heat_pump_count_for_sap[1]["num_epcs"]).to eq(1)
@@ -61,7 +61,7 @@ describe Gateway::ReportingGateway do
     it "will count a row that has json stores as the main_heating description" do
       heat_pump_data["registration_date"] = "2022-11-03"
       heat_pump_data["main_heating"][0]["description"] = { "value": "Air source heat pump, Underfloor heating and radiators, pipes in screed above insulation, electric", "language": "1" }
-      save_assessment_document_store("0000-0000-0000-0000-0005", heat_pump_data)
+      save_assessment("0000-0000-0000-0000-0005", heat_pump_data)
       expect(gateway.heat_pump_count_for_sap.length).to eq(1)
     end
   end
