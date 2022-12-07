@@ -10,7 +10,7 @@ module Gateway
 
     def save_report(key, data)
       report = { data:, date_created: Time.now }.to_json
-      @redis.set(key, report)
+      @redis.hset(:reports, key, report)
     end
   end
 end

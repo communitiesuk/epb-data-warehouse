@@ -27,15 +27,15 @@ describe Gateway::ReportingRedisGateway do
 
   describe "#save_report" do
     let(:saved_data) do
-      JSON.parse(redis.get("heat_pump_report"))
+      JSON.parse(redis.hget(:reports, :heat_pump_report))
     end
 
     before do
-      gateway.save_report("heat_pump_report", expected_data.to_json)
+      gateway.save_report(:heat_pump_report, expected_data.to_json)
     end
 
     it "can call the method" do
-      expect(gateway.save_report("key", "report")).to eq("OK")
+      expect(gateway.save_report("key", "report")).to eq(1)
     end
 
     it "saves the queried data to redis" do
