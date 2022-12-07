@@ -7,8 +7,12 @@ describe "Export SAP heat pump  EPC count rake" do
     before do
       allow($stdout).to receive(:puts)
       allow($stdout).to receive(:write)
-      allow(Factory).to receive(:save_heat_pump_sap_count).and_return(use_case)
+      allow(Container).to receive(:save_heat_pump_sap_count_use_case).and_return(use_case)
       allow(use_case).to receive(:execute)
+    end
+
+    after do
+      Container.reset!
     end
 
     it "run the tasks without error" do
