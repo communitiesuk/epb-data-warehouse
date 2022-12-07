@@ -5,9 +5,8 @@ module Gateway
     end
 
     def heat_pump_count_for_sap
-      last_month = Date.today.strftime("%Y-%m-01").to_date - 1.days
-      start_date = last_month.to_date.prev_year + 1.days
-      end_date = last_month.to_date
+      start_date = first_date_of_month_in_previous_year today
+      end_date = last_date_of_previous_month today
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -61,6 +60,20 @@ module Gateway
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 
       results.map { |result| result }
+    end
+
+  private
+
+    def last_date_of_previous_month(date)
+      Date.strptime(date.strftime("%Y-%m-01"), "%Y-%m-%d").prev_day
+    end
+
+    def first_date_of_month_in_previous_year(date)
+      Date.strptime(date.prev_year.strftime("%Y-%m-01"), "%Y-%m-%d")
+    end
+
+    def today
+      Date.today
     end
   end
 end
