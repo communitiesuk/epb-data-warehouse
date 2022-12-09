@@ -39,7 +39,7 @@ module Gateway
       ]
 
       sql = <<-SQL
-      SELECT COUNT(DISTINCT aav.assessment_id) num_epcs , to_char(date.registered_date::date, 'MM-YYYY') as month_year
+      SELECT COUNT(DISTINCT aav.assessment_id) num_epcs , to_char(date.registered_date::date, 'YYYY-MM') as month_year
       FROM assessment_attribute_values aav
        JOIN (SELECT aav1.assessment_id, json
                      FROM assessment_attribute_values aav1 WHERE attribute_id = $1) as heating
@@ -54,12 +54,17 @@ module Gateway
       WHERE type.attribute_value = 'SAP'
       AND To_DATE(date.registered_date, 'yyyy-mm-dd')  BETWEEN $4 AND $5
       AND (heating.json)::varchar LIKE '%heat pump%'
-      GROUP BY to_char(date.registered_date::date, 'MM-YYYY');
+      GROUP BY to_char(date.registered_date::date, 'YYYY-MM');
       SQL
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 
-      results.map { |result| result }
+      month_range(start_date, end_date).map do |month|
+        {
+          month_year: month,
+          num_epcs: results.find { |result| result["month_year"] == month }&.[]("num_epcs") || 0,
+        }
+      end
     end
 
   private
@@ -74,6 +79,10 @@ module Gateway
 
     def today
       Date.today
+    end
+
+    def month_range(start_date, end_date)
+      (start_date..end_date).to_a.group_by(&:month).values.map(&:first).flatten.map { |d| d.strftime("%Y-%m") }
     end
   end
 end

@@ -10,7 +10,16 @@ describe Gateway::ReportingRedisGateway do
   let(:expected_data) do
     [{ month_year: "01-2022", num_epcs: 3 },
      { month_year: "02-2022", num_epcs: 2 },
-     { month_year: "03-2022", num_epcs: 5 }]
+     { month_year: "03-2022", num_epcs: 5 },
+     { month_year: "04-2022", num_epcs: 0 },
+     { month_year: "05-2022", num_epcs: 0 },
+     { month_year: "06-2022", num_epcs: 0 },
+     { month_year: "07-2022", num_epcs: 0 },
+     { month_year: "08-2022", num_epcs: 0 },
+     { month_year: "09-2022", num_epcs: 0 },
+     { month_year: "10-2022", num_epcs: 0 },
+     { month_year: "11-2022", num_epcs: 0 },
+     { month_year: "12-2022", num_epcs: 0 }]
   end
 
   after do

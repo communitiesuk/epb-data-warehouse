@@ -26,7 +26,20 @@ describe Gateway::ReportingGateway do
 
     context "when fetching at no particular time" do
       let(:expected_data) do
-        [{ month_year: "01-2022", num_epcs: 3 }]
+        [
+          { month_year: "2021-11", num_epcs: 0 },
+          { month_year: "2021-12", num_epcs: 0 },
+          { month_year: "2022-01", num_epcs: 3 },
+          { month_year: "2022-02", num_epcs: 0 },
+          { month_year: "2022-03", num_epcs: 0 },
+          { month_year: "2022-04", num_epcs: 0 },
+          { month_year: "2022-05", num_epcs: 0 },
+          { month_year: "2022-06", num_epcs: 0 },
+          { month_year: "2022-07", num_epcs: 0 },
+          { month_year: "2022-08", num_epcs: 0 },
+          { month_year: "2022-09", num_epcs: 0 },
+          { month_year: "2022-10", num_epcs: 0 },
+        ]
       end
 
       before do
@@ -52,16 +65,18 @@ describe Gateway::ReportingGateway do
         heat_pump_data["registration_date"] = "2022-10-30"
         heat_pump_data["main_heating"][0]["description"] = "Ground source heat pump, underfloor, electric"
         save_assessment("0000-0000-0000-0000-0005", heat_pump_data)
-        expect(gateway.heat_pump_count_for_sap.length).to eq(2)
-        expect(gateway.heat_pump_count_for_sap[1]["month_year"]).to eq("10-2022")
-        expect(gateway.heat_pump_count_for_sap[1]["num_epcs"]).to eq(1)
+        non_zero_results = gateway.heat_pump_count_for_sap.select { |result| result[:num_epcs] > 0 }
+        expect(non_zero_results.length).to eq(2)
+        expect(non_zero_results[1][:month_year]).to eq("2022-10")
+        expect(non_zero_results[1][:num_epcs]).to eq(1)
       end
 
       it "will count a row that has json stores as the main_heating description" do
         heat_pump_data["registration_date"] = "2022-11-03"
         heat_pump_data["main_heating"][0]["description"] = { "value": "Air source heat pump, Underfloor heating and radiators, pipes in screed above insulation, electric", "language": "1" }
         save_assessment("0000-0000-0000-0000-0005", heat_pump_data)
-        expect(gateway.heat_pump_count_for_sap.length).to eq(1)
+        non_zero_results = gateway.heat_pump_count_for_sap.select { |result| result[:num_epcs] > 0 }
+        expect(non_zero_results.length).to eq(1)
       end
     end
 
@@ -76,7 +91,8 @@ describe Gateway::ReportingGateway do
       end
 
       it "returns a count of 1 SAP saved with heat pump main heating between previous March and February of current year" do
-        expect(gateway.heat_pump_count_for_sap.length).to eq 1
+        non_zero_results = gateway.heat_pump_count_for_sap.select { |result| result[:num_epcs] > 0 }
+        expect(non_zero_results.length).to eq 1
       end
     end
   end

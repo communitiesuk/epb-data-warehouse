@@ -7,7 +7,6 @@ module UseCase
 
     def execute
       data = @reporting_gateway.heat_pump_count_for_sap
-      raise Boundary::NoData, "heat_pump_count for SAP" if data.empty?
 
       @reporting_redis_gateway.save_report(:heat_pump_count_for_sap, data)
     end
