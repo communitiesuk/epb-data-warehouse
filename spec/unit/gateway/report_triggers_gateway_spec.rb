@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 require "mock_redis"
+require "timecop"
 
-describe Gateway::ReportTriggersGateway do
+describe Gateway::ReportTriggersGateway, set_with_timecop: true do
   subject(:gateway) do
     described_class.new(redis_client: redis)
   end
@@ -28,6 +29,31 @@ describe Gateway::ReportTriggersGateway do
       end
 
       it "returns the triggers" do
+        expect(gateway.triggers).to eq report_triggers.map(&:to_sym)
+      end
+    end
+
+    context "when calls are made within a ten minute stretch" do
+      let(:report_triggers) { ["loud noises", "quiet shufflings"] }
+
+      before do
+        redis.sadd "report_triggers", report_triggers
+        gateway.triggers
+      end
+
+      it "returns an empty list on the second immediate invocation within a ten minute period" do
+        expect(gateway.triggers).to eq []
+      end
+
+      it "returns an empty list on the second invocation if made five seconds before ten minutes have elapsed" do
+        current_time = Time.now
+        Timecop.freeze(current_time + ((10 * 60) - 5))
+        expect(gateway.triggers).to eq []
+      end
+
+      it "returns the full list of triggers after ten minutes have elapsed" do
+        current_time = Time.now
+        Timecop.freeze(current_time + ((10 * 60) + 5))
         expect(gateway.triggers).to eq report_triggers.map(&:to_sym)
       end
     end

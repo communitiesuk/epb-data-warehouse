@@ -8,6 +8,11 @@ module Gateway
       @redis = redis_client || redis_from_env
     end
 
+    # Returns the actionable triggers currently available. This is the list of triggers currently stored
+    # within the "report_triggers" set on Redis, filtered by any triggers that are currently locked.
+    # The lock uses a separate per-trigger Redis key that is set using a time to live of ten minutes.
+    # It is intended to mostly prevent multiple instances of the data warehouse performing concurrent
+    # heavy queries by ensuring that individual queries can only start every ten minutes.
     def triggers
       triggers_to_process = filter_by_locks(redis.smembers("report_triggers").map(&:to_sym))
       write_locks_for_triggers triggers_to_process
