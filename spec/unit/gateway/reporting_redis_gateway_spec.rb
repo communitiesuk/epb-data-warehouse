@@ -27,7 +27,7 @@ describe Gateway::ReportingRedisGateway do
   end
 
   before(:all) do
-    Timecop.freeze(2022, 11, 30, 0, 0, 0)
+    Timecop.freeze Time.new(2022, 11, 30, 4, 30, 0, "+03:00")
   end
 
   after(:all) do
@@ -56,7 +56,7 @@ describe Gateway::ReportingRedisGateway do
     end
 
     it "saves the data with a key for the date now" do
-      expect(saved_data["date_created"].to_date.strftime("%Y-%m-%d %H:%M")).to eq(Time.now.strftime("%Y-%m-%d %H:%M"))
+      expect(saved_data["date_created"]).to eq "2022-11-30T01:30:00Z"
     end
   end
 end
