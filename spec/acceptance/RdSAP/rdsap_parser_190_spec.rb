@@ -53,7 +53,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                        { "description" => { "language" => "1", "value" => "Fully double glazed" },
                          "energy_efficiency_rating" => 3,
                          "environmental_efficiency_rating" => 3 },
-                      "main-heating" =>
+                      "main_heating" =>
                        [{ "description" =>
                            { "language" => "1", "value" => "Boiler and radiators, mains gas" },
                           "energy_efficiency_rating" => 4,

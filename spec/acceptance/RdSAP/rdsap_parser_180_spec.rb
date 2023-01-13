@@ -39,7 +39,7 @@ RSpec.describe "the parser and the RdSAP configuration for 18.0" do
                         { "description" => { "language" => "1", "value" => "Roof room(s), insulated (assumed)" }, "energy_efficiency_rating" => 4, "environmental_efficiency_rating" => 4 }],
                       "floors" => [{ "description" => { "language" => "1", "value" => "Solid, no insulation (assumed)" }, "energy_efficiency_rating" => 0, "environmental_efficiency_rating" => 0 }],
                       "window" => { "description" => { "language" => "1", "value" => "Fully double glazed" }, "energy_efficiency_rating" => 3, "environmental_efficiency_rating" => 3 },
-                      "main-heating" =>
+                      "main_heating" =>
                        [{ "description" => { "language" => "1", "value" => "Boiler and radiators, mains gas" }, "energy_efficiency_rating" => 4, "environmental_efficiency_rating" => 4 }],
                       "main_heating_controls" =>
                        [{ "description" => { "language" => "1", "value" => "Programmer, room thermostat and TRVs" }, "energy_efficiency_rating" => 4, "environmental_efficiency_rating" => 4 }],

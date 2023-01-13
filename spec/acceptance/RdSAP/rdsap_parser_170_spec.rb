@@ -14,7 +14,7 @@ RSpec.describe "the parser and the RdSAP configuration for 17.0" do
                       "roofs" => [{ "description" => { "language" => "1", "value" => "(another dwelling above)" }, "energy_efficiency_rating" => 0, "environmental_efficiency_rating" => 0 }],
                       "floors" => [{ "description" => { "language" => "1", "value" => "(another dwelling below)" }, "energy_efficiency_rating" => 0, "environmental_efficiency_rating" => 0 }],
                       "window" => { "description" => { "language" => "1", "value" => "Fully double glazed" }, "energy_efficiency_rating" => 3, "environmental_efficiency_rating" => 3 },
-                      "main-heating" => [{ "description" => { "language" => "1", "value" => "Electric storage heaters" }, "energy_efficiency_rating" => 3, "environmental_efficiency_rating" => 1 }],
+                      "main_heating" => [{ "description" => { "language" => "1", "value" => "Electric storage heaters" }, "energy_efficiency_rating" => 3, "environmental_efficiency_rating" => 1 }],
                       "main_heating_controls" =>
                        [{ "description" => { "language" => "1", "value" => "Manual charge control" }, "energy_efficiency_rating" => 2, "environmental_efficiency_rating" => 2 }],
                       "hot_water" => { "description" => { "language" => "1", "value" => "Electric immersion, off-peak" }, "energy_efficiency_rating" => 3, "environmental_efficiency_rating" => 2 },

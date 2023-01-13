@@ -50,7 +50,7 @@ module XmlPresenter
           "Wall" => "walls",
           "Roof" => "roofs",
           "Floor" => { parents: %w[Property-Summary], key: "floors" },
-          "Main-Heating" => { parents: %w[Property-Summary], key: "main-heating" },
+          "Main-Heating" => { parents: %w[Property-Summary], key: "main_heating" },
           "Main-Heating-Controls" => "main_heating_controls",
           "Addendum-Number" => "addendum_numbers",
         })

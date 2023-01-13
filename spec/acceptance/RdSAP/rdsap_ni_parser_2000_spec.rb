@@ -44,7 +44,7 @@ RSpec.describe "parsing with an NI RdSAP configuration" do
                        { "description" => { "language" => "1", "value" => "Fully double glazed" },
                          "energy_efficiency_rating" => 3,
                          "environmental_efficiency_rating" => 3 },
-                      "main-heating" =>
+                      "main_heating" =>
                        [{ "description" => { "language" => "1", "value" => "Electric storage heaters" },
                           "energy_efficiency_rating" => 3,
                           "environmental_efficiency_rating" => 1 }],
