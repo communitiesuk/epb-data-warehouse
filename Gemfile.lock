@@ -18,7 +18,7 @@ GEM
       console (~> 1.10)
       io-event (~> 1.1)
       timers (~> 4.1)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     connection_pool (2.3.0)
     console (1.16.2)
       fiber-local
@@ -148,7 +148,7 @@ DEPENDENCIES
   activerecord (~> 7.0)
   activesupport (~> 7.0)
   async (~> 2.3)
-  concurrent-ruby (~> 1.1)
+  concurrent-ruby (~> 1.2)
   database_cleaner-active_record (~> 2.0, >= 2.0.1)
   epb-auth-tools (~> 1.1.0)
   epb_view_models (~> 1.0)
