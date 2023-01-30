@@ -1,7 +1,5 @@
 FROM ruby:3.1.3
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 ENV LANG=en_GB.UTF-8
 ENV DATABASE_URL=postgresql://epb:SecretWarehousePassword@epb-data-warehouse-db/epb?pool=50
 ENV EPB_API_URL=http://epb-register-api
@@ -13,6 +11,13 @@ ENV EPB_UNLEASH_URI=http://epb-feature-flag/api
 ENV JWT_ISSUER=epb-auth-server
 ENV JWT_SECRET=test-jwt-secret
 ENV STAGE=development
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -; \
+    apt-get update -qq && apt-get install -qq --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY . /app
 WORKDIR /app
