@@ -7,7 +7,7 @@ ruby "3.1.3"
 source "https://rubygems.org"
 group :test do
   gem "database_cleaner-active_record", "~> 2.0", ">= 2.0.1"
-  gem "mock_redis", "~> 0.35"
+  gem "mock_redis", "~> 0.36"
   gem "rspec", "~> 3.12"
   gem "rubocop-govuk", "~> 4.9", require: false
   gem "rubocop-performance", "~> 1.15", require: false
