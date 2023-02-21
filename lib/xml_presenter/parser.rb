@@ -165,7 +165,7 @@ module XmlPresenter
         stripped = string
       else
         stripped = string.strip
-        if stripped.length.zero?
+        if stripped.empty?
           return
         end
 

@@ -26,11 +26,11 @@ module UseCase
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
         unless should_exclude?(meta_data:)
           if meta_data[:optOut]
-            save_attribute_to_stores assessment_id: assessment_id,
+            save_attribute_to_stores assessment_id:,
                                      attribute: OPT_OUT,
                                      value: now_in_db_format
           else
-            delete_attribute_from_stores assessment_id: assessment_id,
+            delete_attribute_from_stores assessment_id:,
                                          attribute: OPT_OUT
 
             save_attribute_to_stores assessment_id:,

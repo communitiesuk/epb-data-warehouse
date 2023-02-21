@@ -56,9 +56,9 @@ module UseCase
 
       parse = UseCase::ParseXmlCertificate.new
 
-      certificate = parse.execute xml: xml,
+      certificate = parse.execute(xml:,
                                   schema_type: meta_data[:schemaType],
-                                  assessment_id: assessment_id
+                                  assessment_id:)
       raise UnimportableAssessment if certificate.nil?
 
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]

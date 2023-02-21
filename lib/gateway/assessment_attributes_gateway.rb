@@ -44,7 +44,7 @@ module Gateway
       if !attribute_value.to_s.empty? && attribute_name.to_s != RRN
         begin
           ActiveRecord::Base.transaction do
-            attribute_id = attributes.id_for attribute_name, parent_name: parent_name
+            attribute_id = attributes.id_for(attribute_name, parent_name:)
             insert_attribute_value(
               assessment_id:,
               attribute_id:,

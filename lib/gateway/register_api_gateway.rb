@@ -12,7 +12,7 @@ module Gateway
       response =
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
-      check_errors_on response, assessment_id: assessment_id
+      check_errors_on(response, assessment_id:)
 
       response.body
     end
@@ -23,7 +23,7 @@ module Gateway
       response =
         Helper::Response.ensure_good { @internal_api_client.get(route) }
 
-      check_errors_on response, assessment_id: assessment_id
+      check_errors_on(response, assessment_id:)
 
       JSON.parse(response.body, symbolize_names: true)[:data]
     end
