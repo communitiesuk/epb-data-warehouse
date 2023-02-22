@@ -39,11 +39,13 @@ module XmlPresenter
           ReportKeyFields
           AR-Recommendations
           RR-Recommendations
+          Activities
           ACI-Sub-Systems
           ACI-Key-Recommendations
           AC-Sub-Systems
           AR-Questions
           Renewable-Energy-Source
+          HVAC-Systems
         ]
         rootless_list_nodes({
           "Short-Payback" => "short_payback",

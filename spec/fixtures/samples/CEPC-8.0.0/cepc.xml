@@ -183,6 +183,144 @@
           </CEPC:HVAC-System-Data>
         </CEPC:HVAC-Systems>
       </CEPC:Building-Data>
+      <CEPC:Building-Data>
+        <CEPC:Analysis-Type>ACTUAL</CEPC:Analysis-Type>
+        <CEPC:Area>951.34</CEPC:Area>
+        <CEPC:Area-Exterior>509.17</CEPC:Area-Exterior>
+        <CEPC:Weather>NEW</CEPC:Weather>
+        <CEPC:Q50-Infiltration>10</CEPC:Q50-Infiltration>
+        <CEPC:Building-W-K>193.204</CEPC:Building-W-K>
+        <CEPC:Building-W-M2K>0.379449</CEPC:Building-W-M2K>
+        <CEPC:Building-Alpha>10</CEPC:Building-Alpha>
+        <CEPC:Activities>
+          <CEPC:Activity>
+            <CEPC:ID>1067</CEPC:ID>
+            <CEPC:Area>81.32</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1070</CEPC:ID>
+            <CEPC:Area>13.9</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1074</CEPC:ID>
+            <CEPC:Area>258.42</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1078</CEPC:ID>
+            <CEPC:Area>76.99</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1071</CEPC:ID>
+            <CEPC:Area>490.62</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1077</CEPC:ID>
+            <CEPC:Area>30.09</CEPC:Area>
+          </CEPC:Activity>
+        </CEPC:Activities>
+        <CEPC:Global-Performance>
+          <CEPC:KWH-M2-Heating>6.54699</CEPC:KWH-M2-Heating>
+          <CEPC:KWH-M2-Cooling>30.3968</CEPC:KWH-M2-Cooling>
+          <CEPC:KWH-M2-Auxiliary>1.86372</CEPC:KWH-M2-Auxiliary>
+          <CEPC:KWH-M2-Lighting>78.7393</CEPC:KWH-M2-Lighting>
+          <CEPC:KWH-M2-DHW>2.7961</CEPC:KWH-M2-DHW>
+          <CEPC:KWH-M2-Equipment>19.5261</CEPC:KWH-M2-Equipment>
+          <CEPC:KWH-M2-Natural-Gas>9.34308</CEPC:KWH-M2-Natural-Gas>
+          <CEPC:KWH-M2-LPG>0</CEPC:KWH-M2-LPG>
+          <CEPC:KWH-M2-Biogas>0</CEPC:KWH-M2-Biogas>
+          <CEPC:KWH-M2-Oil>0</CEPC:KWH-M2-Oil>
+          <CEPC:KWH-M2-Coal>0</CEPC:KWH-M2-Coal>
+          <CEPC:KWH-M2-Anthracite>0</CEPC:KWH-M2-Anthracite>
+          <CEPC:KWH-M2-Smokeless>0</CEPC:KWH-M2-Smokeless>
+          <CEPC:KWH-M2-Dual-Fuel>0</CEPC:KWH-M2-Dual-Fuel>
+          <CEPC:KWH-M2-Biomass>0</CEPC:KWH-M2-Biomass>
+          <CEPC:KWH-M2-Supplied>110.999</CEPC:KWH-M2-Supplied>
+          <CEPC:KWH-M2-Waste-Heat>0</CEPC:KWH-M2-Waste-Heat>
+          <CEPC:KWH-M2-District-Heating>0</CEPC:KWH-M2-District-Heating>
+          <CEPC:KWH-M2-Displaced>0</CEPC:KWH-M2-Displaced>
+          <CEPC:KWH-M2-PVS>0</CEPC:KWH-M2-PVS>
+          <CEPC:KWH-M2-Wind>0</CEPC:KWH-M2-Wind>
+          <CEPC:KWH-M2-CHP>0</CEPC:KWH-M2-CHP>
+          <CEPC:KWH-M2-SES>0</CEPC:KWH-M2-SES>
+        </CEPC:Global-Performance>
+        <CEPC:HVAC-Systems>
+          <CEPC:HVAC-System-Data>
+            <CEPC:Area>353.64</CEPC:Area>
+            <CEPC:Type>No Heating or Cooling</CEPC:Type>
+            <CEPC:Heat-Source>LTHW boiler</CEPC:Heat-Source>
+            <CEPC:Fuel-Type>Natural Gas</CEPC:Fuel-Type>
+            <CEPC:MJ-M2-Heating-Dem>71.1616</CEPC:MJ-M2-Heating-Dem>
+            <CEPC:MJ-M2-Cooling-Dem>13.1255</CEPC:MJ-M2-Cooling-Dem>
+            <CEPC:KWH-M2-Heating>0</CEPC:KWH-M2-Heating>
+            <CEPC:KWH-M2-Cooling>0</CEPC:KWH-M2-Cooling>
+            <CEPC:KWH-M2-Auxiliary>0</CEPC:KWH-M2-Auxiliary>
+            <CEPC:Heating-SSEFF>0</CEPC:Heating-SSEFF>
+            <CEPC:Cooling-SSEER>0</CEPC:Cooling-SSEER>
+            <CEPC:Heating-Gen-SEFF>0</CEPC:Heating-Gen-SEFF>
+            <CEPC:Cooling-Gen-SEER>0</CEPC:Cooling-Gen-SEER>
+            <CEPC:Activities>
+              <CEPC:Activity>
+                <CEPC:ID>1067</CEPC:ID>
+                <CEPC:Area>81.32</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1070</CEPC:ID>
+                <CEPC:Area>13.9</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1074</CEPC:ID>
+                <CEPC:Area>258.42</CEPC:Area>
+              </CEPC:Activity>
+            </CEPC:Activities>
+          </CEPC:HVAC-System-Data>
+          <CEPC:HVAC-System-Data>
+            <CEPC:Area>567.61</CEPC:Area>
+            <CEPC:Type>Split or multi-split system</CEPC:Type>
+            <CEPC:Heat-Source>LTHW boiler</CEPC:Heat-Source>
+            <CEPC:Fuel-Type>Natural Gas</CEPC:Fuel-Type>
+            <CEPC:MJ-M2-Heating-Dem>17.0576</CEPC:MJ-M2-Heating-Dem>
+            <CEPC:MJ-M2-Cooling-Dem>401.756</CEPC:MJ-M2-Cooling-Dem>
+            <CEPC:KWH-M2-Heating>6.49072</CEPC:KWH-M2-Heating>
+            <CEPC:KWH-M2-Cooling>49.5997</CEPC:KWH-M2-Cooling>
+            <CEPC:KWH-M2-Auxiliary>2.47934</CEPC:KWH-M2-Auxiliary>
+            <CEPC:Heating-SSEFF>0.73</CEPC:Heating-SSEFF>
+            <CEPC:Cooling-SSEER>2.25</CEPC:Cooling-SSEER>
+            <CEPC:Heating-Gen-SEFF>0</CEPC:Heating-Gen-SEFF>
+            <CEPC:Cooling-Gen-SEER>0</CEPC:Cooling-Gen-SEER>
+            <CEPC:Activities>
+              <CEPC:Activity>
+                <CEPC:ID>1078</CEPC:ID>
+                <CEPC:Area>76.99</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1071</CEPC:ID>
+                <CEPC:Area>490.62</CEPC:Area>
+              </CEPC:Activity>
+            </CEPC:Activities>
+          </CEPC:HVAC-System-Data>
+          <CEPC:HVAC-System-Data>
+            <CEPC:Area>30.09</CEPC:Area>
+            <CEPC:Type>Other local room heater - unfanned</CEPC:Type>
+            <CEPC:Heat-Source>LTHW boiler</CEPC:Heat-Source>
+            <CEPC:Fuel-Type>Natural Gas</CEPC:Fuel-Type>
+            <CEPC:MJ-M2-Heating-Dem>222.205</CEPC:MJ-M2-Heating-Dem>
+            <CEPC:MJ-M2-Cooling-Dem>205.785</CEPC:MJ-M2-Cooling-Dem>
+            <CEPC:KWH-M2-Heating>84.553</CEPC:KWH-M2-Heating>
+            <CEPC:KWH-M2-Cooling>25.4056</CEPC:KWH-M2-Cooling>
+            <CEPC:KWH-M2-Auxiliary>12.1545</CEPC:KWH-M2-Auxiliary>
+            <CEPC:Heating-SSEFF>0.73</CEPC:Heating-SSEFF>
+            <CEPC:Cooling-SSEER>2.25</CEPC:Cooling-SSEER>
+            <CEPC:Heating-Gen-SEFF>0</CEPC:Heating-Gen-SEFF>
+            <CEPC:Cooling-Gen-SEER>0</CEPC:Cooling-Gen-SEER>
+            <CEPC:Activities>
+              <CEPC:Activity>
+                <CEPC:ID>1077</CEPC:ID>
+                <CEPC:Area>30.09</CEPC:Area>
+              </CEPC:Activity>
+            </CEPC:Activities>
+          </CEPC:HVAC-System-Data>
+        </CEPC:HVAC-Systems>
+      </CEPC:Building-Data>
     </CEPC:Summary-Of-Performance>
     <CEPC:Unstructured-Data>
       <!-- The Interface Input Data encoded in base64. -->
