@@ -36,12 +36,14 @@ module XmlPresenter
         })
         list_nodes %w[
           ReportKeyFields
+          Activities
           AR-Recommendations
           RR-Recommendations
           ACI-Sub-Systems
           ACI-Key-Recommendations
           AC-Sub-Systems
           AR-Questions
+          HVAC-Systems
           Renewable-Energy-Source
         ]
         rootless_list_nodes({
