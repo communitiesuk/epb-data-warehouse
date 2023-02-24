@@ -426,15 +426,13 @@ RSpec.describe "the parser and the CEPC (NI) configuration" do
           "or_benchmark_data" =>
              { "main_benchmark" => "General Office",
                "benchmarks" =>
-                [{ "benchmark" =>
-                    { "name" => "Offices - cellular, naturally ventilated",
-                      "benchmark_id" => 1,
-                      "area_metric" =>
-                       "Gross floor area measured as RICS Gross Internal Area (GIA)",
-                      "floor_area" => 1536,
-                      "tufa" => 1536,
-                      "benchmark" => "General Office",
-                      "occupancy_level" => "Standard Occupancy" } }] },
+                 [{ "name" => "Offices - cellular, naturally ventilated",
+                    "benchmark_id" => 1,
+                    "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
+                    "floor_area" => 1536,
+                    "tufa" => 1536,
+                    "benchmark" => "General Office",
+                    "occupancy_level" => "Standard Occupancy" }] },
           "or_energy_consumption" =>
              { "electricity" =>
                 { "consumption" => 82_812,

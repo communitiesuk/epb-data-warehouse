@@ -39,6 +39,7 @@ module XmlPresenter
           ReportKeyFields
           AR-Recommendations
           RR-Recommendations
+          Benchmarks
           Activities
           ACI-Sub-Systems
           ACI-Key-Recommendations
@@ -64,7 +65,6 @@ module XmlPresenter
           "Guidance" => "guidance",
           "Specials" => "specials",
           "Answer" => "answers",
-          "Benchmarks" => "benchmarks",
           "Building-Data" => "building_data",
         })
         pick_root_node(root_node: "Report", sub_node: "RRN")

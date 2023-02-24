@@ -360,15 +360,20 @@ RSpec.describe "the parser and the CEPC configuration" do
         "or_benchmark_data" =>
                        { "main_benchmark" => "Swimming Pool Centre",
                          "benchmarks" =>
-                          [{ "benchmark" =>
-                              { "name" => "Swimming pool",
-                                "benchmark_id" => 2,
-                                "area_metric" =>
-                                 "Gross floor area measured as RICS Gross Internal Area (GIA)",
-                                "floor_area" => 1358.936,
-                                "tufa" => 1358.936,
-                                "benchmark" => "Swimming Pool Centre",
-                                "occupancy_level" => "Standard Occupancy" } }] },
+                           [{ "name" => "Gymnasium",
+                              "benchmark_id" => 1,
+                              "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
+                              "floor_area" => 110.382,
+                              "tufa" => 110.382,
+                              "benchmark" => "Fitness And Health Centre",
+                              "occupancy_level" => "Standard Occupancy" },
+                            { "name" => "Swimming pool",
+                              "benchmark_id" => 2,
+                              "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
+                              "floor_area" => 1358.936,
+                              "tufa" => 1358.936,
+                              "benchmark" => "Swimming Pool Centre",
+                              "occupancy_level" => "Standard Occupancy" }] },
         "or_energy_consumption" =>
                        { "electricity" =>
                           { "consumption" => 126_161,
@@ -419,6 +424,7 @@ RSpec.describe "the parser and the CEPC configuration" do
                          "ac_rated_output" => { "ac_kw_rating" => 30 },
                          "ac_inspection_commissioned" => 1 },
       }
+
       expect(use_case.execute(xml: dec,
                               schema_type: "CEPC-8.0.0",
                               assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)
