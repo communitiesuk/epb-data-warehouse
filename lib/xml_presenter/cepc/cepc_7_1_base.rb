@@ -66,6 +66,8 @@ module XmlPresenter
           "Specials" => "specials",
           "Answer" => "answers",
           "Building-Data" => "building_data",
+          "Equipment-Operator" => "equipment_operator",
+          "Equipment-Owner" => "equipment_owner",
         })
         pick_root_node(root_node: "Report", sub_node: "RRN")
       end

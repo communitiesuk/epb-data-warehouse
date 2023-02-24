@@ -593,7 +593,7 @@ RSpec.describe "the parser and the CEPC (NI) configuration" do
         "postcode" => "AN4 5ER",
         "calculation_tool" => "Quidos, AIRS, v2.0",
         "equipment_owner" =>
-           { "equipment_owner_name" => "Manager",
+          [{ "equipment_owner_name" => "Manager",
              "telephone_number" => 8_445_555_555,
              "organisation_name" => "The Big Shop",
              "registered_address" =>
@@ -601,7 +601,7 @@ RSpec.describe "the parser and the CEPC (NI) configuration" do
                 "address_line_2" => "The Big Shopping Centre",
                 "address_line_3" => "Main Street",
                 "post_town" => "Anytown",
-                "postcode" => "AN1 2AA" } },
+                "postcode" => "AN1 2AA" } }],
         "building_name" => "The Big Shop - The Big Shopping Centre",
         "f_gas_compliant_date" => "Not Provided",
         "ac_rated_output" => { "ac_kw_rating" => 750 },

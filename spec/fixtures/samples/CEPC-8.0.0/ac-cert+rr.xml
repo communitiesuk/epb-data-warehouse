@@ -73,6 +73,19 @@
           <CEPC:Postcode>NE0 0AA</CEPC:Postcode>
         </CEPC:Registered-Address>
       </CEPC:Equipment-Operator>
+      <CEPC:Equipment-Operator>
+        <CEPC:Responsible-Person>Operator Person</CEPC:Responsible-Person>
+        <CEPC:Telephone-Number>000000000</CEPC:Telephone-Number>
+        <CEPC:Organisation-Name>Organisation Plc</CEPC:Organisation-Name>
+        <CEPC:Registered-Address>
+          <CEPC:Address-Line-1 />
+          <CEPC:Address-Line-2 />
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town />
+          <CEPC:Postcode>NE0 0AA</CEPC:Postcode>
+        </CEPC:Registered-Address>
+      </CEPC:Equipment-Operator>
       <CEPC:Building-Name>24 Some Street</CEPC:Building-Name>
       <CEPC:F-Gas-Compliant-Date>Not Provided</CEPC:F-Gas-Compliant-Date>
       <CEPC:AC-Rated-Output>
