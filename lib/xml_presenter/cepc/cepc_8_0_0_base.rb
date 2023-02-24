@@ -44,7 +44,6 @@ module XmlPresenter
           ACI-Sub-Systems
           ACI-Key-Recommendations
           AC-Sub-Systems
-          AR-Questions
           Renewable-Energy-Source
           HVAC-Systems
         ]

@@ -295,16 +295,15 @@ RSpec.describe "the parser and the CEPC configuration" do
                       "or_benchmark_data" =>
                        { "main_benchmark" => "Schools And Seasonal Public Buildings",
                          "benchmarks" =>
-                          [{ "benchmark" =>
-                              { "name" => "Nursery or kindergarten",
-                                "benchmark_id" => 1,
-                                "area_metric" =>
+                          [{ "name" => "Nursery or kindergarten",
+                             "benchmark_id" => 1,
+                             "area_metric" =>
                                  "Gross floor area measured as RICS Gross Internal Area (GIA)",
-                                "floor_area" => 1219.2,
-                                "tufa" => 1219.2,
-                                "benchmark" => "Schools And Seasonal Public Buildings",
-                                "occupancy_level" => "Extended Occupancy",
-                                "total_equivalent" => 2437.5 } }] },
+                             "floor_area" => 1219.2,
+                             "tufa" => 1219.2,
+                             "benchmark" => "Schools And Seasonal Public Buildings",
+                             "occupancy_level" => "Extended Occupancy",
+                             "total_equivalent" => 2437.5 }] },
                       "or_energy_consumption" =>
                        { "electricity" =>
                           { "consumption" => 59_477,

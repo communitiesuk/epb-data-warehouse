@@ -43,6 +43,7 @@ module XmlPresenter
           ACI-Key-Recommendations
           AC-Sub-Systems
           AR-Questions
+          Benchmarks
           HVAC-Systems
           Renewable-Energy-Source
         ]
@@ -63,7 +64,6 @@ module XmlPresenter
           "Guidance" => "guidance",
           "Specials" => "specials",
           "Answer" => "answers",
-          "Benchmarks" => "benchmarks",
           "Building-Data" => "building_data",
         })
         pick_root_node(root_node: "Report", sub_node: "RRN")

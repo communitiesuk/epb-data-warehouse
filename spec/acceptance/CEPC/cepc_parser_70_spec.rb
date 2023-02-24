@@ -301,14 +301,22 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
                       "or_benchmark_data" =>
                         { "main_benchmark" => "Schools And Seasonal Public Buildings",
                           "benchmarks" =>
-                            [{ "benchmark" =>
-                                 { "name" => "Swimming pool",
-                                   "benchmark_id" => 2,
-                                   "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
-                                   "floor_area" => 254.52,
-                                   "tufa" => 254.52,
-                                   "benchmark" => "Swimming Pool Centre",
-                                   "occupancy_level" => "Extended Occupancy" } }] },
+                            [
+                              {"name"=>"Secondary school",
+                               "benchmark_id"=>1,
+                               "area_metric"=>"Gross floor area measured as RICS Gross Internal Area (GIA)",
+                               "floor_area"=>4646.48,
+                               "tufa"=>4646.48,
+                               "benchmark"=>"Schools And Seasonal Public Buildings",
+                               "occupancy_level"=>"Extended Occupancy"},
+                              { "name" => "Swimming pool",
+                                "benchmark_id" => 2,
+                                "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
+                                "floor_area" => 254.52,
+                                "tufa" => 254.52,
+                                "benchmark" => "Swimming Pool Centre",
+                                "occupancy_level" => "Extended Occupancy" },
+                            ] },
                       "or_energy_consumption" =>
                         { "electricity" =>
                             { "consumption" => 296_820,
