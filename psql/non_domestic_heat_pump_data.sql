@@ -1,6 +1,7 @@
 SELECT
     assessment_id as assessment_id,
     ad.document ->> 'registration_date' as registration_date,
+    ad.document ->> 'property_type' as property_type,
     hvac_systems ->> 'heat_source' as heat_source,
     hvac_systems ->> 'heating_sseff' as heating_sseff,
     hvac_systems ->> 'heating_gen_seff' as heating_gen_seff,
@@ -10,9 +11,9 @@ SELECT
 FROM assessment_documents ad,
     jsonb_array_elements(ad.document -> 'summary_of_performance' -> 'building_data') building_parts,
     jsonb_array_elements(building_parts -> 'hvac_systems') hvac_systems
-WHERE building_parts  ->> 'analysis_type' = 'ACTUAL'
-  AND hvac_systems ->> 'heat_source' LIKE 'Heat pump%'
+WHERE building_parts  ->> 'analysis_type' IN ('ACTUAL', 'NOTIONAL')
+  AND lower(hvac_systems ->> 'heat_source') LIKE 'heat pump%'
   AND ad.document ->> 'postcode' NOT LIKE 'BT%'
   AND (ad.document ->> 'transaction_type' = '3')
   AND (ad.document ->> 'assessment_type')::varchar = 'CEPC'
-  AND (nullif(ad.document->>'registration_date', '')::date) > ('2023-02-01 00:00':: timestamp) AND (nullif(ad.document->>'registration_date', '')::date) < ('2023-02-28 00:00':: timestamp);
+  AND (nullif(ad.document->>'registration_date', '')::date) > ('2020-12-31 00:00':: timestamp) AND (nullif(ad.document->>'registration_date', '')::date) < ('2022-01-01 00:00':: timestamp);
