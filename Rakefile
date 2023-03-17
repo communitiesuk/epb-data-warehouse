@@ -31,7 +31,7 @@ end
 
 Sentry.init do |config|
   config.environment = ENV["STAGE"]
-  config.capture_exception_frame_locals = true
+  config.include_local_variables = true
 end
 
 # Adds project rake files
