@@ -17,7 +17,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker save -o ebpr-data-warehouse-image.tar ebpr-register-api-image:latest
+      - docker save -o ebpr-data-warehouse-image.tar ebpr-data-warehouse-image:latest
 
 artifacts:
   files:
