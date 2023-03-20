@@ -1,12 +1,14 @@
-SELECT assessment_id,
-       (d.document ->> 'sap_ventilation')::json ->> 'air_permeability' as  air_permeability,
+SELECT DISTINCT assessment_id,
+       ((d.document ->> 'sap_ventilation')::json ->> 'air_permeability')::varchar as  air_permeability,
        al.lookup_value as ventilation_type,
-        CASE WHEN jsonb_typeof(d.document -> 'dwelling_type') = 'object' THEN d.document -> 'dwelling_type' ->> 'value' ELSE d.document ->> 'dwelling_type' end as home_type,
-(document->>'registration_date')::date
+       CASE
+           WHEN jsonb_typeof(d.document -> 'dwelling_type') = 'object'
+            THEN (d.document -> 'dwelling_type' ->> 'value')::varchar
+            ELSE (d.document ->> 'dwelling_type')::varchar
+           end as home_type
 FROM assessment_documents d
 LEFT JOIN assessment_lookups al ON al.lookup_key =  (d.document ->> 'sap_ventilation')::json ->> 'ventilation_type'
 LEFT JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
 WHERE d.document ->> 'assessment_type' = 'SAP'
 AND aal.attribute_id = 11
-AND (document->>'registration_date')::date BETWEEN ('2019-01-01 00:00':: timestamp) AND ('2023-01-01 00:00':: timestamp)
-LIMIT 200
+AND (document->>'registration_date')::date BETWEEN ('2019-01-01 00:00':: timestamp) AND ('2023-01-01 00:00':: timestamp);
