@@ -12,7 +12,7 @@ AND (nullif(document->>'registration_date', '')::date)  > '2022-03-01 00:00'
 AND (nullif(document->>'registration_date', '')::date)  < '2023-03-01 00:00'
 and   ad.document ->> 'postcode' LIKE 'BT%';
 
---export for domestic CEPC-RR
+--export for non-domestic CEPC-RR
 SELECT ad.document,
        items.co2_impact as CO2_IMPACT,
         items.recommendation as RECOMMENDATION,
