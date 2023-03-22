@@ -42,7 +42,6 @@ To run Rubocop on its own, run:
 
 make format
 
-
 ## Docker image
 
 ### Build
@@ -56,7 +55,7 @@ To rebuild the Docker image locally, run
 #### Docker Desktop
 
 You can run the created image in Docker Desktop by going to **Images** and pressing **Run** in the *Actions* column.
-This will create a persistent deployment and has an interface to provide multiple useful options.   
+This will create a persistent deployment and has an interface to provide multiple useful options.
 
 #### CLI
 
