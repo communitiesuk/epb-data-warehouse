@@ -125,7 +125,7 @@ GEM
       rubocop-capybara (~> 2.17)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    sentry-ruby (5.8.0)
+    sentry-ruby (5.9.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
     snaky_hash (2.0.1)
       hashie
@@ -165,7 +165,7 @@ DEPENDENCIES
   rspec (~> 3.12)
   rubocop-govuk (~> 4.10)
   rubocop-performance (~> 1.17)
-  sentry-ruby (~> 5.8)
+  sentry-ruby (~> 5.9)
   timecop (~> 0.9.6)
   unleash (~> 4.4.2)
   webmock (~> 3.17)
