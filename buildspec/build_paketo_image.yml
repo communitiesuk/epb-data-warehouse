@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  variables:
+    DEPLOY_APPNAME: "epbr-data-warehouse-integration"
+
+phases:
+  install:
+    commands:
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+
+  pre_build:
+    commands:
+      - mv AWS-Procfile Procfile
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Paketo image...
+      - pack build ebpr-data-warehouse-image --buildpack paketo-buildpacks/ruby --builder paketobuildpacks/builder:full
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker save -o ebpr-data-warehouse-image.tar ebpr-data-warehouse-image:latest
+
+artifacts:
+  files:
+    - '**/*'
