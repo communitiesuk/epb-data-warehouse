@@ -10,11 +10,13 @@ CLUSTER_NAME="${PREFIX}-warehouse-cluster"
 TASK="${PREFIX}-warehouse-ecs-db-migrate-task"
 
 
+aws ec2 describe-vpcs --profile $PROFILE
+
 VPC_ID=$(aws ec2 describe-vpcs --profile $PROFILE --filters Name=tag:Name,Values=$VPC_NAME --query 'Vpcs[0].VpcId')
 printf "VPC ID=" $VPC_ID
 
 if [[ $VPC_ID = "" ]]; then
-  printf "VPC NO FOUND FOR PROFILE ${PROFILE}"
+  printf "VPC NOT FOUND FOR PROFILE ${PROFILE}"
   exit 1
 fi
 
