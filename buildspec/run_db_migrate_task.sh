@@ -4,7 +4,7 @@
 # ./run_db_migrate_task.sh $CLIENT_ROLE_ARN client
 PREFIX=$1
 PROFILE=$2
-VPC_NAME="epb-${STAGE}-vpc"
+VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-warehouse-ecs-sg"
 CLUSTER_NAME="${PREFIX}-warehouse-cluster"
 TASK="${PREFIX}-warehouse-ecs-db-migrate-task"
@@ -12,6 +12,11 @@ TASK="${PREFIX}-warehouse-ecs-db-migrate-task"
 
 VPC_ID=$(aws ec2 describe-vpcs --profile $PROFILE --filters Name=tag:Name,Values=$VPC_NAME --query 'Vpcs[0].VpcId')
 printf "VPC ID=" $VPC_ID
+
+if [[ $VPC_ID = "" ]]; then
+  printf "VPC NO FOUND FOR PROFILE ${PROFILE}"
+  exit 1
+fi
 
 SUBNET_GROUP_ID=$(aws ec2 describe-subnets --profile $PROFILE --filter Name=vpc-id,Values=$VPC_ID --query 'Subnets[?MapPublicIpOnLaunch==`false`].SubnetId')
 
