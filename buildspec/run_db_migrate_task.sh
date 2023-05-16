@@ -11,7 +11,6 @@ TASK="${PREFIX}-warehouse-ecs-db-migrate-task"
 
 
 VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$VPC_NAME --query 'Vpcs[0].VpcId' --profile $PROFILE)
-echo "VPC_ID=${VPC_ID}"
 
 if [[ $VPC_ID = "" ]]; then
   echo "VPC NOT FOUND FOR PROFILE ${PROFILE}"
@@ -20,11 +19,7 @@ fi
 
 SUBNET_GROUP_ID=$(aws ec2 describe-subnets --filter Name=vpc-id,Values=$VPC_ID --query 'Subnets[?MapPublicIpOnLaunch==`false`].SubnetId' --profile $PROFILE)
 
-echo "SUBNET_GROUP ID ${SUBNET_GROUP_ID}"
-
 SECURITY_GROUP_ID=$(aws ec2 describe-security-groups --filter Name=group-name,Values=$SECURITY_GROUP_NAME --query 'SecurityGroups[0].GroupId' --profile $PROFILE )
-
-echo "SECURITY_GROUP ID ${SECURITY_GROUP_ID}"
 
 JSON_STRING="{\"awsvpcConfiguration\": {\"subnets\": ${SUBNET_GROUP_ID}, \"securityGroups\": [${SECURITY_GROUP_ID}],\"assignPublicIp\":\"DISABLED\"}}"
 
@@ -36,7 +31,7 @@ STATUS=""
 
 while [[ $STATUS != "\"STOPPED\"" ]]; do
 STATUS=$(aws ecs describe-tasks  --cluster $CLUSTER_NAME --tasks $TASK_ID --query 'tasks[0].containers[0].lastStatus' --profile $PROFILE)
-echo "${STATUS} << WAITING FOR MIGRATION TASK TO COMPLETE...\n"
+echo "${STATUS} << WAITING FOR MIGRATION TASK TO COMPLETE"
 
 sleep 5
 done
