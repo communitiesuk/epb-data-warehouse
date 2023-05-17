@@ -23,7 +23,7 @@ SECURITY_GROUP_ID=$(aws ec2 describe-security-groups --filter Name=group-name,Va
 
 JSON_STRING="{\"awsvpcConfiguration\": {\"subnets\": ${SUBNET_GROUP_ID}, \"securityGroups\": [${SECURITY_GROUP_ID}],\"assignPublicIp\":\"DISABLED\"}}"
 
-TASK_ID=$(aws ecs run-task  --cluster $CLUSTER_NAME  --task-definition epb-intg-warehouse-ecs-db-migrate-task  \
+TASK_ID=$(aws ecs run-task  --cluster $CLUSTER_NAME  --task-definition ${TASK}  \
     --network-configuration "${JSON_STRING}" \
     --launch-type "FARGATE" --query 'tasks[0].containers[0].taskArn' --profile $PROFILE | tr -d '"' )
 
