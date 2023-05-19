@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_13_143331) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_19_093622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_143331) do
     t.index ["type_of_assessment"], name: "index_assessment_attribute_lookups_on_type_of_assessment"
   end
 
-  create_table "assessment_attribute_values", id: false, force: :cascade do |t|
+  create_table "assessment_attribute_values", primary_key: ["attribute_id", "assessment_id"], force: :cascade do |t|
     t.bigint "attribute_id", null: false
     t.string "assessment_id", null: false
     t.string "attribute_value"
@@ -64,7 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_143331) do
     t.index ["lookup_value"], name: "index_assessment_lookups_on_lookup_value"
   end
 
-  create_table "ons_uprn_directory", id: false, force: :cascade do |t|
+  create_table "ons_uprn_directory", primary_key: ["uprn", "version_id"], force: :cascade do |t|
     t.string "uprn", limit: 17, null: false
     t.string "postcode", limit: 8, null: false
     t.jsonb "areas", null: false
