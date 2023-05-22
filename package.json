@@ -30,7 +30,7 @@
     "csv-stream": "^0.2.0",
     "fast-xml-parser": "^4.2.2",
     "node-fetch": "^3.3.1",
-    "pg": "^8.9.0",
+    "pg": "^8.11.0",
     "pg-promise": "^11.4.3",
     "request": "^2.88.2",
     "unzipper": "^0.10.14"
