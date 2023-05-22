@@ -51,6 +51,7 @@ module XmlPresenter
           "Main-Heating-Controls" => "main_heating_controls",
           "Addendum-Number" => "addendum_numbers",
         })
+        nodes_ignoring_attributes(%w[Energy-Consumption-Current Energy-Consumption-Potential])
       end
     end
   end

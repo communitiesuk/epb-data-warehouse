@@ -78,6 +78,7 @@ module XmlPresenter
         })
         # ignored attributes are XML node attributes that are ignored in the parse and therefore are not written into value objects
         ignored_attributes %w[language xmlns:HIP xmlns:SAP]
+        nodes_ignoring_attributes(%w[Energy-Consumption-Current Energy-Consumption-Potential])
       end
     end
   end

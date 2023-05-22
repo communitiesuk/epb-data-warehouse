@@ -67,8 +67,8 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "energy_rating_potential" => 53,
                       "environmental_impact_current" => 16,
                       "environmental_impact_potential" => 41,
-                      "energy_consumption_current" => { "quantity" => "kWh/m2 per year", "value" => 524 },
-                      "energy_consumption_potential" => { "quantity" => "kWh/m2 per year", "value" => 289 },
+                      "energy_consumption_current" => 524,
+                      "energy_consumption_potential" => 289,
                       "co2_emissions_current" => { "quantity" => "tonnes per year", "value" => 11 },
                       "co2_emissions_potential" => { "quantity" => "tonnes per year", "value" => 6.3 },
                       "co2_emissions_current_per_floor_area" =>

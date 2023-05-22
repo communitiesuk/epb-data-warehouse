@@ -2,7 +2,7 @@ require "nokogiri"
 
 module XmlPresenter
   class Parser
-    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, specified_report: nil, ignored_attributes: [])
+    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, specified_report: nil, ignored_attributes: [], nodes_ignoring_attributes: [])
       @excludes = excludes
       @includes = includes
       @bases = bases
@@ -11,6 +11,7 @@ module XmlPresenter
       @rootless_list_nodes = rootless_list_nodes
       @specified_report = specified_report
       @ignored_attributes = ignored_attributes
+      @nodes_ignoring_attributes = nodes_ignoring_attributes
     end
 
     def parse(xml)
@@ -35,7 +36,8 @@ module XmlPresenter
                                                       list_nodes: @list_nodes,
                                                       rootless_list_nodes: @rootless_list_nodes,
                                                       root_node: root_node_option(xml),
-                                                      ignored_attributes: @ignored_attributes
+                                                      ignored_attributes: @ignored_attributes,
+                                                      nodes_ignoring_attributes: @nodes_ignoring_attributes
       @sax_parser ||= Nokogiri::XML::SAX::Parser.new @assessment_document
     end
 
@@ -96,7 +98,7 @@ module XmlPresenter
   end
 
   class AssessmentDocument < Nokogiri::XML::SAX::Document
-    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, root_node: nil, ignored_attributes: [])
+    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, root_node: nil, ignored_attributes: [], nodes_ignoring_attributes: [])
       @excludes = excludes
       @includes = includes
       @bases = bases
@@ -105,6 +107,7 @@ module XmlPresenter
       @rootless_list_nodes = rootless_list_nodes
       @root_node = root_node
       @ignored_attributes = ignored_attributes
+      @nodes_ignoring_attributes = nodes_ignoring_attributes
       super()
     end
 
@@ -140,8 +143,9 @@ module XmlPresenter
       write_encounter
     end
 
-    def start_element(_name, attrs = nil)
-      @attrs = attrs.reject { |attr| @ignored_attributes.include?(attr.first) }
+    def start_element(name, attrs = nil)
+      local_name = name.split(":").last
+      @attrs = attrs.reject { |attr| @ignored_attributes.include?(attr.first) || @nodes_ignoring_attributes.include?(local_name) }
     end
 
     def end_element_namespace(name, _prefix = nil, _uri = nil)

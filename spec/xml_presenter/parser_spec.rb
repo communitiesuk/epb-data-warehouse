@@ -346,4 +346,36 @@ RSpec.describe XmlPresenter::Parser do
       expect(parser.parse(xml)).to eq expected
     end
   end
+
+  context "with nodes specified that will ignore all attributes" do
+    let(:parser) { described_class.new nodes_ignoring_attributes: %w[Ignore-My-Attributes] }
+
+    it "parses the report ignoring all attributes on the specified nodes but leaving others" do
+      xml = '<Root><Ignore-My-Attributes quantity="metres">23</Ignore-My-Attributes><Length quantity="cm">5</Length></Root>'
+      expected = {
+        "ignore_my_attributes" => 23,
+        "length" => {
+          "quantity" => "cm",
+          "value" => 5,
+        },
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
+
+  context "with nodes specified that will ignore all attributes ignoring node namespace" do
+    let(:parser) { described_class.new nodes_ignoring_attributes: %w[Ignore-My-Attributes] }
+
+    it "parses the report ignoring all attributes on the specified nodes but leaving others" do
+      xml = '<Root><SAP:Ignore-My-Attributes quantity="metres">23</SAP:Ignore-My-Attributes><SAP:Length quantity="cm">5</SAP:Length></Root>'
+      expected = {
+        "ignore_my_attributes" => 23,
+        "length" => {
+          "quantity" => "cm",
+          "value" => 5,
+        },
+      }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end
