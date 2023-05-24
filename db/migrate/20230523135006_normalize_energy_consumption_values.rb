@@ -1,4 +1,4 @@
-class NormalizeEnergyConsumptionValues < ActiveRecord::Migration
+class NormalizeEnergyConsumptionValues < ActiveRecord::Migration[7.0]
   def self.up
     # normalize the values for energy_consumption_current and energy_consumption_potential so they are simple values not objects
     # in JSONB store
