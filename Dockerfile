@@ -15,7 +15,7 @@ ENV STAGE=development
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -; \
-    apt-get update -qq && apt-get install -qq --no-install-recommends nodejs && \
+    apt-get update -qq && apt-get install -y -qq --no-install-recommends nodejs && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
