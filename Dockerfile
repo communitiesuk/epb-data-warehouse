@@ -23,6 +23,8 @@ COPY . /app
 WORKDIR /app
 RUN bundle install
 
+RUN adduser --system --no-create-home nonroot
+USER nonroot
 
 ENTRYPOINT ["bundle", "exec", "ruby", "app.rb"]
 
