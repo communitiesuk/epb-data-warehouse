@@ -1,7 +1,7 @@
 namespace :debug do
   desc "interact with a recovery list"
   task :recovery_list, [:assessment_id] do |_, args|
-    assessment_id = args[:assessment_id]
+    assessment_id = args[:assessment_id] || ENV["assessment_id"]
     recovery_list = gateway :recovery_list
     loop do
       puts "1) register with 3 retries; 2) register attempt; 3) remove assessment; 4) exit"
