@@ -7,8 +7,7 @@ PROFILE=$2
 VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-warehouse-ecs-sg"
 CLUSTER_NAME="${PREFIX}-warehouse-cluster"
-TASK="${PREFIX}-warehouse-ecs-db-migrate-task"
-
+TASK="${PREFIX}-warehouse-ecs-exec-cmd-task"
 
 VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$VPC_NAME --query 'Vpcs[0].VpcId' --profile $PROFILE)
 
