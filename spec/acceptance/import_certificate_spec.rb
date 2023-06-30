@@ -108,7 +108,7 @@ describe "Acceptance::ImportCertificate with data point exceeding character limi
   def attributes_values_from_database(column, attribute)
     ActiveRecord::Base.connection.exec_query(
       "SELECT * FROM assessment_attribute_values WHERE #{column} = #{attribute}",
-      )
+    )
   end
 
   let(:import_xml_certificate_use_case) do
@@ -117,7 +117,7 @@ describe "Acceptance::ImportCertificate with data point exceeding character limi
       assessment_attribute_gateway: eav_gateway,
       documents_gateway: Gateway::DocumentsGateway.new,
       logger:,
-      )
+    )
     UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
                                       assessment_attribute_gateway: eav_gateway,
                                       certificate_gateway:,
@@ -192,7 +192,7 @@ describe "Acceptance::ImportCertificate with data point exceeding character limi
     it "is queryable" do
       response = ActiveRecord::Base.connection.exec_query(
         "select * from assessment_documents where assessment_id = '0000-0000-0000-0000-0000'",
-        )
+      )
       expect(response.length).to be >= 1
     end
   end
