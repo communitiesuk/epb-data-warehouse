@@ -532,7 +532,7 @@ module Gateway
       end
 
       def string
-        value unless is_hash
+        value.to_s unless is_hash
       end
 
       def int

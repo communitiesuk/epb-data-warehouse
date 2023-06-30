@@ -541,6 +541,16 @@ describe Gateway::AssessmentAttributesGateway do
         }.not_to raise_error
       end
     end
+
+    context "with an entry containing a value that is an integer but larger than PostgreSQL can store using the standard INTEGER type" do
+      before do
+        gateway.add_attribute_values(AttributeValue.new("location_description", 263_012_400_001_263_012_400_001, nil), assessment_id: "0000-0000-0000-0000-0001")
+      end
+
+      it "writes nil for the integer value column" do
+        expect(assessment_attribute_values[5]["attribute_value_int"]).to be nil
+      end
+    end
   end
 
   context "when the attributes object is fetched" do
