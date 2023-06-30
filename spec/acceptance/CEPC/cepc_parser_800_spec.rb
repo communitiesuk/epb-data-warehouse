@@ -431,6 +431,121 @@ RSpec.describe "the parser and the CEPC configuration" do
     end
   end
 
+  context "when loading xml from Dec with a data point which exceeds the character limit" do
+    let(:dec) do
+      Samples.xml("CEPC-8.0.0", "dec_exceeds_character_count")
+    end
+
+    it "doesn't error" do
+      expect {
+        use_case.execute xml: dec,
+                         schema_type: "CEPC-8.0.0",
+                         assessment_id: "0000-0000-0000-0000-0000"
+      }.not_to raise_error
+    end
+
+    it "parses the document in the expected format" do
+      expectation = {
+        "issue_date" => "2021-10-12",
+        "valid_until" => "2022-01-31",
+        "report_type" => 1,
+        "inspection_date" => "2021-09-02",
+        "registration_date" => "2021-10-12",
+        "status" => "entered",
+        "related_rrn" => "0000-0000-0000-0000-0001",
+        "language_code" => 1,
+        "scheme_assessor_id" => "TEST000000",
+        "location_description" => "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi...",
+        "uprn" => "RRN-0000-0000-0000-0000-0000",
+        "address_line_1" => "Swim & Fitness Centre",
+        "address_line_2" => "Swimming Lane",
+        "post_town" => "Floatering",
+        "postcode" => "A00 0AA",
+        "property_type" => "Fitness And Health Centre; Swimming Pool Centre",
+        "occupier" => "Swimming corp",
+        "methodology" => "ORCalc",
+        "calculation_tool" => "CLG, ORCalc, v4.0.4",
+        "output_engine" => "ORGen v4.0.4",
+        "or_assessment_start_date" => "2020-08-31",
+        "or_assessment_end_date" => "2021-08-31",
+        "building_category" => "H7; H6;",
+        "or_building_data" =>
+          { "internal_environment" => "Heating and Mechanical Ventilation",
+            "assessment_period_alignment" => "End Of Main Heating Fuel Period",
+            "hvac_system" => "Radiators" },
+        "or_benchmark_data" =>
+          { "main_benchmark" => "Swimming Pool Centre",
+            "benchmarks" =>
+              [{ "name" => "Gymnasium",
+                 "benchmark_id" => 1,
+                 "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
+                 "floor_area" => 110.382,
+                 "tufa" => 110.382,
+                 "benchmark" => "Fitness And Health Centre",
+                 "occupancy_level" => "Standard Occupancy" },
+               { "name" => "Swimming pool",
+                 "benchmark_id" => 2,
+                 "area_metric" => "Gross floor area measured as RICS Gross Internal Area (GIA)",
+                 "floor_area" => 1358.936,
+                 "tufa" => 1358.936,
+                 "benchmark" => "Swimming Pool Centre",
+                 "occupancy_level" => "Standard Occupancy" }] },
+        "or_energy_consumption" =>
+          { "electricity" =>
+              { "consumption" => 126_161,
+                "start_date" => "2020-09-01",
+                "end_date" => "2021-08-31",
+                "estimate" => 0 },
+            "gas" =>
+              { "consumption" => 805_167,
+                "start_date" => "2020-09-01",
+                "end_date" => "2021-08-31",
+                "estimate" => 0 } },
+        "or_usable_floor_area" =>
+          { "ufa_1" => { "name" => "Basement Plant", "floor_area" => 118.16 },
+            "ufa_2" => { "name" => "Basement void around pool", "floor_area" => 179.673 },
+            "ufa_3" => { "name" => "Ground Plant", "floor_area" => 146.223 },
+            "ufa_4" => { "name" => "First Floor Plant", "floor_area" => 49.807 },
+            "total_ufa" => 493.863 },
+        "or_previous_data" => { "asset_rating" => 45 },
+        "renewable_energy_source" =>
+          [{ "start_date" => "2020-09-01",
+             "end_date" => "2021-08-31",
+             "name" => "CHP",
+             "generation" => 24_589,
+             "energy_type" => 0 }],
+        "dec_annual_energy_summary" =>
+          { "annual_energy_use_electrical" => 86.1,
+            "annual_energy_use_fuel_thermal" => 548.82,
+            "renewables_fuel_thermal" => 0,
+            "renewables_electrical" => 16.3,
+            "typical_thermal_use" => 1196.24,
+            "typical_electrical_use" => 238.61 },
+        "dec_status" => 0,
+        "reason_type" => 1,
+        "dec_related_party_disclosure" => 1,
+        "this_assessment" =>
+          { "nominated_date" => "2021-09-01",
+            "energy_rating" => 42,
+            "electricity_co2" => 70,
+            "heating_co2" => 156,
+            "renewables_co2" => 13 },
+        "technical_information" =>
+          { "main_heating_fuel" => "Natural Gas",
+            "building_environment" => "Heating and Mechanical Ventilation",
+            "floor_area" => 1469.318,
+            "separately_metered_electric_heating" => 0 },
+        "ac_questionnaire" =>
+          { "ac_present" => "Yes",
+            "ac_rated_output" => { "ac_kw_rating" => 30 },
+            "ac_inspection_commissioned" => 1 },
+      }
+      expect(use_case.execute(xml: dec,
+                              schema_type: "CEPC-8.0.0",
+                              assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)
+    end
+  end
+
   context "when loading xml from Dec-RR" do
     let(:dec_rr) do
       Samples.xml("CEPC-8.0.0", "dec+rr")

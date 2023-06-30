@@ -227,11 +227,14 @@ module XmlPresenter
       when 0
         return
       when 1
-        set_value @value_buffer.first
+        final_value = @value_buffer.first
       else
-        set_value @value_buffer.join
+        final_value = @value_buffer.join
       end
-
+      if final_value.is_a?(String) && final_value.length > 2704
+        final_value = final_value.truncate(2703)
+      end
+      set_value final_value
       @value_buffer.clear
     end
 
