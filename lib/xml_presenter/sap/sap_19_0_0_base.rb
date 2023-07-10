@@ -11,7 +11,6 @@ module XmlPresenter
           Green-Deal-Package
           Home-Inspector
           Green-Deal-Category
-          RRN
           PDF
           ExceptionList
           ReportList

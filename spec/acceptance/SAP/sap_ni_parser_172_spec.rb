@@ -6,6 +6,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
 
     it "parses the document into the expected format" do
       expectation = { "calculation_software_version" => 4.4,
+                      "hashed_assessment_id" => "e3ab0cec57d9bc8656b76cc5920950534ef1a8a2a1d62d07c4002231d2ba5081",
                       "calculation_software_name" => "Epc Reporter",
                       "sap_version" => 9.91,
                       "walls" =>
@@ -202,6 +203,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
 
     it "parses the document into the expected format" do
       expectation = { "sap_version" => 9.9,
+                      "hashed_assessment_id" => "d30ce6e21f41c2f815361445cfb3954ae399f38c289e1f94097e1f05af938978",
                       "sap_data_version" => 9.81,
                       "bedf_revision_number" => 353,
                       "calculation_software_name" => "Elmhurst Energy Systems Design SAP 2009",

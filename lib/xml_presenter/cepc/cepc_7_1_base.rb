@@ -10,7 +10,6 @@ module XmlPresenter
           EPC-Rating-Scale
           Dec-Related-Party-Disclosure
           AR-Questions
-          RRN
         ]
         includes %w[
           Certificate-Number

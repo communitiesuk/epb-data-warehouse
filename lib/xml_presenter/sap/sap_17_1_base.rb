@@ -11,7 +11,6 @@ module XmlPresenter
           Green-Deal-Package
           Home-Inspector
           Green-Deal-Category
-          RRN
           PDF
         ]
         # includes is a list of nodes you wish to include which might be located inside an excluded section

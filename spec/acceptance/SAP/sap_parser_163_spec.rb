@@ -6,6 +6,7 @@ RSpec.describe "the parser and the SAP configuration" do
 
     it "parses the document into the expected format" do
       expectation = { "calculation_software_name" => "NHER EPC Online",
+                      "hashed_assessment_id" => "46e2eaacf1a82b5ac68d1227f5ec593cbcd260b15c0dde9f7851c0ce89d81511",
                       "calculation_software_version" => 8.3,
                       "sap_version" => 9.91,
                       "bedf_revision_number" => 370,
@@ -242,6 +243,7 @@ RSpec.describe "the parser and the SAP configuration" do
 
     it "parses the document into the expected format" do
       expectation = { "sap_version" => 9.9,
+                      "hashed_assessment_id" => "5d1bc4b6282d414bc4d4acc98a035dc0355a5aef56770f92e3534f07e64d71bc",
                       "bedf_revision_number" => 333,
                       "calculation_software_name" => "SAP Calculator",
                       "calculation_software_version" => 3.59,

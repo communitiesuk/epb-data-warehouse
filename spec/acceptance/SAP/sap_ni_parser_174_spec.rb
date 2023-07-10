@@ -8,6 +8,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
 
     it "parses the document into the expected format" do
       expectation = { "sap_version" => 9.9,
+                      "hashed_assessment_id" => "cf101686c8db58d5d9339b51c42f7dc2993c8a7a2da76e41875501009508501f",
                       "sap_data_version" => 9.81,
                       "bedf_revision_number" => 412,
                       "calculation_software_name" => "Elmhurst Energy Systems Design SAP 2009",

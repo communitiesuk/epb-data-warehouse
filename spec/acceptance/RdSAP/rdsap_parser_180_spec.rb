@@ -6,6 +6,7 @@ RSpec.describe "the parser and the RdSAP configuration for 18.0" do
 
     it "parses the document in the expected format" do
       expectation = { "schema_version_original" => "LIG-17.0",
+                      "hashed_assessment_id" => "db81b6f7073831138014aea534e30fe5c7edfae353c996957fb0509aea3b8d9a",
                       "sap_version" => 9.92,
                       "calculation_software_name" => "Stroma RSAP Engine",
                       "calculation_software_version" => "2.0.0.0",

@@ -43,7 +43,15 @@ module XmlPresenter
 
   private
 
+    def add_hashed_assessment_id
+      @assessment_document.output["rrn"] = Helper::HashedAssessmentId.hash_rrn(@assessment_document.output["rrn"])
+      @assessment_document.output["hashed_assessment_id"] = @assessment_document.output.delete("rrn")
+    end
+
     def last_output
+      unless @assessment_document.output["rrn"] == nil
+        add_hashed_assessment_id
+      end
       @assessment_document.output
     end
 

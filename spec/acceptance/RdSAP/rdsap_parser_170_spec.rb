@@ -6,6 +6,7 @@ RSpec.describe "the parser and the RdSAP configuration for 17.0" do
 
     it "parses the document in the expected format" do
       expectation = { "calculation_software_name" => "NHER EPC Online",
+                      "hashed_assessment_id" => "b9dfe8865034f301ffb825f0781f091f3c027b2ffb06025f09180001194103ae",
                       "calculation_software_version" => "9.0.0",
                       "schema_version_original" => "LIG-17.0",
                       "sap_version" => 9.92,

@@ -8,6 +8,7 @@ RSpec.describe "the parser and the SAP configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "schema_version_original" => "SAP-Schema-19.0.0",
+                      "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
                       "sap_version" => 10.2,
                       "sap_data_version" => 10.2,
                       "calculation_software_name" => "SomeSoft SAP Calculator",

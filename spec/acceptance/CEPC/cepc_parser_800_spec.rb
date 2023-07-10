@@ -8,6 +8,7 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2021-03-19",
+                      "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
                       "report_type" => 3,
                       "valid_until" => "2031-03-18",
                       "inspection_date" => "2021-03-19",
@@ -255,6 +256,7 @@ RSpec.describe "the parser and the CEPC configuration" do
     it "parses the document in the expected format" do
       expectation = {
         "issue_date" => "2021-03-19",
+        "hashed_assessment_id" => "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
         "report_type" => 4,
         "valid_until" => "2031-03-18",
         "related_rrn" => "0000-0000-0000-0000-0000",
@@ -331,6 +333,7 @@ RSpec.describe "the parser and the CEPC configuration" do
     it "parses the document in the expected format" do
       expectation = {
         "issue_date" => "2021-10-12",
+        "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         "valid_until" => "2022-01-31",
         "report_type" => 1,
         "inspection_date" => "2021-09-02",
@@ -447,6 +450,7 @@ RSpec.describe "the parser and the CEPC configuration" do
     it "parses the document in the expected format" do
       expectation = {
         "issue_date" => "2021-10-12",
+        "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         "valid_until" => "2022-01-31",
         "report_type" => 1,
         "inspection_date" => "2021-09-02",
@@ -562,6 +566,7 @@ RSpec.describe "the parser and the CEPC configuration" do
     it "parses the document in the expected format" do
       expectation = {
         "issue_date" => "2021-11-12",
+        "hashed_assessment_id" => "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
         "valid_until" => "2031-11-11",
         "report_type" => 2,
         "inspection_date" => "2021-08-02",
@@ -652,6 +657,7 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2020-12-12",
+                      "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
                       "report_type" => 6,
                       "valid_until" => "2025-12-12",
                       "related_rrn" => "0000-0000-0000-0000-0001",
