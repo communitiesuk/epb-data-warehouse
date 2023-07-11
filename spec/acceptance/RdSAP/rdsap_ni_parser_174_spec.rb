@@ -8,7 +8,6 @@ RSpec.describe "parsing with an NI RdSAP configuration (17.4)" do
 
     it "parses the document in the expected format" do
       expectation = { "schema_version_original" => "LIG-17.4",
-                      "hashed_assessment_id" => "e3ab0cec57d9bc8656b76cc5920950534ef1a8a2a1d62d07c4002231d2ba5081",
                       "sap_version" => 9.92,
                       "calculation_software_name" => "Elmhurst Energy Systems RdSAP Calculator",
                       "calculation_software_version" => "2.11r11",

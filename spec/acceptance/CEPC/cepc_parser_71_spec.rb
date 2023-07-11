@@ -8,7 +8,6 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2017-10-13",
-                      "hashed_assessment_id" => "c6442091a9c89d9491807d8917f7e8153ff08e1b4c459b6a9e5b158edb4ee4df",
                       "report_type" => 3,
                       "valid_until" => "2027-10-12",
                       "related_rrn" => "9999-9999-3333-9999-2222",
@@ -195,7 +194,6 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2017-10-13",
-                      "hashed_assessment_id" => "16d51e65a602604c601f22f2590c8d520be9a02b7471dcb180945848ea497078",
                       "report_type" => 4,
                       "valid_until" => "2027-10-12",
                       "related_rrn" => "9999-9999-3333-9999-3333",
@@ -268,7 +266,6 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2015-12-14",
-                      "hashed_assessment_id" => "77d064b382ba8a59bde1ad0ef786f4e0c03239ca43b9d983b3ede41fc2129d45",
                       "valid_until" => "2016-12-29",
                       "report_type" => 1,
                       "inspection_date" => "2015-12-09",
@@ -379,7 +376,6 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2015-12-14",
-                      "hashed_assessment_id" => "eb3b57101550122ef3b5085e45f60524929623c42ae7647795fe8d5ba719c66f",
                       "valid_until" => "2022-12-13",
                       "report_type" => 2,
                       "inspection_date" => "2015-12-09",
@@ -504,7 +500,6 @@ RSpec.describe "the parser and the CEPC configuration" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2017-10-01",
-                      "hashed_assessment_id" => "889943e870d1874552844a1fc8a52d80c8c84915a5bc1d141527290432de1277",
                       "report_type" => 6,
                       "valid_until" => "2022-07-12",
                       "related_rrn" => "0000-0000-0000-0000-6666",

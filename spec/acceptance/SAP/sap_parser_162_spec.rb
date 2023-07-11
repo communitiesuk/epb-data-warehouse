@@ -6,7 +6,6 @@ RSpec.describe "the parser and the SAP configuration" do
 
     it "parses the document into the expected format" do
       expectation = { "sap_version" => 9.9,
-                      "hashed_assessment_id" => "5d1bc4b6282d414bc4d4acc98a035dc0355a5aef56770f92e3534f07e64d71bc",
                       "bedf_revision_number" => 333,
                       "calculation_software_name" => "NHER Plan Assessor",
                       "calculation_software_version" => 5.4,
@@ -313,7 +312,6 @@ RSpec.describe "the parser and the SAP configuration" do
     it "parses the document into the expected format" do
       expectation = {
         "sap_version" => 9.91,
-        "hashed_assessment_id" => "5d1bc4b6282d414bc4d4acc98a035dc0355a5aef56770f92e3534f07e64d71bc",
         "bedf_revision_number" => 340,
         "calculation_software_name" => "Stroma RdSAP Software",
         "calculation_software_version" => "1.4.1.0",

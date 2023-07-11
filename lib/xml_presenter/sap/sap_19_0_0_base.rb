@@ -15,6 +15,7 @@ module XmlPresenter
           ExceptionList
           ReportList
           SAP-Compliance-Report
+          RRN
         ]
         # includes is a list of nodes you wish to include which might be located inside an excluded section
         includes %w[

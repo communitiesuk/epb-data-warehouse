@@ -13,6 +13,7 @@ module XmlPresenter
           Green-Deal-Package
           Energy-Assessor
           Green-Deal-Category
+          RRN
         ]
         includes %w[
           Certificate-Number

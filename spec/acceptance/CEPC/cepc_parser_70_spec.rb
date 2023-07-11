@@ -6,7 +6,6 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2013-08-16",
-                      "hashed_assessment_id" => "e3ab0cec57d9bc8656b76cc5920950534ef1a8a2a1d62d07c4002231d2ba5081",
                       "report_type" => 3,
                       "valid_until" => "2023-08-15",
                       "related_rrn" => "4444-5555-6666-7777-8889",
@@ -185,7 +184,6 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2013-08-16",
-                      "hashed_assessment_id" => "f4e4a65ff4ce40f080f94d7e071de2fa4dc0a010c17cea46423e7a937e2dca43",
                       "report_type" => 4,
                       "valid_until" => "2023-08-15",
                       "related_rrn" => "4444-5555-6666-7777-8888",
@@ -274,7 +272,6 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2016-02-23",
-                      "hashed_assessment_id" => "5b4eda80e36bd6f1be6a212f1f373678b057b8bc3a24d03254d5a0ef2afed856",
                       "valid_until" => "2017-04-24",
                       "report_type" => 1,
                       "inspection_date" => "2016-04-11",
@@ -387,7 +384,6 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2016-02-23",
-                      "hashed_assessment_id" => "1a5968e6cfd4905d744dc89520224406e64e86b5cf4507f73970c8e3fdf95261",
                       "valid_until" => "2023-02-23",
                       "report_type" => 2,
                       "inspection_date" => "2016-01-11",
@@ -506,7 +502,6 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
 
     it "parses the document in the expected format" do
       expectation = { "issue_date" => "2015-05-05",
-                      "hashed_assessment_id" => "6712b938b0c985c7a420a71a7022967bd8cabd548997e384a17ac2281bf918ff",
                       "report_type" => 6,
                       "valid_until" => "2020-05-14",
                       "related_rrn" => "9999-8888-7777-6666-5554",
