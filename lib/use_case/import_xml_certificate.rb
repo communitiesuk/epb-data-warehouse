@@ -65,7 +65,7 @@ module UseCase
       certificate["created_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:createdAt]) if meta_data[:createdAt]
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_type"] = meta_data[:typeOfAssessment]
-
+      certificate["hashed_assessment_id"] = meta_data[:hashedAssessmentId] if meta_data[:hashedAssessmentId]
       certificate["cancelled_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:cancelledAt]) unless meta_data[:cancelledAt].nil?
       certificate["opt_out"] = Time.now.utc.strftime("%F %T") if meta_data[:optOut]
 
