@@ -7,23 +7,22 @@ namespace :one_off do
     SQL
 
     results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
-    attribute_id = get_attribute_id
+    attribute_id = get_attribute_id_for_hashed_assessment_id
     ActiveRecord::Base.transaction do
       results.each do |row|
-        node_array = []
-        node_array << JSON.parse(row["lsz_node"])["lzc_energy_source"]
-        update_json(row["assessment_id"], node_array)
-        update_eav(row["assessment_id"], node_array, attribute_id)
+        hashed_assessment_id = Helper::HashedAssessmentId.hash_rrn(row["assessment_id"])
+        update_hashed_assessment_id_json(row["assessment_id"], hashed_assessment_id)
+        update_hashed_assessment_id_eav(row["assessment_id"], hashed_assessment_id, attribute_id)
       end
     end
   end
 end
 
-def update_json(assessment_id, node_array)
+def update_hashed_assessment_id_json(assessment_id, hashed_assessment_id)
   sql = <<-SQL
       UPDATE assessment_documents
-      SET document = JSONB_SET(document, '{lzc_energy_sources}', '"#{node_array}"')
-      WHERE assessment_id = $1
+      SET document = JSONB_SET(document, '{hashed_assessment_id}', '"#{hashed_assessment_id}"')
+      WHERE assessment_id = $1;
   SQL
 
   bindings = [
@@ -37,11 +36,15 @@ def update_json(assessment_id, node_array)
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 end
 
-def update_eav(assessment_id, node_array, attribute_id)
+def update_hashed_assessment_id_eav(assessment_id, hashed_assessment_id, attribute_id)
+
   sql = <<-SQL
-      UPDATE assessment_attribute_values
-      SET json = '#{node_array.to_json}'
-      WHERE assessment_id = $1 and attribute_id = $2
+    INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value)
+    VALUES ($1, $2, $3)
+    ON CONFLICT (assessment_id, attribute_id) DO UPDATE
+    SET attribute_value = $3,
+        attribute_value_int = null,
+        attribute_value_float = null;
   SQL
 
   bindings = [
@@ -55,15 +58,20 @@ def update_eav(assessment_id, node_array, attribute_id)
       attribute_id,
       ActiveRecord::Type::Integer.new,
       ),
+    ActiveRecord::Relation::QueryAttribute.new(
+      "hashed_assessment_id",
+      hashed_assessment_id,
+      ActiveRecord::Type::String.new,
+      ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 end
 
-def get_attribute_id
+def get_attribute_id_for_hashed_assessment_id
   sql = <<-SQL
      SELECT attribute_id FROM assessment_attributes
-     WHERE attribute_name = 'lzc_energy_sources'
+     WHERE attribute_name = 'hashed_assessment_id'
   SQL
   ActiveRecord::Base.connection.exec_query(sql, "SQL")[0]["attribute_id"].to_i
 end
