@@ -1,5 +1,72 @@
+shared_context "when saving epcs for fix_lzc_energy_node update" do
+
+  def save_epc(schema:, assessment_id:, type:, stub: nil)
+    if stub.nil?
+      sample = Samples.xml(schema)
+      use_case = UseCase::ParseXmlCertificate.new
+      parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
+    else
+      parsed_epc = stub
+    end
+    parsed_epc["assessment_type"] = type
+    parsed_epc["schema_type"] = schema
+    import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
+    import.execute(assessment_id:, certificate_data: parsed_epc)
+  end
+
+  def get_node_value(assessment_id)
+    sql = <<-SQL
+       SELECT document ->> 'lzc_energy_sources' as lsz_node
+       FROM assessment_documents
+       WHERE assessment_id = $1
+    SQL
+
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+        ),
+    ]
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["lsz_node"]
+  end
+
+  def num_incorrect_nodes
+    sql = <<-SQL
+         select COUNT(*) as total
+         FROM assessment_documents
+        WHERE
+         nullif((document ->> 'lzc_energy_sources')::json ->> 'lzc_energy_source', '') != ''
+    SQL
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL")[0]["total"].to_i
+  end
+
+  def get_node_value_from_eav(assessment_id)
+    sql = <<-SQL
+       SELECT json
+        FROM assessment_attribute_values
+        WHERE assessment_id = $1 And attribute_id = (SELECT attribute_id FROM assessment_attributes WHERE attribute_name = 'lzc_energy_sources' LIMIT 1)
+    SQL
+
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+        ),
+    ]
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["json"]
+  end
+
+end
+
 describe "Fix node Rake" do
   context "when calling the rake task" do
+    include_context "when saving epcs for fix_lzc_energy_node update"
+
     subject(:task) { get_task("one_off:fix_lzc_energy_node") }
 
     before do
@@ -54,63 +121,3 @@ describe "Fix node Rake" do
   end
 end
 
-def save_epc(schema:, assessment_id:, type:, stub: nil)
-  if stub.nil?
-    sample = Samples.xml(schema)
-    use_case = UseCase::ParseXmlCertificate.new
-    parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
-  else
-    parsed_epc = stub
-  end
-  parsed_epc["assessment_type"] = type
-  parsed_epc["schema_type"] = schema
-  import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
-  import.execute(assessment_id:, certificate_data: parsed_epc)
-end
-
-def get_node_value(assessment_id)
-  sql = <<-SQL
-       SELECT document ->> 'lzc_energy_sources' as lsz_node
-       FROM assessment_documents
-       WHERE assessment_id = $1
-  SQL
-
-  bindings = [
-    ActiveRecord::Relation::QueryAttribute.new(
-      "assessment_id",
-      assessment_id,
-      ActiveRecord::Type::String.new,
-    ),
-  ]
-
-  ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["lsz_node"]
-end
-
-def num_incorrect_nodes
-  sql = <<-SQL
-         select COUNT(*) as total
-         FROM assessment_documents
-        WHERE
-         nullif((document ->> 'lzc_energy_sources')::json ->> 'lzc_energy_source', '') != ''
-  SQL
-
-  ActiveRecord::Base.connection.exec_query(sql, "SQL")[0]["total"].to_i
-end
-
-def get_node_value_from_eav(assessment_id)
-  sql = <<-SQL
-       SELECT json
-        FROM assessment_attribute_values
-        WHERE assessment_id = $1 And attribute_id = (SELECT attribute_id FROM assessment_attributes WHERE attribute_name = 'lzc_energy_sources' LIMIT 1)
-  SQL
-
-  bindings = [
-    ActiveRecord::Relation::QueryAttribute.new(
-      "assessment_id",
-      assessment_id,
-      ActiveRecord::Type::String.new,
-    ),
-  ]
-
-  ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["json"]
-end
