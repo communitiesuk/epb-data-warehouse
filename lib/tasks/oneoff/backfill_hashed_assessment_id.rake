@@ -6,13 +6,17 @@ namespace :one_off do
        FROM assessment_documents
     SQL
 
-    results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
     attribute_id = get_attribute_id_for_hashed_assessment_id
-    ActiveRecord::Base.transaction do
-      results.each do |row|
-        hashed_assessment_id = Helper::HashedAssessmentId.hash_rrn(row["assessment_id"])
-        update_hashed_assessment_id_json(row["assessment_id"], hashed_assessment_id)
-        update_hashed_assessment_id_eav(row["assessment_id"], hashed_assessment_id, attribute_id)
+
+    raw_connection = ActiveRecord::Base.connection.raw_connection
+    raw_connection.send_query(sql)
+    raw_connection.set_single_row_mode
+
+    raw_connection.get_result.stream_each.map { |row| row["assessment_id"] }.each_slice(500) do |assessment_ids|
+      assessment_ids.each do |assessment_id|
+        hashed_assessment_id = Helper::HashedAssessmentId.hash_rrn(assessment_id)
+        update_hashed_assessment_id_json(assessment_id, hashed_assessment_id)
+        update_hashed_assessment_id_eav(assessment_id, hashed_assessment_id, attribute_id)
       end
     end
   end
