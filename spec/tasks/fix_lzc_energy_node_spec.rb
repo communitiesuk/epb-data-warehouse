@@ -1,5 +1,4 @@
 shared_context "when saving epcs for fix_lzc_energy_node update" do
-
   def save_epc(schema:, assessment_id:, type:, stub: nil)
     if stub.nil?
       sample = Samples.xml(schema)
@@ -26,7 +25,7 @@ shared_context "when saving epcs for fix_lzc_energy_node update" do
         "assessment_id",
         assessment_id,
         ActiveRecord::Type::String.new,
-        ),
+      ),
     ]
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["lsz_node"]
@@ -55,19 +54,18 @@ shared_context "when saving epcs for fix_lzc_energy_node update" do
         "assessment_id",
         assessment_id,
         ActiveRecord::Type::String.new,
-        ),
+      ),
     ]
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["json"]
   end
-
 end
 
 describe "Fix node Rake" do
   context "when calling the rake task" do
-    include_context "when saving epcs for fix_lzc_energy_node update"
-
     subject(:task) { get_task("one_off:fix_lzc_energy_node") }
+
+    include_context "when saving epcs for fix_lzc_energy_node update"
 
     before do
       allow($stdout).to receive(:puts)
@@ -120,4 +118,3 @@ describe "Fix node Rake" do
     end
   end
 end
-

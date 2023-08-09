@@ -9,7 +9,6 @@ describe "Adding or updating hashed assessment id node rake" do
     end
 
     context "when certificates have been saved" do
-
       it "the value of the nodes for the SAP 18 has a hashed assessment id ", aggregate_failure: true do
         sap_18_hashed_assessment_id_json = get_hashed_assessment_id_from_json("0000-0000-0000-0000-0000")
         sap_18_hashed_assessment_id_eav = get_hashed_assessment_id_from_eav("0000-0000-0000-0000-0000")
@@ -58,18 +57,16 @@ describe "Adding or updating hashed assessment id node rake" do
 end
 
 def save_new_epc(schema:, assessment_id:, assessment_type:, sample_type:, hashed_assessment_id: nil)
-
   sample = Samples.xml(schema, sample_type)
   use_case = UseCase::ParseXmlCertificate.new
-  parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id: assessment_id)
-  unless hashed_assessment_id == nil
+  parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
+  unless hashed_assessment_id.nil?
     parsed_epc["hashed_assessment_id"] = hashed_assessment_id
   end
   parsed_epc["assessment_type"] = assessment_type
   parsed_epc["schema_type"] = schema
   import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
   import.execute(assessment_id:, certificate_data: parsed_epc)
-
 end
 
 def get_hashed_assessment_id_from_json(assessment_id)
@@ -84,7 +81,7 @@ def get_hashed_assessment_id_from_json(assessment_id)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-      ),
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["hashed_assessment_id"]
@@ -102,7 +99,7 @@ def get_hashed_assessment_id_from_eav(assessment_id)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-      ),
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]["attribute_value"]

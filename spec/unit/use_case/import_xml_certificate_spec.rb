@@ -187,7 +187,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
                                                                              optOut: true,
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
                                                                              cancelledAt: "2021-09-05T14:34:56.634Z",
-                                                                             hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",})
+                                                                             hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2" })
       end
 
       it "forms together certificate data and passes it into the import certificate data use case" do
@@ -195,15 +195,15 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
         expect(import_certificate_data_use_case).to have_received(:execute).with(
           assessment_id:,
           certificate_data: include({
-                                      "calculation_software_version" => "13.05r16",
-                                      "created_at" => "2021-07-21 11:26:28",
-                                      "cancelled_at" => "2021-09-05 14:34:56",
-                                      "opt_out" => Time.now.utc.strftime("%F %T"),
-                                      "schema_type" => "RdSAP-Schema-20.0.0",
-                                      "assessment_type" => "RdSAP",
-                                      "hashed_assessment_id" => "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
-                                    }),
-          )
+            "calculation_software_version" => "13.05r16",
+            "created_at" => "2021-07-21 11:26:28",
+            "cancelled_at" => "2021-09-05 14:34:56",
+            "opt_out" => Time.now.utc.strftime("%F %T"),
+            "schema_type" => "RdSAP-Schema-20.0.0",
+            "assessment_type" => "RdSAP",
+            "hashed_assessment_id" => "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
+          }),
+        )
       end
     end
   end

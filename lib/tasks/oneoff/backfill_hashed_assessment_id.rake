@@ -34,14 +34,13 @@ def update_hashed_assessment_id_json(assessment_id, hashed_assessment_id)
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-      ),
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 end
 
 def update_hashed_assessment_id_eav(assessment_id, hashed_assessment_id, attribute_id)
-
   sql = <<-SQL
     INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value)
     VALUES ($1, $2, $3)
@@ -56,17 +55,17 @@ def update_hashed_assessment_id_eav(assessment_id, hashed_assessment_id, attribu
       "assessment_id",
       assessment_id,
       ActiveRecord::Type::String.new,
-      ),
+    ),
     ActiveRecord::Relation::QueryAttribute.new(
       "attribute_id",
       attribute_id,
       ActiveRecord::Type::Integer.new,
-      ),
+    ),
     ActiveRecord::Relation::QueryAttribute.new(
       "hashed_assessment_id",
       hashed_assessment_id,
       ActiveRecord::Type::String.new,
-      ),
+    ),
   ]
 
   ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
