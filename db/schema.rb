@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_23_135006) do
     t.string "postcode", limit: 8, null: false
     t.jsonb "areas", null: false
     t.integer "version_id", null: false
+    t.index "((areas ->> 'ctry22cd'::text))", name: "ons_uprn_directory_area_country"
     t.index ["uprn"], name: "index_ons_uprn_directory_on_uprn"
   end
 
