@@ -88,7 +88,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "has a row that has the parent_name " do
-      row =  attributes.detect { |columns| columns["parent_name"] == "my_parent" }
+      row = attributes.detect { |columns| columns["parent_name"] == "my_parent" }
       expect(row["parent_name"]).to eq("my_parent")
     end
   end
