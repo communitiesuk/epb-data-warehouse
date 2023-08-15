@@ -10,7 +10,7 @@ group :test do
   gem "mock_redis", "~> 0.36"
   gem "rspec", "~> 3.12"
   gem "rubocop-govuk", "~> 4.12", require: false
-  gem "rubocop-performance", "~> 1.18", require: false
+  gem "rubocop-performance", "~> 1.19", require: false
   gem "timecop", "~> 0.9.6"
   gem "webmock", "~> 3.17"
 end
