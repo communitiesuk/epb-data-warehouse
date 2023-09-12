@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_23_135006) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_142153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_23_135006) do
     t.string "postcode", limit: 8, null: false
     t.jsonb "areas", null: false
     t.integer "version_id", null: false
-    t.index "((areas ->> 'ctry22cd'::text))", name: "ons_uprn_directory_area_country"
+    t.index "((areas ->> 'ctry22cd'::text))", name: "idx_ons_uprn_directory_area_country"
     t.index ["uprn"], name: "index_ons_uprn_directory_on_uprn"
   end
 
