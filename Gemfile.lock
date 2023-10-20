@@ -53,8 +53,7 @@ GEM
     language_server-protocol (3.17.0.3)
     mini_portile2 (2.8.4)
     minitest (5.20.0)
-    mock_redis (0.36.0)
-      ruby2_keywords
+    mock_redis (0.37.0)
     multi_xml (0.6.0)
     murmurhash3 (0.1.7)
     nokogiri (1.15.4)
@@ -164,7 +163,7 @@ DEPENDENCIES
   database_cleaner-active_record (~> 2.1)
   epb-auth-tools (~> 1.1.0)
   epb_view_models (~> 1.1)
-  mock_redis (~> 0.36)
+  mock_redis (~> 0.37)
   nokogiri (~> 1.15)
   parallel (~> 1.23)
   pg (~> 1.5)
