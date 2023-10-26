@@ -13,15 +13,17 @@ phases:
   pre_build:
     commands:
       - mv AWS-Procfile Procfile
+      - mv Rakefile Rakefile_avoid_paketo_detect
 
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Paketo image...
-      - pack build ebpr-data-warehouse-image --builder paketobuildpacks/builder-jammy-full --post-buildpack paketo-buildpacks/npm-install@1.1.1 --post-buildpack paketo-buildpacks/bundler --post-buildpack paketo-buildpacks/mri --post-buildpack paketo-buildpacks/bundle-install --default-process web
+      - pack build ebpr-data-warehouse-image --builder paketobuildpacks/builder-jammy-full --post-buildpack paketo-buildpacks/npm-install@1.1.1 --post-buildpack paketo-buildpacks/ruby --default-process web
 
   post_build:
     commands:
+      - mv Rakefile_avoid_paketo_detect Rakefile
       - echo Build completed on `date`
       - docker save -o ebpr-data-warehouse-image.tar ebpr-data-warehouse-image:latest
 
