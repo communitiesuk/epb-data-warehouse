@@ -1,21 +1,3 @@
-require "active_support"
-require "active_support/core_ext"
-require "active_record"
-require "async"
-require "redis"
-require "zeitwerk"
-require "concurrent"
-require "sentry-ruby"
-
-loader = Zeitwerk::Loader.new
-loader.push_dir("#{__dir__}/lib")
-loader.setup
-
-Sentry.init do |config|
-  config.environment = ENV["STAGE"]
-  config.include_local_variables = true
-end
-
 def use_case(name)
   Services.use_case name
 end

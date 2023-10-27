@@ -5,6 +5,7 @@ require "async"
 require "zeitwerk"
 require "epb_view_models"
 require "nokogiri"
+require "concurrent"
 require "sentry-ruby"
 
 require_relative "db/seeds"
@@ -32,6 +33,11 @@ end
 Sentry.init do |config|
   config.environment = ENV["STAGE"]
   config.include_local_variables = true
+end
+
+# Add main entrypoint as default rake
+task :default do
+  require "./app"
 end
 
 # Adds project rake files

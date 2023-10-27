@@ -36,7 +36,7 @@ test:
 	@bundle exec rspec
 
 run:
-	@bundle exec ruby app.rb
+	@bundle exec rake
 
 generate-manifest: ## Generate manifest file for PaaS
 	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
