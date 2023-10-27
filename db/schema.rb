@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_12_142153) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_135710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -62,6 +62,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_142153) do
     t.index ["lookup_key", "lookup_value"], name: "index_assessment_lookups_on_lookup_key_and_lookup_value", unique: true
     t.index ["lookup_key"], name: "index_assessment_lookups_on_lookup_key"
     t.index ["lookup_value"], name: "index_assessment_lookups_on_lookup_value"
+  end
+
+  create_table "ons_postcode_directory", id: false, force: :cascade do |t|
+    t.string "postcode", limit: 8, null: false
+    t.string "country_code", limit: 9, null: false
+    t.string "region_code", limit: 9, null: false
+    t.string "local_authority_code", limit: 9, null: false
+    t.string "westminster_parliamentary_constituency_code", limit: 9, null: false
+    t.jsonb "other_areas", null: false
+    t.index ["country_code"], name: "index_ons_postcode_directory_on_country_code"
+    t.index ["local_authority_code"], name: "index_ons_postcode_directory_on_local_authority_code"
+    t.index ["region_code"], name: "index_ons_postcode_directory_on_region_code"
+    t.index ["westminster_parliamentary_constituency_code"], name: "index_ons_postcode_directory_on_wpcc"
+  end
+
+  create_table "ons_postcode_directory_versions", id: :serial, force: :cascade do |t|
+    t.string "version_month", limit: 7, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ons_uprn_directory", primary_key: ["uprn", "version_id"], force: :cascade do |t|
