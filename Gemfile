@@ -15,8 +15,8 @@ group :test do
   gem "webmock", "~> 3.19"
 end
 
-gem "activerecord", "~> 7.0"
-gem "activesupport", "~> 7.0"
+gem "activerecord", "~> 7.1"
+gem "activesupport", "~> 7.1"
 gem "async", "~> 2.6"
 gem "concurrent-ruby", "~> 1.2"
 gem "epb-auth-tools", "~> 1.1.0"
