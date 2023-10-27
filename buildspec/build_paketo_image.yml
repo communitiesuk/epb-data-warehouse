@@ -13,7 +13,6 @@ phases:
   pre_build:
     commands:
       - mv AWS-Procfile Procfile
-      - mv Rakefile Rakefile_avoid_paketo_detect
 
   build:
     commands:
@@ -23,7 +22,6 @@ phases:
 
   post_build:
     commands:
-      - mv Rakefile_avoid_paketo_detect Rakefile
       - echo Build completed on `date`
       - docker save -o ebpr-data-warehouse-image.tar ebpr-data-warehouse-image:latest
 
