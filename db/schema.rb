@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_143456) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_30_142013) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -64,8 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_143456) do
     t.index ["lookup_value"], name: "index_assessment_lookups_on_lookup_value"
   end
 
-  create_table "ons_postcode_directory", id: false, force: :cascade do |t|
-    t.string "postcode", limit: 8, null: false
+  create_table "ons_postcode_directory", primary_key: "postcode", id: { type: :string, limit: 8 }, force: :cascade do |t|
     t.string "country_code", limit: 9, null: false
     t.string "region_code", limit: 9, null: false
     t.string "local_authority_code", limit: 9, null: false
