@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_135710) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_143456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -75,6 +75,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_135710) do
     t.index ["local_authority_code"], name: "index_ons_postcode_directory_on_local_authority_code"
     t.index ["region_code"], name: "index_ons_postcode_directory_on_region_code"
     t.index ["westminster_parliamentary_constituency_code"], name: "index_ons_postcode_directory_on_wpcc"
+  end
+
+  create_table "ons_postcode_directory_names", force: :cascade do |t|
+    t.string "area_code", null: false
+    t.string "name", null: false
+    t.string "type", null: false
+    t.string "type_code", null: false
+    t.index ["area_code"], name: "index_ons_postcode_directory_names_on_area_code"
+    t.index ["name"], name: "index_ons_postcode_directory_names_on_name"
+    t.index ["type_code"], name: "index_ons_postcode_directory_names_on_type_code"
   end
 
   create_table "ons_postcode_directory_versions", id: :serial, force: :cascade do |t|
