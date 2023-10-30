@@ -11,6 +11,7 @@
     "populate_onsud": "npm i && node lib/tasks/populate_onsud.js",
     "list_onsud_versions": "npm i && node lib/tasks/list_onsud_versions.js",
     "delete_onsud_version": "npm i && node lib/tasks/delete_onsud_version.js",
+    "populate_ons_postcode": "npm i && node lib/tasks/populate_ons_postcode.js",
     "fmt": "npx standard --fix lib/tasks"
   },
   "repository": {
