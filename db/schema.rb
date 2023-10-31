@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_30_142013) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_31_112439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -92,34 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_30_142013) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "ons_uprn_directory", primary_key: ["uprn", "version_id"], force: :cascade do |t|
-    t.string "uprn", limit: 17, null: false
-    t.string "postcode", limit: 8, null: false
-    t.jsonb "areas", null: false
-    t.integer "version_id", null: false
-    t.index "((areas ->> 'ctry22cd'::text))", name: "idx_ons_uprn_directory_area_country"
-    t.index ["uprn"], name: "index_ons_uprn_directory_on_uprn"
-  end
-
-  create_table "ons_uprn_directory_names", force: :cascade do |t|
-    t.string "area_code", null: false
-    t.string "name", null: false
-    t.string "type", null: false
-    t.string "type_code", null: false
-    t.integer "version_id", null: false
-    t.index ["area_code"], name: "index_ons_uprn_directory_names_on_area_code"
-    t.index ["name"], name: "index_ons_uprn_directory_names_on_name"
-    t.index ["type_code"], name: "index_ons_uprn_directory_names_on_type_code"
-  end
-
-  create_table "ons_uprn_directory_versions", id: :serial, force: :cascade do |t|
-    t.string "version_month", limit: 7, null: false
-    t.index ["version_month"], name: "index_ons_uprn_directory_versions_on_version_month", unique: true
-  end
-
   add_foreign_key "assessment_attribute_lookups", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
   add_foreign_key "assessment_attribute_lookups", "assessment_lookups", column: "lookup_id"
   add_foreign_key "assessment_attribute_values", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
-  add_foreign_key "ons_uprn_directory", "ons_uprn_directory_versions", column: "version_id"
-  add_foreign_key "ons_uprn_directory_names", "ons_uprn_directory_versions", column: "version_id"
 end
