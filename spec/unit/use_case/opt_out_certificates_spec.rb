@@ -194,4 +194,18 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
       expect(recovery_list_gateway).not_to have_received(:register_assessments)
     end
   end
+
+  context "when the certificate gateway has a bad connection to the api" do
+    before do
+      allow(recovery_list_gateway).to receive(:assessments).with(queue: :opt_outs).and_return(%w[
+        0000-0000-0000-0000-0000
+      ])
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_raise(Errors::ConnectionApiError)
+      use_case.execute(from_recovery_list: true)
+    end
+
+    it "does not report an attempt to process the assessment onto the recovery list" do
+      expect(recovery_list_gateway).not_to have_received(:register_attempt)
+    end
+  end
 end
