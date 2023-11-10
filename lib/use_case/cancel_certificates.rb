@@ -30,7 +30,7 @@ module UseCase
       rescue StandardError => e
         report_to_sentry e
         @logger.error "Error of type #{e.class} when importing cancellation for the RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
-        register_attempt_to_recovery_list assessment_id unless e.is_a?(Errors::ConnectionApiError)
+        register_attempt_to_recovery_list assessment_id
       end
     rescue StandardError => e
       report_to_sentry e

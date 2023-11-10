@@ -88,28 +88,6 @@ describe Gateway::RegisterApiGateway do
         expect { gateway.fetch "0000-0000-1234" }.to raise_error Errors::AssessmentNotFound
       end
     end
-
-    context "when the api is behind a bad gateway" do
-      before do
-        OauthStub.token
-        WebMock
-          .stub_request(
-            :get,
-            "http://test-api.gov.uk/api/assessments/0000-0000-1234",
-          )
-          .to_return(status: 502, body: '<html>
-<head><title>502 Bad Gateway</title></head>
-<body>
-<center><h1>502 Bad Gateway</h1></center>
-</body>
-</html>
-')
-      end
-
-      it "raises a Connection Error" do
-        expect { gateway.fetch "0000-0000-1234" }.to raise_error Errors::ConnectionApiError
-      end
-    end
   end
 
   context "when calling the api to get the meta data for an assessment" do
@@ -164,28 +142,6 @@ describe Gateway::RegisterApiGateway do
 
       it "raises an AssessmentNotFound" do
         expect { gateway.fetch_meta_data("0000-0000-0000-0000-0042") }.to raise_error Errors::AssessmentNotFound
-      end
-    end
-
-    context "when the response is gateway timeout" do
-      before do
-        OauthStub.token
-        WebMock
-          .stub_request(
-            :get,
-            "http://test-api.gov.uk/api/assessments/0000-0000-1234/meta-data",
-          )
-          .to_return(status: 504, body: '<html>
-<head><title>504 Gateway Timeout</title></head>
-<body>
-<center><h1>504 Gateway Timeout</h1></center>
-</body>
-</html>
-')
-      end
-
-      it "raises a Connection Error" do
-        expect { gateway.fetch_meta_data "0000-0000-1234" }.to raise_error Errors::ConnectionApiError
       end
     end
   end

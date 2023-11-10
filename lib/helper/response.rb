@@ -24,10 +24,6 @@ module Helper
               sprintf("Authorization issue with internal API. Response body: \"%s\"", response.body)
       end
 
-      if response.status == 502 || response.status == 504
-        raise Errors::ConnectionApiError, "Gateway error when making request to the API"
-      end
-
       unless response.status < 400 ||
           JSON.parse(response.body, symbolize_names: true)[:errors]
         raise Errors::MalformedErrorResponseError,
