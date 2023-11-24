@@ -79,7 +79,7 @@ module UseCase
     rescue StandardError => e
       report_to_sentry(e) if is_on_last_attempt(assessment_id)
       @logger.error "Error of type #{e.class} when importing RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
-      register_attempt_to_recovery_list assessment_id
+      register_attempt_to_recovery_list assessment_id unless e.is_a?(Errors::ConnectionApiError)
     end
 
   private

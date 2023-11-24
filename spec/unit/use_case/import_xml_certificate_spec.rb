@@ -231,4 +231,16 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
       expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id:, queue: :assessments)
     end
   end
+
+  context "when the certificate gateway has a bad connection to the api" do
+    before do
+      allow(certificate_gateway).to receive(:fetch).and_raise(Errors::ConnectionApiError)
+      allow(certificate_gateway).to receive(:fetch_meta_data)
+      use_case.execute(assessment_id)
+    end
+
+    it "does not report an attempt to process the assessment onto the recovery list" do
+      expect(recovery_list_gateway).not_to have_received(:register_attempt)
+    end
+  end
 end
