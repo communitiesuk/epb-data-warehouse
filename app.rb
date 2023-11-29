@@ -12,15 +12,16 @@ end
 
 class QueueWorker
   def start!
-    loop do
+    until interrupted?
+      sleep 1
+
       register_signal_handlers
       set_postgres_connection
       pull_queues
       run_reports
-
-      sleep 1
     end
-  rescue Interrupt
+    completed_batch
+  ensure
     shutdown
   end
 
@@ -56,7 +57,16 @@ private
   end
 
   def interrupt
-    raise Interrupt
+    @interrupted = true
+    puts "Completing import of current batch after interrupt received"
+  end
+
+  def completed_batch
+    puts "Completed import of current batch"
+  end
+
+  def interrupted?
+    @interrupted
   end
 
   def shutdown
