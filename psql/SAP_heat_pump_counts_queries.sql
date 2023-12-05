@@ -95,7 +95,7 @@ from (
 select
     name as local_authority,
     year,
-    count(assessment_id) as number_of_assessments
+    count(distinct assessment_id) as number_of_assessments
 from (
 select assessment_id as assessment_id,
        ad.document ->> 'postcode' as postcode,
@@ -128,7 +128,7 @@ from (
 select
     name as westminster_parliamentary_constituency,
     year,
-    count(assessment_id) as number_of_assessments
+    count(distinct assessment_id) as number_of_assessments
 from (
 select assessment_id as assessment_id,
        ad.document ->> 'postcode' as postcode,
