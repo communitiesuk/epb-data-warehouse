@@ -1,5 +1,6 @@
 SELECT
     assessment_id as assessment_id,
+    ad.document ->> 'uprn' as uprn,
     ad.document ->> 'registration_date' as registration_date,
     ad.document ->> 'property_type' as property_type,
     hvac_systems ->> 'heat_source' as heat_source,
@@ -16,4 +17,4 @@ WHERE building_parts  ->> 'analysis_type' IN ('ACTUAL', 'NOTIONAL')
   AND ad.document ->> 'postcode' NOT LIKE 'BT%'
   AND (ad.document ->> 'transaction_type' = '3')
   AND (ad.document ->> 'assessment_type')::varchar = 'CEPC'
-  AND (nullif(ad.document->>'registration_date', '')::date) > ('2020-12-31 00:00':: timestamp) AND (nullif(ad.document->>'registration_date', '')::date) < ('2022-01-01 00:00':: timestamp);
+AND ad.document->>'registration_date' BETWEEN '2022-01-01' AND '2022-12-31';
