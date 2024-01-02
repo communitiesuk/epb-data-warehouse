@@ -52,7 +52,6 @@ private
       raise ArgumentError, "Please set DATABASE_URL"
     end
 
-    # DATABASE_URL is defined by default on GOV PaaS if there is a bound PostgreSQL database
     ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
   end
 
