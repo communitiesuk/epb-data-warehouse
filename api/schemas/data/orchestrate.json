@@ -117,6 +117,11 @@
   },
   "RdSAP-Schema-20.0.0": {
     "schema_path":
+    "api/schemas/xml/RdSAP-Schema-21.0.0/RdSAP/Templates/RdSAP-Report.xsd"
+  },
+
+  "RdSAP-Schema-20.0.0": {
+    "schema_path":
     "api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd"
   },
   "RdSAP-Schema-NI-20.0.0": {
