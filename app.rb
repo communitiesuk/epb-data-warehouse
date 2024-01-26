@@ -18,7 +18,6 @@ class QueueWorker
       register_signal_handlers
       set_postgres_connection
       pull_queues
-      run_reports
     end
     completed_batch
   ensure
