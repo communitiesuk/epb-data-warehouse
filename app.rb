@@ -35,13 +35,6 @@ private
     end
   end
 
-  def run_reports
-    Helper::Toggles.enabled?("data-warehouse-run-reports") do
-      reports_use_case = use_case :run_reports_from_triggers
-      reports_use_case.execute
-    end
-  end
-
   def register_signal_handlers
     trap("INT") { interrupt }
     trap("TERM") { interrupt }

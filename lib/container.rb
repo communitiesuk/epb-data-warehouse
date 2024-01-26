@@ -27,18 +27,6 @@ class Container
     @documents_gateway ||= Gateway::DocumentsGateway.new
   end
 
-  def self.reporting_gateway
-    @reporting_gateway ||= Gateway::ReportingGateway.new
-  end
-
-  def self.reporting_redis_gateway
-    @reporting_redis_gateway ||= Gateway::ReportingRedisGateway.new
-  end
-
-  def self.report_triggers_gateway
-    @report_triggers_gateway ||= Gateway::ReportTriggersGateway.new
-  end
-
   def self.cancel_certificates_use_case
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                       queues_gateway:,
@@ -80,18 +68,6 @@ class Container
                                                                      certificate_gateway: register_api_gateway,
                                                                      recovery_list_gateway:,
                                                                      logger:
-  end
-
-  def self.save_heat_pump_sap_count_use_case
-    @save_heat_pump_sap_count_use_case ||= UseCase::SaveHeatPumpSapCount.new(reporting_gateway:, reporting_redis_gateway:)
-  end
-
-  def self.run_reports_from_triggers_use_case
-    @run_reports_from_triggers_use_case ||= UseCase::RunReportsFromTriggers.new report_triggers_gateway:,
-                                                                                logger:,
-                                                                                report_use_cases: {
-                                                                                  heat_pump_count_for_sap: save_heat_pump_sap_count_use_case,
-                                                                                }
   end
 
   def self.pull_queues_use_case
