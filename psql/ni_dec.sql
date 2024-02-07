@@ -56,5 +56,5 @@ nullif((ad.document ->> 'technical_information')::json ->> 'special_energy_uses'
 
 FROM assessment_documents ad
 WHERE ad.document ->> 'assessment_type' = 'DEC'
-AND document->>'registration_date' BETWEEN '2023-03-01 00:00' AND  '2024-01-01 00:00'
+AND document->>'registration_date' BETWEEN '2023-03-01 00:00' AND  '2024-01-31 00:00'
 and   ad.document ->> 'postcode' LIKE 'BT%';
