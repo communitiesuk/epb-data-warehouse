@@ -42,25 +42,6 @@ To run Rubocop on its own, run:
 
 make format
 
-## Docker image
+## DataWarehouse API Service
 
-### Build
-
-To rebuild the Docker image locally, run
-
-`docker build . --tag epb-data-warehouse`
-
-### Run
-
-#### Docker Desktop
-
-You can run the created image in Docker Desktop by going to **Images** and pressing **Run** in the *Actions* column.
-This will create a persistent deployment and has an interface to provide multiple useful options.
-
-#### CLI
-
-To run the docker image with CLI
-
-`docker run --network {network_id_or_name} --name test-epb-data-warehouse epb-data-warehouse`
-
-Where *network_id_or_name* value is the same as the Docker containers you want to connect with.
+To get this running locally run `bundle exec puma` or `bundle exec rackup -p 80 -o 0.0.0.0`.
