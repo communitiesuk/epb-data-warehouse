@@ -8,5 +8,5 @@ task :import_enums_xsd, %i[config_path] do |_, args|
 
   use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
   use_case.execute
-  pp "enum values added to database"
+  puts "enum values added to database"
 end

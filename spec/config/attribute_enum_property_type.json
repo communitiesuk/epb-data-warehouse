@@ -1,0 +1,26 @@
+{
+  "nodes" : [
+    {
+    "attribute_name": "property_type",
+    "type_of_assessment": "SAP",
+    "xsd_node_name": "PropertyTypeCode"
+    },
+    {
+      "attribute_name": "property_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "PropertyTypeCode"
+    },
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Transaction-Type",
+      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
+      "node_hash": { "Transaction-Code": "Transaction-Text" }
+    }
+  ],
+
+  "paths" : {
+    "sap"  : "/api/schemas/xml/SAP-Schema-18.0.0/SAP/UDT/*-Domains.xsd",
+    "rdsap" : "/api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/UDT/*-Domains.xsd"
+  }
+}
