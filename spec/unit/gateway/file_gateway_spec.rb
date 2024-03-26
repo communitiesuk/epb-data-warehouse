@@ -24,5 +24,9 @@ describe Gateway::FileGateway do
       expect(table.by_col[0]).to eq %w[House Bungalow]
       expect(table.by_col[1]).to eq %w[2 1]
     end
+
+    it "exposed the file name" do
+      expect(gateway.file_name).to eq(file_name)
+    end
   end
 end

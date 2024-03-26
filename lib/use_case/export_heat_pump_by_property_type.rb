@@ -8,7 +8,8 @@ module UseCase
       @notify_gateway = notify_gateway
     end
 
-    def execute(start_date:, end_date:, template_id:, file_name:, email_address:)
+    def execute(start_date:, end_date:, template_id:, email_address:)
+      file_name = @file_gateway.file_name
       @raw_data = @export_gateway.fetch_by_property_type(start_date:, end_date:)
       @file_gateway.save_csv(@raw_data)
       @notify_gateway.send_email(template_id:, file_name:, email_address:)

@@ -70,6 +70,22 @@ class Container
                                                                      logger:
   end
 
+  def self.export_heat_pump_by_property_type_use_case
+    @export_heat_pump_by_property_type_use_case ||= UseCase::ExportHeatPumpByPropertyType.new(export_gateway: export_heat_pumps_gateway, file_gateway: file_gateway("heat_pump_count_by_property_type.csv"), notify_gateway:)
+  end
+
+  def self.export_heat_pumps_gateway
+    @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
+  end
+
+  def self.file_gateway(file_name)
+    @file_gateway || Gateway::FileGateway.new(file_name)
+  end
+
+  def self.notify_gateway
+    @notify_gateway || Gateway::FileGateway.new(ENV["NOTIFY_API_KEY"])
+  end
+
   def self.pull_queues_use_case
     @pull_queues_use_case ||= UseCase::PullQueues.new
   end

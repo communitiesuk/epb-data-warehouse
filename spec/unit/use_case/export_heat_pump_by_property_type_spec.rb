@@ -29,10 +29,11 @@ describe UseCase::ExportHeatPumpByPropertyType do
       allow(export_gateway).to receive(:fetch_by_property_type).and_return data
       allow(Gateway::FileGateway).to receive(:new).with(file_name).and_return(file_gateway)
       allow(file_gateway).to receive(:save_csv).with(data).and_return File
+      allow(file_gateway).to receive(:file_name).and_return file_name
       allow(Gateway::NotifyGateway).to receive(:new).with(test_notify_api_key).and_return(notify_gateway)
       allow(notify_gateway).to receive(:send_email).and_return Notifications::Client::ResponseNotification
       File.new(file_name, "w")
-      use_case.execute(start_date: "2023-01-01", end_date: "2023-01-31", template_id:, file_name:, email_address:)
+      use_case.execute(start_date: "2023-01-01", end_date: "2023-01-31", template_id:, email_address:)
     end
 
     it "calls the fetch_by_property_type method" do
