@@ -3,6 +3,14 @@ describe Gateway::RegisterApiGateway do
 
   let(:api_client) { Gateway::ApiClient.new }
 
+  before do
+    WebMock.enable!
+  end
+
+  after do
+    WebMock.disable!
+  end
+
   context "when getting an assessment using the API endpoint" do
     context "with an assessment that exists on the API" do
       let(:response) { gateway.fetch("0000-0000-0000-0000-0666") }
