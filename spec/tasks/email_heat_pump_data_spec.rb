@@ -31,8 +31,8 @@ context "when calling the email heat pump rake task" do
     allow(Container).to receive(:notify_gateway).and_return notify_gateway
     allow(Container).to receive(:export_heat_pump_by_property_type_use_case).and_return use_case
     allow(UseCase::ExportHeatPumpByPropertyType).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
-    allow(use_case).to receive(:execute)
-
+    allow(use_case).to receive(:execute).and_return Notifications::Client::Notification
+    allow($stdout).to receive(:puts)
     ENV["NOTIFY_TEMPLATE_ID"] = template_id
     ENV["EMAIL_ADDRESS"] = email_address
   end
@@ -44,5 +44,9 @@ context "when calling the email heat pump rake task" do
   it "passed the correct arguments to the use case" do
     task.invoke
     expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:)
+  end
+
+  it "prints the Notification class to the console" do
+    expect { task.invoke }.to output(/Notifications::Client::Notification/).to_stdout
   end
 end

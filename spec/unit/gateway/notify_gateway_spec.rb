@@ -51,8 +51,8 @@ describe Gateway::NotifyGateway do
     end
 
     it "confirms delivery status of the email" do
-      email_response = gateway.send_email(template_id:, file_name:, email_address:)
-      expect(gateway.check_email_status(email_response.id)).to be_a Notifications::Client::Notification
+      gateway.send_email(template_id:, file_name:, email_address:)
+      expect(gateway.check_email_status).to be_a Notifications::Client::Notification
     end
   end
 end

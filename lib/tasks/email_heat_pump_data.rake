@@ -10,5 +10,6 @@ task :email_heat_pump_data do |_, args|
   end_date ||= last_months_dates[:end_date]
 
   use_case = Container.export_heat_pump_by_property_type_use_case
-  use_case.execute(start_date:, end_date:, template_id:, email_address:)
+  status = use_case.execute(start_date:, end_date:, template_id:, email_address:)
+  puts status
 end
