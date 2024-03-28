@@ -1,5 +1,9 @@
+require_relative "../shared_context/shared_send_heat_pump"
+
 context "when calling the email heat pump rake task" do
   subject(:task) { get_task("email_heat_pump_data") }
+
+  include_context "when sending heat pump data"
 
   let(:export_gateway) do
     instance_double(Gateway::ExportHeatPumpsGateway)
@@ -18,11 +22,12 @@ context "when calling the email heat pump rake task" do
   end
 
   let(:file_name) { "heat_pump_count_by_property_type.csv" }
-  let(:template_id) { "b46eb2e7-f7d3-4092-9865-76b57cc24922" }
   let(:email_address) { "sender@something.com" }
-  let(:test_notify_api_key) { "epcheatpumptest-c58430da-e28f-492a-869a-9db3a17d8193-3ba4f26b-8fa7-4d73-bf04-49e94c3e2438" }
   let(:start_date) { "2024-02-01" }
   let(:end_date) { "2024-02-29" }
+  let(:notification) do
+    instance_double(Notifications::Client::Notification)
+  end
 
   before do
     Timecop.freeze(2024, 3, 1, 7, 0, 0)
@@ -31,10 +36,16 @@ context "when calling the email heat pump rake task" do
     allow(Container).to receive(:notify_gateway).and_return notify_gateway
     allow(Container).to receive(:export_heat_pump_by_property_type_use_case).and_return use_case
     allow(UseCase::ExportHeatPumpByPropertyType).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
-    allow(use_case).to receive(:execute).and_return Notifications::Client::Notification
+    allow(notification).to receive(:status).and_return "sending"
+    allow(use_case).to receive(:execute).and_return notification
     allow($stdout).to receive(:puts)
     ENV["NOTIFY_TEMPLATE_ID"] = template_id
     ENV["EMAIL_ADDRESS"] = email_address
+  end
+
+  after do
+    ENV["NOTIFY_TEMPLATE_ID"] = nil
+    ENV["EMAIL_ADDRESS"] = nil
   end
 
   it "doesn't error" do
@@ -47,6 +58,6 @@ context "when calling the email heat pump rake task" do
   end
 
   it "prints the Notification class to the console" do
-    expect { task.invoke }.to output(/Notifications::Client::Notification/).to_stdout
+    expect { task.invoke }.to output(/sending/).to_stdout
   end
 end

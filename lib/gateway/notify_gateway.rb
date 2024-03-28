@@ -2,8 +2,8 @@ require "notifications/client"
 
 module Gateway
   class NotifyGateway
-    def initialize(notify_api_key)
-      @client = Notifications::Client.new(notify_api_key)
+    def initialize(notify_client)
+      @client = notify_client
       @response = nil
     end
 

@@ -1,4 +1,8 @@
+require_relative "../../shared_context/shared_send_heat_pump"
+
 describe UseCase::ExportHeatPumpByPropertyType do
+  include_context "when sending heat pump data"
+
   let(:export_gateway) do
     instance_double(Gateway::ExportHeatPumpsGateway)
   end
@@ -16,9 +20,7 @@ describe UseCase::ExportHeatPumpByPropertyType do
   end
 
   let(:file_name) { "heat_pump_by_property_type.csv" }
-  let(:template_id) { "b46eb2e7-f7d3-4092-9865-76b57cc24922" }
   let(:email_address) { "sender@something.com" }
-  let(:test_notify_api_key) { "epcheatpumptest-c58430da-e28f-492a-869a-9db3a17d8193-3ba4f26b-8fa7-4d73-bf04-49e94c3e2438" }
 
   describe "#execute" do
     let(:data) do
@@ -30,7 +32,7 @@ describe UseCase::ExportHeatPumpByPropertyType do
       allow(Gateway::FileGateway).to receive(:new).with(file_name).and_return(file_gateway)
       allow(file_gateway).to receive(:save_csv).with(data).and_return File
       allow(file_gateway).to receive(:file_name).and_return file_name
-      allow(Gateway::NotifyGateway).to receive(:new).with(test_notify_api_key).and_return(notify_gateway)
+      allow(Gateway::NotifyGateway).to receive(:new).with(notify_client).and_return(notify_gateway)
       allow(notify_gateway).to receive(:send_email).and_return Notifications::Client::ResponseNotification
       allow(notify_gateway).to receive(:check_email_status).and_return Notifications::Client::Notification
     end

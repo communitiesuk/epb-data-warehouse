@@ -16,7 +16,7 @@ module UseCase
 
       @file_gateway.save_csv(raw_data)
       @notify_gateway.send_email(template_id:, file_name:, email_address:)
-      File.delete(file_name) if File.exists?(file_name)
+      File.delete(file_name) if File.exist?(file_name)
       @notify_gateway.check_email_status
     end
   end

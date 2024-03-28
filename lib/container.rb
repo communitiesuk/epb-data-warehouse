@@ -79,11 +79,11 @@ class Container
   end
 
   def self.file_gateway(file_name)
-    @file_gateway || Gateway::FileGateway.new(file_name)
+    @file_gateway ||= Gateway::FileGateway.new(file_name)
   end
 
   def self.notify_gateway
-    @notify_gateway || Gateway::FileGateway.new(ENV["NOTIFY_API_KEY"])
+    @notify_gateway ||= Gateway::NotifyGateway.new(Notifications::Client.new(ENV["NOTIFY_CLIENT_API_KEY"]))
   end
 
   def self.pull_queues_use_case
