@@ -7,10 +7,6 @@ shared_context "when sending heat pump data" do
     Notifications::Client.new(notify_client_test_api_key)
   end
 
-  def notify_client
-    Notifications::Client.new(notify_client_test_api_key)
-  end
-
   def template_id
     "b46eb2e7-f7d3-4092-9865-76b57cc24922"
   end
