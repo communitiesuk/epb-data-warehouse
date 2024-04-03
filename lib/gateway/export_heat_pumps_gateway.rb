@@ -33,12 +33,6 @@ module Gateway
         GROUP BY al.lookup_value;
       SQL
 
-      pp "--DATABASE OUTPUT---"
-      pp "start_date: #{start_date}"
-      pp "end_date: #{end_date}"
-      pp "sql to run: #{sql}"
-      pp "--DATABASE OUTPUT END ---"
-
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
     end
   end

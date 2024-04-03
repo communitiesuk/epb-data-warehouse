@@ -1,8 +1,8 @@
 desc "Email Heat pump counts data "
-task :email_heat_pump_data do |_, args|
-  start_date = args[:start_date] || ENV["START_DATE"]
-  end_date = args[:end_date] || ENV["END_DATE"]
-  email_address = args[:email_address] || ENV["EMAIL_ADDRESS"]
+task :email_heat_pump_data do
+  start_date = ENV["START_DATE"]
+  end_date = ENV["END_DATE"]
+  email_address = ENV["EMAIL_RECIPIENT"] || ENV["NOTIFY_EMAIL_RECIPIENT"]
   template_id = ENV["NOTIFY_TEMPLATE_ID"]
 
   last_months_dates = Tasks::TaskHelpers.get_last_months_dates
