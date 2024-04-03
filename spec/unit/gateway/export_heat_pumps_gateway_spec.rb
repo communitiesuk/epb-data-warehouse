@@ -8,7 +8,6 @@ describe Gateway::ExportHeatPumpsGateway do
   let(:assessment_id) do
     "0000-0000-0000-0000-0000"
   end
-
   let(:schema_type) { "SAP-Schema-19.0.0" }
 
   before do
@@ -38,10 +37,28 @@ describe Gateway::ExportHeatPumpsGateway do
     add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type:, type_of_assessment: "SAP", different_fields: {
       "registration_date": "2023-01-08",
     })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment: "SAP", different_fields: {
+      "main_heating": [
+        {
+          "description": {
+            "value": "Pwmp gwres tarddu yn y ddaear, rheiddiaduron, trydan",
+            "language": "2",
+          },
+          "energy_efficiency_rating": 5,
+          "environmental_efficiency_rating": 5,
+        },
+      ],
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0008", schema_type:, type_of_assessment: "SAP", different_fields: {
+      "main_heating": [
+        { "description": "Room heaters, wood logs", "energy_efficiency_rating": 2, "environmental_efficiency_rating": 5 },
+        { "description": "Air source heat pump, fan coil units, electric", "energy_efficiency_rating": 5, "environmental_efficiency_rating": 5 },
+      ],
+    })
   end
 
   describe "#fetch_by_property_type" do
-    let(:expected_values) { [{ "property_type" => "House", "count" => 2 }, { "property_type" => "Bungalow", "count" => 1 }].sort_by! { |k| k["count"] } }
+    let(:expected_values) { [{ "property_type" => "House", "count" => 4 }, { "property_type" => "Bungalow", "count" => 1 }].sort_by! { |k| k["count"] } }
 
     it "has the expected values" do
       expect(gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31")).to eq expected_values

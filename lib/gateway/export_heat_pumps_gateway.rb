@@ -25,7 +25,7 @@ module Gateway
             join assessment_attributes aa on aal.attribute_id = aa.attribute_id
             where aa.attribute_name = 'property_type' and type_of_assessment = 'SAP'
         ) as aal on aal.lookup_id = al.id
-        WHERE (((ad.document -> 'main_heating') -> 0) -> 'description')::varchar ILIKE '%heat pump%'
+        WHERE ((ad.document -> 'main_heating')::varchar ILIKE '%heat pump%' or (ad.document -> 'main_heating')::varchar ILIKE '%pwmp gwres%')
         AND ad.document->>'registration_date' BETWEEN $1 AND $2
         AND ad.document ->> 'assessment_type' = 'SAP'
         AND ad.document ->> 'postcode' NOT LIKE 'BT%'
