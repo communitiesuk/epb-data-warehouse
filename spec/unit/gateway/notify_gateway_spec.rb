@@ -1,9 +1,11 @@
 describe Gateway::NotifyGateway do
-  subject(:gateway) { described_class.new(notify_api_key) }
+  require_relative "../../shared_context/shared_send_heat_pump"
+  subject(:gateway) { described_class.new(notify_client) }
+
+  include_context "when sending heat pump data"
 
   let(:file_name) { "heat_pump_by_property_type.csv" }
-  let(:notify_api_key) { "epcheatpumptest-c58430da-e28f-492a-869a-9db3a17d8193-3ba4f26b-8fa7-4d73-bf04-49e94c3e2438" }
-  let(:template_id) { "b46eb2e7-f7d3-4092-9865-76b57cc24922" }
+
   let(:data) { [{ "property_type" => "House", "count" => 2 }, { "property_type" => "Bungalow", "count" => 1 }] }
   let(:email_address) { "sender@something.com" }
   let(:mocked_response) do
