@@ -71,15 +71,15 @@ class Container
   end
 
   def self.export_heat_pump_by_property_type_use_case
-    @export_heat_pump_by_property_type_use_case ||= UseCase::ExportHeatPumpByPropertyType.new(export_gateway: export_heat_pumps_gateway, file_gateway: file_gateway("heat_pump_count_by_property_type.csv"), notify_gateway:)
+    @export_heat_pump_by_property_type_use_case ||= UseCase::ExportHeatPumpByPropertyType.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
   end
 
   def self.export_heat_pumps_gateway
     @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
   end
 
-  def self.file_gateway(file_name)
-    @file_gateway ||= Gateway::FileGateway.new(file_name)
+  def self.file_gateway
+    @file_gateway ||= Gateway::FileGateway.new
   end
 
   def self.notify_gateway

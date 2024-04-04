@@ -33,7 +33,7 @@ context "when calling the email heat pump rake task" do
   before do
     ENV["NOTIFY_TEMPLATE_ID"] = template_id
     allow(Container).to receive(:export_heat_pumps_gateway).and_return export_gateway
-    allow(Container).to receive(:file_gateway).with(file_name).and_return file_gateway
+    allow(Container).to receive(:file_gateway).and_return file_gateway
     allow(Container).to receive(:notify_gateway).and_return notify_gateway
     allow(Container).to receive(:export_heat_pump_by_property_type_use_case).and_return use_case
     allow(UseCase::ExportHeatPumpByPropertyType).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case

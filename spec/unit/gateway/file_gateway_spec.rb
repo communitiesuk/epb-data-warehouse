@@ -1,5 +1,5 @@
 describe Gateway::FileGateway do
-  subject(:gateway) { described_class.new(file_name) }
+  subject(:gateway) { described_class.new }
 
   let(:file_name) { "heat_pump_by_property_type.csv" }
 
@@ -7,7 +7,7 @@ describe Gateway::FileGateway do
     let(:data) { [{ "property_type" => "House", "count" => 2 }, { "property_type" => "Bungalow", "count" => 1 }] }
 
     before do
-      gateway.save_csv(data)
+      gateway.save_csv(data, file_name)
     end
 
     after do
@@ -23,10 +23,6 @@ describe Gateway::FileGateway do
       expect(table.length).to eq 2
       expect(table.by_col[0]).to eq %w[House Bungalow]
       expect(table.by_col[1]).to eq %w[2 1]
-    end
-
-    it "exposed the file name" do
-      expect(gateway.file_name).to eq(file_name)
     end
   end
 end

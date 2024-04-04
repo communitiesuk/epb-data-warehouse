@@ -23,7 +23,7 @@ describe Gateway::NotifyGateway do
   end
 
   before do
-    Gateway::FileGateway.new(file_name).save_csv(data)
+    Gateway::FileGateway.new.save_csv(data, file_name)
     WebMock.enable!
     WebMock.stub_request(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
       .to_return(status: 200, body: mocked_response.to_json, headers: {})

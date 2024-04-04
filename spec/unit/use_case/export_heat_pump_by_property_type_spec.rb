@@ -19,7 +19,7 @@ describe UseCase::ExportHeatPumpByPropertyType do
     instance_double(Gateway::NotifyGateway)
   end
 
-  let(:file_name) { "heat_pump_by_property_type.csv" }
+  let(:file_name) { "heat_pump_count_by_property_type_Jan_2023.csv" }
   let(:email_address) { "sender@something.com" }
 
   describe "#execute" do
@@ -29,9 +29,8 @@ describe UseCase::ExportHeatPumpByPropertyType do
 
     before do
       allow(export_gateway).to receive(:fetch_by_property_type).and_return data
-      allow(Gateway::FileGateway).to receive(:new).with(file_name).and_return(file_gateway)
-      allow(file_gateway).to receive(:save_csv).with(data).and_return File
-      allow(file_gateway).to receive(:file_name).and_return file_name
+      allow(Gateway::FileGateway).to receive(:new).and_return(file_gateway)
+      allow(file_gateway).to receive(:save_csv).with(data, file_name).and_return File
       allow(Gateway::NotifyGateway).to receive(:new).with(notify_client).and_return(notify_gateway)
       allow(notify_gateway).to receive(:send_email).and_return Notifications::Client::ResponseNotification
       allow(notify_gateway).to receive(:check_email_status).and_return Notifications::Client::Notification
@@ -44,7 +43,7 @@ describe UseCase::ExportHeatPumpByPropertyType do
 
     it "calls the save_csv method" do
       use_case.execute(start_date: "2023-01-01", end_date: "2023-01-31", template_id:, email_address:)
-      expect(file_gateway).to have_received(:save_csv).with(data).exactly(1).times
+      expect(file_gateway).to have_received(:save_csv).with(data, file_name).exactly(1).times
     end
 
     it "calls the sends_email method" do
