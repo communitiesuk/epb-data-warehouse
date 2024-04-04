@@ -72,5 +72,15 @@ describe UseCase::ExportHeatPumpByPropertyType do
         expect { use_case.execute(start_date: "2023-01-01", end_date: "2023-01-31", template_id:, email_address:) }.to raise_error Boundary::NoData
       end
     end
+
+    context "when a Notifications error is raised" do
+      before do
+        allow(notify_gateway).to receive(:send_email).and_raise Notifications::Client::RequestError.new(stub_notify_response)
+      end
+
+      it "raises a Notifications request error" do
+        expect { use_case.execute(start_date: "2023-01-01", end_date: "2023-01-31", template_id:, email_address:) }.to raise_error(Notifications::Client::RequestError)
+      end
+    end
   end
 end

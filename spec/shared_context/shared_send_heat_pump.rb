@@ -10,4 +10,18 @@ shared_context "when sending heat pump data" do
   def template_id
     "b46eb2e7-f7d3-4092-9865-76b57cc24922"
   end
+
+  def stub_notify_response
+    response = class_double("response")
+    allow(response).to receive(:code).and_return(400)
+    allow(response).to receive(:body).and_return(notify_body.to_s)
+    response
+  end
+
+  def notify_body
+    {
+      "status_code" => 400,
+      "errors" => ["error" => "BadRequestError", "message" => "App error"],
+    }
+  end
 end

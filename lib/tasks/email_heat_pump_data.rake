@@ -12,4 +12,8 @@ task :email_heat_pump_data do
   use_case = Container.export_heat_pump_by_property_type_use_case
   notification = use_case.execute(start_date:, end_date:, template_id:, email_address:)
   puts notification.status
+rescue Boundary::NoData => e
+  report_to_sentry(e)
+rescue Notifications::Client::RequestError => e
+  report_to_sentry(e)
 end
