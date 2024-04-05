@@ -78,7 +78,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
   end
 
-  describe "#fetch_by_total_floor_area" do
+  describe "#fetch_by_floor_area" do
     let(:expected_values) do
       [{ "total_floor_area" => "BETWEEN 0 AND 50", "count" => 1 },
        { "total_floor_area" => "BETWEEN 101 AND 150", "count" => 2 },
@@ -89,7 +89,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_total_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to eq expected_values
+      expect(gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to eq expected_values
     end
   end
 end

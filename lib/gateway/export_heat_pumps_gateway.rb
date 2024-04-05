@@ -36,7 +36,7 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
     end
 
-    def fetch_by_total_floor_area(start_date:, end_date:)
+    def fetch_by_floor_area(start_date:, end_date:)
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "start_date",
