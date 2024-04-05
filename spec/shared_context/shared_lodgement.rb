@@ -48,4 +48,22 @@ shared_context "when lodging XML" do
       "registration_date": "2023-01-08",
     })
   end
+
+  def update_postcode(assessment_id, postcde)
+    sql = <<-SQL
+      UPDATE assessment_documents
+      SET document = JSONB_SET(document, '{postcode}', '"#{postcde}"')
+      WHERE assessment_id = $1
+    SQL
+
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+      ),
+    ]
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+  end
 end

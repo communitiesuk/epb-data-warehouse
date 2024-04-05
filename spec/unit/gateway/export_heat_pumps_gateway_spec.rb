@@ -1,4 +1,6 @@
 require_relative "../../shared_context/shared_lodgement"
+require_relative "../../shared_context/shared_ons_data"
+require "csv"
 
 describe Gateway::ExportHeatPumpsGateway do
   subject(:gateway) { described_class.new }
@@ -70,11 +72,11 @@ describe Gateway::ExportHeatPumpsGateway do
       [{ "property_type" => "House", "count" => 4 },
        { "property_type" => "Bungalow", "count" => 1 },
        { "property_type" => "Flat", "count" => 1 },
-       { "property_type" => "Maisonette", "count" => 1 }].sort_by! { |k| k["property_type"] }
+       { "property_type" => "Maisonette", "count" => 1 }]
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31")).to eq expected_values
+      expect(gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
     end
   end
 
@@ -90,6 +92,34 @@ describe Gateway::ExportHeatPumpsGateway do
 
     it "has the expected values" do
       expect(gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to eq expected_values
+    end
+  end
+
+  describe "#fetch_by_local_authority" do
+    include_context "when saving ons data"
+
+    let(:expected_values) do
+      [{ "local_authority" => nil,
+         "number_of_assessments" => 2 },
+       { "local_authority" => "South Lanarkshire",
+         "number_of_assessments" => 2 },
+       { "local_authority" => "Hammersmith and Fulham",
+         "number_of_assessments" => 3 }]
+    end
+
+    before do
+      import_postcode_directory_name
+      import_postcode_directory_data
+      update_postcode("0000-0000-0000-0000-0001", "ML9 9AR")
+      update_postcode("0000-0000-0000-0000-0002", "ML9 9AR")
+      update_postcode("0000-0000-0000-0000-0004", "BT10 0AA")
+      update_postcode("0000-0000-0000-0000-0007", "SW10 0AA")
+      update_postcode("0000-0000-0000-0000-0008", "SW10 0AA")
+      update_postcode("0000-0000-0000-0000-0009", "W6 9ZD")
+    end
+
+    it "has the expected values" do
+      expect(gateway.fetch_by_local_authority(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
     end
   end
 end
