@@ -74,6 +74,10 @@ class Container
     @export_heat_pump_by_property_type_use_case ||= UseCase::ExportHeatPumpByPropertyType.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
   end
 
+  def self.export_heat_pump_by_floor_area_use_case
+    @export_heat_pump_by_floor_area_use_case ||= UseCase::ExportHeatPumpByFloorArea.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
+  end
+
   def self.export_heat_pumps_gateway
     @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
   end
