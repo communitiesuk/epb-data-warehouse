@@ -28,4 +28,24 @@ shared_context "when lodging XML" do
           }] },
     )
   end
+
+  def add_commercial_assessment
+    add_assessment(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
+  end
+
+  def add_ni_assessment
+    add_assessment(assessment_id: "0000-0000-0000-0000-0004", schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment: "SAP")
+  end
+
+  def add_non_new_dwelling_sap
+    add_assessment(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "SAP", different_fields: {
+      "transaction_type": 1,
+    })
+  end
+
+  def add_assessment_out_of_date_range
+    add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type:, type_of_assessment: "SAP", different_fields: {
+      "registration_date": "2023-01-08",
+    })
+  end
 end
