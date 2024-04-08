@@ -111,5 +111,36 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
     end
+
+    def fetch_by_parliamentary_constituency(start_date:, end_date:)
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "start_date",
+          start_date,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "end_date",
+          end_date,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      sql = <<~SQL
+              SELECT onsn.name as westminster_parliamentary_constituency,#{' '}
+             COUNT(DISTINCT assessment_id) as number_of_assessments
+                FROM assessment_documents ad
+                left join ons_postcode_directory ons on ad.document ->> 'postcode' = ons.postcode
+                left join ons_postcode_directory_names onsn on ons.westminster_parliamentary_constituency_code = onsn.area_code
+        WHERE (((ad.document -> 'main_heating')::varchar ILIKE '%heat pump%' OR (ad.document -> 'main_heating')::varchar ILIKE '%pwmp gwres%'))
+        AND (ad.document->>'registration_date' BETWEEN $1 AND $2)
+        AND (ad.document ->> 'assessment_type')::varchar = 'SAP'
+        AND ad.document ->> 'postcode' NOT LIKE 'BT%'
+        AND (ad.document ->> 'transaction_type' = '6')
+        GROUP BY onsn.name;
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
+    end
   end
 end

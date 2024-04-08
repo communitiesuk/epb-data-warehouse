@@ -66,4 +66,9 @@ shared_context "when lodging XML" do
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
   end
+
+  def import_enums(config_path)
+    config_gateway = Gateway::XsdConfigGateway.new(config_path)
+    UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway).execute
+  end
 end
