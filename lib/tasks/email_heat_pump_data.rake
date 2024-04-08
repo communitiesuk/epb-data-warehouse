@@ -6,22 +6,27 @@ task :email_heat_pump_data do
   template_id = ENV["NOTIFY_TEMPLATE_ID"]
   type_of_export = ENV["TYPE_OF_EXPORT"]
 
+  raise Boundary::InvalidExportType if type_of_export.nil?
+
   last_months_dates = Tasks::TaskHelpers.get_last_months_dates
   start_date ||= last_months_dates[:start_date]
   end_date ||= last_months_dates[:end_date]
 
-  use_case = case type_of_export
-             when "property_type"
-               Container.export_heat_pump_by_property_type_use_case
-             when "floor_area"
-               Container.export_heat_pump_by_floor_area_use_case
-             when "local_authority"
-               Container.export_heat_pump_by_local_authority_use_case
-             end
+  case type_of_export
+  when "property_type"
+    file_prefix = "heat_pump_count_by_property_type"
+    gateway_method = :fetch_by_property_type
+  when "floor_area"
+    file_prefix = "heat_pump_count_by_floor_area"
+    gateway_method = :fetch_by_floor_area
+  when "local_authority"
+    file_prefix = "heat_pump_count_by_local_authority"
+    gateway_method = :fetch_by_local_authority
+  else
+    raise Boundary::InvalidExportType
+  end
 
-  raise Boundary::InvalidExportType if use_case.nil?
-
-  notification = use_case.execute(start_date:, end_date:, template_id:, email_address:)
+  notification = Container.send_heat_pump_counts_use_case.execute(start_date:, end_date:, template_id:, email_address:, file_prefix:, gateway_method:)
   puts notification.status
 rescue Boundary::InvalidExportType => e
   report_to_sentry(e)

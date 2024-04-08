@@ -70,16 +70,8 @@ class Container
                                                                      logger:
   end
 
-  def self.export_heat_pump_by_property_type_use_case
-    @export_heat_pump_by_property_type_use_case ||= UseCase::ExportHeatPumpByPropertyType.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
-  end
-
-  def self.export_heat_pump_by_floor_area_use_case
-    @export_heat_pump_by_floor_area_use_case ||= UseCase::ExportHeatPumpByFloorArea.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
-  end
-
-  def self.export_heat_pump_by_local_authority_use_case
-    @export_heat_pump_by_local_authority_use_case ||= UseCase::ExportHeatPumpByLocalAuthority.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
+  def self.send_heat_pump_counts_use_case
+    @send_heat_pump_counts_use_case ||= UseCase::SendHeatPumpCounts.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
   end
 
   def self.export_heat_pumps_gateway

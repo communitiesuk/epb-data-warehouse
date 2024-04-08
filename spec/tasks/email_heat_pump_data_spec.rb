@@ -43,15 +43,19 @@ context "when calling the email heat pump rake task" do
 
   context "when running the rake to get a count by property type" do
     let(:use_case) do
-      instance_double(UseCase::ExportHeatPumpByPropertyType)
+      instance_double(UseCase::SendHeatPumpCounts)
     end
 
-    let(:file_name) { "heat_pump_count_by_property_type.csv" }
+    let(:file_prefix) { "heat_pump_count_by_property_type" }
+    let(:file_name) { "heat_pump_count_by_property_type_Feb_2024.csv" }
+    let(:gateway_method) do
+      :fetch_by_property_type
+    end
 
     before do
       ENV["TYPE_OF_EXPORT"] = "property_type"
-      allow(Container).to receive(:export_heat_pump_by_property_type_use_case).and_return use_case
-      allow(UseCase::ExportHeatPumpByPropertyType).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
+      allow(Container).to receive(:use_case).and_return use_case
+      allow(UseCase::SendHeatPumpCounts).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
     end
 
     context "when executed on the 1st of the month" do
@@ -65,7 +69,7 @@ context "when calling the email heat pump rake task" do
 
       it "passed the correct arguments to the use case" do
         task.invoke
-        expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:)
+        expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:, file_prefix:, gateway_method:)
       end
 
       it "prints the Notification class to the console" do
@@ -88,7 +92,7 @@ context "when calling the email heat pump rake task" do
 
       it "passed the correct arguments to the use case" do
         task.invoke
-        expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:)
+        expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:, file_prefix:, gateway_method:)
       end
     end
 
@@ -119,12 +123,18 @@ context "when calling the email heat pump rake task" do
 
   context "when running the rake to get a count by floor area" do
     let(:use_case) do
-      instance_double(UseCase::ExportHeatPumpByFloorArea)
+      instance_double(UseCase::SendHeatPumpCounts)
+    end
+
+    let(:file_prefix) { "heat_pump_count_by_floor_area" }
+    let(:file_name) { "heat_pump_count_by_floor_area_Feb_2024.csv" }
+    let(:gateway_method) do
+      :fetch_by_floor_area
     end
 
     before do
-      allow(Container).to receive(:export_heat_pump_by_floor_area_use_case).and_return use_case
-      allow(UseCase::ExportHeatPumpByFloorArea).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
+      allow(Container).to receive(:use_case).and_return use_case
+      allow(UseCase::SendHeatPumpCounts).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
       Timecop.freeze(2024, 3, 1, 7, 0, 0)
       allow(notification).to receive(:status).and_return "sending"
       allow(use_case).to receive(:execute).and_return notification
@@ -135,18 +145,24 @@ context "when calling the email heat pump rake task" do
 
     it "passed the correct arguments to the use case" do
       task.invoke
-      expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:)
+      expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:, file_prefix:, gateway_method:)
     end
   end
 
   context "when running the rake to get a count by local authority" do
     let(:use_case) do
-      instance_double(UseCase::ExportHeatPumpByLocalAuthority)
+      instance_double(UseCase::SendHeatPumpCounts)
+    end
+
+    let(:file_prefix) { "heat_pump_count_by_local_authority" }
+    let(:file_name) { "heat_pump_count_by_local_authority_Feb_2024.csv" }
+    let(:gateway_method) do
+      :fetch_by_local_authority
     end
 
     before do
-      allow(Container).to receive(:export_heat_pump_by_local_authority_use_case).and_return use_case
-      allow(UseCase::ExportHeatPumpByLocalAuthority).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
+      allow(Container).to receive(:use_case).and_return use_case
+      allow(UseCase::SendHeatPumpCounts).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
       Timecop.freeze(2024, 3, 1, 7, 0, 0)
       allow(notification).to receive(:status).and_return "sending"
       allow(use_case).to receive(:execute).and_return notification
@@ -157,13 +173,25 @@ context "when calling the email heat pump rake task" do
 
     it "passed the correct arguments to the use case" do
       task.invoke
-      expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:)
+      expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:, file_prefix:, gateway_method:)
     end
   end
 
   context "when no type of export is passed to the rake" do
     before do
       allow(Sentry).to receive(:capture_exception)
+    end
+
+    it "sends the error to Sentry" do
+      task.invoke
+      expect(Sentry).to have_received(:capture_exception).with(Boundary::InvalidExportType).exactly(1).times
+    end
+  end
+
+  context "when an incorrect type of export is passed" do
+    before do
+      allow(Sentry).to receive(:capture_exception)
+      ENV["TYPE_OF_EXPORT"] = "country"
     end
 
     it "sends the error to Sentry" do
