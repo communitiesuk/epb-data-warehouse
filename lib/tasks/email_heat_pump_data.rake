@@ -22,6 +22,9 @@ task :email_heat_pump_data do
   when "local_authority"
     file_prefix = "heat_pump_count_by_local_authority"
     gateway_method = :fetch_by_local_authority
+  when "parliamentary_constituency"
+    file_prefix = "heat_pump_count_by_parliamentary_constituency"
+    gateway_method = :fetch_by_parliamentary_constituency
   else
     raise Boundary::InvalidExportType
   end
