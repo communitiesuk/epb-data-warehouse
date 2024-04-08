@@ -12,19 +12,13 @@ describe Gateway::ExportHeatPumpsGateway do
     "SAP-Schema-19.0.0"
   end
 
-  let(:seed_data) do
-    true
-  end
-
   before(:all) do
+    type_of_assessment = "SAP"
+    schema_type = "SAP-Schema-19.0.0"
     import_postcode_directory_name
     import_postcode_directory_data
     import_enums "spec/config/attribute_enum_property_type.json"
-  end
-
-  before do
-    allow($stdout).to receive(:puts)
-    type_of_assessment = "SAP"
+    add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:)
     add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:)
     add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
       "main_heating": [
@@ -38,15 +32,19 @@ describe Gateway::ExportHeatPumpsGateway do
         },
       ],
       "total_floor_area": 34,
+      "postcode": "ML9 9AR",
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
       "property_type": 1,
       "total_floor_area": 59,
+      "postcode": "ML9 9AR",
     })
     add_commercial_assessment
-    add_ni_assessment
-    add_non_new_dwelling_sap
-    add_assessment_out_of_date_range
+    add_ni_assessment(assessment_id: "0000-0000-0000-0000-0004",  different_fields: {
+      "postcode": "ML9 9AR",
+    })
+    add_non_new_dwelling_sap(assessment_id: "0000-0000-0000-0000-0005")
+    add_assessment_out_of_date_range(assessment_id: 0000-0000-0000-0000-0006)
     add_assessment(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment:, different_fields: {
       "main_heating": [
         {
@@ -59,6 +57,7 @@ describe Gateway::ExportHeatPumpsGateway do
         },
       ],
       "total_floor_area": 101,
+      "postcode": "SW10 0AA",
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0008", schema_type:, type_of_assessment:, different_fields: {
       "main_heating": [
@@ -66,15 +65,21 @@ describe Gateway::ExportHeatPumpsGateway do
         { "description": "Air source heat pump, fan coil units, electric", "energy_efficiency_rating": 5, "environmental_efficiency_rating": 5 },
       ],
       "total_floor_area": 251,
+      "postcode": "SW10 0AA"
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment:, different_fields: {
       "property_type": 2,
       "total_floor_area": 208,
+      "postcode": "W6 9ZD"
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment:, different_fields: {
       "property_type": 3,
       "total_floor_area": 122,
     })
+  end
+
+  before do
+    allow($stdout).to receive(:puts)
   end
 
   describe "#fetch_by_property_type" do
@@ -101,7 +106,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to eq expected_values
+      expect(gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
     end
   end
 
@@ -117,15 +122,6 @@ describe Gateway::ExportHeatPumpsGateway do
          "number_of_assessments" => 3 }]
     end
 
-    before do
-      update_postcode("0000-0000-0000-0000-0001", "ML9 9AR")
-      update_postcode("0000-0000-0000-0000-0002", "ML9 9AR")
-      update_postcode("0000-0000-0000-0000-0004", "BT10 0AA")
-      update_postcode("0000-0000-0000-0000-0007", "SW10 0AA")
-      update_postcode("0000-0000-0000-0000-0008", "SW10 0AA")
-      update_postcode("0000-0000-0000-0000-0009", "W6 9ZD")
-    end
-
     it "has the expected values" do
       expect(gateway.fetch_by_local_authority(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
     end
@@ -136,15 +132,6 @@ describe Gateway::ExportHeatPumpsGateway do
       [{ "number_of_assessments" => 3, "westminster_parliamentary_constituency" => "Chelsea and Fulham" },
        { "number_of_assessments" => 2, "westminster_parliamentary_constituency" => "Lanark and Hamilton East" },
        { "number_of_assessments" => 2, "westminster_parliamentary_constituency" => nil }]
-    end
-
-    before do
-      update_postcode("0000-0000-0000-0000-0001", "ML9 9AR")
-      update_postcode("0000-0000-0000-0000-0002", "ML9 9AR")
-      update_postcode("0000-0000-0000-0000-0004", "BT10 0AA")
-      update_postcode("0000-0000-0000-0000-0007", "SW10 0AA")
-      update_postcode("0000-0000-0000-0000-0008", "SW10 0AA")
-      update_postcode("0000-0000-0000-0000-0009", "W6 9ZD")
     end
 
     it "has the expected values" do

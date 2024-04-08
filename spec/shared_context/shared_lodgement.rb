@@ -1,4 +1,18 @@
+require "parallel"
+
 shared_context "when lodging XML" do
+  def parse_xml_to_json(xml:, assessment_id:)
+    export_config = XmlPresenter::Sap::Sap1900ExportConfiguration.new
+    parse = lambda {
+      parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: assessment_id))
+      parser.parse(xml)
+    }
+
+    Parallel.map([0]) { |_|
+      parse.call
+    }.first
+  end
+
   def add_assessment(assessment_id:, schema_type:, type_of_assessment:, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil, add_heat_pump_data: true)
     meta_data_sample = {
       "assessment_type" => type_of_assessment,
@@ -9,8 +23,7 @@ shared_context "when lodging XML" do
     }
     xml = Samples.xml(schema_type, type)
 
-    document = UseCase::ParseXmlCertificate.new.execute(xml:, schema_type:, assessment_id:)
-
+    document = parse_xml_to_json(xml:, assessment_id:)
     add_heat_pump_data(document) if add_heat_pump_data
     document.merge!(different_fields) unless different_fields.nil?
     document.merge!(meta_data_sample)
@@ -33,18 +46,18 @@ shared_context "when lodging XML" do
     add_assessment(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
   end
 
-  def add_ni_assessment
-    add_assessment(assessment_id: "0000-0000-0000-0000-0004", schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment: "SAP")
+  def add_ni_assessment(assessment_id:, different_fields:)
+    add_assessment(assessment_id: , schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment: "SAP",  different_fields:)
   end
 
-  def add_non_new_dwelling_sap
-    add_assessment(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "SAP", different_fields: {
+  def add_non_new_dwelling_sap(assessment_id:)
+    add_assessment(assessment_id:, schema_type:  "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
       "transaction_type": 1,
     })
   end
 
-  def add_assessment_out_of_date_range
-    add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type:, type_of_assessment: "SAP", different_fields: {
+  def add_assessment_out_of_date_range(assessment_id:)
+    add_assessment(assessment_id: , schema_type:  "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
       "registration_date": "2023-01-08",
     })
   end

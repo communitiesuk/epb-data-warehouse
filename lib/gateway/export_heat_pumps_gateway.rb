@@ -1,19 +1,12 @@
 module Gateway
   class ExportHeatPumpsGateway
-    def fetch_by_property_type(start_date:, end_date:)
-      bindings = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "start_date",
-          start_date,
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "end_date",
-          end_date,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
+    ASSESSMENT_TYPE = "SAP".freeze
+    TRANSACTION_TYPE = "6".freeze
+    NOT_POST_CODE = "BT%".freeze
+    MAIN_HEATING = "%heat pump%".freeze
+    MAIN_HEATING_WELSH = "%pwmp gwres%".freeze
 
+    def fetch_by_property_type(start_date:, end_date:)
       sql = <<-SQL
        SELECT
            al.lookup_value as property_type,
@@ -25,31 +18,18 @@ module Gateway
             join assessment_attributes aa on aal.attribute_id = aa.attribute_id
             where aa.attribute_name = 'property_type' and type_of_assessment = 'SAP'
         ) as aal on aal.lookup_id = al.id
-        WHERE ((ad.document -> 'main_heating')::varchar ILIKE '%heat pump%' or (ad.document -> 'main_heating')::varchar ILIKE '%pwmp gwres%')
-        AND ad.document->>'registration_date' BETWEEN $1 AND $2
-        AND ad.document ->> 'assessment_type' = 'SAP'
-        AND ad.document ->> 'postcode' NOT LIKE 'BT%'
-        AND ad.document ->> 'transaction_type' = '6'
+        WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
+        AND ad.document ->> 'assessment_type' = $3
+        AND ad.document ->> 'transaction_type' = $4
+        AND ad.document ->> 'postcode' NOT LIKE $5
+        AND ((ad.document -> 'main_heating')::varchar ILIKE $6 or (ad.document -> 'main_heating')::varchar ILIKE $7)
         GROUP BY al.lookup_value;
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
     end
 
     def fetch_by_floor_area(start_date:, end_date:)
-      bindings = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "start_date",
-          start_date,
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "end_date",
-          end_date,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
-
       sql = <<-SQL
        SELECT
            CASE
@@ -62,11 +42,11 @@ module Gateway
            END as total_floor_area,
             count(assessment_id)
        FROM assessment_documents ad
-        WHERE ((ad.document -> 'main_heating')::varchar ILIKE '%heat pump%' or (ad.document -> 'main_heating')::varchar ILIKE '%pwmp gwres%')
-        AND ad.document->>'registration_date' BETWEEN $1 AND $2
-        AND ad.document ->> 'assessment_type' = 'SAP'
-        AND ad.document ->> 'postcode' NOT LIKE 'BT%'
-        AND ad.document ->> 'transaction_type' = '6'
+         WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
+        AND ad.document ->> 'assessment_type' = $3
+        AND ad.document ->> 'transaction_type' = $4
+        AND ad.document ->> 'postcode' NOT LIKE $5
+        AND ((ad.document -> 'main_heating')::varchar ILIKE $6 or (ad.document -> 'main_heating')::varchar ILIKE $7)
         GROUP BY
           CASE
                  WHEN (ad.document ->> 'total_floor_area')::numeric BETWEEN 0 AND 50 THEN 'BETWEEN 0 AND 50'
@@ -78,42 +58,49 @@ module Gateway
            END
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
     end
 
     def fetch_by_local_authority(start_date:, end_date:)
-      bindings = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "start_date",
-          start_date,
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "end_date",
-          end_date,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
-
       sql = <<~SQL
               SELECT COUNT(DISTINCT assessment_id) as number_of_assessments,
               onsn.name as local_authority
                 FROM assessment_documents ad
                 left join ons_postcode_directory ons on ad.document ->> 'postcode' = ons.postcode
                 left join ons_postcode_directory_names onsn on ons.local_authority_code = onsn.area_code
-        WHERE (((ad.document -> 'main_heating')::varchar ILIKE '%heat pump%' OR (ad.document -> 'main_heating')::varchar ILIKE '%pwmp gwres%'))
-        AND (ad.document->>'registration_date' BETWEEN $1 AND $2)
-        AND (ad.document ->> 'assessment_type')::varchar = 'SAP'
-        AND ad.document ->> 'postcode' NOT LIKE 'BT%'
-        AND (ad.document ->> 'transaction_type' = '6')
+         WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
+        AND ad.document ->> 'assessment_type' = $3
+        AND ad.document ->> 'transaction_type' = $4
+        AND ad.document ->> 'postcode' NOT LIKE $5
+        AND ((ad.document -> 'main_heating')::varchar  ILIKE $6 or (ad.document -> 'main_heating')::varchar ILIKE $7)
         GROUP BY onsn.name;
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
     end
 
     def fetch_by_parliamentary_constituency(start_date:, end_date:)
-      bindings = [
+      sql = <<~SQL
+              SELECT onsn.name as westminster_parliamentary_constituency,
+                    COUNT(DISTINCT assessment_id) as number_of_assessments
+                FROM assessment_documents ad
+                left join ons_postcode_directory ons on ad.document ->> 'postcode' = ons.postcode
+                left join ons_postcode_directory_names onsn on ons.westminster_parliamentary_constituency_code = onsn.area_code
+         WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
+        AND ad.document ->> 'assessment_type' = $3
+        AND ad.document ->> 'transaction_type' = $4
+        AND ad.document ->> 'postcode' NOT LIKE $5
+        AND ((ad.document -> 'main_heating')::varchar ILIKE $6 or (ad.document -> 'main_heating')::varchar ILIKE $7)
+        GROUP BY onsn.name;
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
+    end
+
+  private
+
+    def bindings(start_date:, end_date:)
+      [
         ActiveRecord::Relation::QueryAttribute.new(
           "start_date",
           start_date,
@@ -124,23 +111,32 @@ module Gateway
           end_date,
           ActiveRecord::Type::String.new,
         ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_type",
+          ASSESSMENT_TYPE,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "transaction_type",
+          TRANSACTION_TYPE,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "not_post_code",
+          NOT_POST_CODE,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "main_heating",
+          MAIN_HEATING,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "main_heating_welsh",
+          MAIN_HEATING_WELSH,
+          ActiveRecord::Type::String.new,
+        ),
       ]
-
-      sql = <<~SQL
-              SELECT onsn.name as westminster_parliamentary_constituency,#{' '}
-             COUNT(DISTINCT assessment_id) as number_of_assessments
-                FROM assessment_documents ad
-                left join ons_postcode_directory ons on ad.document ->> 'postcode' = ons.postcode
-                left join ons_postcode_directory_names onsn on ons.westminster_parliamentary_constituency_code = onsn.area_code
-        WHERE (((ad.document -> 'main_heating')::varchar ILIKE '%heat pump%' OR (ad.document -> 'main_heating')::varchar ILIKE '%pwmp gwres%'))
-        AND (ad.document->>'registration_date' BETWEEN $1 AND $2)
-        AND (ad.document ->> 'assessment_type')::varchar = 'SAP'
-        AND ad.document ->> 'postcode' NOT LIKE 'BT%'
-        AND (ad.document ->> 'transaction_type' = '6')
-        GROUP BY onsn.name;
-      SQL
-
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
     end
   end
 end
