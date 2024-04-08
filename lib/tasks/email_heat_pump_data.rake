@@ -15,6 +15,8 @@ task :email_heat_pump_data do
                Container.export_heat_pump_by_property_type_use_case
              when "floor_area"
                Container.export_heat_pump_by_floor_area_use_case
+             when "local_authority"
+               Container.export_heat_pump_by_local_authority_use_case
              end
 
   raise Boundary::InvalidExportType if use_case.nil?
