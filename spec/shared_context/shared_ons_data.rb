@@ -4,10 +4,9 @@ shared_context "when saving ons data" do
     ActiveRecord::Base.connection.execute("TRUNCATE ons_postcode_directory")
     CSV.foreach(file_path, headers: true) do |row|
       sql = "INSERT INTO ons_postcode_directory(postcode,country_code,region_code,local_authority_code,westminster_parliamentary_constituency_code,other_areas)
-            VALUES ('#{row["postcode"]}','#{row["country_code"]}','#{row["region_code"]}', '#{row["local_authority_code"]}', '#{row["westminster_parliamentary_constituency_code"]}','#{row["other_areas"]}' )"
+            VALUES ('#{row['postcode']}','#{row['country_code']}','#{row['region_code']}', '#{row['local_authority_code']}', '#{row['westminster_parliamentary_constituency_code']}','#{row['other_areas']}' )"
       ActiveRecord::Base.connection.execute(sql)
     end
-
   end
 
   def import_postcode_directory_name
@@ -15,9 +14,8 @@ shared_context "when saving ons data" do
     ActiveRecord::Base.connection.execute("TRUNCATE ons_postcode_directory_names")
     CSV.foreach(file_path, headers: true) do |row|
       sql = "INSERT INTO ons_postcode_directory_names(area_code,name,type,type_code)
-        VALUES ('#{row["area_code"]}', '#{row["name"]}', '#{row["type"]}', '#{row["type_code"]}')"
+        VALUES ('#{row['area_code']}', '#{row['name']}', '#{row['type']}', '#{row['type_code']}')"
       ActiveRecord::Base.connection.execute(sql)
     end
-
   end
 end
