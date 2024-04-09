@@ -1,10 +1,10 @@
 desc "Email Heat pump counts data "
 task :email_heat_pump_data do
+  type_of_export = ENV["TYPE_OF_EXPORT"]
   start_date = ENV["START_DATE"]
   end_date = ENV["END_DATE"]
   email_address = ENV["EMAIL_RECIPIENT"] || ENV["NOTIFY_EMAIL_RECIPIENT"]
   template_id = ENV["NOTIFY_TEMPLATE_ID"]
-  type_of_export = ENV["TYPE_OF_EXPORT"]
 
   raise Boundary::InvalidExportType if type_of_export.nil?
 
@@ -25,6 +25,9 @@ task :email_heat_pump_data do
   when "parliamentary_constituency"
     file_prefix = "heat_pump_count_by_parliamentary_constituency"
     gateway_method = :fetch_by_parliamentary_constituency
+  when "description"
+    file_prefix = "heat_pump_count_by_description"
+    gateway_method = :fetch_by_description
   else
     raise Boundary::InvalidExportType
   end

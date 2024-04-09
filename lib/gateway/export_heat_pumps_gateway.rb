@@ -125,7 +125,7 @@ module Gateway
             AND (ad.document ->> 'transaction_type' = $5)
             GROUP BY assessment_id, (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar, extract(year from (ad.document->>'registration_date')::date)) as Prop_SAP
         WHERE ((main_heating_description ILIKE $6) OR (main_heating_description ILIKE $7))
-        GROUP BY#{' '}
+        GROUP BY
             CASE
                     WHEN main_heating_description ILIKE '%Mixed exhaust air source heat pump%' THEN 'Mixed exhaust air source heat pump'
                     WHEN main_heating_description ILIKE '%Exhaust air MEV source heat pump%' THEN 'Exhaust air MEV source heat pump'

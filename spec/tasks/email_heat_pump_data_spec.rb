@@ -42,7 +42,7 @@ context "when calling the email heat pump rake task" do
     ENV["TYPE_OF_EXPORT"] = nil
   end
 
-  context "when running the rake to get a count by property type" do
+  context "when emailing the counts by property type" do
     let(:use_case) do
       instance_double(UseCase::SendHeatPumpCounts)
     end
@@ -122,7 +122,7 @@ context "when calling the email heat pump rake task" do
     end
   end
 
-  context "when running the rake to get a count by floor area" do
+  context "when emailing the counts by floor area" do
     let(:use_case) do
       instance_double(UseCase::SendHeatPumpCounts)
     end
@@ -150,7 +150,7 @@ context "when calling the email heat pump rake task" do
     end
   end
 
-  context "when running the rake to get a count by local authority" do
+  context "when emailing the counts by local authority" do
     let(:use_case) do
       instance_double(UseCase::SendHeatPumpCounts)
     end
@@ -178,7 +178,7 @@ context "when calling the email heat pump rake task" do
     end
   end
 
-  context "when running the rake to get a count by parliamentary constituency" do
+  context "when emailing the counts by parliamentary constituency" do
     let(:use_case) do
       instance_double(UseCase::SendHeatPumpCounts)
     end
@@ -198,6 +198,34 @@ context "when calling the email heat pump rake task" do
       allow($stdout).to receive(:puts)
       ENV["NOTIFY_EMAIL_RECIPIENT"] = email_address
       ENV["TYPE_OF_EXPORT"] = "parliamentary_constituency"
+    end
+
+    it "passed the correct arguments to the use case" do
+      task.invoke
+      expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:, file_prefix:, gateway_method:)
+    end
+  end
+
+  context "when emailing the counts by description" do
+    let(:use_case) do
+      instance_double(UseCase::SendHeatPumpCounts)
+    end
+
+    let(:file_prefix) { "heat_pump_count_by_description" }
+    let(:file_name) { "heat_pump_count_by_description_Feb_2024.csv" }
+    let(:gateway_method) do
+      :fetch_by_description
+    end
+
+    before do
+      allow(Container).to receive(:use_case).and_return use_case
+      allow(UseCase::SendHeatPumpCounts).to receive(:new).with(export_gateway:, file_gateway:, notify_gateway:).and_return use_case
+      Timecop.freeze(2024, 3, 1, 7, 0, 0)
+      allow(notification).to receive(:status).and_return "sending"
+      allow(use_case).to receive(:execute).and_return notification
+      allow($stdout).to receive(:puts)
+      ENV["NOTIFY_EMAIL_RECIPIENT"] = email_address
+      ENV["TYPE_OF_EXPORT"] = "description"
     end
 
     it "passed the correct arguments to the use case" do
