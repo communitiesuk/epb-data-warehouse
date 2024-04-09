@@ -10,7 +10,7 @@ module Gateway
       sql = <<-SQL
        SELECT
            al.lookup_value as property_type,
-           count(assessment_id)
+           count(assessment_id) as number_of_assessments
         FROM assessment_documents ad
         JOIN assessment_lookups al ON al.lookup_key = ad.document ->> 'property_type'
         JOIN (
@@ -40,7 +40,7 @@ module Gateway
           WHEN (ad.document ->> 'total_floor_area')::numeric BETWEEN 201 AND 250 THEN 'BETWEEN 201 AND 250'
            WHEN (ad.document ->> 'total_floor_area')::numeric >= 251 THEN 'GREATER THAN 251'
            END as total_floor_area,
-            count(assessment_id)
+            count(assessment_id) as number_of_assessments
        FROM assessment_documents ad
          WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
         AND ad.document ->> 'assessment_type' = $3
@@ -92,6 +92,54 @@ module Gateway
         AND ad.document ->> 'postcode' NOT LIKE $5
         AND ((ad.document -> 'main_heating')::varchar ILIKE $6 or (ad.document -> 'main_heating')::varchar ILIKE $7)
         GROUP BY onsn.name;
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
+    end
+
+    def fetch_by_description(start_date:, end_date:)
+      sql = <<~SQL
+        SELECT
+             count(distinct assessment_id) as number_of_assessments,
+                CASE
+                    WHEN main_heating_description ILIKE '%Mixed exhaust air source heat pump%' THEN 'Mixed exhaust air source heat pump'
+                    WHEN main_heating_description ILIKE '%Exhaust air MEV source heat pump%' THEN 'Exhaust air MEV source heat pump'
+                    WHEN main_heating_description ILIKE '%Ground source heat pump%' THEN 'Ground source heat pump'
+                    WHEN ((main_heating_description ILIKE '%Pwmp gwres%') AND (main_heating_description ILIKE '%ddaear%'))  THEN 'Ground source heat pump'
+                    WHEN main_heating_description ILIKE '%Water source%' THEN 'Water source heat pump'
+                    WHEN main_heating_description ILIKE '%Solar assisted%' THEN 'Solar assisted heat pump'
+                    WHEN main_heating_description ILIKE '%Electric heat pump%' THEN 'Electric heat pump'
+                    WHEN main_heating_description ILIKE '%Community%' THEN 'Community heat pump'
+                    WHEN main_heating_description ILIKE '%Exhaust source%' THEN 'Exhaust source heat pump'
+                    WHEN main_heating_description  ILIKE '%Air source heat pump%' THEN 'Air source heat pump'
+                    WHEN ((main_heating_description ILIKE '%Pwmp gwres%') AND (main_heating_description ILIKE '%awyr%'))  THEN 'Air source heat pump'
+                    ELSE main_heating_description
+                END as heat_pump_description
+        FROM (
+        SELECT assessment_id as assessment_id,
+               (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar as main_heating_description
+            FROM assessment_documents ad
+            WHERE (ad.document->>'registration_date' BETWEEN $1 AND $2)
+            AND (ad.document ->> 'assessment_type')::varchar = $3
+            AND ad.document ->> 'postcode' NOT LIKE $4
+            AND (ad.document ->> 'transaction_type' = $5)
+            GROUP BY assessment_id, (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar, extract(year from (ad.document->>'registration_date')::date)) as Prop_SAP
+        WHERE ((main_heating_description ILIKE $6) OR (main_heating_description ILIKE $7))
+        GROUP BY#{' '}
+            CASE
+                    WHEN main_heating_description ILIKE '%Mixed exhaust air source heat pump%' THEN 'Mixed exhaust air source heat pump'
+                    WHEN main_heating_description ILIKE '%Exhaust air MEV source heat pump%' THEN 'Exhaust air MEV source heat pump'
+                    WHEN main_heating_description ILIKE '%Ground source heat pump%' THEN 'Ground source heat pump'
+                    WHEN ((main_heating_description ILIKE '%Pwmp gwres%') AND (main_heating_description ILIKE '%ddaear%'))  THEN 'Ground source heat pump'
+                    WHEN main_heating_description ILIKE '%Water source%' THEN 'Water source heat pump'
+                    WHEN main_heating_description ILIKE '%Solar assisted%' THEN 'Solar assisted heat pump'
+                    WHEN main_heating_description ILIKE '%Electric heat pump%' THEN 'Electric heat pump'
+                    WHEN main_heating_description ILIKE '%Community%' THEN 'Community heat pump'
+                    WHEN main_heating_description ILIKE '%Exhaust source%' THEN 'Exhaust source heat pump'
+                    WHEN main_heating_description  ILIKE '%Air source heat pump%' THEN 'Air source heat pump'
+                    WHEN ((main_heating_description ILIKE '%Pwmp gwres%') AND (main_heating_description ILIKE '%awyr%'))  THEN 'Air source heat pump'
+                    ELSE main_heating_description
+                END
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
