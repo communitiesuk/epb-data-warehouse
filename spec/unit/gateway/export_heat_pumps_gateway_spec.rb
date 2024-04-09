@@ -40,11 +40,11 @@ describe Gateway::ExportHeatPumpsGateway do
       "postcode": "ML9 9AR",
     })
     add_commercial_assessment
-    add_ni_assessment(assessment_id: "0000-0000-0000-0000-0004",  different_fields: {
+    add_ni_assessment(assessment_id: "0000-0000-0000-0000-0004", different_fields: {
       "postcode": "ML9 9AR",
     })
     add_non_new_dwelling_sap(assessment_id: "0000-0000-0000-0000-0005")
-    add_assessment_out_of_date_range(assessment_id: 0000-0000-0000-0000-0006)
+    add_assessment_out_of_date_range(assessment_id: "0000-0000-0000-0000-0006")
     add_assessment(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment:, different_fields: {
       "main_heating": [
         {
@@ -65,12 +65,12 @@ describe Gateway::ExportHeatPumpsGateway do
         { "description": "Air source heat pump, fan coil units, electric", "energy_efficiency_rating": 5, "environmental_efficiency_rating": 5 },
       ],
       "total_floor_area": 251,
-      "postcode": "SW10 0AA"
+      "postcode": "SW10 0AA",
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment:, different_fields: {
       "property_type": 2,
       "total_floor_area": 208,
-      "postcode": "W6 9ZD"
+      "postcode": "W6 9ZD",
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment:, different_fields: {
       "property_type": 3,

@@ -47,7 +47,7 @@ shared_context "when lodging XML" do
   end
 
   def add_ni_assessment(assessment_id:, different_fields:)
-    add_assessment(assessment_id: , schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment: "SAP",  different_fields:)
+    add_assessment(assessment_id:, schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment: "SAP", different_fields:)
   end
 
   def add_non_new_dwelling_sap(assessment_id:)
@@ -57,7 +57,7 @@ shared_context "when lodging XML" do
   end
 
   def add_assessment_out_of_date_range(assessment_id:)
-    add_assessment(assessment_id: , schema_type:  "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
+    add_assessment(assessment_id:, schema_type:  "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
       "registration_date": "2023-01-08",
     })
   end
