@@ -26,6 +26,7 @@ describe UseCase::SendHeatPumpCounts do
   let(:file_prefix) { "heat_pump_count_by_floor_area" }
   let(:file_name) { "heat_pump_count_by_floor_area_Jan_2023.csv" }
   let(:email_address) { "sender@something.com" }
+  let(:email_subject) { "Count of assessments with heat pumps by floor area Jan 2023" }
 
   describe "#execute" do
     let(:data) do
@@ -67,9 +68,9 @@ describe UseCase::SendHeatPumpCounts do
       expect(file_gateway).to have_received(:save_csv).with(data, file_name).exactly(1).times
     end
 
-    it "calls the sends_email method" do
+    it "calls the sends_email method with the correct arguments" do
       use_case.execute(**args)
-      expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address:).exactly(1).times
+      expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address:, email_subject:).exactly(1).times
     end
 
     it "check the file has been deleted" do

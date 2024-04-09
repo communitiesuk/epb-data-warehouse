@@ -7,7 +7,7 @@ module Gateway
       @response = nil
     end
 
-    def send_email(template_id:, file_name:, email_address:)
+    def send_email(template_id:, file_name:, email_address:, email_subject:)
       file = File.open(file_name, "rb") do |f|
         Notifications.prepare_upload(f, filename: file_name, confirm_email_before_download: false)
       end
@@ -16,6 +16,7 @@ module Gateway
         template_id:,
         personalisation: {
           link_to_file: file,
+          subject: email_subject,
         },
       )
     end

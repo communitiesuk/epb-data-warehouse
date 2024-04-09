@@ -11,13 +11,15 @@ module UseCase
     def execute(start_date:, end_date:, template_id:, email_address:, file_prefix:, gateway_method:)
       file_name = "#{file_prefix}_#{Date.parse(start_date).strftime('%b_%Y')}.csv"
       raw_data = @export_gateway.method(gateway_method).call(start_date:, end_date:)
+      subject_suffix = file_name.tr("_", " ").split("by")[1].split(".")[0]
+      email_subject = "Count of assessments with heat pumps by#{subject_suffix}"
 
       raise Boundary::NoData, "heat pump data" unless raw_data.any?
 
       email_status = nil
       @file_gateway.save_csv(raw_data, file_name)
       begin
-        @notify_gateway.send_email(template_id:, file_name:, email_address:)
+        @notify_gateway.send_email(template_id:, file_name:, email_address:, email_subject:)
         email_status = @notify_gateway.check_email_status
       rescue Notifications::Client::RequestError
         raise
