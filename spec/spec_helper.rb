@@ -7,6 +7,7 @@ require "active_support/core_ext"
 require "active_record"
 require "async"
 require "database_cleaner/active_record"
+require "rack/test"
 require "rake"
 require "nokogiri"
 require "concurrent"
@@ -24,6 +25,8 @@ ENV["EPB_AUTH_SERVER"] = "http://test-auth-server.gov.uk"
 ENV["EPB_API_URL"] = "http://test-api.gov.uk"
 ENV["EPB_QUEUES_URI"] = "redis://127.0.0.1:6379"
 
+ENV["RACK_ENV"] = "test"
+
 WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: %w[
@@ -31,6 +34,14 @@ WebMock.disable_net_connect!(
     getting-new-energy-certificate.local.gov.uk
   ],
 )
+
+module RSpecDataWarehouseApiServiceMixin
+  include Rack::Test::Methods
+
+  def app
+    DataWarehouseApiService
+  end
+end
 
 def get_task(name)
   rake = Rake::Application.new
