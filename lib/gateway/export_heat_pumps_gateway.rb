@@ -120,10 +120,10 @@ module Gateway
                (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar as main_heating_description
             FROM assessment_documents ad
             WHERE ad.document->>'registration_date' BETWEEN $1 AND $2
-            AND ad.document ->> 'assessment_type' = $3
-            AND ad.document ->> 'postcode' NOT LIKE $4
-            AND ad.document ->> 'transaction_type' = $5) as main_heating_query
-        WHERE ((main_heating_description ILIKE $6) OR (main_heating_description ILIKE $7))
+            AND ad.document ->> 'assessment_type' = 'SAP'
+            AND ad.document ->> 'postcode' NOT LIKE 'BT%'
+            AND ad.document ->> 'transaction_type' = '6') as main_heating_query
+        WHERE ((main_heating_description ILIKE '%heat pump%') OR (main_heating_description ILIKE '%pwmp gwres%'))
         GROUP BY
             CASE
                     WHEN main_heating_description ILIKE '%Mixed exhaust air source heat pump%' THEN 'Mixed exhaust air source heat pump'
@@ -141,7 +141,7 @@ module Gateway
                 END
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:).first(2)).map { |result| result }
     end
 
   private
