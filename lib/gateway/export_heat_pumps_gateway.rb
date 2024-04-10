@@ -98,6 +98,19 @@ module Gateway
     end
 
     def fetch_by_description(start_date:, end_date:)
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "start_date",
+          start_date,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "end_date",
+          end_date,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
       sql = <<~SQL
         SELECT
              count(distinct assessment_id) as number_of_assessments,
@@ -119,12 +132,11 @@ module Gateway
         SELECT assessment_id as assessment_id,
                (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar as main_heating_description
             FROM assessment_documents ad
-            WHERE (ad.document->>'registration_date' BETWEEN $1 AND $2)
-            AND (ad.document ->> 'assessment_type')::varchar = $3
-            AND ad.document ->> 'postcode' NOT LIKE $4
-            AND (ad.document ->> 'transaction_type' = $5)
-            GROUP BY assessment_id, (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar, extract(year from (ad.document->>'registration_date')::date)) as Prop_SAP
-        WHERE ((main_heating_description ILIKE $6) OR (main_heating_description ILIKE $7))
+            WHERE ad.document->>'registration_date' BETWEEN $1 AND $2
+            AND ad.document ->> 'assessment_type' = 'SAP'
+            AND ad.document ->> 'postcode' NOT LIKE 'BT%'
+            AND ad.document ->> 'transaction_type' = '6') as main_heating_query
+        WHERE ((main_heating_description ILIKE '%heat pump%') OR (main_heating_description ILIKE '%pwmp gwres%'))
         GROUP BY
             CASE
                     WHEN main_heating_description ILIKE '%Mixed exhaust air source heat pump%' THEN 'Mixed exhaust air source heat pump'
@@ -142,7 +154,7 @@ module Gateway
                 END
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings(start_date:, end_date:)).map { |result| result }
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
     end
 
   private
