@@ -103,5 +103,17 @@ describe UseCase::SendHeatPumpCounts do
         expect { use_case.execute(**args) }.to raise_error(Notifications::Client::RequestError)
       end
     end
+
+    context "when sending to more than 1 recipient" do
+      let(:email_address) do
+        "sender@something.com,another_person@something.com"
+      end
+
+      it "calls the send method for each recipient" do
+        use_case.execute(**args)
+        expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: email_address.split(",")[0], email_subject:).exactly(1).times
+        expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: email_address.split(",")[1], email_subject:).exactly(1).times
+      end
+    end
   end
 end
