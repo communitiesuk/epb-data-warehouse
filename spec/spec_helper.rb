@@ -24,6 +24,8 @@ ENV["EPB_AUTH_CLIENT_SECRET"] = "test.client.secret"
 ENV["EPB_AUTH_SERVER"] = "http://test-auth-server.gov.uk"
 ENV["EPB_API_URL"] = "http://test-api.gov.uk"
 ENV["EPB_QUEUES_URI"] = "redis://127.0.0.1:6379"
+ENV["JWT_ISSUER"] = "test.issuer"
+ENV["JWT_SECRET"] = "test.secret"
 
 ENV["RACK_ENV"] = "test"
 
@@ -59,6 +61,18 @@ def gateway(name)
 end
 
 def report_to_sentry(_); end
+
+def get_valid_jwt(scopes = [], sup = {})
+  token =
+    Auth::Token.new(iat: Time.now.to_i,
+                    exp: Time.now.to_i + (60 * 60),
+                    iss: ENV["JWT_ISSUER"],
+                    sub: "test-subject",
+                    scopes:,
+                    sup:)
+
+  token.encode ENV["JWT_SECRET"]
+end
 
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
