@@ -50,6 +50,7 @@ describe UseCase::SendHeatPumpCounts do
     end
 
     before do
+      allow($stdout).to receive(:puts)
       allow(export_gateway).to receive(gateway_method).and_return data
       allow(Gateway::FileGateway).to receive(:new).and_return(file_gateway)
       allow(file_gateway).to receive(:save_csv).with(data, file_name).and_return File
@@ -79,9 +80,8 @@ describe UseCase::SendHeatPumpCounts do
       expect(File.exist?(file_name)).to be false
     end
 
-    it "returns the status of the email" do
-      status = use_case.execute(**args)
-      expect(status).to eq Notifications::Client::Notification
+    it "outputs the status of the email" do
+      expect { use_case.execute(**args) }.to output("Notifications::Client::Notification\n").to_stdout
     end
 
     context "when there is no data" do
@@ -113,6 +113,10 @@ describe UseCase::SendHeatPumpCounts do
         use_case.execute(**args)
         expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: email_address.split(",")[0], email_subject:).exactly(1).times
         expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: email_address.split(",")[1], email_subject:).exactly(1).times
+      end
+
+      it "outputs the status of the each email" do
+        expect { use_case.execute(**args) }.to output("Notifications::Client::Notification\nNotifications::Client::Notification\n").to_stdout
       end
     end
   end

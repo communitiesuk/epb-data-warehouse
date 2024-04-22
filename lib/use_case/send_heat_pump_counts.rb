@@ -16,26 +16,21 @@ module UseCase
 
       raise Boundary::NoData, "heat pump data" unless raw_data.any?
 
-      email_status = nil
       @file_gateway.save_csv(raw_data, file_name)
       email_address.split(",").each do |email|
-        email_status = send_email(template_id:, file_name:, email_address: email, email_subject:)
+        send_email(template_id:, file_name:, email_address: email, email_subject:)
       end
 
       File.delete(file_name) if File.exist?(file_name)
-      email_status
     end
 
   private
 
     def send_email(template_id:, file_name:, email_address:, email_subject:)
-      begin
-        @notify_gateway.send_email(template_id:, file_name:, email_address:, email_subject:)
-        email_status = @notify_gateway.check_email_status
-      rescue Notifications::Client::RequestError
-        raise
-      end
-      email_status
+      @notify_gateway.send_email(template_id:, file_name:, email_address:, email_subject:)
+      puts @notify_gateway.check_email_status
+    rescue Notifications::Client::RequestError
+      raise
     end
   end
 end
