@@ -32,8 +32,7 @@ task :email_heat_pump_data do
     raise Boundary::InvalidExportType
   end
 
-  notification = Container.send_heat_pump_counts_use_case.execute(start_date:, end_date:, template_id:, email_address:, file_prefix:, gateway_method:)
-  puts notification.status
+  Container.send_heat_pump_counts_use_case.execute(start_date:, end_date:, template_id:, email_address:, file_prefix:, gateway_method:)
 rescue Boundary::InvalidExportType => e
   report_to_sentry(e)
 rescue Boundary::NoData => e

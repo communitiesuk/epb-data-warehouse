@@ -62,19 +62,13 @@ context "when calling the email heat pump rake task" do
     context "when executed on the 1st of the month" do
       before do
         Timecop.freeze(2024, 3, 1, 7, 0, 0)
-        allow(notification).to receive(:status).and_return "sending"
-        allow(use_case).to receive(:execute).and_return notification
-        allow($stdout).to receive(:puts)
+        allow(use_case).to receive(:execute)
         ENV["NOTIFY_EMAIL_RECIPIENT"] = email_address
       end
 
       it "passed the correct arguments to the use case" do
         task.invoke
         expect(use_case).to have_received(:execute).with(template_id:, email_address:, start_date:, end_date:, file_prefix:, gateway_method:)
-      end
-
-      it "prints the Notification class to the console" do
-        expect { task.invoke }.to output(/sending/).to_stdout
       end
     end
 

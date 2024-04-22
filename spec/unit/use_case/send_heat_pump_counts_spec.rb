@@ -49,6 +49,10 @@ describe UseCase::SendHeatPumpCounts do
       }
     end
 
+    let(:client_response) do
+      instance_double(Notifications::Client::Notification, status: "sending")
+    end
+
     before do
       allow($stdout).to receive(:puts)
       allow(export_gateway).to receive(gateway_method).and_return data
@@ -56,7 +60,7 @@ describe UseCase::SendHeatPumpCounts do
       allow(file_gateway).to receive(:save_csv).with(data, file_name).and_return File
       allow(Gateway::NotifyGateway).to receive(:new).with(notify_client).and_return(notify_gateway)
       allow(notify_gateway).to receive(:send_email).and_return Notifications::Client::ResponseNotification
-      allow(notify_gateway).to receive(:check_email_status).and_return Notifications::Client::Notification
+      allow(notify_gateway).to receive(:check_email_status).and_return client_response
     end
 
     it "calls the correct gateway method" do
@@ -81,7 +85,7 @@ describe UseCase::SendHeatPumpCounts do
     end
 
     it "outputs the status of the email" do
-      expect { use_case.execute(**args) }.to output("Notifications::Client::Notification\n").to_stdout
+      expect { use_case.execute(**args) }.to output("sending\n").to_stdout
     end
 
     context "when there is no data" do
@@ -116,7 +120,7 @@ describe UseCase::SendHeatPumpCounts do
       end
 
       it "outputs the status of the each email" do
-        expect { use_case.execute(**args) }.to output("Notifications::Client::Notification\nNotifications::Client::Notification\n").to_stdout
+        expect { use_case.execute(**args) }.to output("sending\nsending\n").to_stdout
       end
     end
   end

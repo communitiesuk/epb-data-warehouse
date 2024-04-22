@@ -28,7 +28,8 @@ module UseCase
 
     def send_email(template_id:, file_name:, email_address:, email_subject:)
       @notify_gateway.send_email(template_id:, file_name:, email_address:, email_subject:)
-      puts @notify_gateway.check_email_status
+      response = @notify_gateway.check_email_status
+      puts response.status
     rescue Notifications::Client::RequestError
       raise
     end
