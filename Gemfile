@@ -16,6 +16,10 @@ group :test do
   gem "webmock", "~> 3.19"
 end
 
+group :rake do
+  gem "notifications-ruby-client", "~> 6.0.0"
+end
+
 gem "activerecord", "~> 7.1"
 gem "activesupport", "~> 7.1"
 gem "async", "~> 2.10"
@@ -23,7 +27,6 @@ gem "concurrent-ruby", "~> 1.2"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.0"
 gem "nokogiri", "~> 1.16"
-gem "notifications-ruby-client", "~> 6.0.0"
 gem "parallel", "~> 1.24"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
