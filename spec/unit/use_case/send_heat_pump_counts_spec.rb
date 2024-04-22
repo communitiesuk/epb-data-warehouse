@@ -115,8 +115,8 @@ describe UseCase::SendHeatPumpCounts do
 
       it "calls the send method for each recipient" do
         use_case.execute(**args)
-        expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: email_address.split(",")[0], email_subject:).exactly(1).times
-        expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: email_address.split(",")[1], email_subject:).exactly(1).times
+        expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: "sender@something.com", email_subject:).exactly(1).times
+        expect(notify_gateway).to have_received(:send_email).with(template_id:, file_name:, email_address: "another_person@something.com", email_subject:).exactly(1).times
       end
 
       it "outputs the status of the each email" do
