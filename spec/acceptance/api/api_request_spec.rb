@@ -13,9 +13,9 @@ describe "HomeController" do
     end
   end
 
-  context "when requesting a response from / with the wrong token" do
+  context "when requesting a response using a token with the wrong scopes" do
     let(:response) do
-      header("Authorization", "Bearer #{get_valid_jwt(%w[dodgytoken])}")
+      header("Authorization", "Bearer #{get_valid_jwt(%w[bad:scope another:scope])}")
       get("/")
     end
 
@@ -28,7 +28,7 @@ describe "HomeController" do
     end
   end
 
-  context "when requesting a response from / with the correct token" do
+  context "when requesting a response from / using a token with the correct scope" do
     let(:response) do
       header("Authorization", "Bearer #{get_valid_jwt(%w[warehouse:test])}")
       get("/")
