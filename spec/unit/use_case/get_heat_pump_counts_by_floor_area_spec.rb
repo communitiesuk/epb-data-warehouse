@@ -9,18 +9,29 @@ describe UseCase::GetHeatPumpCountsByFloorArea do
 
   describe "#execute" do
     let(:data) do
-      [{ "total_floor_area" => "BETWEEN 0 AND 50", "count" => 1 },
-       { "total_floor_area" => "BETWEEN 101 AND 150", "count" => 2 },
-       { "total_floor_area" => "BETWEEN 151 AND 200", "count" => 1 },
-       { "total_floor_area" => "BETWEEN 201 AND 250", "count" => 1 },
-       { "total_floor_area" => "BETWEEN 51 AND 100", "count" => 1 },
-       { "total_floor_area" => "GREATER THAN 251", "count" => 1 }]
+      [{ "total_floor_area" => "BETWEEN 0 AND 50", "number_of_assessments" => 1 },
+       { "total_floor_area" => "BETWEEN 101 AND 150", "number_of_assessments" => 2 },
+       { "total_floor_area" => "BETWEEN 151 AND 200", "number_of_assessments" => 1 },
+       { "total_floor_area" => "BETWEEN 201 AND 250", "number_of_assessments" => 1 },
+       { "total_floor_area" => "BETWEEN 51 AND 100", "number_of_assessments" => 1 },
+       { "total_floor_area" => "GREATER THAN 251", "number_of_assessments" => 1 }]
     end
 
     let(:args) do
       {
         start_date: "2023-01-01",
         end_date: "2023-01-31",
+      }
+    end
+
+    let(:expected_data) do
+      {
+        between_0_and_50: 1,
+        between_101_and_150: 2,
+        between_151_200: 1,
+        between_201_250: 1,
+        between_51_100: 1,
+        greater_than_251: 1,
       }
     end
 
@@ -34,7 +45,7 @@ describe UseCase::GetHeatPumpCountsByFloorArea do
     end
 
     it "returns the data" do
-      expect(use_case.execute(**args)).to eq(data)
+      expect(use_case.execute(**args)).to eq(expected_data)
     end
   end
 end
