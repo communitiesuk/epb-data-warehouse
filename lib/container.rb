@@ -74,6 +74,10 @@ class Container
     @send_heat_pump_counts_use_case ||= UseCase::SendHeatPumpCounts.new(export_gateway: export_heat_pumps_gateway, file_gateway:, notify_gateway:)
   end
 
+  def self.get_heat_pump_counts_by_floor_area_use_case
+    @get_heat_pump_counts_by_floor_area_use_case ||= UseCase::GetHeatPumpCountsByFloorArea.new(export_gateway: export_heat_pumps_gateway)
+  end
+
   def self.export_heat_pumps_gateway
     @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
   end

@@ -24,17 +24,6 @@ describe UseCase::GetHeatPumpCountsByFloorArea do
       }
     end
 
-    let(:expected_data) do
-      {
-        between_0_and_50: 1,
-        between_101_and_150: 2,
-        between_151_200: 1,
-        between_201_250: 1,
-        between_51_100: 1,
-        greater_than_251: 1,
-      }
-    end
-
     before do
       allow(export_gateway).to receive(:fetch_by_floor_area).and_return data
     end
@@ -45,7 +34,7 @@ describe UseCase::GetHeatPumpCountsByFloorArea do
     end
 
     it "returns the data" do
-      expect(use_case.execute(**args)).to eq(expected_data)
+      expect(use_case.execute(**args)).to eq(data)
     end
   end
 end

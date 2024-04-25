@@ -16,6 +16,10 @@ group :test do
   gem "webmock", "~> 3.19"
 end
 
+group :development do
+  gem "sinatra-contrib"
+end
+
 group :rake do
   gem "notifications-ruby-client", "~> 6.0.0"
 end
@@ -36,5 +40,6 @@ gem "redis", "~> 5.0"
 gem "rexml", "~> 3.2"
 gem "sentry-ruby", "~> 5.17"
 gem "sinatra", "~> 4.0"
+gem "sinatra-activerecord", "~> 2.0.27"
 gem "unleash", "~> 5.0.1"
 gem "zeitwerk", "~> 2.6"
