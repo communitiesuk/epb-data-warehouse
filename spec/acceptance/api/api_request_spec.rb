@@ -30,7 +30,7 @@ describe "HomeController" do
 
   context "when requesting a response from / using a token with the correct scope" do
     let(:response) do
-      header("Authorization", "Bearer #{get_valid_jwt(%w[warehouse:test])}")
+      header("Authorization", "Bearer #{get_valid_jwt(%w[warehouse:read])}")
       get("/")
     end
 
