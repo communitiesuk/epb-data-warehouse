@@ -5,6 +5,10 @@ class DataWarehouseApiService < Controller::BaseController
 
   ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
+  get "/healthcheck" do
+    status 200
+  end
+
   use Controller::HomeController
   use Controller::HeatPumpController
 end
