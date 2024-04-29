@@ -4,10 +4,10 @@ describe "HeatPumpController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"
 
-  context "when requesting a response from /api/heat_pump_counts/floor_area" do
+  context "when requesting a response from /api/heat-pump-counts/floor-area" do
     let(:response) do
       header("Authorization", "Bearer #{get_valid_jwt(%w[warehouse:read])}")
-      get("/api/heat_pump_counts/floor_area")
+      get("/api/heat-pump-counts/floor-area")
     end
     let(:type_of_assessment) { "SAP" }
     let(:schema_type) { "SAP-Schema-19.0.0" }
