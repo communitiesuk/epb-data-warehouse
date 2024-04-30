@@ -3,7 +3,7 @@ module Controller
     get "/api/heat-pump-counts/floor-area",
         auth_token_has_all: %w[warehouse:read] do
       use_case = Container.get_heat_pump_counts_by_floor_area_use_case
-      result = use_case.execute(start_date: "2022-05-01", end_date: "2022-05-31")
+      result = use_case.execute(start_date: "2022-05-01", end_date: "2023-05-31")
       json_api_response code: 200, data: result
     end
   end
