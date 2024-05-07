@@ -17,7 +17,7 @@ if [[ $VPC_ID = "" ]]; then
   exit 1
 fi
 
-if [[ $CLUSTER_NAME =~ "api" ]]; then
+if [[ $CLUSTER_NAME == *"warehouse-api"* ]]; then
     echo "IGNORE MIGRATIONS FOR ${CLUSTER_NAME}"
     exit 0
 fi
