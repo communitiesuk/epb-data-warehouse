@@ -4,6 +4,7 @@
 # ./run_db_migrate_task.sh $CLIENT_ROLE_ARN client
 PREFIX=$1
 PROFILE=$2
+CLUSTER_NAME=$3
 VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-warehouse-ecs-sg"
 CLUSTER_NAME="${PREFIX}-warehouse-cluster"
@@ -14,6 +15,11 @@ VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$VPC_NAME --query 
 if [[ $VPC_ID = "" ]]; then
   echo "VPC NOT FOUND FOR PROFILE ${PROFILE}"
   exit 1
+fi
+
+if [[ $CLUSTER_NAME =~ "api" ]]; then
+    echo "IGNORE MIGRATIONS FOR ${CLUSTER_NAME}"
+    exit 0
 fi
 
 SUBNET_GROUP_ID=$(aws ec2 describe-subnets --filter Name=vpc-id,Values=$VPC_ID --query 'Subnets[?MapPublicIpOnLaunch==`false`].SubnetId' --profile $PROFILE)
