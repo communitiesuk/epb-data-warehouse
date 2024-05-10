@@ -33,17 +33,19 @@ describe "HeatPumpController" do
     end
 
     before do
-      add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:)
+      add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: { "registration_date": "2023-05-02" })
       add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
         "main_heating": air_source_description,
         "total_floor_area": 34,
         "postcode": "ML9 9AR",
+        "registration_date": "2023-05-02",
       })
       add_assessment(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
         "main_heating": duplicate_ground_source_description,
         "property_type": 1,
         "total_floor_area": 59,
         "postcode": "ML9 9AR",
+        "registration_date": "2023-05-02",
       })
     end
 
