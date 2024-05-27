@@ -207,7 +207,7 @@ GEM
       murmurhash3 (~> 0.1.7)
     uri (0.13.0)
     version_gem (1.1.4)
-    webmock (3.23.0)
+    webmock (3.23.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -245,7 +245,7 @@ DEPENDENCIES
   sinatra-contrib
   timecop (~> 0.9.8)
   unleash (~> 5.0.1)
-  webmock (~> 3.19)
+  webmock (~> 3.23)
   zeitwerk (~> 2.6)
 
 RUBY VERSION
