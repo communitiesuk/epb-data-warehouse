@@ -12,8 +12,8 @@ group :test do
   gem "rspec", "~> 3.12"
   gem "rubocop-govuk", "~> 4.16", require: false
   gem "rubocop-performance", "~> 1.21", require: false
-  gem "timecop", "~> 0.9.8"
-  gem "webmock", "~> 3.19"
+  gem "timecop", "~> 0.9.9"
+  gem "webmock", "~> 3.23"
 end
 
 group :development do
@@ -21,13 +21,13 @@ group :development do
 end
 
 group :rake do
-  gem "notifications-ruby-client", "~> 6.0.0"
+  gem "notifications-ruby-client", "~> 6.1"
 end
 
 gem "activerecord", "~> 7.1"
 gem "activesupport", "~> 7.1"
 gem "async", "~> 2.11"
-gem "concurrent-ruby", "~> 1.2"
+gem "concurrent-ruby", "~> 1.3"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.0"
 gem "nokogiri", "~> 1.16"
