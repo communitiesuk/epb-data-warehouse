@@ -97,7 +97,6 @@ describe "Acceptance::ImportCertificate" do
     end
 
     it "saves the county_id to the assessments_country_id table " do
-      # result = Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: ids.first)
       expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id: ids.first, country_id: 1).exactly(1).times
     end
   end
