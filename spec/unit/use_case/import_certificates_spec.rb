@@ -57,7 +57,6 @@ describe UseCase::ImportCertificates do
 
     it "registers the assessments from the queue onto the recovery list" do
       use_case.execute
-
       expect(recovery_list_gateway).to have_received(:register_assessments).with(
         "0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", "0000-0000-0000-0000-0002",
         queue: :assessments

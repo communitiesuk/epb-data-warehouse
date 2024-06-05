@@ -7,13 +7,15 @@ shared_context "when getting attributes from db" do
 end
 
 describe "Acceptance::ImportCertificate" do
-  subject(:usecase) do
+  subject(:use_case) do
     UseCase::ImportCertificates.new import_xml_certificate_use_case:,
                                     recovery_list_gateway:,
                                     queues_gateway:
   end
 
   include_context "when getting attributes from db"
+
+  let(:assessments_country_id_gateway) { instance_double(Gateway::AssessmentsCountryIdGateway) }
 
   let(:import_xml_certificate_use_case) do
     eav_gateway = Gateway::AssessmentAttributesGateway.new
@@ -25,7 +27,8 @@ describe "Acceptance::ImportCertificate" do
     UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
                                       assessment_attribute_gateway: eav_gateway,
                                       certificate_gateway:,
-                                      recovery_list_gateway:
+                                      recovery_list_gateway:,
+                                      assessments_country_id_gateway:
   end
 
   let(:certificate_gateway) do
@@ -61,6 +64,7 @@ describe "Acceptance::ImportCertificate" do
       "notForIssueAt": nil,
       "schemaType": "RdSAP-Schema-20.0.0",
       "assessmentAddressId": "RRN-0000-0000-0000-0000-0000",
+      "country_id": 1,
     }
   end
 
@@ -77,7 +81,8 @@ describe "Acceptance::ImportCertificate" do
     allow(certificate_gateway).to receive(:fetch).and_return(xml_sample)
     allow(certificate_gateway).to receive(:fetch_meta_data).and_return(meta_data_sample)
     queues_gateway.push_to_queue(:assessments, ids)
-    usecase.execute
+    allow(assessments_country_id_gateway).to receive(:insert)
+    use_case.execute
   end
 
   context "when an assessment id is provided to the queue" do
@@ -89,6 +94,11 @@ describe "Acceptance::ImportCertificate" do
     it "saves the relevant json to the database" do
       response = attributes_values_from_database("json", "'{\"u_value\": 2, \"data_source\": 2, \"solar_transmittance\": 0.72}'")
       expect(response.length).to be >= 1
+    end
+
+    it "saves the county_id to the assessments_country_id table " do
+      result = Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: ids.first)
+      expect(result.country_id).to eq 1
     end
   end
 
@@ -102,7 +112,7 @@ describe "Acceptance::ImportCertificate" do
   end
 
   context "when importing with data point exceeding character limit" do
-    subject(:usecase) do
+    subject(:use_case) do
       UseCase::ImportCertificates.new import_xml_certificate_use_case:,
                                       recovery_list_gateway:,
                                       queues_gateway:
@@ -118,7 +128,8 @@ describe "Acceptance::ImportCertificate" do
       UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
                                         assessment_attribute_gateway: eav_gateway,
                                         certificate_gateway:,
-                                        recovery_list_gateway:
+                                        recovery_list_gateway:,
+                                        assessments_country_id_gateway:
     end
 
     let(:certificate_gateway) do
@@ -154,6 +165,7 @@ describe "Acceptance::ImportCertificate" do
         "notForIssueAt": nil,
         "schemaType": "CEPC-8.0.0",
         "assessmentAddressId": "RRN-0000-0000-0000-0000-0000",
+        "country_id": 1,
       }
     end
 
@@ -170,7 +182,7 @@ describe "Acceptance::ImportCertificate" do
       allow(certificate_gateway).to receive(:fetch).and_return(xml_sample)
       allow(certificate_gateway).to receive(:fetch_meta_data).and_return(meta_data_sample)
       queues_gateway.push_to_queue(:assessments, ids)
-      usecase.execute
+      use_case.execute
     end
 
     context "when an assessment id is provided to the queue for an assessment with a data point exceeding the character limit" do

@@ -4,11 +4,12 @@ module UseCase
 
     class UnimportableAssessment < RuntimeError; end
 
-    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(import_certificate_data_use_case:, assessment_attribute_gateway:, certificate_gateway:, recovery_list_gateway:, assessments_country_id_gateway:, logger: nil)
       @import_certificate_data_use_case = import_certificate_data_use_case
       @assessment_attribute_gateway = assessment_attribute_gateway
       @certificate_gateway = certificate_gateway
       @recovery_list_gateway = recovery_list_gateway
+      @assessments_country_id_gateway = assessments_country_id_gateway
       @logger = logger
     end
 
@@ -71,6 +72,7 @@ module UseCase
 
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
         @import_certificate_data_use_case.execute(assessment_id:, certificate_data: certificate)
+        @assessments_country_id_gateway.insert(assessment_id:, country_id: meta_data[:country_id])
       end
 
       clear_from_recovery_list assessment_id

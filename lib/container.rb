@@ -58,7 +58,8 @@ class Container
                                                                            assessment_attribute_gateway: assessment_attributes_gateway,
                                                                            certificate_gateway: register_api_gateway,
                                                                            recovery_list_gateway:,
-                                                                           logger:
+                                                                           logger:,
+                                                                           assessments_country_id_gateway:
   end
 
   def self.opt_out_certificates_use_case
@@ -80,6 +81,10 @@ class Container
 
   def self.export_heat_pumps_gateway
     @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
+  end
+
+  def self.assessments_country_id_gateway
+    @assessments_country_id_gateway ||= Gateway::AssessmentsCountryIdGateway.new
   end
 
   def self.file_gateway
