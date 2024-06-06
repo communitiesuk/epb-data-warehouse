@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_094405) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_05_145407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -64,12 +64,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_094405) do
     t.index ["lookup_value"], name: "index_assessment_lookups_on_lookup_value"
   end
 
-  create_table "assessments_country_ids", id: false, force: :cascade do |t|
-    t.string "assessment_id"
+  create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.integer "country_id"
+    t.index ["country_id"], name: "index_assessments_country_ids_on_country_id"
   end
 
-  create_table "countries", id: false, force: :cascade do |t|
+  create_table "countries", primary_key: "country_id", id: :integer, default: nil, force: :cascade do |t|
     t.string "country_code"
     t.string "country_name"
     t.jsonb "address_base_country_code"
