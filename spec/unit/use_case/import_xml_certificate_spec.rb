@@ -234,6 +234,24 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
         expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id:, country_id:).exactly(1).times
       end
     end
+
+    context "when the certificate has no country_id" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: true,
+                                                                             createdAt: "2021-07-21T11:26:28.045Z",
+                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
+                                                                             hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
+                                                                             country_id: nil })
+        use_case.execute(assessment_id)
+      end
+
+      it "sends the country_id to the assessments_country_id_gateway" do
+        expect(assessments_country_id_gateway).not_to have_received(:insert)
+      end
+    end
   end
 
   context "when the certificate gateway is not functioning to return items" do
