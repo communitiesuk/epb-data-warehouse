@@ -46,10 +46,6 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
     "0000-0000-0000-0000-0000"
   end
 
-  let(:country_id) do
-    1
-  end
-
   let(:sample) do
     Samples.xml("RdSAP-Schema-20.0.0")
   end
@@ -226,12 +222,12 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
                                                                              cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
-                                                                             country_id: })
+                                                                             countryId: 1 })
         use_case.execute(assessment_id)
       end
 
       it "sends the country_id to the assessments_country_id_gateway" do
-        expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id:, country_id:).exactly(1).times
+        expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id:, country_id: 1).exactly(1).times
       end
     end
 
@@ -244,7 +240,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
                                                                              cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
-                                                                             country_id: nil })
+                                                                             countryId: nil })
         use_case.execute(assessment_id)
       end
 

@@ -72,7 +72,7 @@ module UseCase
 
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
         @import_certificate_data_use_case.execute(assessment_id:, certificate_data: certificate)
-        @assessments_country_id_gateway.insert(assessment_id:, country_id: meta_data[:country_id]) unless meta_data[:country_id].nil?
+        @assessments_country_id_gateway.insert(assessment_id:, country_id: meta_data[:countryId]) unless meta_data[:countryId].nil?
       end
 
       clear_from_recovery_list assessment_id

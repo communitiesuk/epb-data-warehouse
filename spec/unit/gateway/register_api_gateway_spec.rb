@@ -134,7 +134,7 @@ describe Gateway::RegisterApiGateway do
             "notForIssueAt": nil,
             "schemaType": "RdSAP-Schema-20.0.0",
             "assessmentAddressId": "UPRN-000000000001",
-            "country_id": 1,
+            "countryId": 1,
           },
           "meta": {},
         }.to_json

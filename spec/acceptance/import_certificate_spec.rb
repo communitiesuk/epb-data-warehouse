@@ -64,7 +64,7 @@ describe "Acceptance::ImportCertificate" do
       "notForIssueAt": nil,
       "schemaType": "RdSAP-Schema-20.0.0",
       "assessmentAddressId": "RRN-0000-0000-0000-0000-0000",
-      "country_id": 1,
+      "countryId": 1,
     }
   end
 
