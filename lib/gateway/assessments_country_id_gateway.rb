@@ -27,5 +27,9 @@ module Gateway
         ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       end
     end
+
+    def delete(assessment_id:)
+      AssessmentsCountryId.delete(assessment_id)
+    end
   end
 end

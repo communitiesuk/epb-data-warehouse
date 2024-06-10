@@ -2,13 +2,14 @@ module UseCase
   class CancelCertificates
     include Helper::MetaDataRule
 
-    def initialize(eav_gateway:, queues_gateway:, api_gateway:, documents_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(eav_gateway:, queues_gateway:, api_gateway:, documents_gateway:, recovery_list_gateway:, assessments_country_id_gateway:, logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @queues_gateway = queues_gateway
       @api_gateway = api_gateway
       @documents_gateway = documents_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
+      @assessments_country_id_gateway = assessments_country_id_gateway
     end
 
     def execute(from_recovery_list: false)
@@ -24,6 +25,7 @@ module UseCase
         unless (meta_data[:cancelledAt].nil? && meta_data[:notForIssueAt].nil?) || should_exclude?(meta_data:)
           @assessment_attribute_gateway.delete_attributes_by_assessment assessment_id
           @documents_gateway.delete_assessment assessment_id:
+          @assessments_country_id_gateway.delete(assessment_id:)
         end
 
         clear_assessment_from_recovery_list assessment_id

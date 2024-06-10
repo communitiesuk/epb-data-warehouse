@@ -10,4 +10,18 @@ describe Gateway::AssessmentsCountryIdGateway do
       expect(row.country_id).to eq 5
     end
   end
+
+  describe "#delete" do
+    let(:assessment_id) { "0000-0000-0001-1234-0000" }
+
+    before do
+      country_id = 5
+      gateway.insert(assessment_id:, country_id:)
+    end
+
+    it "removed the row to the table" do
+      expect { gateway.delete(assessment_id:) }.not_to raise_error
+      expect(Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.count).to eq 0
+    end
+  end
 end

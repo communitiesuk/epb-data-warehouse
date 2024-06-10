@@ -7,7 +7,8 @@ describe UseCase::CancelCertificates do
                         api_gateway:,
                         documents_gateway:,
                         recovery_list_gateway:,
-                        logger:
+                        logger:,
+                        assessments_country_id_gateway:
   end
 
   let(:eav_database_gateway) do
@@ -46,6 +47,12 @@ describe UseCase::CancelCertificates do
     logger
   end
 
+  let(:assessments_country_id_gateway) do
+    gateway = instance_double(Gateway::AssessmentsCountryIdGateway)
+    allow(gateway).to receive(:delete)
+    gateway
+  end
+
   context "when the queues gateway is functioning correctly" do
     before do
       allow(eav_database_gateway).to receive(:delete_attributes_by_assessment).and_return(true)
@@ -65,6 +72,11 @@ describe UseCase::CancelCertificates do
       it "passes the relevant certificates to the documents gateway" do
         use_case.execute
         expect(documents_gateway).to have_received(:delete_assessment).exactly(3).times
+      end
+
+      it "passes the relevant assessment id to the AssessmentsCountryIdGateway" do
+        use_case.execute
+        expect(assessments_country_id_gateway).to have_received(:delete).exactly(3).times
       end
 
       it "clears the assessments from the recovery list" do
