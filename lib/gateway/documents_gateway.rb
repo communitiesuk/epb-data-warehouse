@@ -1,5 +1,8 @@
 module Gateway
   class DocumentsGateway
+    class AssessmentDocument < ActiveRecord::Base
+    end
+
     def add_assessment(assessment_id:, document:)
       sql = <<-SQL
         INSERT INTO assessment_documents (assessment_id, document, created_at, updated_at) VALUES ($1, $2, $3, $4)

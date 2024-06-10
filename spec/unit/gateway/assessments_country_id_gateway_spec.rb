@@ -11,7 +11,7 @@ describe Gateway::AssessmentsCountryIdGateway do
     end
   end
 
-  describe "#delete" do
+  describe "#delete_assessment" do
     let(:assessment_id) { "0000-0000-0001-1234-0000" }
 
     before do
@@ -20,7 +20,7 @@ describe Gateway::AssessmentsCountryIdGateway do
     end
 
     it "removed the row to the table" do
-      expect { gateway.delete(assessment_id:) }.not_to raise_error
+      expect { gateway.delete_assessment(assessment_id:) }.not_to raise_error
       expect(Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.count).to eq 0
     end
   end

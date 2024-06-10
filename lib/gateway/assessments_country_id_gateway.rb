@@ -28,7 +28,7 @@ module Gateway
       end
     end
 
-    def delete(assessment_id:)
+    def delete_assessment(assessment_id:)
       AssessmentsCountryId.delete(assessment_id)
     end
   end
