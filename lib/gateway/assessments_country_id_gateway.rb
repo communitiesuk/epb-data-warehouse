@@ -29,7 +29,19 @@ module Gateway
     end
 
     def delete_assessment(assessment_id:)
-      AssessmentsCountryId.delete(assessment_id)
+      sql = <<-SQL
+              DELETE FROM assessments_country_ids
+              WHERE assessment_id=$1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
   end
 end
