@@ -33,7 +33,8 @@ class Container
                                                                       api_gateway: register_api_gateway,
                                                                       documents_gateway:,
                                                                       recovery_list_gateway:,
-                                                                      logger:
+                                                                      logger:,
+                                                                      assessments_country_id_gateway:
   end
 
   def self.fetch_certificate_use_case
