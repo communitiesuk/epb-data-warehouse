@@ -244,7 +244,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
         use_case.execute(assessment_id)
       end
 
-      it "sends the country_id to the assessments_country_id_gateway" do
+      it "does not send the country_id to the assessments_country_id_gateway" do
         expect(assessments_country_id_gateway).not_to have_received(:insert)
       end
     end
