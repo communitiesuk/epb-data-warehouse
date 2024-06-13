@@ -32,6 +32,10 @@ describe "HeatPumpController" do
        { "totalFloorArea" => "BETWEEN 51 AND 100", "numberOfAssessments" => 1 }]
     end
 
+    before(:all) do
+      add_countries
+    end
+
     before do
       add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: { "registration_date": "2023-05-02" })
       add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
