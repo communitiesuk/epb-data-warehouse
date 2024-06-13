@@ -11,7 +11,7 @@ describe Gateway::ExportHeatPumpsGateway do
   before(:all) do
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
-
+    add_countries
     air_source_description = [{
       "description": {
         "value": "Air source heat pump, Underfloor heating and radiators, pipes in screed above insulation, electric",
@@ -126,6 +126,9 @@ describe Gateway::ExportHeatPumpsGateway do
     add_assessment(assessment_id: "0000-0000-0000-0000-0017", schema_type:, type_of_assessment:, different_fields: {
       "main_heating": air_and_ground_source,
     })
+    add_ni_assessment(assessment_id: "0000-0000-0000-0000-0018", different_fields: {
+      "postcode": "BT10 0AA",
+    })
   end
 
   before do
@@ -141,7 +144,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
+      expect(expected_values - gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
     end
   end
 
@@ -156,7 +159,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
+      expect(expected_values - gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
     end
   end
 
@@ -173,7 +176,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_local_authority(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
+      expect(expected_values - gateway.fetch_by_local_authority(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
     end
   end
 
@@ -185,7 +188,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_parliamentary_constituency(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
+      expect(expected_values - gateway.fetch_by_parliamentary_constituency(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
     end
   end
 
@@ -203,7 +206,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(gateway.fetch_by_description(start_date: "2022-05-01", end_date: "2022-05-31") - expected_values).to eq []
+      expect(expected_values - gateway.fetch_by_description(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
     end
   end
 end

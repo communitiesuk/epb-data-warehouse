@@ -5,14 +5,17 @@ module Gateway
     NOT_POST_CODE = "BT%".freeze
     MAIN_HEATING = "%heat pump%".freeze
     MAIN_HEATING_WELSH = "%pwmp gwres%".freeze
+    ENGLAND_AND_WALES_CODES = %w[ENG EAW WLS].freeze
 
     def fetch_by_property_type(start_date:, end_date:)
       sql = <<-SQL
        SELECT
            al.lookup_value AS property_type,
-           COUNT(assessment_id) AS number_of_assessments
+           COUNT(ad.assessment_id) AS number_of_assessments
        FROM assessment_documents ad
-         JOIN assessment_lookups al ON al.lookup_key = ad.document ->> 'property_type'
+        JOIN assessment_lookups al ON al.lookup_key = ad.document ->> 'property_type'
+        JOIN assessments_country_ids ac ON ad.assessment_id= ac.assessment_id
+        JOIN countries co ON co.country_id = ac.country_id#{'  '}
          JOIN (
             SELECT DISTINCT lookup_id FROM assessment_attribute_lookups aal
             JOIN assessment_attributes aa ON aal.attribute_id = aa.attribute_id
@@ -21,8 +24,8 @@ module Gateway
        WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
          AND ad.document ->> 'assessment_type' = $3
          AND ad.document ->> 'transaction_type' = $4
-         AND ad.document ->> 'postcode' NOT LIKE $5
-         AND ((ad.document -> 'main_heating')::varchar ILIKE $6 OR (ad.document -> 'main_heating')::varchar ILIKE $7)
+         AND ((ad.document -> 'main_heating')::varchar ILIKE $5 OR (ad.document -> 'main_heating')::varchar ILIKE $6)
+          AND co.country_code IN  (#{england_and_wales_codes})
        GROUP BY al.lookup_value;
       SQL
 
@@ -40,13 +43,15 @@ module Gateway
            WHEN (ad.document ->> 'total_floor_area')::numeric BETWEEN 201 AND 250 THEN 'BETWEEN 201 AND 250'
            WHEN (ad.document ->> 'total_floor_area')::numeric >= 251 THEN 'GREATER THAN 251'
          END AS total_floor_area,
-             COUNT(assessment_id) AS number_of_assessments
+             COUNT(ad.assessment_id) AS number_of_assessments
        FROM assessment_documents ad
+       JOIN assessments_country_ids ac ON ad.assessment_id= ac.assessment_id
+       JOIN countries co ON co.country_id = ac.country_id#{'  '}
        WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
          AND ad.document ->> 'assessment_type' = $3
          AND ad.document ->> 'transaction_type' = $4
-         AND ad.document ->> 'postcode' NOT LIKE $5
-         AND ((ad.document -> 'main_heating')::varchar ILIKE $6 OR (ad.document -> 'main_heating')::varchar ILIKE $7)
+         AND ((ad.document -> 'main_heating')::varchar ILIKE $5 OR (ad.document -> 'main_heating')::varchar ILIKE $6)
+         AND co.country_code IN  (#{england_and_wales_codes})
        GROUP BY
          CASE
            WHEN (ad.document ->> 'total_floor_area')::numeric BETWEEN 0 AND 50 THEN 'BETWEEN 0 AND 50'
@@ -63,15 +68,17 @@ module Gateway
 
     def fetch_by_local_authority(start_date:, end_date:)
       sql = <<~SQL
-        SELECT COUNT(DISTINCT assessment_id) AS number_of_assessments, onsn.name AS local_authority
+        SELECT COUNT(DISTINCT ad.assessment_id) AS number_of_assessments, onsn.name AS local_authority
         FROM assessment_documents ad
           LEFT JOIN ons_postcode_directory ons ON ad.document ->> 'postcode' = ons.postcode
           LEFT JOIN ons_postcode_directory_names onsn ON ons.local_authority_code = onsn.area_code
+         JOIN assessments_country_ids ac ON ad.assessment_id= ac.assessment_id
+          JOIN countries co ON co.country_id = ac.country_id#{'  '}
         WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
           AND ad.document ->> 'assessment_type' = $3
           AND ad.document ->> 'transaction_type' = $4
-          AND ad.document ->> 'postcode' NOT LIKE $5
-          AND ((ad.document -> 'main_heating')::varchar  ILIKE $6 OR (ad.document -> 'main_heating')::varchar ILIKE $7)
+          AND ((ad.document -> 'main_heating')::varchar  ILIKE $5 OR (ad.document -> 'main_heating')::varchar ILIKE $6)
+         AND co.country_code IN  (#{england_and_wales_codes})
         GROUP BY onsn.name;
       SQL
 
@@ -81,15 +88,17 @@ module Gateway
     def fetch_by_parliamentary_constituency(start_date:, end_date:)
       sql = <<~SQL
         SELECT onsn.name AS westminster_parliamentary_constituency,
-               COUNT(DISTINCT assessment_id) AS number_of_assessments
+               COUNT(DISTINCT ad.assessment_id) AS number_of_assessments
         FROM assessment_documents ad
           LEFT JOIN ons_postcode_directory ons ON ad.document ->> 'postcode' = ons.postcode
           LEFT JOIN ons_postcode_directory_names onsn ON ons.westminster_parliamentary_constituency_code = onsn.area_code
+          JOIN assessments_country_ids ac ON ad.assessment_id= ac.assessment_id
+          JOIN countries co ON co.country_id = ac.country_id#{'  '}
         WHERE  ad.document->>'registration_date' BETWEEN $1 AND $2
           AND ad.document ->> 'assessment_type' = $3
           AND ad.document ->> 'transaction_type' = $4
-          AND ad.document ->> 'postcode' NOT LIKE $5
-          AND ((ad.document -> 'main_heating')::varchar ILIKE $6 OR (ad.document -> 'main_heating')::varchar ILIKE $7)
+          AND ((ad.document -> 'main_heating')::varchar ILIKE $5 OR (ad.document -> 'main_heating')::varchar ILIKE $6)
+        AND co.country_code IN  (#{england_and_wales_codes})
         GROUP BY onsn.name;
       SQL
 
@@ -115,13 +124,16 @@ module Gateway
             ELSE main_heating_description
           END AS heat_pump_description
         FROM (
-        SELECT assessment_id as assessment_id,
+        SELECT ad.assessment_id,
                (jsonb_array_elements(ad.document -> ('main_heating')) ->> 'description')::varchar AS main_heating_description
         FROM assessment_documents ad
+          JOIN assessments_country_ids ac ON ad.assessment_id= ac.assessment_id
+          JOIN countries co ON co.country_id = ac.country_id#{'  '}
         WHERE ad.document->>'registration_date' BETWEEN $1 AND $2
           AND ad.document ->> 'assessment_type' = 'SAP'
-          AND ad.document ->> 'postcode' NOT LIKE 'BT%'
+          AND co.country_code IN  (#{england_and_wales_codes})#{' '}
           AND ad.document ->> 'transaction_type' = '6') AS main_heating_query
+        #{'   '}
         WHERE ((main_heating_description ILIKE '%heat pump%') OR (main_heating_description ILIKE '%pwmp gwres%'))
         GROUP BY
           CASE
@@ -168,11 +180,6 @@ module Gateway
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
-          "not_post_code",
-          NOT_POST_CODE,
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
           "main_heating",
           MAIN_HEATING,
           ActiveRecord::Type::String.new,
@@ -183,6 +190,10 @@ module Gateway
           ActiveRecord::Type::String.new,
         ),
       ]
+    end
+
+    def england_and_wales_codes
+      ENGLAND_AND_WALES_CODES.map { |n| "'#{n}'" }.join(",")
     end
   end
 end

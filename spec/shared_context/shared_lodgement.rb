@@ -28,6 +28,29 @@ shared_context "when lodging XML" do
     document.merge!(different_fields) unless different_fields.nil?
     document.merge!(meta_data_sample)
     Gateway::DocumentsGateway.new.add_assessment(assessment_id:, document:)
+    add_assessment_country_id(assessment_id:, document:)
+  end
+
+  def add_assessment_country_id(assessment_id:, document:)
+    country_id = document&.fetch(:postcode, "")&.start_with?("BT") ? 4 : 1
+    Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_or_create_by(assessment_id:, country_id:)
+  end
+
+  def add_countries
+    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
+
+    insert_sql = <<-SQL
+            INSERT INTO countries(country_id, country_code, country_name, address_base_country_code)
+            VALUES (1, 'ENG', 'England' ,'["E"]'::jsonb),
+                   (2, 'EAW', 'England and Wales', '["E", "W"]'::jsonb),
+                     (3, 'UKN', 'Unknown', '{}'::jsonb),
+                    (4, 'NIR', 'Northern Ireland', '["N"]'::jsonb),
+                    (5, 'SCT', 'Scotland', '["S"]'::jsonb),
+            (6,'', 'Channel Islands', '["L"]'::jsonb),
+                (7,'NR', 'Not Recorded', null)
+
+    SQL
+    ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
   end
 
   def add_heat_pump_data(document)
