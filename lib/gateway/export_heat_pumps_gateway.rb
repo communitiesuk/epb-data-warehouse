@@ -2,7 +2,6 @@ module Gateway
   class ExportHeatPumpsGateway
     ASSESSMENT_TYPE = "SAP".freeze
     TRANSACTION_TYPE = "6".freeze
-    NOT_POST_CODE = "BT%".freeze
     MAIN_HEATING = "%heat pump%".freeze
     MAIN_HEATING_WELSH = "%pwmp gwres%".freeze
     ENGLAND_AND_WALES_CODES = %w[ENG EAW WLS].freeze
