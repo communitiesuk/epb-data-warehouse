@@ -117,8 +117,8 @@ GEM
     redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
-    rexml (3.2.8)
-      strscan (>= 3.0.9)
+    rexml (3.3.1)
+      strscan
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -235,7 +235,7 @@ DEPENDENCIES
   rackup (~> 2.1)
   rake (~> 13.2)
   redis (~> 5.2)
-  rexml (~> 3.2)
+  rexml (~> 3.3)
   rspec (~> 3.12)
   rubocop-govuk (~> 4.16)
   rubocop-performance (~> 1.21)
