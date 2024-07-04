@@ -35,6 +35,24 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
+    def fetch_assessment_json(assessment_id:)
+      sql = <<-SQL
+        SELECT document
+        FROM assessment_documents
+        WHERE assessment_id = $1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["document"]
+    end
+
     def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:)
       sql = <<-SQL
         UPDATE assessment_documents SET document=jsonb_set(document, '{#{top_level_attribute}}', $1::jsonb), updated_at=$2 WHERE assessment_id=$3

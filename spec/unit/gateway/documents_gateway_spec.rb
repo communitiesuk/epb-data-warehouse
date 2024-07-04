@@ -147,4 +147,15 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
       expect(response.count).to eq 0
     end
   end
+
+  context "when fetching the json for an assessment" do
+    before do
+      gateway.add_assessment(assessment_id:, document: assessment_data)
+    end
+
+    it "fetches the json" do
+      result = gateway.fetch_assessment_json(assessment_id:)
+      expect(JSON.parse(result)).to eq assessment_data
+    end
+  end
 end
