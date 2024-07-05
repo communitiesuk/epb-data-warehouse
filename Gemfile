@@ -27,6 +27,7 @@ end
 gem "activerecord", "~> 7.1"
 gem "activesupport", "~> 7.1"
 gem "async", "~> 2.11"
+gem "aws-sdk-s3", "~> 1"
 gem "concurrent-ruby", "~> 1.3"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.1.0"
