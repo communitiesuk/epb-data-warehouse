@@ -129,9 +129,9 @@ RSpec.configure do |config|
     Container.reset!
   end
 
-  # config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 12, 13)) }
-  #
-  # config.after(:all, set_with_timecop: true) { Timecop.return }
-  #
-  # config.after { DatabaseCleaner.clean }
+  config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 12, 13)) }
+
+  config.after(:all, set_with_timecop: true) { Timecop.return }
+
+  config.after { DatabaseCleaner.clean }
 end
