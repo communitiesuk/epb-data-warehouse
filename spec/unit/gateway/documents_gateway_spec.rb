@@ -148,14 +148,18 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
     end
   end
 
-  context "when fetching the json for an assessment" do
+  context "when fetching the json for assessments" do
     before do
       gateway.add_assessment(assessment_id:, document: assessment_data)
+      assessment_id2 = "8570-6826-6530-4969-0203"
+      assessment_data["rrn"] = assessment_id2
+      gateway.add_assessment(assessment_id: assessment_id2, document: assessment_data)
     end
 
-    it "fetches the json" do
-      result = gateway.fetch_assessment_json(assessment_id:)
-      expect(JSON.parse(result)).to eq assessment_data
+    it "fetches all the documents" do
+      result = gateway.fetch_assessments_json
+      expect(result.count).to eq 2
+      expect(result.first).to be_a Domain::RedactedDocument
     end
   end
 end

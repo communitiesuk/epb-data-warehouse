@@ -11,7 +11,7 @@ module Domain
       }
     end
 
-    private
+  private
 
     def redact_json(document)
       document = JSON.parse(document).to_hash
