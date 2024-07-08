@@ -15,7 +15,7 @@ describe Gateway::StorageGateway do
     end
 
     it "can write an object" do
-      response = storage_gateway.write_file("test", "Hello!")
+      response = storage_gateway.write_file(file_name: "test", data: "Hello!")
       expect(response.successful?).to be(true)
     end
   end

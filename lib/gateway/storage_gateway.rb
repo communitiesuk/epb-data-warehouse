@@ -9,7 +9,7 @@ module Gateway
       @client = stub_responses ? initialise_client_stub : initialise_client
     end
 
-    def write_file(file_name, data)
+    def write_file(file_name:, data:)
       client.put_object(
         body: data,
         bucket: @bucket_name,
