@@ -8,7 +8,7 @@ describe Gateway::ExportHeatPumpsGateway do
   include_context "when lodging XML"
   include_context "when saving ons data"
 
-  before do
+  before(:all) do
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
     add_countries
@@ -129,7 +129,6 @@ describe Gateway::ExportHeatPumpsGateway do
     add_ni_assessment(assessment_id: "0000-0000-0000-0000-0018", different_fields: {
       "postcode": "BT10 0AA",
     })
-    allow($stdout).to receive(:puts)
   end
 
   describe "#fetch_by_property_type" do

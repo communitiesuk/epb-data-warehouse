@@ -133,5 +133,5 @@ RSpec.configure do |config|
 
   config.after(:all, set_with_timecop: true) { Timecop.return }
 
-  config.after { DatabaseCleaner.clean }
+  config.after(:all) { DatabaseCleaner.clean }
 end
