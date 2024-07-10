@@ -154,11 +154,12 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
       assessment_id2 = "8570-6826-6530-4969-0203"
       assessment_data["rrn"] = assessment_id2
       gateway.add_assessment(assessment_id: assessment_id2, document: assessment_data)
+      Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: "8570-6826-6530-4969-0203").update(created_at: Time.new(2020, 0o6, 0o1))
     end
 
-    it "fetches all the documents" do
-      result = gateway.fetch_assessments_json
-      expect(result.count).to eq 2
+    it "fetches documents within the start and end date" do
+      result = gateway.fetch_assessments_json(date_from: "2020-05-01", date_to: "2020-07-01")
+      expect(result.count).to eq 1
       expect(result.first).to be_a Domain::RedactedDocument
     end
   end

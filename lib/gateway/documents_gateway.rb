@@ -35,13 +35,27 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
-    def fetch_assessments_json
+    def fetch_assessments_json(date_from:, date_to:)
       sql = <<-SQL
         SELECT document, assessment_id
         FROM assessment_documents
+        WHERE created_at between $1 and $2
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| Domain::RedactedDocument.new(result:) }
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_from,
+          ActiveRecord::Type::DateTime.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          date_to,
+          ActiveRecord::Type::DateTime.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| Domain::RedactedDocument.new(result:) }
     end
 
     def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:)

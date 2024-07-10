@@ -9,6 +9,8 @@ describe "ExportDocumentsRake" do
 
   before do
     ENV["BUCKET_NAME"] = "test"
+    ENV["DATE_FROM"] = "2020-02-01"
+    ENV["DATE_TO"] = "2020-03-01"
     allow(Container).to receive(:storage_gateway).and_return storage_gateway
     allow(UseCase::ExportAssessmentDocuments).to receive(:new).and_return use_case
     allow(use_case).to receive(:execute)
@@ -16,6 +18,8 @@ describe "ExportDocumentsRake" do
 
   after do
     ENV["BUCKET_NAME"] = nil
+    ENV["DATE_FROM"] = nil
+    ENV["DATE_TO"] = nil
   end
 
   context "when exporting documents to s3" do
@@ -27,7 +31,26 @@ describe "ExportDocumentsRake" do
     it "raises an error if no bucket name is provided" do
       ENV["BUCKET_NAME"] = nil
 
-      expect { task.invoke }.to raise_error Boundary::ArgumentMissing
+      expect { task.invoke }.to raise_error(Boundary::ArgumentMissing, "A required argument is missing: bucket_name")
+    end
+
+    it "raises an error if when the date_from is not provided" do
+      ENV["DATE_FROM"] = nil
+
+      expect { task.invoke }.to raise_error(Boundary::ArgumentMissing, "A required argument is missing: date_from")
+    end
+
+    it "raises an error if when the date_to is not provided" do
+      ENV["DATE_TO"] = nil
+
+      expect { task.invoke }.to raise_error(Boundary::ArgumentMissing, "A required argument is missing: date_to")
+    end
+
+    it "raises error if the date_from is after date_to" do
+      ENV["DATE_FROM"] = "2020-03-01"
+      ENV["DATE_TO"] = "2020-02-01"
+
+      expect { task.invoke }.to raise_error(Boundary::InvalidDates, "date_from cannot be greater than date_to")
     end
   end
 
