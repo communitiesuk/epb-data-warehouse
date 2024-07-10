@@ -107,4 +107,8 @@ class Container
   def self.reset!
     instance_variables.each { |var| instance_variable_set(var, nil) }
   end
+
+  def self.storage_gateway(stub_responses: true)
+    @storage_gateway ||= Gateway::StorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses:)
+  end
 end

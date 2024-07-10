@@ -78,4 +78,15 @@ describe UseCase::ExportAssessmentDocuments do
       expect(storage_gateway).to have_received(:write_file).with(file_name: assessment_documents[1][:assessment_id], data: assessment_documents[1][:document])
     end
   end
+
+  context "when there is a storage error" do
+    before do
+      allow(documents_gateway).to receive(:fetch_assessments_json).and_return assessment_documents
+      allow(storage_gateway).to receive(:write_file).and_raise Aws::S3::Errors::ServiceError.new(Seahorse::Client::RequestContext, "something has gone wrong")
+    end
+
+    it "raises an error" do
+      expect { use_case.execute }.to raise_error Aws::S3::Errors::ServiceError
+    end
+  end
 end

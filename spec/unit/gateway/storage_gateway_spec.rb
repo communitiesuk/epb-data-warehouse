@@ -9,14 +9,26 @@ describe Gateway::StorageGateway do
 
     let(:fake_s3) { {} }
 
-    before do
-      stub_file_response(storage_gateway.client)
-      storage_gateway.client.create_bucket(bucket: "my-bucket")
+    context "when the bucket doesn't exist" do
+      before do
+        stub_file_response(storage_gateway.client)
+      end
+
+      it "catches and raises an error" do
+        expect { storage_gateway.write_file(file_name: "test", data: "Hello!") }.to raise_error Aws::S3::Errors::ServiceError
+      end
     end
 
-    it "can write an object" do
-      response = storage_gateway.write_file(file_name: "test", data: "Hello!")
-      expect(response.successful?).to be(true)
+    context "when the bucket does exist" do
+      before do
+        stub_file_response(storage_gateway.client)
+        storage_gateway.client.create_bucket(bucket: "my-bucket")
+      end
+
+      it "can write an object" do
+        response = storage_gateway.write_file(file_name: "test", data: "Hello!")
+        expect(response.successful?).to be(true)
+      end
     end
   end
 end

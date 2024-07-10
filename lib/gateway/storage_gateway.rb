@@ -15,6 +15,8 @@ module Gateway
         bucket: @bucket_name,
         key: file_name,
       )
+    rescue Aws::S3::Errors::ServiceError
+      raise
     end
 
   private
