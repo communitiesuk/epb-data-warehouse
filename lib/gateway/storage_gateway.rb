@@ -10,7 +10,7 @@ module Gateway
     end
 
     def write_file(file_name:, data:)
-      client.put_object(
+      @client.put_object(
         body: data,
         bucket: @bucket_name,
         key: file_name,
