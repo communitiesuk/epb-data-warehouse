@@ -25,7 +25,6 @@ module Gateway
       Aws::S3::Client.new(
         region: "eu-west-2",
         credentials: Aws::ECSCredentials.new,
-        stub_responses:,
       )
     end
 
