@@ -160,7 +160,7 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
     it "fetches documents within the start and end date" do
       result = gateway.fetch_assessments_json(date_from: "2020-05-01", date_to: "2020-07-01")
       expect(result.count).to eq 1
-      expect(result.first).to be_a Domain::RedactedDocument
+      expect(result.first[:assessment_id]).to eq "8570-6826-6530-4969-0203"
     end
   end
 end

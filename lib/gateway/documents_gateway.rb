@@ -55,7 +55,7 @@ module Gateway
         ),
       ]
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| Domain::RedactedDocument.new(result:) }
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| Domain::RedactedDocument.new(result:).to_hash }
     end
 
     def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:)
