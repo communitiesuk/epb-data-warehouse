@@ -5,6 +5,7 @@ describe UseCase::PullQueues do
     UseCase::ImportCertificates,
     UseCase::CancelCertificates,
     UseCase::OptOutCertificates,
+    UseCase::UpdateCertificateAddresses,
   ]
 
   context "when executing the use case" do

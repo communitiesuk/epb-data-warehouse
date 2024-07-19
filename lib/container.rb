@@ -96,6 +96,14 @@ class Container
     @notify_gateway ||= Gateway::NotifyGateway.new(Notifications::Client.new(ENV["NOTIFY_CLIENT_API_KEY"]))
   end
 
+  def self.update_certificate_addresses_use_case
+    @update_certificate_addresses_use_case ||= UseCase::UpdateCertificateAddresses.new eav_gateway: assessment_attributes_gateway,
+                                                                                       documents_gateway:,
+                                                                                       queues_gateway:,
+                                                                                       recovery_list_gateway:,
+                                                                                       logger:
+  end
+
   def self.pull_queues_use_case
     @pull_queues_use_case ||= UseCase::PullQueues.new
   end
