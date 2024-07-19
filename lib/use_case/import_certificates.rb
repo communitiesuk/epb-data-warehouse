@@ -5,6 +5,7 @@ module UseCase
       @queues_gateway = queues_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
+      @queue = :assessments
     end
 
     def execute(from_recovery_list: false)
@@ -34,9 +35,10 @@ module UseCase
     end
 
   private
+    attr_accessor :queue
 
     def register_to_recovery_list(assessment_ids)
-      @recovery_list_gateway.register_assessments(*assessment_ids, queue: :assessments)
+      @recovery_list_gateway.register_assessments(*assessment_ids, queue:)
     end
   end
 end
