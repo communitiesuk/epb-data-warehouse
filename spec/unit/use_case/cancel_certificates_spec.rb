@@ -165,7 +165,7 @@ describe UseCase::CancelCertificates do
       end
 
       it "registers an attempt for the assessment that failed" do
-        expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id: failed_assessment, queue: :cancelled)
+        expect(recovery_list_gateway).to have_received(:register_attempt).with(payload: failed_assessment, queue: :cancelled)
       end
     end
   end

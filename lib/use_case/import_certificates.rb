@@ -35,6 +35,7 @@ module UseCase
     end
 
   private
+
     attr_accessor :queue
 
     def register_to_recovery_list(assessment_ids)

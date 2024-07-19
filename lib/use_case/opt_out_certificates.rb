@@ -19,7 +19,7 @@ module UseCase
       if from_recovery_list
         assessment_ids = @recovery_list_gateway.assessments queue:
       else
-        assessment_ids = @queues_gateway.consume_queue(queue: )
+        assessment_ids = @queues_gateway.consume_queue(queue:)
         register_assessments_to_recovery_list assessment_ids
       end
 
@@ -52,6 +52,7 @@ module UseCase
     end
 
   private
+
     attr_accessor :queue
 
     def save_attribute_to_stores(assessment_id:, attribute:, value:)
@@ -70,11 +71,11 @@ module UseCase
     end
 
     def clear_assessment_on_recovery_list(assessment_id)
-      @recovery_list_gateway.clear_assessment assessment_id, queue:
+      @recovery_list_gateway.clear_assessment payload: assessment_id, queue:
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt assessment_id:, queue:
+      @recovery_list_gateway.register_attempt payload: assessment_id, queue:
     end
 
     def register_assessments_to_recovery_list(assessment_ids)

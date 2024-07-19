@@ -137,7 +137,7 @@ describe UseCase::OptOutCertificates, set_with_timecop: true do
       end
 
       it "registers a processing attempt on the recovery list for the erroring assessment" do
-        expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id: erroring_assessment, queue: :opt_outs)
+        expect(recovery_list_gateway).to have_received(:register_attempt).with(payload: erroring_assessment, queue: :opt_outs)
       end
     end
 

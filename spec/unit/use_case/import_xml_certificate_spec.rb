@@ -74,7 +74,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
           hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
         })
         use_case.execute(assessment_id)
-        expect(recovery_list_gateway).to have_received(:clear_assessment).with(assessment_id, queue: :assessments)
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
       end
 
       context "when the certificate is opted out" do
@@ -144,7 +144,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
       end
 
       it "clears the assessment from the recovery list" do
-        expect(recovery_list_gateway).to have_received(:clear_assessment).with(assessment_id, queue: :assessments)
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
       end
     end
 
@@ -181,7 +181,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
       end
 
       it "clears the assessment from the recovery list" do
-        expect(recovery_list_gateway).to have_received(:clear_assessment).with(assessment_id, queue: :assessments)
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
       end
     end
 
@@ -270,7 +270,7 @@ describe UseCase::ImportXmlCertificate, set_with_timecop: true do
     end
 
     it "reports an attempt to process the assessment onto the recovery list" do
-      expect(recovery_list_gateway).to have_received(:register_attempt).with(assessment_id:, queue: :assessments)
+      expect(recovery_list_gateway).to have_received(:register_attempt).with(payload: assessment_id, queue: :assessments)
     end
   end
 

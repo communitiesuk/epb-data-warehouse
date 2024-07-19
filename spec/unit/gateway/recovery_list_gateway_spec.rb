@@ -32,7 +32,7 @@ describe Gateway::RecoveryListGateway do
       removed_id = "9999-0000-0000-0000-4444"
 
       before do
-        gateway.clear_assessment(removed_id, queue: :assessments)
+        gateway.clear_assessment(payload: removed_id, queue: :assessments)
       end
 
       it "has removed the assessment" do
@@ -57,7 +57,7 @@ describe Gateway::RecoveryListGateway do
     it "calls the lua script against the redis instance" do
       attempted_assessment = "1234-5678-9012-3456-7890"
       lua = "local assessments = redis.call('HGET', KEYS[1], ARGV[1]); if not assessments or tonumber(assessments) <= 1 then redis.call('HDEL', KEYS[1], ARGV[1]) else redis.call('HINCRBY', KEYS[1], ARGV[1], -1) end"
-      gateway_for_attempts.register_attempt assessment_id: attempted_assessment, queue: :assessments
+      gateway_for_attempts.register_attempt payload: attempted_assessment, queue: :assessments
 
       expect(stub_redis).to have_received(:eval).with(lua, keys: %w[assessments_recovery], argv: [attempted_assessment])
     end
@@ -74,13 +74,13 @@ describe Gateway::RecoveryListGateway do
       end
 
       it "gives the correct count of retries left" do
-        expect(gateway.retries_left(assessment_id:, queue: :assessments)).to eq retries
+        expect(gateway.retries_left(payload: assessment_id, queue: :assessments)).to eq retries
       end
     end
 
     context "when the assessment does not exist in the queue" do
       it "gives a count of zero retries left" do
-        expect(gateway.retries_left(assessment_id:, queue: :assessments)).to eq 0
+        expect(gateway.retries_left(payload: assessment_id, queue: :assessments)).to eq 0
       end
     end
   end

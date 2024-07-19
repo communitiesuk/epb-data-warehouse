@@ -87,15 +87,15 @@ module UseCase
   private
 
     def clear_from_recovery_list(assessment_id)
-      @recovery_list_gateway.clear_assessment assessment_id, queue: :assessments
+      @recovery_list_gateway.clear_assessment payload: assessment_id, queue: :assessments
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt(assessment_id:, queue: :assessments)
+      @recovery_list_gateway.register_attempt(payload: assessment_id, queue: :assessments)
     end
 
     def is_on_last_attempt(assessment_id)
-      @recovery_list_gateway.retries_left(assessment_id:, queue: :assessments) >= 1
+      @recovery_list_gateway.retries_left(payload: assessment_id, queue: :assessments) >= 1
     end
   end
 end

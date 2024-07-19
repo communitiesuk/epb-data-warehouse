@@ -14,17 +14,17 @@ module Gateway
       redis.hkeys(name_for_queue(queue))
     end
 
-    def clear_assessment(assessment_id, queue:)
+    def clear_assessment(payload:, queue:)
       validate_queue_name queue
-      redis.hdel(name_for_queue(queue), assessment_id)
+      redis.hdel(name_for_queue(queue), payload)
     end
 
-    def register_attempt(assessment_id:, queue:)
+    def register_attempt(payload:, queue:)
       validate_queue_name queue
       redis.eval(
         "local assessments = redis.call('HGET', KEYS[1], ARGV[1]); if not assessments or tonumber(assessments) <= 1 then redis.call('HDEL', KEYS[1], ARGV[1]) else redis.call('HINCRBY', KEYS[1], ARGV[1], -1) end",
         keys: [name_for_queue(queue)],
-        argv: [assessment_id],
+        argv: [payload],
       )
     end
 
@@ -35,9 +35,9 @@ module Gateway
       redis.hset(name_for_queue(queue), *assessment_ids.map { |assessment_id| [assessment_id, retries] }.flatten)
     end
 
-    def retries_left(assessment_id:, queue:)
+    def retries_left(payload:, queue:)
       validate_queue_name queue
-      redis.hget(name_for_queue(queue), assessment_id).to_i
+      redis.hget(name_for_queue(queue), payload).to_i
     end
 
   private
