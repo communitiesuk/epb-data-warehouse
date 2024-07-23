@@ -12,14 +12,14 @@ module UseCase
       @certificate_gateway = certificate_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
-      @queue = :opt_outs
+      @queue_name = :opt_outs
     end
 
     def execute(from_recovery_list: false)
       if from_recovery_list
-        assessment_ids = @recovery_list_gateway.assessments queue:
+        assessment_ids = @recovery_list_gateway.assessments queue: @queue_name
       else
-        assessment_ids = @queues_gateway.consume_queue(queue:)
+        assessment_ids = @queues_gateway.consume_queue(@queue_name)
         register_assessments_to_recovery_list assessment_ids
       end
 
@@ -53,8 +53,6 @@ module UseCase
 
   private
 
-    attr_accessor :queue
-
     def save_attribute_to_stores(assessment_id:, attribute:, value:)
       @assessment_attribute_gateway.delete_attribute_value(assessment_id:, attribute_name: attribute)
       @assessment_attribute_gateway.add_attribute_value(assessment_id:, attribute_name: attribute, attribute_value: value)
@@ -71,15 +69,15 @@ module UseCase
     end
 
     def clear_assessment_on_recovery_list(assessment_id)
-      @recovery_list_gateway.clear_assessment payload: assessment_id, queue:
+      @recovery_list_gateway.clear_assessment payload: assessment_id, queue: @queue_name
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt payload: assessment_id, queue:
+      @recovery_list_gateway.register_attempt payload: assessment_id, queue: @queue_name
     end
 
     def register_assessments_to_recovery_list(assessment_ids)
-      @recovery_list_gateway.register_assessments(*assessment_ids, queue:)
+      @recovery_list_gateway.register_assessments(*assessment_ids, queue: @queue_name)
     end
   end
 end

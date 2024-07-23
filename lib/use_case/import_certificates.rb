@@ -5,17 +5,17 @@ module UseCase
       @queues_gateway = queues_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
-      @queue = :assessments
+      @queue_name = :assessments
     end
 
     def execute(from_recovery_list: false)
       if from_recovery_list
         assessment_ids = Helper::Stopwatch.log_elapsed_time @logger, "Batch fetched from recovery list" do
-          @recovery_list_gateway.assessments queue: :assessments
+          @recovery_list_gateway.assessments queue: @queue_name
         end
       else
         assessment_ids = Helper::Stopwatch.log_elapsed_time @logger, "Batch fetched from queue" do
-          @queues_gateway.consume_queue(:assessments)
+          @queues_gateway.consume_queue(@queue_name)
         end
         register_to_recovery_list assessment_ids
       end
@@ -36,10 +36,8 @@ module UseCase
 
   private
 
-    attr_accessor :queue
-
     def register_to_recovery_list(assessment_ids)
-      @recovery_list_gateway.register_assessments(*assessment_ids, queue:)
+      @recovery_list_gateway.register_assessments(*assessment_ids, queue: @queue_name)
     end
   end
 end

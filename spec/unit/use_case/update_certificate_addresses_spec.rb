@@ -15,7 +15,7 @@ describe UseCase::UpdateCertificateAddresses do
     eav_database_gateway
   end
 
-  let(:queue) do
+  let(:queue_name) do
     :assessments_address_update
   end
 
@@ -59,7 +59,7 @@ describe UseCase::UpdateCertificateAddresses do
 
       it "fetches the correct queue" do
         use_case.execute
-        expect(queues_gateway).to have_received(:consume_queue).with(queue:).exactly(1).times
+        expect(queues_gateway).to have_received(:consume_queue).with(queue_name).exactly(1).times
       end
 
       it "updates the relevant certificates in the EAV store" do
@@ -95,7 +95,7 @@ describe UseCase::UpdateCertificateAddresses do
 
   context "when assessments are being fetched from the recovery list" do
     before do
-      allow(recovery_list_gateway).to receive(:assessments).with(queue:).and_return(payload)
+      allow(recovery_list_gateway).to receive(:assessments).with(queue: queue_name).and_return(payload)
       use_case.execute from_recovery_list: true
     end
 

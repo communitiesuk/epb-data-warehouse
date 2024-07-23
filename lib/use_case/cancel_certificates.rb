@@ -11,14 +11,14 @@ module UseCase
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
       @assessments_country_id_gateway = assessments_country_id_gateway
-      @queue = :cancelled
+      @queue_name = :cancelled
     end
 
     def execute(from_recovery_list: false)
       if from_recovery_list
-        assessment_ids = @recovery_list_gateway.assessments queue:
+        assessment_ids = @recovery_list_gateway.assessments queue: @queue_name
       else
-        assessment_ids = @queues_gateway.consume_queue(queue:)
+        assessment_ids = @queues_gateway.consume_queue(@queue_name)
         register_assessments_to_recovery_list assessment_ids
       end
 
@@ -43,18 +43,16 @@ module UseCase
 
   private
 
-    attr_accessor :queue
-
     def clear_assessment_from_recovery_list(assessment_id)
-      @recovery_list_gateway.clear_assessment payload: assessment_id, queue:
+      @recovery_list_gateway.clear_assessment payload: assessment_id, queue: @queue_name
     end
 
     def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt payload: assessment_id, queue:
+      @recovery_list_gateway.register_attempt payload: assessment_id, queue: @queue_name
     end
 
     def register_assessments_to_recovery_list(assessment_ids)
-      @recovery_list_gateway.register_assessments(*assessment_ids, queue:)
+      @recovery_list_gateway.register_assessments(*assessment_ids, queue: @queue_name)
     end
   end
 end
