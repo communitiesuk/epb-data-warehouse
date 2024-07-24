@@ -206,7 +206,7 @@ describe UseCase::ImportEnums do
     before do
       lookups_gateway = Gateway::AssessmentLookupsGateway.new
       xsd_config = instance_double(Gateway::XsdConfigGateway)
-      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "tranasction_type",
+      allow(xsd_config).to receive(:nodes_and_paths).and_return([{ "attribute_name" => "transaction_type",
                                                                    "type_of_assessment" => "RdSAP",
                                                                    "xsd_node_name" => "//Transaction-Type",
                                                                    "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
@@ -217,7 +217,8 @@ describe UseCase::ImportEnums do
     end
 
     it "save the enums from the xml definitions" do
-      expect(saved_data.rows.to_h).to eq({ "6" => "New dwelling",
+      result = saved_data.rows.to_h
+      expect(result).to eq({ "6" => "New dwelling",
                                            "1" => "Marketed sale",
                                            "2" => "Non-marketed sale",
                                            "8" => "Rental",
