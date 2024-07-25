@@ -16,7 +16,7 @@ describe UseCase::ImportEnums do
   end
 
   let(:presenter) do
-    Presenter::Xsd.new
+    XmlPresenter::Xsd.new
   end
 
   context "when receiving enums that have variations between schema versions for an attribute" do
@@ -79,7 +79,7 @@ describe UseCase::ImportEnums do
 
     let(:use_case) do
       described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new,
-                          xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+                          xsd_presenter: presenter, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
     end
 
     before do
@@ -211,24 +211,28 @@ describe UseCase::ImportEnums do
                                                                    "xsd_node_name" => "//Transaction-Type",
                                                                    "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
                                                                    "node_hash" => { "Transaction-Code" => "Transaction-Text" } }])
-      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
-
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: presenter, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
       use_case.execute
     end
 
     it "save the enums from the xml definitions" do
       result = saved_data.rows.to_h
-      expect(result).to eq({ "6" => "New dwelling",
-                                           "1" => "Marketed sale",
-                                           "2" => "Non-marketed sale",
-                                           "8" => "Rental",
-                                           "14" => "Stock condition survey",
-                                           "9" => "Assessment for Green Deal",
-                                           "10" => "Following Green Deal",
-                                           "11" => "FiT application",
-                                           "12" => "RHI application",
-                                           "13" => "ECO assessment",
-                                           "5" => "None of the above" })
+      expectation = { "6" => "New dwelling", "1" => "Marketed sale", "2" => "Non-marketed sale", "8" => "Rental", "9" => "Assessment for Green Deal", "10" => "Following Green Deal", "11" => "FiT application", "12" => "RHI application", "13" => "ECO assessment", "5" => "None of the above", "14" => "Stock condition survey", "16" => "Grant scheme", "17" => "Non-grant scheme", "15" => "Re-mortgaging" }
+
+      expect(result).to eq(expectation)
     end
   end
+
+  # context "when my test is running" do
+  #   it "can parse the xml file" do
+  #     simple_type = "//Transaction-Type"
+  #     file_name = "/Users/barryhalper/code/communitiesuk/epb-data-warehouse/api/schemas/xml/RdSAP-Schema-21.0.0/RdSAP/ExternalDefinitions.xml"
+  #     xpath = "//xs:simpleType[@name='#{simple_type}']//xs:enumeration"
+  #     # expect{ REXML::Document.new(File.read(file_name))}.not_to raise_error
+  #     doc = Nokogiri.XML(File.read(file_name)) { |config| config.huge.strict }
+  #
+  #
+  #     expect(0).to eq 0
+  #   end
+  # end
 end

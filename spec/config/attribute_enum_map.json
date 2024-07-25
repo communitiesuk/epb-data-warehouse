@@ -4,7 +4,7 @@
     "type_of_assessment": "RdSap",
     "xsd_node_name": "SAP-BuiltForm"
   }, {
-    "attribute_name": "tranasction_type",
+    "attribute_name": "transaction_type",
     "type_of_assessment": "SAP",
     "xsd_node_name": "Transaction-Type",
     "node_hash": { "Transaction-Code": "Transaction-Text" }

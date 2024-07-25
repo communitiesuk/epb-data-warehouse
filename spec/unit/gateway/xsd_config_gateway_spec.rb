@@ -14,7 +14,7 @@ describe Gateway::XsdConfigGateway do
   end
 
   it "produces a hash of attributes nodes containing a hash of xml nodes" do
-    expected = { "attribute_name" => "tranasction_type",
+    expected = { "attribute_name" => "transaction_type",
                  "type_of_assessment" => "SAP",
                  "xsd_node_name" => "Transaction-Type",
                  "node_hash" => { "Transaction-Code" => "Transaction-Text" } }
