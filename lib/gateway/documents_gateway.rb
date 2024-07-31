@@ -37,9 +37,12 @@ module Gateway
 
     def fetch_assessments_json(date_from:, date_to:)
       sql = <<-SQL
-        SELECT document, assessment_id
-        FROM assessment_documents
+        SELECT ad.document, ad.assessment_id
+        FROM assessment_documents ad
+        JOIN assessments_country_ids aci ON ad.assessment_id = aci.assessment_id
+        JOIN countries c ON c.country_id = aci.country_id
         WHERE created_at between $1 and $2
+        AND c.country_code IN ('ENG', 'WAL', 'EAW')
       SQL
 
       bindings = [

@@ -150,14 +150,24 @@ describe Gateway::DocumentsGateway, set_with_timecop: true do
 
   context "when fetching the json for assessments" do
     before do
+      # Assessment out of date range
       gateway.add_assessment(assessment_id:, document: assessment_data)
+      Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(country_id: 1, assessment_id:)
+      # Assessment within date
       assessment_id2 = "8570-6826-6530-4969-0203"
       assessment_data["rrn"] = assessment_id2
       gateway.add_assessment(assessment_id: assessment_id2, document: assessment_data)
+      Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(country_id: 1, assessment_id: assessment_id2)
       Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: "8570-6826-6530-4969-0203").update(created_at: Time.new(2020, 0o6, 0o1))
+      # Assessment in date range that isn't in England or Wales
+      assessment_id3 = "8570-6826-6530-4969-0204"
+      assessment_data["rrn"] = assessment_id3
+      gateway.add_assessment(assessment_id: assessment_id3, document: assessment_data)
+      Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(country_id: 4, assessment_id: assessment_id3)
+      Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: assessment_id3).update(created_at: Time.new(2020, 0o6, 0o1))
     end
 
-    it "fetches documents within the start and end date" do
+    it "fetches documents from England and Wales within the start and end date" do
       result = gateway.fetch_assessments_json(date_from: "2020-05-01", date_to: "2020-07-01")
       expect(result.count).to eq 1
       expect(result.first[:assessment_id]).to eq "8570-6826-6530-4969-0203"

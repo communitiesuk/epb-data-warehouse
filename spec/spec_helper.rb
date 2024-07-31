@@ -74,6 +74,22 @@ def get_valid_jwt(scopes = [], sup = {})
   token.encode ENV["JWT_SECRET"]
 end
 
+def add_countries
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
+
+  insert_sql = <<-SQL
+            INSERT INTO countries(country_code, country_name, address_base_country_code)
+            VALUES ('ENG', 'England' ,'["E"]'::jsonb),
+                   ('EAW', 'England and Wales', '["E", "W"]'::jsonb),
+                     ('UKN', 'Unknown', '{}'::jsonb),
+                    ('NIR', 'Northern Ireland', '["N"]'::jsonb),
+                    ('SCT', 'Scotland', '["S"]'::jsonb),
+            ('', 'Channel Islands', '["L"]'::jsonb),
+                ('NR', 'Not Recorded', null)
+  SQL
+  ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
+end
+
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
