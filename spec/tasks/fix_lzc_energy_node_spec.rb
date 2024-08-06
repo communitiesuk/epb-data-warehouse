@@ -80,23 +80,23 @@ describe "Fix node Rake" do
         expect(num_incorrect_nodes).to eq(2)
       end
 
-      it "the value of the nodes for the SAP 17 is a hash ", aggregate_failure: true do
+      it "the value of the nodes for the SAP 17 is a hash", :aggregate_failure do
         sap_17_node = JSON.parse(get_node_value("5555-5555-5555-5555-5555"))
         expect(sap_17_node).to be_a Hash
       end
 
-      it "the value of the node for the SAP 18 is a hash " do
+      it "the value of the node for the SAP 18 is a hash" do
         sap_18_node = JSON.parse(get_node_value("0000-0000-0000-0000-0000"))
         expect(sap_18_node).to be_a Hash
       end
 
-      it "the value of the node for the SAP 19 is the correct array " do
+      it "the value of the node for the SAP 19 is the correct array" do
         sap_19_node = JSON.parse(get_node_value("0000-6666-4444-3333-2222"))
         expect(sap_19_node).to be_a Array
       end
     end
 
-    context "when the nodes have been updated " do
+    context "when the nodes have been updated" do
       let!(:run_task) { task.invoke }
 
       it "no longer find any document who have hash in the node lzc_energy_sources" do
@@ -104,13 +104,13 @@ describe "Fix node Rake" do
         expect(num_incorrect_nodes).to eq(0)
       end
 
-      it "the value of the nodes are now arrays " do
+      it "the value of the nodes are now arrays" do
         run_task
         expect(JSON.parse(get_node_value("0000-0000-0000-0000-0000"))).to eq [9]
         expect(JSON.parse(get_node_value("5555-5555-5555-5555-5555"))).to eq [10]
       end
 
-      it "the value of the nodes in the EAV are now arrays " do
+      it "the value of the nodes in the EAV are now arrays" do
         run_task
         expect(JSON.parse(get_node_value_from_eav("0000-0000-0000-0000-0000"))).to eq [9]
         expect(JSON.parse(get_node_value_from_eav("5555-5555-5555-5555-5555"))).to eq [10]

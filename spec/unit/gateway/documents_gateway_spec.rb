@@ -1,4 +1,4 @@
-describe Gateway::DocumentsGateway, set_with_timecop: true do
+describe Gateway::DocumentsGateway, :set_with_timecop do
   subject(:gateway) { described_class.new }
 
   let(:assessment_data) do

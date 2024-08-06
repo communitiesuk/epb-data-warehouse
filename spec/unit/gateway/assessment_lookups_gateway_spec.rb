@@ -59,7 +59,7 @@ describe Gateway::AssessmentLookupsGateway do
         end
       end
 
-      it "returns the string representation of teh value stored in the orginal xml " do
+      it "returns the string representation of teh value stored in the orginal xml" do
         expect(gateway.get_value_by_key(attribute_name: "built_form", lookup_key: "1")).to eq("Detached")
       end
     end

@@ -9,7 +9,7 @@ describe Helper::DateTime do
 
   context "when nil is given as the date" do
     it "returns nil" do
-      expect(described_class.convert_atom_to_db_datetime(nil)).to be nil
+      expect(described_class.convert_atom_to_db_datetime(nil)).to be_nil
     end
   end
 end

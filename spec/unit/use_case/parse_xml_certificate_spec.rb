@@ -30,7 +30,7 @@ describe UseCase::ParseXmlCertificate do
 
   context "when using a schema type that is not parsed" do
     it "returns nil" do
-      expect(use_case.execute(xml: sample, schema_type: "SAP-Schema-10.1", assessment_id:)).to be nil
+      expect(use_case.execute(xml: sample, schema_type: "SAP-Schema-10.1", assessment_id:)).to be_nil
     end
   end
 end

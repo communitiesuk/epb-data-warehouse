@@ -22,7 +22,7 @@ describe Gateway::XsdConfigGateway do
     expect(gateway.nodes.last).to match hash_including(expected)
   end
 
-  it "produces a hash of paths " do
+  it "produces a hash of paths" do
     expect(gateway.paths).to match hash_including({ "rdsap" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
                                                     "sap" => "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
                                                     "cepc" => "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd" })

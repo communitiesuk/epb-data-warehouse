@@ -83,11 +83,11 @@ describe Gateway::AssessmentAttributesGateway do
       )
     end
 
-    it "attribute table has a row for the same attribute " do
+    it "attribute table has a row for the same attribute" do
       expect(attributes.rows.count).to eq(2)
     end
 
-    it "has a row that has the parent_name " do
+    it "has a row that has the parent_name" do
       row = attributes.detect { |columns| columns["parent_name"] == "my_parent" }
       expect(row["parent_name"]).to eq("my_parent")
     end
@@ -109,7 +109,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "does not store a numeric value as an integer that is out of range for a PostgreSQL integer data type" do
-      expect(stored_int).to be nil
+      expect(stored_int).to be_nil
     end
   end
 
@@ -129,7 +129,7 @@ describe Gateway::AssessmentAttributesGateway do
     end
 
     it "does not store a numeric value as an integer that is out of range for a PostgreSQL integer data type" do
-      expect(stored_int).to be nil
+      expect(stored_int).to be_nil
     end
   end
 
@@ -362,7 +362,7 @@ describe Gateway::AssessmentAttributesGateway do
         )
       end
 
-      it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current' " do
+      it "can perform simple data aggregations by calculating the sum and average of 'heating_cost_current'" do
         expect(
           gateway.fetch_average(attribute_name: "heating_cost_current", value_type: "float").to_f,
         ).to eq(10.99)
@@ -390,7 +390,7 @@ describe Gateway::AssessmentAttributesGateway do
         gateway.delete_attributes_by_assessment("0000-0000-0000-0000-0002")
       end
 
-      it "there are no attributes for that assessment  " do
+      it "there are no attributes for that assessment" do
         expect(
           ActiveRecord::Base
             .connection
@@ -402,7 +402,7 @@ describe Gateway::AssessmentAttributesGateway do
         ).to eq(0)
       end
 
-      it "there are attributes for other assessments " do
+      it "there are attributes for other assessments" do
         expect(
           ActiveRecord::Base
             .connection
@@ -548,7 +548,7 @@ describe Gateway::AssessmentAttributesGateway do
       end
 
       it "writes nil for the integer value column" do
-        expect(assessment_attribute_values[5]["attribute_value_int"]).to be nil
+        expect(assessment_attribute_values[5]["attribute_value_int"]).to be_nil
       end
     end
   end
@@ -581,9 +581,9 @@ describe Gateway::AssessmentAttributesGateway do
       it "only keeps the string value, all other methods returning nil", :aggregate_failures do
         cast = described_class::CastValue.new "ND"
         expect(cast.string).to eq "ND"
-        expect(cast.int).to be nil
-        expect(cast.float).to be nil
-        expect(cast.json).to be nil
+        expect(cast.int).to be_nil
+        expect(cast.float).to be_nil
+        expect(cast.json).to be_nil
       end
     end
 
@@ -593,7 +593,7 @@ describe Gateway::AssessmentAttributesGateway do
         expect(cast.string).to eq "42"
         expect(cast.int).to eq 42
         expect(cast.float).to eq 42.0
-        expect(cast.json).to be nil
+        expect(cast.json).to be_nil
       end
     end
 
@@ -603,16 +603,16 @@ describe Gateway::AssessmentAttributesGateway do
         expect(cast.string).to eq "3.14"
         expect(cast.int).to eq 3
         expect(cast.float).to eq 3.14
-        expect(cast.json).to be nil
+        expect(cast.json).to be_nil
       end
     end
 
     context "when the value is a hash" do
       it "makes the hash available through the #json method, with everything else returning nil" do
         cast = described_class::CastValue.new({ code: "NGL" })
-        expect(cast.string).to be nil
-        expect(cast.int).to be nil
-        expect(cast.float).to be nil
+        expect(cast.string).to be_nil
+        expect(cast.int).to be_nil
+        expect(cast.float).to be_nil
         expect(cast.json).to eq({ code: "NGL" })
       end
     end

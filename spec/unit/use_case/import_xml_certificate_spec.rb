@@ -1,4 +1,4 @@
-describe UseCase::ImportXmlCertificate, set_with_timecop: true do
+describe UseCase::ImportXmlCertificate, :set_with_timecop do
   subject(:use_case) do
     described_class.new(
       import_certificate_data_use_case:,

@@ -1,4 +1,4 @@
-describe UseCase::OptOutCertificates, set_with_timecop: true do
+describe UseCase::OptOutCertificates, :set_with_timecop do
   subject(:use_case) do
     described_class.new eav_gateway: database_gateway,
                         documents_gateway:,

@@ -29,7 +29,7 @@ describe Gateway::AssessmentsCountryIdGateway do
       expect(Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.count).to eq 2
       gateway.delete_assessment(assessment_id:)
       expect(Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.count).to eq 1
-      expect(Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: "0000-0000-0001-1234-0000")).to be nil
+      expect(Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: "0000-0000-0001-1234-0000")).to be_nil
     end
   end
 end

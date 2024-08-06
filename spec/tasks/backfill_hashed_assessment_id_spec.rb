@@ -9,7 +9,7 @@ describe "Adding or updating hashed assessment id node rake" do
     end
 
     context "when certificates have been saved" do
-      it "the value of the nodes for the SAP 18 has a hashed assessment id ", aggregate_failure: true do
+      it "the value of the nodes for the SAP 18 has a hashed assessment id", :aggregate_failure do
         sap_18_hashed_assessment_id_json = get_hashed_assessment_id_from_json("0000-0000-0000-0000-0000")
         sap_18_hashed_assessment_id_eav = get_hashed_assessment_id_from_eav("0000-0000-0000-0000-0000")
 
@@ -17,9 +17,9 @@ describe "Adding or updating hashed assessment id node rake" do
         expect(sap_18_hashed_assessment_id_eav).to eq("7777734b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2")
       end
 
-      it "the value of the nodes for the SAP 17 has no hashed assessment id ", aggregate_failure: true do
+      it "the value of the nodes for the SAP 17 has no hashed assessment id", :aggregate_failure do
         sap_17_hashed_assessment_id_json = get_hashed_assessment_id_from_json("5555-5555-5555-5555-5555")
-        expect(sap_17_hashed_assessment_id_json).to be nil
+        expect(sap_17_hashed_assessment_id_json).to be_nil
       end
     end
 
