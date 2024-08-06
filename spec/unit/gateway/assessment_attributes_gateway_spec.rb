@@ -440,7 +440,7 @@ describe Gateway::AssessmentAttributesGateway do
 
   context "when there is no data present" do
     it "returns false when cheking a certificate has attribute data" do
-      expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to eq(false)
+      expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to be(false)
     end
 
     it "returns true when we add certificate data" do
@@ -449,7 +449,7 @@ describe Gateway::AssessmentAttributesGateway do
         attribute_name: "transaction_type",
         attribute_value: { "description": "marketed sale", "value": "10.0" },
       )
-      expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to eq(true)
+      expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to be(true)
     end
 
     context "when deleting an attribute value by name and assessment" do

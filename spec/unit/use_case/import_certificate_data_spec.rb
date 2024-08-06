@@ -157,7 +157,7 @@ describe UseCase::ImportCertificateData do
     end
 
     it "runs the use case without erroring" do
-      use_case.execute(assessment_id:, certificate_data:)
+      expect { use_case.execute(assessment_id:, certificate_data:) }.not_to raise_error
     end
   end
 

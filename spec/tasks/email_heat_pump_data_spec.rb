@@ -27,9 +27,7 @@ context "when calling the email heat pump rake task" do
 
   before do
     ENV["NOTIFY_TEMPLATE_ID"] = template_id
-    allow(Container).to receive(:export_heat_pumps_gateway).and_return export_gateway
-    allow(Container).to receive(:file_gateway).and_return file_gateway
-    allow(Container).to receive(:notify_gateway).and_return notify_gateway
+    allow(Container).to receive_messages(export_heat_pumps_gateway: export_gateway, file_gateway:, notify_gateway:)
   end
 
   after do

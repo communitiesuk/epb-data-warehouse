@@ -13,8 +13,7 @@ shared_context "when sending heat pump data" do
 
   def stub_notify_response
     response = class_double("response")
-    allow(response).to receive(:code).and_return(400)
-    allow(response).to receive(:body).and_return(notify_body.to_s)
+    allow(response).to receive_messages(code: 400, body: notify_body.to_s)
     response
   end
 

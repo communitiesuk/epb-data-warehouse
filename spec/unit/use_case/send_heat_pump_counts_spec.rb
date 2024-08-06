@@ -59,8 +59,7 @@ describe UseCase::SendHeatPumpCounts do
       allow(Gateway::FileGateway).to receive(:new).and_return(file_gateway)
       allow(file_gateway).to receive(:save_csv).with(data, file_name).and_return File
       allow(Gateway::NotifyGateway).to receive(:new).with(notify_client).and_return(notify_gateway)
-      allow(notify_gateway).to receive(:send_email).and_return Notifications::Client::ResponseNotification
-      allow(notify_gateway).to receive(:check_email_status).and_return client_response
+      allow(notify_gateway).to receive_messages(send_email: Notifications::Client::ResponseNotification, check_email_status: client_response)
     end
 
     it "calls the correct gateway method" do

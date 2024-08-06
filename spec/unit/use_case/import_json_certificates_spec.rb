@@ -83,7 +83,7 @@ describe UseCase::ImportJsonCertificates do
           result["attribute_name"] == "asset_rating"
         end
       expect(arr[0]["attribute_value"]).to eq("80")
-      expect(arr[0]["parent_name"]).to eq(nil)
+      expect(arr[0]["parent_name"]).to be_nil
       expect(arr[0]["attribute_value_int"]).to eq(80)
     end
 
@@ -93,7 +93,7 @@ describe UseCase::ImportJsonCertificates do
           result["attribute_name"] == "current_carbon_emission"
         end
       expect(arr[0]["attribute_value"]).to eq("2.4")
-      expect(arr[0]["parent_name"]).to eq(nil)
+      expect(arr[0]["parent_name"]).to be_nil
       expect(arr[0]["attribute_value_float"]).to eq(2.4)
     end
 

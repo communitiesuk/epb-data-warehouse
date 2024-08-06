@@ -78,8 +78,7 @@ describe "Acceptance::ImportCertificate" do
 
   before do
     allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
-    allow(certificate_gateway).to receive(:fetch).and_return(xml_sample)
-    allow(certificate_gateway).to receive(:fetch_meta_data).and_return(meta_data_sample)
+    allow(certificate_gateway).to receive_messages(fetch: xml_sample, fetch_meta_data: meta_data_sample)
     queues_gateway.push_to_queue(:assessments, ids)
     allow(assessments_country_id_gateway).to receive(:insert)
     use_case.execute
@@ -179,8 +178,7 @@ describe "Acceptance::ImportCertificate" do
 
     before do
       allow(Gateway::RegisterApiGateway).to receive(:new).and_return(certificate_gateway)
-      allow(certificate_gateway).to receive(:fetch).and_return(xml_sample)
-      allow(certificate_gateway).to receive(:fetch_meta_data).and_return(meta_data_sample)
+      allow(certificate_gateway).to receive_messages(fetch: xml_sample, fetch_meta_data: meta_data_sample)
       queues_gateway.push_to_queue(:assessments, ids)
       use_case.execute
     end

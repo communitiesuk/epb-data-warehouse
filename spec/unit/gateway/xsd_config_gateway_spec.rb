@@ -74,10 +74,9 @@ describe Gateway::XsdConfigGateway do
     end
 
     before do
-      allow(gateway).to receive(:nodes).and_return(nodes)
-      allow(gateway).to receive(:paths).and_return({ "rdsap" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
-                                                     "sap" => "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
-                                                     "cepc" => "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd" })
+      allow(gateway).to receive_messages(nodes:, paths: { "rdsap" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+                                                          "sap" => "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
+                                                          "cepc" => "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd" })
     end
 
     it "preserves the xsd_path attribute and is not overwritten by the values from the path hash" do
