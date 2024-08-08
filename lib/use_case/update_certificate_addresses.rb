@@ -1,5 +1,7 @@
 module UseCase
   class UpdateCertificateAddresses
+    ASSESSMENT_ADDRESS_ID_KEY = "assessment_address_id".freeze
+
     def initialize(eav_gateway:, queues_gateway:, documents_gateway:, recovery_list_gateway:, logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @queues_gateway = queues_gateway
@@ -16,14 +18,13 @@ module UseCase
         payload = @queues_gateway.consume_queue(@queue_name)
         register_assessments_to_recovery_list payload
       end
-      top_level_attribute = "assessment_address_id"
 
       payload.each do |assessment|
         payload_arr = assessment.split(":")
         assessment_id = payload_arr[0]
         address_id = payload_arr[1]
-        @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute:, new_value: address_id
-        @assessment_attribute_gateway.update_assessment_attribute assessment_id:, attribute: top_level_attribute, value: address_id
+        @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: address_id
+        @assessment_attribute_gateway.update_assessment_attribute assessment_id:, attribute: ASSESSMENT_ADDRESS_ID_KEY, value: address_id
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
         report_to_sentry e
