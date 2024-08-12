@@ -121,7 +121,7 @@ GEM
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
       version_gem (~> 1.1)
-    parallel (1.25.1)
+    parallel (1.26.2)
     parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
@@ -260,7 +260,7 @@ DEPENDENCIES
   mock_redis (~> 0.41)
   nokogiri (~> 1.16)
   notifications-ruby-client (~> 6.1)
-  parallel (~> 1.25)
+  parallel (~> 1.26)
   pg (~> 1.5)
   puma (~> 6.4)
   rack-test (~> 2.1.0)
