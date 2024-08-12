@@ -25,7 +25,7 @@ group :rake do
 end
 
 gem "activerecord", "~> 7.1"
-gem "activesupport", "~> 7.1"
+gem "activesupport", "~> 7.2"
 gem "async", "~> 2.11"
 gem "aws-sdk-s3", "~> 1"
 gem "concurrent-ruby", "~> 1.3"
