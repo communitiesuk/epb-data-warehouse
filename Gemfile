@@ -12,7 +12,7 @@ group :test do
   gem "rspec", "~> 3.12"
   gem "rubocop-govuk", "~> 5.0", require: false
   gem "rubocop-performance", "~> 1.21", require: false
-  gem "timecop", "~> 0.9.10"
+  gem "timecop", "~> 0.9"
   gem "webmock", "~> 3.23"
 end
 
@@ -25,15 +25,15 @@ group :rake do
 end
 
 gem "activerecord", "~> 7.1"
-gem "activesupport", "~> 7.1"
-gem "async", "~> 2.11"
+gem "activesupport", "~> 7.2"
+gem "async", "~> 2.15"
 gem "aws-sdk-s3", "~> 1"
 gem "concurrent-ruby", "~> 1.3"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.0"
 gem "nokogiri", "~> 1.16"
-gem "parallel", "~> 1.25"
+gem "parallel", "~> 1.26"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "rackup", "~> 2.1"
