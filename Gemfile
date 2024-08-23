@@ -24,7 +24,7 @@ group :rake do
   gem "notifications-ruby-client", "~> 6.1"
 end
 
-gem "activerecord", "~> 7.1"
+gem "activerecord", "~> 7.2"
 gem "activesupport", "~> 7.2"
 gem "async", "~> 2.15"
 gem "aws-sdk-s3", "~> 1"
