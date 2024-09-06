@@ -35,7 +35,7 @@ describe Gateway::AverageCo2EmissionsGateway do
   end
 
   describe "#fetch" do
-    context "when the materialised view has been populated" do
+    context "when populating the materialized view" do
       before do
         ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW mvw_avg_co2_emissions", "SQL")
       end
@@ -74,6 +74,24 @@ describe Gateway::AverageCo2EmissionsGateway do
         expect { gateway.refresh(concurrently: true) }.not_to raise_error
         expect(gateway.fetch.length).to eq 4
       end
+    end
+  end
+
+  describe '#refresh' do
+    it "does not error" do
+      expect { gateway.refresh }.not_to raise_error
+    end
+
+    before do
+      add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
+        "co2_emissions_current_per_floor_area": 10,
+        "registration_date": "2021-02-01"
+      })
+    end
+
+    it "updates the result of the materialized view" do
+      gateway.refresh
+      expect(gateway.fetch.length).to eq 4
     end
   end
 end
