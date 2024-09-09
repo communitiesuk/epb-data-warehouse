@@ -34,6 +34,14 @@ describe Gateway::AverageCo2EmissionsGateway do
     })
   end
 
+  before do
+    Timecop.freeze(2022, 12, 2, 0, 0)
+  end
+
+  after do
+    Timecop.return
+  end
+
   describe "#fetch" do
     context "when populating the materialized view" do
       before do
@@ -55,10 +63,24 @@ describe Gateway::AverageCo2EmissionsGateway do
         expect(gateway.fetch.sort_by { |i| i["year_month"] }[2]).to eq expected_values[2]
       end
     end
+
+    context "when fetching data" do
+      before do
+        add_assessment(assessment_id: "0000-0000-0000-0000-0007", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
+          "co2_emissions_current_per_floor_area": 8,
+          "registration_date": "2022-12-01",
+        })
+      end
+
+      it "excludes data for the current month" do
+        gateway.refresh
+        expect(gateway.fetch.length).to eq 3
+      end
+    end
   end
 
   describe "#refresh" do
-    context "when the materialized view is already populated " do
+    context "when the materialized view is already populated" do
       before do
         gateway.refresh
         type_of_assessment = "SAP"
@@ -74,24 +96,6 @@ describe Gateway::AverageCo2EmissionsGateway do
         expect { gateway.refresh(concurrently: true) }.not_to raise_error
         expect(gateway.fetch.length).to eq 4
       end
-    end
-  end
-
-  describe '#refresh' do
-    it "does not error" do
-      expect { gateway.refresh }.not_to raise_error
-    end
-
-    before do
-      add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
-        "co2_emissions_current_per_floor_area": 10,
-        "registration_date": "2021-02-01"
-      })
-    end
-
-    it "updates the result of the materialized view" do
-      gateway.refresh
-      expect(gateway.fetch.length).to eq 4
     end
   end
 end
