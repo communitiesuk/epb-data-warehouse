@@ -116,6 +116,10 @@ class Container
     @fetch_average_co2_emissions_use_case ||= UseCase::FetchAverageCo2Emissions.new(gateway: average_co2_emissions_gateway)
   end
 
+  def self.refresh_average_co2_emissions
+    @refresh_average_co2_emissions ||= UseCase::RefreshAverageCo2Emissions.new(gateway: average_co2_emissions_gateway)
+  end
+
   def self.logger
     @logger ||= Logger.new($stdout, level: Logger::ERROR)
   end
