@@ -108,6 +108,14 @@ class Container
     @pull_queues_use_case ||= UseCase::PullQueues.new
   end
 
+  def self.average_co2_emissions_gateway
+    @average_co2_emissions_gateway ||= Gateway::AverageCo2EmissionsGateway.new
+  end
+
+  def self.fetch_average_co2_emissions_use_case
+    @fetch_average_co2_emissions_use_case ||= UseCase::FetchAverageCo2Emissions.new(gateway: average_co2_emissions_gateway)
+  end
+
   def self.logger
     @logger ||= Logger.new($stdout, level: Logger::ERROR)
   end
