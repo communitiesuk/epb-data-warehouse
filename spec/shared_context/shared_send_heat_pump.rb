@@ -12,7 +12,7 @@ shared_context "when sending heat pump data" do
   end
 
   def stub_notify_response
-    response = class_double("response")
+    response = instance_double(Net::HTTPResponse)
     allow(response).to receive_messages(code: 400, body: notify_body.to_s)
     response
   end
