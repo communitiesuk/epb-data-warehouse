@@ -7,8 +7,8 @@ describe "ReportingController" do
   context "when requesting a response from /api/avg-co2-emissions" do
     let(:expected_data) do
       [
-        { "avgCo2Emission" => 10.0, "country" => "Northern Ireland", "yearMonth" => "2022-03" },
-        { "avgCo2Emission" => 10.0, "country" => "England", "yearMonth" => "2022-05" },
+        { "avgCo2Emission" => 10.0, "country" => "Northern Ireland", "yearMonth" => "2022-03", "assessmentType" => "SAP" },
+        { "avgCo2Emission" => 10.0, "country" => "England", "yearMonth" => "2022-05", "assessmentType" => "SAP" },
       ]
     end
 

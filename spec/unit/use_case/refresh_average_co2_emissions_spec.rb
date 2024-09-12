@@ -17,7 +17,7 @@ describe UseCase::RefreshAverageCo2Emissions do
       expect(gateway).to have_received(:refresh).exactly(:once)
     end
 
-    context "when calling the use case with the  concurrently flag" do
+    context "when calling the use case with the concurrently flag" do
       it "passes argument on to the gateway" do
         use_case.execute(concurrently: true)
         expect(gateway).to have_received(:refresh).with(concurrently: true).exactly(:once)
