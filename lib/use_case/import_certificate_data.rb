@@ -29,9 +29,7 @@ module UseCase
     end
 
     def save_document_data(assessment_id:, certificate:)
-      Helper::Stopwatch.log_elapsed_time @logger, "save document for assessment #{assessment_id}" do
-        documents_gateway.add_assessment(assessment_id:, document: certificate)
-      end
+      documents_gateway.add_assessment(assessment_id:, document: certificate)
     end
   end
 end

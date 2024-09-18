@@ -27,3 +27,8 @@ test:
 
 run:
 	@bundle exec rake
+
+seed-stats-data:
+	@bundle exec rake seed_countries
+	@bundle exec rake seed_average_co2_emissions
+	@bundle exec rake refresh_average_co2_emissions
