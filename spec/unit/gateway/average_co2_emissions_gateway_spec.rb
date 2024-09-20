@@ -20,7 +20,7 @@ describe Gateway::AverageCo2EmissionsGateway do
     })
     Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id: "0000-0000-0000-0000-0002", country_id: 2)
     add_assessment(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
-      "co2_emissions_current_per_floor_area": 20,
+      "co2_emissions_current_per_floor_area": 19,
       "registration_date": "2022-04-01",
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment:, different_fields: {
@@ -54,9 +54,9 @@ describe Gateway::AverageCo2EmissionsGateway do
 
       let(:expected_values) do
         [
-          { "avg_co2_emission" => 10.0, "country" => "Northern Ireland", "year_month" => "2022-03", "assessment_type" => "SAP" },
-          { "avg_co2_emission" => 15.0, "country" => "England", "year_month" => "2022-04", "assessment_type" => "SAP" },
-          { "avg_co2_emission" => 10.0, "country" => "England", "year_month" => "2022-05", "assessment_type" => "SAP" },
+          { "avg_co2_emission" => 10, "country" => "Northern Ireland", "year_month" => "2022-03", "assessment_type" => "SAP" },
+          { "avg_co2_emission" => 15, "country" => "England", "year_month" => "2022-04", "assessment_type" => "SAP" },
+          { "avg_co2_emission" => 10, "country" => "England", "year_month" => "2022-05", "assessment_type" => "SAP" },
         ]
       end
 
@@ -79,7 +79,7 @@ describe Gateway::AverageCo2EmissionsGateway do
         it "returns the expected data" do
           expect(gateway.fetch.length).to eq 4
           rdsap = gateway.fetch.find { |i| i["assessment_type"] == "RdSAP" }
-          expect(rdsap).to eq({ "avg_co2_emission" => 10.0, "country" => "England", "year_month" => "2022-04", "assessment_type" => "RdSAP" })
+          expect(rdsap).to eq({ "avg_co2_emission" => 10, "country" => "England", "year_month" => "2022-04", "assessment_type" => "RdSAP" })
         end
       end
     end
@@ -95,7 +95,7 @@ describe Gateway::AverageCo2EmissionsGateway do
     end
 
     let(:expected_values) do
-      { "avg_co2_emission" => 12.5, "year_month" => "2022-05", "assessment_type" => "SAP" }
+      { "avg_co2_emission" => 13, "year_month" => "2022-05", "assessment_type" => "SAP" }
     end
 
     it "returns the averages for all countries" do

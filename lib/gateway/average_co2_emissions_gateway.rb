@@ -3,7 +3,7 @@ module Gateway
     def fetch
       this_month = Date.today.strftime("%Y-%m")
       sql = <<-SQL
-        SELECT avg_co2_emission,
+        SELECT ROUND((avg_co2_emission)::numeric)::integer as avg_co2_emission,
                country,
                year_month,
               assessment_type
@@ -18,7 +18,7 @@ module Gateway
       this_month = Date.today.strftime("%Y-%m")
 
       sql = <<-SQL
-        SELECT (SUM(avg_co2_emission * cnt) / SUM(cnt)) AS avg_co2_emission,
+        SELECT ROUND((SUM(avg_co2_emission * cnt) / SUM(cnt))::numeric)::integer AS avg_co2_emission,
                year_month,
               assessment_type
         FROM mvw_avg_co2_emissions

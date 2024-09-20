@@ -6,9 +6,10 @@ describe "ReportingController" do
 
   context "when requesting a response from /api/avg-co2-emissions" do
     let(:expected_data) do
-      { "all" => [{ "avgCo2Emission" => 10.0, "yearMonth" => "2022-05", "assessmentType" => "SAP" }, { "avgCo2Emission" => 10.0, "yearMonth" => "2022-03", "assessmentType" => "SAP" }],
-        "northernIreland" => [{ "avgCo2Emission" => 10.0, "country" => "Northern Ireland", "yearMonth" => "2022-03", "assessmentType" => "SAP" }],
-        "england" => [{ "avgCo2Emission" => 10.0, "country" => "England", "yearMonth" => "2022-05", "assessmentType" => "SAP" }] }
+      { "all" => [{ "avgCo2Emission" => 10, "yearMonth" => "2022-05", "assessmentType" => "SAP" },
+                  { "avgCo2Emission" => 10, "yearMonth" => "2022-03", "assessmentType" => "SAP" }],
+        "northernIreland" => [{ "avgCo2Emission" => 10, "country" => "Northern Ireland", "yearMonth" => "2022-03", "assessmentType" => "SAP" }],
+        "england" => [{ "avgCo2Emission" => 10, "country" => "England", "yearMonth" => "2022-05", "assessmentType" => "SAP" }] }
     end
 
     before do
@@ -44,7 +45,7 @@ describe "ReportingController" do
 
       it "returns the expected data" do
         response_body = JSON.parse(response.body)
-        expect(response_body["data"]).to eq(expected_data)
+        expect(response_body["data"].sort).to eq(expected_data.sort)
       end
     end
   end

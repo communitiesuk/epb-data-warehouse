@@ -9,24 +9,24 @@ describe UseCase::FetchAverageCo2Emissions do
 
   let(:fetch_values) do
     [
-      { "avg_co2_emission" => 10.0, "country" => "Northern Ireland", "year_month" => "2022-03" },
-      { "avg_co2_emission" => 15.0, "country" => "England", "year_month" => "2022-04" },
-      { "avg_co2_emission" => 10.0, "country" => "England", "year_month" => "2022-05" },
+      { "avg_co2_emission" => 10, "country" => "Northern Ireland", "year_month" => "2022-03" },
+      { "avg_co2_emission" => 15, "country" => "England", "year_month" => "2022-04" },
+      { "avg_co2_emission" => 10, "country" => "England", "year_month" => "2022-05" },
     ]
   end
 
   let(:fetched_all_values) do
     [
-      { "avg_co2_emission" => 9.0,  "year_month" => "2022-03" },
-      { "avg_co2_emission" => 25.0,  "year_month" => "2022-04" },
-      { "avg_co2_emission" => 45.0,  "year_month" => "2022-05" },
+      { "avg_co2_emission" => 9,  "year_month" => "2022-03" },
+      { "avg_co2_emission" => 25,  "year_month" => "2022-04" },
+      { "avg_co2_emission" => 45,  "year_month" => "2022-05" },
     ]
   end
 
   let(:expected_values) do
     { all: fetched_all_values,
-      england: [{ "avg_co2_emission" => 15.0, "country" => "England", "year_month" => "2022-04" }, { "avg_co2_emission" => 10.0, "country" => "England", "year_month" => "2022-05" }],
-      northern_ireland: [{ "avg_co2_emission" => 10.0, "country" => "Northern Ireland", "year_month" => "2022-03" }] }
+      england: [{ "avg_co2_emission" => 15, "country" => "England", "year_month" => "2022-04" }, { "avg_co2_emission" => 10, "country" => "England", "year_month" => "2022-05" }],
+      northern_ireland: [{ "avg_co2_emission" => 10, "country" => "Northern Ireland", "year_month" => "2022-03" }] }
   end
 
   before do
