@@ -8,7 +8,7 @@ module Gateway
                year_month,
               assessment_type
         FROM mvw_avg_co2_emissions
-        WHERE year_month not like ('#{this_month}');
+        WHERE year_month != '#{this_month}'
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result }
@@ -22,8 +22,8 @@ module Gateway
                year_month,
               assessment_type
         FROM mvw_avg_co2_emissions
-        WHERE year_month not like ('#{this_month}')
-        GROUP BY year_month, assessment_type ;
+        WHERE year_month  != '#{this_month}'
+        GROUP BY year_month, assessment_type#{' '}
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result }
