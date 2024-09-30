@@ -148,8 +148,7 @@ GEM
     redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
-    rexml (3.3.5)
-      strscan
+    rexml (3.3.8)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -221,7 +220,6 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    strscan (3.1.0)
     tilt (2.4.0)
     timecop (0.9.10)
     timeout (0.4.1)
@@ -268,7 +266,7 @@ DEPENDENCIES
   rackup (~> 2.1)
   rake (~> 13.2)
   redis (~> 5.2)
-  rexml (~> 3.2)
+  rexml (~> 3.3)
   rspec (~> 3.12)
   rubocop-govuk (~> 5.0)
   rubocop-performance (~> 1.21)
