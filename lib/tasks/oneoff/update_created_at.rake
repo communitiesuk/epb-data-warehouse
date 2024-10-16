@@ -1,4 +1,5 @@
 namespace :one_off do
+  desc "updated created_at values in EAV"
   task :update_created_at_eav do
     sql = <<~SQL
       INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value)
@@ -11,6 +12,7 @@ namespace :one_off do
     ActiveRecord::Base.connection.exec_query(sql, "SQL")
   end
 
+  desc "updated created_at values in document store"
   task :update_created_at_doc_store do
     sql = <<~SQL
       UPDATE  assessment_documents ad
