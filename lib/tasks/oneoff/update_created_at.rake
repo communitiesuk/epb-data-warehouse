@@ -2,7 +2,7 @@ namespace :one_off do
   task :update_created_at_eav do
     sql = <<~SQL
       INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value)
-      SELECT assessment_id, (SELECT attribute_id FROM assessment_attributes WHERE attribute_name = 'created_at')::bigint, created_at
+      SELECT DISTINCT assessment_id, (SELECT attribute_id FROM assessment_attributes WHERE attribute_name = 'created_at')::bigint, created_at
       FROM assessment_id_created_at r
       ON CONFLICT(attribute_id, assessment_id)
       DO UPDATE SET attribute_value= EXCLUDED.attribute_value;
