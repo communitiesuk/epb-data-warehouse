@@ -5,7 +5,7 @@ module Gateway
 
     def add_assessment(assessment_id:, document:)
       sql = <<-SQL
-        INSERT INTO assessment_documents (assessment_id, document, created_at, updated_at) VALUES ($1, $2, $3, $4)
+        INSERT INTO assessment_documents (assessment_id, document, warehouse_created_at, updated_at) VALUES ($1, $2, $3, $4)
            ON CONFLICT(assessment_id)
         DO UPDATE SET document=$2, updated_at=$3
       SQL
@@ -41,7 +41,7 @@ module Gateway
         FROM assessment_documents ad
         JOIN assessments_country_ids aci ON ad.assessment_id = aci.assessment_id
         JOIN countries c ON c.country_id = aci.country_id
-        WHERE created_at between $1 and $2
+        WHERE warehouse_created_at between $1 and $2
         AND c.country_code IN ('ENG', 'WAL', 'EAW')
       SQL
 

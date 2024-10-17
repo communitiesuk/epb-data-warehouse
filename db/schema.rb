@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_17_093511) do
 
   create_table "assessment_documents", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.jsonb "document", null: false
-    t.datetime "created_at", null: false
+    t.datetime "warehouse_created_at", null: false
     t.datetime "updated_at", null: false
     t.index "((document ->> 'assessment_type'::text))", name: "index_document_assessment_type"
     t.index "((document ->> 'created_at'::text))", name: "index_document_created_at"

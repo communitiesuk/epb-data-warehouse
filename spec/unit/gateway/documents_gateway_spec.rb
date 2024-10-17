@@ -158,13 +158,13 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
       assessment_data["rrn"] = assessment_id2
       gateway.add_assessment(assessment_id: assessment_id2, document: assessment_data)
       Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(country_id: 1, assessment_id: assessment_id2)
-      Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: "8570-6826-6530-4969-0203").update(created_at: Time.new(2020, 0o6, 0o1))
+      Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: "8570-6826-6530-4969-0203").update(warehouse_created_at: Time.new(2020, 0o6, 0o1))
       # Assessment in date range that isn't in England or Wales
       assessment_id3 = "8570-6826-6530-4969-0204"
       assessment_data["rrn"] = assessment_id3
       gateway.add_assessment(assessment_id: assessment_id3, document: assessment_data)
       Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(country_id: 4, assessment_id: assessment_id3)
-      Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: assessment_id3).update(created_at: Time.new(2020, 0o6, 0o1))
+      Gateway::DocumentsGateway::AssessmentDocument.find_by(assessment_id: assessment_id3).update(warehouse_created_at: Time.new(2020, 0o6, 0o1))
     end
 
     it "fetches documents from England and Wales within the start and end date" do
