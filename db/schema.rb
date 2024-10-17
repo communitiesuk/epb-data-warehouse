@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_16_141545) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_17_093511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -51,18 +51,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_141545) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index "((document ->> 'assessment_type'::text))", name: "index_document_assessment_type"
-    t.index "((document ->> 'created_At'::text))", name: "index_document_created_At"
+    t.index "((document ->> 'created_at'::text))", name: "index_document_created_at"
     t.index "((document ->> 'postcode'::text))", name: "index_document_postcode"
     t.index "((document ->> 'registration_date'::text))", name: "index_document_registration_date"
     t.index "((document ->> 'schema_type'::text))", name: "index_document_schema_type"
-  end
-
-  create_table "assessment_id_created_at", id: false, force: :cascade do |t|
-    t.string "assessment_id"
-    t.datetime "created_at", precision: nil
-    t.index ["assessment_id"], name: "idex_assessment_id_created_at_rrn"
-    t.index ["assessment_id"], name: "idx_assessment_id_created_at_assessment_id_rrn"
-    t.index ["created_at"], name: "assessment_id_created_at_date"
   end
 
   create_table "assessment_lookups", force: :cascade do |t|
@@ -110,11 +102,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_141545) do
     t.string "version_month", limit: 7, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "test", id: false, force: :cascade do |t|
-    t.string "assessment_id"
-    t.datetime "created_at", precision: nil
   end
 
   add_foreign_key "assessment_attribute_lookups", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
