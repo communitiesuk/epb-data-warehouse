@@ -17,7 +17,7 @@ namespace :one_off do
     sql = <<~SQL
       UPDATE  assessment_documents ad
       SET  document=jsonb_set(document, '{created_at}', to_jsonb(to_char(r.created_at, 'YYYY-MM-DD HH24:MI:SS.US')))
-      FROM assessment_id_created_at r
+      FROM assessment_id_created_at_missing r
       WHERE r.assessment_id = ad.assessment_id;
     SQL
 
