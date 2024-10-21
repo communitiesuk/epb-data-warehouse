@@ -23,4 +23,16 @@ namespace :one_off do
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL")
   end
+
+  desc "pushes missing created_at rrns to assessment queue"
+  task :push_missing_epc_to_queue do
+    sql = <<~SQL
+      SELECT assessment_id
+      FROM assessment_documents
+      WHERE document ->> 'created_at' IS NULL
+    SQL
+    rrn_array = ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result["assessment_id"] }
+    queues = Container.queues_gateway
+    queues.push_to_queue :assessments, rrn_array, jump_queue: true
+  end
 end
