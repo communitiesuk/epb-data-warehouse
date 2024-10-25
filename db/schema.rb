@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_17_093511) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_17_153835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -55,6 +55,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_17_093511) do
     t.index "((document ->> 'postcode'::text))", name: "index_document_postcode"
     t.index "((document ->> 'registration_date'::text))", name: "index_document_registration_date"
     t.index "((document ->> 'schema_type'::text))", name: "index_document_schema_type"
+  end
+
+  create_table "assessment_id_created_at", id: false, force: :cascade do |t|
+    t.string "assessment_id"
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_id_created_at_missing", id: false, force: :cascade do |t|
+    t.string "assessment_id"
+    t.datetime "created_at", precision: nil
   end
 
   create_table "assessment_lookups", force: :cascade do |t|
