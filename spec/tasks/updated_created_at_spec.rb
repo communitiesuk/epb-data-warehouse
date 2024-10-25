@@ -33,7 +33,7 @@ describe "rake to call the update created at values" do
 
     it "passes the array of assessment_ids the gateway where created_at is NULL" do
       task.invoke
-      expect(gateway).to have_received(:push_to_queue).with(:assessments, data.split(","), jump_queue: true).exactly(1).times
+      expect(gateway).to have_received(:push_to_queue).with(:assessments, data.split(",").sort, jump_queue: true).exactly(1).times
     end
   end
 end

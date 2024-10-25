@@ -112,12 +112,20 @@ class Container
     @average_co2_emissions_gateway ||= Gateway::AverageCo2EmissionsGateway.new
   end
 
+  def self.materialized_views_gateway
+    @materialized_views_gateway ||= Gateway::MaterializedViewsGateway.new
+  end
+
   def self.fetch_average_co2_emissions_use_case
     @fetch_average_co2_emissions_use_case ||= UseCase::FetchAverageCo2Emissions.new(gateway: average_co2_emissions_gateway)
   end
 
   def self.refresh_average_co2_emissions
     @refresh_average_co2_emissions ||= UseCase::RefreshAverageCo2Emissions.new(gateway: average_co2_emissions_gateway)
+  end
+
+  def self.refresh_materialized_views_use_case
+    @refresh_materialized_views_use_case ||= UseCase::RefreshMaterializedView.new(gateway: materialized_views_gateway)
   end
 
   def self.logger
