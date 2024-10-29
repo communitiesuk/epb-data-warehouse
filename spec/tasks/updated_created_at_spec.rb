@@ -6,7 +6,7 @@ describe "rake to call the update created at values" do
 
     include_context "when lodging XML"
 
-    let(:data) { "1234-5678-1234-2278-1234,0000-0000-0000-0000-0000" }
+    let(:data) { "0000-0000-0000-0000-0000,1234-5678-1234-2278-1234" }
     let(:redis) { MockRedis.new }
     let(:gateway) { instance_double Gateway::QueuesGateway }
 
@@ -16,9 +16,10 @@ describe "rake to call the update created at values" do
       allow($stdout).to receive(:puts)
       allow(gateway).to receive(:push_to_queue)
       allow(Container).to receive(:queues_gateway).and_return gateway
-      add_assessment(assessment_id: "1234-5678-1234-2278-1234", schema_type:, type_of_assessment:)
       add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:)
       add_assessment(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment:)
+      add_assessment(assessment_id: "1234-5678-1234-2278-1234", schema_type:, type_of_assessment:)
+
       update_sql = <<~SQL
         UPDATE  assessment_documents ad
          SET  document=jsonb_set(document, '{created_at}', 'null')
