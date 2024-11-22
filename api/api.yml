@@ -1,0 +1,95 @@
+openapi: 3.1.0
+
+info:
+  title: Energy Performance of Buildings Data warehouse API
+  description: API for EPBR Data warehouse API integrations
+  contact:
+    name: MHCLG Digital helpdesk (prefix email subject with "EPB")
+    email: mhclg.digital-services@communities.gov.uk
+  version: 1.2.2
+
+  #TODO complete server section when API is public
+#servers:
+
+paths:
+  /avg-co2-emissions:
+    get:
+      summary: Get the averages co2/sqm emission counts for EPCs
+      operationId: get-avg-co2-emissions
+      security:
+        - oauth:
+            - 'avg-co2-emissions:warehouse:read'
+      responses:
+        '200':
+          description: average counts results
+          content:
+            application/json:
+              schema:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      properties:
+                      $ref: '#/components/schemas/AverageCo2Emissions'
+
+components:
+  securitySchemes:
+    oauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credentials grant flow
+      flows:
+        clientCredentials:
+          tokenUrl: /auth/oauth/token
+          scopes:
+            'warehouse:read': Get report data
+
+  schemas:
+    AverageCo2Emissions:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            all:
+              type: array
+              items:
+                - $ref: '#/components/schemas/AvgCo2EmissionItem'
+            england:
+              type: array
+              items:
+                - $ref: '#/components/schemas/AvgCo2EmissionItem'
+            wales:
+              type: array
+              items:
+                - $ref: '#/components/schemas/AvgCo2EmissionItem'
+            northernIreland:
+              type: array
+              items:
+                - $ref: '#/components/schemas/AvgCo2EmissionItem'
+
+    AvgCo2EmissionItem:
+        type: object
+        properties:
+          avgCo2Emission:
+            $ref: '#/components/schemas/AvgCo2Emission'
+          yearMonth:
+            $ref: '#/components/schemas/YearMonth'
+          assessmentType:
+            $ref: '#/components/schemas/AssessmentType'
+
+    AvgCo2Emission:
+      type: float
+      example: 17.6
+      description: the average calculated from 'co2_emissions_current_per_floor_area' per EPC per month/year per assessment type
+
+    YearMonth:
+      type: string
+      example: "2024-08"
+      description: the unique month and year
+
+    AssessmentType:
+      type: string
+      example: 'RdSAP'
+      enum:
+        - RdSAP
+        - SAP
