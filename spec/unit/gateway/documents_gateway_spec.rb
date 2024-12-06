@@ -168,9 +168,24 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
     end
 
     it "fetches documents from England and Wales within the start and end date" do
-      result = gateway.fetch_assessments_json(date_from: "2020-05-01", date_to: "2020-07-01")
+      result = gateway.fetch_assessments(date_from: "2020-05-01", date_to: "2020-07-01")
       expect(result.count).to eq 1
       expect(result.first[:assessment_id]).to eq "8570-6826-6530-4969-0203"
+    end
+  end
+
+  context "when fetching a single json document" do
+    before do
+      gateway.add_assessment(assessment_id:, document: assessment_data)
+    end
+
+    it "fetches the json document" do
+      assessment_id = "8570-6826-6530-4969-0202"
+      doc = gateway.fetch_redacted(assessment_id:)
+
+      expect(doc.length).to eq 1
+      expect(JSON.parse(doc[0][:document])).to be_a Hash
+      expect(doc[0][:assessment_id]).to eq assessment_id
     end
   end
 end

@@ -35,9 +35,9 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
-    def fetch_assessments_json(date_from:, date_to:)
+    def fetch_assessments(date_from:, date_to:)
       sql = <<-SQL
-        SELECT ad.document, ad.assessment_id
+        SELECT ad.assessment_id
         FROM assessment_documents ad
         JOIN assessments_country_ids aci ON ad.assessment_id = aci.assessment_id
         JOIN countries c ON c.country_id = aci.country_id
@@ -56,6 +56,25 @@ module Gateway
           date_to,
           ActiveRecord::Type::DateTime.new,
         ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result.transform_keys(&:to_sym) }
+    end
+
+    def fetch_redacted(assessment_id:)
+      sql = <<-SQL
+        SELECT ad.document, ad.assessment_id
+        FROM assessment_documents ad
+        WHERE ad.assessment_id = $1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| Domain::RedactedDocument.new(result:).to_hash }

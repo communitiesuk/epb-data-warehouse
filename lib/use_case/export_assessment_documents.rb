@@ -6,11 +6,14 @@ module UseCase
     end
 
     def execute(date_from:, date_to:)
-      assessment_documents = @documents_gateway.fetch_assessments_json(date_from:, date_to:)
-      assessment_documents.each do |assessment_document|
-        @storage_gateway.write_file(file_name: "#{assessment_document[:assessment_id]}.json", data: assessment_document[:document])
-      rescue Aws::S3::Errors::ServiceError
-        raise
+      assessment_ids = @documents_gateway.fetch_assessments(date_from:, date_to:)
+      assessment_ids.each do |row|
+        assessment_document = @documents_gateway.fetch_redacted(assessment_id: row[:assessment_id])
+        begin
+          @storage_gateway.write_file(file_name: "#{assessment_document[:assessment_id]}.json", data: assessment_document[:document])
+        rescue Aws::S3::Errors::ServiceError
+          raise
+        end
       end
     end
   end

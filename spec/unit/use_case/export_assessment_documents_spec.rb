@@ -2,7 +2,7 @@ describe UseCase::ExportAssessmentDocuments do
   let(:use_case) { described_class.new(documents_gateway:, storage_gateway:) }
   let(:documents_gateway) { instance_double Gateway::DocumentsGateway }
   let(:storage_gateway) { instance_double Gateway::StorageGateway }
-  let(:assessment_documents) do
+  let(:assessments_hash) do
     [{
       assessment_id: "8570-6826-6530-4969-0202",
       document: {
@@ -58,31 +58,47 @@ describe UseCase::ExportAssessmentDocuments do
        }.to_json,
      }]
   end
+
+  let(:assessments) do
+    [
+      { assessment_id: assessments_hash[0][:assessment_id] },
+      { assessment_id: assessments_hash[1][:assessment_id] },
+    ]
+  end
+
   let(:date_from) { "2020-02-01" }
   let(:date_to) { "2020-03-01" }
 
   context "when exporting documents to the S3 bucket" do
     before do
-      allow(documents_gateway).to receive(:fetch_assessments_json).with(date_from:, date_to:).and_return assessment_documents
+      assessments_hash.each do |i|
+        allow(documents_gateway).to receive(:fetch_redacted).with(assessment_id: i[:assessment_id]).and_return i
+      end
+
+      allow(documents_gateway).to receive(:fetch_assessments).with(date_from:, date_to:).and_return assessments
       allow(storage_gateway).to receive(:write_file)
     end
 
     it "calls the gateway to fetch the redacted documents" do
       use_case.execute(date_from:, date_to:)
-      expect(documents_gateway).to have_received(:fetch_assessments_json)
+      expect(documents_gateway).to have_received(:fetch_assessments)
     end
 
     it "uploads each assessment document to the S3 bucket" do
       use_case.execute(date_from:, date_to:)
+      expect(documents_gateway).to have_received(:fetch_redacted).exactly(2).times
       expect(storage_gateway).to have_received(:write_file).exactly(2).times
-      expect(storage_gateway).to have_received(:write_file).with(file_name: "#{assessment_documents[0][:assessment_id]}.json", data: assessment_documents[0][:document])
-      expect(storage_gateway).to have_received(:write_file).with(file_name: "#{assessment_documents[1][:assessment_id]}.json", data: assessment_documents[1][:document])
+      expect(storage_gateway).to have_received(:write_file).with(file_name: "#{assessments_hash[0][:assessment_id]}.json", data: assessments_hash[0][:document])
+      expect(storage_gateway).to have_received(:write_file).with(file_name: "#{assessments_hash[1][:assessment_id]}.json", data: assessments_hash[1][:document])
     end
   end
 
   context "when there is a storage error" do
     before do
-      allow(documents_gateway).to receive(:fetch_assessments_json).and_return assessment_documents
+      allow(documents_gateway).to receive(:fetch_assessments).and_return assessments_hash
+      assessments_hash.each do |i|
+        allow(documents_gateway).to receive(:fetch_redacted).with(assessment_id: i[:assessment_id]).and_return i
+      end
       allow(storage_gateway).to receive(:write_file).and_raise Aws::S3::Errors::ServiceError.new(Seahorse::Client::RequestContext, "something has gone wrong")
     end
 
