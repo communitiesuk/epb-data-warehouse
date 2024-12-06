@@ -182,10 +182,8 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
     it "fetches the json document" do
       assessment_id = "8570-6826-6530-4969-0202"
       doc = gateway.fetch_redacted(assessment_id:)
-
-      expect(doc.length).to eq 1
-      expect(JSON.parse(doc[0][:document])).to be_a Hash
-      expect(doc[0][:assessment_id]).to eq assessment_id
+      expect(JSON.parse(doc[:document])).to be_a Hash
+      expect(doc[:assessment_id]).to eq assessment_id
     end
   end
 end
