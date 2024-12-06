@@ -7,10 +7,11 @@ module UseCase
 
     def execute(date_from:, date_to:)
       assessment_ids = @documents_gateway.fetch_assessments(date_from:, date_to:)
+
       assessment_ids.each do |row|
         assessment_document = @documents_gateway.fetch_redacted(assessment_id: row[:assessment_id])
         begin
-          @storage_gateway.write_file(file_name: "#{assessment_document[:assessment_id]}.json", data: assessment_document[:document])
+          @storage_gateway.write_file(file_name: "#{row[:assessment_id]}.json", data: assessment_document[:document])
         rescue Aws::S3::Errors::ServiceError
           raise
         end
