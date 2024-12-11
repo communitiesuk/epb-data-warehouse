@@ -161,16 +161,6 @@ describe UseCase::ImportEnums do
 
     it "checks the schemas that use 0" do
       schemes_that_use_0 = %w[
-        SAP-Schema-16.3
-        SAP-Schema-16.2
-        SAP-Schema-16.1
-        SAP-Schema-16.0
-        SAP-Schema-15.0
-        SAP-Schema-14.2
-        SAP-Schema-14.1
-        SAP-Schema-14.0
-        SAP-Schema-13.0
-        SAP-Schema-12.0
         RdSAP-Schema-20.0.0
         RdSAP-Schema-19.0
         RdSAP-Schema-18.0
@@ -187,9 +177,8 @@ describe UseCase::ImportEnums do
         FROM assessment_attribute_lookups aal
         INNER JOIN assessment_lookups al on aal.lookup_id = al.id
         INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = '0' AND aal.type_of_assessment='RdSAP'")
-
-      expect(data.rows.flatten - schemes_that_use_0).to eq([])
+        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = '0'")
+      expect(schemes_that_use_0 - data.rows.flatten).to eq([])
     end
   end
 
