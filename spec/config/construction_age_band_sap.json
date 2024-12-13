@@ -1,0 +1,10 @@
+{
+  "nodes" : [ {
+    "attribute_name": "construction_age_band",
+    "type_of_assessment": "SAP",
+    "xsd_node_name": "ConstructionDateCode"
+  }],
+  "paths" : {
+    "sap"  : "/api/schemas/xml/SAP**/SAP**/UDT/*-Domains.xsd"
+  }
+}

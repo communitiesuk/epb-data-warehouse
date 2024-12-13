@@ -182,6 +182,28 @@ describe UseCase::ImportEnums do
     end
   end
 
+  context "when saving data across a range of SAP schemas" do
+    before do
+      lookups_gateway = Gateway::AssessmentLookupsGateway.new
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/construction_age_band_sap.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    let(:data) do
+      ActiveRecord::Base.connection.exec_query("SELECT DISTINCT schema_version
+        FROM assessment_attribute_lookups aal
+        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = 'A' AND schema_version IN('SAP-Schema-16.3', 'SAP-Schema-17.1/SAP')
+        ORDER BY schema_version")
+    end
+
+    it "returns values for SAP 16.3 and SAP 17" do
+      expect(data.rows.flatten).to eq(%w[SAP-Schema-16.3 SAP-Schema-17.1/SAP])
+    end
+  end
+
   context "when saving transaction types for RdSAP" do
     let(:lookups_gateway) do
       Gateway::AssessmentLookupsGateway.new
