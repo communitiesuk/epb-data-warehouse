@@ -6,8 +6,8 @@ task :seed_average_co2_emissions do
 
   rrn = "0000-0000-0000-0000-0000"
 
-  sap = JSON.parse(File.read("#{json_dir_path}sap.json"))
-  rdsap = JSON.parse(File.read("#{json_dir_path}rdsap.json"))
+  sap = JSON.parse(File.read("#{json_dir_path}sap.json").force_encoding("utf-8"))
+  rdsap = JSON.parse(File.read("#{json_dir_path}rdsap.json").force_encoding("utf-8"))
   epcs = [sap, rdsap]
 
   next_id = proc do |_assessment_id|
