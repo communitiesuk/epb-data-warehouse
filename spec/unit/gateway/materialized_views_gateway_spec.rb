@@ -6,7 +6,7 @@ describe Gateway::MaterializedViewsGateway do
 
     it "returns an array of one view name" do
       expect(fetch_all).to be_an(Array)
-      expect(fetch_all).to eq(%w[mvw_avg_co2_emissions])
+      expect(fetch_all.sort).to eq(%w[mvw_avg_co2_emissions mvw_domestic_search])
     end
   end
 
