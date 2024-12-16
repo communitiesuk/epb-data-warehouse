@@ -1,3 +1,5 @@
+require "csv"
+
 shared_context "when saving ons data" do
   def import_postcode_directory_data
     file_path = File.join Dir.pwd, "spec/fixtures/ons_data/ons_postcode_directory.csv"
