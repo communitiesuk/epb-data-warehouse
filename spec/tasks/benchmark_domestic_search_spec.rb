@@ -12,8 +12,8 @@ describe "test domestic search benchmarking rake" do
 
     before do
       allow(Container).to receive(:domestic_search_use_case).and_return(use_case)
-      allow(UseCase::DomesticSearch).to receive(:new).with(gateway:).and_return use_case
       allow(use_case).to receive(:execute)
+      allow($stdout).to receive(:puts)
     end
 
     after(:all) do
@@ -24,6 +24,7 @@ describe "test domestic search benchmarking rake" do
     end
 
     it "call the rake without errors" do
+      ENV["ROW_LIMIT"] = "1"
       expect { task.invoke }.not_to raise_error
       expect(use_case).to have_received(:execute).exactly(:once)
     end
@@ -39,6 +40,39 @@ describe "test domestic search benchmarking rake" do
       it "calls the rake without error" do
         expect { task.invoke }.not_to raise_error
         expect(use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", row_limit: "2", council: "Manchester").exactly(:once)
+      end
+
+      it "prints the expected output" do
+        expect { task.invoke }.to output(/Average execution time:/).to_stdout
+      end
+
+      it "calls the use case multiple times" do
+        ENV["COUNT"] = "5"
+        task.invoke
+        expect(use_case).to have_received(:execute).exactly(5).times
+      end
+    end
+
+    context "when passing wrong parameters" do
+      before do
+        ENV["DATE_START"] = "2000-12-31"
+        ENV["DATE_END"] = "2024-12-31"
+        ENV["ROW_LIMIT"] = "2"
+        ENV["COUNCIL"] = "Manchester"
+        allow(use_case).to receive(:execute).and_raise(Boundary::InvalidDates)
+      end
+
+      it "calls the rake with wrong dates and raises an error" do
+        ENV["DATE_START"] = "2024-12-31"
+        ENV["DATE_END"] = "2000-12-31"
+        expect { task.invoke }.to raise_error(Boundary::InvalidDates)
+      end
+
+      it "calls the rake with wrong row limit and raises an error" do
+        ENV["ROW_LIMIT"] = "-1"
+        expect { task.invoke }.to raise_error(Boundary::InvalidArgument)
+        ENV["ROW_LIMIT"] = "5001"
+        expect { task.invoke }.to raise_error(Boundary::InvalidArgument)
       end
     end
   end
