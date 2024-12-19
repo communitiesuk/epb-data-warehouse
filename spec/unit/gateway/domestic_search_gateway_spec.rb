@@ -23,11 +23,11 @@ describe Gateway::DomesticSearchGateway do
       type_of_assessment = "SAP"
       schema_type = "SAP-Schema-19.0.0"
       add_countries
-      add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
-        "postcode": "W6 9ZD",
-      })
       add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
         "postcode": "SW10 0AA",
+      })
+      add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
+        "postcode": "W6 9ZD",
       })
       add_assessment(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
         "postcode": "BT1 1AA",
