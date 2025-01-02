@@ -35,8 +35,6 @@ module Gateway
         )
       end
 
-      sql += " ORDER BY RRN"
-
       sql += " LIMIT $3"
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }

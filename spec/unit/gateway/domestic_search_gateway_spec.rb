@@ -45,7 +45,7 @@ describe Gateway::DomesticSearchGateway do
       { "rrn" => "0000-0000-0000-0000-0000", "address1" => "1 Some Street", "address2" => "Some Area", "address3" => "Some County", "postcode" => "W6 9ZD", "total_floor_area" => "165", "current_energy_rating" => "72", "lodgement_date" => "2022-05-09" }
     end
 
-    it "returns a rows for each assessment in England & Wales" do
+    it "returns a rows for each assessment in England & Wales in ordered by rrn" do
       expect(gateway.fetch(date_start:, date_end:).length).to eq 2
       expect(gateway.fetch(date_start:, date_end:)[0]["rrn"]).to eq "0000-0000-0000-0000-0000"
       expect(gateway.fetch(date_start:, date_end:)[1]["rrn"]).to eq "0000-0000-0000-0000-0001"
