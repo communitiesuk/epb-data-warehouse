@@ -67,12 +67,18 @@ describe "test domestic search benchmarking rake" do
         ENV["DATE_END"] = "2000-12-31"
         expect { task.invoke }.to raise_error(Boundary::InvalidDates)
       end
+    end
 
-      it "calls the rake with wrong row limit and raises an error" do
-        ENV["ROW_LIMIT"] = "-1"
-        expect { task.invoke }.to raise_error(Boundary::InvalidArgument)
-        ENV["ROW_LIMIT"] = "5001"
-        expect { task.invoke }.to raise_error(Boundary::InvalidArgument)
+    context "when passing no row limit" do
+      before do
+        ENV["DATE_START"] = "2000-12-31"
+        ENV["DATE_END"] = "2024-12-31"
+        ENV["COUNCIL"] = "Manchester"
+        allow(use_case).to receive(:execute)
+      end
+
+      it "does not raise an error" do
+        expect { task.invoke }.not_to raise_error
       end
     end
   end

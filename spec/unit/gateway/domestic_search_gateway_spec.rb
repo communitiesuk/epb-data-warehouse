@@ -60,13 +60,15 @@ describe Gateway::DomesticSearchGateway do
       expect(gateway.fetch(date_start:, date_end:)[0]["property_type"]).to eq "House"
     end
 
-    context "when filtering by council" do
+    context "when filtering by council and row limit" do
       let(:council) { "Hammersmith and Fulham" }
+      let(:row_limit) { 2 }
 
       it "returns data with a corresponding council" do
-        expect(gateway.fetch(date_start:, date_end:, council:).length).to eq(2)
-        expect(gateway.fetch(date_start:, date_end:, council:)[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
-        expect(gateway.fetch(date_start:, date_end:, council:)[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        result = gateway.fetch(date_start:, date_end:, council:, row_limit:)
+        expect(result.length).to eq(2)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
       end
     end
 
@@ -80,7 +82,7 @@ describe Gateway::DomesticSearchGateway do
       end
     end
 
-    context "when limiting by number of row" do
+    context "when limiting by only by number of rows" do
       let(:row_limit) { 1 }
 
       it "returns 1" do

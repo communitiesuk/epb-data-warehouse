@@ -6,8 +6,6 @@ task :benchmark_domestic_search do
   council = ENV["COUNCIL"]
   count = ENV["COUNT"].nil? ? 1 : ENV["COUNT"].to_i
 
-  raise Boundary::InvalidArgument, "Row limit must between 1 and 5000" unless row_limit.to_i.positive? || row_limit.to_i > 5000
-
   start_time = Time.now
   count.times do |_i|
     Container.domestic_search_use_case.execute(date_start:, date_end:, row_limit:, council:)
