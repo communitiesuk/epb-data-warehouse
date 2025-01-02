@@ -43,6 +43,8 @@ end
 # Adds project rake files
 Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
 
+ENV["DATABASE_URL"] = "postgresql://localhost:5432/epb_eav_development" if ENV["DATABASE_URL"].nil? && ENV["STAGE"].nil?
+
 # Loads Rails database tasks
 Rake.load_rakefile("active_record/railties/databases.rake")
 unless defined?(DATABASE_CONFIG)

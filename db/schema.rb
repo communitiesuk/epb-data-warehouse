@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema[7.2].define(version: 2025_01_02_094746) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "dblink"
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
   enable_extension "tablefunc"
@@ -57,16 +56,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_094746) do
     t.index "((document ->> 'postcode'::text))", name: "index_document_postcode"
     t.index "((document ->> 'registration_date'::text))", name: "index_document_registration_date"
     t.index "((document ->> 'schema_type'::text))", name: "index_document_schema_type"
-  end
-
-  create_table "assessment_id_created_at", id: false, force: :cascade do |t|
-    t.string "assessment_id"
-    t.datetime "created_at", precision: nil
-  end
-
-  create_table "assessment_id_created_at_missing", id: false, force: :cascade do |t|
-    t.string "assessment_id"
-    t.datetime "created_at", precision: nil
   end
 
   create_table "assessment_lookups", force: :cascade do |t|
@@ -114,10 +103,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_094746) do
     t.string "version_month", limit: 7, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "temp", id: false, force: :cascade do |t|
-    t.jsonb "document"
   end
 
   add_foreign_key "assessment_attribute_lookups", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
