@@ -3,7 +3,7 @@ module Gateway
     attr_accessor :config
 
     def initialize(path)
-      @config = JSON.parse(File.read(path))
+      @config = JSON.parse(File.read(path).force_encoding("utf-8"))
     end
 
     def nodes

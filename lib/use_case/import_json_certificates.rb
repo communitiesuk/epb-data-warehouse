@@ -15,7 +15,7 @@ module UseCase
     def execute
       files = @file_gateway.read
       files.each do |f|
-        certificate = JSON.parse(File.read(f))
+        certificate = JSON.parse(File.read(f).force_encoding("utf-8"))
         assessment_id = certificate["assessment_id"]
         import_certificate_data_use_case.execute(assessment_id:, certificate_data: certificate)
       end
