@@ -30,6 +30,8 @@ module Gateway
         )
       end
 
+      sql += " ORDER BY RRN"
+
       unless row_limit.nil?
         sql += " LIMIT $#{bindings.length + 1}"
         bindings << ActiveRecord::Relation::QueryAttribute.new(
