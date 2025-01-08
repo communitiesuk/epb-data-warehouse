@@ -99,6 +99,7 @@ describe Gateway::DomesticSearchGateway do
           "postcode" => "SW10 0AA",
           "total_floor_area" => "165",
           "current_energy_rating" => "72",
+          "potential_energy_rating" => "72",
           "lodgement_date" => "2022-05-09",
           "local_authority_label" => "Hammersmith and Fulham",
           "constituency_label" => "Chelsea and Fulham",
@@ -115,6 +116,8 @@ describe Gateway::DomesticSearchGateway do
     document ->> 'address_line_2' as ADDRESS2,
     document ->> 'address_line_3' as ADDRESS3,
     document ->> 'postcode' as POSTCODE,
+    document ->> 'energy_rating_potential' AS POTENTIAL_ENERGY_RATING,
+
     document ->> 'total_floor_area' as TOTAL_FLOOR_AREA,
     document->>'energy_rating_current' as CURRENT_ENERGY_RATING,
     document->>'registration_date' as LODGEMENT_DATE,
