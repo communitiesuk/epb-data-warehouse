@@ -256,7 +256,7 @@ describe Gateway::DomesticSearchGateway do
     document ->> 'extensions_count' as EXTENSION_COUNT,
     document ->> 'low_energy_lighting' as LOW_ENERGY_LIGHTING,
     document ->> 'mains_gas' as MAINS_GAS_FLAG,
-    document ->> 'uprn' as UPRN,
+    CASE WHEN document ->> 'uprn' LIKE 'UPRN-%' THEN document ->> 'uprn' ELSE '' END as UPRN,
     document ->> 'energy_assessor' as UPRN_SOURCE,
     os_la.name as LOCAL_AUTHORITY_LABEL,
     os_p.name as CONSTITUENCY_LABEL,
