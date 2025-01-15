@@ -38,6 +38,9 @@ describe Gateway::DomesticSearchGateway do
       add_assessment(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "postcode": "W6 9ZD",
       })
+      add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+        "postcode": "SW10 0AA",
+      })
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
     end
 
@@ -91,7 +94,7 @@ describe Gateway::DomesticSearchGateway do
     end
 
     context "when creating the materialized view" do
-      let(:expected_data) do
+      let(:expected_base_data) do
         { "rrn" => "0000-0000-0000-0000-0001",
           "address1" => "1 Some Street",
           "address2" => "Some Area",
@@ -169,7 +172,7 @@ describe Gateway::DomesticSearchGateway do
           "number_open_fireplaces" => nil,
           "unheated_corridor_length" => nil,
           "uprn" => "UPRN-0000000001",
-          "uprn_source" => nil,
+          "uprn_source" => "",
           "energy_tariff" => nil,
           "floor_height" => nil,
           "glazed_type" => nil,
@@ -183,9 +186,61 @@ describe Gateway::DomesticSearchGateway do
           "full_address" => "1 some street some area some county whitbury" }
       end
 
-      let(:first_query_result) do
-        ActiveRecord::Base.connection.exec_query(
-          "SELECT
+      let(:expected_rdsap_data) do
+        expected_base_data.merge(
+          "address2" => nil,
+          "address3" => nil,
+          "built_form" => nil,
+          "co2_emissions_curr_per_floor_area" => "20",
+          "environmental_impact_current" => "52",
+          "environmental_impact_potential" => "74",
+          "extension_count" => "0",
+          "construction_age_band" => "K",
+          "current_energy_efficiency" => "50",
+          "current_energy_rating" => "E",
+          "energy_consumption_current" => "230",
+          "energy_consumption_potential" => "88",
+          "fixed_lighting_outlets_count" => nil,
+          "floor_description" => "Suspended, no insulation (assumed)",
+          "floor_energy_eff" => "0",
+          "floor_env_eff" => "0",
+          "full_address" => "1 some street whitbury",
+          "heating_cost_current" => nil,
+          "heating_cost_potential" => nil,
+          "hot_water_cost_current" => nil,
+          "hot_water_cost_potential" => nil,
+          "hotwater_description" => "From main system",
+          "hotwater_environmental_rating" => "4",
+          "inspection_date" => "2020-05-04",
+          "lighting_cost_current" => nil,
+          "lighting_cost_potential" => nil,
+          "lighting_description" => "Low energy lighting in 50% of fixed outlets",
+          "lighting_energy_eff" => "4",
+          "lighting_env_eff" => "4",
+          "lodgement_date" => "2020-05-04",
+          "main_fuel" => nil,
+          "mechanical_ventilation" => nil,
+          "multi_glaze_proportion" => nil,
+          "roof_description" => "Pitched, 25 mm loft insulation",
+          "roof_energy_eff" => "2",
+          "roof_env_eff" => "2",
+          "rrn" => "0000-0000-0000-0000-0006",
+          "secondheat_description" => "Room heaters, electric",
+          "total_floor_area" => "55",
+          "main_heating_controls" => "[{\"description\": \"Programmer, room thermostat and TRVs\", \"energy_efficiency_rating\": 4, \"environmental_efficiency_rating\": 4}, {\"description\": \"Time and temperature zone control\", \"energy_efficiency_rating\": 5, \"environmental_efficiency_rating\": 5}]",
+          "uprn" => "UPRN-000000000000",
+          "walls_description" => nil,
+          "walls_energy_eff" => nil,
+          "walls_env_eff" => nil,
+          "wind_turbine_count" => nil,
+          "windows_description" => nil,
+          "windows_energy_eff" => nil,
+          "windows_env_eff" => nil,
+        )
+      end
+
+      let(:sql_query) do
+        "SELECT
     ad.assessment_id as RRN,
     document ->> 'address_line_1' as ADDRESS1,
     document ->> 'address_line_2' as ADDRESS2,
@@ -241,7 +296,7 @@ describe Gateway::DomesticSearchGateway do
     document ->> 'total_floor_area' as TOTAL_FLOOR_AREA,
     document ->> 'registration_date' as LODGEMENT_DATE,
     document ->> 'post_town' as POSTTOWN,
-    document -> 'sap_building_parts'-> 0 ->> 'construction_age_band' as CONSTRUCTION_AGE_BAND,
+    CASE WHEN document ->> 'assessment_type' = 'RdSAP' THEN document -> 'sap_data' -> 'sap_building_parts'-> 0 ->> 'construction_age_band' ELSE document -> 'sap_building_parts'-> 0 ->> 'construction_age_band' END as CONSTRUCTION_AGE_BAND,
     document ->> 'tenure' as TENURE,
     document ->> 'created_at' as LODGEMENT_DATETIME,
     document ->> 'sap_lighting' as FIXED_LIGHTING_OUTLETS_COUNT,
@@ -259,11 +314,11 @@ describe Gateway::DomesticSearchGateway do
     document ->> 'level' as FLOOR_LEVEL,
     document ->> 'storey_count' as FLAT_STOREY_COUNT,
     document ->> 'glazed_area' as GLAZED_AREA,
-    document ->> 'extensions_count' as EXTENSION_COUNT,
+    document -> 'sap_data' ->> 'extensions_count' as EXTENSION_COUNT,
     document ->> 'low_energy_lighting' as LOW_ENERGY_LIGHTING,
     document ->> 'mains_gas' as MAINS_GAS_FLAG,
     CASE WHEN document ->> 'uprn' LIKE 'UPRN-%' THEN document ->> 'uprn' ELSE '' END as UPRN,
-    document ->> 'energy_assessor' as UPRN_SOURCE,
+    '' as UPRN_SOURCE,
     os_la.name as LOCAL_AUTHORITY_LABEL,
     os_p.name as CONSTITUENCY_LABEL,
     os_p.area_code as CONSTITUENCY,
@@ -287,12 +342,18 @@ left JOIN ons_postcode_directory ons on document ->> 'postcode' = ons.postcode
 left join ons_postcode_directory_names os_la on ons.local_authority_code = os_la.area_code
 left join ons_postcode_directory_names os_p on ons.westminster_parliamentary_constituency_code = os_p.area_code
 WHERE document ->> 'assessment_type' IN ('RdSAP', 'SAP')
-  AND co.country_code IN ('EAW', 'ENG', 'WLS')",
-        ).first
+  AND co.country_code IN ('EAW', 'ENG', 'WLS')"
       end
 
-      it "creates a table with the required data" do
-        expect(first_query_result).to eq expected_data
+      it "creates a table with the required data for SAP" do
+        first_query_result = ActiveRecord::Base.connection.exec_query(sql_query).first
+        expect(first_query_result).to eq expected_base_data
+      end
+
+      it "creates a table with the required data for RdSAP" do
+        sql_query << " AND document ->> 'assessment_type' = 'RdSAP'"
+        first_query_result = ActiveRecord::Base.connection.exec_query(sql_query).first
+        expect(first_query_result).to eq expected_rdsap_data
       end
     end
   end
