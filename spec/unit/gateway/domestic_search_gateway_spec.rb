@@ -116,7 +116,7 @@ describe Gateway::DomesticSearchGateway do
           "heating_cost_potential" => "250.34",
           "hot_water_cost_current" => "200.4",
           "hot_water_cost_potential" => "180.43",
-          "main_heating_controls" => "[{\"description\": \"Programmer, room thermostat and TRVs\", \"energy_efficiency_rating\": 4, \"environmental_efficiency_rating\": 4}]",
+          "main_heating_controls" => "Programmer, room thermostat and TRVs",
           "multi_glaze_proportion" => "100",
           "hotwater_description" => "From main system, waste water heat recovery",
           "hotwater_efficiency_rating" => "4",
@@ -153,7 +153,7 @@ describe Gateway::DomesticSearchGateway do
           "construction_age_band" => "A",
           "tenure" => "1",
           "lodgement_datetime" => "2021-07-21T11:26:28.045Z",
-          "fixed_lighting_outlets_count" => "[[{\"lighting_power\": 60, \"lighting_outlets\": 1, \"lighting_efficacy\": 11.2}, {\"lighting_power\": 14, \"lighting_outlets\": 10, \"lighting_efficacy\": 66.9}]]",
+          "fixed_lighting_outlets_count" => 11,
           "low_energy_fixed_light_count" => nil,
           "current_energy_efficiency" => "72",
           "current_energy_rating" => "C",
@@ -201,7 +201,7 @@ describe Gateway::DomesticSearchGateway do
           "energy_consumption_current" => "230",
           "energy_consumption_potential" => "88",
           "energy_tariff" => nil,
-          "fixed_lighting_outlets_count" => "16",
+          "fixed_lighting_outlets_count" => 16,
           "flat_storey_count" => 3,
           "flat_top_storey" => "N",
           "floor_description" => "Suspended, no insulation (assumed)",
@@ -243,7 +243,7 @@ describe Gateway::DomesticSearchGateway do
           "rrn" => "0000-0000-0000-0000-0006",
           "secondheat_description" => "Room heaters, electric",
           "total_floor_area" => "55",
-          "main_heating_controls" => "[{\"description\": \"Programmer, room thermostat and TRVs\", \"energy_efficiency_rating\": 4, \"environmental_efficiency_rating\": 4}, {\"description\": \"Time and temperature zone control\", \"energy_efficiency_rating\": 5, \"environmental_efficiency_rating\": 5}]",
+          "main_heating_controls" => "Programmer, room thermostat and TRVs. Time and temperature zone control",
           "uprn" => "UPRN-000000000000",
           "unheated_corridor_length" => "10",
           "walls_description" => "Solid brick, as built, no insulation (assumed)",
@@ -271,7 +271,6 @@ describe Gateway::DomesticSearchGateway do
     document ->> 'co2_emissions_current' AS CO2_EMISSIONS_CURRENT,
     document ->> 'co2_emissions_current_per_floor_area' AS CO2_EMISSIONS_CURR_PER_FLOOR_AREA,
     document ->> 'co2_emissions_potential' AS CO2_EMISSIONS_POTENTIAL,
-    document ->> 'main_heating_controls' as MAIN_HEATING_CONTROLS,
     document -> 'hot_water' ->> 'description' as HOTWATER_DESCRIPTION,
     document -> 'hot_water' ->> 'energy_efficiency_rating' as HOTWATER_EFFICIENCY_RATING,
     document -> 'hot_water' ->> 'environmental_efficiency_rating' as HOTWATER_ENVIRONMENTAL_RATING,
@@ -339,7 +338,6 @@ describe Gateway::DomesticSearchGateway do
     CASE WHEN document ->> 'assessment_type' = 'RdSAP' THEN document -> 'sap_data' -> 'sap_heating' -> 'main_heating_details' -> 0 ->> 'main_fuel_type' ELSE document -> 'sap_heating' -> 'main_heating_details' -> 0 ->> 'main_fuel_type' END MAIN_FUEL,
     CASE WHEN document ->> 'assessment_type' = 'RdSAP' THEN document -> 'sap_data' -> 'sap_building_parts'-> 0 ->> 'construction_age_band' ELSE document -> 'sap_building_parts'-> 0 ->> 'construction_age_band' END as CONSTRUCTION_AGE_BAND,
     CASE WHEN document ->> 'assessment_type' = 'RdSAP' THEN document -> 'sap_data' ->> 'mechanical_ventilation' ELSE document -> 'sap_ventilation' ->> 'mechanical_ventilation_data_source' END AS MECHANICAL_VENTILATION,
-    CASE WHEN document ->> 'assessment_type' = 'RdSAP' THEN document -> 'sap_data' ->> 'fixed_lighting_outlets_count' ELSE document ->> 'sap_lighting' END as FIXED_LIGHTING_OUTLETS_COUNT,
     CASE WHEN document ->> 'uprn' LIKE 'UPRN-%' THEN document ->> 'uprn' ELSE '' END as UPRN,
     CASE WHEN document ->> 'assessment_type' = 'RdSAP'
       THEN (
@@ -350,7 +348,16 @@ describe Gateway::DomesticSearchGateway do
           SELECT ROUND(AVG((sfd ->> 'storey_height')::numeric), 2)
           FROM jsonb_array_elements((document -> 'sap_building_parts' -> 0 -> 'sap_floor_dimensions')) AS sfd
       )
-      END AS FLOOR_HEIGHT,
+    END AS FLOOR_HEIGHT,
+
+    CASE WHEN document ->> 'assessment_type' = 'RdSAP'
+      THEN ((document -> 'sap_data' ->> 'fixed_lighting_outlets_count')::integer)
+    ELSE (
+      SELECT (SUM(COALESCE((sl ->> 'lighting_outlets')::integer, 0))::integer)
+      FROM jsonb_array_elements((document -> 'sap_lighting' -> 0)) AS sl
+    )
+    END AS FIXED_LIGHTING_OUTLETS_COUNT,
+
     '' as UPRN_SOURCE,
     os_la.name as LOCAL_AUTHORITY_LABEL,
     os_p.name as CONSTITUENCY_LABEL,
@@ -358,6 +365,10 @@ describe Gateway::DomesticSearchGateway do
     get_lookup_value('transaction_type', document ->> 'transaction_type', document ->> 'assessment_type', document->> 'schema_type' ) as TRANSACTION_TYPE,
     get_lookup_value('property_type', document ->> 'property_type', document ->> 'assessment_type', document->> 'schema_type' ) as PROPERTY_TYPE,
 
+    (
+      SELECT STRING_AGG(mhc ->> 'description', '. ')
+      FROM jsonb_array_elements(document -> 'main_heating_controls') AS mhc
+    ) AS MAIN_HEATING_CONTROLS,
 
     LOWER(CONCAT_WS(' ', (document ->> 'address_line_1')::varchar,
                     (document ->> 'address_line_2')::varchar,
