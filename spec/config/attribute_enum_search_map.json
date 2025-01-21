@@ -11,6 +11,18 @@
       "type_of_assessment": "SAP",
       "xsd_node_name": "PropertyTypeCode"
     },
+
+    {
+      "attribute_name": "construction_age_band",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "ConstructionDateCode"
+    },
+    {
+      "attribute_name": "construction_age_band",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "ConstructionDateCode"
+    },
+
     {
       "attribute_name": "transaction_type",
       "type_of_assessment": "SAP",
