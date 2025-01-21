@@ -35,6 +35,12 @@
       "xsd_node_name": "ConstructionDateCode"
     },
     {
+      "attribute_name": "construction_age_band",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "ConstructionDateCode"
+    },
+
+    {
       "attribute_name": "mechanical_ventilation",
       "type_of_assessment": "SAP",
       "xsd_node_name": "SAP-DataSourceCode"
