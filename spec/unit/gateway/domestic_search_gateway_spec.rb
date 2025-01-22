@@ -1,5 +1,6 @@
 require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
+require_relative "../../shared_context/shared_data_export"
 
 describe Gateway::DomesticSearchGateway do
   let(:gateway) { described_class.new }
@@ -8,6 +9,7 @@ describe Gateway::DomesticSearchGateway do
 
   include_context "when lodging XML"
   include_context "when saving ons data"
+  include_context "when exporting data"
 
   before(:all) do
     import_postcode_directory_name
@@ -90,6 +92,8 @@ describe Gateway::DomesticSearchGateway do
     end
 
     context "when checking the columns of the materialized view" do
+      let(:csv_fixture) { read_csv_fixture("domestic") }
+
       let(:expected_sap_data) do
         { "rrn" => "0000-0000-0000-0000-0001",
           "address1" => "1 Some Street",
@@ -252,6 +256,10 @@ describe Gateway::DomesticSearchGateway do
 
       let(:query_result) do
         gateway.fetch(date_start: "2020-04-04", date_end:)
+      end
+
+      it "returns the correct columns" do
+        expect(csv_fixture.headers.sort.map(&:downcase) - expected_sap_data.keys).to eq []
       end
 
       it "returns a row with the required data for SAP" do
