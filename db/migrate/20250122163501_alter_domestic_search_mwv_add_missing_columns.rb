@@ -39,7 +39,7 @@ AS
     document -> 'lighting' ->> 'energy_efficiency_rating' as LIGHTING_ENERGY_EFF,
     document -> 'lighting' ->> 'environmental_efficiency_rating' as LIGHTING_ENV_EFF,
     document ->> 'total_floor_area' as TOTAL_FLOOR_AREA,
-    document ->> 'registration_date' as LODGEMENT_DATE,
+    (document ->> 'registration_date')::date as LODGEMENT_DATE,
     document ->> 'report_type' as REPORT_TYPE,
     document ->> 'post_town' as POSTTOWN,
     document ->> 'tenure' as TENURE,
@@ -103,7 +103,7 @@ AS
     END AS FIXED_LIGHTING_OUTLETS_COUNT,
 
     '' as UPRN_SOURCE,
-    os_la.name as LOCAL_AUTHORITY_LABEL,
+    (os_la.name)::varchar as LOCAL_AUTHORITY_LABEL,
     os_p.name as CONSTITUENCY_LABEL,
     os_p.area_code as CONSTITUENCY,
     co.country_name AS COUNTRY,

@@ -105,10 +105,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_22_163501) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "value", id: false, force: :cascade do |t|
-    t.string "lookup_value"
-  end
-
   add_foreign_key "assessment_attribute_lookups", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
   add_foreign_key "assessment_attribute_lookups", "assessment_lookups", column: "lookup_id"
   add_foreign_key "assessment_attribute_values", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"

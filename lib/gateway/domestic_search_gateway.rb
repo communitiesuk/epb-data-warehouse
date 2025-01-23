@@ -5,19 +5,19 @@ module Gateway
         ActiveRecord::Relation::QueryAttribute.new(
           "date_start",
           date_start,
-          ActiveRecord::Type::String.new,
+          ActiveRecord::Type::Date.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "date_end",
           date_end,
-          ActiveRecord::Type::String.new,
+          ActiveRecord::Type::Date.new,
         ),
       ]
 
       sql = <<-SQL
         SELECT *
         FROM mvw_domestic_search#{' '}
-        WHERE LODGEMENT_DATE BETWEEN $1 AND $2
+        WHERE lodgement_date BETWEEN $1 AND $2
       SQL
 
       unless council.nil?
