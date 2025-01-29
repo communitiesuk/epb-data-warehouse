@@ -27,6 +27,10 @@ class Container
     @documents_gateway ||= Gateway::DocumentsGateway.new
   end
 
+  def self.ons_gateway
+    @ons_gateway ||= Gateway::OnsPostcodeDirectoryNamesGateway.new
+  end
+
   def self.cancel_certificates_use_case
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                       queues_gateway:,
@@ -141,7 +145,7 @@ class Container
   end
 
   def self.domestic_search_use_case
-    @domestic_search_use_case ||= UseCase::DomesticSearch.new(gateway: domestic_search_gateway)
+    @domestic_search_use_case ||= UseCase::DomesticSearch.new(search_gateway: domestic_search_gateway, ons_gateway: ons_gateway)
   end
 
   def self.storage_gateway(stub_responses: true)

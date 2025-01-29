@@ -1,6 +1,12 @@
 module Gateway
   class DomesticSearchGateway
-    def fetch(date_start:, date_end:, row_limit: nil, council: nil)
+    attr_reader :columns
+
+    def initialize
+      @columns = fetch_columns
+    end
+
+    def fetch(date_start:, date_end:, row_limit: nil, council_id: nil)
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "date_start",
@@ -15,18 +21,18 @@ module Gateway
       ]
 
       sql = <<-SQL
-        SELECT *
+        SELECT #{columns.join(', ')}
         FROM mvw_domestic_search#{' '}
         WHERE LODGEMENT_DATE BETWEEN $1 AND $2
       SQL
 
-      unless council.nil?
-        sql += " AND local_authority_label = $3"
+      unless council_id.nil?
+        sql += " AND council_id = $3"
 
         bindings << ActiveRecord::Relation::QueryAttribute.new(
-          "council",
-          council,
-          ActiveRecord::Type::String.new,
+          "council_id",
+          council_id,
+          ActiveRecord::Type::Integer.new,
         )
       end
 
@@ -43,6 +49,20 @@ module Gateway
       end
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result }
+    end
+
+    def fetch_columns
+      sql = <<-SQL
+        SELECT a.attname
+        FROM pg_attribute a
+          JOIN pg_class t on a.attrelid = t.oid
+        WHERE a.attnum > 0
+          AND NOT a.attisdropped
+          AND t.relname = 'mvw_domestic_search'
+          AND a.attname NOT IN ('council_id')
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result["attname"] }
     end
   end
 end
