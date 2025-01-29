@@ -20,6 +20,14 @@ describe Gateway::DomesticSearchGateway do
     import_use_case.execute
   end
 
+  describe "#initialize" do
+    let(:csv_fixture) { read_csv_fixture("domestic") }
+
+    it "returns the correct columns" do
+      expect(csv_fixture.headers.sort.map(&:downcase) - gateway.columns).to eq []
+    end
+  end
+
   describe "#fetch" do
     before do
       type_of_assessment = "SAP"
@@ -56,17 +64,21 @@ describe Gateway::DomesticSearchGateway do
       expect(gateway.fetch(date_start:, date_end:)[1]["rrn"]).to eq "0000-0000-0000-0000-0001"
     end
 
+    it "does not return rows with council id" do
+      expect(gateway.fetch(date_start:, date_end:)[0]["council_id"]).to be_nil
+    end
+
     it "translates enum values into strings using the user defined function" do
       expect(gateway.fetch(date_start:, date_end:)[0]["transaction_type"]).to eq "New dwelling"
       expect(gateway.fetch(date_start:, date_end:)[0]["property_type"]).to eq "House"
     end
 
     context "when filtering by council and row limit" do
-      let(:council) { "Hammersmith and Fulham" }
+      let(:council_id) { 1 }
       let(:row_limit) { 2 }
 
       it "returns data with a corresponding council" do
-        result = gateway.fetch(date_start:, date_end:, council:, row_limit:)
+        result = gateway.fetch(date_start:, date_end:, council_id:, row_limit:)
         expect(result.length).to eq(2)
         expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
         expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")

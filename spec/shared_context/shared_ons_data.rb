@@ -13,7 +13,7 @@ shared_context "when saving ons data" do
 
   def import_postcode_directory_name
     file_path = File.join Dir.pwd, "spec/fixtures/ons_data/ons_postcode_directory_names.csv"
-    ActiveRecord::Base.connection.execute("TRUNCATE ons_postcode_directory_names")
+    ActiveRecord::Base.connection.execute("TRUNCATE ons_postcode_directory_names RESTART IDENTITY CASCADE")
     CSV.foreach(file_path, headers: true) do |row|
       sql = "INSERT INTO ons_postcode_directory_names(area_code,name,type,type_code)
         VALUES ('#{row['area_code']}', '#{row['name']}', '#{row['type']}', '#{row['type_code']}')"
