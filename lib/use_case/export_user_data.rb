@@ -7,10 +7,10 @@ module UseCase
       @storage_gateway = storage_gateway
     end
 
-    def execute(date_start:, date_end:, council:)
-      search_result = @domestic_search_gateway.fetch(date_start:, date_end:, council:)
+    def execute(date_start:, date_end:, council_id:)
+      search_result = @domestic_search_gateway.fetch(date_start:, date_end:, council_id:)
       csv_result = convert_to_csv(data: search_result)
-      s3_file_name = "#{date_start}_#{date_end}_#{council.tr(' ', '-')}.csv"
+      s3_file_name = "#{date_start}_#{date_end}_#{council_id}.csv"
       @storage_gateway.write_file(file_name: s3_file_name, data: csv_result)
     end
 

@@ -39,7 +39,7 @@ describe UseCase::ExportUserData do
     end
 
     it "can call the use case" do
-      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council") }.not_to raise_error
+      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234) }.not_to raise_error
     end
 
     it "converts search results into csv" do
@@ -47,10 +47,10 @@ describe UseCase::ExportUserData do
     end
 
     it "uploads search results to the S3 bucket" do
-      use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council")
+      use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234)
       expect(domestic_search_gateway).to have_received(:fetch).exactly(1).times
       expect(storage_gateway).to have_received(:write_file).exactly(1).times
-      expect(storage_gateway).to have_received(:write_file).with(file_name: "2023-12-01_2023-12-23_Birmingham-City-Council.csv", data: expected_csv)
+      expect(storage_gateway).to have_received(:write_file).with(file_name: "2023-12-01_2023-12-23_1234.csv", data: expected_csv)
     end
   end
 
@@ -61,7 +61,7 @@ describe UseCase::ExportUserData do
     end
 
     it "raises an error" do
-      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council") }.to raise_error Aws::S3::Errors::ServiceError
+      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234) }.to raise_error Aws::S3::Errors::ServiceError
     end
   end
 end
