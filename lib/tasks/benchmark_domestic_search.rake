@@ -6,9 +6,10 @@ task :benchmark_domestic_search do
   council = ENV["COUNCIL"]
   count = ENV["COUNT"].nil? ? 1 : ENV["COUNT"].to_i
 
+  use_case = Container.domestic_search_use_case
   start_time = Time.now
   count.times do |_i|
-    Container.domestic_search_use_case.execute(date_start:, date_end:, row_limit:, council:)
+    use_case.execute(date_start:, date_end:, row_limit:, council:)
   rescue Boundary::InvalidDates => e
     raise e
   end
