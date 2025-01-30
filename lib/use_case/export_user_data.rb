@@ -14,6 +14,8 @@ module UseCase
       @storage_gateway.write_file(file_name: s3_file_name, data: csv_result)
     end
 
+  private
+
     def convert_to_csv(data:)
       csv_string = CSV.generate(headers: true) do |csv|
         csv << data.first.keys # Add column names

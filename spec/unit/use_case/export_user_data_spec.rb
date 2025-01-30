@@ -42,10 +42,6 @@ describe UseCase::ExportUserData do
       expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234) }.not_to raise_error
     end
 
-    it "converts search results into csv" do
-      expect(use_case.convert_to_csv(data: domestic_search_result)).to eq expected_csv
-    end
-
     it "uploads search results to the S3 bucket" do
       use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234)
       expect(domestic_search_gateway).to have_received(:fetch).exactly(1).times
