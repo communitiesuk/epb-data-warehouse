@@ -37,35 +37,6 @@ describe Gateway::AssessmentLookupsGateway do
       expect(result.first).to eq(lookup)
     end
 
-    describe ".get_value_by_key" do
-      before do
-        enum = {
-          "1" => "Detached",
-          "2" => "Semi-Detached",
-          "3" => "End-Terrace",
-          "4" => "Mid-Terrace",
-          "5" => "Enclosed End-Terrace",
-          "6" => "Enclosed Mid-Terrace",
-          "NR" => "Not Recorded",
-        }.freeze
-        assessment_attribute = Gateway::AssessmentAttributesGateway.new
-        attribute_id = assessment_attribute.add_attribute(attribute_name: "built_form")
-        enum.each do |key, value|
-          gateway.add_lookup(Domain::AssessmentLookup.new(
-                               lookup_key: key,
-                               lookup_value: value,
-                               attribute_id:,
-                               type_of_assessment: "RdSAP",
-                               attribute_name: "built_form",
-                             ))
-        end
-      end
-
-      it "returns the string representation of teh value stored in the orginal xml" do
-        expect(gateway.get_value_by_key(attribute_name: "built_form", lookup_key: "1")).to eq("Detached")
-      end
-    end
-
     describe ".truncate_tables" do
       before do
         enum = {

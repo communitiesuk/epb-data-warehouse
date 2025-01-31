@@ -15,59 +15,6 @@ module Gateway
       end
     end
 
-    def get_value_by_key(attribute_name:, lookup_key:, type_of_assessment: nil, schema_version: nil)
-      bindings = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "attribute_name",
-          attribute_name,
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "lookup_key",
-          lookup_key,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
-
-      sql = <<-SQL
-       SELECT DISTINCT lookup_value
-        FROM assessment_attribute_lookups aal
-        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
-        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        WHERE attribute_name = $1 and lookup_key = $2
-      SQL
-
-      unless type_of_assessment.nil?
-        sql << " AND LOWER(type_of_assessment) = $3"
-
-        bindings <<
-          ActiveRecord::Relation::QueryAttribute.new(
-            "type_of_assessment",
-            type_of_assessment.downcase,
-            ActiveRecord::Type::String.new,
-          )
-      end
-
-      unless schema_version.nil?
-        sql << " AND LOWER(schema_version) = $#{bindings.length + 1}"
-
-        bindings <<
-          ActiveRecord::Relation::QueryAttribute.new(
-            "schema_version",
-            schema_version.downcase,
-            ActiveRecord::Type::String.new,
-          )
-      end
-      lookup_value_result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
-
-      if attribute_name == "construction_age_band"
-        match = lookup_value_result.match(/^England and Wales:.*?(?=;)/)
-        lookup_value_result = match ? match[0] : nil
-      end
-
-      lookup_value_result
-    end
-
     def truncate_tables
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_lookups CASCADE;")
 
