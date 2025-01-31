@@ -21,6 +21,7 @@ describe Gateway::AssessmentLookupsGateway do
         lookup_value: "my_value",
         attribute_id:,
         type_of_assessment: "RdSAP",
+        attribute_name: "my_attribute",
       )
     end
 
@@ -55,6 +56,7 @@ describe Gateway::AssessmentLookupsGateway do
                                lookup_value: value,
                                attribute_id:,
                                type_of_assessment: "RdSAP",
+                               attribute_name: "built_form",
                              ))
         end
       end
@@ -83,6 +85,7 @@ describe Gateway::AssessmentLookupsGateway do
                                lookup_value: value,
                                attribute_id:,
                                type_of_assessment: "RdSAP",
+                               attribute_name: "built_form",
                              ))
           gateway.truncate_tables
         end
