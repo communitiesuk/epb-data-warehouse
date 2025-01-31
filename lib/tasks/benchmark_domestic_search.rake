@@ -8,21 +8,20 @@ task :benchmark_domestic_search do
   s3_upload = ENV["S3_UPLOAD"].nil? ? false : true
 
   start_time = Time.now
+  params = { date_start: date_start, date_end: date_end, council: council }
 
   if s3_upload
     use_case = Container.export_user_data_use_case
-    begin
-      use_case.execute(date_start:, date_end:, council:)
-    rescue Boundary::InvalidDates => e
-      raise e
-    end
+    count = 1
   else
     use_case = Container.domestic_search_use_case
-    count.times do |_i|
-      use_case.execute(date_start:, date_end:, row_limit:, council:)
-    rescue Boundary::InvalidDates => e
-      raise e
-    end
+    params[:row_limit] = row_limit
+  end
+
+  count.times do |_i|
+    use_case.execute(**params)
+  rescue Boundary::InvalidDates => e
+    raise e
   end
 
   total_time = Time.now - start_time
