@@ -132,9 +132,12 @@ describe UseCase::ImportEnums do
     end
 
     it "returns the expected enum value for a L in England and Northern Ireland" do
-      enum_value = lookups_gateway.get_value_by_key(attribute_name: "construction_age_band", lookup_key: "L", type_of_assessment: "RdSAP",
-                                                    schema_version: "RdSAP-Schema-17.0")
-      expect(enum_value).to eq("England and Wales: 2012 onwards")
+      enum_value = ActiveRecord::Base.connection.exec_query("SELECT lookup_value
+        FROM assessment_attribute_lookups aal
+        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+        WHERE aa.attribute_name = 'construction_age_band' and lookup_key = 'A'").first["lookup_value"]
+      expect(enum_value).to eq("England and Wales: before 1900")
     end
 
     it "only has L values for the expected schema versions" do

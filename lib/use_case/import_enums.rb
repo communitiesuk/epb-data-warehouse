@@ -42,6 +42,7 @@ module UseCase
                                                  attribute_id:,
                                                  type_of_assessment: attribute["type_of_assessment"] || nil,
                                                  schema_version:,
+                                                 attribute_name: attribute["attribute_name"],
                                                ))
       end
     end

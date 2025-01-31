@@ -76,9 +76,10 @@ module Gateway
 
     def get_lookups_by_attribute_and_key(attribute_id:, lookup_key:)
       sql = <<-SQL
-        SELECT *
+        SELECT *, aa.attribute_name
         FROM assessment_attribute_lookups aal
         INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
         WHERE aal.attribute_id = $1
         AND al.lookup_key = $2
       SQL
@@ -106,6 +107,7 @@ module Gateway
           attribute_id: result["attribute_id"],
           type_of_assessment: result["type_of_assessment"],
           schema_version: result["schema_version"],
+          attribute_name: result["attribute_name"],
         )
       end
       assessment_lookups
