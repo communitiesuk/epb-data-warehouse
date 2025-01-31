@@ -1,6 +1,6 @@
 describe UseCase::ExportUserData do
   subject(:use_case) do
-    described_class.new(domestic_search_gateway:, storage_gateway:)
+    described_class.new(domestic_search_gateway:, storage_gateway:, ons_gateway:)
   end
 
   let(:domestic_search_gateway) do
@@ -9,6 +9,10 @@ describe UseCase::ExportUserData do
 
   let(:storage_gateway) do
     instance_double Gateway::StorageGateway
+  end
+
+  let(:ons_gateway) do
+    instance_double Gateway::OnsPostcodeDirectoryNamesGateway
   end
 
   let(:domestic_search_result) do
@@ -34,30 +38,32 @@ describe UseCase::ExportUserData do
 
   context "when exporting domestic search data to S3" do
     before do
+      allow(ons_gateway).to receive(:fetch_council_id).and_return("12345")
       allow(domestic_search_gateway).to receive(:fetch).and_return domestic_search_result
       allow(storage_gateway).to receive(:write_file)
     end
 
     it "can call the use case" do
-      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234) }.not_to raise_error
+      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council") }.not_to raise_error
     end
 
     it "uploads search results to the S3 bucket" do
-      use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234)
+      use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council")
       expect(domestic_search_gateway).to have_received(:fetch).exactly(1).times
       expect(storage_gateway).to have_received(:write_file).exactly(1).times
-      expect(storage_gateway).to have_received(:write_file).with(file_name: "2023-12-01_2023-12-23_1234.csv", data: expected_csv)
+      expect(storage_gateway).to have_received(:write_file).with(file_name: "2023-12-01_2023-12-23_Birmingham-City-Council.csv", data: expected_csv)
     end
   end
 
   context "when there is a storage error" do
     before do
+      allow(ons_gateway).to receive(:fetch_council_id).and_return("12345")
       allow(domestic_search_gateway).to receive(:fetch).and_return domestic_search_result
       allow(storage_gateway).to receive(:write_file).and_raise Aws::S3::Errors::ServiceError.new(Seahorse::Client::RequestContext, "something has gone wrong")
     end
 
     it "raises an error" do
-      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council_id: 1234) }.to raise_error Aws::S3::Errors::ServiceError
+      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council") }.to raise_error Aws::S3::Errors::ServiceError
     end
   end
 end

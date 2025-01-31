@@ -6,13 +6,18 @@ describe "test domestic search benchmarking rake" do
       instance_double(UseCase::DomesticSearch)
     end
 
+    let(:export_user_data_use_case) do
+      instance_double(UseCase::ExportUserData)
+    end
+
     let(:gateway) do
       instance_double(Gateway::DomesticSearchGateway)
     end
 
     before do
-      allow(Container).to receive(:domestic_search_use_case).and_return(use_case)
+      allow(Container).to receive_messages(domestic_search_use_case: use_case, export_user_data_use_case: export_user_data_use_case)
       allow(use_case).to receive(:execute)
+      allow(export_user_data_use_case).to receive(:execute)
       allow($stdout).to receive(:puts)
     end
 
@@ -37,6 +42,10 @@ describe "test domestic search benchmarking rake" do
         ENV["COUNCIL"] = "Manchester"
       end
 
+      after(:all) do
+        ENV["S3_UPLOAD"] = nil
+      end
+
       it "calls the rake without error" do
         expect { task.invoke }.not_to raise_error
         expect(use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", row_limit: "2", council: "Manchester").exactly(:once)
@@ -50,6 +59,13 @@ describe "test domestic search benchmarking rake" do
         ENV["COUNT"] = "5"
         task.invoke
         expect(use_case).to have_received(:execute).exactly(5).times
+      end
+
+      it "calls the rake without error for s3 upload" do
+        ENV["S3_UPLOAD"] = "true"
+        expect { task.invoke }.not_to raise_error
+        expect(export_user_data_use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", council: "Manchester").exactly(:once)
+        expect(use_case).not_to have_received(:execute)
       end
     end
 
