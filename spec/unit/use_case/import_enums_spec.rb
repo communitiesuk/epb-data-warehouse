@@ -134,8 +134,7 @@ describe UseCase::ImportEnums do
     it "returns the expected enum value for a L in England and Northern Ireland" do
       enum_value = lookups_gateway.get_value_by_key(attribute_name: "construction_age_band", lookup_key: "L", type_of_assessment: "RdSAP",
                                                     schema_version: "RdSAP-Schema-17.0")
-      expect(enum_value.split(";\n").first).to eq("England and Wales: 2012 onwards")
-      expect(enum_value.split(";\n").last).to eq("Northern Ireland: 2014 onwards")
+      expect(enum_value).to eq("England and Wales: 2012 onwards")
     end
 
     it "only has L values for the expected schema versions" do

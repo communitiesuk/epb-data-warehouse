@@ -58,7 +58,14 @@ module Gateway
             ActiveRecord::Type::String.new,
           )
       end
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
+      lookup_value_result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["lookup_value"]
+
+      if attribute_name == "construction_age_band"
+        match = lookup_value_result.match(/^England and Wales:.*?(?=;)/)
+        lookup_value_result = match ? match[0] : nil
+      end
+
+      lookup_value_result
     end
 
     def truncate_tables
