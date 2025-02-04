@@ -5,12 +5,14 @@ task :benchmark_domestic_search do
   row_limit = ENV["ROW_LIMIT"]
   council = ENV["COUNCIL"]
   count = ENV["COUNT"].nil? ? 1 : ENV["COUNT"].to_i
+  ENV["BUCKET_NAME"] = ENV["UD_BUCKET_NAME"]
   s3_upload = ENV["S3_UPLOAD"].nil? ? false : true
 
   start_time = Time.now
   params = { date_start: date_start, date_end: date_end, council: council }
 
   if s3_upload
+    Container.storage_gateway(stub_responses: false)
     use_case = Container.export_user_data_use_case
     count = 1
   else

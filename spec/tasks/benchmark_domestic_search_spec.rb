@@ -10,6 +10,10 @@ describe "test domestic search benchmarking rake" do
       instance_double(UseCase::ExportUserData)
     end
 
+    let(:storage_gateway) do
+      Gateway::StorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses: true)
+    end
+
     let(:gateway) do
       instance_double(Gateway::DomesticSearchGateway)
     end
@@ -62,8 +66,11 @@ describe "test domestic search benchmarking rake" do
         expect(use_case).to have_received(:execute).exactly(5).times
       end
 
-      it "calls the rake without error for s3 upload" do
+      it "calls the rake for s3 upload without errors" do
         ENV["S3_UPLOAD"] = "true"
+        ENV["UD_BUCKET_NAME"] = "test"
+        allow(Container).to receive(:storage_gateway).and_return storage_gateway
+
         expect { task.invoke }.not_to raise_error
         expect(export_user_data_use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", council: "Manchester").exactly(:once)
         expect(use_case).not_to have_received(:execute)
