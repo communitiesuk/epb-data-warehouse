@@ -44,6 +44,7 @@ describe "test domestic search benchmarking rake" do
 
       after(:all) do
         ENV["S3_UPLOAD"] = nil
+        ENV["COUNT"] = nil
       end
 
       it "calls the rake without error" do
@@ -82,6 +83,21 @@ describe "test domestic search benchmarking rake" do
         ENV["DATE_START"] = "2024-12-31"
         ENV["DATE_END"] = "2000-12-31"
         expect { task.invoke }.to raise_error(Boundary::InvalidDates)
+      end
+    end
+
+    context "when there are no search results" do
+      before do
+        ENV["DATE_START"] = "2000-12-31"
+        ENV["DATE_END"] = "2024-12-31"
+        ENV["COUNCIL"] = "Manchester"
+        allow(use_case).to receive(:execute).and_raise Boundary::NoData, "Domestic Search query"
+      end
+
+      it "calls the rake to do an empty search" do
+        ENV["DATE_START"] = "2024-12-31"
+        ENV["DATE_END"] = "2000-12-31"
+        expect { task.invoke }.to output("There is no data return for 'Domestic Search query'\n").to_stdout
       end
     end
 

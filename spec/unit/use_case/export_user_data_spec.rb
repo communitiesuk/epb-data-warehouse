@@ -30,6 +30,10 @@ describe UseCase::ExportUserData do
     ]
   end
 
+  let(:empty_domestic_search_result) do
+    []
+  end
+
   let(:expected_csv) do
     "rrn,address_line_1,postcode\n"\
     "0000-0000-0000-0000-0000,Address line 1,SW1H 9AJ\n"\
@@ -64,6 +68,17 @@ describe UseCase::ExportUserData do
 
     it "raises an error" do
       expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council") }.to raise_error Aws::S3::Errors::ServiceError
+    end
+  end
+
+  context "when there are no results" do
+    before do
+      allow(ons_gateway).to receive(:fetch_council_id).and_return("12345")
+      allow(domestic_search_gateway).to receive(:fetch).and_return empty_domestic_search_result
+    end
+
+    it "raises an error" do
+      expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", council: "Birmingham City Council") }.to raise_error Boundary::NoData
     end
   end
 end

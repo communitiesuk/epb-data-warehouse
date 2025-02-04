@@ -11,6 +11,9 @@ module UseCase
     def execute(date_start:, date_end:, council:)
       council_id = @ons_gateway.fetch_council_id(council) unless council.nil?
       search_result = @domestic_search_gateway.fetch(date_start:, date_end:, council_id:)
+
+      raise Boundary::NoData, "Domestic Search query" unless search_result.any?
+
       csv_result = convert_to_csv(data: search_result)
       s3_file_name = "#{date_start}_#{date_end}_#{council.tr(' ', '-')}.csv"
       @storage_gateway.write_file(file_name: s3_file_name, data: csv_result)

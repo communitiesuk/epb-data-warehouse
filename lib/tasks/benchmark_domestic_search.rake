@@ -22,9 +22,10 @@ task :benchmark_domestic_search do
     use_case.execute(**params)
   rescue Boundary::InvalidDates => e
     raise e
+  rescue Boundary::NoData => e
+    puts e.exception
+  else
+    total_time = Time.now - start_time
+    puts "Average execution time: #{total_time / count} seconds"
   end
-
-  total_time = Time.now - start_time
-
-  puts "Average execution time: #{total_time / count} seconds"
 end
