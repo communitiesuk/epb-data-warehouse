@@ -87,9 +87,9 @@ GEM
     jwt (2.9.3)
       base64
     language_server-protocol (3.17.0.3)
-    logger (1.6.1)
+    logger (1.6.2)
     mini_portile2 (2.8.8)
-    minitest (5.25.2)
+    minitest (5.25.4)
     mock_redis (0.49.0)
       redis (~> 5)
     multi_json (1.15.0)
@@ -201,7 +201,7 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    securerandom (0.3.2)
+    securerandom (0.4.0)
     sentry-ruby (5.21.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -212,7 +212,7 @@ GEM
       rack-protection (= 4.1.1)
       rack-session (>= 2.0.0, < 3)
       tilt (~> 2.0)
-    sinatra-activerecord (2.0.27)
+    sinatra-activerecord (2.0.28)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     sinatra-contrib (4.1.1)
@@ -275,7 +275,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.21)
   sentry-ruby (~> 5.17)
   sinatra (~> 4.1)
-  sinatra-activerecord (~> 2.0.27)
+  sinatra-activerecord (~> 2.0.28)
   sinatra-contrib
   timecop (~> 0.9)
   unleash (~> 5.0.1)
