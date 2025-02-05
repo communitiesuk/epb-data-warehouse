@@ -73,6 +73,7 @@ GEM
       logger
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
+    ffi (1.16.3)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
       fiber-storage
@@ -95,7 +96,6 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
-    murmurhash3 (0.1.7)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
     net-http (0.5.0)
@@ -230,14 +230,22 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
-    unleash (5.0.7)
-      murmurhash3 (~> 0.1.7)
+    unleash (6.1.2)
+      yggdrasil-engine (~> 1.0.1)
     uri (1.0.2)
     version_gem (1.1.4)
     webmock (3.24.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    yggdrasil-engine (1.0.2-aarch64-linux)
+      ffi (~> 1.16.3)
+    yggdrasil-engine (1.0.2-arm64-darwin)
+      ffi (~> 1.16.3)
+    yggdrasil-engine (1.0.2-x86_64-darwin)
+      ffi (~> 1.16.3)
+    yggdrasil-engine (1.0.2-x86_64-linux)
+      ffi (~> 1.16.3)
     zeitwerk (2.7.1)
 
 PLATFORMS
@@ -278,7 +286,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.27)
   sinatra-contrib
   timecop (~> 0.9)
-  unleash (~> 5.0.1)
+  unleash (~> 6.1.2)
   webmock (~> 3.23)
   zeitwerk (~> 2.6)
 
