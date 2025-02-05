@@ -57,6 +57,13 @@ describe UseCase::ExportUserData do
       expect(storage_gateway).to have_received(:write_file).exactly(1).times
       expect(storage_gateway).to have_received(:write_file).with(file_name: "2023-12-01_2023-12-23_Birmingham-City-Council.csv", data: expected_csv)
     end
+
+    it "uploads search results for all councils to the S3 bucket" do
+      use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23")
+      expect(domestic_search_gateway).to have_received(:fetch).exactly(1).times
+      expect(storage_gateway).to have_received(:write_file).exactly(1).times
+      expect(storage_gateway).to have_received(:write_file).with(file_name: "2023-12-01_2023-12-23_All-Councils.csv", data: expected_csv)
+    end
   end
 
   context "when there is a storage error" do
