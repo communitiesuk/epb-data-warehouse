@@ -1,0 +1,58 @@
+{
+  "nodes" : [
+    {
+      "attribute_name": "improvement_summary",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Summary" }
+    },
+    {
+      "attribute_name": "improvement_summary",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Summary" }
+    },
+
+    {
+      "attribute_name": "improvement_summary",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Summary" }
+    },
+
+    {
+      "attribute_name": "improvement_description",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Description" }
+    },
+
+    {
+      "attribute_name": "improvement_description",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Description" }
+    },
+
+    {
+      "attribute_name": "improvement_description",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Description" }
+    }
+  ],
+
+  "paths" : {
+    "rdsap" : "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+    "sap"  : "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
+    "cepc" : "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd"
+  }
+}
+
+

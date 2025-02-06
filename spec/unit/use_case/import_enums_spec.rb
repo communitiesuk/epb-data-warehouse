@@ -235,17 +235,4 @@ describe UseCase::ImportEnums do
       expect(result).to eq(expectation)
     end
   end
-
-  # context "when my test is running" do
-  #   it "can parse the xml file" do
-  #     simple_type = "//Transaction-Type"
-  #     file_name = "/Users/barryhalper/code/communitiesuk/epb-data-warehouse/api/schemas/xml/RdSAP-Schema-21.0.0/RdSAP/ExternalDefinitions.xml"
-  #     xpath = "//xs:simpleType[@name='#{simple_type}']//xs:enumeration"
-  #     # expect{ REXML::Document.new(File.read(file_name))}.not_to raise_error
-  #     doc = Nokogiri.XML(File.read(file_name)) { |config| config.huge.strict }
-  #
-  #
-  #     expect(0).to eq 0
-  #   end
-  # end
 end

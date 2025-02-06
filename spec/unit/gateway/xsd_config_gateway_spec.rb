@@ -86,9 +86,47 @@ describe Gateway::XsdConfigGateway do
 
   context "when loading the production json file" do
     let(:prod_gateway) { described_class.new("config/attribute_enum_map.json") }
+    let(:node_keys) do
+      prod_gateway.nodes.map do |hash|
+        { "attribute_name" => hash["attribute_name"], "type_of_assessment" => hash["type_of_assessment"] }
+      end
+    end
+    let(:expected_nodes) do
+      [{ "attribute_name" => "energy_tariff", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "glazed_area", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "glazed_type", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "heat_loss_corridor", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "main_fuel", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "main_fuel", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "construction_age_band", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "construction_age_band", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "mechanical_ventilation", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "mechanical_ventilation", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "property_type", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "property_type", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "tenure", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "tenure", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "transaction_type", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "transaction_type", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "improvement_summary", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "transaction_type", "type_of_assessment" => "CEPC" },
+       { "attribute_name" => "ventilation_type", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "cylinder_insulation_thickness", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "water_heating_fuel", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "water_heating_fuel", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "improvement_summary", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "improvement_summary", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "improvement_summary", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "improvement_description", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "improvement_description", "type_of_assessment" => "RdSAP" }]
+    end
 
     it "does not raise an error due the the json being mistyped" do
       expect { prod_gateway }.not_to raise_error
+    end
+
+    it "the correct enums have been added for requisite schemas" do
+      expect(node_keys - expected_nodes).to eq []
     end
   end
 end

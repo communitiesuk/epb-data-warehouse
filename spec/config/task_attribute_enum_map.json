@@ -7,7 +7,16 @@
     "attribute_name": "construction_age_band",
     "type_of_assessment": "RdSap",
     "xsd_node_name": "ConstructionDateCode"
-  }],
+  },
+    {
+      "attribute_name": "improvement_summary",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "//Recommendation",
+      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
+      "node_hash": { "Improvement-Number": "Improvement-Summary" }
+    }
+
+  ],
   "paths" : {
     "rdsap" : "/api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/UDT/*-Domains.xsd",
     "sap"  : "/api/schemas/xml/SAP-Schema-18.0.0/SAP/UDT/*-Domains.xsd",
