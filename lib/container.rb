@@ -155,4 +155,8 @@ class Container
   def self.storage_gateway(stub_responses: true)
     @storage_gateway ||= Gateway::StorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses:)
   end
+
+  def self.multipart_storage_gateway(stub_responses: true)
+    @multipart_storage_gateway ||= Gateway::MultipartStorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses:)
+  end
 end
