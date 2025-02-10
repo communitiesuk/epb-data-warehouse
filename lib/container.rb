@@ -149,7 +149,7 @@ class Container
   end
 
   def self.export_user_data_use_case
-    @export_user_data_use_case ||= UseCase::ExportUserData.new(domestic_search_gateway: domestic_search_gateway, storage_gateway: storage_gateway, ons_gateway: ons_gateway)
+    @export_user_data_use_case ||= UseCase::ExportUserData.new(domestic_search_gateway: domestic_search_gateway, multipart_storage_gateway: multipart_storage_gateway, ons_gateway: ons_gateway)
   end
 
   def self.storage_gateway(stub_responses: true)
