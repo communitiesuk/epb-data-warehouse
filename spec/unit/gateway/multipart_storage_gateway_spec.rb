@@ -20,7 +20,7 @@ describe Gateway::MultipartStorageGateway do
       end
 
       it "catches and raises an error if upload_id was not created" do
-        expect { storage_gateway.upload_part(file_name: "test", upload_id: "fake_id", part_number: 1, data: "Hello!") }.to raise_error Aws::S3::Errors::NoSuchUpload
+        expect { storage_gateway.upload_part(file_name: "test", upload_id: "fake_id", part_number: 1, data: "Hello!") }.to raise_error Errors::MultipartUploadError
       end
 
       it "successfully upload parts" do

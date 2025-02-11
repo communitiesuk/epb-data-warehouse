@@ -4,6 +4,8 @@ module Gateway
   class MultipartStorageGateway
     attr_reader :client
 
+    MINIMUM_UPLOAD_SIZE = 5 * 1024 * 1024
+
     def initialize(bucket_name:, stub_responses: false)
       @bucket_name = bucket_name
       @client = stub_responses ? initialise_client_stub : initialise_client
@@ -17,7 +19,7 @@ module Gateway
         },
       ).upload_id
     rescue Aws::S3::Errors::ServiceError
-      raise
+      raise Errors::MultipartUploadError
     end
 
     def upload_part(file_name:, upload_id:, part_number:, data:)
@@ -29,8 +31,18 @@ module Gateway
         body: data,
       )
       { etag: part.etag, part_number: part_number }
+    rescue Aws::S3::Errors::NoSuchUpload
+      raise Errors::MultipartUploadError
+    end
+
+    def abort_upload(file_name:, upload_id:)
+      @client.abort_multipart_upload(
+        bucket: @bucket_name,
+        key: file_name,
+        upload_id: upload_id,
+      )
     rescue Aws::S3::Errors::ServiceError
-      raise
+      raise Errors::MultipartUploadError
     end
 
     def complete_upload(file_name:, upload_id:, parts:)
@@ -41,7 +53,11 @@ module Gateway
         multipart_upload: { parts: parts },
       )
     rescue Aws::S3::Errors::ServiceError
-      raise
+      raise Errors::MultipartUploadError
+    end
+
+    def buffer_size_check?(size:)
+      size >= MINIMUM_UPLOAD_SIZE
     end
 
   private

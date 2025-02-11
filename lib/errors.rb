@@ -71,4 +71,7 @@ module Errors
 
   class UriTooLong < RuntimeError
   end
+
+  class MultipartUploadError < StandardError
+  end
 end
