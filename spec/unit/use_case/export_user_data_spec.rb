@@ -58,6 +58,7 @@ describe UseCase::ExportUserData do
       end
       allow(multipart_storage_gateway).to receive(:create_upload).and_return(upload_id)
       allow(multipart_storage_gateway).to receive(:complete_upload)
+      allow(multipart_storage_gateway).to receive(:buffer_size_check?)
     end
 
     it "can call the use case" do
@@ -85,6 +86,8 @@ describe UseCase::ExportUserData do
     end
 
     it "uploads search results in parts for multi-year searches" do
+      allow(multipart_storage_gateway).to receive(:buffer_size_check?).and_return(true)
+
       expected_domestic_search_calls = [
         { date_start: "2010-02-07", date_end: "2010-12-31", council_id: nil },
         { date_start: "2011-01-01", date_end: "2011-12-31", council_id: nil },
@@ -103,18 +106,35 @@ describe UseCase::ExportUserData do
         { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 6, data: expected_csv },
       ]
 
-      expected_multipart_parts = [{ etag: "ETAG-1234", part_number: 1 },
-                                  { etag: "ETAG-1234", part_number: 2 },
-                                  { etag: "ETAG-1234", part_number: 3 },
-                                  { etag: "ETAG-1234", part_number: 4 },
-                                  { etag: "ETAG-1234", part_number: 5 },
-                                  { etag: "ETAG-1234", part_number: 6 }]
+      expected_multipart_parts = [
+        { etag: "ETAG-1234", part_number: 1 },
+        { etag: "ETAG-1234", part_number: 2 },
+        { etag: "ETAG-1234", part_number: 3 },
+        { etag: "ETAG-1234", part_number: 4 },
+        { etag: "ETAG-1234", part_number: 5 },
+        { etag: "ETAG-1234", part_number: 6 },
+      ]
 
       use_case.execute(date_start: "2010-02-07", date_end: "2015-09-21")
 
       expected_domestic_search_calls.each do |expected_call|
         expect(domestic_search_gateway).to have_received(:fetch).with(expected_call).ordered
       end
+
+      expect(multipart_upload_calls).to eq(expected_multipart_storage_calls)
+      expect(multipart_storage_gateway).to have_received(:complete_upload).with(file_name: "2010-02-07_2015-09-21_All-Councils.csv", parts: expected_multipart_parts, upload_id: "UID-0000012345")
+    end
+
+    it "buffers uploads when results are lower than 5MB" do
+      expected_multipart_storage_calls = [
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 1, data: expected_csv * 6 },
+      ]
+
+      expected_multipart_parts = [
+        { etag: "ETAG-1234", part_number: 1 },
+      ]
+
+      use_case.execute(date_start: "2010-02-07", date_end: "2015-09-21")
 
       expect(multipart_upload_calls).to eq(expected_multipart_storage_calls)
       expect(multipart_storage_gateway).to have_received(:complete_upload).with(file_name: "2010-02-07_2015-09-21_All-Councils.csv", parts: expected_multipart_parts, upload_id: "UID-0000012345")

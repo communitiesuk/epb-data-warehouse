@@ -4,6 +4,8 @@ module Gateway
   class MultipartStorageGateway
     attr_reader :client
 
+    MINIMUM_UPLOAD_SIZE = 5 * 1024 * 1024
+
     def initialize(bucket_name:, stub_responses: false)
       @bucket_name = bucket_name
       @client = stub_responses ? initialise_client_stub : initialise_client
@@ -42,6 +44,10 @@ module Gateway
       )
     rescue Aws::S3::Errors::ServiceError
       raise
+    end
+
+    def buffer_size_check?(size:)
+      size >= MINIMUM_UPLOAD_SIZE
     end
 
   private

@@ -26,8 +26,11 @@ module UseCase
       years_range = (start_year..end_year).to_a
       part_number = 1
       parts_uploaded = []
+      upload_buffer = ""
 
       years_range.each do |year|
+        check_size = year != years_range.last
+
         if years_range.length == 1 # The range only covers one year
           current_date_start = date_start
           current_date_end = date_end
@@ -46,8 +49,13 @@ module UseCase
         raise Boundary::NoData, "Domestic Search query" unless search_result.any?
 
         csv_result = convert_to_csv(data: search_result)
-        parts_uploaded << @multipart_storage_gateway.upload_part(file_name: s3_file_name, upload_id: upload_id, part_number: part_number, data: csv_result)
+        upload_buffer << csv_result
+
+        next unless !check_size || @multipart_storage_gateway.buffer_size_check?(size: upload_buffer.size)
+
+        parts_uploaded << @multipart_storage_gateway.upload_part(file_name: s3_file_name, upload_id: upload_id, part_number: part_number, data: upload_buffer.dup)
         part_number += 1
+        upload_buffer.clear
       end
       @multipart_storage_gateway.complete_upload(file_name: s3_file_name, upload_id: upload_id, parts: parts_uploaded)
     end
@@ -55,11 +63,11 @@ module UseCase
   private
 
     def convert_to_csv(data:)
-      csv_string = CSV.generate(headers: true) do |csv|
+      CSV.generate(headers: true) do |csv|
         csv << data.first.keys # Add column names
         data.each { |hash| csv << hash.values }
       end
-      csv_string.force_encoding("UTF-8")
+      # csv_string.force_encoding("UTF-8")
     end
   end
 end
