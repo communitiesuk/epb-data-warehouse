@@ -24,35 +24,14 @@ module Gateway
     def fetch_rr(*args)
       this_args = args.first
       sql = <<~SQL
-                        SELECT aav.assessment_id as rrn,
-           items.sequence as IMPROVEMENT_ITEM,
-                        items.improvement_category as IMPROVEMENT_ID,
-                        items.indicative_cost as INDICATIVE_COST,
-              CASE WHEN  (improvement_details -> 'improvement_texts') IS NULL THEN
-             get_lookup_value('improvement_summary', (items.improvement_details ->> 'improvement_number'),  t.assessment_type, s.schema_type )
-
-                 ELSE (improvement_details -> 'improvement_texts' ->> 'improvement_summary')::varchar END
-                  as improvement_summary_text,
-
-            CASE WHEN (improvement_details -> 'improvement_texts') IS NULL THEN
-            get_lookup_value('improvement_description', (items.improvement_details ->> 'improvement_number'),  t.assessment_type, s.schema_type )::varchar
-              ELSE (improvement_details -> 'improvement_texts' ->> 'improvement_description')::varchar END
-                      as improvement_descr_text
-        FROM assessment_attribute_values aav
-        CROSS JOIN LATERAL json_to_recordset(json::json) AS  items(sequence integer, indicative_cost varchar, improvement_type varchar,improvement_category varchar,  improvement_details json  )
-        JOIN mvw_domestic_search mvw ON mvw.rrn = aav.assessment_id
-        JOIN public.assessment_attributes aa on aa.attribute_id = aav.attribute_id
-        JOIN (SELECT aav1.assessment_id, aav1.attribute_value as schema_type
-                       FROM assessment_attribute_values aav1
-                       JOIN public.assessment_attributes a1 on aav1.attribute_id = a1.attribute_id
-                       WHERE a1.attribute_name = 'schema_type')  as s
-                      ON s.assessment_id = aav.assessment_id
-        JOIN (SELECT aav2.assessment_id, aav2.attribute_value as assessment_type
-                       FROM assessment_attribute_values aav2
-                       JOIN public.assessment_attributes a2 on aav2.attribute_id = a2.attribute_id
-                       WHERE a2.attribute_name = 'assessment_type')  as t
-                      ON t.assessment_id = aav.assessment_id
-        WHERE aa.attribute_name = 'suggested_improvements'
+         SELECT rr.rrn,
+        improvement_item,
+        improvement_id,
+        indicative_cost,
+        improvement_summary_text,
+        improvement_descr_text
+        FROM mvw_domestic_rr_search rr
+        JOIN mvw_domestic_search m ON m.rrn=rr.rrn
       SQL
 
       this_args[:bindings] = get_bindings(**this_args)

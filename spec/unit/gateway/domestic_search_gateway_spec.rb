@@ -304,6 +304,7 @@ describe Gateway::DomesticSearchGateway do
         "postcode": "SW10 0AA",
       })
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
+      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
     end
 
     let(:data) do
