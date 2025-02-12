@@ -11,7 +11,7 @@ describe UseCase::DomesticSearch do
     instance_double(Gateway::DomesticSearchGateway)
   end
 
-  let(:args) do
+  let(:search_arguments) do
     { date_start: "2023-12-01", date_end: "2023-12-23", row_limit: 20, council_id: nil }
   end
 
@@ -25,12 +25,12 @@ describe UseCase::DomesticSearch do
   end
 
   it "can call the use case" do
-    expect { use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", row_limit: 20, council: nil) }.not_to raise_error
+    expect { use_case.execute(**search_arguments) }.not_to raise_error
   end
 
   it "passed the argument to the search gateway" do
-    expect(use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", row_limit: 20, council: nil)).to eq domestic_search_result
-    expect(search_gateway).to have_received(:fetch).with(args).exactly(1).times
+    expect(use_case.execute(**search_arguments)).to eq domestic_search_result
+    expect(search_gateway).to have_received(:fetch).with(search_arguments).exactly(1).times
   end
 
   context "when a council name is provided" do
@@ -39,7 +39,8 @@ describe UseCase::DomesticSearch do
     end
 
     before do
-      use_case.execute(date_start: "2023-12-01", date_end: "2023-12-23", row_limit: 20, council: "Hammersmith and Fulham")
+      args[:council] = "Hammersmith and Fulham"
+      use_case.execute(**args)
     end
 
     it "passes the council id to the search" do
@@ -49,7 +50,10 @@ describe UseCase::DomesticSearch do
 
   context "when the dates are out of range" do
     it "raises an error" do
-      expect { use_case.execute(date_start: "2023-12-24", date_end: "2023-12-23", row_limit: 20, council: nil) }.to raise_error(Boundary::InvalidDates)
+      search_arguments[:date_start] = "2023-12-24"
+      search_arguments[:date_end] = "2023-12-23"
+      search_arguments[:council] = nil
+      expect { use_case.execute(**search_arguments) }.to raise_error(Boundary::InvalidDates)
     end
   end
 end

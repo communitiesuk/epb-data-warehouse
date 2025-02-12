@@ -9,9 +9,7 @@ module UseCase
       parse = lambda {
         export_config = configuration_class.new
         parser = XmlPresenter::Parser.new(**export_config.to_args(sub_node_value: assessment_id))
-        Helper::Stopwatch.log_elapsed_time @logger, "parsed XML for assessment #{assessment_id}" do
-          parser.parse(xml)
-        end
+        parser.parse(xml)
       }
 
       if use_subprocess

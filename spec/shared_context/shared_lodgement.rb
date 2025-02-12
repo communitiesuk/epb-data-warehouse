@@ -31,6 +31,22 @@ shared_context "when lodging XML" do
     add_assessment_country_id(assessment_id:, document:)
   end
 
+  def add_assessment_eav(assessment_id:, schema_type:, type_of_assessment:, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil)
+    meta_data_sample = {
+      "assessment_type" => type_of_assessment,
+      "opt_out" => false,
+      "created_at" => "2021-07-21T11:26:28.045Z",
+      "schema_type" => schema_type,
+      "assessment_address_id" => assessment_address_id,
+    }
+    xml = Samples.xml(schema_type, type)
+    certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
+    certificate_data.merge!(different_fields) unless different_fields.nil?
+    certificate_data.merge!(meta_data_sample)
+    Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
+    add_assessment_country_id(assessment_id:, document: certificate_data)
+  end
+
   def add_assessment_country_id(assessment_id:, document:)
     country_id = document&.fetch(:postcode, "")&.start_with?("BT") ? 4 : 1
     Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_or_create_by(assessment_id:, country_id:)

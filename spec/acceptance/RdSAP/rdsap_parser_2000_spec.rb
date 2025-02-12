@@ -106,7 +106,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                           "environmental_impact_rating" => 64,
                           "indicative_cost" => 1000,
                           "improvement_details" =>
-                           { "improvement_texts" => { "improvement_description" => "Improvement desc" } } }],
+                           { "improvement_texts" => { "improvement_description" => "An improvement desc", "improvement_summary" => "An improvement summary" } } }],
                       "lzc_energy_sources" => [11],
                       "renewable_heat_incentive" =>
                        { "space_heating_existing_dwelling" => 13_120,

@@ -5,12 +5,13 @@ module UseCase
       @ons_gateway = ons_gateway
     end
 
-    def execute(date_start:, date_end:, row_limit: nil, council: nil)
-      raise Boundary::InvalidDates if date_start > date_end
+    def execute(*args)
+      this_args = args[0]
+      raise Boundary::InvalidDates if this_args[:date_start] > this_args[:date_end]
 
-      council_id = @ons_gateway.fetch_council_id(council) unless council.nil?
+      this_args[:council_id] = @ons_gateway.fetch_council_id(this_args[:council]) unless this_args[:council].nil?
 
-      @search_gateway.fetch(date_start:, date_end:, row_limit: row_limit, council_id: council_id)
+      @search_gateway.fetch(**this_args)
     end
   end
 end
