@@ -56,7 +56,12 @@ module UseCase
         parts_uploaded << @multipart_storage_gateway.upload_part(file_name: s3_file_name, upload_id: upload_id, part_number: part_number, data: upload_buffer.dup)
         part_number += 1
         upload_buffer.clear
+      rescue Boundary::NoData
+        # continue loop if not at the end but if no data at all abort upload
+        raise
       end
+
+
       @multipart_storage_gateway.complete_upload(file_name: s3_file_name, upload_id: upload_id, parts: parts_uploaded)
     end
 
