@@ -12,7 +12,7 @@ task :benchmark_domestic_search do
   params = { date_start: date_start, date_end: date_end, council: council }
 
   if s3_upload
-    Container.storage_gateway(stub_responses: false)
+    Container.multipart_storage_gateway(stub_responses: false)
     use_case = Container.export_user_data_use_case
     count = 1
   else
@@ -22,9 +22,7 @@ task :benchmark_domestic_search do
 
   count.times do |_i|
     use_case.execute(**params)
-  rescue Boundary::InvalidDates => e
-    raise e
-  rescue Boundary::NoData => e
+  rescue Boundary::TerminableError => e
     puts e.exception
   else
     total_time = Time.now - start_time

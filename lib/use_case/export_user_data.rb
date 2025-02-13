@@ -30,7 +30,7 @@ module UseCase
 
       begin
         years_range.each do |year|
-          check_size = year != years_range.last
+          check_size = year != years_range.last # Do not check size on the last year
 
           if years_range.length == 1 # The range only covers one year
             current_date_start = date_start
@@ -47,12 +47,14 @@ module UseCase
           end
 
           search_result = @domestic_search_gateway.fetch(date_start: current_date_start, date_end: current_date_end, council_id:)
-          next unless search_result.any?
-
-          csv_result = convert_to_csv(data: search_result)
-          upload_buffer << csv_result
+          if search_result.any?
+            csv_result = convert_to_csv(data: search_result)
+            upload_buffer << csv_result
+          end
 
           next unless !check_size || @multipart_storage_gateway.buffer_size_check?(size: upload_buffer.size)
+
+          next if upload_buffer.empty?
 
           upload_id = @multipart_storage_gateway.create_upload(file_name: s3_file_name) if upload_id.nil?
           parts_uploaded << @multipart_storage_gateway.upload_part(file_name: s3_file_name, upload_id: upload_id, part_number: part_number, data: upload_buffer.dup)
@@ -63,9 +65,9 @@ module UseCase
         raise Boundary::NoData, "Domestic Search query" if upload_id.nil?
 
         @multipart_storage_gateway.complete_upload(file_name: s3_file_name, upload_id: upload_id, parts: parts_uploaded)
-      rescue Errors::MultipartUploadError
+      rescue Boundary::ExportS3Error => e
         @multipart_storage_gateway.abort_upload(file_name: s3_file_name, upload_id: upload_id)
-        raise
+        raise e
       end
     end
 

@@ -19,7 +19,7 @@ module Gateway
         },
       ).upload_id
     rescue Aws::S3::Errors::ServiceError
-      raise Errors::MultipartUploadError
+      raise Boundary::ExportS3Error
     end
 
     def upload_part(file_name:, upload_id:, part_number:, data:)
@@ -32,7 +32,7 @@ module Gateway
       )
       { etag: part.etag, part_number: part_number }
     rescue Aws::S3::Errors::NoSuchUpload
-      raise Errors::MultipartUploadError
+      raise Boundary::ExportS3Error
     end
 
     def abort_upload(file_name:, upload_id:)
@@ -42,7 +42,7 @@ module Gateway
         upload_id: upload_id,
       )
     rescue Aws::S3::Errors::ServiceError
-      raise Errors::MultipartUploadError
+      raise Boundary::ExportS3Error
     end
 
     def complete_upload(file_name:, upload_id:, parts:)
@@ -53,7 +53,7 @@ module Gateway
         multipart_upload: { parts: parts },
       )
     rescue Aws::S3::Errors::ServiceError
-      raise Errors::MultipartUploadError
+      raise Boundary::ExportS3Error
     end
 
     def buffer_size_check?(size:)

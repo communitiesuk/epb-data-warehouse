@@ -11,7 +11,7 @@ describe "test domestic search benchmarking rake" do
     end
 
     let(:storage_gateway) do
-      Gateway::StorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses: true)
+      Gateway::MultipartStorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses: true)
     end
 
     let(:gateway) do
@@ -69,11 +69,12 @@ describe "test domestic search benchmarking rake" do
       it "calls the rake for s3 upload without errors" do
         ENV["S3_UPLOAD"] = "true"
         ENV["UD_BUCKET_NAME"] = "test"
-        allow(Container).to receive(:storage_gateway).and_return storage_gateway
+        allow(Container).to receive(:multipart_storage_gateway).and_return storage_gateway
 
         expect { task.invoke }.not_to raise_error
         expect(export_user_data_use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", council: "Manchester").exactly(:once)
         expect(use_case).not_to have_received(:execute)
+        expect(Container).to have_received(:multipart_storage_gateway)
       end
     end
 
@@ -89,7 +90,7 @@ describe "test domestic search benchmarking rake" do
       it "calls the rake with wrong dates and raises an error" do
         ENV["DATE_START"] = "2024-12-31"
         ENV["DATE_END"] = "2000-12-31"
-        expect { task.invoke }.to raise_error(Boundary::InvalidDates)
+        expect { task.invoke }.to output("date_from cannot be greater than date_to\n").to_stdout
       end
     end
 
