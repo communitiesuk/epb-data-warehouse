@@ -49,11 +49,19 @@ describe "test domestic search benchmarking rake" do
       after(:all) do
         ENV["S3_UPLOAD"] = nil
         ENV["COUNT"] = nil
+        ENV["RECOMMENDATIONS"] = nil
       end
 
-      it "calls the rake without error" do
+      it "calls the rake and passes the arguments to the use case" do
         expect { task.invoke }.not_to raise_error
         expect(use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", row_limit: "2", council: "Manchester").exactly(:once)
+      end
+
+      it "passes the recommendations to the use case" do
+        ENV["RECOMMENDATIONS"] = "true"
+        task.invoke
+        ENV["RECOMMENDATIONS"] = nil
+        expect(use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", row_limit: "2", council: "Manchester", recommendations: "true").exactly(:once)
       end
 
       it "prints the expected output" do
@@ -70,7 +78,6 @@ describe "test domestic search benchmarking rake" do
         ENV["S3_UPLOAD"] = "true"
         ENV["UD_BUCKET_NAME"] = "test"
         allow(Container).to receive(:multipart_storage_gateway).and_return storage_gateway
-
         expect { task.invoke }.not_to raise_error
         expect(export_user_data_use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", council: "Manchester").exactly(:once)
         expect(use_case).not_to have_received(:execute)

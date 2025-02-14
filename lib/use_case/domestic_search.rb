@@ -10,8 +10,10 @@ module UseCase
       raise Boundary::InvalidDates if this_args[:date_start] > this_args[:date_end]
 
       this_args[:council_id] = @ons_gateway.fetch_council_id(this_args[:council]) unless this_args[:council].nil?
-
-      @search_gateway.fetch(**this_args)
+      results = {}
+      results[:domestic] = @search_gateway.fetch(**this_args)
+      results[:domestic_rr] = @search_gateway.fetch_rr(**this_args) unless this_args[:recommendations].nil?
+      results
     end
   end
 end

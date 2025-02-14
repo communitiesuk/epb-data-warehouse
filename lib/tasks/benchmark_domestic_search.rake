@@ -10,6 +10,7 @@ task :benchmark_domestic_search do
 
   start_time = Time.now
   params = { date_start: date_start, date_end: date_end, council: council }
+  params[:recommendations] = ENV["RECOMMENDATIONS"] unless ENV["RECOMMENDATIONS"].nil?
 
   if s3_upload
     Container.multipart_storage_gateway(stub_responses: false)
