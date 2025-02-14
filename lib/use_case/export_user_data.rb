@@ -27,6 +27,7 @@ module UseCase
       part_number = 1
       parts_uploaded = []
       upload_buffer = ""
+      header_added = false
 
       begin
         years_range.each do |year|
@@ -48,7 +49,8 @@ module UseCase
 
           search_result = @domestic_search_gateway.fetch(date_start: current_date_start, date_end: current_date_end, council_id:)
           if search_result.any?
-            csv_result = convert_to_csv(data: search_result)
+            csv_result = convert_to_csv(data: search_result, add_header: !header_added)
+            header_added = true
             upload_buffer << csv_result
           end
 
@@ -73,9 +75,9 @@ module UseCase
 
   private
 
-    def convert_to_csv(data:)
+    def convert_to_csv(data:, add_header: false)
       CSV.generate(headers: true) do |csv|
-        csv << data.first.keys # Add column names
+        csv << data.first.keys if add_header # Add column names
         data.each { |hash| csv << hash.values }
       end
     end

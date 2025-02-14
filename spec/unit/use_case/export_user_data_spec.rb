@@ -34,10 +34,20 @@ describe UseCase::ExportUserData do
     []
   end
 
-  let(:expected_csv) do
-    "rrn,address_line_1,postcode\n"\
+  let(:expected_csv_headers) do
+    "rrn,address_line_1,postcode\n"
+  end
+
+  let(:expected_csv_rows) do
     "0000-0000-0000-0000-0000,Address line 1,SW1H 9AJ\n"\
     "0000-0000-0000-0000-0001,9 New Union Street,M4 6BW\n"
+  end
+
+  let(:expected_csv_multiyear) do
+    expected_csv_headers + expected_csv_rows * 6
+  end
+  let(:expected_csv) do
+    expected_csv_headers + expected_csv_rows
   end
 
   let(:upload_id) do
@@ -99,11 +109,11 @@ describe UseCase::ExportUserData do
 
       expected_multipart_storage_calls = [
         { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 1, data: expected_csv },
-        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 2, data: expected_csv },
-        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 3, data: expected_csv },
-        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 4, data: expected_csv },
-        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 5, data: expected_csv },
-        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 6, data: expected_csv },
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 2, data: expected_csv_rows },
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 3, data: expected_csv_rows },
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 4, data: expected_csv_rows },
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 5, data: expected_csv_rows },
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 6, data: expected_csv_rows },
       ]
 
       expected_multipart_parts = [
@@ -127,7 +137,7 @@ describe UseCase::ExportUserData do
 
     it "buffers uploads when results are lower than 5MB" do
       expected_multipart_storage_calls = [
-        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 1, data: expected_csv * 6 },
+        { file_name: "2010-02-07_2015-09-21_All-Councils.csv", upload_id: upload_id, part_number: 1, data: expected_csv_multiyear },
       ]
 
       expected_multipart_parts = [
