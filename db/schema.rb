@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_12_123604) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_17_105543) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -69,6 +69,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_12_123604) do
   create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.integer "country_id"
     t.index ["country_id"], name: "index_assessments_country_ids_on_country_id"
+  end
+
+  create_table "audit_logs", id: false, force: :cascade do |t|
+    t.string "assessment_id"
+    t.string "event_type", null: false
+    t.datetime "timestamp", default: "2025-02-17 11:15:26", null: false
   end
 
   create_table "countries", primary_key: "country_id", id: :integer, default: nil, force: :cascade do |t|
