@@ -5,6 +5,7 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
                         queues_gateway:,
                         certificate_gateway:,
                         recovery_list_gateway:,
+                        audit_logs_gateway:,
                         logger:
   end
 
@@ -39,6 +40,12 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
     allow(gateway).to receive(:clear_assessment)
     allow(gateway).to receive(:register_attempt)
     allow(gateway).to receive(:register_assessments)
+    gateway
+  end
+
+  let(:audit_logs_gateway) do
+    gateway = instance_double(Gateway::AuditLogsGateway)
+    allow(gateway).to receive(:insert_log)
     gateway
   end
 
@@ -81,6 +88,10 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
       it "clears 3 certificates from the recovery list" do
         expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
       end
+
+      it "inserts 3 logs to the audit logs" do
+        expect(audit_logs_gateway).to have_received(:insert_log).exactly(3).times
+      end
     end
 
     context "when marking one existing cert as opted in" do
@@ -109,6 +120,10 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
 
       it "uses the expected XXXX-XX-XX XX:XX:XX format for saving the datetime of the opt-out/in" do
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times.with(include(new_value: Time.now.utc.strftime("%F %T")))
+      end
+
+      it "inserts 3 logs to the audit logs" do
+        expect(audit_logs_gateway).to have_received(:insert_log).exactly(3).times
       end
     end
 

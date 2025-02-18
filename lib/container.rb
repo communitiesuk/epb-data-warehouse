@@ -31,6 +31,10 @@ class Container
     @ons_gateway ||= Gateway::OnsPostcodeDirectoryNamesGateway.new
   end
 
+  def self.audit_logs_gateway
+    @audit_logs_gateway ||= Gateway::AuditLogsGateway.new
+  end
+
   def self.cancel_certificates_use_case
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                       queues_gateway:,
@@ -73,6 +77,7 @@ class Container
                                                                      queues_gateway:,
                                                                      certificate_gateway: register_api_gateway,
                                                                      recovery_list_gateway:,
+                                                                     audit_logs_gateway:,
                                                                      logger:
   end
 

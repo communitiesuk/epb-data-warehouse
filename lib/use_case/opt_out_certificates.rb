@@ -5,12 +5,13 @@ module UseCase
     OPT_OUT = "opt_out".freeze
     OPT_IN = "opt_in".freeze
 
-    def initialize(eav_gateway:, documents_gateway:, queues_gateway:, certificate_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(eav_gateway:, documents_gateway:, queues_gateway:, certificate_gateway:, recovery_list_gateway:, audit_logs_gateway:, logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @documents_gateway = documents_gateway
       @queues_gateway = queues_gateway
       @certificate_gateway = certificate_gateway
       @recovery_list_gateway = recovery_list_gateway
+      @audit_logs_gateway = audit_logs_gateway
       @logger = logger
       @queue_name = :opt_outs
     end
@@ -57,6 +58,7 @@ module UseCase
       @assessment_attribute_gateway.delete_attribute_value(assessment_id:, attribute_name: attribute)
       @assessment_attribute_gateway.add_attribute_value(assessment_id:, attribute_name: attribute, attribute_value: value)
       @documents_gateway.set_top_level_attribute(assessment_id:, top_level_attribute: attribute, new_value: value)
+      @audit_logs_gateway.insert_log(assessment_id:, event_type: attribute, timestamp: value)
     end
 
     def delete_attribute_from_stores(assessment_id:, attribute:)
