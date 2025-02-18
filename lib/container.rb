@@ -41,6 +41,7 @@ class Container
                                                                       api_gateway: register_api_gateway,
                                                                       documents_gateway:,
                                                                       recovery_list_gateway:,
+                                                                      audit_logs_gateway:,
                                                                       logger:,
                                                                       assessments_country_id_gateway:
   end

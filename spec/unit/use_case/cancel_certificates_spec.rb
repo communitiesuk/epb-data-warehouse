@@ -7,6 +7,7 @@ describe UseCase::CancelCertificates do
                         api_gateway:,
                         documents_gateway:,
                         recovery_list_gateway:,
+                        audit_logs_gateway:,
                         logger:,
                         assessments_country_id_gateway:
   end
@@ -38,6 +39,12 @@ describe UseCase::CancelCertificates do
     allow(gateway).to receive(:clear_assessment)
     allow(gateway).to receive(:register_attempt)
     allow(gateway).to receive(:register_assessments)
+    gateway
+  end
+
+  let(:audit_logs_gateway) do
+    gateway = instance_double(Gateway::AuditLogsGateway)
+    allow(gateway).to receive(:insert_log)
     gateway
   end
 
@@ -82,6 +89,11 @@ describe UseCase::CancelCertificates do
       it "clears the assessments from the recovery list" do
         use_case.execute
         expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
+      end
+
+      it "inserts 3 logs to the audit logs" do
+        use_case.execute
+        expect(audit_logs_gateway).to have_received(:insert_log).exactly(3).times
       end
     end
 
@@ -223,6 +235,7 @@ describe UseCase::CancelCertificates do
                           api_gateway:,
                           documents_gateway: documents_gateway_real,
                           recovery_list_gateway:,
+                          audit_logs_gateway:,
                           logger:,
                           assessments_country_id_gateway:
     end
@@ -279,6 +292,12 @@ describe UseCase::CancelCertificates do
       gateway
     end
 
+    let(:audit_logs_gateway) do
+      gateway = instance_double(Gateway::AuditLogsGateway)
+      allow(gateway).to receive(:insert_log)
+      gateway
+    end
+
     let(:logger) do
       logger = instance_double(Logger)
       allow(logger).to receive(:error)
@@ -301,6 +320,7 @@ describe UseCase::CancelCertificates do
       deleted_assessments_country_id = Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: "1235-0000-0000-0000-0000")
       expect(deleted_doc).to be_nil
       expect(deleted_assessments_country_id).to be_nil
+      expect(audit_logs_gateway).to have_received(:insert_log).with(assessment_id: "1235-0000-0000-0000-0000", event_type: "cancelled", timestamp: anything)
     end
   end
 end
