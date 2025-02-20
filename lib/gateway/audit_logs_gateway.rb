@@ -2,9 +2,11 @@ class Gateway::AuditLogsGateway
   def initialize; end
 
   def insert_log(assessment_id:, event_type:, timestamp:)
-    log_insert = <<-SQL
+    sql = <<-SQL
           INSERT INTO audit_logs(assessment_id, event_type, timestamp)
           VALUES($1, $2, $3)
+          ON CONFLICT (assessment_id, event_type)#{' '}
+          DO UPDATE SET timestamp=$3
     SQL
 
     bindings = [
@@ -24,6 +26,6 @@ class Gateway::AuditLogsGateway
         ActiveRecord::Type::DateTime.new,
       ),
     ]
-    ActiveRecord::Base.connection.insert(log_insert, nil, nil, nil, nil, bindings)
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
   end
 end

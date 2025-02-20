@@ -90,6 +90,13 @@ def add_countries
   ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
 end
 
+def clear_materialized_views
+  Gateway::MaterializedViewsGateway.new.fetch_all.each do |view|
+    sql = "REFRESH MATERIALIZED VIEW #{view} WITH NO DATA;"
+    ActiveRecord::Base.connection.exec_query(sql, "SQL")
+  end
+end
+
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
@@ -133,7 +140,7 @@ RSpec.configure do |config|
   end
 
   config.before do
-    DatabaseCleaner.strategy = [:truncation, { only: %w[assessment_attribute_values assessment_documents assessments_country_ids] }]
+    DatabaseCleaner.strategy = [:truncation, { only: %w[assessment_attribute_values assessment_documents assessments_country_ids audit_logs] }]
     DatabaseCleaner.start
   end
 
