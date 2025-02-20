@@ -10,6 +10,9 @@ describe Gateway::CommercialSearchGateway do
     include_context "when saving ons data"
     include_context "when exporting data"
     before do
+      attributes_gateway = Gateway::AssessmentAttributesGateway.new
+      attributes_gateway.clear
+
       import_postcode_directory_name
       import_postcode_directory_data
       config_path = "spec/config/attribute_enum_search_map.json"
@@ -19,7 +22,7 @@ describe Gateway::CommercialSearchGateway do
 
       add_countries
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
-        "postcode": "W6 9ZD", "address1": "1 Some Street", "address2": "Some Area", "address3": "Some County", "property_type": "B1 Offices and Workshop businesses"
+        "postcode": "W6 9ZD", "address1": "1 Some Street", "address2": "Some Area", "address3": "Some County", "property_type": "B1 Offices and Workshop businesses", "building_emissions": "67.09"
       })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "postcode": "W6 9ZD",

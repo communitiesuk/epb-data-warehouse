@@ -16,6 +16,9 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
 
   describe "#fetch_rr" do
     before(:all) do
+      attributes_gateway = Gateway::AssessmentAttributesGateway.new
+      attributes_gateway.clear
+
       import_postcode_directory_name
       import_postcode_directory_data
       config_path = "spec/config/attribute_enum_search_map.json"

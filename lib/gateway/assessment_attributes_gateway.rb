@@ -165,6 +165,10 @@ module Gateway
         .map { |result| result }
     end
 
+    def clear
+      attributes.clear
+    end
+
     def fetch_assessment_attributes(
       attribute_column_array:,
       where_clause_hash: ""
@@ -492,6 +496,11 @@ module Gateway
         attributes[key]
       end
 
+      def clear
+        clear_db
+        @attributes.clear
+      end
+
       def id_for(attribute_name, parent_name: nil)
         attributes.compute_if_absent([attribute_name, parent_name]) do
           insert(attribute: attribute_name, parent: parent_name)
@@ -501,6 +510,11 @@ module Gateway
       attr_reader :attributes
 
     private
+
+      def clear_db
+        sql = "TRUNCATE TABLE assessment_attributes RESTART IDENTITY CASCADE"
+        ActiveRecord::Base.connection.execute(sql)
+      end
 
       def insert(attribute:, parent:)
         sql = "INSERT INTO assessment_attributes (attribute_name, parent_name) VALUES ($1, $2)"
