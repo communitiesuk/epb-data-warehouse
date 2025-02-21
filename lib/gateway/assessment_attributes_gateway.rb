@@ -165,6 +165,10 @@ module Gateway
         .map { |result| result }
     end
 
+    def clear_attributes
+      attributes.clear_attributes
+    end
+
     def fetch_assessment_attributes(
       attribute_column_array:,
       where_clause_hash: ""
@@ -490,6 +494,12 @@ module Gateway
 
       def [](key)
         attributes[key]
+      end
+
+      def clear_attributes
+        sql = "TRUNCATE TABLE assessment_attributes RESTART IDENTITY CASCADE"
+        ActiveRecord::Base.connection.execute(sql)
+        @attributes.clear
       end
 
       def id_for(attribute_name, parent_name: nil)
