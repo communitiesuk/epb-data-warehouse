@@ -21,11 +21,11 @@ describe Gateway::CommercialSearchGateway do
       import_use_case.execute
 
       add_countries
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
     end
 
     let(:expected_data) do
-      { "assessment_id" => "0000-0000-0000-0000-0000",
+      { "assessment_id" => "0000-0000-0000-0000-0006",
         "address1" => "60 Maple Syrup Road",
         "address2" => "Candy Mountain",
         "postcode" => "NE0 0AA",

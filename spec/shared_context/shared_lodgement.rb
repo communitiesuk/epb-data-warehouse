@@ -39,7 +39,19 @@ shared_context "when lodging XML" do
       "schema_type" => schema_type,
       "assessment_address_id" => assessment_address_id,
     }
-    xml = Samples.xml(schema_type, type)
+
+    xml_path = "RRN"
+    if type == "cepc"
+      xml_path = "//CEPC:RRN"
+    elsif type.end_with? "sap"
+      xml_path = "//SAP:RRN"
+    end
+
+    document = Nokogiri.XML Samples.xml(schema_type, type)
+    rrn = document.at(xml_path)
+    rrn.children = assessment_id unless rrn.nil?
+    xml = document.to_xml
+
     certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
     certificate_data.merge!(different_fields) unless different_fields.nil?
     certificate_data.merge!(meta_data_sample)
