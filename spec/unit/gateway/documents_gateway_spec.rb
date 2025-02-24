@@ -72,7 +72,6 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
   end
 
   before do
-    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attributes CASCADE;")
     ActiveRecord::Base.connection.reset_pk_sequence!("assessment_documents")
   end
 

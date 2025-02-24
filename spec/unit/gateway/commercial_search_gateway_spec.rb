@@ -10,9 +10,6 @@ describe Gateway::CommercialSearchGateway do
     include_context "when saving ons data"
     include_context "when exporting data"
     before do
-      attributes_gateway = Gateway::AssessmentAttributesGateway.new
-      attributes_gateway.clear_attributes
-
       import_postcode_directory_name
       import_postcode_directory_data
       config_path = "spec/config/attribute_enum_search_map.json"
