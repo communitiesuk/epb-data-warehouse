@@ -91,8 +91,6 @@ describe Gateway::CommercialSearchGateway do
         ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
       END as aircon_kw_rating,
       get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned' as ac_inspection_commissioned,
-      get_attribute_value('emission_rate_type', aav.assessment_id) as standard_emissions,
-      get_attribute_value('building_environment', aav.assessment_id) as building_environment,
       get_attribute_value('report_type', aav.assessment_id) as report_type,
       t.assessment_type as type_of_assessment,
       get_attribute_value('primary_energy_value', aav.assessment_id) as primary_energy_value,
