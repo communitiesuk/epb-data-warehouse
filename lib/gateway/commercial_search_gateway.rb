@@ -13,6 +13,7 @@ module Gateway
       sql = <<~SQL
         SELECT DISTINCT
               get_attribute_value('postcode', aav.assessment_id) as postcode,
+              get_attribute_value('post_town', aav.assessment_id) as region,
               get_attribute_value('property_type', aav.assessment_id) as property_type,
               get_attribute_value('address_line_1', aav.assessment_id) as address1,
               get_attribute_value('address_line_2', aav.assessment_id) as address2,
