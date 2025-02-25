@@ -48,7 +48,7 @@ describe Gateway::CommercialSearchGateway do
         "typical_emissions" => "90.98",
         "building_environment" => "Air Conditioning",
         "country" => "England",
-        "primary_energy_value" => nil,
+        "primary_energy_value" => "451.27",
         "report_type" => "3",
         "type_of_assessment" => "CEPC" }
     end

@@ -50,7 +50,7 @@ module Gateway
               get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned' as ac_inspection_commissioned,
               get_attribute_value('report_type', aav.assessment_id) as report_type,
               t.assessment_type as type_of_assessment,
-              get_attribute_value('primary_energy_value', aav.assessment_id) as primary_energy_value,
+              get_attribute_json('energy_use', aav.assessment_id) ->> 'energy_consumption_current' as primary_energy_value,
               co.country_name as country,
               aav.assessment_id as assessment_id
         FROM assessment_attribute_values aav
