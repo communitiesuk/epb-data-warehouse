@@ -37,7 +37,9 @@ describe Gateway::CommercialSearchGateway do
         "existing_stock_benchmark" => "100",
         "main_heating_fuel" => nil,
         "new_build_benchmark" => "34",
-        "aircon_present" => nil,
+        "ac_inspection_commissioned" => "4",
+        "aircon_kw_rating" => "Unknown",
+        "aircon_present" => "No",
         "building_emissions" => nil,
         "floor_area" => nil,
         "lodgement_datetime" => Time.parse("2021-03-19 00:00:00.000000000 +0000"),
@@ -80,7 +82,13 @@ describe Gateway::CommercialSearchGateway do
       get_attribute_value('emission_rate_type', aav.assessment_id) as typical_emissions,
       get_attribute_value('emission_rate_type', aav.assessment_id) as building_emissions,
       get_attribute_value('emission_rate_type', aav.assessment_id) as standard_emissions,
-      get_attribute_value('ac_questionnaire',  aav.assessment_id) as aircon_present,
+      get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_present' as aircon_present,
+      CASE
+        WHEN (get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_rating_unknown_flag')::int = 1
+        THEN 'Unknown'
+        ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
+      END as aircon_kw_rating,
+      get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned' as ac_inspection_commissioned,
       get_attribute_value('emission_rate_type', aav.assessment_id) as standard_emissions,
       get_attribute_value('building_environment', aav.assessment_id) as building_environment,
       get_attribute_value('report_type', aav.assessment_id) as report_type,
