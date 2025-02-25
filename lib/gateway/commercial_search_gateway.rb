@@ -20,7 +20,6 @@ module Gateway
               get_attribute_value('uprn', aav.assessment_id) as building_reference_number,
               get_attribute_value('asset_rating', aav.assessment_id) as asset_rating,
               energy_band_calculator(get_attribute_value('asset_rating', aav.assessment_id)::INTEGER, 'cepc') as asset_rating_band,
-              get_attribute_value('property_type', aav.assessment_id) as property_type,
               get_attribute_value('registration_date', aav.assessment_id) as lodgement_date,
               get_attribute_value('registration_date', aav.assessment_id)::TIMESTAMP as lodgement_datetime,
               get_attribute_value('inspection_date', aav.assessment_id) as inspection_date,
