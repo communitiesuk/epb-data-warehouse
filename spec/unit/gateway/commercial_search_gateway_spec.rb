@@ -12,16 +12,12 @@ describe Gateway::CommercialSearchGateway do
     before do
       import_postcode_directory_name
       import_postcode_directory_data
-      config_path = "spec/config/attribute_enum_search_map.json"
-      config_gateway = Gateway::XsdConfigGateway.new(config_path)
-      import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
-      import_use_case.execute
-
       add_countries
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment: "CEPC", type: "cepc+rr")
     end
 
-    let(:expected_data) do
+    let(:cepc_expected_data) do
       { "assessment_id" => "0000-0000-0000-0000-0006",
         "address1" => "60 Maple Syrup Road",
         "address2" => "Candy Mountain",
@@ -55,62 +51,52 @@ describe Gateway::CommercialSearchGateway do
         "report_type" => "3",
         "type_of_assessment" => "CEPC" }
     end
-    let(:first_query_result) do
-      ActiveRecord::Base.connection.exec_query("SELECT
-      get_attribute_value('postcode', aav.assessment_id) as postcode,
-      get_attribute_value('property_type', aav.assessment_id) as property_type,
-      get_attribute_value('address_line_1', aav.assessment_id) as address1,
-      get_attribute_value('address_line_2', aav.assessment_id) as address2,
-      get_attribute_value('uprn', aav.assessment_id) as building_reference_number,
-      get_attribute_value('asset_rating', aav.assessment_id) as asset_rating,
-      energy_band_calculator(get_attribute_value('asset_rating', aav.assessment_id)::INTEGER, 'cepc') as asset_rating_band,
-      get_attribute_value('property_type', aav.assessment_id) as property_type,
-      get_attribute_value('registration_date', aav.assessment_id) as lodgement_date,
-      get_attribute_value('registration_date', aav.assessment_id)::TIMESTAMP as lodgement_datetime,
-      get_attribute_value('inspection_date', aav.assessment_id) as inspection_date,
-      get_attribute_value('transaction_type', aav.assessment_id) as transaction_type,
-      get_attribute_value('new_build_benchmark', aav.assessment_id) as new_build_benchmark,
-      get_attribute_value('existing_stock_benchmark', aav.assessment_id) as existing_stock_benchmark,
 
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'floor_area' as floor_area,
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'building_level' as building_level,
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'main_heating_fuel' as main_heating_fuel,
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'building_environment' as building_environment,
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'other_fuel_description' as other_fuel_desc,
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'special_energy_uses' as special_energy_uses,
-      get_attribute_json('technical_information',  aav.assessment_id) ->> 'renewable_sources' as renewable_sources,
-
-      get_attribute_value('ser', aav.assessment_id) as standard_emissions,
-      get_attribute_value('ter', aav.assessment_id) as target_emissions,
-      get_attribute_value('tyr', aav.assessment_id) as typical_emissions,
-      get_attribute_value('ber', aav.assessment_id) as building_emissions,
-      get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_present' as aircon_present,
-      CASE
-        WHEN (get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_rating_unknown_flag')::int = 1
-        THEN 'Unknown'
-        ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
-      END as aircon_kw_rating,
-      get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned' as ac_inspection_commissioned,
-      get_attribute_value('report_type', aav.assessment_id) as report_type,
-      t.assessment_type as type_of_assessment,
-      get_attribute_value('primary_energy_value', aav.assessment_id) as primary_energy_value,
-      co.country_name as country,
-
-      aav.assessment_id as assessment_id
-FROM assessment_attribute_values aav
-JOIN (SELECT aav2.assessment_id, aav2.attribute_value as assessment_type
-                       FROM assessment_attribute_values aav2
-                       JOIN public.assessment_attributes a2 on aav2.attribute_id = a2.attribute_id
-                       WHERE a2.attribute_name = 'assessment_type')  as t
-                      ON t.assessment_id = aav.assessment_id
-join assessments_country_ids aci on aav.assessment_id = aci.assessment_id
-join countries co on aci.country_id = co.country_id
-AND t.assessment_type = 'CEPC'
-  AND co.country_code IN ('EAW', 'ENG', 'WLS');").first
+    let(:cepc_rr_expected_data) do
+      {
+        "ac_inspection_commissioned" => "4",
+        "address1" => nil,
+        "address2" => "Acme Coffee",
+        "aircon_kw_rating" => "Unknown",
+        "aircon_present" => "No",
+        "assessment_id" => "0000-0000-0000-0000-0007",
+        "asset_rating" => "134",
+        "asset_rating_band" => "F",
+        "building_emissions" => "158.9",
+        "building_environment" => "Heating and Natural Ventilation",
+        "building_level" => "3",
+        "building_reference_number" => "987345673489",
+        "country" => "England",
+        "existing_stock_benchmark" => "90",
+        "floor_area" => "314",
+        "inspection_date" => "2013-08-10",
+        "lodgement_date" => "2013-08-15",
+        "lodgement_datetime" => Time.parse("2013-08-15 00:00:00.000000000 +0000"),
+        "main_heating_fuel" => "Grid Supplied Electricity",
+        "new_build_benchmark" => "34",
+        "other_fuel_desc" => nil,
+        "postcode" => "PT42 7AD",
+        "primary_energy_value" => nil,
+        "property_type" => "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",
+        "renewable_sources" => nil,
+        "report_type" => "3",
+        "special_energy_uses" => nil,
+        "standard_emissions" => "59.26",
+        "target_emissions" => "39.95",
+        "transaction_type" => "1",
+        "type_of_assessment" => "CEPC",
+        "typical_emissions" => "106.52",
+      }
     end
 
-    it "creates a table with the required data" do
-      expect(first_query_result).to eq expected_data
+    it "creates a table with the required data for cepc" do
+      result = gateway.fetch("0000-0000-0000-0000-0006").first
+      expect(result).to eq cepc_expected_data
+    end
+
+    it "creates a table with the required data for cepc+rr" do
+      result = gateway.fetch("0000-0000-0000-0000-0007").first
+      expect(result).to eq cepc_rr_expected_data
     end
   end
 end
