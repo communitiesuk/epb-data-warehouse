@@ -4,6 +4,24 @@
       "attribute_name": "transaction_type",
       "type_of_assessment": "CEPC",
       "xsd_node_name": "TransactionType"
+    },
+    {
+      "attribute_name": "ac_inspection_commissioned",
+      "type_of_assessment": "CEPC",
+      "xsd_node_name": "ACInspectionCommissioned",
+      "xsd_path": "/api/schemas/xml/CEPC-*/Reports/BaseDataTypes.xsd"
+    },
+    {
+      "attribute_name": "ac_estimated_output",
+      "type_of_assessment": "CEPC",
+      "xsd_node_name": "ACEstimatedOutput",
+      "xsd_path": "/api/schemas/xml/CEPC-*/Reports/BaseDataTypes.xsd"
+    },
+    {
+      "attribute_name": "report_type",
+      "type_of_assessment": "CEPC",
+      "xsd_node_name": "ReportTypeCode",
+      "xsd_path": "/api/schemas/xml/CEPC-*/Reports/Report-Header.xsd"
     }
   ],
 

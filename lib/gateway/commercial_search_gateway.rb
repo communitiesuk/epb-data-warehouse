@@ -46,8 +46,10 @@ module Gateway
                 THEN 'Unknown'
                 ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
               END as aircon_kw_rating,
-              get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned' as ac_inspection_commissioned,
-              get_attribute_value('report_type', aav.assessment_id) as report_type,
+              get_lookup_value('ac_inspection_commissioned', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as ac_inspection_commissioned,
+              get_lookup_value('ac_estimated_output', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_estimated_output', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as ac_estimated_output,
+
+              get_lookup_value('report_type', get_attribute_value('report_type', aav.assessment_id), t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as report_type,
               t.assessment_type as type_of_assessment,
               get_attribute_json('energy_use', aav.assessment_id) ->> 'energy_consumption_current' as primary_energy_value,
               co.country_name as country,

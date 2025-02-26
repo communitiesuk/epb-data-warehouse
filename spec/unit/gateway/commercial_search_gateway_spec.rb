@@ -25,6 +25,7 @@ describe Gateway::CommercialSearchGateway do
 
     let(:cepc_expected_data) do
       { "assessment_id" => "0000-0000-0000-0000-0006",
+        "ac_estimated_output" => nil,
         "address1" => "60 Maple Syrup Road",
         "address2" => "Candy Mountain",
         "postcode" => "NE0 0AA",
@@ -40,7 +41,7 @@ describe Gateway::CommercialSearchGateway do
         "existing_stock_benchmark" => "100",
         "main_heating_fuel" => "Grid Supplied Electricity",
         "new_build_benchmark" => "34",
-        "ac_inspection_commissioned" => "4",
+        "ac_inspection_commissioned" => "Not relevant",
         "aircon_kw_rating" => "Unknown",
         "aircon_present" => "No",
         "floor_area" => "951",
@@ -55,13 +56,14 @@ describe Gateway::CommercialSearchGateway do
         "building_environment" => "Air Conditioning",
         "country" => "England",
         "primary_energy_value" => "451.27",
-        "report_type" => "3",
+        "report_type" => "Energy Performance Certificate",
         "type_of_assessment" => "CEPC" }
     end
 
     let(:cepc_rr_expected_data) do
       {
-        "ac_inspection_commissioned" => "4",
+        "ac_inspection_commissioned" => "Not relevant",
+        "ac_estimated_output" => nil,
         "address1" => nil,
         "address2" => "Acme Coffee",
         "region" => "POSTTOWN",
@@ -87,7 +89,7 @@ describe Gateway::CommercialSearchGateway do
         "primary_energy_value" => nil,
         "property_type" => "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",
         "renewable_sources" => nil,
-        "report_type" => "3",
+        "report_type" => "Energy Performance Certificate",
         "special_energy_uses" => nil,
         "standard_emissions" => "59.26",
         "target_emissions" => "39.95",
