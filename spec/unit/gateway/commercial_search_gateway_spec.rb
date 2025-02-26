@@ -9,10 +9,16 @@ describe Gateway::CommercialSearchGateway do
     include_context "when lodging XML"
     include_context "when saving ons data"
     include_context "when exporting data"
-    before do
+
+    before(:all) do
       import_postcode_directory_name
       import_postcode_directory_data
       add_countries
+      config_path = "spec/config/attribute_enum_commercial_search_map.json"
+      config_gateway = Gateway::XsdConfigGateway.new(config_path)
+      import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
+      import_use_case.execute
+
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment: "CEPC", type: "cepc+rr")
     end
@@ -29,7 +35,7 @@ describe Gateway::CommercialSearchGateway do
         "asset_rating_band" => "D",
         "inspection_date" => "2021-03-19",
         "lodgement_date" => "2021-03-19",
-        "transaction_type" => "1",
+        "transaction_type" => "Mandatory issue (Marketed sale).",
         "building_level" => "3",
         "existing_stock_benchmark" => "100",
         "main_heating_fuel" => "Grid Supplied Electricity",
@@ -85,7 +91,7 @@ describe Gateway::CommercialSearchGateway do
         "special_energy_uses" => nil,
         "standard_emissions" => "59.26",
         "target_emissions" => "39.95",
-        "transaction_type" => "1",
+        "transaction_type" => "Mandatory issue (Marketed sale).",
         "type_of_assessment" => "CEPC",
         "typical_emissions" => "106.52",
       }

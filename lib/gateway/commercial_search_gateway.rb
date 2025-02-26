@@ -23,7 +23,7 @@ module Gateway
               get_attribute_value('registration_date', aav.assessment_id) as lodgement_date,
               get_attribute_value('registration_date', aav.assessment_id)::TIMESTAMP as lodgement_datetime,
               get_attribute_value('inspection_date', aav.assessment_id) as inspection_date,
-              get_attribute_value('transaction_type', aav.assessment_id) as transaction_type,
+              get_lookup_value('transaction_type', get_attribute_value('transaction_type', aav.assessment_id), t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as transaction_type,
               get_attribute_value('new_build_benchmark', aav.assessment_id) as new_build_benchmark,
               get_attribute_value('existing_stock_benchmark', aav.assessment_id) as existing_stock_benchmark,
 

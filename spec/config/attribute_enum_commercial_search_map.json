@@ -8,7 +8,7 @@
   ],
 
   "paths" : {
-    "cepc" : "/api/schemas/xml/CEPC-8.0.0/Reports/Reported-Data.xsd"
+    "cepc" : "/api/schemas/xml/CEPC-*/Reports/Reported-Data.xsd"
   }
 }
 
