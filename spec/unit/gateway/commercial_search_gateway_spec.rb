@@ -26,6 +26,7 @@ describe Gateway::CommercialSearchGateway do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment:, type: "cepc+rr", different_fields: {
         "postcode" => "SW10 0AA",
       })
+      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_search")
     end
 
     let(:cepc_expected_data) do
@@ -108,13 +109,17 @@ describe Gateway::CommercialSearchGateway do
       }
     end
 
+    let(:query_result) do
+      gateway.fetch("2012-01-01", "2022-01-01")
+    end
+
     it "creates a table with the required data for cepc" do
-      result = gateway.fetch("0000-0000-0000-0000-0006").first
+      result = query_result.find { |i| i["assessment_id"] == "0000-0000-0000-0000-0006" }
       expect(result).to eq cepc_expected_data
     end
 
     it "creates a table with the required data for cepc+rr" do
-      result = gateway.fetch("0000-0000-0000-0000-0007").first
+      result = query_result.find { |i| i["assessment_id"] == "0000-0000-0000-0000-0007" }
       expect(result).to eq cepc_rr_expected_data
     end
   end
