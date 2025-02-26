@@ -13,10 +13,11 @@ module Gateway
       sql = <<~SQL
         SELECT DISTINCT
               get_attribute_value('postcode', aav.assessment_id) as postcode,
-              get_attribute_value('post_town', aav.assessment_id) as region,
+              get_attribute_value('post_town', aav.assessment_id) as posttown,
               get_attribute_value('property_type', aav.assessment_id) as property_type,
               get_attribute_value('address_line_1', aav.assessment_id) as address1,
               get_attribute_value('address_line_2', aav.assessment_id) as address2,
+              get_attribute_value('address_line_3', aav.assessment_id) as address3,
               get_attribute_value('uprn', aav.assessment_id) as building_reference_number,
               get_attribute_value('asset_rating', aav.assessment_id) as asset_rating,
               energy_band_calculator(get_attribute_value('asset_rating', aav.assessment_id)::INTEGER, 'cepc') as asset_rating_band,
@@ -47,12 +48,13 @@ module Gateway
                 ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
               END as aircon_kw_rating,
               get_lookup_value('ac_inspection_commissioned', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as ac_inspection_commissioned,
-              get_lookup_value('ac_estimated_output', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_estimated_output', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as ac_estimated_output,
+              get_lookup_value('ac_estimated_output', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_estimated_output', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as estimated_aircon_kw_rating,
 
               get_lookup_value('report_type', get_attribute_value('report_type', aav.assessment_id), t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as report_type,
               t.assessment_type as type_of_assessment,
               get_attribute_json('energy_use', aav.assessment_id) ->> 'energy_consumption_current' as primary_energy_value,
               co.country_name as country,
+              ons.region_code as region,
               aav.assessment_id as assessment_id
         FROM assessment_attribute_values aav
         JOIN (
@@ -64,6 +66,7 @@ module Gateway
         ON t.assessment_id = aav.assessment_id
         JOIN assessments_country_ids aci on aav.assessment_id = aci.assessment_id
         JOIN countries co on aci.country_id = co.country_id
+        left JOIN ons_postcode_directory ons on get_attribute_value('postcode', aav.assessment_id) = ons.postcode
         WHERE aav.assessment_id = $1
         AND t.assessment_type = 'CEPC'
           AND co.country_code IN ('EAW', 'ENG', 'WLS');

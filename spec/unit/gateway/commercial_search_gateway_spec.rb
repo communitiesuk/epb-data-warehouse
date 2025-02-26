@@ -18,18 +18,25 @@ describe Gateway::CommercialSearchGateway do
       config_gateway = Gateway::XsdConfigGateway.new(config_path)
       import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
       import_use_case.execute
+      type_of_assessment = "CEPC"
 
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc")
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment: "CEPC", type: "cepc+rr")
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "cepc", different_fields: {
+        "postcode" => "SW10 0AA",
+      })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment:, type: "cepc+rr", different_fields: {
+        "postcode" => "SW10 0AA",
+      })
     end
 
     let(:cepc_expected_data) do
       { "assessment_id" => "0000-0000-0000-0000-0006",
-        "ac_estimated_output" => nil,
+        "estimated_aircon_kw_rating" => nil,
         "address1" => "60 Maple Syrup Road",
         "address2" => "Candy Mountain",
-        "postcode" => "NE0 0AA",
-        "region" => "Big Rock",
+        "address3" => nil,
+        "region" => "E12000007",
+        "postcode" => "SW10 0AA",
+        "posttown" => "Big Rock",
         "property_type" => "A1/A2 Retail and Financial/Professional services",
         "asset_rating" => "84",
         "building_reference_number" => "UPRN-000000000000",
@@ -63,10 +70,12 @@ describe Gateway::CommercialSearchGateway do
     let(:cepc_rr_expected_data) do
       {
         "ac_inspection_commissioned" => "Not relevant",
-        "ac_estimated_output" => nil,
+        "estimated_aircon_kw_rating" => nil,
         "address1" => nil,
         "address2" => "Acme Coffee",
-        "region" => "POSTTOWN",
+        "address3" => "13 Old Street",
+        "region" => "E12000007",
+        "posttown" => "POSTTOWN",
         "aircon_kw_rating" => "Unknown",
         "aircon_present" => "No",
         "assessment_id" => "0000-0000-0000-0000-0007",
@@ -85,7 +94,7 @@ describe Gateway::CommercialSearchGateway do
         "main_heating_fuel" => "Grid Supplied Electricity",
         "new_build_benchmark" => "34",
         "other_fuel_desc" => nil,
-        "postcode" => "PT42 7AD",
+        "postcode" => "SW10 0AA",
         "primary_energy_value" => nil,
         "property_type" => "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",
         "renewable_sources" => nil,
