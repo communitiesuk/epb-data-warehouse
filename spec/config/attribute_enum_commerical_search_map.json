@@ -1,0 +1,14 @@
+{
+  "nodes" : [
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "CEPC",
+      "xsd_node_name": "TransactionType"
+    }
+  ],
+
+  "paths" : {
+    "cepc" : "/api/schemas/xml/CEPC-8.0.0/Reports/Reported-Data.xsd"
+  }
+}
+

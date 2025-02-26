@@ -36,53 +36,8 @@
       "xsd_node_name": "//Transaction-Type",
       "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
       "node_hash": { "Transaction-Code": "Transaction-Text" }
-    },
-    {
-      "attribute_name": "improvement_summary",
-      "type_of_assessment": "RdSAP",
-      "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
-      "node_hash": { "Improvement-Number": "Improvement-Summary" }
-    },
-    {
-      "attribute_name": "improvement_summary",
-      "type_of_assessment": "SAP",
-      "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
-      "node_hash": { "Improvement-Number": "Improvement-Summary" }
-    },
-
-    {
-      "attribute_name": "improvement_summary",
-      "type_of_assessment": "SAP",
-      "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
-      "node_hash": { "Improvement-Number": "Improvement-Summary" }
-    },
-
-    {
-      "attribute_name": "improvement_description",
-      "type_of_assessment": "RdSAP",
-      "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
-      "node_hash": { "Improvement-Number": "Improvement-Description" }
-    },
-
-    {
-      "attribute_name": "improvement_description",
-      "type_of_assessment": "SAP",
-      "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
-      "node_hash": { "Improvement-Number": "Improvement-Description" }
-    },
-
-    {
-      "attribute_name": "improvement_description",
-      "type_of_assessment": "SAP",
-      "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
-      "node_hash": { "Improvement-Number": "Improvement-Description" }
     }
+
   ],
 
   "paths" : {
