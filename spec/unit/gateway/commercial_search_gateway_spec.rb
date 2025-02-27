@@ -5,6 +5,12 @@ require_relative "../../shared_context/shared_data_export"
 describe Gateway::CommercialSearchGateway do
   subject(:gateway) { described_class.new }
 
+  let(:date_start) { "2012-01-01" }
+  let(:date_end) { "2022-01-01" }
+  let(:search_arguments) do
+    { date_start:, date_end: }
+  end
+
   context "when creating commercial materialized view" do
     include_context "when lodging XML"
     include_context "when saving ons data"
@@ -110,7 +116,7 @@ describe Gateway::CommercialSearchGateway do
     end
 
     let(:query_result) do
-      gateway.fetch("2012-01-01", "2022-01-01")
+      gateway.fetch(**search_arguments)
     end
 
     it "creates a table with the required data for cepc" do
