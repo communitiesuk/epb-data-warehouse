@@ -225,14 +225,9 @@ RSpec.describe "the parser and the CEPC configuration" do
                       "tyr" => 90.98,
                       "energy_use" => { "energy_consumption_current" => 451.27 },
                       "technical_information" =>
-                       { "main_heating_fuel" => "Grid Supplied Electricity",
-                         "building_environment" => "Air Conditioning",
-                         "floor_area" => 951,
-                         "building_level" => 3 },
+                        { "building_environment" => "Air Conditioning", "building_level" => 3, "floor_area" => 951, "main_heating_fuel" => "Grid Supplied Electricity", "other_fuel_description" => "Other fuel test", "renewable_sources" => "Renewable sources test", "special_energy_uses" => "Test sp" },
                       "ac_questionnaire" =>
-                       { "ac_present" => "No",
-                         "ac_rated_output" => { "ac_rating_unknown_flag" => 1 },
-                         "ac_inspection_commissioned" => 4 } }
+                        { "ac_estimated_output" => 3, "ac_inspection_commissioned" => 4, "ac_present" => "No", "ac_rated_output" => { "ac_kw_rating" => 100, "ac_rating_unknown_flag" => 0 } } }
       expect(use_case.execute(xml: cepc,
                               schema_type: "CEPC-8.0.0",
                               assessment_id: "0000-0000-0000-0000-0000")).to eq(expectation)

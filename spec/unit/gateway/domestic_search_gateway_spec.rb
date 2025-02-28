@@ -290,6 +290,7 @@ describe Gateway::DomesticSearchGateway do
 
       it "returns a row with the required data for RdSAP" do
         result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0006" }
+
         expect(result).to eq expected_rdsap_data
       end
     end

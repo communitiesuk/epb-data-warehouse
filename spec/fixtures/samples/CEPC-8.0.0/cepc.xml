@@ -1212,12 +1212,17 @@
         <CEPC:Building-Environment>Air Conditioning</CEPC:Building-Environment>
         <CEPC:Floor-Area>951</CEPC:Floor-Area>
         <CEPC:Building-Level>3</CEPC:Building-Level>
+        <CEPC:Special-Energy-Uses>Test sp</CEPC:Special-Energy-Uses>
+        <CEPC:Renewable-Sources>Renewable sources test</CEPC:Renewable-Sources>
+        <CEPC:Other-Fuel-Description>Other fuel test</CEPC:Other-Fuel-Description>
       </CEPC:Technical-Information>
       <CEPC:AC-Questionnaire>
         <CEPC:AC-Present>No</CEPC:AC-Present>
         <CEPC:AC-Rated-Output>
-          <CEPC:AC-Rating-Unknown-Flag>1</CEPC:AC-Rating-Unknown-Flag>
+          <CEPC:AC-Rating-Unknown-Flag>0</CEPC:AC-Rating-Unknown-Flag>
+          <CEPC:AC-kW-Rating>100</CEPC:AC-kW-Rating>
         </CEPC:AC-Rated-Output>
+        <CEPC:AC-Estimated-Output>3</CEPC:AC-Estimated-Output>
         <CEPC:AC-Inspection-Commissioned>4</CEPC:AC-Inspection-Commissioned>
       </CEPC:AC-Questionnaire>
     </CEPC:Energy-Performance-Certificate>

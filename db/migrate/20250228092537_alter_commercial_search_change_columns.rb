@@ -1,4 +1,4 @@
-class AlterCommercialSearchAddCouncilId < ActiveRecord::Migration[7.0]
+class AlterCommercialSearchChangeColumns < ActiveRecord::Migration[7.0]
   def self.up
     execute "DROP MATERIALIZED VIEW IF EXISTS mvw_commercial_search"
     execute "CREATE MATERIALIZED VIEW mvw_commercial_search
@@ -33,21 +33,25 @@ class AlterCommercialSearchAddCouncilId < ActiveRecord::Migration[7.0]
           get_attribute_value('tyr', aav.assessment_id) as typical_emissions,
           get_attribute_value('ber', aav.assessment_id) as building_emissions,
           get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_present' as aircon_present,
-          CASE
-            WHEN (get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_rating_unknown_flag')::int = 1
-            THEN 'Unknown'
-            ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
-          END as aircon_kw_rating,
-          get_lookup_value('ac_inspection_commissioned', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as ac_inspection_commissioned,
-          get_lookup_value('ac_estimated_output', get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_estimated_output', t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as estimated_aircon_kw_rating,
 
-          get_lookup_value('report_type', get_attribute_value('report_type', aav.assessment_id), t.assessment_type, get_attribute_value('schema_type', aav.assessment_id) )  as report_type,
+
+CASE
+  WHEN (get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_rating_unknown_flag')::int = 1
+  THEN ''
+  ELSE get_attribute_json('ac_questionnaire', aav.assessment_id) -> 'ac_rated_output' ->> 'ac_kw_rating'
+END as aircon_kw_rating,
+
+
+
+          get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_inspection_commissioned' as ac_inspection_commissioned,
+          get_attribute_json('ac_questionnaire',  aav.assessment_id) ->> 'ac_estimated_output' as estimated_aircon_kw_rating,
+          get_attribute_value('report_type', aav.assessment_id) as report_type,
           t.assessment_type as type_of_assessment,
           get_attribute_json('energy_use', aav.assessment_id) ->> 'energy_consumption_current' as primary_energy_value,
           co.country_name as country,
           ons_r.name as region,
           os_la.id::integer as council_id,
-          aav.assessment_id as assessment_id
+          aav.assessment_id as rrn
 
     FROM assessment_attribute_values aav
     JOIN (
@@ -67,7 +71,7 @@ class AlterCommercialSearchAddCouncilId < ActiveRecord::Migration[7.0]
       AND ons_r.type = 'Region'
     WITH NO DATA;"
 
-    add_index :mvw_commercial_search, :assessment_id, unique: true
+    add_index :mvw_commercial_search, :rrn, unique: true
     add_index :mvw_commercial_search, :lodgement_date
     add_index :mvw_commercial_search, :council_id
   end

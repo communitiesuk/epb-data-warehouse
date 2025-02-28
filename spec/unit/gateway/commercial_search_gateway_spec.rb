@@ -36,8 +36,8 @@ describe Gateway::CommercialSearchGateway do
     end
 
     let(:cepc_expected_data) do
-      { "assessment_id" => "0000-0000-0000-0000-0006",
-        "estimated_aircon_kw_rating" => nil,
+      { "rrn" => "0000-0000-0000-0000-0006",
+        "estimated_aircon_kw_rating" => "3",
         "address1" => "60 Maple Syrup Road",
         "address2" => "Candy Mountain",
         "address3" => nil,
@@ -55,14 +55,14 @@ describe Gateway::CommercialSearchGateway do
         "existing_stock_benchmark" => "100",
         "main_heating_fuel" => "Grid Supplied Electricity",
         "new_build_benchmark" => "34",
-        "ac_inspection_commissioned" => "Not relevant",
-        "aircon_kw_rating" => "Unknown",
+        "ac_inspection_commissioned" => "4",
+        "aircon_kw_rating" => "100",
         "aircon_present" => "No",
         "floor_area" => "951",
         "lodgement_datetime" => Time.parse("2021-03-19 00:00:00.000000000 +0000"),
-        "other_fuel_desc" => nil,
-        "renewable_sources" => nil,
-        "special_energy_uses" => nil,
+        "other_fuel_desc" => "Other fuel test",
+        "renewable_sources" => "Renewable sources test",
+        "special_energy_uses" => "Test sp",
         "standard_emissions" => "45.61",
         "building_emissions" => "76.29",
         "target_emissions" => "31.05",
@@ -70,22 +70,22 @@ describe Gateway::CommercialSearchGateway do
         "building_environment" => "Air Conditioning",
         "country" => "England",
         "primary_energy_value" => "451.27",
-        "report_type" => "Energy Performance Certificate",
+        "report_type" => "3",
         "type_of_assessment" => "CEPC" }
     end
 
     let(:cepc_rr_expected_data) do
       {
-        "ac_inspection_commissioned" => "Not relevant",
+        "ac_inspection_commissioned" => "4",
         "estimated_aircon_kw_rating" => nil,
         "address1" => nil,
         "address2" => "Acme Coffee",
         "address3" => "13 Old Street",
         "region" => "London",
         "posttown" => "POSTTOWN",
-        "aircon_kw_rating" => "Unknown",
+        "aircon_kw_rating" => "",
         "aircon_present" => "No",
-        "assessment_id" => "0000-0000-0000-0000-0007",
+        "rrn" => "0000-0000-0000-0000-0007",
         "asset_rating" => "134",
         "asset_rating_band" => "F",
         "building_emissions" => "158.9",
@@ -105,7 +105,7 @@ describe Gateway::CommercialSearchGateway do
         "primary_energy_value" => nil,
         "property_type" => "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",
         "renewable_sources" => nil,
-        "report_type" => "Energy Performance Certificate",
+        "report_type" => "3",
         "special_energy_uses" => nil,
         "standard_emissions" => "59.26",
         "target_emissions" => "39.95",
@@ -119,14 +119,27 @@ describe Gateway::CommercialSearchGateway do
       gateway.fetch(**search_arguments)
     end
 
-    it "creates a table with the required data for cepc" do
-      result = query_result.find { |i| i["assessment_id"] == "0000-0000-0000-0000-0006" }
+    it "returns a dataset with the required data for cepc" do
+      result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0006" }
       expect(result).to eq cepc_expected_data
     end
 
-    it "creates a table with the required data for cepc+rr" do
-      result = query_result.find { |i| i["assessment_id"] == "0000-0000-0000-0000-0007" }
+    it "returns a dataset with the required data for cepc+rr" do
+      result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0007" }
       expect(result).to eq cepc_rr_expected_data
+    end
+
+    context "when checking the columns of the materialized view" do
+      let(:csv_fixture) { read_csv_fixture("commercial") }
+
+      let(:query_result) do
+        search_arguments[:date_start] = "2020-04-04"
+        gateway.fetch(**search_arguments)
+      end
+
+      it "returns the correct columns" do
+        expect(csv_fixture.headers.sort.map(&:downcase) - cepc_expected_data.keys).to eq []
+      end
     end
   end
 end
