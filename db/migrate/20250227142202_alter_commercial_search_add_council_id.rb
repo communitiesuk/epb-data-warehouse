@@ -67,9 +67,9 @@ class AlterCommercialSearchAddCouncilId < ActiveRecord::Migration[7.0]
       AND ons_r.type = 'Region'
     WITH NO DATA;"
 
-    add_index :mvw_domestic_search, :assessment_id, unique: true
-    add_index :mvw_domestic_search, :lodgement_date
-    add_index :mvw_domestic_search, :council_id
+    add_index :mvw_commercial_search, :assessment_id, unique: true
+    add_index :mvw_commercial_search, :lodgement_date
+    add_index :mvw_commercial_search, :council_id
   end
 
   def self.down; end
