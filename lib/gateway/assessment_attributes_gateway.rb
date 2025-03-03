@@ -297,6 +297,31 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
+    def fetch_duplicate_attributes
+      sql = <<-SQL
+             WITH CTE AS
+        (SELECT attribute_id, attribute_name,
+            ROW_NUMBER()
+            OVER( PARTITION BY attribute_name ORDER BY attribute_name) as row_number
+            FROM assessment_attributes
+        )
+        SELECT attribute_id, attribute_name, row_number
+        FROM CTE
+        WHERE row_number > 1
+        ORDER BY attribute_name
+      SQL
+      ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |row| row }
+    end
+
+    def fix_duplicate_attributes(duplicate_attributes:)
+      duplicate_attributes.each do |row|
+        existing_attribute_id = row["attribute_id"]
+        updated_attribute_id = get_attribute_id(row["attribute_name"])
+        update_assessments_attribute_id(existing_attribute_id:, updated_attribute_id:)
+        delete_attribute(attribute_id: row["attribute_id"])
+      end
+    end
+
   private
 
     def attribute_where_clause
@@ -452,6 +477,42 @@ module Gateway
       ]
 
       ActiveRecord::Base.connection.insert(sql, nil, nil, nil, nil, bindings)
+    end
+
+    def update_assessments_attribute_id(existing_attribute_id:, updated_attribute_id:)
+      sql = <<-SQL
+             UPDATE assessment_attribute_values
+             SET attribute_id = $2
+             WHERE attribute_id = $1
+      SQL
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "existing_attribute_id",
+          existing_attribute_id,
+          ActiveRecord::Type::BigInteger.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "updated_attribute_id",
+          updated_attribute_id,
+          ActiveRecord::Type::BigInteger.new,
+        ),
+      ]
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
+
+    def delete_attribute(attribute_id:)
+      sql = <<-SQL
+             DELETE FROM assessment_attributes
+             WHERE attribute_id = $1
+      SQL
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_id",
+          attribute_id,
+          ActiveRecord::Type::BigInteger.new,
+        ),
+      ]
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
     def attributes

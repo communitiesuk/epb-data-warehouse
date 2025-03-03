@@ -1,3 +1,5 @@
+require_relative "../../shared_context/shared_attribute_gateway"
+
 describe Gateway::AssessmentAttributesGateway do
   let(:gateway) { described_class.new }
   let(:attributes) do
@@ -614,6 +616,69 @@ describe Gateway::AssessmentAttributesGateway do
         expect(cast.int).to be_nil
         expect(cast.float).to be_nil
         expect(cast.json).to eq({ code: "NGL" })
+      end
+    end
+  end
+
+  context "when some attributes are duplicated" do
+    include_context "when saving attributes"
+
+    before do
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "dupe1", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "dupe2", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "b", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "c", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "dupe1", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "dupe2", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "b", attribute_value: "b")
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "c", attribute_value: "b")
+      insert_sql = <<-SQL
+              INSERT INTO assessment_attributes(attribute_name )
+              VALUES ('dupe1'), ('dupe1'), ('dupe2'), ('dupe2')
+      SQL
+      ActiveRecord::Base.connection.execute(insert_sql)
+      insert_sql = <<-SQL
+       UPDATE assessment_attribute_values
+       SET attribute_id = 7
+       WHERE attribute_id =3#{' '}
+      SQL
+      ActiveRecord::Base.connection.execute(insert_sql)
+    end
+
+    describe "#fetch_duplicate_attributes" do
+      let(:expected) do
+        [{ "attribute_id" => 7, "attribute_name" => "dupe1", "row_number" => 2 },
+         { "attribute_id" => 8, "attribute_name" => "dupe1", "row_number" => 3 },
+         { "attribute_id" => 9, "attribute_name" => "dupe2", "row_number" => 2 },
+         { "attribute_id" => 10, "attribute_name" => "dupe2", "row_number" => 3 }]
+      end
+
+      it "returns rows of duplicated values" do
+        expect(gateway.fetch_duplicate_attributes).to eq expected
+      end
+    end
+
+    describe "#fix_duplicate_attributes" do
+      let(:duplicate_attributes) do
+        gateway.fetch_duplicate_attributes
+      end
+
+      it "changes to assessment attribute id to the correct and removes the dupes" do
+        expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "dupe1")).to eq [7]
+        expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "dupe1")).to eq [7]
+        gateway.fix_duplicate_attributes(duplicate_attributes:)
+        expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "dupe1")).to eq [3]
+        expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "dupe1")).to eq [3]
+      end
+
+      it "there are no dupes to fetch" do
+        gateway.fix_duplicate_attributes(duplicate_attributes:)
+        expect(gateway.fetch_duplicate_attributes).to eq []
+      end
+
+      it "the non dupes attribute id remains unchanged" do
+        gateway.fix_duplicate_attributes(duplicate_attributes:)
+        expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "b")).to eq [5]
       end
     end
   end
