@@ -30,11 +30,11 @@ describe UseCase::FixAttributeDuplicates do
         allow(assessment_attribute_gateway).to receive_messages(fetch_duplicate_attributes: duplicates, fix_duplicate_attributes: nil)
       end
 
-      it "does not raise an nerror" do
+      it "does not raise an error" do
         expect { use_case.execute }.not_to raise_error
       end
 
-      it "returns the number of duplicateds to be fixed" do
+      it "returns the number of duplicates to be fixed" do
         expect(use_case.execute).to eq 4
       end
     end
