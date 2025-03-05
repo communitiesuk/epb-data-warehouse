@@ -24,5 +24,19 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).map { |result| result }
     end
+
+    def count(*args)
+      this_args = args.first
+      sql = <<~SQL
+        SELECT COUNT(*) FROM #{mvw_name}
+      SQL
+
+      this_args[:bindings] = get_bindings(**this_args)
+
+      this_args[:sql] = sql
+      sql = search_filter(**this_args)
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).first["count"]
+    end
   end
 end

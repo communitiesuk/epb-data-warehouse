@@ -295,4 +295,19 @@ describe Gateway::DomesticSearchGateway do
       end
     end
   end
+
+  describe "#count" do
+    it "returns the number of epcs" do
+      result = gateway.count(**search_arguments)
+      expect(result).to eq 2
+    end
+
+    context "when filtering for a council where there is no data" do
+      it "returns a zero" do
+        search_arguments[:council_id] = 56
+        result = gateway.count(**search_arguments)
+        expect(result).to eq 0
+      end
+    end
+  end
 end
