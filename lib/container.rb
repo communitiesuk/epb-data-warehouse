@@ -154,6 +154,10 @@ class Container
     @domestic_search_use_case ||= UseCase::DomesticSearch.new(search_gateway: domestic_search_gateway, ons_gateway: ons_gateway)
   end
 
+  def self.fix_attribute_duplicates_use_case
+    @fix_attribute_duplicates_use_case ||= UseCase::FixAttributeDuplicates.new(assessment_attribute_gateway: assessment_attributes_gateway)
+  end
+
   def self.export_user_data_use_case
     @export_user_data_use_case ||= UseCase::ExportUserData.new(domestic_search_gateway: domestic_search_gateway, multipart_storage_gateway: multipart_storage_gateway, ons_gateway: ons_gateway)
   end
