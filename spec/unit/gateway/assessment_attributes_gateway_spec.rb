@@ -677,6 +677,7 @@ describe Gateway::AssessmentAttributesGateway do
       end
 
       it "the non dupes attribute id remains unchanged" do
+        expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "b")).to eq [5]
         gateway.fix_duplicate_attributes(duplicate_attributes:)
         expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "b")).to eq [5]
       end

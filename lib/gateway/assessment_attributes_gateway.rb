@@ -302,7 +302,7 @@ module Gateway
              WITH CTE AS
         (SELECT attribute_id, attribute_name,
             ROW_NUMBER()
-            OVER( PARTITION BY attribute_name ORDER BY attribute_name) as row_number
+            OVER( PARTITION BY attribute_name ORDER BY attribute_id) as row_number
             FROM assessment_attributes
         )
         SELECT attribute_id, attribute_name, row_number
