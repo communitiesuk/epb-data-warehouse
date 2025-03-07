@@ -681,6 +681,43 @@ describe Gateway::AssessmentAttributesGateway do
         gateway.fix_duplicate_attributes(duplicate_attributes:)
         expect(fetch_attribute_id_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "b")).to eq [5]
       end
+
+      context "when an assessment has attributes values for both dupes" do
+        before do
+          insert_sql = <<-SQL
+           INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value)
+           VALUES ('0000-0000-0000-0000-0001', 8, 'test')
+          SQL
+          ActiveRecord::Base.connection.execute(insert_sql)
+          gateway.fix_duplicate_attributes(duplicate_attributes:)
+        end
+
+        let(:assessment_attribute_values) do
+          sql = <<-SQL
+          SELECT aav.assessment_id, aav.attribute_value,aa.attribute_id#{' '}
+          FROM assessment_attribute_values aav
+          JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id
+          where attribute_name = 'dupe1'
+          SQL
+          ActiveRecord::Base.connection.execute(sql).map { |rows| rows }
+        end
+
+        it "rescues the RecordNotUnique error and deletes the duplicate" do
+          expect(gateway.fetch_duplicate_attributes).to eq []
+        end
+
+        it "there remain 2 values for the each assessment" do
+          expect(assessment_attribute_values.length).to eq 2
+        end
+
+        it "the remaining attributes have the old attribute id for dupe1" do
+          expect(assessment_attribute_values.map { |row| row["attribute_id"] }).to eq [3, 3]
+        end
+
+        it "the remaining attributes values are unchanged for dupe1" do
+          expect(assessment_attribute_values.map { |row| row["attribute_value"] }).to eq %w[b b]
+        end
+      end
     end
   end
 end
