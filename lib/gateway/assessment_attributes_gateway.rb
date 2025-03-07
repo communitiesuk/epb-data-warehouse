@@ -318,7 +318,10 @@ module Gateway
         existing_attribute_id = row["attribute_id"]
         updated_attribute_id = get_attribute_id(row["attribute_name"])
         update_assessments_attribute_id(existing_attribute_id:, updated_attribute_id:)
-        delete_attribute(attribute_id: row["attribute_id"])
+        delete_attribute(attribute_id: existing_attribute_id)
+      rescue ActiveRecord::StatementInvalid
+        delete_attribute_value_by_id(attribute_id: existing_attribute_id)
+        delete_attribute(attribute_id: existing_attribute_id)
       end
     end
 
@@ -504,6 +507,21 @@ module Gateway
       sql = <<-SQL
              DELETE FROM assessment_attributes
              WHERE attribute_id = $1
+      SQL
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "attribute_id",
+          attribute_id,
+          ActiveRecord::Type::BigInteger.new,
+        ),
+      ]
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
+
+    def delete_attribute_value_by_id(attribute_id:)
+      sql = <<-SQL
+               DELETE FROM assessment_attribute_values
+               WHERE attribute_id = $1
       SQL
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
