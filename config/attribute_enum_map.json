@@ -4,6 +4,13 @@
     "type_of_assessment": "SAP",
     "xsd_node_name": "SAP-ElectricityTariffCode"
   },
+
+    {
+      "attribute_name": "energy_tariff",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "EnergyEfficiencySummaryCode"
+    },
+
     {
       "attribute_name": "glazed_area",
       "type_of_assessment": "RdSAP",
@@ -158,7 +165,19 @@
       "attribute_name": "water_heating_fuel",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "HeatingFuelTypeCode"
+    },
+
+    {
+      "attribute_name": "built_form",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "SAP-BuiltFormCode"
+    },
+    {
+      "attribute_name": "built_form",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "SAP-BuiltFormCode"
     }
+
   ],
 
   "paths" : {

@@ -93,6 +93,7 @@ describe Gateway::XsdConfigGateway do
     end
     let(:expected_nodes) do
       [{ "attribute_name" => "energy_tariff", "type_of_assessment" => "SAP" },
+       { "attribute_name" => "energy_tariff", "type_of_assessment" => "RdSAP" },
        { "attribute_name" => "glazed_area", "type_of_assessment" => "RdSAP" },
        { "attribute_name" => "glazed_type", "type_of_assessment" => "RdSAP" },
        { "attribute_name" => "heat_loss_corridor", "type_of_assessment" => "RdSAP" },
@@ -118,7 +119,9 @@ describe Gateway::XsdConfigGateway do
        { "attribute_name" => "improvement_summary", "type_of_assessment" => "RdSAP" },
        { "attribute_name" => "improvement_summary", "type_of_assessment" => "RdSAP" },
        { "attribute_name" => "improvement_description", "type_of_assessment" => "SAP" },
-       { "attribute_name" => "improvement_description", "type_of_assessment" => "RdSAP" }]
+       { "attribute_name" => "improvement_description", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "built_form", "type_of_assessment" => "RdSAP" },
+       { "attribute_name" => "built_form", "type_of_assessment" => "SAP" }]
     end
 
     it "does not raise an error due the the json being mistyped" do
