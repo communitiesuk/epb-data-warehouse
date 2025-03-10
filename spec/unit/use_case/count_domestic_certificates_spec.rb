@@ -15,10 +15,6 @@ describe UseCase::CountDomesticCertificates do
     { date_start: "2023-12-01", date_end: "2023-12-23", council_id: nil }
   end
 
-  # let(:count_domestic_result) do
-  #   20
-  # end
-
   let(:expectation) do
     20
   end
