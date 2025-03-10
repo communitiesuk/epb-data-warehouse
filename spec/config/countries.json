@@ -1,0 +1,62 @@
+[
+  {
+    "country_id": 1,
+    "country_code": "ENG",
+    "country_name": "England",
+    "address_base_country_code": ["E"]
+  },
+  {
+    "country_id": 2,
+    "country_code": "WLS",
+    "country_name": "Wales",
+    "address_base_country_code": ["W"]
+  },
+  {
+    "country_id": 3,
+    "country_code": "NIR",
+    "country_name": "Northern Ireland",
+    "address_base_country_code": ["N"]
+  },
+  {
+    "country_id": 4,
+    "country_code": "EAW",
+    "country_name": "England and Wales",
+    "address_base_country_code": ["E", "W"]
+  },
+  {
+    "country_id": 5,
+    "country_code": "SCT",
+    "country_name": "Scotland",
+    "address_base_country_code": ["S"]
+  },
+  {
+    "country_id": 6,
+    "country_code": "IOM",
+    "country_name": "Isle of Man",
+    "address_base_country_code": ["M"]
+  },
+  {
+    "country_id": 7,
+    "country_code": "NR",
+    "country_name": "Not Recorded",
+    "address_base_country_code": null
+  },
+  {
+    "country_id": 8,
+    "country_code": "UKN",
+    "country_name": "Unknown",
+    "address_base_country_code": null
+  },
+  {
+    "country_id": 9,
+    "country_code": "",
+    "country_name": "England and Scotland",
+    "address_base_country_code": ["E", "S"]
+  },
+  {
+    "country_id": 10,
+    "country_code": "",
+    "country_name": "Channel Islands",
+    "address_base_country_code": ["L"]
+  }
+]
