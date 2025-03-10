@@ -12,4 +12,5 @@ class DataWarehouseApiService < Controller::BaseController
   use Controller::HomeController
   use Controller::HeatPumpController
   use Controller::ReportingController
+  use Controller::DomesticSearchController
 end

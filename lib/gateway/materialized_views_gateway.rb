@@ -12,9 +12,11 @@ module Gateway
 
       str = concurrently ? "CONCURRENTLY" : ""
       sql = "REFRESH MATERIALIZED VIEW #{str} #{name}"
-      ActiveRecord::Base.connection.exec_query(sql, "SQL")
-    rescue PG::InvalidParameterValue => e
-      pp e.message
+      begin
+        ActiveRecord::Base.connection.exec_query(sql, "SQL")
+      rescue StandardError => e
+        pp e.message
+      end
     end
   end
 end

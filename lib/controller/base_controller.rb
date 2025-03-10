@@ -6,6 +6,7 @@ module Controller
   class BaseController < Sinatra::Base
     def initialize(app = nil, **_kwargs)
       super
+      @json_helper = Helper::JsonHelper.new
     end
 
     configure :development do
@@ -57,6 +58,10 @@ module Controller
       JSON.parse(hash.to_json).deep_transform_keys { |k|
         k.camelize(:lower)
       }.to_json
+    end
+
+    def params_body(schema)
+      @json_helper.convert_to_ruby_hash(params.to_json, schema:)
     end
   end
 end
