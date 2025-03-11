@@ -24,7 +24,7 @@ class SeedMaterializedViewsHelper
 
   def self.import_countries
     file_path = File.join Dir.pwd, "spec/config/countries.json"
-    country_values= JSON.parse(File.read(file_path), symbolize_names: true)
+    country_values = JSON.parse(File.read(file_path), symbolize_names: true)
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
     country_values.each do |item|
       Countries.create(country_id: item[:country_id], country_name: item[:country_name], address_base_country_code: item[:address_base_country_code], country_code: item[:country_code])

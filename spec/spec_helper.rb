@@ -40,6 +40,9 @@ WebMock.disable_net_connect!(
 module RSpecDataWarehouseApiServiceMixin
   include Rack::Test::Methods
 
+  class Countries < ActiveRecord::Base
+  end
+
   def app
     DataWarehouseApiService
   end
@@ -77,17 +80,12 @@ end
 def add_countries
   ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
 
-  insert_sql = <<-SQL
-            INSERT INTO countries(country_code, country_name, address_base_country_code)
-            VALUES ('ENG', 'England' ,'["E"]'::jsonb),
-                   ('EAW', 'England and Wales', '["E", "W"]'::jsonb),
-                     ('UKN', 'Unknown', '{}'::jsonb),
-                    ('NIR', 'Northern Ireland', '["N"]'::jsonb),
-                    ('SCT', 'Scotland', '["S"]'::jsonb),
-            ('', 'Channel Islands', '["L"]'::jsonb),
-                ('NR', 'Not Recorded', null)
-  SQL
-  ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
+  file_path = File.join Dir.pwd, "spec/config/countries.json"
+  country_values = JSON.parse(File.read(file_path), symbolize_names: true)
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
+  country_values.each do |item|
+    Countries.create(country_id: item[:country_id], country_name: item[:country_name], address_base_country_code: item[:address_base_country_code], country_code: item[:country_code])
+  end
 end
 
 def clear_materialized_views
