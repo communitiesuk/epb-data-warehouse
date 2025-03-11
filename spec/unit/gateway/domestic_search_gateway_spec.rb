@@ -24,22 +24,22 @@ describe Gateway::DomesticSearchGateway do
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
     add_countries
-    add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
       "postcode": "SW10 0AA",
     })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
       "postcode": "W6 9ZD",
     })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
       "postcode": "BT1 1AA",
     })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment:, different_fields: {
       "registration_date": "2024-12-06", "postcode": "SW10 0AA"
     })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
       "postcode": "W6 9ZD",
     })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "SW10 0AA",
     })
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
@@ -60,9 +60,10 @@ describe Gateway::DomesticSearchGateway do
 
     it "returns a rows for each assessment in England & Wales in ordered by rrn" do
       data = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
-      expect(data.length).to eq 2
+      expect(data.length).to eq 3
       expect(data[0]["rrn"]).to eq "0000-0000-0000-0000-0000"
       expect(data[1]["rrn"]).to eq "0000-0000-0000-0000-0001"
+      expect(data[2]["rrn"]).to eq "0000-0000-0000-0000-0003"
     end
 
     it "does not return rows with council id" do
@@ -70,7 +71,7 @@ describe Gateway::DomesticSearchGateway do
     end
 
     it "translates enum values into strings using the user defined function" do
-      expect(gateway.fetch(**search_arguments)[0]["transaction_type"]).to eq "New dwelling"
+      expect(gateway.fetch(**search_arguments)[0]["transaction_type"]).to eq "Marketed sale"
       expect(gateway.fetch(**search_arguments)[0]["property_type"]).to eq "House"
     end
 
@@ -120,7 +121,7 @@ describe Gateway::DomesticSearchGateway do
           "region" => "E12000007",
           "report_type" => "3",
           "total_floor_area" => "165",
-          "built_form" => "4",
+          "built_form" => "Mid-Terrace",
           "inspection_date" => "2022-05-09",
           "environment_impact_current" => "94",
           "energy_consumption_current" => "59",
@@ -138,41 +139,41 @@ describe Gateway::DomesticSearchGateway do
           "main_heating_controls" => "Programmer, room thermostat and TRVs",
           "multi_glaze_proportion" => "100",
           "hotwater_description" => "From main system, waste water heat recovery",
-          "hot_water_energy_eff" => "4",
-          "hot_water_env_eff" => "3",
+          "hot_water_energy_eff" => "Good",
+          "hot_water_env_eff" => "Average",
           "floor_description" => "Average thermal transmittance 0.12 W/m²K",
-          "floor_energy_eff" => "5",
-          "floor_env_eff" => "5",
+          "floor_energy_eff" => "Very Good",
+          "floor_env_eff" => "Very Good",
           "windows_description" => "High performance glazing",
-          "windows_energy_eff" => "0",
-          "windows_env_eff" => "5",
+          "windows_energy_eff" => "N/A",
+          "windows_env_eff" => "Very Good",
           "walls_description" => "Average thermal transmittance 0.18 W/m²K",
-          "walls_energy_eff" => "5",
-          "walls_env_eff" => "5",
+          "walls_energy_eff" => "Very Good",
+          "walls_env_eff" => "Very Good",
           "secondheat_description" => "Electric heater",
-          "sheating_energy_eff" => "0",
-          "sheating_env_eff" => "0",
+          "sheating_energy_eff" => "N/A",
+          "sheating_env_eff" => "N/A",
           "roof_description" => "Average thermal transmittance 0.13 W/m²K",
-          "roof_energy_eff" => "5",
-          "roof_env_eff" => "5",
-          "mainheat_description" => "Ground source heat pump, underfloor, electric",
-          "mainheat_energy_eff" => "5",
-          "mainheat_env_eff" => "5",
-          "mainheatc_energy_eff" => "4",
-          "mainheatc_env_eff" => "4",
+          "roof_energy_eff" => "Very Good",
+          "roof_env_eff" => "Very Good",
+          "mainheat_description" => "Boiler and radiators, electric",
+          "mainheat_energy_eff" => "Average",
+          "mainheat_env_eff" => "Poor",
+          "mainheatc_energy_eff" => "Good",
+          "mainheatc_env_eff" => "Good",
           "mainheatcont_description" => "Programmer, room thermostat and TRVs",
           "lighting_description" => "Low energy lighting in 91% of fixed outlets",
-          "lighting_energy_eff" => "5",
-          "lighting_env_eff" => "5",
-          "main_fuel" => "39",
+          "lighting_energy_eff" => "Very Good",
+          "lighting_env_eff" => "Very Good",
+          "main_fuel" => "Electricity: electricity, unspecified tariff",
           "wind_turbine_count" => 1,
-          "mechanical_ventilation" => "1",
+          "mechanical_ventilation" => nil,
           "lodgement_date" => "2022-05-09",
           "posttown" => "Whitbury",
           "construction_age_band" => "England and Wales: before 1900",
-          "tenure" => "1",
+          "tenure" => "owner-occupied",
           "lodgement_datetime" => "2021-07-21T11:26:28.045Z",
-          "fixed_lighting_outlets_count" => 11,
+          "fixed_lighting_outlets_count" => "11",
           "low_energy_fixed_lighting_outlets_count" => nil,
           "current_energy_efficiency" => "72",
           "current_energy_rating" => "C",
@@ -192,15 +193,15 @@ describe Gateway::DomesticSearchGateway do
           "unheated_corridor_length" => nil,
           "building_reference_number" => "UPRN-0000000001",
           "uprn_source" => "",
-          "energy_tariff" => "5",
-          "floor_height" => "2.83",
+          "energy_tariff" => "off-peak 18 hour",
+          "floor_height" => "2.8",
           "glazed_type" => nil,
           "photo_supply" => nil,
           "solar_water_heating_flag" => nil,
           "local_authority_label" => "Hammersmith and Fulham",
           "constituency_label" => "Chelsea and Fulham",
           "constituency" => "E14000629",
-          "transaction_type" => "New dwelling",
+          "transaction_type" => "Marketed sale",
           "property_type" => "House" }
       end
 
@@ -209,7 +210,7 @@ describe Gateway::DomesticSearchGateway do
           "address2" => nil,
           "address3" => nil,
           "report_type" => "2",
-          "built_form" => "2",
+          "built_form" => "Semi-Detached",
           "co2_emiss_curr_per_floor_area" => "20",
           "environment_impact_current" => "52",
           "environment_impact_potential" => "74",
@@ -220,44 +221,46 @@ describe Gateway::DomesticSearchGateway do
           "energy_consumption_current" => "230",
           "energy_consumption_potential" => "88",
           "energy_tariff" => nil,
-          "fixed_lighting_outlets_count" => 16,
-          "flat_storey_count" => 3,
+          "fixed_lighting_outlets_count" => "16",
+          "flat_storey_count" => 2,
           "flat_top_storey" => "N",
           "floor_description" => "Suspended, no insulation (assumed)",
-          "floor_energy_eff" => "0",
-          "floor_env_eff" => "0",
+          "floor_energy_eff" => "N/A",
+          "floor_env_eff" => "N/A",
           "floor_level" => "1",
-          "floor_height" => "2.52",
-          "glazed_area" => "1",
-          "glazed_type" => "2",
-          "photo_supply" => "0",
+          "floor_height" => "2.45",
+          "glazed_area" => "Normal",
+          "glazed_type" => "double glazing installed during or after 2002",
+          "photo_supply" => "50",
           "solar_water_heating_flag" => "N",
           "heating_cost_current" => "365.98",
           "heating_cost_potential" => "250.34",
-          "heat_loss_corridor" => "2",
+          "heat_loss_corridor" => "unheated corridor",
           "hot_water_cost_current" => "200.4",
           "hot_water_cost_potential" => "180.43",
           "hotwater_description" => "From main system",
-          "hot_water_env_eff" => "4",
+          "hot_water_env_eff" => "Good",
           "inspection_date" => "2020-05-04",
           "lighting_cost_current" => "123.45",
           "lighting_cost_potential" => "84.23",
           "lighting_description" => "Low energy lighting in 50% of fixed outlets",
-          "lighting_energy_eff" => "4",
-          "lighting_env_eff" => "4",
+          "lighting_energy_eff" => "Good",
+          "lighting_env_eff" => "Good",
           "lodgement_date" => "2020-05-04",
           "low_energy_lighting" => "100",
           "low_energy_fixed_lighting_outlets_count" => "16",
-          "main_fuel" => "26",
+          "main_fuel" => "mains gas (not community)",
           "mains_gas_flag" => "Y",
-          "mechanical_ventilation" => "0",
+          "mainheat_description" => "Boiler and radiators, anthracite",
+          "mainheat_env_eff" => "Very Poor",
+          "mechanical_ventilation" => "natural",
           "multi_glaze_proportion" => "100",
           "number_habitable_rooms" => "5",
           "number_heated_rooms" => "5",
           "number_open_fireplaces" => "0",
           "roof_description" => "Pitched, 25 mm loft insulation",
-          "roof_energy_eff" => "2",
-          "roof_env_eff" => "2",
+          "roof_energy_eff" => "Poor",
+          "roof_env_eff" => "Poor",
           "rrn" => "0000-0000-0000-0000-0006",
           "secondheat_description" => "Room heaters, electric",
           "total_floor_area" => "55",
@@ -265,12 +268,12 @@ describe Gateway::DomesticSearchGateway do
           "building_reference_number" => "UPRN-000000000000",
           "unheated_corridor_length" => "10",
           "walls_description" => "Solid brick, as built, no insulation (assumed)",
-          "walls_energy_eff" => "1",
-          "walls_env_eff" => "1",
+          "walls_energy_eff" => "Very Poor",
+          "walls_env_eff" => "Very Poor",
           "wind_turbine_count" => 0,
           "windows_description" => "Fully double glazed",
-          "windows_energy_eff" => "3",
-          "windows_env_eff" => "3",
+          "windows_energy_eff" => "Average",
+          "windows_env_eff" => "Average",
         )
       end
 
@@ -299,7 +302,7 @@ describe Gateway::DomesticSearchGateway do
   describe "#count" do
     it "returns the number of epcs" do
       result = gateway.count(**search_arguments)
-      expect(result).to eq 2
+      expect(result).to eq 3
     end
 
     context "when filtering for a council where there is no data" do

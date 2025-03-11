@@ -53,7 +53,7 @@ shared_context "when lodging XML" do
     xml = document.to_xml
 
     certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
-    certificate_data.merge!(different_fields) unless different_fields.nil?
+    certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
     certificate_data.merge!(meta_data_sample)
     Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
     add_assessment_country_id(assessment_id:, document: certificate_data)

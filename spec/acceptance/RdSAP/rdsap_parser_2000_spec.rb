@@ -210,7 +210,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "wind_turbines_count" => 0,
                          "wind_turbines_terrain_type" => 2,
                          "photovoltaic_supply" =>
-                          { "none_or_no_details" => { "percent_roof_area" => 0, "pv_connection" => 0 } } },
+                          { "none_or_no_details" => { "percent_roof_area" => 50, "pv_connection" => 0 } } },
                       "sap_windows" =>
                        [{ "window_location" => 0,
                           "window_area" => 200.1,

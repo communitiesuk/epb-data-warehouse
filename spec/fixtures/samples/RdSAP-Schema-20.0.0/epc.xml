@@ -283,7 +283,7 @@
         <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
         <Photovoltaic-Supply>
           <None-Or-No-Details>
-            <Percent-Roof-Area>0</Percent-Roof-Area>
+            <Percent-Roof-Area>50</Percent-Roof-Area>
             <PV-Connection>0</PV-Connection>
           </None-Or-No-Details>
         </Photovoltaic-Supply>
