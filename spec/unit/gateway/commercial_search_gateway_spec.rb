@@ -32,6 +32,9 @@ describe Gateway::CommercialSearchGateway do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment:, type: "cepc+rr", different_fields: {
         "postcode" => "SW10 0AA",
       })
+      add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
+        "postcode": "SW10 0AA",
+      })
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_search")
     end
 
@@ -117,6 +120,10 @@ describe Gateway::CommercialSearchGateway do
 
     let(:query_result) do
       gateway.fetch(**search_arguments)
+    end
+
+    it "returns a dataset with onl the 2 commercial EPCs" do
+      expect(query_result.length).to eq 2
     end
 
     it "returns a dataset with the required data for cepc" do
