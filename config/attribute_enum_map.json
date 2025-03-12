@@ -176,8 +176,17 @@
       "attribute_name": "built_form",
       "type_of_assessment": "SAP",
       "xsd_node_name": "SAP-BuiltFormCode"
+    },
+    {
+      "attribute_name": "energy_efficiency_rating",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "EnergyEfficiencySummaryCode"
+    },
+    {
+      "attribute_name": "energy_efficiency_rating",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "EnergyEfficiencySummaryCode"
     }
-
   ],
 
   "paths" : {
