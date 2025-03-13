@@ -7,6 +7,7 @@ namespace :one_off do
     SeedMaterializedViewsHelper.import_postcode_directory_data
     SeedMaterializedViewsHelper.import_postcode_directory_name
     SeedMaterializedViewsHelper.import_countries
+    SeedMaterializedViewsHelper.import_domestic_search_enums
 
     mv_gateway = Gateway::MaterializedViewsGateway.new
     mv_gateway.fetch_all.each do |mv_view|
@@ -49,5 +50,12 @@ class SeedMaterializedViewsHelper
         VALUES ('#{row['area_code']}', '#{row['name']}', '#{row['type']}', '#{row['type_code']}')"
       ActiveRecord::Base.connection.execute(sql)
     end
+  end
+
+  def self.import_domestic_search_enums
+    config_path = "spec/config/attribute_enum_search_map.json"
+    config_gateway = Gateway::XsdConfigGateway.new(config_path)
+    import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
+    import_use_case.execute
   end
 end
