@@ -24,14 +24,17 @@ describe Gateway::DomesticSearchGateway do
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
     add_countries
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
-      "postcode": "SW10 0AA",
-    })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
       "postcode": "W6 9ZD",
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
+      "postcode": "SW10 0AA",
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
+      "postcode": "ML9 9AR",
+    })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
-      "postcode": "BT1 1AA",
+      "postcode": "BT1 1AA", "energy_rating_current": 50
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment:, different_fields: {
       "registration_date": "2024-12-06", "postcode": "SW10 0AA"
@@ -60,33 +63,16 @@ describe Gateway::DomesticSearchGateway do
 
     it "returns a rows for each assessment in England & Wales in ordered by rrn" do
       data = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
-      expect(data.length).to eq 3
+      expect(data.length).to eq 4
       expect(data[0]["rrn"]).to eq "0000-0000-0000-0000-0000"
       expect(data[1]["rrn"]).to eq "0000-0000-0000-0000-0001"
-      expect(data[2]["rrn"]).to eq "0000-0000-0000-0000-0003"
-    end
-
-    it "does not return rows with council id" do
-      expect(gateway.fetch(**search_arguments)[0]["council_id"]).to be_nil
+      expect(data[2]["rrn"]).to eq "0000-0000-0000-0000-0002"
+      expect(data[3]["rrn"]).to eq "0000-0000-0000-0000-0003"
     end
 
     it "translates enum values into strings using the user defined function" do
       expect(gateway.fetch(**search_arguments)[0]["transaction_type"]).to eq "Marketed sale"
       expect(gateway.fetch(**search_arguments)[0]["property_type"]).to eq "House"
-    end
-
-    context "when filtering by council and row limit" do
-      before do
-        search_arguments[:row_limit] = 2
-        search_arguments[:council_id] = 1
-      end
-
-      it "returns data with a corresponding council" do
-        result = gateway.fetch(**search_arguments)
-        expect(result.length).to eq(2)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
-        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
-      end
     end
 
     context "when filtering by a date range" do
@@ -98,6 +84,64 @@ describe Gateway::DomesticSearchGateway do
       end
     end
 
+    context "when filtering by councils" do
+      before do
+        search_arguments[:council] = ["Hammersmith and Fulham", "South Lanarkshire"]
+      end
+
+      it "returns data with a corresponding constituency in ordered by rrn" do
+        result = gateway.fetch(**search_arguments)
+        expect(result.length).to eq(3)
+      end
+    end
+
+    context "when filtering by parliamentary constituencies" do
+      before do
+        search_arguments[:constituency] = ["Chelsea and Fulham", "Lanark and Hamilton East"]
+      end
+
+      it "returns data with a corresponding constituency in ordered by rrn" do
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        expect(result.length).to eq(3)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
+      end
+    end
+
+    context "when filtering by postcode" do
+      before do
+        search_arguments[:postcode] = "SW10 0AA"
+      end
+
+      it "returns data with a corresponding postcode" do
+        result = gateway.fetch(**search_arguments)
+        expect(result.length).to eq(1)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0001")
+      end
+    end
+
+    context "when filtering by efficiency ratings" do
+      it "returns data with a corresponding efficiency rating" do
+        search_arguments[:eff_rating] = %w[C]
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        expect(result.length).to eq(3)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
+      end
+
+      it "returns data with corresponding efficiency ratings" do
+        search_arguments[:eff_rating] = %w[C E]
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        expect(result.length).to eq(4)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
+        expect(result[3]["rrn"]).to eq("0000-0000-0000-0000-0003")
+      end
+    end
+
     context "when limiting by only by number of rows" do
       before do
         search_arguments[:row_limit] = 1
@@ -105,6 +149,34 @@ describe Gateway::DomesticSearchGateway do
 
       it "returns 1" do
         expect(gateway.fetch(**search_arguments).length).to eq(1)
+      end
+    end
+
+    context "when filtering by multiply filter options" do
+      it "returns data with a corresponding council" do
+        search_arguments[:row_limit] = 1
+        search_arguments[:council] = ["Hammersmith and Fulham"]
+        result = gateway.fetch(**search_arguments)
+        expect(result.length).to eq(1)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
+      end
+
+      it "returns data with a corresponding efficiency ratings, postcode and limit" do
+        search_arguments[:eff_rating] = %w[C E]
+        search_arguments[:postcode] = "SW10 0AA"
+        search_arguments[:row_limit] = 1
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        expect(result.length).to eq(1)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0001")
+      end
+
+      it "returns data with a corresponding efficiency ratings, constituency and limit" do
+        search_arguments[:eff_rating] = %w[C E]
+        search_arguments[:constituency] = ["Lanark and Hamilton East"]
+        search_arguments[:row_limit] = 1
+        result = gateway.fetch(**search_arguments)
+        expect(result.length).to eq(1)
+        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0002")
       end
     end
 
@@ -302,12 +374,12 @@ describe Gateway::DomesticSearchGateway do
   describe "#count" do
     it "returns the number of epcs" do
       result = gateway.count(**search_arguments)
-      expect(result).to eq 3
+      expect(result).to eq 4
     end
 
     context "when filtering for a council where there is no data" do
       it "returns a zero" do
-        search_arguments[:council_id] = 56
+        search_arguments[:council] = ["Belfast South"]
         result = gateway.count(**search_arguments)
         expect(result).to eq 0
       end

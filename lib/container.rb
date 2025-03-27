@@ -162,10 +162,6 @@ class Container
     @fix_attribute_duplicates_use_case ||= UseCase::FixAttributeDuplicates.new(assessment_attribute_gateway: assessment_attributes_gateway)
   end
 
-  def self.export_user_data_use_case
-    @export_user_data_use_case ||= UseCase::ExportUserData.new(domestic_search_gateway: domestic_search_gateway, multipart_storage_gateway: multipart_storage_gateway, ons_gateway: ons_gateway)
-  end
-
   def self.storage_gateway(stub_responses: true)
     @storage_gateway ||= Gateway::StorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses:)
   end

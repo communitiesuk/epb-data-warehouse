@@ -21,7 +21,6 @@ describe UseCase::CountDomesticCertificates do
 
   before do
     allow(search_gateway).to receive_messages(count: 20)
-    allow(ons_gateway).to receive(:fetch_council_id).and_return 1
   end
 
   it "can call the use case" do

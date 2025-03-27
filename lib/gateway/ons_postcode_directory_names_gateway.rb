@@ -4,10 +4,6 @@ module Gateway
       @councils = fetch_councils
     end
 
-    def fetch_council_id(name)
-      @councils.find { |council| council["name"] == name }["id"]
-    end
-
   private
 
     def fetch_councils

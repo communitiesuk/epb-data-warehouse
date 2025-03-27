@@ -29,7 +29,6 @@ describe UseCase::DomesticSearch do
 
   before do
     allow(search_gateway).to receive_messages(fetch: domestic_search_result, fetch_rr: domestic_rr_search_result)
-    allow(ons_gateway).to receive(:fetch_council_id).and_return 1
   end
 
   it "can call the use case" do

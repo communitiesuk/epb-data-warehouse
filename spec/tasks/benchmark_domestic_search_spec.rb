@@ -6,10 +6,6 @@ describe "test domestic search benchmarking rake" do
       instance_double(UseCase::DomesticSearch)
     end
 
-    let(:export_user_data_use_case) do
-      instance_double(UseCase::ExportUserData)
-    end
-
     let(:storage_gateway) do
       Gateway::MultipartStorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses: true)
     end
@@ -19,9 +15,8 @@ describe "test domestic search benchmarking rake" do
     end
 
     before do
-      allow(Container).to receive_messages(domestic_search_use_case: use_case, export_user_data_use_case: export_user_data_use_case)
+      allow(Container).to receive_messages(domestic_search_use_case: use_case)
       allow(use_case).to receive(:execute)
-      allow(export_user_data_use_case).to receive(:execute)
       allow($stdout).to receive(:puts)
     end
 
@@ -72,16 +67,6 @@ describe "test domestic search benchmarking rake" do
         ENV["COUNT"] = "5"
         task.invoke
         expect(use_case).to have_received(:execute).exactly(5).times
-      end
-
-      it "calls the rake for s3 upload without errors" do
-        ENV["S3_UPLOAD"] = "true"
-        ENV["UD_BUCKET_NAME"] = "test"
-        allow(Container).to receive(:multipart_storage_gateway).and_return storage_gateway
-        expect { task.invoke }.not_to raise_error
-        expect(export_user_data_use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", council: "Manchester").exactly(:once)
-        expect(use_case).not_to have_received(:execute)
-        expect(Container).to have_received(:multipart_storage_gateway)
       end
     end
 
