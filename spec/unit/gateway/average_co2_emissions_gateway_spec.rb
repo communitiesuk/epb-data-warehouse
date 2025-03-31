@@ -18,7 +18,6 @@ describe Gateway::AverageCo2EmissionsGateway do
     add_assessment(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
       "co2_emissions_current_per_floor_area": 15,
     })
-    Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id: "0000-0000-0000-0000-0002", country_id: 2)
     add_assessment(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
       "co2_emissions_current_per_floor_area": 19,
       "registration_date": "2022-04-01",
@@ -36,6 +35,7 @@ describe Gateway::AverageCo2EmissionsGateway do
       "co2_emissions_current_per_floor_area": 8,
       "registration_date": "2022-12-01",
     })
+    ActiveRecord::Base.connection.exec_query("UPDATE assessments_country_ids SET country_id=4 WHERE assessment_id='0000-0000-0000-0000-0005' ", "SQL")
   end
 
   before do

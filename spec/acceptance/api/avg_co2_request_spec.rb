@@ -27,10 +27,12 @@ describe "ReportingController" do
       })
       add_assessment(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment:, different_fields: {
         "co2_emissions_current_per_floor_area": 10,
-        "postcode": "BT1 1AA",
+        "postcode" => "BT1 1AA",
         "registration_date": "2022-03-01",
       })
-      Gateway::AverageCo2EmissionsGateway.new.refresh
+
+
+      ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW mvw_avg_co2_emissions", "SQL")
     end
 
     context "when a request is successful" do
@@ -44,6 +46,7 @@ describe "ReportingController" do
       end
 
       it "returns the expected data" do
+
         response_body = JSON.parse(response.body)
         expect(response_body["data"].sort).to eq(expected_data.sort)
       end

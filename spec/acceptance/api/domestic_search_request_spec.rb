@@ -22,11 +22,11 @@ describe "DomesticSearchController" do
     before do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: { "registration_date": "2023-05-02" })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
-        "postcode": "ML9 9AR",
+        "postcode": "SW1V 2AA",
         "registration_date": "2023-05-02",
       })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
-        "postcode": "ML9 9AR",
+        "postcode": "SW1V 2AA",
         "registration_date": "2023-05-02",
       })
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")

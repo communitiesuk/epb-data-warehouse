@@ -60,7 +60,14 @@ shared_context "when lodging XML" do
   end
 
   def add_assessment_country_id(assessment_id:, document:)
-    country_id = document&.fetch(:postcode, "")&.start_with?("BT") ? 4 : 1
+    country_id = case document["postcode"]
+                 when /^BT/
+                   4
+                 when /^ML/
+                   5
+                 else
+                   1
+                 end
     Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_or_create_by(assessment_id:, country_id:)
   end
 
