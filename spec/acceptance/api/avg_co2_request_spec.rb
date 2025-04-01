@@ -31,7 +31,6 @@ describe "ReportingController" do
         "registration_date": "2022-03-01",
       })
 
-
       ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW mvw_avg_co2_emissions", "SQL")
     end
 
@@ -46,7 +45,6 @@ describe "ReportingController" do
       end
 
       it "returns the expected data" do
-
         response_body = JSON.parse(response.body)
         expect(response_body["data"].sort).to eq(expected_data.sort)
       end

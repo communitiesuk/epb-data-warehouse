@@ -1,6 +1,7 @@
 require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
+require_relative "../../shared_context/shared_import_enums"
 
 describe Gateway::CommercialSearchGateway do
   subject(:gateway) { described_class.new }
@@ -15,15 +16,13 @@ describe Gateway::CommercialSearchGateway do
     include_context "when lodging XML"
     include_context "when saving ons data"
     include_context "when exporting data"
+    include_context "when saving enum data to lookup tables"
 
     before(:all) do
       import_postcode_directory_name
       import_postcode_directory_data
       add_countries
-      config_path = "spec/config/attribute_enum_commercial_search_map.json"
-      config_gateway = Gateway::XsdConfigGateway.new(config_path)
-      import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
-      import_use_case.execute
+
       type_of_assessment = "CEPC"
 
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "cepc", different_fields: {
@@ -35,6 +34,7 @@ describe Gateway::CommercialSearchGateway do
       add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
         "postcode": "SW10 0AA",
       })
+      import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_search")
     end
 

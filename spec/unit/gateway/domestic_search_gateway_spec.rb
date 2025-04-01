@@ -1,6 +1,7 @@
 require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
+require_relative "../../shared_context/shared_import_enums"
 
 describe Gateway::DomesticSearchGateway do
   let(:gateway) { described_class.new }
@@ -13,14 +14,11 @@ describe Gateway::DomesticSearchGateway do
   include_context "when lodging XML"
   include_context "when saving ons data"
   include_context "when exporting data"
+  include_context "when saving enum data to lookup tables"
 
   before(:all) do
     import_postcode_directory_name
     import_postcode_directory_data
-    config_path = "spec/config/attribute_enum_search_map.json"
-    config_gateway = Gateway::XsdConfigGateway.new(config_path)
-    import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
-    import_use_case.execute
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
     add_countries
@@ -48,6 +46,7 @@ describe Gateway::DomesticSearchGateway do
     add_assessment_eav(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "ML9 9AR",
     })
+    import_look_ups(schema_versions: %w[RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end
 

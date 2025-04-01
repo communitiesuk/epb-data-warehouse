@@ -1,4 +1,4 @@
-require_relative "../shared_context/shared_import_enumns"
+require_relative "../shared_context/shared_import_enums"
 
 describe "ImportEnumsXsd Rake" do
   subject(:task) { get_task("import_enums_xsd") }
