@@ -45,3 +45,28 @@ make format
 ## DataWarehouse API Service
 
 To get this running locally run `bundle exec puma` or `bundle exec rackup -p 80 -o 0.0.0.0`.
+
+## Adding XSD enumerable data to the database as attribute lookups
+
+An EPC data point (attribute) can often be saved as a value that represents a string 
+e.g for the attribute _energy_tariff_ the value 1 is stored. It can be any value between 0-5. The enumerable representations of 1 is_Very Poor_
+The enum values are loaded into the database using the following command
+
+`rake import_enums_xsd`
+
+This rake parses the relevant XSD/XML files that hold the enumerable values as saves them to the database as attribute lookup data
+
+The configuration for the enums import rake can be found in this file `/config/attribute_enum_map.json`
+The configuration tells the application which data point the enumerable is for, which XML node contains the enumerable values and in which location for a certificate type
+
+If any changes need to made to the enum data you will need to update the config file, push the changes and then run the import rake in all environments. 
+This deletes all the attribute look ups and reloads them from the XSD.
+
+NB To load all the enums into the database takes few minutes to run.
+If you need to access this data for testing purposes there is a rake that loads the values into the development database and then creates a csv file in the /spec/fixtures/  
+This file can then be used to load data into the test database in seconds.
+To generate the test file run
+
+`rake generate_enum_csv`
+
+NB This will only need to be run if you want to change the existing test data.
