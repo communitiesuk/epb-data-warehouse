@@ -155,7 +155,7 @@ class Container
   end
 
   def self.count_domestic_certificates_use_case
-    @count_domestic_certificates_use_case ||= UseCase::CountDomesticCertificates.new(search_gateway: domestic_search_gateway, ons_gateway: ons_gateway)
+    @count_domestic_certificates_use_case ||= UseCase::CountDomesticCertificates.new(search_gateway: domestic_search_gateway)
   end
 
   def self.fix_attribute_duplicates_use_case

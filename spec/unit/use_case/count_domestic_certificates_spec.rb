@@ -1,10 +1,6 @@
 describe UseCase::CountDomesticCertificates do
   subject(:use_case) do
-    described_class.new(search_gateway:, ons_gateway:)
-  end
-
-  let(:ons_gateway) do
-    instance_double(Gateway::OnsPostcodeDirectoryNamesGateway)
+    described_class.new(search_gateway:)
   end
 
   let(:search_gateway) do
