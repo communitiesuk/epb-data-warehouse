@@ -118,7 +118,7 @@ paths:
                   jsonObject:
                     summary: A sample RdSAP
                     externalValue: "https://raw.githubusercontent.com/communitiesuk/epb-data-warehouse/refs/heads/main/spec/fixtures/json_export/rdsap.json"
-  /domestic/recommendations/{assessmentId-key}:
+  /domestic/recommendations/{assessmentId}:
     get:
       description: Returns the recommendations for a specific property
       tags:
@@ -126,12 +126,7 @@ paths:
 
       parameters:
         - name: assessmentId
-          in: path
-          description: assessmentId for property
-          required: true
-          schema:
-            type: string
-            maxLength: 64
+          $ref:  '#/components/schemas/AssessmentId'
 
       responses:
         '200':
