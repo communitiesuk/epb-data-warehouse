@@ -118,6 +118,31 @@ paths:
                   jsonObject:
                     summary: A sample RdSAP
                     externalValue: "https://github.com/communitiesuk/epb-data-warehouse/blob/main/spec/fixtures/json_export/rdsap.json"
+  /domestic/recommendations/{assessmentId-key}:
+    get:
+      description: Returns the recommendations for a specific property
+      tags:
+        - domestic
+
+      parameters:
+        - name: assessmentId
+          in: path
+          description: assessmentId for property
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+
+      responses:
+        '200':
+          description: Successfully returned a list of recommendations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendations'
+
+        '400':
+          $ref: '#/components/responses/400Error'
 
 
 components:
@@ -130,14 +155,39 @@ components:
     Domestic-Certificate:
       type: object
 
-
-    Metadata:
-      type: object
-
     AssessmentId:
       type: string
       pattern: '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
       example: '0000-0000-0000-0000-0000'
+
+    Recommendation:
+      type: object
+      properties:
+        rrr:
+          $ref: '#/components/schemas/AssessmentId'
+        improvement_item:
+          type: integer
+          description: Used to order the recommendations on the output EPC.
+        improvement_summary_text:
+          type: string
+          description: A short description of the suggested improvement.
+        improvement_descr_text:
+          type: string
+          description: Detailed description of the suggested improvement.
+        improvement_id:
+          type: integer
+          description: Code number associated with the improvement measure.
+        improvement_id_text:
+          type: string
+          description: The text associated with the improvement measure.
+        INDICATIVE_COST:
+          type: string
+          example: '¬£800 - ¬£1,200'
+          description: The indicative costs are the cost of installed recommendation measures, which are fixed no matter the type of house being assessed. These are displayed as a cost range on the Energy Performance Certificate as costs vary between individual suppliers.
+    Recommendations:
+      type: array
+      items:
+        $ref: '#/components/schemas/Recommendation'
 
   parameters:
     Size:
@@ -173,7 +223,6 @@ components:
       schema:
         type: string #One of supported parameter codes (.import/resources/constituency-geo-lookup.csv)
 
-
     Domestic-Energy-band:
       name: energy-band
       in: query
@@ -202,7 +251,6 @@ components:
         items:
           type: string
           enum: [a, b, c, d, e, f, g]
-
     From-month:
       name: from-month
       in: query
@@ -233,6 +281,7 @@ components:
       schema:
         type: integer
         minimum: 2012
+
 
 
   responses:
