@@ -44,7 +44,7 @@ paths:
 
         '400':
           $ref: '#/components/responses/400Error'
-  /domestic/last-month:
+  /domestic/this-month:
       get:
         description: Returns a list of domestic EPCs published since the 1st day of the last month
         tags:
@@ -117,7 +117,7 @@ paths:
                 examples:
                   jsonObject:
                     summary: A sample RdSAP
-                    externalValue: "https://github.com/communitiesuk/epb-data-warehouse/blob/main/spec/fixtures/json_export/rdsap.json"
+                    externalValue: "https://raw.githubusercontent.com/communitiesuk/epb-data-warehouse/refs/heads/main/spec/fixtures/json_export/rdsap.json"
   /domestic/recommendations/{assessmentId-key}:
     get:
       description: Returns the recommendations for a specific property
