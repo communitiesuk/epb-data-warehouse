@@ -1,0 +1,188 @@
+openapi: 3.1.0
+
+info:
+  title: Energy Performance of Buildings Data API
+  description: Public API for EPB data integrations
+  contact:
+    name: MHCLG Digital helpdesk (prefix email subject with "EPB")
+    email: mhclg.digital-services@communities.gov.uk
+  version: 1.2.2
+
+tags:
+  - name: domestic
+    description: Domestic Certificates API
+
+
+paths:
+  /domestic/search:
+    get:
+      description: Returns a list of domestic EPCs
+      tags:
+        - domestic
+
+      parameters:
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Postcode'
+        - $ref: '#/components/parameters/Local-authority'
+        - $ref: '#/components/parameters/Constituency'
+        - $ref: '#/components/parameters/Domestic-Energy-band'
+        - $ref: '#/components/parameters/From-month'
+        - $ref: '#/components/parameters/From-year'
+        - $ref: '#/components/parameters/To-month'
+        - $ref: '#/components/parameters/To-year'
+
+      responses:
+        '200':
+          description: Successfully returned a list of domestic EPCs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RRN'
+
+        '400':
+          $ref: '#/components/responses/400Error'
+
+  /domestic/certifcate:
+    get:
+      description: Returns an object all EPC data points
+      tags:
+        - domestic
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The RRN of the assessment being requested'
+          schema:
+            $ref: '#/components/schemas/RRN'
+       responses:
+         -  '200':
+
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    Certificate:
+      type: object
+
+    Metadata:
+      type: object
+
+    RRN:
+      type: string
+      pattern: '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
+      example: '0000-0000-0000-0000-0000'
+
+  parameters:
+    Size:
+      name: limit
+      in: query
+      description: number of rows per page (max 5,000)
+      schema:
+        type: integer
+    Page:
+      name: page
+      in: query
+      description: page number of paginator
+      schema:
+        type: integer
+
+    Postcode:
+      name: postcode
+      in: query
+      description: An arbitrary postcode or prefix string of e.g. 'P', 'PR', 'PR8' or 'PR82EG'
+      schema:
+        type: string
+
+    Local-authority:
+      name: local-authority
+      in: query
+      description: Local authority (Adur)
+      schema:
+        type: string #One of supported parameter codes (./import/resources/local-authority-geo-lookup.csv)
+    Constituency:
+      name: constituency
+      in: query
+      description: parliamentary constituency (Aberavon)
+      schema:
+        type: string #One of supported parameter codes (.import/resources/constituency-geo-lookup.csv)
+
+
+    Domestic-Energy-band:
+      name: energy-band
+      in: query
+      description: >
+        Bands and descriptions:
+
+        - `a` - A rated (92+)
+
+        - `b` - B rated (81-91)
+
+        - `c` - C rated (69-80)
+
+        - `d` - D rated (55-68)
+
+        - `e` - E rated (39-54)
+
+        - `f` - F rated (21-38)
+
+        - `g` - G rated (1-20)
+
+
+        Bands based on cost of energy [in kWh/year] multiplied by fuel costs. (£/m²/year where cost is derived from kWh).
+      style: form
+      schema:
+        type: array
+        items:
+          type: string
+          enum: [a, b, c, d, e, f, g]
+
+
+    From-month:
+      name: from-month
+      in: query
+      description: A numeric month identifier 1-12, to establish the start of a date range, where 1 is January and 12 is December. If no from-month parameter is supplied 1 (January) is assumed.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 12
+    From-year:
+      name: from-year
+      in: query
+      description: A numeric year identifier to estalish the start of a date range between 2008 and the current year, e.g. 2015. If no year parameter is supplied 2008 is assumed.
+      schema:
+        type: integer
+        minimum: 2008
+    To-month:
+      name: to-month
+      in: query
+      description: A numeric month identifier 1-12, to establish the end of a date range, where 1 is January and 12 is December. If no to-month parameter is supplied then 12 is assumed.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 12
+    To-year:
+      name: to-year
+      in: query
+      description: A numeric year identifier between 2008 and the current year, e.g. 2015. If no to-year parameter is supplied then the current year is assumed.
+      schema:
+        type: integer
+        minimum: 2008
+
+
+  responses:
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
