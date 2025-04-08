@@ -40,12 +40,62 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RRN'
+                  $ref: '#/components/schemas/AssessmentId'
 
         '400':
           $ref: '#/components/responses/400Error'
+  /domestic/last-month:
+      get:
+        description: Returns a list of domestic EPCs published since the 1st day of the last month
+        tags:
+          - domestic
 
-  /domestic/certifcate:
+        parameters:
+          - $ref: '#/components/parameters/Size'
+          - $ref: '#/components/parameters/Page'
+          - $ref: '#/components/parameters/Postcode'
+          - $ref: '#/components/parameters/Local-authority'
+          - $ref: '#/components/parameters/Constituency'
+          - $ref: '#/components/parameters/Domestic-Energy-band'
+
+        responses:
+          '200':
+            description: Successfully returned a list of domestic EPCs
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AssessmentId'
+
+          '400':
+            $ref: '#/components/responses/400Error'
+  /domestic/deltas:
+    get:
+      description: Returns a list of domestic EPCs removed from the publication since the 1st day of the last month
+      tags:
+        - domestic
+
+      parameters:
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Postcode'
+        - $ref: '#/components/parameters/Local-authority'
+        - $ref: '#/components/parameters/Constituency'
+        - $ref: '#/components/parameters/Domestic-Energy-band'
+
+      responses:
+        '200':
+          description: Successfully returned a list of domestic EPCs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssessmentId'
+        '400':
+          $ref: '#/components/responses/400Error'
+  /domestic/certifcate/{assessmentId}:
     get:
       description: Returns an object all EPC data points
       tags:
@@ -54,11 +104,20 @@ paths:
         - in: path
           name: assessmentId
           required: true
-          description: 'The RRN of the assessment being requested'
+          description: 'The ID of the assessment being requested, usually RRN'
           schema:
-            $ref: '#/components/schemas/RRN'
-       responses:
-         -  '200':
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+         '200':
+           description: JSON representation of an energy performance certificate
+           content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Domestic-Certificate"
+                examples:
+                  jsonObject:
+                    summary: A sample RdSAP
+                    externalValue: "https://github.com/communitiesuk/epb-data-warehouse/blob/main/spec/fixtures/json_export/rdsap.json"
 
 
 components:
@@ -68,13 +127,14 @@ components:
       scheme: basic
 
   schemas:
-    Certificate:
+    Domestic-Certificate:
       type: object
+
 
     Metadata:
       type: object
 
-    RRN:
+    AssessmentId:
       type: string
       pattern: '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
       example: '0000-0000-0000-0000-0000'
@@ -143,7 +203,6 @@ components:
           type: string
           enum: [a, b, c, d, e, f, g]
 
-
     From-month:
       name: from-month
       in: query
@@ -155,10 +214,10 @@ components:
     From-year:
       name: from-year
       in: query
-      description: A numeric year identifier to estalish the start of a date range between 2008 and the current year, e.g. 2015. If no year parameter is supplied 2008 is assumed.
+      description: A numeric year identifier to establish the start of a date range between 2008 and the current year, e.g. 2015. If no year parameter is supplied 2008 is assumed.
       schema:
         type: integer
-        minimum: 2008
+        minimum: 2012
     To-month:
       name: to-month
       in: query
@@ -173,7 +232,7 @@ components:
       description: A numeric year identifier between 2008 and the current year, e.g. 2015. If no to-year parameter is supplied then the current year is assumed.
       schema:
         type: integer
-        minimum: 2008
+        minimum: 2012
 
 
   responses:
