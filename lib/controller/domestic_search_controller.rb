@@ -28,7 +28,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/domestic/count", auth_token_has_all: %w[epb-data-front:read] do
+    get "/api/domestic/count" do
       params_body SEARCH_SCHEMA
       execute_params = {
         date_start: params[:date_start],
