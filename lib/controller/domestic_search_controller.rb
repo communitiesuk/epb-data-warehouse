@@ -41,6 +41,9 @@ module Controller
       use_case = Container.count_domestic_certificates_use_case
       result = use_case.execute(**execute_params)
       json_api_response code: 200, data: { count: result }
+    rescue StandardError => e
+      report_to_sentry(e)
+      json_api_response code: 500, data: { errors: [{ code: e.message }] }
     end
   end
 end
