@@ -78,5 +78,62 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
       group = data.group_by { |i| i["rrn"] }
       expect(group.length).to eq 2
     end
+
+    context "when the json is not is an hash with a single item rather than an array" do
+      let(:single_improvement) do
+        {
+          improvement: {
+            sequence: 1,
+            typical_saving: {
+              value: 38,
+              currency: "GBP",
+            },
+            indicative_cost: "£4,000 - £6,000",
+            improvement_type: "W2",
+            improvement_details: {
+              improvement_number: 58,
+            },
+            improvement_category: 5,
+            energy_performance_rating: 74,
+            environmental_impact_rating: 78,
+          },
+        }
+      end
+
+      before do
+        sql = <<-SQL
+           UPDATE assessment_attribute_values aav
+            SET json  = $1
+            FROM assessment_attributes aa
+            WHERE  aav.attribute_id = aa.attribute_id
+            AND aa.attribute_name = $2 AND aav.assessment_id = $3
+        SQL
+
+        bindings = [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "json",
+            single_improvement,
+            ActiveRecord::Type::Json.new,
+          ),
+          ActiveRecord::Relation::QueryAttribute.new(
+            "attribute_name",
+            "suggested_improvements",
+            ActiveRecord::Type::String.new,
+          ),
+          ActiveRecord::Relation::QueryAttribute.new(
+            "assessment_id",
+            "0000-0000-0000-0000-0006",
+            ActiveRecord::Type::String.new,
+          ),
+        ]
+        ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
+      end
+
+      it "returns the single recommendation" do
+        items = data.select { |i| i["rrn"] == "0000-0000-0000-0000-0006" }
+        expect(items.length).to eq 1
+      end
+    end
   end
 end
