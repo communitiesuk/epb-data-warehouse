@@ -42,4 +42,19 @@ describe UseCase::CountDomesticCertificates do
       expect(search_gateway).to have_received(:count).with(args).exactly(1).times
     end
   end
+
+  context "when all the efficiency ratings are provided" do
+    let(:args) do
+      { date_start: "2023-12-01", date_end: "2023-12-23", eff_rating: %w[A B C D E F G] }
+    end
+
+    before do
+      use_case.execute(**args)
+    end
+
+    it "doesn't pass any efficiency rating to the search" do
+      args.delete(:eff_rating)
+      expect(search_gateway).to have_received(:count).with(args).exactly(1).times
+    end
+  end
 end
