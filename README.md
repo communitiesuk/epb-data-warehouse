@@ -36,6 +36,24 @@ that export the data in the format required by Open Data Communities. The run th
 
 `SELECT * FROM vw_open_data_export`
 
+## Running Code against Postgres In Container
+
+If want to run your code against a version of postgres other than that already installed, you can specifiy a port in your nake commands
+
+E.g To run the code base against Postgres v17 and you have Postgres 14 installed:
+
+Installed Postgres 17 docker image:
+
+`docker run -d -p 5431:5432  --name postgres-17 -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_USER=postgres  postgres:17`
+
+This command exposes postgres 17 on port 5431
+
+To run code against this version 
+
+`PGPORT=5431 make setup-db
+PGPORT=5431 make test`
+
+
 ## Code Formatting
 
 To run Rubocop on its own, run:
