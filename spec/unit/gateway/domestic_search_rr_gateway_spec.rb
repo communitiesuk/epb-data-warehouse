@@ -30,11 +30,12 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
         "postcode": "SW10 0AA",
       })
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
-    end
-
-    before do
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
     end
+
+    # before do
+    #
+    # end
 
     let(:data) do
       search_arguments[:date_start] = "2010-01-01"
