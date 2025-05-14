@@ -29,13 +29,9 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "SW10 0AA",
       })
-      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
-      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
+      refresh_mview(name: "mvw_domestic_search")
+      refresh_mview(name: "mvw_domestic_rr_search")
     end
-
-    # before do
-    #
-    # end
 
     let(:data) do
       search_arguments[:date_start] = "2010-01-01"

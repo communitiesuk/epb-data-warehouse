@@ -7,4 +7,16 @@ shared_context "when exporting data" do
 
     CSV.parse(read_file, headers: true) if parse
   end
+
+  def refresh_mview(name:)
+    retries = 2
+    try = 0
+    begin
+      Gateway::MaterializedViewsGateway.new.refresh(name:)
+    rescue StandardError
+      try += 1
+      sleep(2)
+      retry if try < retries
+    end
+  end
 end
