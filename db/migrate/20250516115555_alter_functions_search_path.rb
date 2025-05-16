@@ -52,11 +52,7 @@ END $$"
       RETURN data;
 
       END $$;"
-
-
   end
-  def self.down
 
-
-  end
+  def self.down; end
 end
