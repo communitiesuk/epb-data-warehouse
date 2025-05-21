@@ -8,15 +8,18 @@ shared_context "when exporting data" do
     CSV.parse(read_file, headers: true) if parse
   end
 
-  def refresh_mview(name:)
-    retries = 2
-    try = 0
+  def retry_operation(max_attempts: 5)
+    attempts = 0
     begin
-      Gateway::MaterializedViewsGateway.new.refresh(name:)
+      attempts += 1
+      yield
     rescue StandardError
-      try += 1
-      sleep(2)
-      retry if try < retries
+      if attempts < max_attempts
+        sleep(1) # Optional: Add delay between retries
+        retry
+      else
+        raise "Operation failed after #{max_attempts} attempts. Last error: #{e.message}"
+      end
     end
   end
 end

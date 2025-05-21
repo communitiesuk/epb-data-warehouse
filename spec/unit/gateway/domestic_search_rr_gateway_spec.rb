@@ -29,13 +29,15 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "SW10 0AA",
       })
-      refresh_mview(name: "mvw_domestic_search")
-      refresh_mview(name: "mvw_domestic_rr_search")
+      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
+      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
     end
 
     let(:data) do
       search_arguments[:date_start] = "2010-01-01"
-      gateway.fetch_rr(**search_arguments)
+      retry_operation do
+        gateway.fetch_rr(**search_arguments)
+      end
     end
 
     let(:expected_sap_rr_data) do
@@ -60,11 +62,18 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
     end
 
     it "returns the 4 recommendations for a the RdSAP assessment" do
+      retry_operation do
+        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
+      end
       items = data.select { |i| i["rrn"] == "0000-0000-0000-0000-0006" }.sort_by { |i| i["improvement_item"] }
       expect(items).to eq expected_rdsap_data
     end
 
     it "returns the recommendations text for the SAP of 16.1" do
+      retry_operation do
+        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
+      end
+
       items = data.select { |i| i["rrn"] == "0000-0000-0000-0000-0009" }.sort_by { |i| i["improvement_item"] }
       expect(items[0]).to eq expected_sap_rr_data[0]
       expect(items[1]).to eq expected_sap_rr_data[1]
