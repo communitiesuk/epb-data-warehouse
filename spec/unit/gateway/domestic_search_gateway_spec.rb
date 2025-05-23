@@ -385,15 +385,14 @@ describe Gateway::DomesticSearchGateway do
     end
   end
 
-  describe  "#fetch_rrns" do
-    let(:expectation) {
-      [{"rrn"=>"0000-0000-0000-0000-0000"}, {"rrn"=>"0000-0000-0000-0000-0001"}, {"rrn"=>"0000-0000-0000-0000-0002"}]
-    }
+  describe "#fetch_rrns" do
+    let(:expectation) do
+      [{ "rrn" => "0000-0000-0000-0000-0000" }, { "rrn" => "0000-0000-0000-0000-0001" }, { "rrn" => "0000-0000-0000-0000-0002" }]
+    end
 
     it "returns a list of rrn" do
       result = gateway.fetch_rrns(**search_arguments)
       expect(result).to eq expectation
     end
-
   end
 end

@@ -16,11 +16,7 @@ describe UseCase::DomesticSearch do
   end
 
   let(:domestic_search_result) do
-    [{ "rrn": "0000-0000-0000-0000-0000", "address1" => "1 Some Street" }, { "rrn": "0000-0000-0000-0000-0001", "address1" => "2 Some Other Street" }]
-  end
-
-  let(:domestic_rr_search_result) do
-    [{ "rrn": "0000-0000-0000-0000-0001", "indicative_cost" => "£15" }, { "rrn": "0000-0000-0000-0000-0001", "indicative_cost" => "£40000" }]
+    [{ "rrn" => "0000-0000-0000-0000-0000" }, { "rrn" => "0000-0000-0000-0000-0001" }]
   end
 
   let(:expectation) do
@@ -28,7 +24,7 @@ describe UseCase::DomesticSearch do
   end
 
   before do
-    allow(search_gateway).to receive_messages(fetch: domestic_search_result)
+    allow(search_gateway).to receive_messages(fetch_rrns: domestic_search_result)
   end
 
   it "can call the use case" do
@@ -36,15 +32,8 @@ describe UseCase::DomesticSearch do
   end
 
   it "passes the arguments to the gateway to fetch domestic data" do
-    results = expectation.reject { |k| k == :domestic_rr }
-    expect(use_case.execute(**search_arguments)).to eq results
-    expect(search_gateway).to have_received(:fetch).with(search_arguments).exactly(1).times
-  end
-
-  it "passes the same arguments to the gateway to additionally fetch domestic rr data" do
-    search_arguments[:recommendations] = true
-    expect(use_case.execute(**search_arguments)).to eq expectation
-    expect(search_gateway).to have_received(:fetch).with(search_arguments).exactly(1).times
+    expect(use_case.execute(**search_arguments)).to eq domestic_search_result
+    expect(search_gateway).to have_received(:fetch_rrns).with(search_arguments).exactly(1).times
   end
 
   context "when a council name is provided" do
@@ -58,7 +47,7 @@ describe UseCase::DomesticSearch do
     end
 
     it "passes the council id to the search" do
-      expect(search_gateway).to have_received(:fetch).with(args).exactly(1).times
+      expect(search_gateway).to have_received(:fetch_rrns).with(args).exactly(1).times
     end
   end
 

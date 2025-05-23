@@ -28,8 +28,8 @@ module Gateway
     def fetch_rrns(*args)
       this_args = args.first
       sql = <<~SQL
-         SELECT rrn
-         FROM mvw_domestic_search 
+        SELECT rrn
+        FROM mvw_domestic_search#{' '}
       SQL
 
       this_args[:bindings] = get_bindings(**this_args)
