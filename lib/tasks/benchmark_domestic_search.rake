@@ -3,7 +3,7 @@ task :benchmark_domestic_search do
   date_start = ENV["DATE_START"]
   date_end = ENV["DATE_END"]
   row_limit = ENV["ROW_LIMIT"]
-  council = ENV["COUNCIL"]
+  council = ENV["COUNCIL"].nil? ? nil : ENV["COUNCIL"].split(",").map(&:strip)
   count = ENV["COUNT"].nil? ? 1 : ENV["COUNT"].to_i
   ENV["BUCKET_NAME"] = ENV["UD_BUCKET_NAME"]
   s3_upload = ENV["S3_UPLOAD"].nil? ? false : true

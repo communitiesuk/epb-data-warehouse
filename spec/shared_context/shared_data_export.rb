@@ -8,7 +8,7 @@ shared_context "when exporting data" do
     CSV.parse(read_file, headers: true) if parse
   end
 
-  def retry_mview(max_attempts: 5, name: )
+  def retry_mview(name:, max_attempts: 5)
     attempts = 0
     begin
       attempts += 1

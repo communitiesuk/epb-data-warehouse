@@ -35,7 +35,7 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
 
     let(:data) do
       search_arguments[:date_start] = "2010-01-01"
-      retry_mview(name: "mvw_domestic_rr_search" ) do
+      retry_mview(name: "mvw_domestic_rr_search") do
         gateway.fetch_rr(**search_arguments)
       end
     end
