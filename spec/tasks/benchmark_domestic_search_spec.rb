@@ -52,13 +52,6 @@ describe "test domestic search benchmarking rake" do
         expect(use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", row_limit: "2", council: %w[Manchester]).exactly(:once)
       end
 
-      it "passes the recommendations to the use case" do
-        ENV["RECOMMENDATIONS"] = "true"
-        task.invoke
-        ENV["RECOMMENDATIONS"] = nil
-        expect(use_case).to have_received(:execute).with(date_start: "2000-12-31", date_end: "2024-12-31", row_limit: "2", council: %w[Manchester], recommendations: "true").exactly(:once)
-      end
-
       it "prints the expected output" do
         expect { task.invoke }.to output(/Average execution time:/).to_stdout
       end

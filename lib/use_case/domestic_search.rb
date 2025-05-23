@@ -11,7 +11,7 @@ module UseCase
 
       results = {}
       results[:domestic] = @search_gateway.fetch(**this_args)
-      results[:domestic_rr] = @search_gateway.fetch_rr(**this_args) unless this_args[:recommendations].nil?
+
       results
     end
   end

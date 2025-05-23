@@ -24,11 +24,11 @@ describe UseCase::DomesticSearch do
   end
 
   let(:expectation) do
-    { domestic: domestic_search_result, domestic_rr: domestic_rr_search_result }
+    { domestic: domestic_search_result }
   end
 
   before do
-    allow(search_gateway).to receive_messages(fetch: domestic_search_result, fetch_rr: domestic_rr_search_result)
+    allow(search_gateway).to receive_messages(fetch: domestic_search_result)
   end
 
   it "can call the use case" do
@@ -39,14 +39,12 @@ describe UseCase::DomesticSearch do
     results = expectation.reject { |k| k == :domestic_rr }
     expect(use_case.execute(**search_arguments)).to eq results
     expect(search_gateway).to have_received(:fetch).with(search_arguments).exactly(1).times
-    expect(search_gateway).to have_received(:fetch_rr).with(search_arguments).exactly(0).times
   end
 
   it "passes the same arguments to the gateway to additionally fetch domestic rr data" do
     search_arguments[:recommendations] = true
     expect(use_case.execute(**search_arguments)).to eq expectation
     expect(search_gateway).to have_received(:fetch).with(search_arguments).exactly(1).times
-    expect(search_gateway).to have_received(:fetch_rr).with(search_arguments).exactly(1).times
   end
 
   context "when a council name is provided" do
