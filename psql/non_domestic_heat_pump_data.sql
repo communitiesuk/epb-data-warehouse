@@ -1,5 +1,6 @@
 SELECT
     assessment_id as assessment_id,
+    ad.document ->> 'hashed_assessment_id' as hashed_assessment_id,
     ad.document ->> 'uprn' as uprn,
     ad.document ->> 'registration_date' as registration_date,
     ad.document ->> 'property_type' as property_type,
