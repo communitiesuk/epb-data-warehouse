@@ -1,5 +1,6 @@
 SELECT
     (document ->> 'building_name') as building_name,
+    (document ->> 'uprn') as uprn,
     (document ->> 'address_line_1') as address_line_1,
     (document ->> 'address_line_2') as address_line_2,
     (document ->> 'address_line_3') as address_line_3,
@@ -16,5 +17,4 @@ FROM assessment_documents ad
          JOIN countries c ON c.country_id = aci.country_id
 WHERE c.country_code IN ('ENG', 'EAW', 'WLS')
   AND document ->> 'report_type' = '6'
-  AND document -> 'opt_out' IS NULL
   AND document ->> 'created_at' >= '2024-06-01';
