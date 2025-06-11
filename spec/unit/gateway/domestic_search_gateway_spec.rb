@@ -395,4 +395,42 @@ describe Gateway::DomesticSearchGateway do
       expect(result).to eq expectation
     end
   end
+
+  context "when the vw_domestic_yesterday is created" do
+    get_columns_sql = <<-SQL
+        SELECT a.attname
+        FROM pg_attribute a
+          JOIN pg_class t on a.attrelid = t.oid
+        WHERE a.attnum > 0
+          AND NOT a.attisdropped
+          AND t.relname = 'vw_domestic_yesterday'
+    SQL
+
+    get_yesterday_data_sql = <<-SQL
+        SELECT *
+        FROM vw_domestic_yesterday
+    SQL
+
+    let(:columns) { read_csv_fixture("domestic") }
+    let(:vw_columns) do
+      ActiveRecord::Base.connection.exec_query(get_columns_sql, "SQL").map { |result| result["attname"] }
+    end
+
+    let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query(get_yesterday_data_sql, "SQL").map { |result| result } }
+
+    let(:yesterday) { (Date.today - 1) }
+
+    before do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
+    end
+
+    it "returns the same columns as the mvw_domestic_search" do
+      expect(columns.headers.sort.map(&:downcase) - vw_columns).to eq []
+    end
+
+    it "returns only the data from yesterday" do
+      expect(vw_yesterday.length).to eq 1
+      expect(vw_yesterday[0]["rrn"]).to eq("0000-0000-0000-0000-0006")
+    end
+  end
 end
