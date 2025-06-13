@@ -396,27 +396,11 @@ describe Gateway::DomesticSearchGateway do
     end
   end
 
-  context "when the vw_domestic_yesterday is created" do
-    get_columns_sql = <<-SQL
-        SELECT a.attname
-        FROM pg_attribute a
-          JOIN pg_class t on a.attrelid = t.oid
-        WHERE a.attnum > 0
-          AND NOT a.attisdropped
-          AND t.relname = 'vw_domestic_yesterday'
-    SQL
+  context "when calling vw_domestic_yesterday" do
+    let(:mvw_columns) { get_columns_from_view("mvw_domestic_search") }
+    let(:vw_columns) { get_columns_from_view("vw_domestic_yesterday") }
 
-    get_yesterday_data_sql = <<-SQL
-        SELECT *
-        FROM vw_domestic_yesterday
-    SQL
-
-    let(:columns) { read_csv_fixture("domestic") }
-    let(:vw_columns) do
-      ActiveRecord::Base.connection.exec_query(get_columns_sql, "SQL").map { |result| result["attname"] }
-    end
-
-    let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query(get_yesterday_data_sql, "SQL").map { |result| result } }
+    let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query("SELECT * FROM vw_domestic_yesterday", "SQL").map { |result| result } }
 
     let(:yesterday) { (Date.today - 1) }
 
@@ -425,10 +409,10 @@ describe Gateway::DomesticSearchGateway do
     end
 
     it "returns the same columns as the mvw_domestic_search" do
-      expect(columns.headers.sort.map(&:downcase) - vw_columns).to eq []
+      expect(vw_columns).to eq mvw_columns
     end
 
-    it "returns only the data from yesterday" do
+    it "returns only the domestic data from yesterday" do
       expect(vw_yesterday.length).to eq 1
       expect(vw_yesterday[0]["rrn"]).to eq("0000-0000-0000-0000-0006")
     end
