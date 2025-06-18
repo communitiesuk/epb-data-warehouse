@@ -25,6 +25,7 @@ module UseCase
 
     def export_configuration(schema_type)
       export_config_file = {
+        "RdSAP-Schema-21.0.1" => XmlPresenter::Rdsap::Rdsap21ExportConfiguration,
         "RdSAP-Schema-21.0.0" => XmlPresenter::Rdsap::Rdsap21ExportConfiguration,
         "RdSAP-Schema-20.0.0" => XmlPresenter::Rdsap::Rdsap20ExportConfiguration,
         "RdSAP-Schema-19.0" => XmlPresenter::Rdsap::Rdsap19ExportConfiguration,
