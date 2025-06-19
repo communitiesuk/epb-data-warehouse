@@ -1,15 +1,16 @@
 require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
+require_relative "../../shared_context/shared_recommendations"
 
-describe "Gateway::DomesticSearchGateway.fetch_rr" do
-  let(:gateway) { Gateway::DomesticSearchGateway.new }
+describe "Domestic Recommendations Report" do
   let(:date_start) { "2021-12-01" }
   let(:date_end) { "2023-12-09" }
   let(:search_arguments) do
     { date_start:, date_end: }
   end
 
+  include_context "when fetching recommendations report"
   include_context "when lodging XML"
   include_context "when saving ons data"
   include_context "when exporting data"
@@ -36,7 +37,7 @@ describe "Gateway::DomesticSearchGateway.fetch_rr" do
     let(:data) do
       search_arguments[:date_start] = "2010-01-01"
       retry_mview(name: "mvw_domestic_rr_search") do
-        gateway.fetch_rr(**search_arguments)
+        fetch_rr(**search_arguments)
       end
     end
 
