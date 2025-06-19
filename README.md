@@ -67,7 +67,7 @@ To get this running locally run `bundle exec puma` or `bundle exec rackup -p 80 
 ## Adding XSD enumerable data to the database as attribute lookups
 
 An EPC data point (attribute) can often be saved as a value that represents a string 
-e.g for the attribute _energy_tariff_ the value 1 is stored. It can be any value between 0-5. The enumerable representations of 1 is_Very Poor_
+e.g for the attribute _energy_tariff_ the value 1 is stored. It can be any value between 1-5 for RdSAP (1-4 for SAP). The enumerable representations of 1 is _dual_.
 The enum values are loaded into the database using the following command
 
 `rake import_enums_xsd`

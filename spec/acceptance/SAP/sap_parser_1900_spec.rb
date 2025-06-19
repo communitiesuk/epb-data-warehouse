@@ -102,7 +102,7 @@ RSpec.describe "the parser and the SAP configuration" do
                           "energy_performance_rating" => 80,
                           "environmental_impact_rating" => 96 }],
                       "sap_energy_source" =>
-                       { "electricity_tariff" => 5, "wind_turbines" => [{ "wind_turbine_rotor_diameter" => 1.7, "wind_turbine_hub_height" => 3 }] },
+                       { "electricity_tariff" => 4, "wind_turbines" => [{ "wind_turbine_rotor_diameter" => 1.7, "wind_turbine_hub_height" => 3 }] },
                       "sap_heating" =>
                        { "main_heating_details" =>
                           [{ "main_heating_number" => 1,

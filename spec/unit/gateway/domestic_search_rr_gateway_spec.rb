@@ -81,7 +81,7 @@ describe "Domestic Recommendations Report" do
 
     context "when the json is not is an hash with a single item rather than an array" do
       let(:single_improvement) do
-        {
+        [{
           improvement: {
             sequence: 1,
             typical_saving: {
@@ -97,7 +97,7 @@ describe "Domestic Recommendations Report" do
             energy_performance_rating: 74,
             environmental_impact_rating: 78,
           },
-        }
+        }]
       end
 
       before do

@@ -235,4 +235,35 @@ describe UseCase::ImportEnums do
       expect(result).to eq(expectation)
     end
   end
+
+  context "when saving the energy tariff enums" do
+    let(:lookups_gateway)  do
+      Gateway::AssessmentLookupsGateway.new
+    end
+
+    before(:all) do
+      lookups_gateway = Gateway::AssessmentLookupsGateway.new
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_energy_tariff.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    it "returns the expected RdSAP enum value for a '1'" do
+      enum_value = ActiveRecord::Base.connection.exec_query("SELECT lookup_value
+        FROM assessment_attribute_lookups aal
+        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+        WHERE aa.attribute_name = 'energy_tariff' and lookup_key = '1' and aal.type_of_assessment='RdSAP'").first["lookup_value"]
+      expect(enum_value).to eq("dual")
+    end
+
+    it "returns the expected SAP enum value for a '1'" do
+      enum_value = ActiveRecord::Base.connection.exec_query("SELECT lookup_value
+        FROM assessment_attribute_lookups aal
+        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+        WHERE aa.attribute_name = 'energy_tariff' and lookup_key = '1' and aal.type_of_assessment='SAP'").first["lookup_value"]
+      expect(enum_value).to eq("standard tariff")
+    end
+  end
 end

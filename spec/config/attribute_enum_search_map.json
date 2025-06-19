@@ -43,6 +43,11 @@
       "xsd_node_name": "SAP-ElectricityTariffCode"
     },
     {
+      "attribute_name": "energy_tariff",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "ElectricMeterTypeCode"
+    },
+    {
       "attribute_name": "built_form",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "SAP-BuiltFormCode"

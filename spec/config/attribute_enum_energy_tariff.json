@@ -1,0 +1,20 @@
+{
+  "nodes" : [
+    {
+      "attribute_name": "energy_tariff",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "SAP-ElectricityTariffCode"
+    },
+    {
+      "attribute_name": "energy_tariff",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "ElectricMeterTypeCode"
+    }
+  ],
+
+  "paths" : {
+    "rdsap" : "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+    "sap"  : "/api/schemas/xml/SAP**/SAP**/UDT/*-Domains.xsd",
+    "cepc" : "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd"
+  }
+}

@@ -178,7 +178,7 @@
   <SAP10-Data>
     <SAP-Property-Details>
       <SAP-Energy-Source>
-        <Electricity-Tariff>5</Electricity-Tariff>
+        <Electricity-Tariff>4</Electricity-Tariff>
         <Wind-Turbines>
           <Wind-Turbine>
             <Wind-Turbine-Rotor-Diameter>1.7</Wind-Turbine-Rotor-Diameter>

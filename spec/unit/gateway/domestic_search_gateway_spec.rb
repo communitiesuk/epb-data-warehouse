@@ -264,7 +264,7 @@ describe Gateway::DomesticSearchGateway do
           "unheated_corridor_length" => nil,
           "building_reference_number" => "UPRN-0000000001",
           "uprn_source" => "",
-          "energy_tariff" => "off-peak 18 hour",
+          "energy_tariff" => "24 hour",
           "floor_height" => "2.8",
           "glazed_type" => nil,
           "photo_supply" => nil,
@@ -291,7 +291,7 @@ describe Gateway::DomesticSearchGateway do
           "current_energy_rating" => "E",
           "energy_consumption_current" => "230",
           "energy_consumption_potential" => "88",
-          "energy_tariff" => nil,
+          "energy_tariff" => "Single",
           "fixed_lighting_outlets_count" => "16",
           "flat_storey_count" => 2,
           "flat_top_storey" => "N",
@@ -364,7 +364,6 @@ describe Gateway::DomesticSearchGateway do
 
       it "returns a row with the required data for RdSAP" do
         result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0006" }
-
         expect(result).to eq expected_rdsap_data
       end
     end

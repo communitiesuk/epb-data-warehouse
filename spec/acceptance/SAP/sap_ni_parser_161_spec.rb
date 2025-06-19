@@ -247,8 +247,6 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
       actual = use_case.execute(xml: rdsap,
                                 schema_type: "SAP-Schema-NI-16.1",
                                 assessment_id: "1234-1234-1234-1234-1234")
-      # pp actual
-
       expect(actual).to eq expectation
     end
   end
