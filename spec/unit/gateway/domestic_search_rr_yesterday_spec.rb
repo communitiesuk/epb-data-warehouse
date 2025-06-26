@@ -63,7 +63,6 @@ describe "Domestic Recommendations Report Yesterday" do
     end
 
     it "returns the same columns as the mvw_domestic_rr_search" do
-      mvw_columns.delete("id")
       expect(vw_columns).to eq mvw_columns
     end
 
