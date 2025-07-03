@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_26_162758) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_30_091828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -67,6 +67,33 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_26_162758) do
     t.index ["lookup_value"], name: "index_assessment_lookups_on_lookup_value"
   end
 
+  create_table "assessment_search", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 1
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.datetime "registration_date", precision: nil
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+    t.index ["address"], name: "index_assessment_search_on_address_trigram", opclass: :gin_trgm_ops, using: :gin
+    t.index ["assessment_address_id"], name: "index_assessment_search_on_assessment_address_id"
+    t.index ["assessment_type"], name: "index_assessment_search_on_assessment_type"
+    t.index ["constituency"], name: "index_assessment_search_on_constituency"
+    t.index ["council"], name: "index_assessment_search_on_council"
+    t.index ["created_at"], name: "index_assessment_search_on_created_at"
+    t.index ["current_energy_efficiency_rating"], name: "index_assessment_search_on_current_energy_efficiency_rating"
+    t.index ["postcode"], name: "index_assessment_search_on_postcode"
+    t.index ["registration_date"], name: "index_assessment_search_on_registration_date"
+  end
+
   create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.integer "country_id"
     t.index ["country_id"], name: "index_assessments_country_ids_on_country_id"
@@ -75,7 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_26_162758) do
   create_table "audit_logs", force: :cascade do |t|
     t.string "assessment_id"
     t.string "event_type", null: false
-    t.datetime "timestamp", default: "2025-06-26 15:33:21", null: false
+    t.datetime "timestamp", default: "2025-07-09 09:44:57", null: false
 
     t.unique_constraint ["assessment_id", "event_type"], name: "idx_audit_log_rrn_event"
   end
