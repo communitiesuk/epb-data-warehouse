@@ -99,6 +99,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
               "schema_type" => "RdSAP-Schema-20.0.0",
               "assessment_type" => "RdSAP",
             }),
+            country_id: nil,
           )
         end
       end
@@ -117,6 +118,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           expect(import_certificate_data_use_case).to have_received(:execute).with(
             assessment_id:,
             certificate_data: match(does_not_contain_key("cancelled_at")),
+            country_id: nil,
           )
         end
 
@@ -124,6 +126,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           expect(import_certificate_data_use_case).to have_received(:execute).with(
             assessment_id:,
             certificate_data: match(does_not_contain_key("opt_out")),
+            country_id: nil,
           )
         end
       end
@@ -162,6 +165,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
         expect(import_certificate_data_use_case).to have_received(:execute).with(
           assessment_id:,
           certificate_data: match(does_not_contain_key("created_at")),
+          country_id: nil,
         )
       end
     end
@@ -209,6 +213,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
             "assessment_type" => "RdSAP",
             "hashed_assessment_id" => "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
           }),
+          country_id: nil,
         )
       end
     end

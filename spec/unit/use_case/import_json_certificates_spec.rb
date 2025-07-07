@@ -3,6 +3,7 @@ describe UseCase::ImportJsonCertificates do
     described_class.new file_gateway: directory_gateway,
                         import_certificate_data_use_case: UseCase::ImportCertificateData.new(
                           assessment_attribute_gateway:,
+                          assessment_search_gateway:,
                           documents_gateway: instance_double(Gateway::DocumentsGateway),
                           logger:,
                         )
@@ -12,6 +13,10 @@ describe UseCase::ImportJsonCertificates do
 
   let(:assessment_attribute_gateway) do
     instance_double(Gateway::AssessmentAttributesGateway)
+  end
+
+  let(:assessment_search_gateway) do
+    instance_double(Gateway::AssessmentSearchGateway)
   end
 
   let(:logger) do
@@ -31,6 +36,7 @@ describe UseCase::ImportJsonCertificates do
     allow(directory_gateway).to receive(:read).and_return(files)
     allow(assessment_attribute_gateway).to receive(:add_attribute_value)
                                              .and_return(1)
+    allow(assessment_search_gateway).to receive(:insert_assessment)
   end
 
   it "imports 3 files from the fixtures" do

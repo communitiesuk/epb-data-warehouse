@@ -9,7 +9,7 @@ shared_context "when saving epcs for fix_lzc_energy_node update" do
     end
     parsed_epc["assessment_type"] = type
     parsed_epc["schema_type"] = schema
-    import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new)
+    import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new, assessment_search_gateway: Gateway::AssessmentSearchGateway.new)
     import.execute(assessment_id:, certificate_data: parsed_epc)
   end
 

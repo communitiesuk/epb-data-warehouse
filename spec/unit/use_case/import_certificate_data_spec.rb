@@ -4,6 +4,7 @@ describe UseCase::ImportCertificateData do
   end
 
   let(:documents_gateway) { instance_double(Gateway::DocumentsGateway) }
+  let(:assessment_search_gateway) { instance_double(Gateway::AssessmentSearchGateway) }
 
   let(:logger) do
     logger = instance_double(Logger)
@@ -13,6 +14,7 @@ describe UseCase::ImportCertificateData do
 
   let!(:use_case) do
     described_class.new assessment_attribute_gateway: assessment_attributes_gateway,
+                        assessment_search_gateway:,
                         documents_gateway:,
                         logger:
   end
@@ -21,6 +23,7 @@ describe UseCase::ImportCertificateData do
     allow(assessment_attributes_gateway).to receive(:add_attribute_value)
     allow(assessment_attributes_gateway).to receive(:add_attribute_values)
     allow(documents_gateway).to receive(:add_assessment)
+    allow(assessment_search_gateway).to receive(:insert_assessment)
   end
 
   context "when a simple attribute is passed to the usecase" do
@@ -29,15 +32,24 @@ describe UseCase::ImportCertificateData do
       "2" => "B",
     }
 
+    country_id = 1
+
     assessment_id = "0000-0000-0000-0000-0000"
 
     it "passes the attributes and values to the gateway unchanged" do
-      use_case.execute(assessment_id:, certificate_data:)
+      use_case.execute(assessment_id:, certificate_data:, country_id:)
 
       expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
         described_class::AttributeValue.new("1", "A", nil),
         described_class::AttributeValue.new("2", "B", nil),
         assessment_id: "0000-0000-0000-0000-0000",
+      )
+      expect(assessment_search_gateway).to have_received(:insert_assessment).with(
+        {
+          assessment_id: "0000-0000-0000-0000-0000",
+          country_id: 1,
+          document: { "1" => "A", "2" => "B" },
+        },
       )
     end
   end
