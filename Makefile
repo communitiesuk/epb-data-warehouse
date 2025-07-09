@@ -3,12 +3,8 @@ SHELL := /bin/bash
 
 .PHONY: help format test run setup-db seed-test-data generate-manifest deploy-app migrate-db-and-wait-for-success
 
-
-ifdef PGPORT
-PGPORT := $(PGPORT)
-else
-PGPORT := 5432
-endif
+# Set default PGPORT if undefinded
+PGPORT ?= 5432
 
 help: ## Print help documentation
 	@echo -e "Makefile Help for epb-data-warehouse"
@@ -34,7 +30,7 @@ drop-db:
 
 seed-test-data:
 	@echo ">>>>> Seeding DB with test data"
-	@bundle exec rake seed_test_data DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:5431/epb_eav_development"
+	@bundle exec rake seed_test_data DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:${PGPORT}/epb_eav_development"
 
 test:
 	@bundle exec rspec
@@ -43,6 +39,6 @@ run:
 	@bundle exec rake
 
 seed-stats-data:
-	@bundle exec rake seed_countries
-	@bundle exec rake seed_average_co2_emissions
-	@bundle exec rake refresh_average_co2_emissions
+	@bundle exec rake seed_countries DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:${PGPORT}/epb_eav_development"
+	@bundle exec rake seed_average_co2_emissions DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:${PGPORT}/epb_eav_development"
+	@bundle exec rake refresh_average_co2_emissions DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:${PGPORT}/epb_eav_development"
