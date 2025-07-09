@@ -240,7 +240,7 @@ module Gateway
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first[
-        attribute_name
+        attribute_name,
       ]
     end
 
@@ -261,7 +261,7 @@ module Gateway
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first[
-        attribute_name
+        attribute_name,
       ]
     end
 

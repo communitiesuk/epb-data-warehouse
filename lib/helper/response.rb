@@ -24,7 +24,7 @@ module Helper
               sprintf("Authorization issue with internal API. Response body: \"%s\"", response.body)
       end
 
-      if response.status == 502 || response.status == 504
+      if [502, 504].include?(response.status)
         raise Errors::ConnectionApiError, "Gateway error when making request to the API"
       end
 
