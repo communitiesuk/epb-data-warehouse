@@ -137,8 +137,8 @@ private
     arr = []
     keys = %i[address_line_1 address_line_2 address_line_3 address_line_4 post_town]
     keys.each do |key|
-      arr.append(document[key]) unless document[key].nil? || document[key].empty?
+      arr.append(document[key]) unless document[key].nil?
     end
-    arr.join(" ").downcase
+    arr.map(&:to_s).reject(&:empty?).join(" ").downcase
   end
 end

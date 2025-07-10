@@ -311,5 +311,23 @@ describe Gateway::AssessmentSearchGateway do
         expect(search.length).to eq 0
       end
     end
+
+    context "when one of the address lines is an integer" do
+      let(:doc) do
+        parse_assessment(assessment_id: "9999-0000-0000-0000-9997",
+                         schema_type: "RdSAP-Schema-20.0.0",
+                         type_of_assessment: "RdSAP",
+                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => 14 })
+      end
+
+      before do
+        gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9997", document: doc, country_id:)
+      end
+
+      it "produces the correct address" do
+        epc = search.find { |i| i["assessment_id"] == "9999-0000-0000-0000-9997" }
+        expect(epc["address"]).to eq "14 whitbury"
+      end
+    end
   end
 end
