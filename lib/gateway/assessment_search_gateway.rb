@@ -1,4 +1,7 @@
 class Gateway::AssessmentSearchGateway
+  class AssessmentSearch < ActiveRecord::Base
+  end
+
   VALID_COUNTRY_IDS = [1, 2, 4].freeze
   AC_CERTIFICATE_TYPE = "AC-CERT".freeze
 
@@ -114,6 +117,20 @@ class Gateway::AssessmentSearchGateway
     ]
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+  end
+
+  def delete_assessment(assessment_id:)
+    sql = <<-SQL
+        DELETE FROM assessment_search  WHERE assessment_id = $1
+    SQL
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+      ),
+    ]
+    ActiveRecord::Base.connection.delete(sql, "SQL", bindings)
   end
 
 private

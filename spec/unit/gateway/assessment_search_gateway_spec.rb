@@ -330,4 +330,31 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
   end
+
+  describe "#delete_assessment" do
+    before do
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+      gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9996", document: rdsap, country_id:)
+      gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9999", document: rdsap, country_id:)
+    end
+
+    let(:rdsap) do
+      parse_assessment(assessment_id: "9999-0000-0000-0000-9996",
+                       schema_type: "RdSAP-Schema-20.0.0",
+                       type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000",
+                       different_fields: { "postcode" => "SW10 0AA" })
+    end
+
+    it "deletes one of the assessments" do
+      gateway.delete_assessment(assessment_id: "9999-0000-0000-0000-9996")
+      expect(search.length).to eq 1
+      expect(search.first["assessment_id"]).to eq "9999-0000-0000-0000-9999"
+    end
+
+    context "when the assessment id is not found" do
+      it "does not error" do
+        expect { gateway.delete_assessment(assessment_id: "9999-0000-0000-0000-1111") }.not_to raise_error
+      end
+    end
+  end
 end
