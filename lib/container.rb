@@ -47,7 +47,8 @@ class Container
                                                                       recovery_list_gateway:,
                                                                       audit_logs_gateway:,
                                                                       logger:,
-                                                                      assessments_country_id_gateway:
+                                                                      assessments_country_id_gateway:,
+                                                                      assessment_search_gateway:
   end
 
   def self.fetch_certificate_use_case

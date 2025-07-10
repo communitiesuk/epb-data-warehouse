@@ -4,7 +4,10 @@ module UseCase
 
     CANCELLED = "cancelled".freeze
 
-    def initialize(eav_gateway:, queues_gateway:, api_gateway:, documents_gateway:, recovery_list_gateway:, assessments_country_id_gateway:, audit_logs_gateway:, logger: nil)
+    def initialize(eav_gateway:, queues_gateway:, api_gateway:, documents_gateway:, recovery_list_gateway:,
+                   assessments_country_id_gateway:, audit_logs_gateway:,
+                   assessment_search_gateway:,
+                   logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @queues_gateway = queues_gateway
       @api_gateway = api_gateway
@@ -13,6 +16,7 @@ module UseCase
       @audit_logs_gateway = audit_logs_gateway
       @logger = logger
       @assessments_country_id_gateway = assessments_country_id_gateway
+      @assessment_search_gateway = assessment_search_gateway
       @queue_name = :cancelled
     end
 
@@ -30,6 +34,7 @@ module UseCase
           @assessment_attribute_gateway.delete_attributes_by_assessment assessment_id
           @documents_gateway.delete_assessment(assessment_id:)
           @assessments_country_id_gateway.delete_assessment(assessment_id:)
+          @assessment_search_gateway.delete_assessment(assessment_id:)
           @audit_logs_gateway.insert_log(assessment_id:, event_type: CANCELLED, timestamp: Time.now.utc)
         end
 

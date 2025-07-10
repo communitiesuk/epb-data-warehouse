@@ -9,7 +9,8 @@ describe UseCase::CancelCertificates do
                         recovery_list_gateway:,
                         audit_logs_gateway:,
                         logger:,
-                        assessments_country_id_gateway:
+                        assessments_country_id_gateway:,
+                        assessment_search_gateway:
   end
 
   let(:eav_database_gateway) do
@@ -60,6 +61,12 @@ describe UseCase::CancelCertificates do
     gateway
   end
 
+  let(:assessment_search_gateway) do
+    gateway = instance_double(Gateway::AssessmentSearchGateway)
+    allow(gateway).to receive(:delete_assessment)
+    gateway
+  end
+
   context "when the queues gateway is functioning correctly" do
     before do
       allow(eav_database_gateway).to receive(:delete_attributes_by_assessment).and_return(true)
@@ -84,6 +91,11 @@ describe UseCase::CancelCertificates do
       it "passes the relevant assessment id to the AssessmentsCountryIdGateway" do
         use_case.execute
         expect(assessments_country_id_gateway).to have_received(:delete_assessment).exactly(3).times
+      end
+
+      it "passes the relevant assessment id to the AssessmentSearchGateway" do
+        use_case.execute
+        expect(assessment_search_gateway).to have_received(:delete_assessment).exactly(3).times
       end
 
       it "clears the assessments from the recovery list" do
@@ -237,7 +249,8 @@ describe UseCase::CancelCertificates do
                           recovery_list_gateway:,
                           audit_logs_gateway:,
                           logger:,
-                          assessments_country_id_gateway:
+                          assessments_country_id_gateway:,
+                          assessment_search_gateway:
     end
 
     let(:eav_database_gateway) do
@@ -298,6 +311,12 @@ describe UseCase::CancelCertificates do
       gateway
     end
 
+    let(:assessment_search_gateway) do
+      gateway = instance_double(Gateway::AssessmentSearchGateway)
+      allow(gateway).to receive(:delete_assessment)
+      gateway
+    end
+
     let(:logger) do
       logger = instance_double(Logger)
       allow(logger).to receive(:error)
@@ -321,6 +340,7 @@ describe UseCase::CancelCertificates do
       expect(deleted_doc).to be_nil
       expect(deleted_assessments_country_id).to be_nil
       expect(audit_logs_gateway).to have_received(:insert_log).with(assessment_id: "1235-0000-0000-0000-0000", event_type: "cancelled", timestamp: anything)
+      expect(assessment_search_gateway).to have_received(:delete_assessment).with(assessment_id: "1235-0000-0000-0000-0000")
     end
   end
 end
