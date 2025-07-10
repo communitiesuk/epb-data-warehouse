@@ -85,6 +85,7 @@ class Container
                                                                      certificate_gateway: register_api_gateway,
                                                                      recovery_list_gateway:,
                                                                      audit_logs_gateway:,
+                                                                     assessment_search_gateway:,
                                                                      logger:
   end
 

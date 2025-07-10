@@ -5,13 +5,16 @@ module UseCase
     OPT_OUT = "opt_out".freeze
     OPT_IN = "opt_in".freeze
 
-    def initialize(eav_gateway:, documents_gateway:, queues_gateway:, certificate_gateway:, recovery_list_gateway:, audit_logs_gateway:, logger: nil)
+    def initialize(eav_gateway:, documents_gateway:, queues_gateway:, certificate_gateway:, recovery_list_gateway:, audit_logs_gateway:,
+                   assessment_search_gateway:,
+                   logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @documents_gateway = documents_gateway
       @queues_gateway = queues_gateway
       @certificate_gateway = certificate_gateway
       @recovery_list_gateway = recovery_list_gateway
       @audit_logs_gateway = audit_logs_gateway
+      @assessment_search_gateway = assessment_search_gateway
       @logger = logger
       @queue_name = :opt_outs
     end
@@ -28,9 +31,8 @@ module UseCase
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
         unless should_exclude?(meta_data:)
           if meta_data[:optOut]
-            save_attribute_to_stores assessment_id:,
-                                     attribute: OPT_OUT,
-                                     value: now_in_db_format
+            save_attribute_to_stores assessment_id:, attribute: OPT_OUT, value: now_in_db_format
+            delete_from_search assessment_id:
           else
             delete_attribute_from_stores assessment_id:,
                                          attribute: OPT_OUT
@@ -38,6 +40,7 @@ module UseCase
             save_attribute_to_stores assessment_id:,
                                      attribute: OPT_IN,
                                      value: now_in_db_format
+            add_back_onto_queue assessment_id:
           end
         end
 
@@ -61,6 +64,10 @@ module UseCase
       @audit_logs_gateway.insert_log(assessment_id:, event_type: attribute, timestamp: value)
     end
 
+    def delete_from_search(assessment_id:)
+      @assessment_search_gateway.delete_assessment(assessment_id:)
+    end
+
     def delete_attribute_from_stores(assessment_id:, attribute:)
       @assessment_attribute_gateway.delete_attribute_value(assessment_id:, attribute_name: attribute)
       @documents_gateway.delete_top_level_attribute(assessment_id:, top_level_attribute: attribute)
@@ -72,6 +79,10 @@ module UseCase
 
     def clear_assessment_on_recovery_list(assessment_id)
       @recovery_list_gateway.clear_assessment payload: assessment_id, queue: @queue_name
+    end
+
+    def add_back_onto_queue(assessment_id)
+      @queues_gateway.push_to_queue :assessment, assessment_id:
     end
 
     def register_attempt_to_recovery_list(assessment_id)

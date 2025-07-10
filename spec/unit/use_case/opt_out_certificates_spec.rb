@@ -6,6 +6,7 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
                         certificate_gateway:,
                         recovery_list_gateway:,
                         audit_logs_gateway:,
+                        assessment_search_gateway:,
                         logger:
   end
 
@@ -26,7 +27,9 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
   end
 
   let(:queues_gateway) do
-    instance_double(Gateway::QueuesGateway)
+    gateway = instance_double(Gateway::QueuesGateway)
+    allow(gateway).to receive(:push_to_queue)
+    gateway
   end
 
   let(:certificate_gateway) do
@@ -46,6 +49,12 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
   let(:audit_logs_gateway) do
     gateway = instance_double(Gateway::AuditLogsGateway)
     allow(gateway).to receive(:insert_log)
+    gateway
+  end
+
+  let(:assessment_search_gateway) do
+    gateway = instance_double(Gateway::AssessmentSearchGateway)
+    allow(gateway).to receive(:delete_assessment)
     gateway
   end
 
@@ -92,6 +101,10 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
       it "inserts 3 logs to the audit logs" do
         expect(audit_logs_gateway).to have_received(:insert_log).exactly(3).times
       end
+
+      it "passes the relevant assessment id to the AssessmentSearchGateway" do
+        expect(assessment_search_gateway).to have_received(:delete_assessment).exactly(3).times
+      end
     end
 
     context "when marking one existing cert as opted in" do
@@ -124,6 +137,14 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
 
       it "inserts 3 logs to the audit logs" do
         expect(audit_logs_gateway).to have_received(:insert_log).exactly(3).times
+      end
+
+      it "the search gateway is called for only the 2 EPC that are opted out" do
+        expect(assessment_search_gateway).to have_received(:delete_assessment).exactly(2).times
+      end
+
+      it "the opted in EPC is added back onto the assessments queue" do
+        expect(queues_gateway).to have_received(:push_to_queue).with(:assessment, { assessment_id: { assessment_id: "0000-9999-0000-0000-0001" } }).exactly(1).times
       end
     end
 
