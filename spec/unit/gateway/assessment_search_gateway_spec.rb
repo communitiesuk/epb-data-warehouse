@@ -126,6 +126,24 @@ describe Gateway::AssessmentSearchGateway do
           expect(row["current_energy_efficiency_band"]).to be_nil
         end
       end
+
+      context "when the asset rating is A+" do
+        let(:assessment_id) { "0000-0000-0000-0000-0001" }
+        let(:cepc) do
+          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => -1 })
+        end
+
+        before do
+          gateway.insert_assessment(assessment_id:, document: cepc, country_id:)
+        end
+
+        it "the current energy rating is 0" do
+          row = search.find { |x| x["assessment_id"] == assessment_id }
+          expect(row["assessment_id"]).to eq assessment_id
+          expect(row["current_energy_efficiency_rating"]).to eq(-1)
+          expect(row["current_energy_efficiency_band"]).to eq "A+"
+        end
+      end
     end
 
     context "when saving a DEC" do
