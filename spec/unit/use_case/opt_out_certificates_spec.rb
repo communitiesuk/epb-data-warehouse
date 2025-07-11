@@ -144,7 +144,7 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
       end
 
       it "the opted in EPC is added back onto the assessments queue" do
-        expect(queues_gateway).to have_received(:push_to_queue).with(:assessment, { assessment_id: { assessment_id: "0000-9999-0000-0000-0001" } }).exactly(1).times
+        expect(queues_gateway).to have_received(:push_to_queue).with(:assessment, "0000-9999-0000-0000-0001").exactly(1).times
       end
     end
 

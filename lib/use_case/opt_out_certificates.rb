@@ -81,8 +81,8 @@ module UseCase
       @recovery_list_gateway.clear_assessment payload: assessment_id, queue: @queue_name
     end
 
-    def add_back_onto_queue(assessment_id)
-      @queues_gateway.push_to_queue :assessment, assessment_id:
+    def add_back_onto_queue(assessment_id:)
+      @queues_gateway.push_to_queue :assessment, assessment_id
     end
 
     def register_attempt_to_recovery_list(assessment_id)
