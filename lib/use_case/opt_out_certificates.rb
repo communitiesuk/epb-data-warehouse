@@ -82,7 +82,7 @@ module UseCase
     end
 
     def add_back_onto_queue(assessment_id:)
-      @queues_gateway.push_to_queue :assessment, assessment_id
+      @queues_gateway.push_to_queue :assessments, assessment_id
     end
 
     def register_attempt_to_recovery_list(assessment_id)
