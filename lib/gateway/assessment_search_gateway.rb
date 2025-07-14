@@ -7,12 +7,13 @@ class Gateway::AssessmentSearchGateway
 
   def initialize; end
 
-  def insert_assessment(assessment_id:, document:, country_id:)
+  def insert_assessment(assessment_id:, document:, country_id:, created_at: nil)
     document_clone = document.clone
     document_clone.deep_symbolize_keys!
     return unless VALID_COUNTRY_IDS.include?(country_id)
     return if document_clone[:assessment_type] == AC_CERTIFICATE_TYPE
 
+    created_at = Time.now if created_at.nil?
     sql = <<-SQL
     INSERT INTO assessment_search (
       assessment_id,
@@ -111,7 +112,7 @@ class Gateway::AssessmentSearchGateway
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "created_at",
-        Time.now,
+        created_at,
         ActiveRecord::Type::DateTime.new,
       ),
     ]
