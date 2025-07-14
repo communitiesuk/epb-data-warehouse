@@ -1,11 +1,11 @@
 --export for domestic-RR
 SELECT  ad.document ->> 'hashed_assessment_id' as RRN,
         items.sequence as IMPROVEMENT_ITEM,
-        items.improvement_category as IMPROVEMENT_ID,
+        items.improvement_details ->> 'improvement_number' as IMPROVEMENT_ID,
         items.indicative_cost as INDICATIVE_COST
 FROM assessment_documents ad,
      json_to_recordset((ad.document -> 'suggested_improvements')::json) AS
-         items(sequence integer, indicative_cost varchar, improvement_type varchar,improvement_category varchar )
+         items(sequence integer, indicative_cost varchar, improvement_type varchar,improvement_details json)
 
 WHERE ad.document ->> 'assessment_type' IN ('SAP', 'RdSAP')
 AND document->>'registration_date' BETWEEN '2023-03-01 00:00' AND  '2024-01-01 00:00'
