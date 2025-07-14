@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_11_112524) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_30_091828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_11_112524) do
     t.string "post_town", limit: 100
     t.string "postcode", limit: 10
     t.integer "current_energy_efficiency_rating"
-    t.string "current_energy_efficiency_band", limit: 2
+    t.string "current_energy_efficiency_band", limit: 1
     t.string "council", limit: 40
     t.string "constituency", limit: 45
     t.string "assessment_address_id", limit: 30
@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_11_112524) do
   create_table "audit_logs", force: :cascade do |t|
     t.string "assessment_id"
     t.string "event_type", null: false
-    t.datetime "timestamp", default: "2025-07-11 11:05:15", null: false
+    t.datetime "timestamp", default: "2025-06-24 10:52:46", null: false
 
     t.unique_constraint ["assessment_id", "event_type"], name: "idx_audit_log_rrn_event"
   end
