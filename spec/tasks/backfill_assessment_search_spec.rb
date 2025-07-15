@@ -2,14 +2,6 @@ describe "Adding or updating hashed assessment id node rake" do
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:backfill_assessment_search") }
 
-    before do
-      save_new_epc(schema: "SAP-Schema-18.0.0", assessment_id: "0000-0000-0000-0000-0000", assessment_type: "SAP", sample_type: "epc")
-      save_new_epc(schema: "SAP-Schema-17.0", assessment_id: "5555-5555-5555-5555-5555", assessment_type: "SAP", sample_type: "epc")
-      save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-2222", assessment_type: "RdSAP", sample_type: "epc")
-
-      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
-    end
-
     after do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attribute_values;")
     end
@@ -17,10 +9,17 @@ describe "Adding or updating hashed assessment id node rake" do
     let(:search) do
       ActiveRecord::Base.connection.exec_query(
         "SELECT * FROM assessment_search",
-        )
+      )
     end
 
-    context "When certificates have been saved" do
+    context "when certificates have been saved" do
+      before do
+        save_new_epc(schema: "SAP-Schema-18.0.0", assessment_id: "0000-0000-0000-0000-0000", assessment_type: "SAP", sample_type: "epc")
+        save_new_epc(schema: "SAP-Schema-17.0", assessment_id: "5555-5555-5555-5555-5555", assessment_type: "SAP", sample_type: "epc")
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-2222", assessment_type: "RdSAP", sample_type: "epc")
+
+        ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+      end
 
       it "EPCs are saved into assessment search table" do
         task.invoke
@@ -30,11 +29,10 @@ describe "Adding or updating hashed assessment id node rake" do
       it "inserting an already existing assessment does not raise an error" do
         task.invoke
         task.reenable
-        expect{ task.invoke }.to_not raise_error
+        expect { task.invoke }.not_to raise_error
       end
 
       it "inserting an already existing assessment does not call the assessment search gateway" do
-
         task.invoke
 
         gateway_instance = instance_double(Gateway::AssessmentSearchGateway)
@@ -71,7 +69,7 @@ describe "Adding or updating hashed assessment id node rake" do
 
       it "uses the created_at value when available" do
         created_at = Time.utc(2025, 7, 14)
-        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3333", assessment_type: "RdSAP", sample_type: "epc", created_at: )
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3333", assessment_type: "RdSAP", sample_type: "epc", created_at:)
         task.invoke
 
         epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-3333" }
@@ -85,6 +83,37 @@ describe "Adding or updating hashed assessment id node rake" do
         task.invoke
         epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-6666" }
         expect(epc["created_at"]).to eq "2020-07-14 00:00:00.000000"
+      end
+    end
+
+    context "when different certificate versions are saved" do
+      let(:created_at) do
+        Time.utc(2025, 7, 14)
+      end
+
+      it "SAP-Schema-16.0 contains data for the relevant columns" do
+        save_new_epc(schema: "SAP-Schema-16.0", assessment_id: "0000-0000-0000-0000-0000", assessment_type: "SAP", sample_type: "sap", created_at:)
+        task.invoke
+        expect(search.length).to eq(1)
+        expected_result = {
+          "address" => "28, place drive town",
+          "address_line_1" => "28, Place Drive",
+          "address_line_2" => nil,
+          "address_line_3" => nil,
+          "address_line_4" => nil,
+          "assessment_address_id" => nil,
+          "assessment_id" => "0000-0000-0000-0000-0000",
+          "assessment_type" => "SAP",
+          "constituency" => nil,
+          "council" => nil,
+          "created_at" => Time.new("2025-07-15 09:51:58.003658000 +0000"),
+          "current_energy_efficiency_band" => "B",
+          "current_energy_efficiency_rating" => 82,
+          "post_town" => "Town",
+          "postcode" => "AA1 1AA",
+          "registration_date" => Time.new("2012-09-29 00:00:00.000000000 +0000"),
+        }
+        expect(search.first).to eq(expected_result)
 
       end
     end
