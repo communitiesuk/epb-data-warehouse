@@ -27,7 +27,6 @@ namespace :one_off do
     raw_connection.get_result.stream_each.map { |row| { assessment_id: row["assessment_id"], document: row["document"], country_id: row["country_id"], created_at: row["created_at"] } }.each_slice(500) do |assessments|
       assessments.each do |assessment|
         document = JSON.parse(assessment[:document])
-        pp assessment[:assessment_id]
         assessment_search_gateway.insert_assessment(assessment_id: assessment[:assessment_id], document:, country_id: assessment[:country_id], created_at: assessment[:created_at])
       end
     end
