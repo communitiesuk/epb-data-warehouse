@@ -119,6 +119,29 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
   end
 
+  def update_attribute(assessment_id:, attribute_name:, new_value:)
+    sql = <<-SQL
+      UPDATE assessment_search
+      SET #{attribute_name} = $1
+      WHERE assessment_id = $2
+    SQL
+
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        attribute_name.to_s,
+        new_value,
+        ActiveRecord::Type::String.new,
+      ),
+      ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+      ),
+    ]
+
+    ActiveRecord::Base.connection.exec_query(sql, "UPDATE_ASSESSMENT_SEARCH_ATTR", bindings)
+  end
+
   def delete_assessment(assessment_id:)
     sql = <<-SQL
         DELETE FROM assessment_search  WHERE assessment_id = $1

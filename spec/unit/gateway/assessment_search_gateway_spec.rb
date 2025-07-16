@@ -349,18 +349,29 @@ describe Gateway::AssessmentSearchGateway do
     end
   end
 
+  describe "#update_attribute" do
+    before do
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+      gateway.insert_assessment(assessment_id: "9999-0000-0000-0011-9996", document: rdsap, country_id:)
+    end
+
+    it "updates the assessment search attribute" do
+      gateway.update_attribute(assessment_id: "9999-0000-0000-0011-9996", attribute_name: "assessment_address_id", new_value: "RRN-0000-0000-0000-0000-0011")
+      expect(search.first["assessment_address_id"]).to eq "RRN-0000-0000-0000-0000-0011"
+    end
+
+    context "when the assessment id is not found" do
+      it "does not error" do
+        expect { gateway.update_attribute(assessment_id: "9999-0000-0000-0000-1111", attribute_name: "assessment_address_id", new_value: "RRN-0000-0000-0000-0000-0011") }.not_to raise_error
+      end
+    end
+  end
+
   describe "#delete_assessment" do
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
       gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9996", document: rdsap, country_id:)
       gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9999", document: rdsap, country_id:)
-    end
-
-    let(:rdsap) do
-      parse_assessment(assessment_id: "9999-0000-0000-0000-9996",
-                       schema_type: "RdSAP-Schema-20.0.0",
-                       type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000",
-                       different_fields: { "postcode" => "SW10 0AA" })
     end
 
     it "deletes one of the assessments" do

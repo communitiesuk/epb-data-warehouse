@@ -118,6 +118,7 @@ class Container
                                                                                        documents_gateway:,
                                                                                        queues_gateway:,
                                                                                        recovery_list_gateway:,
+                                                                                       assessment_search_gateway:,
                                                                                        logger:
   end
 
