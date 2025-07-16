@@ -1,6 +1,16 @@
 namespace :one_off do
   desc "Apply addition of hashed_assessment_id by updating the document store and EAV table with a new data node or row"
   task :backfill_assessment_search do
+    start_date = ENV["START_DATE"]
+    end_date = ENV["END_DATE"]
+
+    start_date ||= nil
+    end_date ||= nil
+
+    date_range_sql = ""
+    if !start_date.nil? && !end_date.nil?
+      date_range_sql = "AND d.document ->> 'created_at' BETWEEN '#{start_date}' AND '#{end_date}'"
+    end
     assessment_search_gateway = Gateway::AssessmentSearchGateway.new
 
     sql = <<-SQL
@@ -18,6 +28,8 @@ namespace :one_off do
                         FROM assessment_search ase
                         WHERE ase.assessment_id = d.assessment_id)
       )
+      AND d.document ->> 'assessment_type' != 'AC-CERT'
+      #{date_range_sql}
     SQL
 
     raw_connection = ActiveRecord::Base.connection.raw_connection
