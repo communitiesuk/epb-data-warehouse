@@ -1,6 +1,6 @@
 require_relative "../shared_context/shared_lodgement"
 
-describe "Adding or updating hashed assessment id node rake" do
+describe "calling the rake to delete any rows from assessment_search" do
   include_context "when lodging XML"
 
   context "when calling the rake task" do
@@ -25,7 +25,7 @@ describe "Adding or updating hashed assessment id node rake" do
       end
     end
 
-    context "when one EPC has row in audit_logs for cancelled" do
+    context "when one EPC has a row in audit_logs for cancelled" do
       before do
         Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0000", event_type: "cancelled", timestamp: Time.now.utc)
         Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0001", event_type: "opt_out", timestamp: Time.now.utc)
