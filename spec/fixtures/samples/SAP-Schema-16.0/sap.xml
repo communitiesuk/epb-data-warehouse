@@ -1,4 +1,5 @@
 <ConditionReportCreateRequest_1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.epcregister.com" xmlns:HIP="DCLG-HIP" xmlns:SAP="DCLG-SAP09" xmlns:CS="DCLG-HIP/CommonStructures">
+<ConditionReportCreateRequest_1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.epcregister.com" xmlns:HIP="DCLG-HIP" xmlns:SAP="DCLG-SAP09" xmlns:CS="DCLG-HIP/CommonStructures">
   <Identification>
     <CS:ServiceName>CreateReport</CS:ServiceName>
     <CS:Operation>Create</CS:Operation>

@@ -109,8 +109,7 @@ shared_context "when fetching recommendations report" do
     sql
   end
 
-  def fetch_rr(*args)
-    this_args = args.first
+  def fetch_rr
     sql = <<~SQL
        SELECT rr.rrn,
       improvement_item,
@@ -119,13 +118,8 @@ shared_context "when fetching recommendations report" do
       improvement_summary_text,
       improvement_descr_text
       FROM mvw_domestic_rr_search rr
-      JOIN mvw_domestic_search m ON m.rrn=rr.rrn
     SQL
 
-    this_args[:bindings] = get_bindings(**this_args)
-    this_args[:sql] = sql
-    sql = search_filter(**this_args)
-
-    ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).map { |result| result }
+    ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result }
   end
 end

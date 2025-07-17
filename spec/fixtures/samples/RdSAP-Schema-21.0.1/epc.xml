@@ -112,41 +112,39 @@
     <Suggested-Improvements>
       <Improvement>
         <Sequence>1</Sequence>
-        <Improvement-Category>6</Improvement-Category>
-        <Improvement-Type>Z3</Improvement-Type>
-        <Typical-Saving>360</Typical-Saving>
-        <Energy-Performance-Rating>50</Energy-Performance-Rating>
-        <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
-        <Indicative-Cost>£100 - £350</Indicative-Cost>
+        <Improvement-Category>5</Improvement-Category>
+        <Improvement-Type>G</Improvement-Type>
         <Improvement-Details>
-          <Improvement-Number>5</Improvement-Number>
+          <Improvement-Number>66</Improvement-Number>
         </Improvement-Details>
+        <Typical-Saving>139</Typical-Saving>
+        <Indicative-Cost>£220 - £250</Indicative-Cost>
+        <Energy-Performance-Rating>70</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>70</Environmental-Impact-Rating>
       </Improvement>
       <Improvement>
         <Sequence>2</Sequence>
-        <Improvement-Category>2</Improvement-Category>
-        <Improvement-Type>Z2</Improvement-Type>
-        <Typical-Saving>99</Typical-Saving>
-        <Energy-Performance-Rating>60</Energy-Performance-Rating>
-        <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
-        <Indicative-Cost>2000</Indicative-Cost>
+        <Improvement-Category>5</Improvement-Category>
+        <Improvement-Type>N</Improvement-Type>
         <Improvement-Details>
-          <Improvement-Number>1</Improvement-Number>
+          <Improvement-Number>19</Improvement-Number>
         </Improvement-Details>
+        <Typical-Saving>49</Typical-Saving>
+        <Indicative-Cost>£4,000 - £7,000</Indicative-Cost>
+        <Energy-Performance-Rating>72</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>73</Environmental-Impact-Rating>
       </Improvement>
       <Improvement>
         <Sequence>3</Sequence>
-        <Improvement-Category>2</Improvement-Category>
-        <Improvement-Type>Z2</Improvement-Type>
-        <Typical-Saving>99</Typical-Saving>
-        <Energy-Performance-Rating>60</Energy-Performance-Rating>
-        <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
-        <Indicative-Cost>1000</Indicative-Cost>
+        <Improvement-Category>5</Improvement-Category>
+        <Improvement-Type>U</Improvement-Type>
         <Improvement-Details>
-          <Improvement-Texts>
-            <Improvement-Description>Improvement desc</Improvement-Description>
-          </Improvement-Texts>
+          <Improvement-Number>34</Improvement-Number>
         </Improvement-Details>
+        <Typical-Saving>286</Typical-Saving>
+        <Indicative-Cost>£8,000 - £10,000</Indicative-Cost>
+        <Energy-Performance-Rating>83</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>75</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
     <Renewable-Heat-Incentive>
