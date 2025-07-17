@@ -32,6 +32,9 @@ seed-test-data:
 	@echo ">>>>> Seeding DB with test data"
 	@bundle exec rake seed_test_data DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:${PGPORT}/epb_eav_development"
 
+backfill-assessment-search:
+	@bundle exec rake one_off:backfill_assessment_search DATABASE_URL="postgresql://postgres:${DOCKER_POSTGRES_PASSWORD}@localhost:${PGPORT}/epb_eav_development"
+
 test:
 	@bundle exec rspec
 
