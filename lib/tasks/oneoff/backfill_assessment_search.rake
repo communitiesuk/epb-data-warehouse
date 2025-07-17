@@ -30,7 +30,7 @@ namespace :one_off do
       #{date_range_sql}
     SQL
 
-    count_sql = "SELECT COUNT(*) FROM (#{sql})"
+    count_sql = "SELECT COUNT(*) FROM (#{sql}) as a"
     count = ActiveRecord::Base.connection.select_value(count_sql).to_i
 
     if count.zero?
