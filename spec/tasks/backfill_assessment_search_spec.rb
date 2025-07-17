@@ -13,6 +13,7 @@ describe "Backfill assessment_search table rake" do
     end
 
     before do
+      allow($stdout).to receive(:puts)
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
     end
 
@@ -28,10 +29,24 @@ describe "Backfill assessment_search table rake" do
         expect(search.length).to eq(3)
       end
 
+      it "shows a message of the assessments count to be backfilled" do
+        expect { task.invoke }.to output(/Total assessments to backfill: 3/).to_stdout
+      end
+
+      it "shows a message when finished" do
+        expect { task.invoke }.to output(/All certificates have been backfilled/).to_stdout
+      end
+
       it "inserting an already existing assessment does not raise an error" do
         task.invoke
         task.reenable
         expect { task.invoke }.not_to raise_error
+      end
+
+      it "when nothing needs to be inserted, shows a warning message" do
+        task.invoke
+        task.reenable
+        expect { task.invoke }.to output(/No certificates to backfill — exiting early./).to_stdout
       end
 
       it "inserting an already existing assessment does not call the assessment search gateway" do
