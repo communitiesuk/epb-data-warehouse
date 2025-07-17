@@ -11,7 +11,7 @@ namespace :one_off do
     assessment_search_gateway = Gateway::AssessmentSearchGateway.new
 
     sql = <<-SQL
-      SELECT d.assessment_id, d.document, aci.country_id, COALESCE(d.document ->> 'created_at', d.warehouse_created_at::TEXT) AS created_at
+      SELECT d.assessment_id, aci.country_id
       FROM assessment_documents d
       LEFT JOIN assessments_country_ids aci ON d.assessment_id = aci.assessment_id
       WHERE NOT (
@@ -48,11 +48,27 @@ namespace :one_off do
 
     raw_connection.get_result.stream_each.map { |row| { assessment_id: row["assessment_id"], document: row["document"], country_id: row["country_id"], created_at: row["created_at"] } }.each_slice(500) do |assessments|
       assessments.each do |assessment|
-        document = JSON.parse(assessment[:document])
-        assessment_search_gateway.insert_assessment(assessment_id: assessment[:assessment_id], document:, country_id: assessment[:country_id], created_at: assessment[:created_at])
+        document = Helper::BackFillTask.document(assessment[:assessment_id])
+        created_at = document["created_at"]
+        assessment_search_gateway.insert_assessment(assessment_id: assessment[:assessment_id], document:, country_id: assessment[:country_id], created_at:)
       end
     end
     puts "All certificates have been backfilled"
     ActiveRecord::Base.connection.close
+  end
+end
+
+class Helper::BackFillTask
+  def self.document(assessment_id)
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+      ),
+    ]
+
+    doc = ActiveRecord::Base.connection.exec_query("SELECT document FROM assessment_documents WHERE assessment_id =$1", "SQL", bindings).first["document"]
+    JSON.parse(doc)
   end
 end

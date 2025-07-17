@@ -70,17 +70,13 @@ describe "Backfill assessment_search table rake" do
 
       it "doesn't save AC-CERT assessment types" do
         save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-1111", assessment_type: "AC-CERT", sample_type: "epc")
-
         task.invoke
-
         expect(search.length).to eq(3)
       end
 
       it "only saves assessments from England, Wales or England and Wales" do
         save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-0000", assessment_type: "SAP", sample_type: "epc", country_id: 3)
-
         task.invoke
-
         expect(search.length).to eq(3)
       end
 
@@ -91,15 +87,6 @@ describe "Backfill assessment_search table rake" do
 
         epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-3333" }
         expect(epc["created_at"]).to eq "2025-07-14 00:00:00.000000"
-      end
-
-      it "uses the warehouse_created_at value when created_at is nil" do
-        Timecop.freeze(Time.utc(2020, 7, 14))
-        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-6666", assessment_type: "RdSAP", sample_type: "epc")
-        Timecop.return
-        task.invoke
-        epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-6666" }
-        expect(epc["created_at"]).to eq "2020-07-14 00:00:00.000000"
       end
     end
 
