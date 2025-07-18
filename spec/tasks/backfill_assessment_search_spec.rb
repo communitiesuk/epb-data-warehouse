@@ -1,7 +1,25 @@
+shared_context "when inserting epc documents" do
+  def save_new_epc(schema:, assessment_id:, assessment_type:, sample_type:, country_id: 1, created_at: nil, postcode: nil)
+    sample = Samples.xml(schema, sample_type)
+    use_case = UseCase::ParseXmlCertificate.new
+    parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
+    parsed_epc["assessment_type"] = assessment_type
+    parsed_epc["schema_type"] = schema
+    parsed_epc["created_at"] = created_at.to_s unless created_at.nil?
+    parsed_epc["registration_date"] = created_at.to_s unless created_at.nil?
+    parsed_epc["postcode"] = postcode unless postcode.nil?
+    import = Gateway::DocumentsGateway.new
+    import.add_assessment(assessment_id:, document: parsed_epc)
+    country_gateway = Gateway::AssessmentsCountryIdGateway.new
+    country_gateway.insert(assessment_id:, country_id:) unless country_id.nil?
+  end
+end
+
 describe "Backfill assessment_search table rake" do
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:backfill_assessment_search") }
 
+    include_context "when inserting epc documents"
     after do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attribute_values;")
     end
@@ -81,12 +99,19 @@ describe "Backfill assessment_search table rake" do
       end
 
       it "uses the created_at value when available" do
-        created_at = Time.utc(2025, 7, 14)
+        created_at = Date.new(2025, 7, 14)
         save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3333", assessment_type: "RdSAP", sample_type: "epc", created_at:)
         task.invoke
 
         epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-3333" }
-        expect(epc["created_at"]).to eq "2025-07-14 00:00:00.000000"
+        expect(epc["created_at"]).to eq "2025-07-14"
+      end
+
+      it "uses the registration_date when created_at is not available" do
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-8888", assessment_type: "RdSAP", sample_type: "epc")
+        task.invoke
+        epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-8888" }
+        expect(epc["created_at"]).to eq "2020-06-04"
       end
     end
 
@@ -102,9 +127,9 @@ describe "Backfill assessment_search table rake" do
       end
 
       it "only saves the ones with a 'created_at' value inside the date range" do
-        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3322", assessment_type: "RdSAP", sample_type: "epc", created_at: Time.utc(2022, 7, 14))
-        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3333", assessment_type: "RdSAP", sample_type: "epc", created_at: Time.utc(2023, 7, 14))
-        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3344", assessment_type: "RdSAP", sample_type: "epc", created_at: Time.utc(2024, 7, 14))
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3322", assessment_type: "RdSAP", sample_type: "epc", created_at: Date.new(2022, 7, 14))
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3333", assessment_type: "RdSAP", sample_type: "epc", created_at: Date.new(2023, 7, 14))
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3344", assessment_type: "RdSAP", sample_type: "epc", created_at: Date.new(2024, 7, 14))
         task.invoke
         expect(search.length).to eq(1)
         expect(search.first["assessment_id"]).to eq("0000-6666-4444-3333-3333")
@@ -113,7 +138,7 @@ describe "Backfill assessment_search table rake" do
 
     context "when different certificate versions are saved" do
       let(:created_at) do
-        Time.utc(2025, 7, 14)
+        Date.new(2025, 7, 14)
       end
       let(:columns_to_check) do
         %w[assessment_id address_line_1 post_town postcode current_energy_efficiency_rating current_energy_efficiency_band council constituency address registration_date assessment_type created_at]
@@ -138,12 +163,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "SAP",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "B",
           "current_energy_efficiency_rating" => 82,
           "post_town" => "Town",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2012-09-29 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -163,12 +188,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "SAP",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "C",
           "current_energy_efficiency_rating" => 72,
           "post_town" => "Whitbury",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2022-05-09 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -188,12 +213,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "RdSAP",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "D",
           "current_energy_efficiency_rating" => 66,
           "post_town" => "POSTTOWN",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2016-01-12 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -213,12 +238,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "RdSAP",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "E",
           "current_energy_efficiency_rating" => 50,
           "post_town" => "Whitbury",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2025-04-04 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -238,12 +263,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "CEPC",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "F",
           "current_energy_efficiency_rating" => 134,
           "post_town" => "POSTTOWN",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2013-08-15 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -263,12 +288,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "CEPC",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "D",
           "current_energy_efficiency_rating" => 84,
           "post_town" => "Big Rock",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2021-03-19 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -288,12 +313,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "DEC",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "D",
           "current_energy_efficiency_rating" => 77,
           "post_town" => "POSTTOWN",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2016-04-25 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -313,12 +338,12 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "DEC",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => "A",
           "current_energy_efficiency_rating" => 1,
           "post_town" => "Whitbury",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2020-05-04 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
@@ -338,29 +363,15 @@ describe "Backfill assessment_search table rake" do
           "assessment_type" => "DEC",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "created_at" => Time.new("2025-07-14 00:00:00.000000000 +0000"),
+          "created_at" => Date.new(2025, 7, 14),
           "current_energy_efficiency_band" => nil,
           "current_energy_efficiency_rating" => 0,
           "post_town" => "Fulchester",
           "postcode" => "SW10 0AA",
-          "registration_date" => Time.new("2020-05-04 00:00:00.000000000 +0000"),
+          "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
       end
     end
-  end
-
-  def save_new_epc(schema:, assessment_id:, assessment_type:, sample_type:, country_id: 1, created_at: nil, postcode: nil)
-    sample = Samples.xml(schema, sample_type)
-    use_case = UseCase::ParseXmlCertificate.new
-    parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
-    parsed_epc["assessment_type"] = assessment_type
-    parsed_epc["schema_type"] = schema
-    parsed_epc["created_at"] = created_at.to_s unless created_at.nil?
-    parsed_epc["postcode"] = postcode unless postcode.nil?
-    import = Gateway::DocumentsGateway.new
-    import.add_assessment(assessment_id:, document: parsed_epc)
-    country_gateway = Gateway::AssessmentsCountryIdGateway.new
-    country_gateway.insert(assessment_id:, country_id:) unless country_id.nil?
   end
 end

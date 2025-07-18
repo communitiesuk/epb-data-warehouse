@@ -6,7 +6,7 @@ namespace :one_off do
 
     date_range_sql = ""
     if !start_date.nil? && !end_date.nil?
-      date_range_sql = "AND d.document ->> 'created_at' BETWEEN '#{start_date}' AND '#{end_date}'"
+      date_range_sql = "AND d.document ->> 'registration_date' BETWEEN '#{start_date}' AND '#{end_date}'"
     end
     assessment_search_gateway = Gateway::AssessmentSearchGateway.new
 
@@ -49,7 +49,7 @@ namespace :one_off do
     raw_connection.get_result.stream_each.map { |row| { assessment_id: row["assessment_id"], document: row["document"], country_id: row["country_id"], created_at: row["created_at"] } }.each_slice(500) do |assessments|
       assessments.each do |assessment|
         document = Helper::BackFillTask.document(assessment[:assessment_id])
-        created_at = document["created_at"]
+        created_at = document["created_at"].nil? ? document["registration_date"] : document["created_at"]
         assessment_search_gateway.insert_assessment(assessment_id: assessment[:assessment_id], document:, country_id: assessment[:country_id], created_at:)
       end
     end
