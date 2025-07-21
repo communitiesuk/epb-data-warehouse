@@ -323,7 +323,7 @@ describe Gateway::DomesticSearchGateway do
           "low_energy_fixed_lighting_outlets_count" => "16",
           "main_fuel" => "mains gas (not community)",
           "mains_gas_flag" => "Y",
-          "mainheat_description" => "Boiler and radiators, anthracite",
+          "mainheat_description" => "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
           "mainheat_env_eff" => "Very Poor",
           "mechanical_ventilation" => "natural",
           "multi_glaze_proportion" => "100",
