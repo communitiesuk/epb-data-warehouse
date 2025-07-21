@@ -177,6 +177,10 @@
   </Energy-Assessment>
   <SAP10-Data>
     <SAP-Property-Details>
+      <SAP-Flat-Details>
+        <Level>1</Level>
+        <Storeys>1</Storeys>
+      </SAP-Flat-Details>
       <SAP-Energy-Source>
         <Electricity-Tariff>4</Electricity-Tariff>
         <Wind-Turbines>

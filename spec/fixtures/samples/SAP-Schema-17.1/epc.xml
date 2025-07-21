@@ -178,6 +178,9 @@
       <Conservatory-Type>1</Conservatory-Type>
       <Design-Water-Use>1</Design-Water-Use>
       <Is-In-Smoke-Control-Area>unknown</Is-In-Smoke-Control-Area>
+      <SAP-Flat-Details>
+        <Level>1</Level>
+      </SAP-Flat-Details>
       <SAP-Opening-Types>
         <SAP-Opening-Type>
           <Name>Opening Type 1</Name>
