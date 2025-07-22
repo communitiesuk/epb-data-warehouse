@@ -100,9 +100,9 @@
         <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Hot-Water>
       <Lighting>
-        <Description>Low energy lighting in 91% of fixed outlets</Description>
-        <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
+        <Description>Energy saving bulbs</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Lighting>
       <Air-Tightness>
         <Description>Air permeability 2.0 m³/h.m² (assumed)</Description>
@@ -594,8 +594,13 @@
           </Fixed-Light>
           <Fixed-Light>
             <Lighting-Outlets>10</Lighting-Outlets>
-            <Lighting-Efficacy> 66.9</Lighting-Efficacy>
-            <Lighting-Power> 14</Lighting-Power>
+            <Lighting-Efficacy>66.9</Lighting-Efficacy>
+            <Lighting-Power>14</Lighting-Power>
+          </Fixed-Light>
+          <Fixed-Light>
+            <Lighting-Outlets>7</Lighting-Outlets>
+            <Lighting-Efficacy>69.9</Lighting-Efficacy>
+            <Lighting-Power>15</Lighting-Power>
           </Fixed-Light>
         </Fixed-Lights>
       </SAP-Lighting>
