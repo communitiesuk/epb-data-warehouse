@@ -21,18 +21,18 @@ describe Gateway::AssessmentSearchGateway do
   end
 
   before(:all) do
-    Timecop.freeze(Time.utc(2025, 7, 4, 12, 0))
     import_postcode_directory_name
     import_postcode_directory_data
   end
 
-  after(:all) do
-    Timecop.return
-  end
-
   describe "#insert_assessment" do
     before do
+      Timecop.freeze(Time.utc(2025, 7, 4, 12, 0))
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+    end
+
+    after do
+      Timecop.return
     end
 
     context "when saving a domestic EPC" do
@@ -383,6 +383,113 @@ describe Gateway::AssessmentSearchGateway do
     context "when the assessment id is not found" do
       it "does not error" do
         expect { gateway.delete_assessment(assessment_id: "9999-0000-0000-0000-1111") }.not_to raise_error
+      end
+    end
+  end
+
+  describe "#find_assesments" do
+    let(:args) do
+      {
+        date_start: "2014-12-01",
+        date_end: "2024-12-09",
+        assessment_type: %w[RdSAP SAP],
+      }
+    end
+
+    let(:cepc) do
+      parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD" })
+    end
+
+    before do
+      Timecop.freeze(Date.yesterday.to_time.utc)
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+
+      20.times do |i|
+        assessment_id = "0000-0000-0000-#{i.to_s.rjust(4, '0')}"
+        gateway.insert_assessment(assessment_id:, document: rdsap, country_id:)
+      end
+
+      10.times do |i|
+        assessment_id = "0001-0000-0000-#{i.to_s.rjust(4, '0')}"
+        gateway.insert_assessment(assessment_id:, document: cepc, country_id:)
+      end
+      Timecop.return
+    end
+
+    it "returns the required columns" do
+      expected_result = {
+        "certificate_number" => "0000-0000-0000-0000",
+        "address_line_1" => "1 Some Street",
+        "address_line_2" => nil,
+        "address_line_3" => nil,
+        "address_line_4" => nil,
+        "assessment_address_id" => "RRN-0000-0000-0000-0000-0000",
+        "constituency" => "Chelsea and Fulham",
+        "council" => "Hammersmith and Fulham",
+        "current_energy_efficiency_band" => "E",
+        "post_town" => "Whitbury",
+        "postcode" => "SW10 0AA",
+        "registration_date" => Date.new(2020, 5, 4),
+      }
+      expect(gateway.find_assessments(**args).first).to eq expected_result
+    end
+
+    it "returns data for domestic" do
+      domestic_args = args.merge({ assessment_type: %w[RdSAP SAP] })
+      expect(gateway.find_assessments(**domestic_args).length).to eq 20
+    end
+
+    context "when filtering for an address" do
+      before do
+        Timecop.freeze(Date.yesterday.to_time.utc)
+        address_rdsap = rdsap.merge({ "address_line_1" => "2 Some street" })
+        gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, country_id:)
+        Timecop.return
+      end
+
+      it "returns one row for the exact address" do
+        address = "2 Some street"
+        address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
+        expect(gateway.find_assessments(**address_args).length).to eq 1
+        expect(gateway.find_assessments(**address_args).first["address_line_1"]).to eq(address)
+        expect(gateway.find_assessments(**address_args).first["certificate_number"]).to eq("0000-0000-0010-0123")
+      end
+
+      it "returns all the rows matching partial address" do
+        address = "Some street"
+        address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
+        expect(gateway.find_assessments(**address_args).length).to eq 21
+      end
+
+      it "returns all the rows matching partial address regardless of casing" do
+        address = "SOme StrEet"
+        address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
+        expect(gateway.find_assessments(**address_args).length).to eq 21
+      end
+    end
+
+    context "when filtering for dates" do
+      before do
+        date_rdsap = rdsap.merge({ "registration_date" => "2022-02-05" })
+        Timecop.freeze(Date.yesterday.to_time.utc)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, country_id:)
+        Timecop.return
+      end
+
+      it "returns one row for the date range" do
+        date_args = args.merge({ date_start: "2021-12-01", date_end: "2024-12-09" })
+        expect(gateway.find_assessments(**date_args).length).to eq 1
+        expect(gateway.find_assessments(**date_args).first["certificate_number"]).to eq("0000-0000-0020-0123")
+      end
+    end
+
+    context "when having data from today" do
+      before do
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap, country_id:)
+      end
+
+      it "ignores the assessment created today" do
+        expect(gateway.find_assessments(**args).length).to eq 20
       end
     end
   end

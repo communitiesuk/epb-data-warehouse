@@ -157,6 +157,32 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.delete(sql, "SQL", bindings)
   end
 
+  def find_assessments(*args)
+    this_args = args.first
+    sql = <<-SQL
+        SELECT assessment_id AS certificate_number,
+               address_line_1,
+               address_line_2,
+               address_line_3,
+               address_line_4,
+               postcode,
+               post_town,
+               council,
+               constituency,
+               assessment_address_id,
+               current_energy_efficiency_band,
+               registration_date
+               FROM assessment_search
+    SQL
+
+    this_args[:bindings] = get_bindings(**this_args)
+
+    this_args[:sql] = sql
+    sql = search_filter(**this_args)
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).map { |row| row }
+  end
+
 private
 
   def get_energy_rating(document:)
@@ -181,5 +207,146 @@ private
       arr.append(document[key]) unless document[key].nil?
     end
     arr.map(&:to_s).reject(&:empty?).join(" ").downcase
+  end
+
+  def get_bindings(*args)
+    this_args = args.first
+    arr = []
+
+    this_args[:assessment_type].each_with_index do |type, idx|
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_type#{idx + 1}",
+        type,
+        ActiveRecord::Type::String.new,
+      )
+    end
+
+    unless this_args[:eff_rating].nil?
+      this_args[:eff_rating].each_with_index do |rating, idx|
+        arr << ActiveRecord::Relation::QueryAttribute.new(
+          "eff_rating_#{idx + 1}",
+          rating,
+          ActiveRecord::Type::String.new,
+        )
+      end
+    end
+
+    unless this_args[:council].nil?
+      this_args[:council].each_with_index do |council, idx|
+        arr << ActiveRecord::Relation::QueryAttribute.new(
+          "council_#{idx + 1}",
+          council,
+          ActiveRecord::Type::String.new,
+        )
+      end
+    end
+
+    unless this_args[:constituency].nil?
+      this_args[:constituency].each_with_index do |constituency, idx|
+        arr << ActiveRecord::Relation::QueryAttribute.new(
+          "constituency_#{idx + 1}",
+          constituency,
+          ActiveRecord::Type::String.new,
+        )
+      end
+    end
+
+    arr.concat [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "date_start",
+        this_args[:date_start],
+        ActiveRecord::Type::Date.new,
+      ),
+      ActiveRecord::Relation::QueryAttribute.new(
+        "date_end",
+        this_args[:date_end],
+        ActiveRecord::Type::Date.new,
+      ),
+    ]
+
+    unless this_args[:address].nil?
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "address",
+        "%#{this_args[:address].downcase}%",
+        ActiveRecord::Type::String.new,
+      )
+    end
+
+    unless this_args[:postcode].nil?
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "postcode",
+        this_args[:postcode],
+        ActiveRecord::Type::String.new,
+      )
+    end
+
+    unless this_args[:row_limit].nil?
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "limit",
+        this_args[:row_limit],
+        ActiveRecord::Type::Integer.new,
+      )
+
+    end
+    arr
+  end
+
+  def search_filter(*args)
+    this_args = args.first
+    sql = this_args[:sql]
+
+    index = 1
+
+    sql << " JOIN ( VALUES "
+    sql << this_args[:assessment_type].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+    sql << ") vals (t) "
+    sql << "ON (assessment_type = t)"
+    index += this_args[:assessment_type].size
+
+    unless this_args[:eff_rating].nil?
+      sql << " JOIN ( VALUES "
+      sql << this_args[:eff_rating].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << ") vals (v) "
+      sql << "ON (current_energy_rating = v)"
+      index += this_args[:eff_rating].size
+    end
+
+    unless this_args[:council].nil?
+      sql << " JOIN ( VALUES "
+      sql << this_args[:council].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << ") councils (c) "
+      sql << "ON (council = c)"
+      index += this_args[:council].size
+    end
+
+    unless this_args[:constituency].nil?
+      sql << " JOIN ( VALUES "
+      sql << this_args[:constituency].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << ") cons (d) "
+      sql << "ON (constituency = d)"
+      index += this_args[:constituency].size
+    end
+
+    sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
+    sql << "registration_date BETWEEN $#{index} AND $#{index + 1}"
+    index += 2
+
+    unless this_args[:address].nil?
+      sql << " AND address LIKE $#{index}"
+      index += 1
+    end
+
+    unless this_args[:postcode].nil?
+      sql << " AND postcode = $#{index}"
+      index += 1
+    end
+
+    sql << " AND NOT created_at::date = CURRENT_DATE"
+
+    unless this_args[:row_limit].nil?
+      sql << " ORDER BY registration_date DESC"
+      sql << " LIMIT $#{index}"
+    end
+    sql
   end
 end
