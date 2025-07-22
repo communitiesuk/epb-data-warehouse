@@ -40,7 +40,7 @@ describe "ImportEnumsXsd Rake" do
         end
 
         it "saves all improvement_summary values for the latest version of RdSAP" do
-          expect(counts.find { |i| i["schema_version"] == "RdSAP-Schema-21.0.0" }["cnt"]).to eq 55
+          expect(counts.find { |i| i["schema_version"] == "RdSAP-Schema-21.0.0" }["cnt"]).to eq 60
         end
 
         it "saves all improvement_summary values for the older version of RdSAP" do
@@ -94,7 +94,7 @@ describe "ImportEnumsXsd Rake" do
         end
 
         it "saves all improvement_description values for the latest version of RdSAP" do
-          expect(counts.find { |i| i["schema_version"] == "RdSAP-Schema-21.0.0" }["cnt"]).to eq 55
+          expect(counts.find { |i| i["schema_version"] == "RdSAP-Schema-21.0.0" }["cnt"]).to eq 60
         end
 
         it "saves all improvement_description values for the older version of RdSAP" do
