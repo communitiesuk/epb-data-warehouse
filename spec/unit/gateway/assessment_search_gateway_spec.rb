@@ -503,6 +503,26 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
 
+    context "when filtering by constituency" do
+      before do
+        postcode_rdsap = rdsap.merge({ "postcode" => "ML9 9AR" })
+        Timecop.freeze(Date.yesterday.to_time.utc)
+        gateway.insert_assessment(assessment_id: "0000-0000-0033-0033", document: postcode_rdsap, country_id:)
+        Timecop.return
+      end
+
+      it "returns one row matching the constituency" do
+        council_args = args.merge({ constituency: ["Lanark and Hamilton East"] })
+        expect(gateway.find_assessments(**council_args).length).to eq 1
+        expect(gateway.find_assessments(**council_args).first["certificate_number"]).to eq("0000-0000-0033-0033")
+      end
+
+      it "returns all matching rows when searching for multiple constituencies" do
+        council_args = args.merge({ constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] })
+        expect(gateway.find_assessments(**council_args).length).to eq 3
+      end
+    end
+
     context "when having data from today" do
       before do
         gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap, country_id:)
