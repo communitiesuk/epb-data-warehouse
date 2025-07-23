@@ -401,19 +401,17 @@ describe Gateway::AssessmentSearchGateway do
     end
 
     before do
-      Timecop.freeze(Date.yesterday.to_time.utc)
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
 
       2.times do |i|
         assessment_id = "0000-0000-0000-#{i.to_s.rjust(4, '0')}"
-        gateway.insert_assessment(assessment_id:, document: rdsap, country_id:)
+        gateway.insert_assessment(assessment_id:, document: rdsap, created_at: "2025-07-22", country_id:)
       end
 
       3.times do |i|
         assessment_id = "0001-0000-0000-#{i.to_s.rjust(4, '0')}"
-        gateway.insert_assessment(assessment_id:, document: cepc, country_id:)
+        gateway.insert_assessment(assessment_id:, document: cepc, created_at: "2025-07-22", country_id:)
       end
-      Timecop.return
     end
 
     it "returns the required columns" do
@@ -441,10 +439,8 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when filtering for an address" do
       before do
-        Timecop.freeze(Date.yesterday.to_time.utc)
         address_rdsap = rdsap.merge({ "address_line_1" => "2 Some street" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, country_id:)
-        Timecop.return
+        gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, created_at: "2025-07-22", country_id:)
       end
 
       it "returns one row for the exact address" do
@@ -471,9 +467,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering for dates" do
       before do
         date_rdsap = rdsap.merge({ "registration_date" => "2022-02-05" })
-        Timecop.freeze(Date.yesterday.to_time.utc)
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, country_id:)
-        Timecop.return
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, created_at: "2025-07-22", country_id:)
       end
 
       it "returns one row for the date range" do
@@ -486,9 +480,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by council" do
       before do
         postcode_rdsap = rdsap.merge({ "postcode" => "SW1A 2AA" })
-        Timecop.freeze(Date.yesterday.to_time.utc)
-        gateway.insert_assessment(assessment_id: "0000-0000-0022-0022", document: postcode_rdsap, country_id:)
-        Timecop.return
+        gateway.insert_assessment(assessment_id: "0000-0000-0022-0022", document: postcode_rdsap, created_at: "2025-07-22", country_id:)
       end
 
       it "returns one row for the council" do
@@ -506,9 +498,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by constituency" do
       before do
         postcode_rdsap = rdsap.merge({ "postcode" => "ML9 9AR" })
-        Timecop.freeze(Date.yesterday.to_time.utc)
-        gateway.insert_assessment(assessment_id: "0000-0000-0033-0033", document: postcode_rdsap, country_id:)
-        Timecop.return
+        gateway.insert_assessment(assessment_id: "0000-0000-0033-0033", document: postcode_rdsap, created_at: "2025-07-22", country_id:)
       end
 
       it "returns one row matching the constituency" do
@@ -525,7 +515,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when having data from today" do
       before do
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap, country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap, created_at: Time.now, country_id:)
       end
 
       it "ignores the assessment created today" do
