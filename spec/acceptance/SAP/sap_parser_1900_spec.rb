@@ -35,6 +35,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "region_code" => 16,
                       "country_code" => "ENG",
                       "assessment_date" => "2022-05-09",
+                      "sap_flat_details" => { "level" => 1, "storeys" => 1 },
                       "walls" => [{ "description" => "Average thermal transmittance 0.18 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
                       "roofs" => [{ "description" => "Average thermal transmittance 0.13 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
                       "floors" => [{ "description" => "Average thermal transmittance 0.12 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
@@ -55,9 +56,9 @@ RSpec.describe "the parser and the SAP configuration" do
                          "energy_efficiency_rating" => 4,
                          "environmental_efficiency_rating" => 3 },
                       "lighting" =>
-                       { "description" => "Low energy lighting in 91% of fixed outlets",
-                         "energy_efficiency_rating" => 5,
-                         "environmental_efficiency_rating" => 5 },
+                        { "description" => "Energy saving bulbs",
+                          "energy_efficiency_rating" => 0,
+                          "environmental_efficiency_rating" => 0 },
                       "air_tightness" =>
                        { "description" => "Air permeability 2.0 m³/h.m² (assumed)", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 },
                       "has_fixed_air_conditioning" => "false",
@@ -273,9 +274,11 @@ RSpec.describe "the parser and the SAP configuration" do
                       "cold_water_source" => 1,
                       "windows_overshading" => 2,
                       "is_in_smoke_control_area" => "unknown",
-                      "sap_lighting" =>
-                       [[{ "lighting_outlets" => 1, "lighting_efficacy" => 11.2, "lighting_power" => 60 },
-                         { "lighting_outlets" => 10, "lighting_efficacy" => 66.9, "lighting_power" => 14 }]],
+                      "sap_lighting" => [
+                        [{ "lighting_efficacy" => 11.2, "lighting_outlets" => 1, "lighting_power" => 60 },
+                         { "lighting_efficacy" => 66.9, "lighting_outlets" => 10, "lighting_power" => 14 },
+                         { "lighting_efficacy" => 69.9, "lighting_outlets" => 7, "lighting_power" => 15 }],
+                      ],
                       "conservatory_type" => 1,
                       "terrain_type" => 1,
                       "is_dwelling_export_capable" => "true",

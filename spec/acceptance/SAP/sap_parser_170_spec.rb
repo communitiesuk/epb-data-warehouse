@@ -29,6 +29,7 @@ RSpec.describe "the parser and the SAP configuration (17.0)" do
                       "region_code" => 6,
                       "country_code" => "ENG",
                       "assessment_date" => "2013-07-08",
+                      "sap_flat_details" => { "level" => 1 },
                       "walls" =>
                         [{ "description" => "Average thermal transmittance 0.28 W/m²K",
                            "energy_efficiency_rating" => 5,

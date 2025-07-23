@@ -353,6 +353,7 @@ RSpec.describe "the parser and the SAP configuration" do
                          "hot_water_store_heat_loss" => 1.31,
                          "has_cylinder_thermostat" => "true",
                          "is_cylinder_in_heated_space" => "true" },
+                      "sap_flat_details" => { "level" => 1 },
                       "sap_energy_source" =>
                        { "pv_arrays" =>
                           [{ "peak_power" => 0.75,
