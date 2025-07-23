@@ -432,9 +432,11 @@ describe Gateway::AssessmentSearchGateway do
       expect(gateway.find_assessments(**args).first).to eq expected_result
     end
 
-    it "returns data for domestic" do
-      domestic_args = args.merge({ assessment_type: %w[RdSAP SAP] })
-      expect(gateway.find_assessments(**domestic_args).length).to eq 2
+    context "when filtering by assessment_type" do
+      it "returns data for domestic" do
+        domestic_args = args.merge({ assessment_type: %w[RdSAP SAP] })
+        expect(gateway.find_assessments(**domestic_args).length).to eq 2
+      end
     end
 
     context "when filtering for an address" do
@@ -510,6 +512,36 @@ describe Gateway::AssessmentSearchGateway do
       it "returns all matching rows when searching for multiple constituencies" do
         council_args = args.merge({ constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] })
         expect(gateway.find_assessments(**council_args).length).to eq 3
+      end
+    end
+
+    context "when filtering by postcode" do
+      before do
+        postcode_rdsap = rdsap.merge({ "postcode" => "AB1 2CD" })
+        gateway.insert_assessment(assessment_id: "0000-0000-0044-0044", document: postcode_rdsap, created_at: "2025-07-22", country_id:)
+      end
+
+      it "returns one row matching the postcode" do
+        postcode_args = args.merge({ postcode: "AB1 2CD" })
+        expect(gateway.find_assessments(**postcode_args).length).to eq 1
+        expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
+      end
+    end
+
+    context "when filtering by eff_rating" do
+      before do
+        eff_rating_rdsap = rdsap.merge({ "energy_rating_current" => 95 })
+        gateway.insert_assessment(assessment_id: "0000-0000-0044-0044", document: eff_rating_rdsap, created_at: "2025-07-22", country_id:)
+      end
+
+      it "returns one row matching the eff_rating" do
+        eff_rating_args = args.merge({ eff_rating: %w[A] })
+        expect(gateway.find_assessments(**eff_rating_args).length).to eq 1
+      end
+
+      it "returns multiple rows when searching for multiple eff_rating" do
+        eff_rating_args = args.merge({ eff_rating: %w[A E] })
+        expect(gateway.find_assessments(**eff_rating_args).length).to eq 3
       end
     end
 

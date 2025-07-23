@@ -299,15 +299,15 @@ private
 
     sql << " JOIN ( VALUES "
     sql << this_args[:assessment_type].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
-    sql << ") vals (t) "
+    sql << ") types (t) "
     sql << "ON (assessment_type = t)"
     index += this_args[:assessment_type].size
 
     unless this_args[:eff_rating].nil?
       sql << " JOIN ( VALUES "
       sql << this_args[:eff_rating].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
-      sql << ") vals (v) "
-      sql << "ON (current_energy_rating = v)"
+      sql << ") ratings (r) "
+      sql << "ON (current_energy_efficiency_band = r)"
       index += this_args[:eff_rating].size
     end
 
