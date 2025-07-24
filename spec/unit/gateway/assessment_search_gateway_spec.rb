@@ -403,10 +403,9 @@ describe Gateway::AssessmentSearchGateway do
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
 
-      2.times do |i|
-        assessment_id = "0000-0000-0000-#{i.to_s.rjust(4, '0')}"
-        gateway.insert_assessment(assessment_id:, document: rdsap, created_at: "2025-07-22", country_id:)
-      end
+      newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-01" })
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: newer_rdsap, created_at: "2025-07-22", country_id:)
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, created_at: "2025-07-22", country_id:)
 
       3.times do |i|
         assessment_id = "0001-0000-0000-#{i.to_s.rjust(4, '0')}"
@@ -427,7 +426,7 @@ describe Gateway::AssessmentSearchGateway do
         "current_energy_efficiency_band" => "E",
         "post_town" => "Whitbury",
         "postcode" => "SW10 0AA",
-        "registration_date" => Date.new(2020, 5, 4),
+        "registration_date" => Date.new(2021, 11, 1),
       }
       expect(gateway.find_assessments(**args).first).to eq expected_result
     end
