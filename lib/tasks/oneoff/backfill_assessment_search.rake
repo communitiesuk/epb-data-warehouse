@@ -13,7 +13,8 @@ namespace :one_off do
     sql = <<-SQL
       SELECT d.assessment_id, aci.country_id
       FROM assessment_documents d
-      LEFT JOIN assessments_country_ids aci ON d.assessment_id = aci.assessment_id
+      JOIN assessments_country_ids aci ON d.assessment_id = aci.assessment_id
+      JOIN ( VALUES (1), (2), (4) ) vals (c) ON (aci.country_id = c)
       WHERE NOT (
         EXISTS (SELECT 1
                 FROM assessment_attribute_values aav
@@ -26,34 +27,24 @@ namespace :one_off do
                         WHERE ase.assessment_id = d.assessment_id)
       )
       AND d.document ->> 'assessment_type' != 'AC-CERT'
-      AND aci.country_id IN (1, 2, 4)
       #{date_range_sql}
     SQL
-
-    count_sql = "SELECT COUNT(*) FROM (#{sql}) as a"
-    count = ActiveRecord::Base.connection.select_value(count_sql).to_i
-
-    if count.zero?
-      puts "No certificates to backfill — exiting early."
-      next
-    else
-      puts "Total assessments to backfill: #{count}"
-    end
+    count = 0
 
     raw_connection = ActiveRecord::Base.connection.raw_connection
     raw_connection.send_query(sql)
     raw_connection.set_single_row_mode
-
-    return if count.eql? 0
 
     raw_connection.get_result.stream_each.map { |row| { assessment_id: row["assessment_id"], document: row["document"], country_id: row["country_id"], created_at: row["created_at"] } }.each_slice(500) do |assessments|
       assessments.each do |assessment|
         document = Helper::BackFillTask.document(assessment[:assessment_id])
         created_at = document["created_at"].nil? ? document["registration_date"] : document["created_at"]
         assessment_search_gateway.insert_assessment(assessment_id: assessment[:assessment_id], document:, country_id: assessment[:country_id], created_at:)
+        count += 1
       end
     end
-    puts "All certificates have been backfilled"
+
+    puts "Total assessments to back fill: #{count}"
     ActiveRecord::Base.connection.close
   end
 end

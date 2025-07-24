@@ -48,23 +48,13 @@ describe "Backfill assessment_search table rake" do
       end
 
       it "shows a message of the assessments count to be backfilled" do
-        expect { task.invoke }.to output(/Total assessments to backfill: 3/).to_stdout
-      end
-
-      it "shows a message when finished" do
-        expect { task.invoke }.to output(/All certificates have been backfilled/).to_stdout
+        expect { task.invoke }.to output(/Total assessments to back fill: 3/).to_stdout
       end
 
       it "inserting an already existing assessment does not raise an error" do
         task.invoke
         task.reenable
         expect { task.invoke }.not_to raise_error
-      end
-
-      it "when nothing needs to be inserted, shows a warning message" do
-        task.invoke
-        task.reenable
-        expect { task.invoke }.to output(/No certificates to backfill — exiting early./).to_stdout
       end
 
       it "inserting an already existing assessment does not call the assessment search gateway" do
@@ -75,7 +65,7 @@ describe "Backfill assessment_search table rake" do
         allow(Gateway::AssessmentSearchGateway).to receive(:new).and_return(gateway_instance)
 
         task.reenable
-        task.invoke
+        expect { task.invoke }.to output(/Total assessments to back fill: 0/).to_stdout
         expect(gateway_instance).to have_received(:insert_assessment).exactly(0).times
       end
 
