@@ -279,15 +279,6 @@ private
         ActiveRecord::Type::String.new,
       )
     end
-
-    unless this_args[:row_limit].nil?
-      arr << ActiveRecord::Relation::QueryAttribute.new(
-        "limit",
-        this_args[:row_limit],
-        ActiveRecord::Type::Integer.new,
-      )
-
-    end
     arr
   end
 
@@ -343,10 +334,9 @@ private
 
     sql << " AND NOT created_at::date = CURRENT_DATE"
 
-    unless this_args[:row_limit].nil?
-      sql << " ORDER BY registration_date DESC"
-      sql << " LIMIT $#{index}"
-    end
+    sql << " ORDER BY registration_date DESC"
+    sql << " LIMIT 5000"
+
     sql
   end
 end
