@@ -15,6 +15,7 @@ shared_context "when inserting epc documents" do
   end
 end
 
+require_relative "../shared_context/shared_lodgement"
 describe "Backfill assessment_search table rake" do
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:backfill_assessment_search") }
@@ -361,6 +362,32 @@ describe "Backfill assessment_search table rake" do
           "registration_date" => Date.new(2025, 7, 14),
         }
         expect(search.first).to eq(expected_result)
+      end
+    end
+
+    context "when a document is not found" do
+      include_context "when lodging XML"
+
+      let(:rdsap) do
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000 ", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "postcode" => "SW10 0AA" })
+      end
+
+      before do
+        allow(Helper::BackFillTask).to receive(:document).and_return rdsap
+        allow(Helper::BackFillTask).to receive(:document).with("5555-5555-5555-5555-5555").and_raise NoMethodError
+        save_new_epc(schema: "SAP-Schema-18.0.0", assessment_id: "0000-0000-0000-0000-0000", assessment_type: "SAP", sample_type: "epc")
+        save_new_epc(schema: "SAP-Schema-17.0", assessment_id: "5555-5555-5555-5555-5555", assessment_type: "SAP", sample_type: "epc")
+        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-2222", assessment_type: "RdSAP", sample_type: "epc")
+      end
+
+      it "does not raise an error" do
+        expect { task.invoke }.not_to raise_error
+        expect(search.length).to be > 1
+      end
+
+      it "inserts the 2 epcs that exist" do
+        task.invoke
+        expect(search.length).to eq 2
       end
     end
   end

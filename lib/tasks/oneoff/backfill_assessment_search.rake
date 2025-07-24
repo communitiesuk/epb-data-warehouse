@@ -1,3 +1,5 @@
+require_relative "../../helper/back_fill_task"
+
 namespace :one_off do
   desc "Apply addition of hashed_assessment_id by updating the document store and EAV table with a new data node or row"
   task :backfill_assessment_search do
@@ -41,25 +43,12 @@ namespace :one_off do
         created_at = document["created_at"].nil? ? document["registration_date"] : document["created_at"]
         assessment_search_gateway.insert_assessment(assessment_id: assessment[:assessment_id], document:, country_id: assessment[:country_id], created_at:)
         count += 1
+      rescue NoMethodError
+        # Ignored
       end
     end
 
     puts "Total assessments to back fill: #{count}"
     ActiveRecord::Base.connection.close
-  end
-end
-
-class Helper::BackFillTask
-  def self.document(assessment_id)
-    bindings = [
-      ActiveRecord::Relation::QueryAttribute.new(
-        "assessment_id",
-        assessment_id,
-        ActiveRecord::Type::String.new,
-      ),
-    ]
-
-    doc = ActiveRecord::Base.connection.exec_query("SELECT document FROM assessment_documents WHERE assessment_id =$1", "SQL", bindings).first["document"]
-    JSON.parse(doc)
   end
 end
