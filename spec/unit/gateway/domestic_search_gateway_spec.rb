@@ -46,7 +46,13 @@ describe Gateway::DomesticSearchGateway do
     add_assessment_eav(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "ML9 9AR",
     })
-    import_look_ups(schema_versions: %w[RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0])
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "RdSAP-Schema-21.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+      "postcode": "SW1A 2AA",
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+      "registration_date": "2021-12-06", "postcode": "SW1A 2AA"
+    })
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end
 
@@ -65,7 +71,7 @@ describe Gateway::DomesticSearchGateway do
 
     it "returns a rows for each assessment in England & Wales in ordered by rrn" do
       data = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
-      expect(data.length).to eq 3
+      expect(data.length).to eq 5
       expect(data[0]["rrn"]).to eq "0000-0000-0000-0000-0000"
       expect(data[1]["rrn"]).to eq "0000-0000-0000-0000-0001"
       expect(data[2]["rrn"]).to eq "0000-0000-0000-0000-0002"
@@ -92,7 +98,7 @@ describe Gateway::DomesticSearchGateway do
 
       it "returns data with a corresponding constituency in ordered by rrn" do
         result = gateway.fetch(**search_arguments)
-        expect(result.length).to eq(3)
+        expect(result.length).to eq(5)
       end
     end
 
@@ -103,10 +109,12 @@ describe Gateway::DomesticSearchGateway do
 
       it "returns data with a corresponding constituency in ordered by rrn" do
         result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
-        expect(result.length).to eq(3)
+        expect(result.length).to eq(5)
         expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
         expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
         expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
+        expect(result[3]["rrn"]).to eq("0000-0000-0000-0000-0007")
+        expect(result[4]["rrn"]).to eq("0000-0000-0000-0000-0008")
       end
     end
 
@@ -134,10 +142,12 @@ describe Gateway::DomesticSearchGateway do
       it "returns data with corresponding efficiency ratings" do
         search_arguments[:eff_rating] = %w[C E]
         result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
-        expect(result.length).to eq(3)
+        expect(result.length).to eq(5)
         expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
         expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
         expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
+        expect(result[3]["rrn"]).to eq("0000-0000-0000-0000-0007")
+        expect(result[4]["rrn"]).to eq("0000-0000-0000-0000-0008")
       end
     end
 
@@ -348,6 +358,50 @@ describe Gateway::DomesticSearchGateway do
         )
       end
 
+      let(:expected_rdsap_2100_data) do
+        expected_rdsap_data.merge(
+          "rrn" => "0000-0000-0000-0000-0007",
+          "construction_age_band" => "England and Wales: 2022 onwards",
+          "fixed_lighting_outlets_count" => nil,
+          "glazed_area" => nil,
+          "glazed_type" => nil,
+          "inspection_date" => "2023-12-01",
+          "lodgement_date" => "2023-12-01",
+          "low_energy_fixed_lighting_outlets_count" => nil,
+          "low_energy_lighting" => nil,
+          "mechanical_ventilation" => "positive input from outside",
+          "number_open_fireplaces" => nil,
+          "photo_supply" => "0",
+          "transaction_type" => "Grant scheme",
+          "postcode" => "SW1A 2AA",
+          "constituency" => "E14001172",
+          "constituency_label" => "Cities of London and Westminster",
+          "local_authority_label" => "Westminster",
+        )
+      end
+
+      let(:expected_rdsap_2101_data) do
+        expected_rdsap_data.merge(
+          "rrn" => "0000-0000-0000-0000-0008",
+          "construction_age_band" => "England and Wales: 2022 onwards",
+          "fixed_lighting_outlets_count" => nil,
+          "glazed_area" => nil,
+          "glazed_type" => nil,
+          "inspection_date" => "2025-04-04",
+          "lodgement_date" => "2021-12-06",
+          "low_energy_fixed_lighting_outlets_count" => nil,
+          "low_energy_lighting" => nil,
+          "mechanical_ventilation" => "positive input from outside",
+          "number_open_fireplaces" => nil,
+          "photo_supply" => "0",
+          "transaction_type" => "Grant scheme",
+          "postcode" => "SW1A 2AA",
+          "constituency" => "E14001172",
+          "constituency_label" => "Cities of London and Westminster",
+          "local_authority_label" => "Westminster",
+        )
+      end
+
       let(:query_result) do
         search_arguments[:date_start] = "2020-04-04"
         gateway.fetch(**search_arguments)
@@ -366,13 +420,23 @@ describe Gateway::DomesticSearchGateway do
         result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0006" }
         expect(result).to eq expected_rdsap_data
       end
+
+      it "returns a row with the required data for RdSAP 21.0.0" do
+        result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0007" }
+        expect(result).to eq expected_rdsap_2100_data
+      end
+
+      it "returns a row with the required data for RdSAP 21.0.1" do
+        result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0008" }
+        expect(result).to eq expected_rdsap_2101_data
+      end
     end
   end
 
   describe "#count" do
     it "returns the number of epcs" do
       result = gateway.count(**search_arguments)
-      expect(result).to eq 3
+      expect(result).to eq 5
     end
 
     context "when filtering for a council where there is no data" do
@@ -386,7 +450,7 @@ describe Gateway::DomesticSearchGateway do
 
   describe "#fetch_rrns" do
     let(:expectation) do
-      [{ "rrn" => "0000-0000-0000-0000-0000" }, { "rrn" => "0000-0000-0000-0000-0001" }, { "rrn" => "0000-0000-0000-0000-0002" }]
+      [{ "rrn" => "0000-0000-0000-0000-0000" }, { "rrn" => "0000-0000-0000-0000-0001" }, { "rrn" => "0000-0000-0000-0000-0002" }, { "rrn" => "0000-0000-0000-0000-0007" }, { "rrn" => "0000-0000-0000-0000-0008" }]
     end
 
     it "returns a list of rrn" do
