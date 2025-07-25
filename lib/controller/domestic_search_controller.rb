@@ -25,6 +25,9 @@ module Controller
           type: "array",
           items: { type: "string" },
         },
+        address: {
+          type: "string",
+        },
       },
     }.freeze
 
@@ -44,6 +47,22 @@ module Controller
     rescue StandardError => e
       report_to_sentry(e)
       json_api_response code: 500, data: { errors: [{ code: e.message }] }
+    end
+
+    get "/api/domestic/search", auth_token_has_all: %w[epb-data-front:read] do
+      execute_params = {
+        date_start: params[:date_start],
+        date_end: params[:date_end],
+        council: params[:council],
+        constituency: params[:constituency],
+        postcode: params[:postcode],
+        eff_rating: params[:eff_rating],
+        assessment_type: %w[SAP RdSAP],
+        address: params[:address],
+      }
+      use_case = Container.assessment_search_use_case
+      result = use_case.execute(**execute_params)
+      json_api_response code: 200, data: result
     end
   end
 end

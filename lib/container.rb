@@ -39,6 +39,10 @@ class Container
     @assessment_search_gateway ||= Gateway::AssessmentSearchGateway.new
   end
 
+  def self.assessment_search_use_case
+    @assessment_search_use_case ||= UseCase::AssessmentSearch.new(assessment_search_gateway:)
+  end
+
   def self.cancel_certificates_use_case
     @cancel_certificates_use_case ||= UseCase::CancelCertificates.new eav_gateway: assessment_attributes_gateway,
                                                                       queues_gateway:,

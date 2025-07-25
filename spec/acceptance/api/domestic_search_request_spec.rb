@@ -9,9 +9,6 @@ describe "DomesticSearchController" do
   context "when requesting a response from /api/domestic/count" do
     let(:type_of_assessment) { "SAP" }
     let(:schema_type) { "SAP-Schema-19.0.0" }
-    let(:expected_data) do
-      { "count" => 3 }
-    end
 
     before(:all) do
       import_postcode_directory_name
@@ -80,6 +77,178 @@ describe "DomesticSearchController" do
 
       it "raises an error due to the missing token" do
         expect(response.body).to include "You are not authorised to perform this request"
+      end
+    end
+  end
+
+  context "when requesting a response from /api/domestic/search" do
+    let(:rdsap) do
+      parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "postcode" => "SW10 0AA" })
+    end
+
+    let(:postcode_rdsap) do
+      rdsap.merge({ "postcode" => "SW1A 2AA" })
+    end
+
+    let(:council_constituency_rdsap) do
+      rdsap.merge({ "postcode" => "ML9 9AR" })
+    end
+
+    let(:eff_rdsap) do
+      rdsap.merge({ "energy_rating_current" => 85 })
+    end
+
+    let(:address_rdsap) do
+      rdsap.merge({ "address_line_1" => "2 Banana Street" })
+    end
+
+    let(:search_assessment_gateway) do
+      Gateway::AssessmentSearchGateway.new
+    end
+
+    let(:country_id) { 1 }
+
+    let(:expected_data) do
+      {
+        "addressLine1" => "1 Some Street",
+        "addressLine2" => nil,
+        "addressLine3" => nil,
+        "addressLine4" => nil,
+        "assessmentAddressId" => "RRN-0000-0000-0000-0000-0000",
+        "certificateNumber" => "0000-0000-0000-0000",
+        "constituency" => "Chelsea and Fulham",
+        "council" => "Hammersmith and Fulham",
+        "currentEnergyEfficiencyBand" => "B",
+        "postTown" => "Whitbury",
+        "postcode" => "SW10 0AA",
+        "registrationDate" => "2020-05-04T00:00:00.000Z",
+      }
+    end
+
+    before do
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: eff_rdsap, created_at: "2024-01-01", country_id:)
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: postcode_rdsap, created_at: "2023-01-01", country_id:)
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: council_constituency_rdsap, created_at: "2023-05-05", country_id:)
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: address_rdsap, created_at: "2022-05-05", country_id:)
+    end
+
+    context "when the response is a success" do
+      context "when no optional search filters are added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01"
+        end
+
+        it "does not error" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 4
+          result = response_body["data"].find { |i| i["certificateNumber"] == "0000-0000-0000-0000" }
+          expect(result).to eq expected_data
+        end
+      end
+
+      context "when optional postcode filter is added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { postcode: "SW1A 2AA" }
+        end
+
+        it "returns the correct assessment" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 1
+          expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0001")
+        end
+      end
+
+      context "when optional council filter is added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire"] }
+        end
+
+        let(:multiple_responses) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire", "Hammersmith and Fulham"] }
+        end
+
+        it "returns the correct assessment" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 1
+          expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0002")
+        end
+
+        it "returns the correct assessments for multiple inputs" do
+          response_body = JSON.parse(multiple_responses.body)
+          expect(multiple_responses.status).to eq(200)
+          expect(response_body["data"].length).to eq 3
+        end
+      end
+
+      context "when optional constituency filter is added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East"] }
+        end
+
+        let(:multiple_responses) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] }
+        end
+
+        it "returns the correct assessment" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 1
+          expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0002")
+        end
+
+        it "returns the correct assessments for multiple inputs" do
+          response_body = JSON.parse(multiple_responses.body)
+          expect(multiple_responses.status).to eq(200)
+          expect(response_body["data"].length).to eq 3
+        end
+      end
+
+      context "when optional eff_rating filter is added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B] }
+        end
+
+        let(:multiple_responses) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B E] }
+        end
+
+        it "returns the correct assessment" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 1
+          expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0000")
+        end
+
+        it "returns the correct assessments for multiple inputs" do
+          response_body = JSON.parse(multiple_responses.body)
+          expect(multiple_responses.status).to eq(200)
+          expect(response_body["data"].length).to eq 4
+        end
+      end
+
+      context "when optional address filter is added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { address: "2 Banana Street" }
+        end
+
+        it "returns the correct assessment" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 1
+          expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0003")
+        end
       end
     end
   end
