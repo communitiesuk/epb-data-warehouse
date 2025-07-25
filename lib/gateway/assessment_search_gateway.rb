@@ -275,7 +275,7 @@ private
     unless this_args[:postcode].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "postcode",
-        this_args[:postcode],
+        format_postcode(this_args[:postcode]),
         ActiveRecord::Type::String.new,
       )
     end
@@ -338,5 +338,11 @@ private
     sql << " LIMIT 5000"
 
     sql
+  end
+
+  def format_postcode(postcode)
+    postcode.gsub!(/[[:space:]]/, "")
+    postcode.insert(-4, " ") unless postcode.length < 3
+    postcode.upcase
   end
 end

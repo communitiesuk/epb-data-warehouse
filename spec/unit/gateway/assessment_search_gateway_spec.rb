@@ -439,9 +439,14 @@ describe Gateway::AssessmentSearchGateway do
     end
 
     context "when filtering for an address" do
+      let(:expected_result) do
+        ["1 Some Street", "2 Some street", "10 Some Street"]
+      end
+
       before do
         address_rdsap = rdsap.merge({ "address_line_1" => "2 Some street" })
         gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.update_attribute(assessment_id: "0000-0000-0000-0001", attribute_name: "address_line_1", new_value: "10 Some Street")
       end
 
       it "returns one row for the exact address" do
@@ -455,13 +460,15 @@ describe Gateway::AssessmentSearchGateway do
       it "returns all the rows matching partial address" do
         address = "Some street"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
-        expect(gateway.find_assessments(**address_args).length).to eq 3
+        result = gateway.find_assessments(**address_args)
+        expect(result.map { |r| r["address_line_1"] }).to eq expected_result
       end
 
       it "returns all the rows matching partial address regardless of casing" do
         address = "SOme StrEet"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
-        expect(gateway.find_assessments(**address_args).length).to eq 3
+        result = gateway.find_assessments(**address_args)
+        expect(result.map { |r| r["address_line_1"] }).to eq expected_result
       end
     end
 
@@ -525,6 +532,16 @@ describe Gateway::AssessmentSearchGateway do
         expect(gateway.find_assessments(**postcode_args).length).to eq 1
         expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
       end
+
+      it "returns a row regardless of case" do
+        postcode_args = args.merge({ postcode: "ab1 2Cd" })
+        expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
+      end
+
+      it "returns a row regardless of spaces" do
+        postcode_args = args.merge({ postcode: "ab12Cd" })
+        expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
+      end
     end
 
     context "when filtering by eff_rating" do
@@ -538,19 +555,35 @@ describe Gateway::AssessmentSearchGateway do
         expect(gateway.find_assessments(**eff_rating_args).length).to eq 1
       end
 
-      it "returns multiple rows when searching for multiple eff_rating" do
+      it "returns multiple rows for multiple eff ratings" do
         eff_rating_args = args.merge({ eff_rating: %w[A E] })
         expect(gateway.find_assessments(**eff_rating_args).length).to eq 3
       end
     end
 
-    context "when having data from today" do
+    context "when the search table has data lodged today" do
       before do
         gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap, created_at: Time.now, country_id:)
       end
 
       it "ignores the assessment created today" do
-        expect(gateway.find_assessments(**args).length).to eq 2
+        expect(gateway.find_assessments(**args).map { |i| i["certificate_number"] }).not_to include("0000-0000-0020-0123")
+      end
+    end
+
+    context "when passing all arguments to the search" do
+      let(:all_args) do
+        args.merge({
+          postcode: "SW10 0AA",
+          eff_rating: %w[A B C D E F G],
+          council: ["Hammersmith and Fulham"],
+          address: "street",
+        })
+      end
+
+      it "returns results for the relevant EPCs" do
+        results = gateway.find_assessments(**all_args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001]
       end
     end
   end
