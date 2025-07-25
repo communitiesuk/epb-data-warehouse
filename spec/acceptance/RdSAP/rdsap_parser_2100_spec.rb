@@ -67,6 +67,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                       "total_floor_area" => 55,
                       "has_fixed_air_conditioning" => "false",
                       "multiple_glazed_proportion" => 100,
+                      "open_chimneys_count" => 1,
                       "energy_rating_current" => 50,
                       "energy_rating_potential" => 72,
                       "energy_rating_average" => 60,

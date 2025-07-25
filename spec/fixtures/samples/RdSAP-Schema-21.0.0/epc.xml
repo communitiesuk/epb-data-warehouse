@@ -165,6 +165,7 @@
   </Energy-Assessment>
   <SAP-Data>
     <SAP-Property-Details>
+      <Open-Chimneys-Count>1</Open-Chimneys-Count>
       <Property-Type>0</Property-Type>
       <Built-Form>2</Built-Form>
       <Extensions-Count>0</Extensions-Count>
