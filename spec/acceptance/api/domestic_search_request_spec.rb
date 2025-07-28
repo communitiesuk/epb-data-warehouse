@@ -251,5 +251,56 @@ describe "DomesticSearchController" do
         end
       end
     end
+
+    context "when getting an error response" do
+      context "when dates are missing" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search"
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the missing dates" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "please provide a valid date range"
+        end
+      end
+
+      context "when dates are out of range" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2025-01-01&date_end=2018-01-01"
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the missing dates" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "please provide a valid date range"
+        end
+      end
+
+      context "when date range includes today" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          tomorrow = Date.tomorrow.strftime "%Y-%m-%d"
+          get "/api/domestic/search?date_start=2014-01-01", { date_end: tomorrow }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the date range including today" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "the date cannot include today"
+        end
+      end
+    end
   end
 end
