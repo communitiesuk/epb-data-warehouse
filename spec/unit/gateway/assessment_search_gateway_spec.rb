@@ -440,7 +440,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when filtering for an address" do
       let(:expected_result) do
-        ["1 Some Street", "2 Some street", "10 Some Street"]
+        ["1 Some Street", "2 Some street", "10 Some Street"].sort
       end
 
       before do
@@ -461,14 +461,14 @@ describe Gateway::AssessmentSearchGateway do
         address = "Some street"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
         result = gateway.find_assessments(**address_args)
-        expect(result.map { |r| r["address_line_1"] }).to eq expected_result
+        expect(result.map { |r| r["address_line_1"] }.sort).to eq expected_result
       end
 
       it "returns all the rows matching partial address regardless of casing" do
         address = "SOme StrEet"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
         result = gateway.find_assessments(**address_args)
-        expect(result.map { |r| r["address_line_1"] }).to eq expected_result
+        expect(result.map { |r| r["address_line_1"] }.sort).to eq expected_result
       end
     end
 
