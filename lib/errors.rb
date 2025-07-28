@@ -71,4 +71,10 @@ module Errors
 
   class UriTooLong < RuntimeError
   end
+
+  class CouncilNotFound < RuntimeError
+  end
+
+  class ConstituencyNotFound < RuntimeError
+  end
 end

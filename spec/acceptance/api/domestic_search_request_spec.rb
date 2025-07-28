@@ -82,6 +82,11 @@ describe "DomesticSearchController" do
   end
 
   context "when requesting a response from /api/domestic/search" do
+    before(:all) do
+      import_postcode_directory_name
+      import_postcode_directory_data
+    end
+
     let(:rdsap) do
       parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "postcode" => "SW10 0AA" })
     end
@@ -299,6 +304,70 @@ describe "DomesticSearchController" do
         it "raises an error for the date range including today" do
           response_body = JSON.parse(response.body)
           expect(response_body["data"]["error"]).to include "the date cannot include today"
+        end
+      end
+
+      context "when no results found" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2018-02-01"
+        end
+
+        it "returns 404" do
+          expect(response.status).to eq(404)
+        end
+
+        it "raises an error for no results found" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "No domestic assessments could be found for that query"
+        end
+      end
+
+      context "when postcode is invalid" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { postcode: "invalid postcode" }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the invalid postcode" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "please prove a valid postcode"
+        end
+      end
+
+      context "when council is invalid" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { council: ["invalid council"] }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the council name not found" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "provide valid council name(s)"
+        end
+      end
+
+      context "when constituency is invalid" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { constituency: ["invalid constituency"] }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the constituency name not found" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "provide valid constituency name(s)"
         end
       end
     end

@@ -52,4 +52,12 @@ describe UseCase::AssessmentSearch do
       expect { use_case.execute(**search_arguments) }.to raise_error(Boundary::InvalidDates)
     end
   end
+
+  context "when all eff_ratings parameters are provided" do
+    it "does not pass them to the gateway" do
+      eff_rating_arguments = search_arguments.merge({ eff_rating: %w[A B C D E F G] })
+      use_case.execute(**eff_rating_arguments)
+      expect(assessment_search_gateway).to have_received(:find_assessments).with(**search_arguments).exactly(1).times
+    end
+  end
 end
