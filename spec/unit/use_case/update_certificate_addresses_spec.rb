@@ -7,6 +7,7 @@ describe UseCase::UpdateCertificateAddresses do
                         documents_gateway:,
                         assessment_search_gateway:,
                         recovery_list_gateway:,
+                        audit_logs_gateway:,
                         logger:
   end
 
@@ -14,6 +15,12 @@ describe UseCase::UpdateCertificateAddresses do
     eav_database_gateway = instance_double(Gateway::AssessmentAttributesGateway)
     allow(eav_database_gateway).to receive(:update_assessment_attribute)
     eav_database_gateway
+  end
+
+  let(:audit_logs_gateway) do
+    audit_log_gateway = instance_double(Gateway::AuditLogsGateway)
+    allow(audit_log_gateway).to receive(:insert_log)
+    audit_log_gateway
   end
 
   let(:queue_name) do
@@ -89,6 +96,15 @@ describe UseCase::UpdateCertificateAddresses do
           attribute_name: "assessment_address_id",
           new_value: "RRN-0000-0000-0000-0000-0001",
         ).exactly(1).times
+      end
+
+      it "updates the audit logs" do
+        use_case.execute
+        expect(audit_logs_gateway).to have_received(:insert_log).exactly(3).times
+        expect(audit_logs_gateway).to have_received(:insert_log).with(hash_including(
+                                                                        assessment_id: "0000-0000-0000-0000-0001",
+                                                                        event_type: "address_id_updated",
+                                                                      )).exactly(1).times
       end
 
       it "clears the assessments from the recovery list" do

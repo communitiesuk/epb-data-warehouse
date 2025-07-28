@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_25_113836) do
   create_table "audit_logs", force: :cascade do |t|
     t.string "assessment_id"
     t.string "event_type", null: false
-    t.datetime "timestamp", default: "2025-07-25 11:10:02", null: false
+    t.datetime "timestamp", default: "2025-07-25 14:13:49", null: false
 
     t.unique_constraint ["assessment_id", "event_type"], name: "idx_audit_log_rrn_event"
   end

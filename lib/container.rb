@@ -123,6 +123,7 @@ class Container
                                                                                        queues_gateway:,
                                                                                        recovery_list_gateway:,
                                                                                        assessment_search_gateway:,
+                                                                                       audit_logs_gateway:,
                                                                                        logger:
   end
 

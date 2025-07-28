@@ -1,14 +1,16 @@
 module UseCase
   class UpdateCertificateAddresses
     ASSESSMENT_ADDRESS_ID_KEY = "assessment_address_id".freeze
+    EVENT_TYPE = "address_id_updated".freeze
 
-    def initialize(eav_gateway:, queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(eav_gateway:, queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, audit_logs_gateway:, logger: nil)
       @assessment_attribute_gateway = eav_gateway
       @queues_gateway = queues_gateway
       @documents_gateway = documents_gateway
       @assessment_search_gateway = assessment_search_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
+      @audit_logs_gateway = audit_logs_gateway
       @queue_name = :assessments_address_update
     end
 
@@ -27,6 +29,7 @@ module UseCase
         @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: address_id
         @assessment_attribute_gateway.update_assessment_attribute assessment_id:, attribute: ASSESSMENT_ADDRESS_ID_KEY, value: address_id
         @assessment_search_gateway.update_attribute assessment_id:, attribute_name: ASSESSMENT_ADDRESS_ID_KEY, new_value: address_id
+        @audit_logs_gateway.insert_log(assessment_id:, event_type: EVENT_TYPE, timestamp: Time.now.utc)
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
         report_to_sentry e
