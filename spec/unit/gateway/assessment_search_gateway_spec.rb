@@ -587,4 +587,28 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
   end
+
+  describe "#count" do
+    let(:args) do
+      {
+        date_start: "2014-12-01",
+        date_end: "2024-12-09",
+        assessment_type: %w[RdSAP SAP],
+      }
+    end
+
+    before do
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+      date_rdsap = rdsap.merge({ "registration_date" => "2012-02-05" })
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: date_rdsap, created_at: "2025-07-22", country_id:)
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, created_at: "2025-07-23", country_id:)
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: rdsap, created_at: "2025-07-24", country_id:)
+    end
+
+    context "when calling count method returns the number of rows in the table" do
+      it "returns assessments matching the filters" do
+        expect(gateway.count(**args)).to eq 2
+      end
+    end
+  end
 end

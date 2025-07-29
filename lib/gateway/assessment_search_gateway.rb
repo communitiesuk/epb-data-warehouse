@@ -183,6 +183,21 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).map { |row| row }
   end
 
+  def count(*args)
+    this_args = args.first
+    sql = <<~SQL
+      SELECT COUNT(*)
+      FROM assessment_search
+    SQL
+
+    this_args[:bindings] = get_bindings(**this_args)
+
+    this_args[:sql] = sql
+    sql = search_filter(**this_args)
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).first["count"]
+  end
+
 private
 
   def get_energy_rating(document:)
@@ -334,8 +349,8 @@ private
 
     sql << " AND NOT created_at::date = CURRENT_DATE"
 
-    sql << " ORDER BY registration_date DESC"
-    sql << " LIMIT 5000"
+    sql << " ORDER BY registration_date DESC" unless this_args[:sql].include?("COUNT(*)")
+    sql << " LIMIT 5000" unless this_args[:sql].include?("COUNT(*)")
 
     sql
   end
