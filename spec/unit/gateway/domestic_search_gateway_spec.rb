@@ -479,5 +479,10 @@ describe Gateway::DomesticSearchGateway do
       expect(vw_yesterday.length).to eq 1
       expect(vw_yesterday[0]["rrn"]).to eq("0000-0000-0000-0000-0006")
     end
+
+    it "includes rows updated yesterday" do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET updated_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0008'", "SQL")
+      expect(vw_yesterday.map { |i| i["rrn"] }.sort!).to eq %w[0000-0000-0000-0000-0006 0000-0000-0000-0000-0008]
+    end
   end
 end

@@ -88,3 +88,5 @@ To generate the test file run
 `rake generate_enum_csv`
 
 NB This will only need to be run if you want to change the existing test data.
+
+environmental_impact_current 
