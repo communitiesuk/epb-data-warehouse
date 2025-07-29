@@ -181,7 +181,7 @@ class AlterVwDomesticYesterdayUpdatedAt < ActiveRecord::Migration[7.0]
   def self.up
     execute "DROP VIEW IF EXISTS vw_domestic_yesterday"
     execute "CREATE VIEW vw_domestic_yesterday
-    AS #{sql} AND warehouse_created_at::date = CURRENT_DATE - 1 OR updated_at = (CURRENT_DATE - 1)"
+    AS #{sql} AND warehouse_created_at::date = CURRENT_DATE - 1 OR updated_at::date = (CURRENT_DATE - 1)"
   end
 
   def self.down; end
