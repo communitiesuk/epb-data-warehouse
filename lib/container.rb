@@ -182,4 +182,8 @@ class Container
   def self.multipart_storage_gateway(stub_responses: true)
     @multipart_storage_gateway ||= Gateway::MultipartStorageGateway.new(bucket_name: ENV["BUCKET_NAME"], stub_responses:)
   end
+
+  def self.get_redacted_certificate_use_case
+    @get_redacted_certificate_use_case ||= UseCase::GetRedactedCertificate.new(documents_gateway:)
+  end
 end

@@ -3,10 +3,6 @@ require_relative "../../shared_context/shared_lodgement"
 describe Domain::RedactedDocument do
   include_context "when lodging XML"
 
-  let(:document) do
-    parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "postcode" => "SW10 0AA" })
-  end
-
   let(:result) do
     { "document" =>
                       {
