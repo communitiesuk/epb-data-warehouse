@@ -5,16 +5,20 @@ describe Gateway::AuditLogsGateway do
     clear_materialized_views
   end
 
-  let(:logs) do
-    ActiveRecord::Base.connection.exec_query(
-      "SELECT assessment_id, event_type, timestamp FROM audit_logs",
-    )
-  end
+  describe "#insert_logs" do
+    let(:logs) do
+      ActiveRecord::Base.connection.exec_query(
+        "SELECT assessment_id, event_type, timestamp FROM audit_logs",
+      )
+    end
 
-  let(:event_type) { "cancelled" }
-  let(:assessment_id) { "0000-0000-0001-1234-0000" }
+    let(:event_type) { "cancelled" }
+    let(:assessment_id) { "0000-0000-0001-1234-0000" }
 
-  describe "#insert" do
+    before do
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE audit_logs")
+    end
+
     it "saves the row to the table" do
       timestamp = "2025-01-01 00:00:00"
       gateway.insert_log(assessment_id:, event_type:, timestamp:)
@@ -68,6 +72,46 @@ describe Gateway::AuditLogsGateway do
           updated_row = logs.map { |row| row }.select { |i| i["timestamp"] == "2025-06-01 00:00:01" }
           expect(updated_row.length).to eq 1
         end
+      end
+    end
+  end
+
+  describe "#fetch_logs" do
+    before do
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE audit_logs")
+      gateway.insert_log(assessment_id: "0000-0000-0000-0000", event_type: "cancelled", timestamp: "2025-01-01 00:00:00")
+      gateway.insert_log(assessment_id: "0000-0000-0000-0001", event_type: "opt_out", timestamp: "2025-02-01 00:00:00")
+      gateway.insert_log(assessment_id: "0000-0000-0000-0002", event_type: "address_id_updated", timestamp: "2025-03-01 00:00:00")
+    end
+
+    context "when fetch_logs is executed" do
+      it "presents removed and address_id_update as new event_type names" do
+        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
+        expect(result.map { |l| l["event_type"] }).to eq %w[removed removed address_id_update]
+      end
+    end
+
+    context "when filter date range includes today" do
+      before { gateway.insert_log(assessment_id: "0000-0000-0000-0004", event_type: "cancelled", timestamp: Time.current) }
+
+      it "excludes results from today" do
+        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: Date.current)
+        expect(result.length).to eq 3
+        expect(result.map { |l| l["certificate_number"] }.sort!).not_to include "0000-0000-0000-0004"
+      end
+    end
+
+    context "when filtering by date" do
+      it "returns all results when the filter date range covers all results" do
+        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
+        expect(result.length).to eq 3
+        expect(result.map { |l| l["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001 0000-0000-0000-0002]
+      end
+
+      it "returns relevant results in filter date range" do
+        result = gateway.fetch_logs(start_date: "2025-01-15", end_date: "2025-02-15")
+        expect(result.length).to eq 1
+        expect(result.first["certificate_number"]).to eq "0000-0000-0000-0001"
       end
     end
   end
