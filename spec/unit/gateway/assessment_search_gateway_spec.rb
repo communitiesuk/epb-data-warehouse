@@ -110,9 +110,9 @@ describe Gateway::AssessmentSearchGateway do
       end
 
       context "when the asset rating is nil" do
-        let(:assessment_id) { "0000-0000-0000-0000-0001" }
+        let(:assessment_id) { "0000-0000-0000-0000-0000" }
         let(:cepc) do
-          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => nil })
+          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => nil })
         end
 
         before do
@@ -128,9 +128,9 @@ describe Gateway::AssessmentSearchGateway do
       end
 
       context "when the asset rating is A+" do
-        let(:assessment_id) { "0000-0000-0000-0000-0001" }
+        let(:assessment_id) { "0000-0000-0000-0000-0000" }
         let(:cepc) do
-          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => -1 })
+          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => -1 })
         end
 
         before do

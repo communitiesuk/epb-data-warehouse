@@ -13,7 +13,8 @@ shared_context "when lodging XML" do
     }.first
   end
 
-  def parse_assessment(assessment_id:, schema_type:, type_of_assessment:, assessment_address_id:, type: "epc", different_fields: nil)
+  def parse_assessment(assessment_id:, schema_type:, type_of_assessment:, assessment_address_id: nil, type: "epc", different_fields: nil)
+    assessment_address_id ||= "RRN-#{assessment_id}"
     meta_data = {
       "assessment_type" => type_of_assessment,
       "schema_type" => schema_type,
@@ -22,8 +23,11 @@ shared_context "when lodging XML" do
     sample = Nokogiri.XML Samples.xml(schema_type, type)
     xml = sample.to_xml
     document = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
+    raise Boundary::NoData, "document" if document.empty?
+
     document.merge!(meta_data)
     document.merge!(different_fields) unless different_fields.nil?
+    document
   end
 
   def add_assessment(assessment_id:, schema_type:, type_of_assessment:, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil, add_heat_pump_data: true)
