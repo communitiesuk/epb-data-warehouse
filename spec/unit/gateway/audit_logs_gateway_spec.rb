@@ -85,9 +85,17 @@ describe Gateway::AuditLogsGateway do
     end
 
     context "when fetch_logs is executed" do
+      before { gateway.insert_log(assessment_id: "0000-0000-0000-0003", event_type: "opt_in", timestamp: "2025-03-01 00:00:00") }
+
       it "presents removed and address_id_update as new event_type names" do
         result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
         expect(result.map { |l| l["event_type"] }).to eq %w[removed removed address_id_update]
+      end
+
+      it "does not return logs with event_type 'opt_in'" do
+        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
+        expect(result.length).to eq 3
+        expect(result.map { |l| l["event_type"] }).not_to include "opt_in"
       end
     end
 
