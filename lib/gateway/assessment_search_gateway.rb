@@ -5,7 +5,9 @@ class Gateway::AssessmentSearchGateway
   VALID_COUNTRY_IDS = [1, 2, 4].freeze
   AC_CERTIFICATE_TYPE = "AC-CERT".freeze
 
-  def initialize; end
+  def initialize(row_limit: 5000)
+    @row_limit = row_limit
+  end
 
   def insert_assessment(assessment_id:, document:, country_id:, created_at: nil)
     document_clone = document.clone
@@ -177,12 +179,11 @@ class Gateway::AssessmentSearchGateway
                FROM assessment_search
     SQL
 
-    this_args[:bindings] = get_bindings(**this_args)
-
     this_args[:sql] = sql
+    bindings = get_bindings(**this_args)
     sql = search_filter(**this_args)
 
-    ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).map { |row| row }
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row }
   end
 
   def count(*args)
@@ -192,12 +193,11 @@ class Gateway::AssessmentSearchGateway
       FROM assessment_search
     SQL
 
-    this_args[:bindings] = get_bindings(**this_args)
-
     this_args[:sql] = sql
+    bindings = get_bindings(**this_args)
     sql = search_filter(**this_args)
 
-    ActiveRecord::Base.connection.exec_query(sql, "SQL", this_args[:bindings]).first["count"]
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["count"]
   end
 
 private
@@ -296,6 +296,23 @@ private
         ActiveRecord::Type::String.new,
       )
     end
+
+    unless this_args[:sql].include?("COUNT(*)")
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "limit",
+        @row_limit,
+        ActiveRecord::Type::Integer.new,
+      )
+    end
+
+    unless this_args[:current_page].nil?
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "offset",
+        calculate_offset(this_args[:current_page]),
+        ActiveRecord::Type::Integer.new,
+      )
+    end
+
     arr
   end
 
@@ -351,8 +368,11 @@ private
 
     sql << " AND NOT created_at::date = CURRENT_DATE"
 
-    sql << " ORDER BY registration_date DESC" unless this_args[:sql].include?("COUNT(*)")
-    sql << " LIMIT 5000" unless this_args[:sql].include?("COUNT(*)")
+    unless this_args[:sql].include?("COUNT(*)")
+      sql << " ORDER BY registration_date DESC"
+      sql << " LIMIT $#{index}"
+      sql << " OFFSET $#{index + 1}" unless this_args[:current_page].nil?
+    end
 
     sql
   end
@@ -361,5 +381,10 @@ private
     postcode.gsub!(/[[:space:]]/, "")
     postcode.insert(-4, " ") unless postcode.length < 3
     postcode.upcase
+  end
+
+  def calculate_offset(current_page)
+    current_page = 1 if current_page <= 0
+    (current_page - 1) * @row_limit
   end
 end

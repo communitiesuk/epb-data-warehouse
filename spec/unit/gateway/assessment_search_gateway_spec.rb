@@ -2,7 +2,7 @@ require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
 
 describe Gateway::AssessmentSearchGateway do
-  subject(:gateway) { described_class.new }
+  subject(:gateway) { described_class.new(row_limit: 5) }
 
   include_context "when lodging XML"
   include_context "when saving ons data"
@@ -600,6 +600,35 @@ describe Gateway::AssessmentSearchGateway do
       it "returns one row with no value for building_reference_number" do
         results = gateway.fetch_assessments(**all_args).find { |i| i["certificate_number"] == "0000-0000-0000-0001" }
         expect(results["building_reference_number"]).to eq ""
+      end
+    end
+
+    context "when using pagination data" do
+      before do
+        ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+        12.times do |i|
+          assessment_id = "0005-0000-0000-#{i.to_s.rjust(4, '0')}"
+          newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-#{i + 1}" })
+          gateway.insert_assessment(assessment_id:, document: newer_rdsap, created_at: "2025-07-22", country_id:)
+        end
+      end
+
+      it "returns the last 5 certificates for page 1" do
+        current_page_args = args.merge(current_page: 1)
+        results = gateway.fetch_assessments(**current_page_args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0005-0000-0000-0011 0005-0000-0000-0010 0005-0000-0000-0009 0005-0000-0000-0008 0005-0000-0000-0007]
+      end
+
+      it "returns the middle 5 certificates for page 2" do
+        current_page_args = args.merge(current_page: 2)
+        results = gateway.fetch_assessments(**current_page_args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0005-0000-0000-0006 0005-0000-0000-0005 0005-0000-0000-0004 0005-0000-0000-0003 0005-0000-0000-0002]
+      end
+
+      it "returns the last 2 certificates for page 3" do
+        current_page_args = args.merge(current_page: 3)
+        results = gateway.fetch_assessments(**current_page_args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0005-0000-0000-0001 0005-0000-0000-0000]
       end
     end
   end
