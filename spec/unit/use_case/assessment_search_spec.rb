@@ -29,7 +29,7 @@ describe UseCase::AssessmentSearch do
   end
 
   before do
-    allow(assessment_search_gateway).to receive(:find_assessments).and_return(assessment_search_result)
+    allow(assessment_search_gateway).to receive(:fetch_assessments).and_return(assessment_search_result)
   end
 
   it "can call the use case" do
@@ -38,7 +38,7 @@ describe UseCase::AssessmentSearch do
 
   it "passes the arguments to the assessment_search_gateway" do
     use_case.execute(**search_arguments)
-    expect(assessment_search_gateway).to have_received(:find_assessments).with(**search_arguments).exactly(1).times
+    expect(assessment_search_gateway).to have_received(:fetch_assessments).with(**search_arguments).exactly(1).times
   end
 
   it "returns the response produced by the gateway" do
@@ -57,7 +57,7 @@ describe UseCase::AssessmentSearch do
     it "does not pass them to the gateway" do
       eff_rating_arguments = search_arguments.merge({ eff_rating: %w[A B C D E F G] })
       use_case.execute(**eff_rating_arguments)
-      expect(assessment_search_gateway).to have_received(:find_assessments).with(**search_arguments).exactly(1).times
+      expect(assessment_search_gateway).to have_received(:fetch_assessments).with(**search_arguments).exactly(1).times
     end
   end
 end

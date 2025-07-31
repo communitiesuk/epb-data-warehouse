@@ -157,7 +157,7 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.delete(sql, "SQL", bindings)
   end
 
-  def find_assessments(*args)
+  def fetch_assessments(*args)
     this_args = args.first
     sql = <<-SQL
         SELECT assessment_id AS certificate_number,

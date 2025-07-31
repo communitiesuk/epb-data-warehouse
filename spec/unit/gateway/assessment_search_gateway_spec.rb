@@ -428,13 +428,13 @@ describe Gateway::AssessmentSearchGateway do
         "postcode" => "SW10 0AA",
         "registration_date" => Date.new(2021, 11, 1),
       }
-      expect(gateway.find_assessments(**args).first).to eq expected_result
+      expect(gateway.fetch_assessments(**args).first).to eq expected_result
     end
 
     context "when filtering by assessment_type" do
       it "returns data for domestic" do
         domestic_args = args.merge({ assessment_type: %w[RdSAP SAP] })
-        expect(gateway.find_assessments(**domestic_args).length).to eq 2
+        expect(gateway.fetch_assessments(**domestic_args).length).to eq 2
       end
     end
 
@@ -452,22 +452,22 @@ describe Gateway::AssessmentSearchGateway do
       it "returns one row for the exact address" do
         address = "2 Some street"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
-        expect(gateway.find_assessments(**address_args).length).to eq 1
-        expect(gateway.find_assessments(**address_args).first["address_line_1"]).to eq(address)
-        expect(gateway.find_assessments(**address_args).first["certificate_number"]).to eq("0000-0000-0010-0123")
+        expect(gateway.fetch_assessments(**address_args).length).to eq 1
+        expect(gateway.fetch_assessments(**address_args).first["address_line_1"]).to eq(address)
+        expect(gateway.fetch_assessments(**address_args).first["certificate_number"]).to eq("0000-0000-0010-0123")
       end
 
       it "returns all the rows matching partial address" do
         address = "Some street"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
-        result = gateway.find_assessments(**address_args)
+        result = gateway.fetch_assessments(**address_args)
         expect(result.map { |r| r["address_line_1"] }.sort).to eq expected_result
       end
 
       it "returns all the rows matching partial address regardless of casing" do
         address = "SOme StrEet"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
-        result = gateway.find_assessments(**address_args)
+        result = gateway.fetch_assessments(**address_args)
         expect(result.map { |r| r["address_line_1"] }.sort).to eq expected_result
       end
     end
@@ -480,8 +480,8 @@ describe Gateway::AssessmentSearchGateway do
 
       it "returns one row for the date range" do
         date_args = args.merge({ date_start: "2021-12-01", date_end: "2024-12-09" })
-        expect(gateway.find_assessments(**date_args).length).to eq 1
-        expect(gateway.find_assessments(**date_args).first["certificate_number"]).to eq("0000-0000-0020-0123")
+        expect(gateway.fetch_assessments(**date_args).length).to eq 1
+        expect(gateway.fetch_assessments(**date_args).first["certificate_number"]).to eq("0000-0000-0020-0123")
       end
     end
 
@@ -493,13 +493,13 @@ describe Gateway::AssessmentSearchGateway do
 
       it "returns one row for the council" do
         council_args = args.merge({ council: %w[Westminster] })
-        expect(gateway.find_assessments(**council_args).length).to eq 1
-        expect(gateway.find_assessments(**council_args).first["certificate_number"]).to eq("0000-0000-0022-0022")
+        expect(gateway.fetch_assessments(**council_args).length).to eq 1
+        expect(gateway.fetch_assessments(**council_args).first["certificate_number"]).to eq("0000-0000-0022-0022")
       end
 
       it "returns multiple rows when searching for multiple councils" do
         council_args = args.merge({ council: ["Westminster", "Hammersmith and Fulham"] })
-        expect(gateway.find_assessments(**council_args).length).to eq 3
+        expect(gateway.fetch_assessments(**council_args).length).to eq 3
       end
     end
 
@@ -511,13 +511,13 @@ describe Gateway::AssessmentSearchGateway do
 
       it "returns one row matching the constituency" do
         council_args = args.merge({ constituency: ["Lanark and Hamilton East"] })
-        expect(gateway.find_assessments(**council_args).length).to eq 1
-        expect(gateway.find_assessments(**council_args).first["certificate_number"]).to eq("0000-0000-0033-0033")
+        expect(gateway.fetch_assessments(**council_args).length).to eq 1
+        expect(gateway.fetch_assessments(**council_args).first["certificate_number"]).to eq("0000-0000-0033-0033")
       end
 
       it "returns all matching rows when searching for multiple constituencies" do
         council_args = args.merge({ constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] })
-        expect(gateway.find_assessments(**council_args).length).to eq 3
+        expect(gateway.fetch_assessments(**council_args).length).to eq 3
       end
     end
 
@@ -529,18 +529,18 @@ describe Gateway::AssessmentSearchGateway do
 
       it "returns one row matching the postcode" do
         postcode_args = args.merge({ postcode: "AB1 2CD" })
-        expect(gateway.find_assessments(**postcode_args).length).to eq 1
-        expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
+        expect(gateway.fetch_assessments(**postcode_args).length).to eq 1
+        expect(gateway.fetch_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
       end
 
       it "returns a row regardless of case" do
         postcode_args = args.merge({ postcode: "ab1 2Cd" })
-        expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
+        expect(gateway.fetch_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
       end
 
       it "returns a row regardless of spaces" do
         postcode_args = args.merge({ postcode: "ab12Cd" })
-        expect(gateway.find_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
+        expect(gateway.fetch_assessments(**postcode_args).first["certificate_number"]).to eq("0000-0000-0044-0044")
       end
     end
 
@@ -552,12 +552,12 @@ describe Gateway::AssessmentSearchGateway do
 
       it "returns one row matching the eff_rating" do
         eff_rating_args = args.merge({ eff_rating: %w[A] })
-        expect(gateway.find_assessments(**eff_rating_args).length).to eq 1
+        expect(gateway.fetch_assessments(**eff_rating_args).length).to eq 1
       end
 
       it "returns multiple rows for multiple eff ratings" do
         eff_rating_args = args.merge({ eff_rating: %w[A E] })
-        expect(gateway.find_assessments(**eff_rating_args).length).to eq 3
+        expect(gateway.fetch_assessments(**eff_rating_args).length).to eq 3
       end
     end
 
@@ -567,7 +567,7 @@ describe Gateway::AssessmentSearchGateway do
       end
 
       it "ignores the assessment created today" do
-        expect(gateway.find_assessments(**args).map { |i| i["certificate_number"] }).not_to include("0000-0000-0020-0123")
+        expect(gateway.fetch_assessments(**args).map { |i| i["certificate_number"] }).not_to include("0000-0000-0020-0123")
       end
     end
 
@@ -582,7 +582,7 @@ describe Gateway::AssessmentSearchGateway do
       end
 
       it "returns results for the relevant EPCs" do
-        results = gateway.find_assessments(**all_args)
+        results = gateway.fetch_assessments(**all_args)
         expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001]
       end
     end
@@ -598,7 +598,7 @@ describe Gateway::AssessmentSearchGateway do
       end
 
       it "returns one row with no value for building_reference_number" do
-        results = gateway.find_assessments(**all_args).find { |i| i["certificate_number"] == "0000-0000-0000-0001" }
+        results = gateway.fetch_assessments(**all_args).find { |i| i["certificate_number"] == "0000-0000-0000-0001" }
         expect(results["building_reference_number"]).to eq ""
       end
     end

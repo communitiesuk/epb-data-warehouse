@@ -30,7 +30,7 @@ module UseCase
         end
       end
 
-      result = @assessment_search_gateway.find_assessments(**this_args)
+      result = @assessment_search_gateway.fetch_assessments(**this_args)
 
       raise Boundary::NoData, "assessment search" if result.empty?
 
