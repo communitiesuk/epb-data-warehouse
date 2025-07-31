@@ -20,21 +20,22 @@ describe Gateway::DomesticSearchGateway do
     import_postcode_directory_name
     import_postcode_directory_data
     type_of_assessment = "SAP"
+    assessment_address_id = "UPRN-000000001245"
     schema_type = "SAP-Schema-19.0.0"
     add_countries
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "W6 9ZD",
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "SW10 0AA",
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "SW1A 2AA", "energy_rating_current": 50
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "BT1 1AA",
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "registration_date": "2024-12-06", "postcode": "SW10 0AA"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
@@ -189,7 +190,7 @@ describe Gateway::DomesticSearchGateway do
       end
     end
 
-    context "when checking the columns of the materialized view" do
+    context "when checking the materialized view results" do
       let(:csv_fixture) { read_csv_fixture("domestic") }
 
       let(:expected_sap_data) do
@@ -272,7 +273,7 @@ describe Gateway::DomesticSearchGateway do
           "number_heated_rooms" => nil,
           "number_open_fireplaces" => "0",
           "unheated_corridor_length" => nil,
-          "building_reference_number" => "UPRN-0000000001",
+          "building_reference_number" => "1245",
           "uprn_source" => "",
           "energy_tariff" => "24 hour",
           "floor_height" => "2.8",
@@ -346,7 +347,7 @@ describe Gateway::DomesticSearchGateway do
           "rrn" => "0000-0000-0000-0000-0006",
           "secondheat_description" => "Room heaters, electric",
           "total_floor_area" => "55",
-          "building_reference_number" => "UPRN-000000000000",
+          "building_reference_number" => "",
           "unheated_corridor_length" => "10",
           "walls_description" => "Solid brick, as built, no insulation (assumed)",
           "walls_energy_eff" => "Very Poor",
@@ -429,6 +430,20 @@ describe Gateway::DomesticSearchGateway do
       it "returns a row with the required data for RdSAP 21.0.1" do
         result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0008" }
         expect(result).to eq expected_rdsap_2101_data
+      end
+    end
+
+    context "when an assessment has a RRN value saved into the assessment_address_id attribute" do
+      before do
+        Gateway::AssessmentAttributesGateway.new.update_assessment_attribute(assessment_id: "0000-0000-0000-0000-0000",
+                                                                             attribute: "assessment_address_id",
+                                                                             value: "RRN-0000-0000-0000-0000-1234")
+        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
+      end
+
+      it "returns an empty value for the building_reference_number" do
+        results = gateway.fetch(**search_arguments)
+        expect(results.find { |i| i["rrn"] == "0000-0000-0000-0000-0000" }["building_reference_number"]).to eq ""
       end
     end
   end
