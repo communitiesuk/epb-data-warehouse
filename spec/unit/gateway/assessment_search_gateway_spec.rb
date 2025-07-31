@@ -387,7 +387,7 @@ describe Gateway::AssessmentSearchGateway do
     end
   end
 
-  describe "#find_assesments" do
+  describe "#fetch_assesments" do
     let(:args) do
       {
         date_start: "2014-12-01",
@@ -403,7 +403,7 @@ describe Gateway::AssessmentSearchGateway do
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
 
-      newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-01" })
+      newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-01", "assessment_address_id" => "UPRN-000000001245"  })
       gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: newer_rdsap, created_at: "2025-07-22", country_id:)
       gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, created_at: "2025-07-22", country_id:)
 
@@ -420,7 +420,7 @@ describe Gateway::AssessmentSearchGateway do
         "address_line_2" => nil,
         "address_line_3" => nil,
         "address_line_4" => nil,
-        "assessment_address_id" => "RRN-0000-0000-0000-0000-0000",
+        "building_reference_number" => "1245",
         "constituency" => "Chelsea and Fulham",
         "council" => "Hammersmith and Fulham",
         "current_energy_efficiency_band" => "E",
@@ -584,6 +584,22 @@ describe Gateway::AssessmentSearchGateway do
       it "returns results for the relevant EPCs" do
         results = gateway.find_assessments(**all_args)
         expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001]
+      end
+    end
+
+    context "when an assessment has a RRN value saved into the assessment_address_id attribute" do
+      let(:all_args) do
+        args.merge({
+          postcode: "SW10 0AA",
+          eff_rating: %w[A B C D E F G],
+          council: ["Hammersmith and Fulham"],
+          address: "street",
+        })
+      end
+
+      it "returns one row with no value for building_reference_number" do
+        results = gateway.find_assessments(**all_args).find { |i| i["certificate_number"] == "0000-0000-0000-0001" }
+        expect(results["building_reference_number"]).to eq ""
       end
     end
   end

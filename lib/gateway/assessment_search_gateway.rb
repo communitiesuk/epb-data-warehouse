@@ -169,9 +169,11 @@ class Gateway::AssessmentSearchGateway
                post_town,
                council,
                constituency,
-               assessment_address_id,
                current_energy_efficiency_band,
-               registration_date
+               registration_date,
+                CASE WHEN starts_with(assessment_address_id, 'UPRN') THEN
+                (REPLACE(assessment_address_id,  'UPRN-', '')::BIGINT)::varchar(15)
+                ELSE '' END as building_reference_number#{' '}
                FROM assessment_search
     SQL
 

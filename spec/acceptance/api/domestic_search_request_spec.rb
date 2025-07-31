@@ -88,7 +88,7 @@ describe "DomesticSearchController" do
     end
 
     let(:rdsap) do
-      parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "postcode" => "SW10 0AA" })
+      parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
     end
 
     let(:postcode_rdsap) do
@@ -119,7 +119,7 @@ describe "DomesticSearchController" do
         "addressLine2" => nil,
         "addressLine3" => nil,
         "addressLine4" => nil,
-        "assessmentAddressId" => "RRN-0000-0000-0000-0000-0000",
+        "buildingReferenceNumber" => "100121241798",
         "certificateNumber" => "0000-0000-0000-0000",
         "constituency" => "Chelsea and Fulham",
         "council" => "Hammersmith and Fulham",
