@@ -180,6 +180,7 @@ class Gateway::AssessmentSearchGateway
     SQL
 
     this_args[:sql] = sql
+    this_args[:limit] = true
     bindings = get_bindings(**this_args)
     sql = search_filter(**this_args)
 
@@ -297,7 +298,7 @@ private
       )
     end
 
-    unless this_args[:sql].include?("COUNT(*)")
+    if this_args[:limit]
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "limit",
         @row_limit,
@@ -368,7 +369,7 @@ private
 
     sql << " AND NOT created_at::date = CURRENT_DATE"
 
-    unless this_args[:sql].include?("COUNT(*)")
+    if this_args[:limit]
       sql << " ORDER BY registration_date DESC"
       sql << " LIMIT $#{index}"
       sql << " OFFSET $#{index + 1}" unless this_args[:current_page].nil?
