@@ -59,9 +59,17 @@ describe UseCase::GetPagination do
       allow(search_gateway).to receive_messages(count: 1222)
     end
 
+    let(:search_arguments) do
+      { date_start: "2023-12-01", date_end: "2023-12-23", current_page: 1 }
+    end
+
+    let(:expected_return_hash) do
+      { total_records: 1222, current_page: 1, total_pages: 1, next_page: nil, prev_page: nil }
+    end
+
     it "returns total pages of 1" do
       result = use_case.execute(**search_arguments)
-      expect(result[:total_pages]).to eq 1
+      expect(result).to eq expected_return_hash
     end
   end
 
@@ -70,9 +78,17 @@ describe UseCase::GetPagination do
       allow(search_gateway).to receive_messages(count: 71_882)
     end
 
+    let(:search_arguments) do
+      { date_start: "2023-12-01", date_end: "2023-12-23", current_page: 3 }
+    end
+
+    let(:expected_return_hash) do
+      { total_records: 71_882, current_page: 3, total_pages: 15, next_page: 4, prev_page: 2 }
+    end
+
     it "returns correct total pages value" do
       result = use_case.execute(**search_arguments)
-      expect(result[:total_pages]).to eq 15
+      expect(result).to eq expected_return_hash
     end
   end
 end
