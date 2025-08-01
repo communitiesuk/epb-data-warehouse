@@ -75,7 +75,7 @@ describe "test domestic search benchmarking rake" do
       it "calls the rake with wrong dates and raises an error" do
         ENV["DATE_START"] = "2024-12-31"
         ENV["DATE_END"] = "2000-12-31"
-        expect { task.invoke }.to output("date_from cannot be greater than date_to\n").to_stdout
+        expect { task.invoke }.to output("start date cannot be greater than end date\n").to_stdout
       end
     end
 

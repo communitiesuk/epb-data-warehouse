@@ -29,7 +29,7 @@ class Gateway::AuditLogsGateway
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
   end
 
-  def fetch_logs(start_date:, end_date:)
+  def fetch_logs(date_start:, date_end:)
     sql = <<-SQL
           SELECT assessment_id as certificate_number,
                  CASE#{'  '}
@@ -40,20 +40,19 @@ class Gateway::AuditLogsGateway
                  timestamp
           FROM audit_logs
           WHERE timestamp BETWEEN $1 AND $2
-            AND timestamp != CURRENT_DATE
             AND event_type != 'opt_in'
           ORDER BY timestamp
     SQL
 
     bindings = [
       ActiveRecord::Relation::QueryAttribute.new(
-        "start_date",
-        start_date,
+        "date_start",
+        date_start,
         ActiveRecord::Type::DateTime.new,
       ),
       ActiveRecord::Relation::QueryAttribute.new(
-        "end_date",
-        end_date,
+        "date_end",
+        date_end,
         ActiveRecord::Type::DateTime.new,
       ),
     ]

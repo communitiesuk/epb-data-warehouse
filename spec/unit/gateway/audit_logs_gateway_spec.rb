@@ -88,36 +88,26 @@ describe Gateway::AuditLogsGateway do
       before { gateway.insert_log(assessment_id: "0000-0000-0000-0003", event_type: "opt_in", timestamp: "2025-03-01 00:00:00") }
 
       it "presents removed and address_id_update as new event_type names" do
-        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
+        result = gateway.fetch_logs(date_start: "2025-01-01", date_end: "2025-03-01")
         expect(result.map { |l| l["event_type"] }).to eq %w[removed removed address_id_update]
       end
 
       it "does not return logs with event_type 'opt_in'" do
-        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
+        result = gateway.fetch_logs(date_start: "2025-01-01", date_end: "2025-03-01")
         expect(result.length).to eq 3
         expect(result.map { |l| l["event_type"] }).not_to include "opt_in"
       end
     end
 
-    context "when filter date range includes today" do
-      before { gateway.insert_log(assessment_id: "0000-0000-0000-0004", event_type: "cancelled", timestamp: Time.current) }
-
-      it "excludes results from today" do
-        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: Date.current)
-        expect(result.length).to eq 3
-        expect(result.map { |l| l["certificate_number"] }.sort!).not_to include "0000-0000-0000-0004"
-      end
-    end
-
     context "when filtering by date" do
       it "returns all results when the filter date range covers all results" do
-        result = gateway.fetch_logs(start_date: "2025-01-01", end_date: "2025-03-01")
+        result = gateway.fetch_logs(date_start: "2025-01-01", date_end: "2025-03-01")
         expect(result.length).to eq 3
         expect(result.map { |l| l["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001 0000-0000-0000-0002]
       end
 
       it "returns relevant results in filter date range" do
-        result = gateway.fetch_logs(start_date: "2025-01-15", end_date: "2025-02-15")
+        result = gateway.fetch_logs(date_start: "2025-01-15", date_end: "2025-02-15")
         expect(result.length).to eq 1
         expect(result.first["certificate_number"]).to eq "0000-0000-0000-0001"
       end
