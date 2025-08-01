@@ -50,7 +50,7 @@ describe "ExportDocumentsRake" do
       ENV["DATE_FROM"] = "2020-03-01"
       ENV["DATE_TO"] = "2020-02-01"
 
-      expect { task.invoke }.to raise_error(Boundary::InvalidDates, "date_from cannot be greater than date_to")
+      expect { task.invoke }.to raise_error(Boundary::InvalidDates, "start date cannot be greater than end date")
     end
   end
 

@@ -4,10 +4,18 @@ module UseCase
       @audit_logs_gateway = audit_logs_gateway
     end
 
-    def execute(start_date:, end_date:)
-      raise Boundary::InvalidDates if start_date > end_date
+    def execute(date_start:, date_end:)
+      raise Boundary::Json::ValidationError if date_start.nil? || date_end.nil?
+      raise Boundary::InvalidDates if date_start > date_end
 
-      @audit_logs_gateway.fetch_logs(start_date:, end_date:)
+      range = (Date.parse(date_start)..Date.parse(date_end))
+      raise Boundary::InvalidArgument, "date range cannot include today" if range.include? Date.today
+
+      result = @audit_logs_gateway.fetch_logs(date_start:, date_end:)
+
+      raise Boundary::NoData, "audit logs" if result.nil? || result.empty?
+
+      result
     end
   end
 end

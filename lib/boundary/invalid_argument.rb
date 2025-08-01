@@ -1,8 +1,8 @@
 module Boundary
   class InvalidArgument < Boundary::TerminableError
-    def initialize(argument)
+    def initialize(error_message)
       super(<<~MSG.strip)
-        Invalid argument-: #{argument}
+        #{error_message}
       MSG
     end
   end
