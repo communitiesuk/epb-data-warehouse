@@ -55,6 +55,10 @@ class Container
                                                                       assessment_search_gateway:
   end
 
+  def self.fetch_audit_logs_use_case
+    @fetch_audit_logs_use_case ||= UseCase::FetchAuditLogs.new audit_logs_gateway: audit_logs_gateway
+  end
+
   def self.fetch_certificate_use_case
     @fetch_certificate_use_case ||= UseCase::FetchCertificate.new certificate_gateway: register_api_gateway
   end
