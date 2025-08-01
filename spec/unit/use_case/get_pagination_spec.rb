@@ -28,8 +28,12 @@ describe UseCase::GetPagination do
   end
 
   it "passes the arguments to the gateway to count domestic data" do
-    expect(use_case.execute(**search_arguments)).to eq expected_return_hash
+    use_case.execute(**search_arguments)
     expect(search_gateway).to have_received(:count).with(search_arguments).exactly(1).times
+  end
+
+  it "returns the expected hash" do
+    expect(use_case.execute(**search_arguments)).to eq expected_return_hash
   end
 
   context "when current page is 1" do
@@ -47,6 +51,28 @@ describe UseCase::GetPagination do
 
     it "returns nil for next page when total records is below threshold" do
       expect(use_case.execute(**current_page_1_args)[:next_page]).to be_nil
+    end
+  end
+
+  context "when total records is less than 5000" do
+    before do
+      allow(search_gateway).to receive_messages(count: 1222)
+    end
+
+    it "returns total pages of 1" do
+      result = use_case.execute(**search_arguments)
+      expect(result[:total_pages]).to eq 1
+    end
+  end
+
+  context "when total record count is not divisible by number of rows" do
+    before do
+      allow(search_gateway).to receive_messages(count: 71_882)
+    end
+
+    it "returns correct total pages value" do
+      result = use_case.execute(**search_arguments)
+      expect(result[:total_pages]).to eq 15
     end
   end
 end
