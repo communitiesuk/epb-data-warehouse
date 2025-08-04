@@ -2,17 +2,21 @@ module UseCase
   class GetPagination
     attr_writer :number_of_rows
 
-    def initialize(search_gateway:)
-      @search_gateway = search_gateway
+    def initialize(assessment_search_gateway:)
+      @assessment_search_gateway = assessment_search_gateway
       @number_of_rows = 5000
     end
 
     def execute(*args)
       this_args = args[0]
 
-      total_records = @search_gateway.count(**this_args)
+      total_records = @assessment_search_gateway.count(**this_args)
+      raise Boundary::NoData, "assessment search" if total_records.zero?
+
       current_page = this_args.delete(:current_page)&.to_i
       total_pages = (total_records / @number_of_rows.to_f).ceil
+      raise Errors::OutOfPaginationRangeError, total_pages if current_page > total_pages || current_page < 1
+
       next_page = current_page + 1 unless current_page >= total_pages
       prev_page = current_page > 1 ? current_page - 1 : nil
 

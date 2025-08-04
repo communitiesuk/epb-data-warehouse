@@ -151,6 +151,18 @@ describe "DomesticSearchController" do
           result = response_body["data"].find { |i| i["certificateNumber"] == "0000-0000-0000-0000" }
           expect(result).to eq expected_data
         end
+
+        it "includes pagination data" do
+          response_body = JSON.parse(response.body)
+          expected_pagination = {
+            "totalRecords" => 4,
+            "currentPage" => 1,
+            "totalPages" => 1,
+            "nextPage" => nil,
+            "prevPage" => nil,
+          }
+          expect(response_body["pagination"]).to eq(expected_pagination)
+        end
       end
 
       context "when optional postcode filter is added" do
@@ -284,7 +296,7 @@ describe "DomesticSearchController" do
           expect(response.status).to eq(400)
         end
 
-        it "raises an error for the missing dates" do
+        it "raises an error for the invalid date range" do
           response_body = JSON.parse(response.body)
           expect(response_body["data"]["error"]).to include "please provide a valid date range"
         end
@@ -368,6 +380,38 @@ describe "DomesticSearchController" do
         it "raises an error for the constituency name not found" do
           response_body = JSON.parse(response.body)
           expect(response_body["data"]["error"]).to include "provide valid constituency name(s)"
+        end
+      end
+
+      context "when current_page is negative" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: -1 }
+        end
+
+        it "returns 416" do
+          expect(response.status).to eq(416)
+        end
+
+        it "raises an error for the pagination out of range error" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "The requested page number -1 is out of range. Please provide a page number between 1 and 1"
+        end
+      end
+
+      context "when current_page is not a number" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: "not-a-number" }
+        end
+
+        it "returns 416" do
+          expect(response.status).to eq(416)
+        end
+
+        it "raises an error for the pagination out of range error" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "The requested page number 0 is out of range. Please provide a page number between 1 and 1"
         end
       end
     end

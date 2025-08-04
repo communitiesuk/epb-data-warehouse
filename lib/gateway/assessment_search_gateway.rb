@@ -304,14 +304,13 @@ private
         @row_limit,
         ActiveRecord::Type::Integer.new,
       )
-    end
-
-    unless this_args[:current_page].nil?
-      arr << ActiveRecord::Relation::QueryAttribute.new(
-        "offset",
-        calculate_offset(this_args[:current_page]),
-        ActiveRecord::Type::Integer.new,
-      )
+      unless this_args[:current_page].nil?
+        arr << ActiveRecord::Relation::QueryAttribute.new(
+          "offset",
+          calculate_offset(this_args[:current_page]),
+          ActiveRecord::Type::Integer.new,
+        )
+      end
     end
 
     arr

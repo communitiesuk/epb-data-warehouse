@@ -1,9 +1,9 @@
 describe UseCase::GetPagination do
   subject(:use_case) do
-    described_class.new(search_gateway:)
+    described_class.new(assessment_search_gateway:)
   end
 
-  let(:search_gateway) do
+  let(:assessment_search_gateway) do
     instance_double(Gateway::AssessmentSearchGateway)
   end
 
@@ -16,7 +16,7 @@ describe UseCase::GetPagination do
   end
 
   before do
-    allow(search_gateway).to receive_messages(count: 60_000)
+    allow(assessment_search_gateway).to receive_messages(count: 60_000)
   end
 
   it "can call the use case" do
@@ -29,7 +29,7 @@ describe UseCase::GetPagination do
 
   it "passes the arguments to the gateway to count domestic data" do
     use_case.execute(**search_arguments)
-    expect(search_gateway).to have_received(:count).with(search_arguments).exactly(1).times
+    expect(assessment_search_gateway).to have_received(:count).with(search_arguments).exactly(1).times
   end
 
   it "returns the expected hash" do
@@ -42,7 +42,7 @@ describe UseCase::GetPagination do
     end
 
     before do
-      allow(search_gateway).to receive_messages(count: 20)
+      allow(assessment_search_gateway).to receive_messages(count: 20)
     end
 
     it "returns nil for previous page" do
@@ -56,7 +56,7 @@ describe UseCase::GetPagination do
 
   context "when total records is less than 5000" do
     before do
-      allow(search_gateway).to receive_messages(count: 1222)
+      allow(assessment_search_gateway).to receive_messages(count: 1222)
     end
 
     let(:search_arguments) do
@@ -75,7 +75,7 @@ describe UseCase::GetPagination do
 
   context "when total record count is not divisible by number of rows" do
     before do
-      allow(search_gateway).to receive_messages(count: 71_882)
+      allow(assessment_search_gateway).to receive_messages(count: 71_882)
     end
 
     let(:search_arguments) do
@@ -89,6 +89,32 @@ describe UseCase::GetPagination do
     it "returns correct total pages value" do
       result = use_case.execute(**search_arguments)
       expect(result).to eq expected_return_hash
+    end
+  end
+
+  context "when current page is out of range" do
+    before do
+      allow(assessment_search_gateway).to receive_messages(count: 390)
+    end
+
+    it "raises an OutOfPaginationRangeError when current page is 0" do
+      search_args_page_0 = { date_start: "2023-12-01", date_end: "2023-12-23", current_page: 0 }
+      expect { use_case.execute(**search_args_page_0) }.to raise_error(Errors::OutOfPaginationRangeError)
+    end
+
+    it "raises an OutOfPaginationRangeError when current page is greater than 1" do
+      search_args_page_2 = { date_start: "2023-12-01", date_end: "2023-12-23", current_page: 2 }
+      expect { use_case.execute(**search_args_page_2) }.to raise_error(Errors::OutOfPaginationRangeError)
+    end
+  end
+
+  context "when total records is 0" do
+    before do
+      allow(assessment_search_gateway).to receive_messages(count: 0)
+    end
+
+    it "raises an NoData error" do
+      expect { use_case.execute(**search_arguments) }.to raise_error(Boundary::NoData)
     end
   end
 end

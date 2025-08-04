@@ -77,4 +77,12 @@ module Errors
 
   class ConstituencyNotFound < RuntimeError
   end
+
+  class OutOfPaginationRangeError < RuntimeError
+    def initialize(total_pages)
+      super(<<~MSG.strip)
+        Please provide a page number between 1 and #{total_pages}."
+      MSG
+    end
+  end
 end
