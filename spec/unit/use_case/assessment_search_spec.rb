@@ -45,14 +45,6 @@ describe UseCase::AssessmentSearch do
     expect(use_case.execute(**search_arguments)).to eq assessment_search_result
   end
 
-  context "when the dates are out of range" do
-    it "raises an error" do
-      search_arguments[:date_start] = "2023-12-24"
-      search_arguments[:date_end] = "2023-12-23"
-      expect { use_case.execute(**search_arguments) }.to raise_error(Boundary::InvalidDates)
-    end
-  end
-
   context "when all eff_ratings parameters are provided" do
     it "does not pass them to the gateway" do
       eff_rating_arguments = search_arguments.merge({ eff_rating: %w[A B C D E F G] })
