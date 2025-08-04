@@ -68,7 +68,7 @@ describe "Domestic Recommendations Report Yesterday" do
 
     it "returns only the domestic recommendations data from yesterday" do
       expect(vw_yesterday.length).to eq 3
-      expect(vw_yesterday.map { |row| row["rrn"] }).to all(eq("0000-0000-0000-0000-0006"))
+      expect(vw_yesterday.map { |row| row["certificate_number"] }).to all(eq("0000-0000-0000-0000-0006"))
     end
   end
 end

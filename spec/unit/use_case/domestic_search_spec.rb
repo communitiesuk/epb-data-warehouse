@@ -24,7 +24,7 @@ describe UseCase::DomesticSearch do
   end
 
   before do
-    allow(search_gateway).to receive_messages(fetch_rrns: domestic_search_result)
+    allow(search_gateway).to receive_messages(fetch_certificate_numbers: domestic_search_result)
   end
 
   it "can call the use case" do
@@ -33,7 +33,7 @@ describe UseCase::DomesticSearch do
 
   it "passes the arguments to the gateway to fetch domestic data" do
     expect(use_case.execute(**search_arguments)).to eq domestic_search_result
-    expect(search_gateway).to have_received(:fetch_rrns).with(search_arguments).exactly(1).times
+    expect(search_gateway).to have_received(:fetch_certificate_numbers).with(search_arguments).exactly(1).times
   end
 
   context "when a council name is provided" do
@@ -47,7 +47,7 @@ describe UseCase::DomesticSearch do
     end
 
     it "passes the council id to the search" do
-      expect(search_gateway).to have_received(:fetch_rrns).with(args).exactly(1).times
+      expect(search_gateway).to have_received(:fetch_certificate_numbers).with(args).exactly(1).times
     end
   end
 

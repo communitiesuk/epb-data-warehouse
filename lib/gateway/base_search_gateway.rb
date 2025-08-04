@@ -157,7 +157,7 @@ module Gateway
       end
 
       unless this_args[:row_limit].nil?
-        sql << " ORDER BY RRN"
+        sql << " ORDER BY certificate_number"
         sql << " LIMIT $#{index}"
       end
       sql

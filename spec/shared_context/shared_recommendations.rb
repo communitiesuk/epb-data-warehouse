@@ -103,7 +103,7 @@ shared_context "when fetching recommendations report" do
     end
 
     unless this_args[:row_limit].nil?
-      sql << " ORDER BY RRN"
+      sql << " ORDER BY certificate_number"
       sql << " LIMIT $#{index}"
     end
     sql
@@ -111,7 +111,7 @@ shared_context "when fetching recommendations report" do
 
   def fetch_rr
     sql = <<~SQL
-       SELECT rr.rrn,
+       SELECT rr.certificate_number,
       improvement_item,
       improvement_id,
       indicative_cost,

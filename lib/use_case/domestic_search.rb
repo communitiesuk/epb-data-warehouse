@@ -9,7 +9,7 @@ module UseCase
       this_args = args[0]
       raise Boundary::InvalidDates if this_args[:date_start] > this_args[:date_end]
 
-      @search_gateway.fetch_rrns(**this_args)
+      @search_gateway.fetch_certificate_numbers(**this_args)
     end
   end
 end

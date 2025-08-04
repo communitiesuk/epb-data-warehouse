@@ -67,15 +67,15 @@ describe Gateway::DomesticSearchGateway do
 
   describe "#fetch" do
     let(:expected_data) do
-      { "rrn" => "0000-0000-0000-0000-0000", "address1" => "1 Some Street", "address2" => "Some Area", "address3" => "Some County", "postcode" => "W6 9ZD", "total_floor_area" => "165", "current_energy_rating" => "72", "lodgement_date" => "2022-05-09" }
+      { "certificate_number" => "0000-0000-0000-0000-0000", "address1" => "1 Some Street", "address2" => "Some Area", "address3" => "Some County", "postcode" => "W6 9ZD", "total_floor_area" => "165", "current_energy_rating" => "72", "lodgement_date" => "2022-05-09" }
     end
 
-    it "returns a rows for each assessment in England & Wales in ordered by rrn" do
-      data = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+    it "returns a rows for each assessment in England & Wales in ordered by certificate_number" do
+      data = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
       expect(data.length).to eq 5
-      expect(data[0]["rrn"]).to eq "0000-0000-0000-0000-0000"
-      expect(data[1]["rrn"]).to eq "0000-0000-0000-0000-0001"
-      expect(data[2]["rrn"]).to eq "0000-0000-0000-0000-0002"
+      expect(data[0]["certificate_number"]).to eq "0000-0000-0000-0000-0000"
+      expect(data[1]["certificate_number"]).to eq "0000-0000-0000-0000-0001"
+      expect(data[2]["certificate_number"]).to eq "0000-0000-0000-0000-0002"
     end
 
     it "translates enum values into strings using the user defined function" do
@@ -88,7 +88,7 @@ describe Gateway::DomesticSearchGateway do
 
       it "returns the row with a relevant data" do
         expect(gateway.fetch(**search_arguments).length).to eq(1)
-        expect(gateway.fetch(**search_arguments)[0]["rrn"]).to eq("0000-0000-0000-0000-0004")
+        expect(gateway.fetch(**search_arguments)[0]["certificate_number"]).to eq("0000-0000-0000-0000-0004")
       end
     end
 
@@ -97,7 +97,7 @@ describe Gateway::DomesticSearchGateway do
         search_arguments[:council] = ["Hammersmith and Fulham", "Westminster"]
       end
 
-      it "returns data with a corresponding constituency in ordered by rrn" do
+      it "returns data with a corresponding constituency in ordered by certificate_number" do
         result = gateway.fetch(**search_arguments)
         expect(result.length).to eq(5)
       end
@@ -108,14 +108,14 @@ describe Gateway::DomesticSearchGateway do
         search_arguments[:constituency] = ["Chelsea and Fulham", "Cities of London and Westminster"]
       end
 
-      it "returns data with a corresponding constituency in ordered by rrn" do
-        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+      it "returns data with a corresponding constituency in ordered by certificate_number" do
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
         expect(result.length).to eq(5)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
-        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
-        expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
-        expect(result[3]["rrn"]).to eq("0000-0000-0000-0000-0007")
-        expect(result[4]["rrn"]).to eq("0000-0000-0000-0000-0008")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[2]["certificate_number"]).to eq("0000-0000-0000-0000-0002")
+        expect(result[3]["certificate_number"]).to eq("0000-0000-0000-0000-0007")
+        expect(result[4]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
       end
     end
 
@@ -127,28 +127,28 @@ describe Gateway::DomesticSearchGateway do
       it "returns data with a corresponding postcode" do
         result = gateway.fetch(**search_arguments)
         expect(result.length).to eq(1)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
       end
     end
 
     context "when filtering by efficiency ratings" do
       it "returns data with a corresponding efficiency rating" do
         search_arguments[:eff_rating] = %w[C]
-        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
         expect(result.length).to eq(2)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
-        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
       end
 
       it "returns data with corresponding efficiency ratings" do
         search_arguments[:eff_rating] = %w[C E]
-        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
         expect(result.length).to eq(5)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
-        expect(result[1]["rrn"]).to eq("0000-0000-0000-0000-0001")
-        expect(result[2]["rrn"]).to eq("0000-0000-0000-0000-0002")
-        expect(result[3]["rrn"]).to eq("0000-0000-0000-0000-0007")
-        expect(result[4]["rrn"]).to eq("0000-0000-0000-0000-0008")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[1]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[2]["certificate_number"]).to eq("0000-0000-0000-0000-0002")
+        expect(result[3]["certificate_number"]).to eq("0000-0000-0000-0000-0007")
+        expect(result[4]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
       end
     end
 
@@ -168,16 +168,16 @@ describe Gateway::DomesticSearchGateway do
         search_arguments[:council] = ["Hammersmith and Fulham"]
         result = gateway.fetch(**search_arguments)
         expect(result.length).to eq(1)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0000")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0000")
       end
 
       it "returns data with a corresponding efficiency ratings, postcode and limit" do
         search_arguments[:eff_rating] = %w[C E]
         search_arguments[:postcode] = "SW10 0AA"
         search_arguments[:row_limit] = 1
-        result = gateway.fetch(**search_arguments).sort_by { |i| i["rrn"] }
+        result = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
         expect(result.length).to eq(1)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0001")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
       end
 
       it "returns data with a corresponding efficiency ratings, constituency and limit" do
@@ -186,7 +186,7 @@ describe Gateway::DomesticSearchGateway do
         search_arguments[:row_limit] = 1
         result = gateway.fetch(**search_arguments)
         expect(result.length).to eq(1)
-        expect(result[0]["rrn"]).to eq("0000-0000-0000-0000-0002")
+        expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0002")
       end
     end
 
@@ -194,7 +194,7 @@ describe Gateway::DomesticSearchGateway do
       let(:csv_fixture) { read_csv_fixture("domestic") }
 
       let(:expected_sap_data) do
-        { "rrn" => "0000-0000-0000-0000-0001",
+        { "certificate_number" => "0000-0000-0000-0000-0001",
           "address1" => "1 Some Street",
           "address2" => "Some Area",
           "address3" => "Some County",
@@ -344,7 +344,7 @@ describe Gateway::DomesticSearchGateway do
           "roof_description" => "Pitched, 25 mm loft insulation",
           "roof_energy_eff" => "Poor",
           "roof_env_eff" => "Poor",
-          "rrn" => "0000-0000-0000-0000-0006",
+          "certificate_number" => "0000-0000-0000-0000-0006",
           "secondheat_description" => "Room heaters, electric",
           "total_floor_area" => "55",
           "building_reference_number" => "",
@@ -361,7 +361,7 @@ describe Gateway::DomesticSearchGateway do
 
       let(:expected_rdsap_2100_data) do
         expected_rdsap_data.merge(
-          "rrn" => "0000-0000-0000-0000-0007",
+          "certificate_number" => "0000-0000-0000-0000-0007",
           "construction_age_band" => "England and Wales: 2022 onwards",
           "fixed_lighting_outlets_count" => "0",
           "glazed_area" => nil,
@@ -383,7 +383,7 @@ describe Gateway::DomesticSearchGateway do
 
       let(:expected_rdsap_2101_data) do
         expected_rdsap_data.merge(
-          "rrn" => "0000-0000-0000-0000-0008",
+          "certificate_number" => "0000-0000-0000-0000-0008",
           "construction_age_band" => "England and Wales: 2022 onwards",
           "fixed_lighting_outlets_count" => "0",
           "glazed_area" => nil,
@@ -413,37 +413,37 @@ describe Gateway::DomesticSearchGateway do
       end
 
       it "returns a row with the required data for SAP" do
-        result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0001" }
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0001" }
         expect(result).to eq expected_sap_data
       end
 
       it "returns a row with the required data for RdSAP" do
-        result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0006" }
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }
         expect(result).to eq expected_rdsap_data
       end
 
       it "returns a row with the required data for RdSAP 21.0.0" do
-        result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0007" }
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0007" }
         expect(result).to eq expected_rdsap_2100_data
       end
 
       it "returns a row with the required data for RdSAP 21.0.1" do
-        result = query_result.find { |i| i["rrn"] == "0000-0000-0000-0000-0008" }
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0008" }
         expect(result).to eq expected_rdsap_2101_data
       end
     end
 
-    context "when an assessment has a RRN value saved into the assessment_address_id attribute" do
+    context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do
       before do
         Gateway::AssessmentAttributesGateway.new.update_assessment_attribute(assessment_id: "0000-0000-0000-0000-0000",
                                                                              attribute: "assessment_address_id",
-                                                                             value: "RRN-0000-0000-0000-0000-1234")
+                                                                             value: "certificate_number-0000-0000-0000-0000-1234")
         Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
       end
 
       it "returns an empty value for the building_reference_number" do
         results = gateway.fetch(**search_arguments)
-        expect(results.find { |i| i["rrn"] == "0000-0000-0000-0000-0000" }["building_reference_number"]).to eq ""
+        expect(results.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0000" }["building_reference_number"]).to eq ""
       end
     end
   end
@@ -463,13 +463,13 @@ describe Gateway::DomesticSearchGateway do
     end
   end
 
-  describe "#fetch_rrns" do
+  describe "#fetch_certificate_numbers" do
     let(:expectation) do
-      [{ "rrn" => "0000-0000-0000-0000-0000" }, { "rrn" => "0000-0000-0000-0000-0001" }, { "rrn" => "0000-0000-0000-0000-0002" }, { "rrn" => "0000-0000-0000-0000-0007" }, { "rrn" => "0000-0000-0000-0000-0008" }]
+      [{ "certificate_number" => "0000-0000-0000-0000-0000" }, { "certificate_number" => "0000-0000-0000-0000-0001" }, { "certificate_number" => "0000-0000-0000-0000-0002" }, { "certificate_number" => "0000-0000-0000-0000-0007" }, { "certificate_number" => "0000-0000-0000-0000-0008" }]
     end
 
-    it "returns a list of rrn" do
-      result = gateway.fetch_rrns(**search_arguments)
+    it "returns a list of certificate_number" do
+      result = gateway.fetch_certificate_numbers(**search_arguments)
       expect(result).to eq expectation
     end
   end
@@ -492,12 +492,12 @@ describe Gateway::DomesticSearchGateway do
 
     it "returns only the domestic data from yesterday" do
       expect(vw_yesterday.length).to eq 1
-      expect(vw_yesterday[0]["rrn"]).to eq("0000-0000-0000-0000-0006")
+      expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0006")
     end
 
     it "includes rows updated yesterday" do
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET updated_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0008'", "SQL")
-      expect(vw_yesterday.map { |i| i["rrn"] }.sort!).to eq %w[0000-0000-0000-0000-0006 0000-0000-0000-0000-0008]
+      expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0006 0000-0000-0000-0000-0008]
     end
   end
 end

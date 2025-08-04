@@ -5,10 +5,10 @@ module Gateway
       super
     end
 
-    def fetch_rrns(*args)
+    def fetch_certificate_numbers(*args)
       this_args = args.first
       sql = <<~SQL
-        SELECT rrn
+        SELECT certificate_number
         FROM mvw_domestic_search#{' '}
       SQL
 
