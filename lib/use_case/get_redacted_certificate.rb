@@ -5,7 +5,7 @@ module UseCase
     end
 
     def execute(assessment_id:)
-      redacted_document = @documents_gateway.fetch_redacted(assessment_id:)
+      redacted_document = @documents_gateway.fetch_by_id(assessment_id:)
       raise Errors::CertificateNotFound if redacted_document.nil?
 
       redacted_document
