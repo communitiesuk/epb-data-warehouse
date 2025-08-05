@@ -80,6 +80,28 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| Domain::RedactedDocument.new(result:).to_hash }.first
     end
 
+    def fetch_by_id(assessment_id:)
+      sql = <<-SQL
+        SELECT ad.document, ad.assessment_id
+        FROM assessment_documents ad
+        WHERE ad.assessment_id = $1
+        AND EXISTS (SELECT 1 FROM assessment_search s WHERE s.assessment_id = ad.assessment_id)
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| Domain::RedactedDocument.new(result:).to_hash }.first
+    end
+
+
+
     def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:)
       sql = <<-SQL
         UPDATE assessment_documents SET document=jsonb_set(document, '{#{top_level_attribute}}', $1::jsonb), updated_at=$2 WHERE assessment_id=$3

@@ -4,8 +4,14 @@ describe "DomesticSearchController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"
 
+  let(:assessment_id){
+    "0000-0000-0000-0000-0000"
+  }
+
   before do
-    add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
+    document = { assessment_type: "SAP", postcode: "SW10 1AA"}
+    add_assessment(assessment_id: , schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
+    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document:, country_id: 1)
   end
 
   context "when the response is successful" do

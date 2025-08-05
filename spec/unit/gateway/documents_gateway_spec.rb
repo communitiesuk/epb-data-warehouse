@@ -147,6 +147,8 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
     end
   end
 
+
+
   context "when fetching the json for assessments" do
     before do
       # Assessment out of date range
@@ -173,6 +175,9 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
     end
   end
 
+
+  describe "#fetch_redacted" do
+
   context "when fetching a single json document" do
     before do
       gateway.add_assessment(assessment_id:, document: assessment_data)
@@ -184,5 +189,38 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
       expect(JSON.parse(doc[:document])).to be_a Hash
       expect(doc[:assessment_id]).to eq assessment_id
     end
+    end
   end
+
+  describe "fetch_by_id" do
+
+    context "when fetching a single json document" do
+
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
+      end
+
+      it "fetches the json document" do
+        doc = gateway.fetch_by_id(assessment_id:)
+        expect(JSON.parse(doc[:document])).to be_a Hash
+        expect(doc[:assessment_id]).to eq assessment_id
+      end
+    end
+
+    context "when the EPC is opted out, there is no row in the assessment search table " do
+
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        Gateway::AssessmentSearchGateway.new.delete_assessment(assessment_id:)
+      end
+
+      it "return a nil for the EPC" do
+        assessment_id = "8570-6826-6530-4969-0202"
+        expect(gateway.fetch_by_id(assessment_id:)).to be_nil
+
+      end
+    end
+  end
+
 end
