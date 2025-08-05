@@ -11,6 +11,14 @@ describe Helper::DomesticSearchParamsValidator, type: :helper do
     end
   end
 
+  context "when the date range includes today" do
+    it "raises an InvalidArgument error" do
+      search_arguments[:date_start] = "2023-12-24"
+      search_arguments[:date_end] = Date.today.strftime("%Y-%m-%d")
+      expect { described_class.validate(**search_arguments) }.to raise_error(Boundary::InvalidArgument)
+    end
+  end
+
   context "when the postcode is invalid" do
     it "raises an PostcodeNotValid error" do
       search_arguments[:postcode] = "invalid postcode"

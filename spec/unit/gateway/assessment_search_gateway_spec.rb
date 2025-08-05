@@ -630,6 +630,12 @@ describe Gateway::AssessmentSearchGateway do
         results = gateway.fetch_assessments(**current_page_args)
         expect(results.map { |i| i["certificate_number"] }).to eq %w[0005-0000-0000-0001 0005-0000-0000-0000]
       end
+
+      it "defaults to page 1 if the page is invalid" do
+        invalid_page_args = args.merge(current_page: -1)
+        results = gateway.fetch_assessments(**invalid_page_args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0005-0000-0000-0011 0005-0000-0000-0010 0005-0000-0000-0009 0005-0000-0000-0008 0005-0000-0000-0007]
+      end
     end
   end
 
