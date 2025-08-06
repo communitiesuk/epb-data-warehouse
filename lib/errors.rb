@@ -85,4 +85,7 @@ module Errors
       MSG
     end
   end
+
+  class FileNotFound < RuntimeError
+  end
 end
