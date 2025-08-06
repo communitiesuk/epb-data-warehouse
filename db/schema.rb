@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_05_115758) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_05_153656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_05_115758) do
   create_table "audit_logs", force: :cascade do |t|
     t.string "assessment_id"
     t.string "event_type", null: false
-    t.datetime "timestamp", default: "2025-07-30 11:55:31", null: false
+    t.datetime "timestamp", default: "2025-08-06 13:33:34", null: false
     t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
     t.unique_constraint ["assessment_id", "event_type"], name: "idx_audit_log_rrn_event"
   end

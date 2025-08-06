@@ -24,14 +24,14 @@ describe "Domestic Recommendations Report" do
       import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
       import_use_case.execute
       add_countries
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "SAP-Schema-16.1", type_of_assessment: "SAP", type: "sap", different_fields: {
-        "postcode": "SW10 0AA",
+      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0009", schema_type: "SAP-Schema-16.1", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
-        "postcode": "SW10 0AA",
+      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
-        "postcode": "SW10 0AA",
+      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0010", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
       })
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
