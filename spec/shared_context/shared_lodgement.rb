@@ -108,7 +108,7 @@ shared_context "when lodging XML" do
   def add_assessment_country_id(assessment_id:, document:)
     country_id = case document["postcode"]
                  when /^BT/
-                   4
+                   3
                  when /^ML/
                    5
                  else
@@ -122,13 +122,13 @@ shared_context "when lodging XML" do
 
     insert_sql = <<-SQL
             INSERT INTO countries(country_id, country_code, country_name, address_base_country_code)
-            VALUES (1, 'ENG', 'England' ,'["E"]'::jsonb),
-                   (2, 'EAW', 'England and Wales', '["E", "W"]'::jsonb),
-                     (3, 'UKN', 'Unknown', '{}'::jsonb),
-                    (4, 'NIR', 'Northern Ireland', '["N"]'::jsonb),
+            VALUES  (1, 'ENG', 'England' ,'["E"]'::jsonb),
+                    (2, 'WLS', 'Wales', '{}'::jsonb),
+                    (3, 'NIR', 'Northern Ireland', '["N"]'::jsonb),
+                    (4, 'EAW', 'England and Wales', '["E", "W"]'::jsonb),
                     (5, 'SCT', 'Scotland', '["S"]'::jsonb),
-            (6,'', 'Channel Islands', '["L"]'::jsonb),
-                (7,'NR', 'Not Recorded', null)
+                    (42,'', 'Channel Islands', '["L"]'::jsonb),
+                    (7,'NR', 'Not Recorded', null)
 
     SQL
     ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
@@ -166,10 +166,10 @@ shared_context "when lodging XML" do
     })
   end
 
-  def update_postcode(assessment_id, postcde)
+  def update_postcode(assessment_id, postcode)
     sql = <<-SQL
       UPDATE assessment_documents
-      SET document = JSONB_SET(document, '{postcode}', '"#{postcde}"')
+      SET document = JSONB_SET(document, '{postcode}', '"#{postcode}"')
       WHERE assessment_id = $1
     SQL
 

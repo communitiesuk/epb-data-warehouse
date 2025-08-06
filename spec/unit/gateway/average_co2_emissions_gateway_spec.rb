@@ -35,7 +35,7 @@ describe Gateway::AverageCo2EmissionsGateway do
       "co2_emissions_current_per_floor_area": 8,
       "registration_date": "2022-12-01",
     })
-    ActiveRecord::Base.connection.exec_query("UPDATE assessments_country_ids SET country_id=4 WHERE assessment_id='0000-0000-0000-0000-0005' ", "SQL")
+    ActiveRecord::Base.connection.exec_query("UPDATE assessments_country_ids SET country_id=3 WHERE assessment_id='0000-0000-0000-0000-0005' ", "SQL")
   end
 
   before do
