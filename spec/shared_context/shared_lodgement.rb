@@ -48,7 +48,7 @@ shared_context "when lodging XML" do
     add_assessment_country_id(assessment_id:, document:)
   end
 
-  def add_assessment_eav(assessment_id:, schema_type:, type_of_assessment:, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil)
+  def add_assessment_eav(assessment_id:, schema_type:, type_of_assessment:, add_to_assessment_search: false, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil)
     meta_data_sample = {
       "assessment_type" => type_of_assessment,
       "opt_out" => false,
@@ -73,35 +73,9 @@ shared_context "when lodging XML" do
     certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
     certificate_data.merge!(meta_data_sample)
     Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
-    add_assessment_country_id(assessment_id:, document: certificate_data)
-  end
-
-  def add_assessment_eav_and_search(assessment_id:, schema_type:, type_of_assessment:, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil)
-    meta_data_sample = {
-      "assessment_type" => type_of_assessment,
-      "opt_out" => false,
-      "created_at" => "2021-07-21T11:26:28.045Z",
-      "schema_type" => schema_type,
-      "assessment_address_id" => assessment_address_id,
-    }
-
-    xml_path = "RRN"
-    if type == "cepc"
-      xml_path = "//CEPC:RRN"
-    elsif type.end_with? "sap"
-      xml_path = "//SAP:RRN"
+    if add_to_assessment_search
+      Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: certificate_data["country_id"])
     end
-
-    document = Nokogiri.XML Samples.xml(schema_type, type)
-    rrn = document.at(xml_path)
-    rrn.children = assessment_id unless rrn.nil?
-    xml = document.to_xml
-
-    certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
-    certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
-    certificate_data.merge!(meta_data_sample)
-    Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
-    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: certificate_data["country_id"])
     add_assessment_country_id(assessment_id:, document: certificate_data)
   end
 

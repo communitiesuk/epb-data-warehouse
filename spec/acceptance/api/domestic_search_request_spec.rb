@@ -17,21 +17,21 @@ describe "DomesticSearchController" do
     end
 
     before do
-      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
         "registration_date": "2023-05-02", "country_id": 1
       })
-      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
         "postcode": "SW1V 2AA",
         "registration_date": "2023-05-02",
         "country_id": 1,
       })
-      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
         "postcode": "SW1V 2AA",
         "energy_rating_current": 50,
         "registration_date": "2023-05-02",
         "country_id": 1,
       })
-      add_assessment_eav_and_search(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
         "postcode": "SW1X JBA",
         "energy_rating_current": 83,
         "registration_date": "2023-05-02",
