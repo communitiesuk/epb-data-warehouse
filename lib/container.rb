@@ -202,4 +202,8 @@ class Container
   def self.get_presigned_url_use_case
     @get_presigned_url_use_case ||= UseCase::GetPresignedUrl.new(gateway: s3_gateway, bucket_name: ENV["AWS_S3_USER_DATA_BUCKET_NAME"])
   end
+
+  def self.get_file_info_use_case
+    @get_file_info_use_case ||= UseCase::GetFileInfo.new(gateway: s3_gateway, bucket_name: ENV["AWS_S3_USER_DATA_BUCKET_NAME"])
+  end
 end

@@ -18,7 +18,7 @@ module Gateway
       response = @s3_client.head_object(bucket:, key: file_name)
       {
         file_size: response.content_length,
-        last_modified: response.last_modified,
+        last_updated: response.last_modified,
       }
     rescue Aws::S3::Errors::NotFound
       raise Errors::FileNotFound, file_name

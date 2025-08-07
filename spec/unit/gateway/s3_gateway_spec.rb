@@ -75,11 +75,11 @@ describe Gateway::S3Gateway do
                )
       end
 
-      it "returns a hash with file size and last modified date" do
+      it "returns a hash with file size and last updated date" do
         expect(response).to be_a(Hash)
         expect(response).to eq(
           file_size: 3600,
-          last_modified: Time.parse("2006-01-01 12:00:00 UTC"),
+          last_updated: Time.parse("2006-01-01 12:00:00 UTC"),
         )
       end
     end
