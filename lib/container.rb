@@ -194,4 +194,12 @@ class Container
   def self.get_redacted_certificate_use_case
     @get_redacted_certificate_use_case ||= UseCase::GetRedactedCertificate.new(documents_gateway:)
   end
+
+  def self.s3_gateway
+    @s3_gateway ||= Gateway::S3Gateway.new
+  end
+
+  def self.get_presigned_url_use_case
+    @get_presigned_url_use_case ||= UseCase::GetPresignedUrl.new(gateway: s3_gateway, bucket_name: ENV["AWS_S3_USER_DATA_BUCKET_NAME"])
+  end
 end

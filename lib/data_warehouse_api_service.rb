@@ -15,4 +15,5 @@ class DataWarehouseApiService < Controller::BaseController
   use Controller::DomesticSearchController
   use Controller::CertificateController
   use Controller::DeltasController
+  use Controller::FileController
 end

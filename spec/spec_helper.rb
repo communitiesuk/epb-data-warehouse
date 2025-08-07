@@ -26,6 +26,7 @@ ENV["EPB_API_URL"] = "http://test-api.gov.uk"
 ENV["EPB_QUEUES_URI"] = "redis://127.0.0.1:6379"
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
+ENV["AWS_S3_USER_DATA_BUCKET_NAME"] = "user-data"
 
 ENV["RACK_ENV"] = "test"
 
