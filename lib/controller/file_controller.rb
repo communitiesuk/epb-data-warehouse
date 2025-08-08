@@ -11,8 +11,8 @@ module Controller
       json_api_response code: 500, data: { error: "Internal Server Error" }
     end
 
-    get "/api/files/:property_type/info", auth_token_has_all: %w[epb-data-front:read] do
-      file_name = "#{params[:property_type]}/full-load/#{params[:property_type]}.zip"
+    get "/api/files/domestic/csv/info", auth_token_has_all: %w[epb-data-front:read] do
+      file_name = "domestic/full-load/domestic.zip"
       return_data = Container.get_file_info_use_case.execute(file_name:)
       json_api_response data: return_data
     rescue Errors::FileNotFound
