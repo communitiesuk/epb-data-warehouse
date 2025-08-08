@@ -1,4 +1,4 @@
-describe "VwRedactedAssessmentDocuments" do
+describe "MvwRedactedAssessmentDocuments" do
   let(:documents_gateway) { Gateway::DocumentsGateway.new }
 
   let(:assessment_search_gateway) { Gateway::AssessmentSearchGateway.new }
@@ -60,14 +60,15 @@ describe "VwRedactedAssessmentDocuments" do
     }
   end
 
-  context "when fetching from vw_redacted_assessment_documents" do
+  context "when fetching from mvw_redacted_assessment_documents" do
     before do
       documents_gateway.add_assessment(assessment_id:, document: assessment_data_to_redact)
       assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_to_redact, country_id: 1)
+      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_redacted_assessment_documents")
     end
 
     let(:redacted_row) do
-      sql = "SELECT * FROM vw_redacted_assessment_documents WHERE certificate_number='#{assessment_id}'"
+      sql = "SELECT * FROM mvw_redacted_assessment_documents WHERE certificate_number='#{assessment_id}'"
       result = ActiveRecord::Base.connection.exec_query(sql)
       result.first
     end
