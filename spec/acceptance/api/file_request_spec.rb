@@ -1,9 +1,5 @@
-describe "get .get-energy-certificate-data.epb-frontend/download" do
+describe "FileController" do
   include RSpecDataWarehouseApiServiceMixin
-
-  let(:file_name) do
-    "domestic"
-  end
 
   let(:file_path) do
     "domestic/full-load/domestic.zip"
@@ -11,7 +7,7 @@ describe "get .get-energy-certificate-data.epb-frontend/download" do
 
   let(:response) do
     header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-    get "/api/files/#{file_name}"
+    get "/api/files/domestic/csv"
   end
 
   context "when the file exists" do

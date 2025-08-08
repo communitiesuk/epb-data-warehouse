@@ -1,7 +1,7 @@
 module Controller
   class FileController < BaseController
-    get "/api/files/:property_type", auth_token_has_all: %w[epb-data-front:read] do
-      file_name = "#{params[:property_type]}/full-load/#{params[:property_type]}.zip"
+    get "/api/files/domestic/csv", auth_token_has_all: %w[epb-data-front:read] do
+      file_name = "domestic/full-load/domestic.zip"
       s3_url = Container.get_presigned_url_use_case.execute(file_name:)
       redirect s3_url
     rescue Errors::FileNotFound
