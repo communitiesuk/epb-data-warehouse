@@ -18,13 +18,21 @@ servers:
 
 tags:
   - name: Search
-    description: Search the register given filtering data
+    description: Search given filtering data
+  - name: Delta
+    description: EPC changes between 2 dates
+  - name: Data
+    description: Certificate data download
+  - name: Files
+    description: Bulk Certificate Zip files download
+  - name: Domestic
+    description: Domestic property operations
 
 paths:
   /api/certificate:
     get:
       tags:
-        - Search
+        - Data
       summary: /api/certificate
       description: |-
         Fetch a certificate
@@ -32,22 +40,116 @@ paths:
       operationId: fetch-certificate
       security:
         - bearerToken: []
+      parameters:
+      - in: query
+        name: certificate_number
+        description: The certificate number to fetch
+        required: true
+        schema:
+          type: string
+          example: "0000-1672-0000-1732-0000"
+      responses:
+        '200':
+          description: Successful response returning an EPC document in JSON format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateResponse'
+        '404':
+          description: Certificate not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Certificate not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                errors:
+                  - code: "Unexpected error message here"
 
   /api/deltas:
     get:
       tags:
-        - Search
-      summary: /api/deltas
+        - Delta
+      summary: Search certificates that have changed between two dates
       description: |-
-        /api/deltas
+        Search EPCs changes between date_start and date_end
       operationId: delta-certificates
       security:
         - bearerToken: []
+      parameters:
+          - in: query
+            name: date_start
+            description: The start date for the date range of the search (YY-mm-dd)
+            required: true
+            schema:
+              type: string
+              format: date
+              example: '2017-01-10'
+          - in: query
+            name: date_end
+            description: The end date for the date range of the search (YY-mm-dd)
+            required: true
+            schema:
+              type: string
+              format: date
+              example: '2020-01-10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeltaResponse'
+
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_date_range:
+                  summary: Invalid or missing date range
+                  value:
+                    error: "The search query was invalid - please provide a valid date range"
+                includes_today:
+                  summary: Date range includes today, which is not allowed
+                  value:
+                    error: "The search query was invalid - the date cannot include today"
+
+        '404':
+          description: No data found for the query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "No audit logs could be found for that query"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                errors:
+                  - code: "Unexpected error message here"
 
   /api/domestic/search:
     get:
       tags:
         - Search
+        - Domestic
       summary: Search for certificates
       description: |-
         Search EPCs by
@@ -125,14 +227,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/EnergyAssessmentSearchResult'
-                  pagination:
-                    $ref: '#/components/schemas/PaginationMetadata'
+                $ref: '#/components/schemas/AssessmentSearchResult'
               example:
                 data:
                   - addressLine1: "1 Some Street"
@@ -206,6 +301,91 @@ paths:
                 errors:
                   - code: "Unexpected error message here"
 
+  /api/files/domestic/csv:
+    get:
+      tags:
+        - Files
+        - Domestic
+      summary: Download domestic full-load CSV
+      description: |
+        Redirects to a pre-signed S3 URL for the domestic full-load ZIP file.
+      operationId: download-domestic-full-load
+      security:
+        - bearerToken: []
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/domestic/csv/info:
+    get:
+      tags:
+        - Files
+        - Domestic
+      summary: Get info about domestic full-load CSV
+      description: |
+        Returns metadata about the domestic full-load ZIP file.
+      operationId: get-domestic-full-load-info
+      security:
+        - bearerToken: []
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
 components:
   securitySchemes:
     bearerToken:
@@ -274,6 +454,87 @@ components:
                 properties:
                   code:
                     type: string
+    DeltaEvent:
+      type: object
+      properties:
+        certificateNumber:
+          type: string
+          example: "0000-0000-0000-0002-1111"
+        eventType:
+          type: string
+          enum: [opt_out, cancelled, address_id_updated]
+          example: "opt_out"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-02-17T16:26:08.535Z"
+      required:
+        - certificateNumber
+        - eventType
+        - timestamp
+
+    DeltaResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeltaEvent'
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+        - data
+        - meta
+
+    CertificateResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: EPC document in JSON format
+          additionalProperties: true
+      required:
+        - data
+        - meta
+
+    FileInfo:
+      type: object
+      properties:
+        fileSize:
+          type: integer
+          description: Size of the file in bytes
+          example: 22
+        lastUpdated:
+          type: string
+          format: date-time
+          description: Last modified timestamp of the file
+          example: "2025-08-01T00:31:19.000+00:00"
+      required:
+        - fileSize
+        - lastUpdated
+
+    FileInfoResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/FileInfo'
+      required:
+        - data
+        - meta
+
+    AssessmentSearchResult:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnergyAssessmentSearchResult'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - data
+        - pagination
 
   links: {}
   callbacks: {}
