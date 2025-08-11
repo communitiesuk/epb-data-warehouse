@@ -6,39 +6,30 @@ describe "DomesticSearchController" do
   include_context "when lodging XML"
   include_context "when saving ons data"
 
-  let(:search_assessment_gateway) do
-    Gateway::AssessmentSearchGateway.new
+  before(:all) do
+    import_postcode_directory_name
+    import_postcode_directory_data
+    add_countries
+
+    search_assessment_gateway = Gateway::AssessmentSearchGateway.new
+    rdsap = parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
+    sap = parse_assessment(assessment_id: "9999-0000-0000-0000-9995", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", assessment_address_id: "UPRN-100121241799", different_fields: { "postcode" => "SW10 0AA", "energy_rating_current" => 72 })
+
+    postcode_rdsap = rdsap.merge({ "postcode" => "SW1A 2AA" })
+    council_constituency_rdsap = rdsap.merge({ "postcode" => "ML9 9AR" })
+    eff_rdsap = rdsap.merge({ "energy_rating_current" => 85 })
+    address_rdsap = rdsap.merge({ "address_line_1" => "2 Banana Street" })
+    country_id = 1
+
+    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: eff_rdsap, created_at: "2024-01-01", country_id:)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: postcode_rdsap, created_at: "2023-01-01", country_id:)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: council_constituency_rdsap, created_at: "2023-05-05", country_id:)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: address_rdsap, created_at: "2022-05-05", country_id:)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0004", document: sap, created_at: "2022-01-01", country_id: 1)
   end
 
-  let(:country_id) { 1 }
-
   context "when requesting a response from /api/domestic/count" do
-    let(:type_of_assessment) { "SAP" }
-
-    let(:schema_type) { "SAP-Schema-19.0.0" }
-
-    let(:sap) do
-      parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type:, type_of_assessment:, assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
-    end
-
-    let(:eff_sap) do
-      sap.merge({ "energy_rating_current" => 85 })
-    end
-
-    before(:all) do
-      import_postcode_directory_name
-      import_postcode_directory_data
-      add_countries
-    end
-
-    before do
-      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: sap, created_at: "2024-02-02", country_id:)
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: sap, created_at: "2023-02-02", country_id:)
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: eff_sap, created_at: "2023-03-03", country_id:)
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: eff_sap, created_at: "2022-02-02", country_id:)
-    end
-
     context "when the response is a success" do
       context "when no optional search filters are added" do
         let(:response) do
@@ -49,20 +40,20 @@ describe "DomesticSearchController" do
         it "returns 4 rows of data" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"]).to eq({ "count" => 4 })
+          expect(response_body["data"]).to eq({ "count" => 5 })
         end
       end
 
       context "when optional search filters are added" do
         let(:response) do
           header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-          get "/api/domestic/count?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B E] }
+          get "/api/domestic/count?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[A B] }
         end
 
-        it "returns 2 rows of data for efficiency rating filter" do
+        it "returns 1 row of data for efficiency rating filter" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"]).to eq({ "count" => 2 })
+          expect(response_body["data"]).to eq({ "count" => 1 })
         end
       end
     end
@@ -84,31 +75,6 @@ describe "DomesticSearchController" do
   end
 
   context "when requesting a response from /api/domestic/search" do
-    before(:all) do
-      import_postcode_directory_name
-      import_postcode_directory_data
-    end
-
-    let(:rdsap) do
-      parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
-    end
-
-    let(:postcode_rdsap) do
-      rdsap.merge({ "postcode" => "SW1A 2AA" })
-    end
-
-    let(:council_constituency_rdsap) do
-      rdsap.merge({ "postcode" => "ML9 9AR" })
-    end
-
-    let(:eff_rdsap) do
-      rdsap.merge({ "energy_rating_current" => 85 })
-    end
-
-    let(:address_rdsap) do
-      rdsap.merge({ "address_line_1" => "2 Banana Street" })
-    end
-
     let(:expected_data) do
       {
         "addressLine1" => "1 Some Street",
@@ -126,14 +92,6 @@ describe "DomesticSearchController" do
       }
     end
 
-    before do
-      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: eff_rdsap, created_at: "2024-01-01", country_id:)
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: postcode_rdsap, created_at: "2023-01-01", country_id:)
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: council_constituency_rdsap, created_at: "2023-05-05", country_id:)
-      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: address_rdsap, created_at: "2022-05-05", country_id:)
-    end
-
     context "when the response is a success" do
       context "when no optional search filters are added" do
         let(:response) do
@@ -141,10 +99,14 @@ describe "DomesticSearchController" do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01"
         end
 
-        it "does not error" do
+        it "returns a successful response with data" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"].length).to eq 4
+          expect(response_body["data"].length).to eq 5
+        end
+
+        it "returns expected data" do
+          response_body = JSON.parse(response.body)
           result = response_body["data"].find { |i| i["certificateNumber"] == "0000-0000-0000-0000" }
           expect(result).to eq expected_data
         end
@@ -152,7 +114,7 @@ describe "DomesticSearchController" do
         it "includes pagination data" do
           response_body = JSON.parse(response.body)
           expected_pagination = {
-            "totalRecords" => 4,
+            "totalRecords" => 5,
             "currentPage" => 1,
             "totalPages" => 1,
             "nextPage" => nil,
@@ -197,7 +159,7 @@ describe "DomesticSearchController" do
         it "returns the correct assessments for multiple inputs" do
           response_body = JSON.parse(multiple_responses.body)
           expect(multiple_responses.status).to eq(200)
-          expect(response_body["data"].length).to eq 3
+          expect(response_body["data"].length).to eq 4
         end
       end
 
@@ -222,7 +184,7 @@ describe "DomesticSearchController" do
         it "returns the correct assessments for multiple inputs" do
           response_body = JSON.parse(multiple_responses.body)
           expect(multiple_responses.status).to eq(200)
-          expect(response_body["data"].length).to eq 3
+          expect(response_body["data"].length).to eq 4
         end
       end
 
