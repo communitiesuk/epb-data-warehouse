@@ -1,10 +1,10 @@
-describe UseCase::CountDomesticCertificates do
+describe UseCase::CountCertificates do
   subject(:use_case) do
-    described_class.new(search_gateway:)
+    described_class.new(assessment_search_gateway:)
   end
 
-  let(:search_gateway) do
-    instance_double(Gateway::DomesticSearchGateway)
+  let(:assessment_search_gateway) do
+    instance_double(Gateway::AssessmentSearchGateway)
   end
 
   let(:search_arguments) do
@@ -16,7 +16,7 @@ describe UseCase::CountDomesticCertificates do
   end
 
   before do
-    allow(search_gateway).to receive_messages(count: 20)
+    allow(assessment_search_gateway).to receive_messages(count: 20)
   end
 
   it "can call the use case" do
@@ -25,7 +25,7 @@ describe UseCase::CountDomesticCertificates do
 
   it "passes the arguments to the gateway to count domestic data" do
     expect(use_case.execute(**search_arguments)).to eq expectation
-    expect(search_gateway).to have_received(:count).with(search_arguments).exactly(1).times
+    expect(assessment_search_gateway).to have_received(:count).with(search_arguments).exactly(1).times
   end
 
   context "when a council name is provided" do
@@ -39,7 +39,7 @@ describe UseCase::CountDomesticCertificates do
     end
 
     it "passes the council id to the search" do
-      expect(search_gateway).to have_received(:count).with(args).exactly(1).times
+      expect(assessment_search_gateway).to have_received(:count).with(args).exactly(1).times
     end
   end
 
@@ -54,7 +54,7 @@ describe UseCase::CountDomesticCertificates do
 
     it "doesn't pass any efficiency rating to the search" do
       args.delete(:eff_rating)
-      expect(search_gateway).to have_received(:count).with(args).exactly(1).times
+      expect(assessment_search_gateway).to have_received(:count).with(args).exactly(1).times
     end
   end
 end

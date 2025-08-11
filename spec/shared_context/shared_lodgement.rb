@@ -74,7 +74,7 @@ shared_context "when lodging XML" do
     certificate_data.merge!(meta_data_sample)
     Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
     if add_to_assessment_search
-      Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: certificate_data["country_id"])
+      Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, created_at: certificate_data["created_at"], document: certificate_data, country_id: certificate_data["country_id"])
     end
     add_assessment_country_id(assessment_id:, document: certificate_data)
   end

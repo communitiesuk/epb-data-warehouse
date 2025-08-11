@@ -454,21 +454,6 @@ describe Gateway::DomesticSearchGateway do
     end
   end
 
-  describe "#count" do
-    it "returns the number of epcs" do
-      result = gateway.count(**search_arguments)
-      expect(result).to eq 5
-    end
-
-    context "when filtering for a council where there is no data" do
-      it "returns a zero" do
-        search_arguments[:council] = ["Belfast South"]
-        result = gateway.count(**search_arguments)
-        expect(result).to eq 0
-      end
-    end
-  end
-
   describe "#fetch_certificate_numbers" do
     let(:expectation) do
       [{ "certificate_number" => "0000-0000-0000-0000-0000" }, { "certificate_number" => "0000-0000-0000-0000-0001" }, { "certificate_number" => "0000-0000-0000-0000-0002" }, { "certificate_number" => "0000-0000-0000-0000-0007" }, { "certificate_number" => "0000-0000-0000-0000-0008" }]

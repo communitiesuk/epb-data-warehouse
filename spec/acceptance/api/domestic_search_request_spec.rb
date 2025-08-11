@@ -6,9 +6,24 @@ describe "DomesticSearchController" do
   include_context "when lodging XML"
   include_context "when saving ons data"
 
+  let(:search_assessment_gateway) do
+    Gateway::AssessmentSearchGateway.new
+  end
+
+  let(:country_id) { 1 }
+
   context "when requesting a response from /api/domestic/count" do
     let(:type_of_assessment) { "SAP" }
+
     let(:schema_type) { "SAP-Schema-19.0.0" }
+
+    let(:sap) do
+      parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type:, type_of_assessment:, assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
+    end
+
+    let(:eff_sap) do
+      sap.merge({ "energy_rating_current" => 85 })
+    end
 
     before(:all) do
       import_postcode_directory_name
@@ -17,27 +32,11 @@ describe "DomesticSearchController" do
     end
 
     before do
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
-        "registration_date": "2023-05-02", "country_id": 1
-      })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
-        "postcode": "SW1V 2AA",
-        "registration_date": "2023-05-02",
-        "country_id": 1,
-      })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
-        "postcode": "SW1V 2AA",
-        "energy_rating_current": 50,
-        "registration_date": "2023-05-02",
-        "country_id": 1,
-      })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
-        "postcode": "SW1X JBA",
-        "energy_rating_current": 83,
-        "registration_date": "2023-05-02",
-        "country_id": 1,
-      })
-      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: sap, created_at: "2024-02-02", country_id:)
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: sap, created_at: "2023-02-02", country_id:)
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: eff_sap, created_at: "2023-03-03", country_id:)
+      search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: eff_sap, created_at: "2022-02-02", country_id:)
     end
 
     context "when the response is a success" do
@@ -110,12 +109,6 @@ describe "DomesticSearchController" do
       rdsap.merge({ "address_line_1" => "2 Banana Street" })
     end
 
-    let(:search_assessment_gateway) do
-      Gateway::AssessmentSearchGateway.new
-    end
-
-    let(:country_id) { 1 }
-
     let(:expected_data) do
       {
         "addressLine1" => "1 Some Street",
@@ -134,6 +127,7 @@ describe "DomesticSearchController" do
     end
 
     before do
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
       search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: eff_rdsap, created_at: "2024-01-01", country_id:)
       search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: postcode_rdsap, created_at: "2023-01-01", country_id:)
       search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: council_constituency_rdsap, created_at: "2023-05-05", country_id:)

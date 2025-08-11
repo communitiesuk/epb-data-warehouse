@@ -31,6 +31,10 @@ module Controller
         current_page: {
           type: "integer",
         },
+        assessment_type: {
+          type: "array",
+          items: { type: "string" },
+        },
       },
     }.freeze
 
@@ -43,8 +47,9 @@ module Controller
         constituency: params[:constituency],
         postcode: params[:postcode],
         eff_rating: params[:eff_rating],
+        assessment_type: %w[SAP RdSAP],
       }
-      use_case = Container.count_domestic_certificates_use_case
+      use_case = Container.count_certificates_use_case
       result = use_case.execute(**execute_params)
       json_api_response code: 200, data: { count: result }
     rescue StandardError => e

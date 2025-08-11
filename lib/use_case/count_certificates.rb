@@ -1,7 +1,7 @@
 module UseCase
-  class CountDomesticCertificates
-    def initialize(search_gateway:)
-      @search_gateway = search_gateway
+  class CountCertificates
+    def initialize(assessment_search_gateway:)
+      @assessment_search_gateway = assessment_search_gateway
     end
 
     def execute(*args)
@@ -10,8 +10,7 @@ module UseCase
       if !this_args[:eff_rating].nil? && this_args[:eff_rating].sort == %w[A B C D E F G]
         this_args.delete(:eff_rating)
       end
-
-      @search_gateway.count(**this_args)
+      @assessment_search_gateway.count(**this_args)
     end
   end
 end
