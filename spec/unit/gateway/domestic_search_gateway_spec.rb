@@ -195,6 +195,7 @@ describe Gateway::DomesticSearchGateway do
 
       let(:expected_sap_data) do
         { "certificate_number" => "0000-0000-0000-0000-0001",
+          "address" => "1 some street some area some county",
           "address1" => "1 Some Street",
           "address2" => "Some Area",
           "address3" => "Some County",
@@ -280,6 +281,7 @@ describe Gateway::DomesticSearchGateway do
           "glazed_type" => nil,
           "photo_supply" => nil,
           "solar_water_heating_flag" => nil,
+          "local_authority" => "E09000013",
           "local_authority_label" => "Hammersmith and Fulham",
           "constituency_label" => "Chelsea and Fulham",
           "constituency" => "E14000629",
@@ -289,6 +291,7 @@ describe Gateway::DomesticSearchGateway do
 
       let(:expected_rdsap_data) do
         expected_sap_data.merge(
+          "address" => "1 some street",
           "address2" => nil,
           "address3" => nil,
           "report_type" => "2",
@@ -356,6 +359,7 @@ describe Gateway::DomesticSearchGateway do
           "windows_description" => "Fully double glazed",
           "windows_energy_eff" => "Average",
           "windows_env_eff" => "Average",
+          "local_authority" => "E09000013",
         )
       end
 
@@ -377,6 +381,7 @@ describe Gateway::DomesticSearchGateway do
           "postcode" => "SW1A 2AA",
           "constituency" => "E14001172",
           "constituency_label" => "Cities of London and Westminster",
+          "local_authority" => "E09000033",
           "local_authority_label" => "Westminster",
         )
       end
@@ -399,6 +404,7 @@ describe Gateway::DomesticSearchGateway do
           "postcode" => "SW1A 2AA",
           "constituency" => "E14001172",
           "constituency_label" => "Cities of London and Westminster",
+          "local_authority" => "E09000033",
           "local_authority_label" => "Westminster",
         )
       end
