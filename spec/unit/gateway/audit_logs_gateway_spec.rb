@@ -74,6 +74,30 @@ describe Gateway::AuditLogsGateway do
         end
       end
     end
+
+    context "when no timestamp is set" do
+      before do
+        Timecop.freeze(Time.utc(2014, 7, 4, 12, 0))
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "does not raise an error" do
+        expect { gateway.insert_log(assessment_id:, event_type:, timestamp: nil) }.not_to raise_error
+      end
+
+      it "the new row timestamp column has a default value" do
+        gateway.insert_log(assessment_id:, event_type:, timestamp: nil)
+        expect(logs[0]["timestamp"]).to eq Time.now
+      end
+
+      it "the assessment has an updated time stamp" do
+        gateway.insert_log(assessment_id:, event_type:, timestamp: "2025-02-01 00:00:01")
+        expect(logs.first["timestamp"].to_s).to eq "2025-02-01 00:00:01 UTC"
+      end
+    end
   end
 
   describe "#fetch_logs" do

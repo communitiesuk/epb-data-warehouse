@@ -22,7 +22,7 @@ class Gateway::AuditLogsGateway
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "timestamp",
-        timestamp,
+        timestamp || Time.now,
         ActiveRecord::Type::DateTime.new,
       ),
     ]
