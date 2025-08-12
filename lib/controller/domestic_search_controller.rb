@@ -31,10 +31,6 @@ module Controller
         current_page: {
           type: "integer",
         },
-        assessment_type: {
-          type: "array",
-          items: { type: "string" },
-        },
       },
     }.freeze
 
