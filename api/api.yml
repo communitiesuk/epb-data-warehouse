@@ -17,16 +17,15 @@ servers:
     description: Production Service
 
 tags:
-  - name: Search
-    description: Search given filtering data
+  - name: Domestic
+    description: Domestic property operations
   - name: Delta
     description: EPC changes between 2 dates
   - name: Data
-    description: Certificate data download
+    description: EPC certificate data
   - name: Files
-    description: Bulk Certificate Zip files download
-  - name: Domestic
-    description: Domestic property operations
+    description: Bulk Certificate file downloads
+
 
 paths:
   /api/certificate:
@@ -89,7 +88,7 @@ paths:
       parameters:
         - in: query
           name: date_start
-          description: The start date for the date range of the search (YY-mm-dd)
+          description: The start date for the date range of the search (YYYY-mm-dd)
           required: true
           schema:
             type: string
@@ -97,7 +96,7 @@ paths:
             example: '2017-01-10'
         - in: query
           name: date_end
-          description: The end date for the date range of the search (YY-mm-dd)
+          description: The end date for the date range of the search (YYYY-mm-dd)
           required: true
           schema:
             type: string
@@ -150,7 +149,7 @@ paths:
       tags:
         - Search
         - Domestic
-      summary: Search for certificates
+      summary: Search for domestic certificates
       description: |-
         Search EPCs by
           - date_start and date_end **mandatory**
@@ -165,7 +164,7 @@ paths:
       parameters:
         - in: query
           name: date_start
-          description: The start date for the date range of the search (YY-mm-dd)
+          description: The start date for the date range of the search (YYYY-mm-dd)
           required: true
           schema:
             type: string
@@ -173,7 +172,7 @@ paths:
             example: '2017-01-10'
         - in: query
           name: date_end
-          description: The end date for the date range of the search (YY-mm-dd)
+          description: The end date for the date range of the search (YYYY-mm-dd)
           required: true
           schema:
             type: string
@@ -485,12 +484,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DeltaEvent'
-        meta:
-          type: object
-          additionalProperties: true
       required:
         - data
-        - meta
 
     CertificateResponse:
       type: object
@@ -501,7 +496,6 @@ components:
           additionalProperties: true
       required:
         - data
-        - meta
 
     FileInfo:
       type: object
@@ -526,7 +520,6 @@ components:
           $ref: '#/components/schemas/FileInfo'
       required:
         - data
-        - meta
 
     AssessmentSearchResult:
       type: object
