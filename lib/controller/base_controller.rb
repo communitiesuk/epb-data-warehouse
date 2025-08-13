@@ -34,7 +34,7 @@ module Controller
       code: 200,
       data: {},
       meta: {},
-      pagination_hash: {},
+      pagination: {},
       burrow_key: false,
       data_key: :data
     )
@@ -43,8 +43,9 @@ module Controller
         data[burrow_key] = meta.delete(data_key)
       end
 
-      response_data = { data:, meta: }
-      response_data[:pagination] = pagination_hash unless pagination_hash.empty?
+      response_data = { data: }
+      response_data[:meta] = meta if meta.empty?
+      response_data[:pagination] = pagination unless pagination.empty?
       json_response(response_data, code)
     end
 
