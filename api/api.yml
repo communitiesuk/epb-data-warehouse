@@ -93,7 +93,7 @@ paths:
           schema:
             type: string
             format: date
-            example: '2017-01-10'
+            example: '2020-04-10'
         - in: query
           name: date_end
           description: The end date for the date range of the search (YYYY-mm-dd)
@@ -101,7 +101,7 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-01-10'
+            example: '2020-5-10'
       responses:
         '200':
           description: Successful response
@@ -169,7 +169,7 @@ paths:
           schema:
             type: string
             format: date
-            example: '2017-01-10'
+            example: '2025-07-10'
         - in: query
           name: date_end
           description: The end date for the date range of the search (YYYY-mm-dd)
@@ -177,7 +177,7 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-01-10'
+            example: '2025-08-10'
         - in: query
           name: council
           description: The array of Local Authorities used for the search filter
