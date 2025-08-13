@@ -124,7 +124,7 @@ module Controller
                           "currentPage": 1,
                           "totalPages": 1,
                           "nextPage": null,
-                          "prevPage": null}
+                          "prevPage": null }
 
       assessment_search_use_case = Container.assessment_search_use_case
       result = assessment_search_use_case.execute(**execute_params)

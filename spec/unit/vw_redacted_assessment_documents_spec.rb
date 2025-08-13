@@ -1,4 +1,4 @@
-describe "MvwRedactedAssessmentDocuments" do
+describe "VwRedactedAssessmentDocuments" do
   let(:documents_gateway) { Gateway::DocumentsGateway.new }
 
   let(:assessment_search_gateway) { Gateway::AssessmentSearchGateway.new }
@@ -60,15 +60,14 @@ describe "MvwRedactedAssessmentDocuments" do
     }
   end
 
-  context "when fetching from mvw_redacted_assessment_documents" do
+  context "when fetching from vw_domestic_documents_2020" do
     before do
       documents_gateway.add_assessment(assessment_id:, document: assessment_data_to_redact)
       assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_to_redact, country_id: 1)
-      Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_redacted_assessment_documents")
     end
 
     let(:redacted_row) do
-      sql = "SELECT * FROM mvw_redacted_assessment_documents WHERE certificate_number='#{assessment_id}'"
+      sql = "SELECT * FROM vw_domestic_documents_2020 WHERE certificate_number='#{assessment_id}'"
       result = ActiveRecord::Base.connection.exec_query(sql)
       result.first
     end
@@ -87,6 +86,22 @@ describe "MvwRedactedAssessmentDocuments" do
 
     it "contains the assessment_type column" do
       expect(redacted_row["assessment_type"]).to eq "RdSAP"
+    end
+
+    it "contains the year column" do
+      expect(redacted_row["year"]).to eq 2020
+    end
+  end
+
+  context "when generating redacted documents tables" do
+    let(:redacted_table_names) do
+      sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name LIKE 'vw_domestic_documents_%';"
+      result = ActiveRecord::Base.connection.exec_query(sql)
+      result
+    end
+
+    it "generates the correct number of tables" do
+      expect(redacted_table_names.length).to eq 14
     end
   end
 end
