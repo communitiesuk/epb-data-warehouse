@@ -460,7 +460,7 @@ describe Gateway::DomesticSearchGateway do
     end
 
     it "returns a list of certificate_number" do
-      result = gateway.fetch_certificate_numbers(**search_arguments)
+      result = gateway.fetch_certificate_numbers(**search_arguments).sort_by { |k| k["certificate_number"] }
       expect(result).to eq expectation
     end
   end
