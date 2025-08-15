@@ -9,12 +9,10 @@ info:
   version: 0.0.1
 
 servers:
-  - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
+  - url: 'https://api.get-energy-performance-data.epb-integration.communities.gov.uk'
     description: Integration Service
-  - url: 'https://api.epb-staging.digital.communities.gov.uk/api'
+  - url: 'https://api.get-energy-performance-data.epb-staging.communities.gov.uk'
     description: Staging Service
-  - url: 'https://api.epb.digital.communities.gov.uk/api'
-    description: Production Service
 
 tags:
   - name: Domestic
@@ -25,7 +23,6 @@ tags:
     description: EPC certificate data
   - name: Files
     description: Bulk Certificate file downloads
-
 
 paths:
   /api/certificate:
@@ -179,7 +176,7 @@ paths:
             format: date
             example: '2025-08-10'
         - in: query
-          name: council
+          name: council[]
           description: The array of Local Authorities used for the search filter
           schema:
             type: array
@@ -187,7 +184,7 @@ paths:
               type: string
             example: ['Manchester', 'Birmingham']
         - in: query
-          name: constituency
+          name: constituency[]
           description: The array of Parliamentary Constituencies used for the search filter
           schema:
             type: array
@@ -201,7 +198,7 @@ paths:
             type: string
             example: 'FL23 4JA'
         - in: query
-          name: eff_rating
+          name: eff_rating[]
           description: The array of Efficiency Ratings used for the search filter
           schema:
             type: array
