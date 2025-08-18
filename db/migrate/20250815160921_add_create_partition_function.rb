@@ -24,7 +24,7 @@ BEGIN
                 end_date =  make_date(y+1, 1, 1)::varchar;
             END IF;
                partition_name = table_name || concat('_y', y, 'm', m);
-             sql='CREATE TABLE ' || partition_name || ' PARTITION OF '|| table_name ||' FOR VALUES FROM (' || quote_literal(start_date) || ') TO  (' || quote_literal(end_date) ||')';
+             sql='CREATE TABLE IF NOT EXISTS ' || partition_name || ' PARTITION OF '|| table_name ||' FOR VALUES FROM (' || quote_literal(start_date) || ') TO  (' || quote_literal(end_date) ||')';
              EXECUTE sql;
          END LOOP;
    END LOOP;
