@@ -216,7 +216,7 @@ paths:
           description: The page number for search result pagination
           schema:
             type: integer
-          example: 3
+          example: 1
       responses:
         '200':
           description: Assessment search results
