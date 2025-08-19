@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_15_160921) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_19_112203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -67,7 +67,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_15_160921) do
     t.index ["lookup_value"], name: "index_assessment_lookups_on_lookup_value"
   end
 
-  create_table "assessment_search", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+  create_table "assessment_search", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
     t.string "address_line_1"
     t.string "address_line_2"
     t.string "address_line_3"
@@ -80,18 +81,3201 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_15_160921) do
     t.string "constituency", limit: 45
     t.string "assessment_address_id", limit: 30
     t.string "address", limit: 500
-    t.datetime "registration_date", precision: nil
+    t.timestamptz "registration_date", null: false
     t.string "assessment_type", limit: 8
     t.datetime "created_at", precision: nil
-    t.index ["address"], name: "index_assessment_search_on_address_trigram", opclass: :gin_trgm_ops, using: :gin
-    t.index ["assessment_address_id"], name: "index_assessment_search_on_assessment_address_id"
-    t.index ["assessment_type"], name: "index_assessment_search_on_assessment_type"
-    t.index ["constituency"], name: "index_assessment_search_on_constituency"
-    t.index ["council"], name: "index_assessment_search_on_council"
-    t.index ["created_at"], name: "index_assessment_search_on_created_at"
-    t.index ["current_energy_efficiency_rating"], name: "index_assessment_search_on_current_energy_efficiency_rating"
-    t.index ["postcode"], name: "index_assessment_search_on_postcode"
-    t.index ["registration_date"], name: "index_assessment_search_on_registration_date"
+  end
+
+  create_table "assessment_search_temp_y2012m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2012m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2013m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2014m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2015m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2016m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2017m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2018m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2019m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2020m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2021m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2022m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2023m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2024m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m1", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m10", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m11", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m12", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m2", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m3", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m4", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m5", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m6", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m7", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m8", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
+  end
+
+  create_table "assessment_search_temp_y2025m9", primary_key: ["assessment_id", "registration_date"], force: :cascade do |t|
+    t.string "assessment_id", null: false
+    t.string "address_line_1"
+    t.string "address_line_2"
+    t.string "address_line_3"
+    t.string "address_line_4"
+    t.string "post_town", limit: 100
+    t.string "postcode", limit: 10
+    t.integer "current_energy_efficiency_rating"
+    t.string "current_energy_efficiency_band", limit: 2
+    t.string "council", limit: 40
+    t.string "constituency", limit: 45
+    t.string "assessment_address_id", limit: 30
+    t.string "address", limit: 500
+    t.timestamptz "registration_date", null: false
+    t.string "assessment_type", limit: 8
+    t.datetime "created_at", precision: nil
   end
 
   create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|

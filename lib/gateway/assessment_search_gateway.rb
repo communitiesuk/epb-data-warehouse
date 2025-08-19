@@ -46,7 +46,7 @@ class Gateway::AssessmentSearchGateway
     LEFT JOIN ons_postcode_directory_names n1
       ON d.westminster_parliamentary_constituency_code = n1.area_code AND n1.type = 'Westminster parliamentary constituency'
     LIMIT 1
-    ON CONFLICT (assessment_id) DO NOTHING;
+    ON CONFLICT (assessment_id, registration_date) DO NOTHING;
     SQL
 
     address = generate_address(document: document_clone)

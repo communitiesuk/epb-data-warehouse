@@ -9,7 +9,7 @@ describe "DomesticSearchController" do
   end
 
   before do
-    document = { assessment_type: "SAP", postcode: "SW10 1AA" }
+    document = { assessment_type: "SAP", postcode: "SW10 1AA", registration_date: Time.now }
     add_assessment(assessment_id:, schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
     Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document:, country_id: 1)
   end
