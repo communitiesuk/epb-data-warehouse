@@ -13,10 +13,6 @@ shared_context "when partitioning a table" do
     ActiveRecord::Base.connection.exec_query(sql)
   end
 
-  def add_partitions
-    ActiveRecord::Base.connection.execute("SELECT fn_create_day_month_partition('assessment_search_temp', 2025)::varchar").first
-  end
-
   def drop_temp_table(table_name)
     ActiveRecord::Base.connection.exec_query("DROP TABLE #{table_name}")
   end

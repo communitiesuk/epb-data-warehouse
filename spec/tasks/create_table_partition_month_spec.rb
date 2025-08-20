@@ -4,7 +4,7 @@ describe "Add a partition to the assessment_search table for next month" do
   include_context "when partitioning a table"
 
   context "when calling the rake task" do
-    subject(:task) { get_task("add_partition_assessment_search") }
+    subject(:task) { get_task("create_table_partition_month") }
 
     let(:table_name) { "test_table" }
 
@@ -22,7 +22,7 @@ describe "Add a partition to the assessment_search table for next month" do
     context "when the current date is Aug 2025" do
       it "adds a partition for Sept 2025" do
         task.invoke
-        expect(get_partitions(table_name)).to include("test_table_y2025m9")
+        expect(get_partitions(table_name)).to eq ["test_table_y2025m9"]
       end
     end
 
@@ -31,11 +31,10 @@ describe "Add a partition to the assessment_search table for next month" do
         task.invoke
       end
 
-      it "does not add a dupe" do
+      it "does not add a duplicate partition" do
         task.invoke
-        expect(get_partitions(table_name)).to eq ["test_table_y2025m9"]
+        expect(get_partitions(table_name)).to eq %w[test_table_y2025m9]
       end
-
     end
 
     context "when the current date is Dec 2025" do
@@ -56,9 +55,19 @@ describe "Add a partition to the assessment_search table for next month" do
         expect(get_partitions(table_name)).to include("test_table_y2026m1")
       end
 
-      it "allow insertion without error" do
+      it "allows and insertion into the table without error" do
         task.invoke
         expect { insert_row }.not_to raise_error
+      end
+    end
+
+    context "when the table passed in is not found" do
+      before do
+        ENV["TABLE_NAME"] = "blah"
+      end
+
+      it "raises an error invalid argument error" do
+        expect { task.invoke }.to raise_error(Boundary::InvalidArgument)
       end
     end
   end

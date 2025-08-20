@@ -1,36 +1,13 @@
+require_relative "../../shared_context/shared_partition"
+
 describe "Create Partition" do
+  include_context "when partitioning a table"
+
   context "when calling the function to create a partition on a table" do
-    before do
-      sql = <<~SQL
-            create table assessment_search_temp
-        (
-            assessment_id  varchar,
-            registration_date  timestamp with time zone
-
-        )
-        PARTITION BY RANGE (registration_date)
-      SQL
-
-      ActiveRecord::Base.connection.exec_query(sql)
-      ActiveRecord::Base.connection.execute("SELECT fn_create_day_month_partition('assessment_search_temp', 2025)::varchar").first
-    end
-
-    after { ActiveRecord::Base.connection.exec_query("DROP TABLE assessment_search_temp") }
-
+    let(:table_name) { "assessment_search_temp" }
     let(:partitions) do
-      sql = <<~SQL
-               SELECT
-            child.relname       AS child
-        FROM pg_inherits
-            JOIN pg_class parent            ON pg_inherits.inhparent = parent.oid
-            JOIN pg_class child             ON pg_inherits.inhrelid   = child.oid
-        #{'   '}
-        WHERE parent.relname='assessment_search_temp';
-        #{'    '}
-      SQL
-      ActiveRecord::Base.connection.exec_query(sql).map { |i| i["child"] }.sort!
+      get_partitions(table_name)
     end
-
     let(:insert_row) do
       sql = <<~SQL
         INSERT INTO assessment_search_temp(assessment_id, registration_date)
@@ -40,6 +17,13 @@ describe "Create Partition" do
       SQL
       ActiveRecord::Base.connection.exec_query(sql)
     end
+
+    before do
+      create_temp_table(table_name)
+      ActiveRecord::Base.connection.execute("SELECT fn_create_day_month_partition('assessment_search_temp', 2025)::varchar").first
+    end
+
+    after { ActiveRecord::Base.connection.exec_query("DROP TABLE assessment_search_temp") }
 
     it "the table has a partition for every month-year" do
       expect(partitions.length).to eq 168
