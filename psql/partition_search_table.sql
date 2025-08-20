@@ -108,11 +108,15 @@ COMMIT;
 ------------------------------------------------------------------------
 
 BEGIN;
+
+create unique index assessment_search_pkey
+    on assessment_search (assessment_id, registration_date);
+
 create index index_assessment_search_on_postcode
     on assessment_search (postcode);
 
-create index index_assessment_search_on_current_energy_efficiency_rating
-    on assessment_search (current_energy_efficiency_rating);
+create index index_assessment_search_on_current_energy_efficiency_band
+    on assessment_search (current_energy_efficiency_band);
 
 create index index_assessment_search_on_council
     on assessment_search (council);
