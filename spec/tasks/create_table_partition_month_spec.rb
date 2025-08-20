@@ -22,7 +22,7 @@ describe "Add a partition to the assessment_search table for next month" do
     context "when the current date is Aug 2025" do
       it "adds a partition for Sept 2025" do
         task.invoke
-        expect(get_partitions(table_name)).to eq ["test_table_y2025m9"]
+        expect(get_partitions(table_name)).to eq %w[test_table_y2025m9]
       end
     end
 

@@ -9,6 +9,7 @@ task :create_table_partition_month do
   end_date    = Time.new(this_year, next_month + 1, 1)
 
   raise Boundary::InvalidArgument, "table #{table_name} is not found" unless AddPartition.table_exists?(table_name)
+
   sql = "CREATE TABLE IF NOT EXISTS #{partition_name} PARTITION OF #{table_name} FOR VALUES FROM ('#{start_date}') TO ('#{end_date}')"
 
   ActiveRecord::Base.connection.exec_query(sql)
