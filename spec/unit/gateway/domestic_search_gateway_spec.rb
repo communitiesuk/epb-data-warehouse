@@ -66,10 +66,6 @@ describe Gateway::DomesticSearchGateway do
   end
 
   describe "#fetch" do
-    let(:expected_data) do
-      { "certificate_number" => "0000-0000-0000-0000-0000", "address1" => "1 Some Street", "address2" => "Some Area", "address3" => "Some County", "postcode" => "W6 9ZD", "total_floor_area" => "165", "current_energy_rating" => "72", "lodgement_date" => "2022-05-09" }
-    end
-
     it "returns rows for each assessment in England & Wales ordered by certificate_number" do
       data = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
       expect(data.length).to eq 5
@@ -79,8 +75,10 @@ describe Gateway::DomesticSearchGateway do
     end
 
     it "translates enum values into strings using the user defined function" do
-      expect(gateway.fetch(**search_arguments)[0]["transaction_type"]).to eq "Marketed sale"
-      expect(gateway.fetch(**search_arguments)[0]["property_type"]).to eq "House"
+      data = gateway.fetch(**search_arguments).sort_by { |i| i["certificate_number"] }
+      expect(data[0]["certificate_number"]).to eq "0000-0000-0000-0000-0000"
+      expect(data[0]["transaction_type"]).to eq "Marketed sale"
+      expect(data[0]["property_type"]).to eq "House"
     end
 
     context "when filtering by a date range" do
