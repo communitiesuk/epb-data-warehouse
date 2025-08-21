@@ -55,7 +55,7 @@ describe Gateway::UserCredentialsGateway do
       end
 
       it "returns true" do
-        expect(gateway.bearer_token_exist?(token)).to be(true)
+        expect(gateway.bearer_token_exists?(token)).to be(true)
       end
     end
 
@@ -88,7 +88,7 @@ describe Gateway::UserCredentialsGateway do
       end
 
       it "returns false" do
-        expect(gateway.bearer_token_exist?("invalid-token")).to be(false)
+        expect(gateway.bearer_token_exists?("invalid-token")).to be(false)
       end
     end
   end

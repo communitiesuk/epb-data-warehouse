@@ -9,7 +9,7 @@ module Gateway
       @table = @dynamo_resource.table(table_name)
     end
 
-    def bearer_token_exist?(bearer_token)
+    def bearer_token_exists?(bearer_token)
       resp = @table.scan(
         filter_expression: "BearerToken = :bearer_token",
         expression_attribute_values: {
