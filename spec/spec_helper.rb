@@ -27,15 +27,12 @@ ENV["EPB_QUEUES_URI"] = "redis://127.0.0.1:6379"
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["AWS_S3_USER_DATA_BUCKET_NAME"] = "user-data"
+ENV["EPB_DATA_USER_CREDENTIAL_TABLE_NAME"] = "test_users_table"
 
 ENV["RACK_ENV"] = "test"
 
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: %w[
-    find-energy-certificate.local.gov.uk
-    getting-new-energy-certificate.local.gov.uk
-  ],
 )
 
 module RSpecDataWarehouseApiServiceMixin

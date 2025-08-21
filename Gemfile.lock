@@ -37,6 +37,9 @@ GEM
       base64
       jmespath (~> 1, >= 1.6.1)
       logger
+    aws-sdk-dynamodb (1.146.0)
+      aws-sdk-core (~> 3, >= 3.225.0)
+      aws-sigv4 (~> 1.5)
     aws-sdk-kms (1.106.0)
       aws-sdk-core (~> 3, >= 3.225.0)
       aws-sigv4 (~> 1.5)
@@ -273,6 +276,7 @@ DEPENDENCIES
   activerecord (~> 7.2)
   activesupport (~> 7.2)
   async (~> 2.21)
+  aws-sdk-dynamodb (~> 1.146)
   aws-sdk-s3 (~> 1)
   concurrent-ruby (~> 1.3)
   csv (~> 3.3)
