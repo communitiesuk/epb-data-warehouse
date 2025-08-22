@@ -6,8 +6,53 @@ describe "FileController" do
   end
 
   let(:response) do
-    header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+    header("Authorization", "Bearer valid-bearer-token")
     get "/api/files/domestic/csv"
+  end
+
+  let(:authenticate_user_use_case) do
+    instance_double(UseCase::AuthenticateUser)
+  end
+
+  before do
+    allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+    allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+  end
+
+  context "when not setting Authentication header" do
+    let(:no_auth_header_response) do
+      get "/api/files/domestic/csv"
+    end
+
+    it "returns 403" do
+      expect(no_auth_header_response.status).to eq(403)
+    end
+  end
+
+  context "when Authentication header is not a Bearer token" do
+    let(:no_bearer_response) do
+      header("Authorization", "")
+      get "/api/files/domestic/csv"
+    end
+
+    it "returns 403" do
+      expect(no_bearer_response.status).to eq(403)
+    end
+  end
+
+  context "when Authentication token does not exist" do
+    before do
+      allow(authenticate_user_use_case).to receive(:execute).and_return(false)
+    end
+
+    let(:non_existing_bearer_response) do
+      header("Authorization", "Bearer invalid-token")
+      get "/api/files/domestic/csv"
+    end
+
+    it "returns 403" do
+      expect(non_existing_bearer_response.status).to eq(403)
+    end
   end
 
   context "when the file exists" do

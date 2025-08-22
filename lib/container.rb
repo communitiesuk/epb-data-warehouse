@@ -206,4 +206,12 @@ class Container
   def self.get_file_info_use_case
     @get_file_info_use_case ||= UseCase::GetFileInfo.new(gateway: s3_gateway, bucket_name: ENV["AWS_S3_USER_DATA_BUCKET_NAME"])
   end
+
+  def self.user_credentials_gateway
+    @user_credentials_gateway ||= Gateway::UserCredentialsGateway.new
+  end
+
+  def self.authenticate_user_use_case
+    @authenticate_user_use_case ||= UseCase::AuthenticateUser.new(user_credentials_gateway:)
+  end
 end

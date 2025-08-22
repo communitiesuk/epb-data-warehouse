@@ -88,4 +88,7 @@ module Errors
 
   class FileNotFound < RuntimeError
   end
+
+  class MissingBearerToken < ApiError
+  end
 end

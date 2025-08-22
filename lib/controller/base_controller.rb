@@ -30,6 +30,21 @@ module Controller
       end
     end
 
+    before do
+      bearer_token_paths = %w[/api/files/domestic/csv /api/files/domestic/csv/info]
+      if bearer_token_paths.include?(request.path)
+        auth_header = env["HTTP_AUTHORIZATION"]
+        raise Errors::MissingBearerToken if auth_header.nil? || !auth_header.include?("Bearer")
+
+        bearer_token = auth_header.sub("Bearer ", "")
+        authenticated = Container.authenticate_user_use_case.execute(bearer_token)
+        raise Errors::MissingBearerToken unless authenticated
+
+      end
+    rescue Errors::MissingBearerToken
+      halt 403, { errors: [{ code: "UNAUTHORISED", title: "You are not authenticated" }] }.to_json
+    end
+
     def json_api_response(
       code: 200,
       data: {},
