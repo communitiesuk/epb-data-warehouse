@@ -8,15 +8,21 @@ describe "DomesticSearchController" do
     "0000-0000-0000-0000-0000"
   end
 
+  let(:authenticate_user_use_case) do
+    instance_double(UseCase::AuthenticateUser)
+  end
+
   before do
     document = { assessment_type: "SAP", postcode: "SW10 1AA", registration_date: Time.now }
     add_assessment(assessment_id:, schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
     Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document:, country_id: 1)
+    allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+    allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+    header("Authorization", "Bearer valid-bearer-token")
   end
 
   context "when the response is successful" do
     let(:response) do
-      header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
       get "/api/certificate?certificate_number=0000-0000-0000-0000-0000"
     end
 
@@ -37,7 +43,6 @@ describe "DomesticSearchController" do
 
   context "when the certificate request is invalid" do
     let(:response) do
-      header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
       get "/api/certificate?certificate_number=0000-0000-0000-0000-0001"
     end
 

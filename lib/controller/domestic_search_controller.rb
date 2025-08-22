@@ -53,7 +53,7 @@ module Controller
       json_api_response code: 500, data: { errors: [{ code: e.message }] }
     end
 
-    get "/api/domestic/search", auth_token_has_all: %w[epb-data-front:read] do
+    get "/api/domestic/search" do
       params[:current_page] = (params["current_page"] || 1).to_i
 
       params_body SEARCH_SCHEMA

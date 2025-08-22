@@ -29,6 +29,16 @@ describe "DomesticSearchController" do
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0004", document: sap, created_at: "2022-01-01", country_id: 1)
   end
 
+  let(:authenticate_user_use_case) do
+    instance_double(UseCase::AuthenticateUser)
+  end
+
+  before do
+    allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+    allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+    header("Authorization", "Bearer valid-bearer-token")
+  end
+
   context "when requesting a response from /api/domestic/count" do
     context "when the response is a success" do
       context "when no optional search filters are added" do
@@ -95,7 +105,6 @@ describe "DomesticSearchController" do
     context "when the response is a success" do
       context "when no optional search filters are added" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01"
         end
 
@@ -140,12 +149,10 @@ describe "DomesticSearchController" do
 
       context "when optional council filter is added" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire"] }
         end
 
         let(:multiple_responses) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire", "Hammersmith and Fulham"] }
         end
 
@@ -165,12 +172,10 @@ describe "DomesticSearchController" do
 
       context "when optional constituency filter is added" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East"] }
         end
 
         let(:multiple_responses) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] }
         end
 
@@ -190,12 +195,10 @@ describe "DomesticSearchController" do
 
       context "when optional eff_rating filter is added" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B] }
         end
 
         let(:multiple_responses) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B E] }
         end
 
@@ -215,7 +218,6 @@ describe "DomesticSearchController" do
 
       context "when optional address filter is added" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { address: "2 Banana Street" }
         end
 
@@ -231,7 +233,6 @@ describe "DomesticSearchController" do
     context "when getting an error response" do
       context "when dates are missing" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search"
         end
 
@@ -247,7 +248,6 @@ describe "DomesticSearchController" do
 
       context "when dates are out of range" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2025-01-01&date_end=2018-01-01"
         end
 
@@ -263,7 +263,6 @@ describe "DomesticSearchController" do
 
       context "when date range includes today" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           tomorrow = Date.tomorrow.strftime "%Y-%m-%d"
           get "/api/domestic/search?date_start=2014-01-01", { date_end: tomorrow }
         end
@@ -280,7 +279,6 @@ describe "DomesticSearchController" do
 
       context "when no results found" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2018-02-01"
         end
 
@@ -296,7 +294,6 @@ describe "DomesticSearchController" do
 
       context "when postcode is invalid" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { postcode: "invalid postcode" }
         end
 
@@ -312,7 +309,6 @@ describe "DomesticSearchController" do
 
       context "when council is invalid" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { council: ["invalid council"] }
         end
 
@@ -328,7 +324,6 @@ describe "DomesticSearchController" do
 
       context "when constituency is invalid" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { constituency: ["invalid constituency"] }
         end
 
@@ -344,7 +339,6 @@ describe "DomesticSearchController" do
 
       context "when current_page is negative" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: -1 }
         end
 
@@ -360,7 +354,6 @@ describe "DomesticSearchController" do
 
       context "when current_page is zero" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: 0 }
         end
 
@@ -376,7 +369,6 @@ describe "DomesticSearchController" do
 
       context "when current_page is not a number" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: "not-a-number" }
         end
 

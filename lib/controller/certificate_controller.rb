@@ -10,7 +10,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/certificate", auth_token_has_all: %w[epb-data-front:read] do
+    get "/api/certificate" do
       params_body CERTIFICATE_SCHEMA
       use_case = Container.get_redacted_certificate_use_case
       result = use_case.execute(assessment_id: params[:certificate_number])

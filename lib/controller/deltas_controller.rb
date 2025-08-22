@@ -13,8 +13,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/deltas",
-        auth_token_has_all: %w[epb-data-front:read] do
+    get "/api/deltas" do
       params_body SEARCH_SCHEMA
 
       use_case = Container.fetch_audit_logs_use_case

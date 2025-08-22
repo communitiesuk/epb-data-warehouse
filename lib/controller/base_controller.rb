@@ -31,8 +31,8 @@ module Controller
     end
 
     before do
-      bearer_token_paths = %w[/api/files/domestic/csv /api/files/domestic/csv/info]
-      if bearer_token_paths.include?(request.path)
+      excluded_paths = %w[/api/heat-pump-counts/floor-area /api/avg-co2-emissions /healthcheck /]
+      unless excluded_paths.include?(request.path)
         auth_header = env["HTTP_AUTHORIZATION"]
         raise Errors::MissingBearerToken if auth_header.nil? || !auth_header.include?("Bearer")
 

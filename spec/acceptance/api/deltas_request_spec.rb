@@ -11,17 +11,23 @@ describe "DeltasController" do
         "timestamp" => "2025-02-01T00:00:01.000Z" }
     end
 
+    let(:authenticate_user_use_case) do
+      instance_double(UseCase::AuthenticateUser)
+    end
+
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE audit_logs")
 
       audit_logs_gateway.insert_log(assessment_id: "0000-0000-0000-0000", event_type: "opt_out", timestamp: "2025-02-01 00:00:01")
       audit_logs_gateway.insert_log(assessment_id: "0000-0000-0000-0001", event_type: "cancelled", timestamp: "2025-02-02 00:00:01")
       audit_logs_gateway.insert_log(assessment_id: "0000-0000-0000-0002", event_type: "address_id_updated", timestamp: "2025-02-03 00:00:01")
+      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+      allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+      header("Authorization", "Bearer valid-bearer-token")
     end
 
     context "when the response is a success" do
       let(:response) do
-        header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
         get "/api/deltas?date_start=2024-01-01&date_end=2025-03-01"
       end
 
@@ -44,7 +50,6 @@ describe "DeltasController" do
     context "when getting an error response" do
       context "when dates are missing" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/deltas"
         end
 
@@ -60,7 +65,6 @@ describe "DeltasController" do
 
       context "when dates are out of range" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/deltas?date_start=2025-01-01&date_end=2018-01-01"
         end
 
@@ -76,7 +80,6 @@ describe "DeltasController" do
 
       context "when date range includes today" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           tomorrow = Date.tomorrow.strftime "%Y-%m-%d"
           get "/api/deltas?date_start=2014-01-01", { date_end: tomorrow }
         end
@@ -93,7 +96,6 @@ describe "DeltasController" do
 
       context "when no results found" do
         let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/deltas?date_start=2018-01-01&date_end=2018-02-01"
         end
 
