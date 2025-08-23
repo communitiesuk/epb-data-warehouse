@@ -223,4 +223,19 @@ describe Domain::RedactedDocument do
       end
     end
   end
+
+  describe "#get_hash" do
+    let(:domain) do
+      json_args = result["document"]
+      described_class.new(result: json_args)
+    end
+
+    let(:expected_hash) do
+      JSON.parse(expected_data[:document], symbolize_names: true)
+    end
+
+    it "returns the expected hash with pii fields removed" do
+      expect(domain.get_hash).to eq expected_hash
+    end
+  end
 end

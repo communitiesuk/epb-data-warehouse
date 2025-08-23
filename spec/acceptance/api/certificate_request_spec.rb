@@ -28,16 +28,11 @@ describe "DomesticSearchController" do
 
     it "returns a redacted json document as a hash" do
       response_body = JSON.parse(response.body)
-      expect(response_body["data"]).not_to be_nil
+      expect(response_body["data"]).to be_a(Hash)
     end
 
     it "returns a 200 status code" do
       expect(response.status).to eq(200)
-    end
-
-    it "returns valid json data" do
-      response_body = JSON.parse(response.body)
-      expect { JSON.parse(response_body["data"]) }.not_to raise_error
     end
   end
 

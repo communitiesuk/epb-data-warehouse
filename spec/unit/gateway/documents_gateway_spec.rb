@@ -190,6 +190,10 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
 
   describe "fetch_by_id" do
     context "when fetching a single json document" do
+      let(:redaction_hash) do
+        { rrn: "8570-6826-6530-4969-0202", status: "entered", tenure: 1, property: { uprn: 7_435_089_668, address: { postcode: "NW8 0PG", post_town: "LONDON", address_line_1: "25, Marlborough Place" } }, region_code: 17, report_type: 2, sap_version: 9.94, country_code: "EAW", language_code: 1, property_type: 0, completion_date: "2020-06-01", inspection_date: "2020-06-01", transaction_type: 1, registration_date: "2020-06-01", schema_version_original: "LIG-19.0", calculation_software_name: "Elmhurst Energy Systems RdSAP Calculator", calculation_software_version: "4.05r0005" }
+      end
+
       before do
         gateway.add_assessment(assessment_id:, document: assessment_data)
         Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
@@ -197,8 +201,7 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
 
       it "fetches the json document" do
         doc = gateway.fetch_by_id(assessment_id:)
-        expect(JSON.parse(doc[:document])).to be_a Hash
-        expect(doc[:assessment_id]).to eq assessment_id
+        expect(doc).to eq redaction_hash
       end
     end
 
