@@ -358,8 +358,8 @@ describe "DomesticSearchController" do
           get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: -1 }
         end
 
-        it "returns 416" do
-          expect(response.status).to eq(416)
+        it "returns 400" do
+          expect(response.status).to eq(400)
         end
 
         it "raises an error for the pagination out of range error" do
@@ -373,8 +373,8 @@ describe "DomesticSearchController" do
           get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: 0 }
         end
 
-        it "returns 416" do
-          expect(response.status).to eq(416)
+        it "returns 400" do
+          expect(response.status).to eq(400)
         end
 
         it "raises an error for the pagination out of range error" do
@@ -388,8 +388,8 @@ describe "DomesticSearchController" do
           get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { current_page: "not-a-number" }
         end
 
-        it "returns 416" do
-          expect(response.status).to eq(416)
+        it "returns 400" do
+          expect(response.status).to eq(400)
         end
 
         it "raises an error for the pagination out of range error" do

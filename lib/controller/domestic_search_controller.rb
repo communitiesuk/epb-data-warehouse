@@ -102,7 +102,7 @@ module Controller
       json_api_response code: 404, data: { error: no_data_error }
     rescue Errors::OutOfPaginationRangeError => e
       out_of_pagination_range_error = "The requested page number #{params[:current_page]} is out of range. #{e.message}"
-      json_api_response code: 416, data: { error: out_of_pagination_range_error }
+      json_api_response code: 400, data: { error: out_of_pagination_range_error }
     rescue Errors::OutOfPageSizeRangeError
       page_size_message = "The requested page size #{params[:page_size]} is out of range. Please provide a page size between 1 and 5000"
       json_api_response code: 400, data: { error: page_size_message }

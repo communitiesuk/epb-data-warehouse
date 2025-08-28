@@ -278,6 +278,10 @@ paths:
                   summary: Invalid constituency
                   value:
                     error: "The search query was invalid - provide valid constituency name(s)"
+                page_out_of_range:
+                  summary: Page out of range
+                  value:
+                    error: "The requested page number 15 is out of range. Total pages: 12"
                 invalid_page_size:
                   summary: Invalid page size
                   value:
@@ -290,14 +294,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 error: "No domestic assessments could be found for that query"
-        '416':
-          description: Page out of range
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                error: "The requested page number 99 is out of range. Total pages: 12"
         '500':
           description: Internal server error
           content:
