@@ -26,7 +26,7 @@ module Gateway
       when "local", nil
         Aws::DynamoDB::Client.new(stub_responses: true)
       else
-        Aws::DynamoDB::Client.new(region: "eu-west-2", credentials: Aws::ECSCredentials.new)
+        Aws::DynamoDB::Client.new(region: "eu-west-2")
       end
     end
   end
