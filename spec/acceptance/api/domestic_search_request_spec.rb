@@ -108,6 +108,17 @@ describe "DomesticSearchController" do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01"
         end
 
+        let(:expected_pagination) do
+          {
+            "totalRecords" => 5,
+            "currentPage" => 1,
+            "totalPages" => 1,
+            "nextPage" => nil,
+            "prevPage" => nil,
+            "pageSize" => 5000,
+          }
+        end
+
         it "returns a successful response with data" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
@@ -122,13 +133,6 @@ describe "DomesticSearchController" do
 
         it "includes pagination data" do
           response_body = JSON.parse(response.body)
-          expected_pagination = {
-            "totalRecords" => 5,
-            "currentPage" => 1,
-            "totalPages" => 1,
-            "nextPage" => nil,
-            "prevPage" => nil,
-          }
           expect(response_body["pagination"]).to eq(expected_pagination)
         end
       end

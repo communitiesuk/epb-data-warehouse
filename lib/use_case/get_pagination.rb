@@ -21,11 +21,12 @@ module UseCase
       prev_page = current_page > 1 ? current_page - 1 : nil
 
       {
-        "total_records": total_records,
-        "current_page": current_page,
-        "total_pages": total_pages,
-        "next_page": next_page,
-        "prev_page": prev_page,
+        total_records: total_records,
+        current_page: current_page,
+        total_pages: total_pages,
+        next_page: next_page,
+        prev_page: prev_page,
+        page_size: @row_limit,
       }
     end
   end

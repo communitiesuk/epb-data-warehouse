@@ -12,7 +12,7 @@ describe UseCase::GetPagination do
   end
 
   let(:expected_return_hash) do
-    { total_records: 60_000, current_page: 3, total_pages: 12, next_page: 4, prev_page: 2 }
+    { total_records: 60_000, current_page: 3, total_pages: 12, next_page: 4, prev_page: 2, page_size: 5000 }
   end
 
   before do
@@ -21,10 +21,6 @@ describe UseCase::GetPagination do
 
   it "can call the use case" do
     expect { use_case.execute(**search_arguments) }.not_to raise_error
-  end
-
-  it "returns a hash" do
-    expect(use_case.execute(**search_arguments)).to be_a(Hash)
   end
 
   it "passes the arguments to the gateway to count domestic data" do
@@ -64,7 +60,7 @@ describe UseCase::GetPagination do
     end
 
     let(:expected_return_hash) do
-      { total_records: 1222, current_page: 1, total_pages: 1, next_page: nil, prev_page: nil }
+      { total_records: 1222, current_page: 1, total_pages: 1, next_page: nil, prev_page: nil, page_size: 5000 }
     end
 
     it "returns total pages of 1" do
@@ -84,7 +80,7 @@ describe UseCase::GetPagination do
     end
 
     let(:expected_return_hash) do
-      { total_records: 1222, current_page: 1, total_pages: 13, next_page: 2, prev_page: nil }
+      { total_records: 1222, current_page: 1, total_pages: 13, next_page: 2, prev_page: nil, page_size: 100 }
     end
 
     it "returns total pages of 1" do
@@ -103,7 +99,7 @@ describe UseCase::GetPagination do
     end
 
     let(:expected_return_hash) do
-      { total_records: 71_882, current_page: 3, total_pages: 15, next_page: 4, prev_page: 2 }
+      { total_records: 71_882, current_page: 3, total_pages: 15, next_page: 4, prev_page: 2, page_size: 5000 }
     end
 
     it "returns correct total pages value" do
@@ -145,7 +141,7 @@ describe UseCase::GetPagination do
     end
 
     let(:expected_return_hash) do
-      { total_records: 100, current_page: 1, total_pages: 1, next_page: nil, prev_page: nil }
+      { total_records: 100, current_page: 1, total_pages: 1, next_page: nil, prev_page: nil, page_size: 5000 }
     end
 
     let(:search_arguments) do
