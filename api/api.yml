@@ -250,6 +250,7 @@ paths:
                   totalPages: 1
                   nextPage: null
                   prevPage: null
+                  pageSize: 5000
         '400':
           description: Bad request - missing or malformed parameters
           content:
@@ -446,6 +447,9 @@ components:
           type: integer
           nullable: true
         prevPage:
+          type: integer
+          nullable: true
+        pageSize:
           type: integer
           nullable: true
 
