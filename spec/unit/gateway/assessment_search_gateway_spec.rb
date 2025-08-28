@@ -2,7 +2,7 @@ require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
 
 describe Gateway::AssessmentSearchGateway do
-  subject(:gateway) { described_class.new(row_limit: 5) }
+  subject(:gateway) { described_class.new }
 
   include_context "when lodging XML"
   include_context "when saving ons data"
@@ -393,6 +393,7 @@ describe Gateway::AssessmentSearchGateway do
         date_start: "2014-12-01",
         date_end: "2024-12-09",
         assessment_type: %w[RdSAP SAP],
+        row_limit: 5,
       }
     end
 

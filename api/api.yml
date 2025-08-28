@@ -217,6 +217,12 @@ paths:
           schema:
             type: integer
           example: 1
+        - in: query
+          name: page_size
+          description: The number of rows returned for each page (Max size is 5000)
+          schema:
+            type: integer
+          example: 5000
       responses:
         '200':
           description: Assessment search results
@@ -271,6 +277,10 @@ paths:
                   summary: Invalid constituency
                   value:
                     error: "The search query was invalid - provide valid constituency name(s)"
+                invalid_page_size:
+                  summary: Invalid page size
+                  value:
+                    error: "The search query was invalid - provide valid page_size between 1 and 5000"
         '404':
           description: No assessments found
           content:

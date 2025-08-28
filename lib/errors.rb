@@ -86,6 +86,9 @@ module Errors
     end
   end
 
+  class OutOfPageSizeRangeError < RuntimeError
+  end
+
   class FileNotFound < RuntimeError
   end
 

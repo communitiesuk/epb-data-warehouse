@@ -25,6 +25,8 @@ module Helper
           raise Errors::ConstituencyNotFound, "provide valid constituency name(s)" unless constituencies.include?(constituency)
         end
       end
+
+      raise Errors::OutOfPageSizeRangeError if this_args[:row_limit] < 1 || this_args[:row_limit] > 5000
     end
   end
 end

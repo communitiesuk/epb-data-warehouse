@@ -5,9 +5,7 @@ class Gateway::AssessmentSearchGateway
   VALID_COUNTRY_IDS = [1, 2, 4].freeze
   AC_CERTIFICATE_TYPE = "AC-CERT".freeze
 
-  def initialize(row_limit: 5000)
-    @row_limit = row_limit
-  end
+  def initialize; end
 
   def insert_assessment(assessment_id:, document:, country_id:, created_at: nil)
     document_clone = document.clone
@@ -298,16 +296,16 @@ private
       )
     end
 
-    if this_args[:limit]
+    if this_args[:row_limit]
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "limit",
-        @row_limit,
+        this_args[:row_limit],
         ActiveRecord::Type::Integer.new,
       )
       unless this_args[:current_page].nil?
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "offset",
-          calculate_offset(this_args[:current_page]),
+          calculate_offset(this_args[:current_page], this_args[:row_limit]),
           ActiveRecord::Type::Integer.new,
         )
       end
@@ -383,8 +381,8 @@ private
     postcode.upcase
   end
 
-  def calculate_offset(current_page)
+  def calculate_offset(current_page, row_limit)
     current_page = 1 if current_page <= 0
-    (current_page - 1) * @row_limit
+    (current_page - 1) * row_limit
   end
 end

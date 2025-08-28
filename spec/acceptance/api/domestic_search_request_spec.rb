@@ -103,7 +103,7 @@ describe "DomesticSearchController" do
     end
 
     context "when the response is a success" do
-      context "when no optional search filters are added" do
+      context "when no optional search params are passed" do
         let(:response) do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01"
         end
@@ -133,7 +133,7 @@ describe "DomesticSearchController" do
         end
       end
 
-      context "when optional postcode filter is added" do
+      context "when the postcode param is passed" do
         let(:response) do
           header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { postcode: "SW1A 2AA" }
@@ -147,7 +147,7 @@ describe "DomesticSearchController" do
         end
       end
 
-      context "when optional council filter is added" do
+      context "when the council param is passed" do
         let(:response) do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire"] }
         end
@@ -170,7 +170,7 @@ describe "DomesticSearchController" do
         end
       end
 
-      context "when optional constituency filter is added" do
+      context "when the constituency param is passed" do
         let(:response) do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East"] }
         end
@@ -193,7 +193,7 @@ describe "DomesticSearchController" do
         end
       end
 
-      context "when optional eff_rating filter is added" do
+      context "when the eff_rating param is passed" do
         let(:response) do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B] }
         end
@@ -216,7 +216,7 @@ describe "DomesticSearchController" do
         end
       end
 
-      context "when optional address filter is added" do
+      context "when the address param is passed" do
         let(:response) do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { address: "2 Banana Street" }
         end
@@ -226,6 +226,18 @@ describe "DomesticSearchController" do
           expect(response.status).to eq(200)
           expect(response_body["data"].length).to eq 1
           expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0003")
+        end
+      end
+
+      context "when the page_size param is passed" do
+        let(:response) do
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01&page_size=4"
+        end
+
+        it "returns the correct number of rows" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 4
         end
       end
     end
@@ -379,6 +391,36 @@ describe "DomesticSearchController" do
         it "raises an error for the pagination out of range error" do
           response_body = JSON.parse(response.body)
           expect(response_body["data"]["error"]).to include "The requested page number 0 is out of range. Please provide a page number between 1 and 1"
+        end
+      end
+
+      context "when page_size is greater than 5000" do
+        let(:response) do
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { page_size: 5001 }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the pagination out of range error" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "The requested page size 5001 is out of range. Please provide a page size between 1 and 5000"
+        end
+      end
+
+      context "when page_size is less than 1" do
+        let(:response) do
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2022-01-01", { page_size: 0 }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the pagination out of range error" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "The requested page size 0 is out of range. Please provide a page size between 1 and 5000"
         end
       end
     end

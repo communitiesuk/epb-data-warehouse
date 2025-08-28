@@ -73,6 +73,26 @@ describe UseCase::GetPagination do
     end
   end
 
+  context "when the row_limit is 100" do
+    before do
+      allow(assessment_search_gateway).to receive_messages(count: 1222)
+      use_case.row_limit = 100
+    end
+
+    let(:search_arguments) do
+      { date_start: "2023-12-01", date_end: "2023-12-23", current_page: 1 }
+    end
+
+    let(:expected_return_hash) do
+      { total_records: 1222, current_page: 1, total_pages: 13, next_page: 2, prev_page: nil }
+    end
+
+    it "returns total pages of 1" do
+      result = use_case.execute(**search_arguments)
+      expect(result).to eq expected_return_hash
+    end
+  end
+
   context "when total record count is not divisible by number of rows" do
     before do
       allow(assessment_search_gateway).to receive_messages(count: 71_882)
@@ -115,6 +135,26 @@ describe UseCase::GetPagination do
 
     it "raises an NoData error" do
       expect { use_case.execute(**search_arguments) }.to raise_error(Boundary::NoData)
+    end
+  end
+
+  context "when row_limit is smaller than the record set" do
+    before do
+      allow(assessment_search_gateway).to receive_messages(count: 100)
+      use_case.row_limit = 5000
+    end
+
+    let(:expected_return_hash) do
+      { total_records: 100, current_page: 1, total_pages: 1, next_page: nil, prev_page: nil }
+    end
+
+    let(:search_arguments) do
+      { date_start: "2023-12-01", date_end: "2023-12-23", current_page: 1 }
+    end
+
+    it "returns correct total pages value" do
+      result = use_case.execute(**search_arguments)
+      expect(result).to eq expected_return_hash
     end
   end
 end

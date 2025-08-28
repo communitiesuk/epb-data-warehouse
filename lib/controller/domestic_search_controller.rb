@@ -31,6 +31,10 @@ module Controller
         current_page: {
           type: "integer",
         },
+        page_size: {
+          type: "integer",
+        },
+
       },
     }.freeze
 
@@ -55,6 +59,7 @@ module Controller
 
     get "/api/domestic/search" do
       params[:current_page] = (params["current_page"] || 1).to_i
+      params[:page_size] = (params["page_size"] || 5000).to_i
 
       params_body SEARCH_SCHEMA
       execute_params = {
@@ -67,12 +72,13 @@ module Controller
         assessment_type: %w[SAP RdSAP],
         address: params[:address],
         current_page: params[:current_page],
+        row_limit: params[:page_size],
       }
 
       Helper::DomesticSearchParamsValidator.validate(**execute_params)
       pagination_use_case = Container.get_pagination_use_case
+      pagination_use_case.row_limit = params[:page_size]
       pagination_hash = pagination_use_case.execute(**execute_params)
-
       assessment_search_use_case = Container.assessment_search_use_case
       result = assessment_search_use_case.execute(**execute_params)
       json_api_response code: 200, data: result, pagination: pagination_hash
@@ -97,6 +103,9 @@ module Controller
     rescue Errors::OutOfPaginationRangeError => e
       out_of_pagination_range_error = "The requested page number #{params[:current_page]} is out of range. #{e.message}"
       json_api_response code: 416, data: { error: out_of_pagination_range_error }
+    rescue Errors::OutOfPageSizeRangeError
+      page_size_message = "The requested page size #{params[:page_size]} is out of range. Please provide a page size between 1 and 5000"
+      json_api_response code: 400, data: { error: page_size_message }
     rescue StandardError => e
       report_to_sentry(e)
       json_api_response code: 500, data: { errors: [{ code: e.message }] }
