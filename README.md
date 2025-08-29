@@ -90,3 +90,19 @@ To generate the test file run
 NB This will only need to be run if you want to change the existing test data.
 
 environmental_impact_current 
+
+
+## Json Samples 
+The code base contains code samples of every type of EPC certificate type and schema version that is supported for publication
+
+The json samples matches the output of the API endpoint `/api/certificate/` which will vary depending on the certificate type and schema version
+
+The files can be found at `/spec/fixtures/json_samples/`
+
+The data for the samples is based on the corresponding XML sample. These files can be found at `/spec/fixtures/samples/`
+
+To recreate the data in the json samples run the following command: 
+
+`rake dev_setup:generate_json_examples`
+
+This will delete the existing file and recreate based on any changes made to XML samples
