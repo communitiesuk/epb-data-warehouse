@@ -1,4 +1,4 @@
-describe "VwRedactedAssessmentDocuments" do
+describe "VwDomesticDocuments" do
   let(:documents_gateway) { Gateway::DocumentsGateway.new }
 
   let(:assessment_search_gateway) { Gateway::AssessmentSearchGateway.new }
