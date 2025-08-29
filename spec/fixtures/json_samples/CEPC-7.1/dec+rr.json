@@ -1,0 +1,117 @@
+{
+  "issue_date": "2015-12-14",
+  "valid_until": "2016-12-29",
+  "report_type": 1,
+  "inspection_date": "2015-12-09",
+  "registration_date": "2015-12-14",
+  "status": "entered",
+  "related_rrn": "0000-0000-0000-0000-0006",
+  "language_code": 1,
+  "location_description": "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls.  The building is heated by gas fired boilers.",
+  "uprn": 0,
+  "address_line_2": "Place Early Years Centre",
+  "address_line_3": "Address Road",
+  "post_town": "Town",
+  "postcode": "A1 1AA",
+  "property_type": "Schools And Seasonal Public Buildings",
+  "methodology": "ORCalc",
+  "calculation_tool": "DCLG, ORCalc, v3.6.2",
+  "output_engine": "ORGen v3.6.2",
+  "or_assessment_start_date": "2014-09-30",
+  "or_assessment_end_date": "2015-09-30",
+  "building_category": "S3;",
+  "or_building_data": {
+    "internal_environment": "Heating and Natural Ventilation",
+    "assessment_period_alignment": "End Of Main Heating Fuel Period",
+    "hvac_system": "Convectors"
+  },
+  "or_benchmark_data": {
+    "main_benchmark": "Schools And Seasonal Public Buildings",
+    "benchmarks": [
+      {
+        "name": "Nursery or kindergarten",
+        "benchmark_id": 1,
+        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "floor_area": 1219.2,
+        "tufa": 1219.2,
+        "benchmark": "Schools And Seasonal Public Buildings",
+        "occupancy_level": "Extended Occupancy",
+        "total_equivalent": 2437.5
+      }
+    ]
+  },
+  "or_energy_consumption": {
+    "electricity": {
+      "consumption": 59477,
+      "start_date": "2014-10-01",
+      "end_date": "2015-10-01",
+      "estimate": 0
+    },
+    "gas": {
+      "consumption": 143533,
+      "start_date": "2014-09-30",
+      "end_date": "2015-09-30",
+      "estimate": 0
+    }
+  },
+  "or_previous_data": {
+    "previous_rating_1": {
+      "or": 75,
+      "ormm": 12,
+      "oryyyy": 2014
+    },
+    "previous_rating_2": {
+      "or": 75,
+      "ormm": 12,
+      "oryyyy": 2013
+    }
+  },
+  "dec_annual_energy_summary": {
+    "annual_energy_use_electrical": 49,
+    "annual_energy_use_fuel_thermal": 118,
+    "renewables_fuel_thermal": 0,
+    "renewables_electrical": 0,
+    "typical_thermal_use": 176,
+    "typical_electrical_use": 51
+  },
+  "dec_status": 0,
+  "reason_type": 1,
+  "dec_related_party_disclosure": 4,
+  "this_assessment": {
+    "nominated_date": "2015-12-30",
+    "energy_rating": 80,
+    "electricity_co2": 33,
+    "heating_co2": 28,
+    "renewables_co2": 0
+  },
+  "year1_assessment": {
+    "nominated_date": "2014-12-01",
+    "energy_rating": 75,
+    "electricity_co2": 30,
+    "heating_co2": 24,
+    "renewables_co2": 0
+  },
+  "year2_assessment": {
+    "nominated_date": "2013-12-01",
+    "energy_rating": 75,
+    "electricity_co2": 31,
+    "heating_co2": 29,
+    "renewables_co2": 0
+  },
+  "technical_information": {
+    "main_heating_fuel": "Natural Gas",
+    "building_environment": "Heating and Natural Ventilation",
+    "floor_area": 1219.2,
+    "separately_metered_electric_heating": 0
+  },
+  "ac_questionnaire": {
+    "ac_present": "No",
+    "ac_rated_output": {
+      "ac_rating_unknown_flag": 1
+    },
+    "ac_inspection_commissioned": 4
+  },
+  "assessment_type": "DEC",
+  "schema_type": "CEPC-7.1",
+  "assessment_address_id": "RRN-0000-0000-0000-0000-0005"
+}

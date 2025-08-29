@@ -1,0 +1,930 @@
+{
+  "sap_version": 9.91,
+  "bedf_revision_number": 340,
+  "calculation_software_name": "Stroma RdSAP Software",
+  "calculation_software_version": "1.4.1.0",
+  "inspection_date": "2013-06-27",
+  "report_type": 2,
+  "completion_date": "2013-07-12",
+  "registration_date": "2013-07-12",
+  "status": "entered",
+  "language_code": 1,
+  "restricted_access": 0,
+  "tenure": 1,
+  "transaction_type": 5,
+  "seller_commission_report": "Y",
+  "property_type": 0,
+  "address_line_1": "11, Some Close",
+  "address_line_2": "Long Itchington",
+  "post_town": "Town",
+  "postcode": "AA1 1AA",
+  "uprn": 0,
+  "region_code": 3,
+  "country_code": "EAW",
+  "walls": [
+    {
+      "description": "Cavity wall, as built, no insulation (assumed)",
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2
+    },
+    {
+      "description": "Cavity wall, as built, insulated (assumed)",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "roofs": [
+    {
+      "description": "Pitched, 75 mm loft insulation",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    }
+  ],
+  "floors": [
+    {
+      "description": "Suspended, no insulation (assumed)",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "To unheated space, limited insulation (assumed)",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "windows": [
+    {
+      "description": "Partial double glazing",
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2
+    }
+  ],
+  "main_heating": [
+    {
+      "description": "Boiler and radiators, mains gas",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    },
+    {
+      "description": "Boiler and radiators, mains gas",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "main_heating_controls": [
+    {
+      "description": "Programmer, room thermostat and TRVs",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "hot_water": {
+    "description": "From main system",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "lighting": {
+    "description": "Low energy lighting in 13% of fixed outlets",
+    "energy_efficiency_rating": 2,
+    "environmental_efficiency_rating": 2
+  },
+  "secondary_heating": {
+    "description": "Room heaters, coal",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "has_hot_water_cylinder": "true",
+  "has_heated_separate_conservatory": "false",
+  "dwelling_type": "Detached house",
+  "total_floor_area": 1563,
+  "has_fixed_air_conditioning": "false",
+  "energy_rating_average": 60,
+  "energy_rating_current": 52,
+  "energy_rating_potential": 69,
+  "environmental_impact_current": 40,
+  "environmental_impact_potential": 58,
+  "energy_consumption_current": 239,
+  "energy_consumption_potential": 153,
+  "co2_emissions_current": 78,
+  "co2_emissions_potential": 51,
+  "co2_emissions_current_per_floor_area": 50,
+  "lighting_cost_current": {
+    "currency": "GBP",
+    "value": 635
+  },
+  "lighting_cost_potential": {
+    "currency": "GBP",
+    "value": 344
+  },
+  "heating_cost_current": {
+    "currency": "GBP",
+    "value": 13144
+  },
+  "heating_cost_potential": {
+    "currency": "GBP",
+    "value": 8582
+  },
+  "hot_water_cost_current": {
+    "currency": "GBP",
+    "value": 188
+  },
+  "hot_water_cost_potential": {
+    "currency": "GBP",
+    "value": 151
+  },
+  "suggested_improvements": [
+    {
+      "sequence": 1,
+      "improvement_category": 5,
+      "improvement_type": "A",
+      "improvement_details": {
+        "improvement_number": 5
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 637.67
+      },
+      "indicative_cost": "£100  -  £350",
+      "energy_performance_rating": 55,
+      "environmental_impact_rating": 42
+    },
+    {
+      "sequence": 2,
+      "improvement_category": 5,
+      "improvement_type": "B",
+      "improvement_details": {
+        "improvement_number": 6
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 1224.21
+      },
+      "indicative_cost": "£500  -  £1,500",
+      "energy_performance_rating": 59,
+      "environmental_impact_rating": 46
+    },
+    {
+      "sequence": 3,
+      "improvement_category": 5,
+      "improvement_type": "W",
+      "improvement_details": {
+        "improvement_number": 47
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 476.28
+      },
+      "indicative_cost": "£800  -  £1,200",
+      "energy_performance_rating": 60,
+      "environmental_impact_rating": 48
+    },
+    {
+      "sequence": 4,
+      "improvement_category": 5,
+      "improvement_type": "D",
+      "improvement_details": {
+        "improvement_number": 10
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 787.42
+      },
+      "indicative_cost": "£80  -  £120",
+      "energy_performance_rating": 63,
+      "environmental_impact_rating": 51
+    },
+    {
+      "sequence": 5,
+      "improvement_category": 5,
+      "improvement_type": "E",
+      "improvement_details": {
+        "improvement_number": 35
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 234.75
+      },
+      "indicative_cost": "£305",
+      "energy_performance_rating": 64,
+      "environmental_impact_rating": 51
+    },
+    {
+      "sequence": 6,
+      "improvement_category": 5,
+      "improvement_type": "I",
+      "improvement_details": {
+        "improvement_number": 20
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 1219.36
+      },
+      "indicative_cost": "£2,200  -  £3,000",
+      "energy_performance_rating": 68,
+      "environmental_impact_rating": 56
+    },
+    {
+      "sequence": 7,
+      "improvement_category": 5,
+      "improvement_type": "O",
+      "improvement_details": {
+        "improvement_number": 8
+      },
+      "typical_saving": {
+        "currency": "GBP",
+        "value": 310.6
+      },
+      "indicative_cost": "£3,300  -  £6,500",
+      "energy_performance_rating": 69,
+      "environmental_impact_rating": 58
+    }
+  ],
+  "lzc_energy_sources": [
+    9
+  ],
+  "renewable_heat_incentive": {
+    "space_heating_existing_dwelling": 207769,
+    "impact_of_loft_insulation": -12585,
+    "impact_of_cavity_insulation": -21982,
+    "water_heating": 3640
+  },
+  "addendum": {
+    "cavity_fill_recommended": "true"
+  },
+  "schema_version": "LIG-16.1",
+  "built_form": 1,
+  "extensions_count": 2,
+  "multiple_glazing_type": "ND",
+  "glazed_area": 4,
+  "door_count": 4,
+  "insulated_door_count": 0,
+  "percent_draughtproofed": 0,
+  "habitable_room_count": 15,
+  "heated_room_count": 15,
+  "fixed_lighting_outlets_count": 70,
+  "low_energy_fixed_lighting_outlets_count": 9,
+  "low_energy_lighting": 13,
+  "measurement_type": 1,
+  "mechanical_ventilation": 2,
+  "open_fireplaces_count": 0,
+  "solar_water_heating": "N",
+  "conservatory_type": 2,
+  "sap_building_parts": [
+    {
+      "building_part_number": 1,
+      "identifier": "Main Dwelling",
+      "construction_age_band": "C",
+      "wall_thickness_measured": "Y",
+      "wall_thickness": 320,
+      "wall_dry_lined": "N",
+      "wall_construction": 4,
+      "wall_insulation_type": 4,
+      "roof_construction": 4,
+      "roof_insulation_location": 2,
+      "roof_insulation_thickness": "75mm",
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "floor_construction": 2,
+          "floor_insulation": 1,
+          "heat_loss_perimeter": 96.43,
+          "total_floor_area": 668.41,
+          "room_height": 2.52
+        },
+        {
+          "floor": 1,
+          "heat_loss_perimeter": 106.57,
+          "total_floor_area": 691.43,
+          "room_height": 2.87
+        }
+      ],
+      "floor_heat_loss": 7
+    },
+    {
+      "building_part_number": 2,
+      "identifier": "Extension 1",
+      "construction_age_band": "H",
+      "wall_thickness_measured": "Y",
+      "wall_thickness": 500,
+      "wall_dry_lined": "N",
+      "wall_construction": 4,
+      "wall_insulation_type": 4,
+      "roof_construction": 5,
+      "roof_insulation_location": 2,
+      "roof_insulation_thickness": "75mm",
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "floor_construction": 1,
+          "floor_insulation": 1,
+          "heat_loss_perimeter": 34.27,
+          "total_floor_area": 82.03,
+          "room_height": 2.54
+        }
+      ],
+      "floor_heat_loss": 7
+    },
+    {
+      "building_part_number": 3,
+      "identifier": "Extension 2",
+      "construction_age_band": "H",
+      "wall_thickness_measured": "Y",
+      "wall_thickness": 280,
+      "wall_dry_lined": "N",
+      "wall_construction": 4,
+      "wall_insulation_type": 4,
+      "roof_construction": 4,
+      "roof_insulation_location": 2,
+      "roof_insulation_thickness": "75mm",
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "floor_construction": 2,
+          "floor_insulation": 1,
+          "heat_loss_perimeter": 37.71,
+          "total_floor_area": 121.31,
+          "room_height": 3.21
+        }
+      ],
+      "floor_heat_loss": 2
+    }
+  ],
+  "sap_windows": [
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 1
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 1
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 2,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 2,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 2,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 2,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 2,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 4,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 4,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 4,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 5,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 5,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 1,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 2,
+      "glazing_type": 3,
+      "window_type": 1,
+      "u_value": 3.1,
+      "solar_transmittance": 0.76,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 8,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 5,
+      "window_type": 1,
+      "u_value": 4.8,
+      "solar_transmittance": 0.85,
+      "data_source": 2,
+      "orientation": 5
+    },
+    {
+      "window_location": 0,
+      "window_area": 2,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 3,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 3
+    },
+    {
+      "window_location": 0,
+      "window_area": 6,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 8,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 8,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 7
+    },
+    {
+      "window_location": 0,
+      "window_area": 9,
+      "glazing_type": 2,
+      "window_type": 1,
+      "u_value": 2,
+      "solar_transmittance": 0.72,
+      "data_source": 2,
+      "orientation": 5
+    }
+  ],
+  "sap_heating": {
+    "main_heating_details": [
+      {
+        "main_heating_number": 1,
+        "main_heating_category": 2,
+        "main_heating_fraction": 0.5,
+        "main_heating_data_source": 2,
+        "sap_main_heating_code": 101,
+        "main_fuel_type": 26,
+        "main_heating_control": 2106,
+        "boiler_flue_type": 2,
+        "fan_flue_present": "N",
+        "heat_emitter_type": 1,
+        "has_fghrs": "N"
+      },
+      {
+        "main_heating_number": 2,
+        "main_heating_category": 2,
+        "main_heating_fraction": 0.5,
+        "main_heating_data_source": 2,
+        "sap_main_heating_code": 101,
+        "main_fuel_type": 26,
+        "main_heating_control": 2106,
+        "boiler_flue_type": 2,
+        "fan_flue_present": "Y",
+        "heat_emitter_type": 1,
+        "has_fghrs": "N"
+      }
+    ],
+    "water_heating_code": 901,
+    "water_heating_fuel": 26,
+    "secondary_heating_type": 631,
+    "secondary_fuel_type": 33,
+    "cylinder_size": 4,
+    "cylinder_insulation_type": 1,
+    "cylinder_insulation_thickness": 50,
+    "cylinder_thermostat": "Y",
+    "has_fixed_air_conditioning": "false",
+    "wwhrs": {
+      "rooms_with_bath_and_or_shower": 3,
+      "rooms_with_mixer_shower_no_bath": 0,
+      "rooms_with_bath_and_mixer_shower": 3
+    }
+  },
+  "sap_energy_source": {
+    "meter_type": 1,
+    "main_gas": "Y",
+    "wind_turbines_count": 0,
+    "wind_turbines_terrain_type": 3,
+    "photovoltaic_supply": {
+      "percent_roof_area": 0
+    }
+  },
+  "assessment_type": "RDSAP",
+  "schema_type": "SAP-Schema-16.2",
+  "assessment_address_id": "RRN-"
+}
