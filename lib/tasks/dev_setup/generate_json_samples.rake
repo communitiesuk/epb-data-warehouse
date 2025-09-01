@@ -4,6 +4,7 @@ namespace :dev_setup do
     Tasks::TaskHelpers.quit_if_production
 
     output_dir = "#{Dir.pwd}/spec/fixtures/json_samples"
+    mkdir output_dir unless Dir.exist? output_dir
 
     sample_files = GenerateJsonSamples.get_sample_files
     sample_files.each do |file|
