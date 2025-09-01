@@ -29,16 +29,6 @@ describe "DomesticSearchController" do
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0004", document: sap, created_at: "2022-01-01", country_id: 1)
   end
 
-  let(:authenticate_user_use_case) do
-    instance_double(UseCase::AuthenticateUser)
-  end
-
-  before do
-    allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
-    allow(authenticate_user_use_case).to receive(:execute).and_return(true)
-    header("Authorization", "Bearer valid-bearer-token")
-  end
-
   context "when requesting a response from /api/domestic/count" do
     context "when the response is a success" do
       context "when no optional search filters are added" do
@@ -85,6 +75,9 @@ describe "DomesticSearchController" do
   end
 
   context "when requesting a response from /api/domestic/search" do
+    let(:authenticate_user_use_case) do
+      instance_double(UseCase::AuthenticateUser)
+    end
     let(:expected_data) do
       {
         "addressLine1" => "1 Some Street",
@@ -100,6 +93,12 @@ describe "DomesticSearchController" do
         "postcode" => "SW10 0AA",
         "registrationDate" => "2020-05-04T00:00:00.000Z",
       }
+    end
+
+    before do
+      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+      allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+      header("Authorization", "Bearer valid-bearer-token")
     end
 
     context "when the response is a success" do
