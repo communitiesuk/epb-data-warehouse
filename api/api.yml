@@ -389,6 +389,91 @@ paths:
                 example:
                   error: "Internal Server Error"
 
+  /api/files/domestic/json:
+    get:
+      tags:
+        - Files
+        - Domestic
+      summary: Download domestic full-load JSON
+      description: |
+        Redirects to a pre-signed S3 URL for the domestic full-load ZIP file.
+      operationId: download-domestic-full-load
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/domestic/json/info:
+    get:
+      tags:
+        - Files
+        - Domestic
+      summary: Get info about domestic full-load JSON
+      description: |
+        Returns metadata about the domestic full-load ZIP file.
+      operationId: get-domestic-full-load-info
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
 components:
   securitySchemes:
     bearerToken:
