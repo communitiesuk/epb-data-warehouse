@@ -82,7 +82,7 @@ module Gateway
 
     def fetch_by_id(assessment_id:)
       sql = <<-SQL
-        SELECT ad.document
+        SELECT fn_export_json_document(ad.document) as document
         FROM assessment_documents ad
         WHERE ad.assessment_id = $1
         AND EXISTS (SELECT * FROM assessment_search s WHERE s.assessment_id = ad.assessment_id)
@@ -96,8 +96,10 @@ module Gateway
         ),
 
       ]
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+      return nil if result.empty?
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |i| Domain::RedactedDocument.new(result: i["document"]).get_hash }.first
+      JSON.parse(result.first["document"], symbolize_names: true)
     end
 
     def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:)

@@ -13,7 +13,7 @@ describe "DomesticSearchController" do
   end
 
   before do
-    document = { assessment_type: "SAP", postcode: "SW10 1AA", registration_date: Time.now }
+    document = { assessment_type: "SAP", postcode: "SW10 1AA", registration_date: Time.now, assessment_address_id: "UPRN-0000000001245" }
     add_assessment(assessment_id:, schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
     Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document:, country_id: 1)
     allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)

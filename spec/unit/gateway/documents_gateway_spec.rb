@@ -191,11 +191,54 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
   describe "fetch_by_id" do
     context "when fetching a single json document" do
       let(:redaction_hash) do
-        { rrn: "8570-6826-6530-4969-0202", status: "entered", tenure: 1, property: { uprn: 7_435_089_668, address: { postcode: "NW8 0PG", post_town: "LONDON", address_line_1: "25, Marlborough Place" } }, region_code: 17, report_type: 2, sap_version: 9.94, country_code: "EAW", language_code: 1, property_type: 0, completion_date: "2020-06-01", inspection_date: "2020-06-01", transaction_type: 1, registration_date: "2020-06-01", schema_version_original: "LIG-19.0", calculation_software_name: "Elmhurst Energy Systems RdSAP Calculator", calculation_software_version: "4.05r0005" }
+        { status: "entered",
+          tenure: 1,
+          region_code: 17,
+          report_type: 2,
+          sap_version: 9.94,
+          country_code: "EAW",
+          language_code: 1,
+          property_type: 0,
+          assessment_type: "RdSAP",
+          completion_date: "2020-06-01",
+          inspection_date: "2020-06-01",
+          transaction_type: 1,
+          registration_date: "2020-06-01",
+          schema_version_original: "LIG-19.0",
+          building_reference_number: 1245,
+          calculation_software_name: "Elmhurst Energy Systems RdSAP Calculator",
+          calculation_software_version: "4.05r0005" }
+      end
+
+      let(:json_sample) do
+        {
+          "schema_version_original" => "LIG-19.0",
+          "sap_version" => 9.94,
+          "calculation_software_name" => "Elmhurst Energy Systems RdSAP Calculator",
+          "calculation_software_version" => "4.05r0005",
+          "inspection_date" => "2020-06-01",
+          "report_type" => 2,
+          "completion_date" => "2020-06-01",
+          "registration_date" => "2020-06-01",
+          "status" => "entered",
+          "language_code" => 1,
+          "tenure" => 1,
+          "transaction_type" => 1,
+          "property_type" => 0,
+          "scheme_assessor_id" => "EES/008538",
+          "region_code" => 17,
+          "country_code" => "EAW",
+          "uprn" => "UPRN-0000000001245",
+          "owner" => "Unknown",
+          "occupier" => "William Gates",
+          "assessment_type" => "RdSAP",
+          "equipment_operator" => "some value",
+          "assessment_address_id" => "UPRN-0000000001245",
+        }
       end
 
       before do
-        gateway.add_assessment(assessment_id:, document: assessment_data)
+        gateway.add_assessment(assessment_id:, document: json_sample)
         Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
       end
 
