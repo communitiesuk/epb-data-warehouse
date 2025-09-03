@@ -21,7 +21,6 @@
   "address_line_3": "Some County",
   "post_town": "Whitbury",
   "postcode": "A0 0AA",
-  "uprn": "UPRN-0000000001",
   "region_code": 16,
   "country_code": "ENG",
   "assessment_date": "2022-05-09",
@@ -605,5 +604,5 @@
   "data_type": 1,
   "assessment_type": "EPC",
   "schema_type": "SAP-Schema-19.0.0",
-  "assessment_address_id": "RRN-<RRN>0000-0000-0000-0000-0000</RRN>"
+  "building_reference_number": 1245
 }

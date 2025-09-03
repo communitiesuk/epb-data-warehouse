@@ -18,7 +18,6 @@
   "address_line_2": "Long Itchington",
   "post_town": "Town",
   "postcode": "A1 1AA",
-  "uprn": 7777777778,
   "region_code": 6,
   "country_code": "ENG",
   "assessment_date": "2020-08-17",
@@ -557,5 +556,5 @@
   },
   "assessment_type": "EPC",
   "schema_type": "SAP-Schema-17.1",
-  "assessment_address_id": "RRN-<RRN>0000-0000-3333-7777-5555</RRN>"
+  "building_reference_number": 1245
 }

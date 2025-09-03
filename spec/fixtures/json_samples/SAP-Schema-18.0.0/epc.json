@@ -19,7 +19,6 @@
   "address_line_2": "Nice Road",
   "post_town": "Town",
   "postcode": "LS0 0AA",
-  "uprn": "RRN-0000-0000-0000-0000-0000",
   "region_code": 3,
   "country_code": "ENG",
   "assessment_date": "2021-01-01",
@@ -505,5 +504,5 @@
   },
   "assessment_type": "EPC",
   "schema_type": "SAP-Schema-18.0.0",
-  "assessment_address_id": "RRN-<RRN>0000-0000-0000-0000-0000</RRN>"
+  "building_reference_number": 1245
 }

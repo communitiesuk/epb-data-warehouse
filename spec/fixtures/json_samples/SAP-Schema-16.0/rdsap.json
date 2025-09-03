@@ -291,8 +291,7 @@
   "address_line_1": "11, Street Road",
   "post_town": "Town",
   "postcode": "AA1 1AA",
-  "uprn": 0,
   "assessment_type": "RDSAP",
   "schema_type": "SAP-Schema-16.0",
-  "assessment_address_id": "RRN-"
+  "building_reference_number": 1245
 }

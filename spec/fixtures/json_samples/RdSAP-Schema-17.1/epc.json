@@ -16,7 +16,6 @@
   "address_line_2": "Lower Moria",
   "post_town": "POSTTOWN",
   "postcode": "PT42 5HL",
-  "uprn": 878768766,
   "region_code": 17,
   "country_code": "EAW",
   "walls": [
@@ -467,5 +466,5 @@
   },
   "assessment_type": "EPC",
   "schema_type": "RdSAP-Schema-17.1",
-  "assessment_address_id": "RRN-<RRN>5555-4444-3333-2222-1111</RRN>"
+  "building_reference_number": 1245
 }

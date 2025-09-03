@@ -29,15 +29,15 @@ end
 
 class GenerateJsonSamples
   def self.parse_assessment(xml:, assessment_id:, schema_type:, type:)
-    assessment_address_id ||= "RRN-#{assessment_id}"
     meta_data = {
       "assessment_type" => type.gsub("+rr", "").upcase,
       "schema_type" => schema_type,
-      "assessment_address_id" => assessment_address_id,
+      "building_reference_number" => 1245,
     }
 
     document = UseCase::ParseXmlCertificate.new.execute(xml: xml.to_xml, assessment_id:, schema_type:)
     document.merge!(meta_data)
+    document.delete("uprn")
     Domain::RedactedDocument.new(result: document.to_json).get_hash
   end
 

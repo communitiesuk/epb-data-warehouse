@@ -17,7 +17,6 @@
   "address_line_1": "28, Place Drive",
   "post_town": "Town",
   "postcode": "AA1 1AA",
-  "uprn": 90000000000,
   "region_code": 17,
   "country_code": "EAW",
   "assessment_date": "2012-09-29",
@@ -343,5 +342,5 @@
   },
   "assessment_type": "SAP",
   "schema_type": "SAP-Schema-16.0",
-  "assessment_address_id": "RRN-"
+  "building_reference_number": 1245
 }

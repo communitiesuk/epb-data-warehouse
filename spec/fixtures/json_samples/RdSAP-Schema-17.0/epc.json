@@ -342,10 +342,9 @@
   "address_line_1": "42, Moria Mines Lane",
   "post_town": "POSTTOWN",
   "postcode": "PT5 4RZ",
-  "uprn": 4444444444,
   "region_code": 3,
   "country_code": "EAW",
   "assessment_type": "EPC",
   "schema_type": "RdSAP-Schema-17.0",
-  "assessment_address_id": "RRN-<RRN>6666-5555-4444-3333-2222</RRN>"
+  "building_reference_number": 1245
 }

@@ -8,7 +8,6 @@
   "status": "entered",
   "language_code": 1,
   "building_complexity": "Level 3",
-  "uprn": 0,
   "address_line_1": "99a Address Street",
   "address_line_2": "Place Location",
   "post_town": "New Town",
@@ -259,5 +258,5 @@
   },
   "assessment_type": "CEPC",
   "schema_type": "CEPC-7.1",
-  "assessment_address_id": "RRN-9999-9999-3333-9999-3333"
+  "building_reference_number": 1245
 }

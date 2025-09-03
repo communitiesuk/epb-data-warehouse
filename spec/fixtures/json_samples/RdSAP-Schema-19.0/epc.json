@@ -16,7 +16,6 @@
   "address_line_2": "New Town",
   "post_town": "Town",
   "postcode": "A1 1AA",
-  "uprn": 9999999999,
   "region_code": 19,
   "country_code": "EAW",
   "walls": [
@@ -381,5 +380,5 @@
   },
   "assessment_type": "EPC",
   "schema_type": "RdSAP-Schema-19.0",
-  "assessment_address_id": "RRN-<RRN>0000-6666-4444-3333-2222</RRN>"
+  "building_reference_number": 1245
 }

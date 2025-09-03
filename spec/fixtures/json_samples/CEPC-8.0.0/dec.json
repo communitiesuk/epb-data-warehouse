@@ -7,7 +7,6 @@
   "status": "entered",
   "language_code": 1,
   "building_complexity": "Level 3",
-  "uprn": "UPRN-000000000001",
   "address_line_1": "Some Unit",
   "address_line_2": "2 Lonely Street",
   "address_line_3": "Some Area",
@@ -294,5 +293,5 @@
   },
   "assessment_type": "DEC",
   "schema_type": "CEPC-8.0.0",
-  "assessment_address_id": "RRN-0000-0000-0000-0000-0000"
+  "building_reference_number": 1245
 }

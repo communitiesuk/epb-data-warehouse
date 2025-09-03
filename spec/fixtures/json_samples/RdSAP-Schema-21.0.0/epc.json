@@ -395,8 +395,7 @@
   "address_line_1": "1 Some Street",
   "post_town": "Whitbury",
   "postcode": "A0 0AA",
-  "uprn": "UPRN-000000000000",
   "assessment_type": "EPC",
   "schema_type": "RdSAP-Schema-21.0.0",
-  "assessment_address_id": "RRN-<RRN>0000-0000-0000-0000-0000</RRN>"
+  "building_reference_number": 1245
 }

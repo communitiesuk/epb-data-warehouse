@@ -16,7 +16,6 @@
   "address_line_2": "Village",
   "post_town": "POSTTOWN",
   "postcode": "PT11 4RF",
-  "uprn": 22223333,
   "region_code": 1,
   "country_code": "EAW",
   "walls": [
@@ -408,5 +407,5 @@
   },
   "assessment_type": "EPC",
   "schema_type": "RdSAP-Schema-18.0",
-  "assessment_address_id": "RRN-<RRN>0000-1111-2222-3333-4444</RRN>"
+  "building_reference_number": 1245
 }

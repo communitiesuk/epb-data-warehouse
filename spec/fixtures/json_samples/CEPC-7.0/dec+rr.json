@@ -7,7 +7,6 @@
   "status": "entered",
   "related_rrn": "3333-4444-5555-6666-7778",
   "language_code": 1,
-  "uprn": 876764383383,
   "address_line_1": "Mr Blobby's Sports Academy",
   "address_line_2": "Mr Blobby's Academy",
   "address_line_3": "Blobby Custard Lane",
@@ -123,5 +122,5 @@
   },
   "assessment_type": "DEC",
   "schema_type": "CEPC-7.0",
-  "assessment_address_id": "RRN-3333-4444-5555-6666-7777"
+  "building_reference_number": 1245
 }

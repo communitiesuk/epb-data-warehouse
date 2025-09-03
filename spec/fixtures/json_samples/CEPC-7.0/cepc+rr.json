@@ -9,7 +9,6 @@
   "language_code": 1,
   "building_complexity": "Level 3",
   "location_description": "Located in main shopping area in Posttown town centre",
-  "uprn": 987345673489,
   "address_line_2": "Acme Coffee",
   "address_line_3": "13 Old Street",
   "post_town": "POSTTOWN",
@@ -273,5 +272,5 @@
   },
   "assessment_type": "CEPC",
   "schema_type": "CEPC-7.0",
-  "assessment_address_id": "RRN-4444-5555-6666-7777-8888"
+  "building_reference_number": 1245
 }

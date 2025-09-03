@@ -18,7 +18,6 @@
   "address_line_2": "Long Itchington",
   "post_town": "Town",
   "postcode": "AA1 1AA",
-  "uprn": 0,
   "region_code": 3,
   "country_code": "EAW",
   "walls": [
@@ -926,5 +925,5 @@
   },
   "assessment_type": "RDSAP",
   "schema_type": "SAP-Schema-16.2",
-  "assessment_address_id": "RRN-"
+  "building_reference_number": 1245
 }

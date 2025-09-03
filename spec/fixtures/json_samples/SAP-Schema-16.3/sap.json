@@ -16,7 +16,6 @@
   "address_line_1": "17, Street Terrace",
   "post_town": "Town",
   "postcode": "AA1 1AA",
-  "uprn": 0,
   "region_code": 3,
   "country_code": "EAW",
   "assessment_date": "2014-04-04",
@@ -451,5 +450,5 @@
   },
   "assessment_type": "SAP",
   "schema_type": "SAP-Schema-16.3",
-  "assessment_address_id": "RRN-"
+  "building_reference_number": 1245
 }

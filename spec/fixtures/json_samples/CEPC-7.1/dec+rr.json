@@ -8,7 +8,6 @@
   "related_rrn": "0000-0000-0000-0000-0006",
   "language_code": 1,
   "location_description": "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls.  The building is heated by gas fired boilers.",
-  "uprn": 0,
   "address_line_2": "Place Early Years Centre",
   "address_line_3": "Address Road",
   "post_town": "Town",
@@ -113,5 +112,5 @@
   },
   "assessment_type": "DEC",
   "schema_type": "CEPC-7.1",
-  "assessment_address_id": "RRN-0000-0000-0000-0000-0005"
+  "building_reference_number": 1245
 }

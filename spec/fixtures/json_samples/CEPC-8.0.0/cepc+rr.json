@@ -14,7 +14,6 @@
   "postcode": "NE0 0AA",
   "property_type": "A1/A2 Retail and Financial/Professional services",
   "is_heritage_site": "N",
-  "uprn": "UPRN-000000000000",
   "methodology": "SBEM",
   "calculation_tool": "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.b.0",
   "output_engine": "EPCgen, v5.6.b.0",
@@ -463,5 +462,5 @@
   },
   "assessment_type": "CEPC",
   "schema_type": "CEPC-8.0.0",
-  "assessment_address_id": "RRN-0000-0000-0000-0000-0000"
+  "building_reference_number": 1245
 }

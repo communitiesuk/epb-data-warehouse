@@ -8,7 +8,6 @@
   "related_rrn": "0000-0000-0000-0000-0001",
   "language_code": 1,
   "location_description": "Swimming pool with gumnasium.",
-  "uprn": "RRN-0000-0000-0000-0000-0000",
   "address_line_1": "Swim & Fitness Centre",
   "address_line_2": "Swimming Lane",
   "post_town": "Floatering",
@@ -126,5 +125,5 @@
   },
   "assessment_type": "DEC",
   "schema_type": "CEPC-8.0.0",
-  "assessment_address_id": "RRN-0000-0000-0000-0000-0000"
+  "building_reference_number": 1245
 }
