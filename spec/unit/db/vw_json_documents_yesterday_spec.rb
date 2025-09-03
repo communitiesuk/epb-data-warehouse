@@ -11,7 +11,6 @@ describe "VwJsonDocumentsYesterday" do
       "sap_version" => 9.94,
       "calculation_software_name" => "Elmhurst Energy Systems RdSAP Calculator",
       "calculation_software_version" => "4.05r0005",
-      "rrn" => "8570-6826-6530-4969-0202",
       "inspection_date" => "2020-06-01",
       "report_type" => 2,
       "completion_date" => "2020-06-01",
@@ -22,41 +21,14 @@ describe "VwJsonDocumentsYesterday" do
       "transaction_type" => 1,
       "property_type" => 0,
       "scheme_assessor_id" => "EES/008538",
-      "property" =>
-        { "address" =>
-            { "address_line_1" => "25, Marlborough Place",
-              "post_town" => "LONDON",
-              "postcode" => "NW8 0PG" },
-          "uprn" => 7_435_089_668 },
       "region_code" => 17,
       "country_code" => "EAW",
-      "equipment_operator": [
-        {
-          "organisation_name": "operator Ltd",
-          "registered_address": {
-            "address_line_1": "Add 1",
-            "post_town": "St Albans",
-            "postcode": "AL1 3UT",
-          },
-          "responsible_person": "Operator",
-          "telephone_number": 123_456_789,
-        },
-      ],
-      "equipment_owner": [
-        {
-          "equipment_owner_name": "Owner",
-          "organisation_name": "Owner Ltd",
-          "registered_address": {
-            "address_line_1": "Add 1",
-            "post_town": "St Albans",
-            "postcode": "AL1 3UT",
-          },
-          "telephone_number": 123_465_789,
-        },
-      ],
-      "owner": "Unknown",
-      "occupier": "William Gates",
+      "uprn" => "UPRN-0000000001245",
+      "owner" => "Unknown",
+      "occupier" => "William Gates",
       "assessment_type" => "RdSAP",
+      "equipment_operator" => "some value",
+      "assessment_address_id" => "UPRN-0000000001245",
     }
   end
 
