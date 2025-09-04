@@ -213,7 +213,6 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
         {
           "schema_version_original" => "LIG-19.0",
           "sap_version" => 9.94,
-          "calculation_software_name" => "Elmhurst Energy Systems RdSAP Calculator",
           "calculation_software_version" => "4.05r0005",
           "inspection_date" => "2020-06-01",
           "report_type" => 2,

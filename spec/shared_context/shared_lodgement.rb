@@ -162,4 +162,26 @@ shared_context "when lodging XML" do
     config_gateway = Gateway::XsdConfigGateway.new(config_path)
     UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway).execute
   end
+
+  def add_commercial(assessment_id:, type_of_assessment:, schema_type:, type:, different_fields: nil)
+    meta_data_sample = {
+      "assessment_type" => type_of_assessment,
+      "opt_out" => false,
+      "created_at" => "2021-07-21T11:26:28.045Z",
+      "schema_type" => schema_type,
+      "assessment_address_id" => "URPN-000000012457",
+    }
+
+    document = Nokogiri.XML Samples.xml(schema_type, type)
+    rrn = document.at("//*[local-name() = 'RRN']")
+    rrn.children = assessment_id unless rrn.nil?
+    xml = document.to_xml
+
+    certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
+    certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
+    certificate_data.merge!(meta_data_sample)
+    Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
+    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, created_at: certificate_data["created_at"], document: certificate_data, country_id: certificate_data["country_id"])
+    add_assessment_country_id(assessment_id:, document: certificate_data)
+  end
 end
