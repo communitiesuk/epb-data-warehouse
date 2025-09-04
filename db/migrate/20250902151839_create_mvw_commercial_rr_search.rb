@@ -1,7 +1,8 @@
 class CreateMvwCommercialRrSearch < ActiveRecord::Migration[7.0]
   def self.up
     sql = <<~SQL
-      SELECT
+      CREATE MATERIALIZED VIEW mvw_commercial_rr_search AS 
+       SELECT
           r.certificate_number AS CERTIFICATE_NUMBER,
           r.payback_type AS PAYBACK_TYPE,
           ROW_NUMBER() OVER (PARTITION BY r.certificate_number) AS RECOMMENDATION_ITEM,
@@ -36,6 +37,7 @@ class CreateMvwCommercialRrSearch < ActiveRecord::Migration[7.0]
               AND  co.country_code IN ('EAW', 'ENG', 'WLS')
               AND  ase.assessment_type = 'CEPC'
       ) r
+       WITH NO DATA
     SQL
     execute(sql)
   end

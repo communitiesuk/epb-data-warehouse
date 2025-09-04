@@ -64,10 +64,14 @@ shared_context "when lodging XML" do
       xml_path = "//SAP:RRN"
     end
 
-    document = Nokogiri.XML Samples.xml(schema_type, type)
-    rrn = document.at(xml_path)
-    rrn.children = assessment_id unless rrn.nil?
-    xml = document.to_xml
+    if type == "cepc+rr"
+      xml = get_recommendations_xml(schema_type, type, "1112").to_xml
+    else
+      document = Nokogiri.XML Samples.xml(schema_type, type)
+      rrn = document.at(xml_path)
+      rrn.children = assessment_id unless rrn.nil?
+      xml = document.to_xml
+    end
 
     certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
     certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
@@ -77,6 +81,27 @@ shared_context "when lodging XML" do
       Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, created_at: certificate_data["created_at"], document: certificate_data, country_id: certificate_data["country_id"])
     end
     add_assessment_country_id(assessment_id:, document: certificate_data)
+  end
+
+  def get_recommendations_xml(schema, type, assessment_id_part)
+    index_value = 2
+    rr_xml = Nokogiri.XML Samples.xml(schema, type)
+    rr_xml
+      .xpath("//*[local-name() = 'RRN']")
+      .each_with_index do |node, index|
+      node.content =
+        "#{assessment_id_part}-0000-0000-0000-000#{index + index_value}"
+    end
+
+    rr_xml
+      .xpath("//*[local-name() = 'Related-RRN']")
+      .reverse
+      .each_with_index do |node, index|
+      node.content =
+        "#{assessment_id_part}-0000-0000-0000-000#{index + index_value}"
+    end
+
+    rr_xml
   end
 
   def add_assessment_country_id(assessment_id:, document:)
