@@ -206,7 +206,6 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
           registration_date: "2020-06-01",
           schema_version_original: "LIG-19.0",
           building_reference_number: 1245,
-          calculation_software_name: "Elmhurst Energy Systems RdSAP Calculator",
           calculation_software_version: "4.05r0005" }
       end
 
