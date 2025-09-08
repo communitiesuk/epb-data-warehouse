@@ -1,7 +1,6 @@
 {
   "schema_version_original": "LIG-17.1",
   "sap_version": 9.92,
-  "calculation_software_name": "iQ-Engine",
   "calculation_software_version": "v92.0.1.1",
   "inspection_date": "2018-05-29",
   "report_type": 2,

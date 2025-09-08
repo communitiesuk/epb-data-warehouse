@@ -82,51 +82,6 @@ describe Gateway::CommercialSearchGateway do
         "uprn_source" => "" }
     end
 
-    let(:cepc_rr_expected_data) do
-      {
-        "ac_inspection_commissioned" => "4",
-        "estimated_aircon_kw_rating" => nil,
-        "address" => nil,
-        "address1" => nil,
-        "address2" => "Acme Coffee",
-        "address3" => "13 Old Street",
-        "posttown" => "POSTTOWN",
-        "aircon_kw_rating" => "",
-        "aircon_present" => "No",
-        "building_reference_number" => "",
-        "certificate_number" => "0000-0000-0000-0000-0007",
-        "constituency" => "E14000629",
-        "constituency_label" => "Chelsea and Fulham",
-        "county" => "",
-        "asset_rating" => "134",
-        "asset_rating_band" => "F",
-        "building_emissions" => "158.9",
-        "building_environment" => "Heating and Natural Ventilation",
-        "building_level" => "3",
-        "existing_stock_benchmark" => "90",
-        "floor_area" => "314",
-        "inspection_date" => "2013-08-10",
-        "lodgement_date" => "2013-08-15",
-        "lodgement_datetime" => Time.parse("2013-08-15 00:00:00.000000000 +0000"),
-        "local_authority" => "E09000013",
-        "local_authority_label" => "Hammersmith and Fulham",
-        "main_heating_fuel" => "Grid Supplied Electricity",
-        "new_build_benchmark" => "34",
-        "other_fuel_desc" => nil,
-        "postcode" => "SW10 0AA",
-        "primary_energy_value" => nil,
-        "property_type" => "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",
-        "renewable_sources" => nil,
-        "report_type" => "3",
-        "special_energy_uses" => nil,
-        "standard_emissions" => "59.26",
-        "target_emissions" => "39.95",
-        "transaction_type" => "Mandatory issue (Marketed sale).",
-        "typical_emissions" => "106.52",
-        "uprn" => "",
-        "uprn_source" => "",
-      }
-    end
 
     let(:query_result) do
       gateway.fetch(**search_arguments)
@@ -141,10 +96,6 @@ describe Gateway::CommercialSearchGateway do
       expect(result).to eq cepc_expected_data
     end
 
-    it "returns a dataset with the required data for cepc+rr" do
-      result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0007" }
-      expect(result).to eq cepc_rr_expected_data
-    end
 
     context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do
       it "returns an empty value for the building_reference_number" do

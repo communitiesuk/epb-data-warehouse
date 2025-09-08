@@ -37,7 +37,12 @@ class GenerateJsonSamples
 
     document = UseCase::ParseXmlCertificate.new.execute(xml: xml.to_xml, assessment_id:, schema_type:)
     document.merge!(meta_data)
+    redacted_json(document:)
+  end
+
+  def self.redacted_json(document:)
     document.delete("uprn")
+    document.delete("calculation_software_name")
     Domain::RedactedDocument.new(result: document.to_json).get_hash
   end
 

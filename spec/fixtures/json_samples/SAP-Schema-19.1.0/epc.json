@@ -2,7 +2,6 @@
   "schema_version_original": "SAP-Schema-19.0.0",
   "sap_version": 10.2,
   "sap_data_version": 10.2,
-  "calculation_software_name": "SomeSoft SAP Calculator",
   "calculation_software_version": "13.05r16",
   "user_interface_name": "BRE SAP interface 10.2",
   "user_interface_version": "1.0.1-alpha",

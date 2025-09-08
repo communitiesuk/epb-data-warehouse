@@ -1,7 +1,6 @@
 {
   "schema_version_original": "LIG-17.0",
   "sap_version": 9.92,
-  "calculation_software_name": "Stroma RSAP Engine",
   "calculation_software_version": "2.0.0.0",
   "inspection_date": "2017-03-19",
   "report_type": 2,

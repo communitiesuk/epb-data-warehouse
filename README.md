@@ -105,4 +105,6 @@ To recreate the data in the json samples run the following command:
 
 `rake dev_setup:generate_json_examples`
 
-This will delete the existing file and recreate based on any changes made to XML samples
+This will delete the existing file and recreate based on any changes made to XML samples.
+
+If changes are made to json being exported the rake will need to updated to reflect these changes.
