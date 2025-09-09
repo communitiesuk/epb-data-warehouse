@@ -1,39 +1,14 @@
 {
-  "sap_version": 9.9,
-  "bedf_revision_number": 333,
-  "calculation_software_version": 5.4,
-  "inspection_date": "2013-02-06",
-  "report_type": 3,
-  "completion_date": "2013-02-06",
-  "registration_date": "2013-02-06",
-  "status": "entered",
-  "language_code": 1,
-  "restricted_access": 0,
-  "transaction_type": 6,
-  "seller_commission_report": "Y",
-  "property_type": 0,
-  "address_line_1": "17, Street Terrace",
-  "post_town": "Town",
-  "postcode": "AA1 1AA",
-  "region_code": 16,
-  "country_code": "EAW",
-  "assessment_date": "2013-02-06",
-  "renewable_heat_incentive": {
-    "rhi_new_dwelling": {
-      "space_heating": 41938,
-      "water_heating": 2876
-    }
-  },
-  "walls": [
+  "roofs": [
     {
-      "description": "Average thermal transmittance 0.17 W/m²K",
+      "description": "Average thermal transmittance 0.14 W/m²K",
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
   ],
-  "roofs": [
+  "walls": [
     {
-      "description": "Average thermal transmittance 0.14 W/m²K",
+      "description": "Average thermal transmittance 0.17 W/m²K",
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
@@ -45,33 +20,10 @@
       "environmental_efficiency_rating": 5
     }
   ],
+  "status": "entered",
   "windows": {
     "description": "High performance glazing",
     "energy_efficiency_rating": 5,
-    "environmental_efficiency_rating": 5
-  },
-  "main_heating": [
-    {
-      "description": "Ground source heat pump, underfloor, electric",
-      "energy_efficiency_rating": 4,
-      "environmental_efficiency_rating": 5
-    }
-  ],
-  "main_heating_controls": [
-    {
-      "description": "Time and temperature zone control",
-      "energy_efficiency_rating": 5,
-      "environmental_efficiency_rating": 5
-    }
-  ],
-  "secondary_heating": {
-    "description": "Room heaters, wood logs",
-    "energy_efficiency_rating": 0,
-    "environmental_efficiency_rating": 0
-  },
-  "hot_water": {
-    "description": "From main system, plus solar",
-    "energy_efficiency_rating": 4,
     "environmental_efficiency_rating": 5
   },
   "lighting": {
@@ -79,2031 +31,2080 @@
     "energy_efficiency_rating": 5,
     "environmental_efficiency_rating": 5
   },
+  "postcode": "AA1 1AA",
+  "data_type": 2,
+  "hot_water": {
+    "description": "From main system, plus solar",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 5
+  },
+  "post_town": "Town",
+  "built_form": 1,
+  "living_area": 44.4,
+  "orientation": 0,
+  "region_code": 16,
+  "report_type": 3,
+  "sap_heating": {
+    "has_solar_panel": "true",
+    "water_fuel_type": 39,
+    "solar_store_volume": 100,
+    "water_heating_code": 901,
+    "secondary_fuel_type": 20,
+    "hot_water_store_size": 300,
+    "main_heating_details": [
+      {
+        "main_fuel_type": 39,
+        "heat_emitter_type": 2,
+        "main_heating_code": 201,
+        "main_heating_number": 1,
+        "main_heating_control": 2207,
+        "main_heating_category": 4,
+        "main_heating_fraction": 1,
+        "main_heating_data_source": 3,
+        "has_delayed_start_thermostat": "false",
+        "load_or_weather_compensation": 0,
+        "underfloor_heat_emitter_type": 2,
+        "is_main_heating_hetas_approved": "false",
+        "is_central_heating_pump_in_heated_space": "true"
+      }
+    ],
+    "has_hot_water_cylinder": "true",
+    "has_solar_powered_pump": "false",
+    "secondary_heating_code": 633,
+    "has_cylinder_thermostat": "true",
+    "solar_panel_aperture_area": 5.26,
+    "has_fixed_air_conditioning": "false",
+    "secondary_heating_category": 10,
+    "solar_panel_collector_type": 3,
+    "is_cylinder_in_heated_space": "true",
+    "solar_panel_collector_pitch": 3,
+    "is_hot_water_separately_timed": "true",
+    "is_primary_pipework_insulated": "true",
+    "secondary_heating_data_source": 3,
+    "hot_water_store_insulation_type": 1,
+    "hot_water_store_heat_loss_source": 3,
+    "is_solar_store_combined_cylinder": "true",
+    "solar_panel_collector_data_source": 2,
+    "solar_panel_collector_orientation": 3,
+    "solar_panel_collector_overshading": 1,
+    "is_heat_pump_assisted_by_immersion": "false",
+    "is_secondary_heating_hetas_approved": "false",
+    "hot_water_store_insulation_thickness": 80,
+    "solar_panel_collector_heat_loss_rate": 3,
+    "solar_panel_collector_zero_loss_efficiency": 60
+  },
+  "sap_version": 9.9,
+  "schema_type": "SAP-Schema-16.2",
+  "country_code": "EAW",
+  "main_heating": [
+    {
+      "description": "Ground source heat pump, underfloor, electric",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 5
+    }
+  ],
   "air_tightness": {
     "description": "Air permeability 6.4 m³/h.m² (as tested)",
     "energy_efficiency_rating": 4,
     "environmental_efficiency_rating": 4
   },
-  "has_fixed_air_conditioning": "false",
-  "has_hot_water_cylinder": "true",
-  "has_heated_separate_conservatory": "false",
   "dwelling_type": "Detached house",
+  "language_code": 1,
+  "property_type": 0,
+  "address_line_1": "17, Street Terrace",
+  "schema_version": "LIG-16.0",
+  "assessment_date": "2013-02-06",
+  "assessment_type": "SAP",
+  "completion_date": "2013-02-06",
+  "inspection_date": "2013-02-06",
+  "sap_ventilation": {
+    "psv_count": 0,
+    "pressure_test": 1,
+    "air_permeability": 6.373,
+    "open_flues_count": 0,
+    "ventilation_type": 1,
+    "extract_fans_count": 9,
+    "open_fireplaces_count": 0,
+    "sheltered_sides_count": 0,
+    "flueless_gas_fires_count": 0
+  },
   "total_floor_area": 709,
-  "energy_rating_current": 85,
-  "energy_rating_potential": 85,
-  "environmental_impact_current": 88,
-  "environmental_impact_potential": 88,
-  "energy_consumption_current": 63,
-  "energy_consumption_potential": 63,
-  "co2_emissions_current": 6.5,
-  "co2_emissions_current_per_floor_area": 9,
-  "co2_emissions_potential": 6.5,
-  "lighting_cost_current": 154,
-  "lighting_cost_potential": 154,
-  "heating_cost_current": 2132,
-  "heating_cost_potential": 2132,
-  "hot_water_cost_current": 105,
-  "hot_water_cost_potential": 105,
-  "energy_rating_average": 60,
+  "transaction_type": 6,
+  "conservatory_type": 1,
+  "registration_date": "2013-02-06",
+  "restricted_access": 0,
+  "sap_energy_source": {
+    "pv_arrays": [
+      {
+        "pitch": 3,
+        "peak_power": 3.6,
+        "orientation": 5,
+        "overshading": 1
+      }
+    ],
+    "electricity_tariff": 1,
+    "wind_turbines_count": 0,
+    "wind_turbine_terrain_type": 3,
+    "fixed_lighting_outlets_count": 40,
+    "low_energy_fixed_lighting_outlets_count": 40,
+    "low_energy_fixed_lighting_outlets_percentage": 100
+  },
+  "sap_opening_types": [
+    {
+      "name": 1,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D7",
+      "glazing_type": 6
+    },
+    {
+      "name": 2,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D12",
+      "glazing_type": 6
+    },
+    {
+      "name": 3,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W27",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 4,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W28A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 5,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W29A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 6,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W30",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 7,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W31",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 8,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W32",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 9,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W25",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 10,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W26",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 11,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D3",
+      "glazing_type": 6
+    },
+    {
+      "name": 12,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D11",
+      "glazing_type": 6
+    },
+    {
+      "name": 13,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W34",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 14,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W33",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 15,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W20",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 16,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W21",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 17,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W35",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 18,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W36",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 19,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W37",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 20,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W22",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 21,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W23",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 22,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W24",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 23,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W24A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 24,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W38",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 25,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W39",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 26,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W40",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 27,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W41",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 28,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W42",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 29,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W1A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 30,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W2A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 31,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W1B",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 32,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W2B",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 33,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W18",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 34,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W19",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 35,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D4",
+      "glazing_type": 6
+    },
+    {
+      "name": 36,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D6",
+      "glazing_type": 6
+    },
+    {
+      "name": 37,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D5",
+      "glazing_type": 6
+    },
+    {
+      "name": 38,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D9",
+      "glazing_type": 6
+    },
+    {
+      "name": 39,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D10",
+      "glazing_type": 6
+    },
+    {
+      "name": 40,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W17",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 41,
+      "type": 5,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W14",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 42,
+      "type": 5,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W16",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 43,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D1",
+      "glazing_type": 6
+    },
+    {
+      "name": 44,
+      "type": 2,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D2",
+      "glazing_type": 6
+    },
+    {
+      "name": 45,
+      "type": 1,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "D8",
+      "glazing_type": 1
+    },
+    {
+      "name": 46,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W9",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 47,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W29",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 48,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W28",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 49,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W13",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 50,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W9A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 51,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W15",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 52,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WF",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 53,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WG",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 54,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WH",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 55,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WI",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 56,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WJ",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 57,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W30A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 58,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W31A",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 59,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WLL",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 60,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WMM",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 61,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WAA",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 62,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WBB",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 63,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WCC",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 64,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WDD",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 65,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WO",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 66,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WP",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 67,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WQ",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 68,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W1",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 69,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W10",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 70,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W2",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 71,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W3",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 72,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W4",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 73,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W5",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 74,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W6",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 75,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W7",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 76,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W11",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 77,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "W12",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 78,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WA",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 79,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WB",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 80,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WC",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 81,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WD",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 82,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WE",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 83,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WK",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 84,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WL",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 85,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WM",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 86,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WN",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 87,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WFF",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 88,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WGG",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 89,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WHH",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 90,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WII",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 91,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WJJ",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 92,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WKK",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 93,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WR",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 94,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WS",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 95,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WT",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 96,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WU",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 97,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WV",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 98,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WW",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 99,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WX",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 100,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WY",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 101,
+      "type": 4,
+      "u_value": 1.4,
+      "data_source": 2,
+      "description": "WZ",
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
+    }
+  ],
+  "secondary_heating": {
+    "description": "Room heaters, wood logs",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
   "lzc_energy_sources": [
     4,
     7,
     10,
     11
   ],
-  "data_type": 2,
-  "schema_version": "LIG-16.0",
-  "built_form": 1,
-  "living_area": 44.4,
-  "orientation": 0,
-  "conservatory_type": 1,
-  "is_in_smoke_control_area": "unknown",
-  "sap_heating": {
-    "water_heating_code": 901,
-    "water_fuel_type": 39,
-    "has_hot_water_cylinder": "true",
-    "secondary_heating_category": 10,
-    "secondary_heating_data_source": 3,
-    "secondary_heating_code": 633,
-    "secondary_fuel_type": 20,
-    "has_fixed_air_conditioning": "false",
-    "is_heat_pump_assisted_by_immersion": "false",
-    "is_secondary_heating_hetas_approved": "false",
-    "hot_water_store_size": 300,
-    "hot_water_store_heat_loss_source": 3,
-    "hot_water_store_insulation_type": 1,
-    "hot_water_store_insulation_thickness": 80,
-    "is_primary_pipework_insulated": "true",
-    "has_cylinder_thermostat": "true",
-    "is_cylinder_in_heated_space": "true",
-    "is_hot_water_separately_timed": "true",
-    "has_solar_panel": "true",
-    "solar_panel_aperture_area": 5.26,
-    "solar_panel_collector_type": 3,
-    "solar_panel_collector_data_source": 2,
-    "solar_panel_collector_zero_loss_efficiency": 60,
-    "solar_panel_collector_heat_loss_rate": 3,
-    "solar_panel_collector_pitch": 3,
-    "solar_panel_collector_orientation": 3,
-    "solar_panel_collector_overshading": 1,
-    "has_solar_powered_pump": "false",
-    "is_solar_store_combined_cylinder": "true",
-    "solar_store_volume": 100,
-    "main_heating_details": [
-      {
-        "main_heating_number": 1,
-        "main_heating_category": 4,
-        "main_heating_data_source": 3,
-        "main_heating_code": 201,
-        "main_fuel_type": 39,
-        "main_heating_control": 2207,
-        "heat_emitter_type": 2,
-        "underfloor_heat_emitter_type": 2,
-        "is_central_heating_pump_in_heated_space": "true",
-        "has_delayed_start_thermostat": "false",
-        "is_main_heating_hetas_approved": "false",
-        "load_or_weather_compensation": 0,
-        "main_heating_fraction": 1
-      }
-    ]
-  },
-  "sap_energy_source": {
-    "pv_arrays": [
-      {
-        "peak_power": 3.6,
-        "orientation": 5,
-        "pitch": 3,
-        "overshading": 1
-      }
-    ],
-    "wind_turbines_count": 0,
-    "wind_turbine_terrain_type": 3,
-    "fixed_lighting_outlets_count": 40,
-    "low_energy_fixed_lighting_outlets_count": 40,
-    "low_energy_fixed_lighting_outlets_percentage": 100,
-    "electricity_tariff": 1
-  },
   "sap_building_parts": [
     {
-      "building_part_number": 1,
+      "sap_roofs": [
+        {
+          "name": "Roof 1",
+          "u_value": 0.129,
+          "roof_type": 2,
+          "description": "Roof 1 ZINC FLAT",
+          "total_roof_area": 145
+        },
+        {
+          "name": "Roof 2",
+          "u_value": 0.139,
+          "roof_type": 2,
+          "description": "Roof 2 THATCH ROOF",
+          "total_roof_area": 93.03
+        },
+        {
+          "name": "Roof 3",
+          "u_value": 0.19,
+          "roof_type": 2,
+          "description": "Roof 3 DORMER",
+          "total_roof_area": 4.8
+        },
+        {
+          "name": "Roof 4",
+          "u_value": 0.151,
+          "roof_type": 2,
+          "description": "Roof 4 SLATE",
+          "total_roof_area": 157.54
+        }
+      ],
+      "sap_walls": [
+        {
+          "name": "Wall 1",
+          "u_value": 0.166,
+          "wall_type": 2,
+          "description": "Wall 1 BRICK & FLINT",
+          "total_wall_area": 407.31,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Wall 2",
+          "u_value": 0.168,
+          "wall_type": 1,
+          "description": "Wall 2 CONCRETE",
+          "total_wall_area": 122.42,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Wall 3",
+          "u_value": 0.181,
+          "wall_type": 2,
+          "description": "Wall 3 INT WALL",
+          "total_wall_area": 17.33,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Wall 4",
+          "u_value": 0.158,
+          "wall_type": 2,
+          "description": "Wall 4 TF",
+          "total_wall_area": 236.58,
+          "is_curtain_walling": "false"
+        }
+      ],
       "identifier": "Main Dwelling",
-      "construction_year": 2010,
       "overshading": 1,
       "sap_openings": [
         {
           "name": 1,
           "type": 1,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 0.91,
-          "height": 2.1
+          "height": 2.1,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 2,
           "type": 2,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 0.91,
-          "height": 2.1
+          "height": 2.1,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 3,
           "type": 3,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 3.99,
-          "height": 0.78
+          "height": 0.78,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 4,
           "type": 4,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 3.33,
-          "height": 0.97
+          "height": 0.97,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 5,
           "type": 5,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 3.17,
-          "height": 0.97
+          "height": 0.97,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 6,
           "type": 6,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 1.28,
-          "height": 0.97
+          "height": 0.97,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 7,
           "type": 7,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 2.31,
-          "height": 0.97
+          "height": 0.97,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 8,
           "type": 8,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 2.31,
-          "height": 0.97
+          "height": 0.97,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 9,
           "type": 9,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 5.86,
-          "height": 1.36
+          "height": 1.36,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 10,
           "type": 10,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 3.95,
-          "height": 1.36
+          "height": 1.36,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 11,
           "type": 11,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 1.68,
-          "height": 2.75
+          "height": 2.75,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 12,
           "type": 12,
-          "location": "Wall 4",
-          "orientation": 0,
           "width": 1.99,
-          "height": 2.2
+          "height": 2.2,
+          "location": "Wall 4",
+          "orientation": 0
         },
         {
           "name": 13,
           "type": 13,
-          "location": "Wall 1",
-          "orientation": 8,
           "width": 1.24,
-          "height": 0.95
+          "height": 0.95,
+          "location": "Wall 1",
+          "orientation": 8
         },
         {
           "name": 14,
           "type": 14,
-          "location": "Wall 1",
-          "orientation": 2,
           "width": 1.99,
-          "height": 0.95
+          "height": 0.95,
+          "location": "Wall 1",
+          "orientation": 2
         },
         {
           "name": 15,
           "type": 15,
-          "location": "Wall 4",
-          "orientation": 2,
           "width": 2.92,
-          "height": 2.09
+          "height": 2.09,
+          "location": "Wall 4",
+          "orientation": 2
         },
         {
           "name": 16,
           "type": 16,
-          "location": "Wall 4",
-          "orientation": 4,
           "width": 1.38,
-          "height": 2.09
+          "height": 2.09,
+          "location": "Wall 4",
+          "orientation": 4
         },
         {
           "name": 17,
           "type": 17,
-          "location": "Wall 4",
-          "orientation": 1,
           "width": 1.36,
-          "height": 2.4
+          "height": 2.4,
+          "location": "Wall 4",
+          "orientation": 1
         },
         {
           "name": 18,
           "type": 18,
-          "location": "Wall 4",
-          "orientation": 3,
           "width": 2.09,
-          "height": 2.4
+          "height": 2.4,
+          "location": "Wall 4",
+          "orientation": 3
         },
         {
           "name": 19,
           "type": 19,
-          "location": "Wall 4",
-          "orientation": 3,
           "width": 1.88,
-          "height": 2.4
+          "height": 2.4,
+          "location": "Wall 4",
+          "orientation": 3
         },
         {
           "name": 20,
           "type": 20,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.68,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 21,
           "type": 21,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.68,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 22,
           "type": 22,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.68,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 23,
           "type": 23,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.68,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 24,
           "type": 24,
-          "location": "Wall 1",
-          "orientation": 5,
           "width": 0.54,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 1",
+          "orientation": 5
         },
         {
           "name": 25,
           "type": 25,
-          "location": "Wall 1",
-          "orientation": 5,
           "width": 0.54,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 1",
+          "orientation": 5
         },
         {
           "name": 26,
           "type": 26,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.54,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 27,
           "type": 27,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.54,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 28,
           "type": 28,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.54,
-          "height": 0.99
+          "height": 0.99,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 29,
           "type": 29,
-          "location": "Wall 4",
-          "orientation": 3,
           "width": 1.45,
-          "height": 1.42
+          "height": 1.42,
+          "location": "Wall 4",
+          "orientation": 3
         },
         {
           "name": 30,
           "type": 30,
-          "location": "Wall 4",
-          "orientation": 3,
           "width": 1.68,
-          "height": 1.42
+          "height": 1.42,
+          "location": "Wall 4",
+          "orientation": 3
         },
         {
           "name": 31,
           "type": 31,
-          "location": "Wall 4",
-          "orientation": 5,
           "width": 1.45,
-          "height": 1.42
+          "height": 1.42,
+          "location": "Wall 4",
+          "orientation": 5
         },
         {
           "name": 32,
           "type": 32,
-          "location": "Wall 4",
-          "orientation": 1,
           "width": 1.68,
-          "height": 1.42
+          "height": 1.42,
+          "location": "Wall 4",
+          "orientation": 1
         },
         {
           "name": 33,
           "type": 33,
-          "location": "Wall 4",
-          "orientation": 2,
           "width": 1.35,
-          "height": 2.09
+          "height": 2.09,
+          "location": "Wall 4",
+          "orientation": 2
         },
         {
           "name": 34,
           "type": 34,
-          "location": "Wall 4",
-          "orientation": 2,
           "width": 1.35,
-          "height": 2.09
+          "height": 2.09,
+          "location": "Wall 4",
+          "orientation": 2
         },
         {
           "name": 35,
           "type": 35,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 3.84,
-          "height": 2.8
+          "height": 2.8,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 36,
           "type": 36,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 4.74,
-          "height": 2.8
+          "height": 2.8,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 37,
           "type": 37,
-          "location": "Wall 4",
-          "orientation": 0,
           "width": 2.81,
-          "height": 2.8
+          "height": 2.8,
+          "location": "Wall 4",
+          "orientation": 0
         },
         {
           "name": 38,
           "type": 38,
-          "location": "Wall 4",
-          "orientation": 0,
           "width": 6.45,
-          "height": 2.4
+          "height": 2.4,
+          "location": "Wall 4",
+          "orientation": 0
         },
         {
           "name": 39,
           "type": 39,
-          "location": "Wall 4",
-          "orientation": 0,
           "width": 3.84,
-          "height": 2.4
+          "height": 2.4,
+          "location": "Wall 4",
+          "orientation": 0
         },
         {
           "name": 40,
           "type": 40,
-          "location": "Wall 1",
-          "orientation": 2,
           "width": 1.4,
-          "height": 2.76
+          "height": 2.76,
+          "location": "Wall 1",
+          "orientation": 2
         },
         {
           "name": 41,
           "type": 41,
-          "location": "Roof 2",
-          "orientation": 8,
           "width": 0.6,
-          "height": 0.89
+          "height": 0.89,
+          "location": "Roof 2",
+          "orientation": 8
         },
         {
           "name": 42,
           "type": 42,
-          "location": "Roof 2",
-          "orientation": 4,
           "width": 7.25,
-          "height": 0.89
+          "height": 0.89,
+          "location": "Roof 2",
+          "orientation": 4
         },
         {
           "name": 43,
           "type": 43,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 1.81,
-          "height": 2.1
+          "height": 2.1,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 44,
           "type": 44,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 2.49,
-          "height": 2.1
+          "height": 2.1,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 45,
           "type": 45,
-          "location": "Wall 1",
-          "orientation": 0,
           "width": 3.08,
-          "height": 2.62
+          "height": 2.62,
+          "location": "Wall 1",
+          "orientation": 0
         },
         {
           "name": 46,
           "type": 46,
-          "location": "Wall 1",
-          "orientation": 2,
           "width": 1.68,
-          "height": 1.36
+          "height": 1.36,
+          "location": "Wall 1",
+          "orientation": 2
         },
         {
           "name": 47,
           "type": 47,
-          "location": "Wall 4",
-          "orientation": 3,
           "width": 1.18,
-          "height": 2.44
+          "height": 2.44,
+          "location": "Wall 4",
+          "orientation": 3
         },
         {
           "name": 48,
           "type": 48,
-          "location": "Wall 4",
-          "orientation": 3,
           "width": 1.18,
-          "height": 1.23
+          "height": 1.23,
+          "location": "Wall 4",
+          "orientation": 3
         },
         {
           "name": 49,
           "type": 49,
-          "location": "Wall 1",
-          "orientation": 2,
           "width": 4.27,
-          "height": 2.85
+          "height": 2.85,
+          "location": "Wall 1",
+          "orientation": 2
         },
         {
           "name": 50,
           "type": 50,
-          "location": "Wall 1",
-          "orientation": 2,
           "width": 1.68,
-          "height": 4.15
+          "height": 4.15,
+          "location": "Wall 1",
+          "orientation": 2
         },
         {
           "name": 51,
           "type": 51,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 1.74,
-          "height": 2.62
+          "height": 2.62,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 52,
           "type": 52,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 2.36,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 53,
           "type": 53,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 1.5,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 54,
           "type": 54,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.7,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 55,
           "type": 55,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.92,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 56,
           "type": 56,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.9,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 57,
           "type": 57,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.18,
-          "height": 2.98
+          "height": 2.98,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 58,
           "type": 58,
-          "location": "Wall 1",
-          "orientation": 3,
           "width": 1.18,
-          "height": 2.98
+          "height": 2.98,
+          "location": "Wall 1",
+          "orientation": 3
         },
         {
           "name": 59,
           "type": 59,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 0.62,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 60,
           "type": 60,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.69,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 61,
           "type": 61,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 2.38,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 62,
           "type": 62,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.13,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 63,
           "type": 63,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.73,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 64,
           "type": 64,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.94,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 65,
           "type": 65,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.39,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 66,
           "type": 66,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.59,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 67,
           "type": 67,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.65,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 68,
           "type": 68,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.46,
-          "height": 0.54
+          "height": 0.54,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 69,
           "type": 69,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.46,
-          "height": 0.54
+          "height": 0.54,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 70,
           "type": 70,
-          "location": "Wall 1",
-          "orientation": 8,
           "width": 1.14,
-          "height": 1.06
+          "height": 1.06,
+          "location": "Wall 1",
+          "orientation": 8
         },
         {
           "name": 71,
           "type": 71,
-          "location": "Wall 1",
-          "orientation": 8,
           "width": 1.14,
-          "height": 1.06
+          "height": 1.06,
+          "location": "Wall 1",
+          "orientation": 8
         },
         {
           "name": 72,
           "type": 72,
-          "location": "Wall 1",
-          "orientation": 8,
           "width": 1.14,
-          "height": 1.06
+          "height": 1.06,
+          "location": "Wall 1",
+          "orientation": 8
         },
         {
           "name": 73,
           "type": 73,
-          "location": "Wall 1",
-          "orientation": 8,
           "width": 1.14,
-          "height": 1.06
+          "height": 1.06,
+          "location": "Wall 1",
+          "orientation": 8
         },
         {
           "name": 74,
           "type": 74,
-          "location": "Wall 1",
-          "orientation": 4,
           "width": 1.14,
-          "height": 1.06
+          "height": 1.06,
+          "location": "Wall 1",
+          "orientation": 4
         },
         {
           "name": 75,
           "type": 75,
-          "location": "Wall 1",
-          "orientation": 4,
           "width": 1.14,
-          "height": 1.06
+          "height": 1.06,
+          "location": "Wall 1",
+          "orientation": 4
         },
         {
           "name": 76,
           "type": 76,
-          "location": "Wall 4",
-          "orientation": 8,
           "width": 2,
-          "height": 1.09
+          "height": 1.09,
+          "location": "Wall 4",
+          "orientation": 8
         },
         {
           "name": 77,
           "type": 77,
-          "location": "Wall 4",
-          "orientation": 8,
           "width": 2,
-          "height": 1.09
+          "height": 1.09,
+          "location": "Wall 4",
+          "orientation": 8
         },
         {
           "name": 78,
           "type": 78,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.76,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 79,
           "type": 79,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.76,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 80,
           "type": 80,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 0.76,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 81,
           "type": 81,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 2.57,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 82,
           "type": 82,
-          "location": "Wall 4",
-          "orientation": 6,
           "width": 2.57,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 6
         },
         {
           "name": 83,
           "type": 83,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.88,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 84,
           "type": 84,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.88,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 85,
           "type": 85,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.88,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 86,
           "type": 86,
-          "location": "Wall 1",
-          "orientation": 6,
           "width": 0.88,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 6
         },
         {
           "name": 87,
           "type": 87,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.28,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 88,
           "type": 88,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.28,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 89,
           "type": 89,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.28,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 90,
           "type": 90,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.35,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 91,
           "type": 91,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.35,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 92,
           "type": 92,
-          "location": "Wall 4",
-          "orientation": 7,
           "width": 1.35,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 4",
+          "orientation": 7
         },
         {
           "name": 93,
           "type": 93,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.55,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 94,
           "type": 94,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.55,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 95,
           "type": 95,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.55,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 96,
           "type": 96,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.55,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 97,
           "type": 97,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.55,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 98,
           "type": 98,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.92,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 99,
           "type": 99,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 0.92,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 100,
           "type": 100,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.23,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         },
         {
           "name": 101,
           "type": 101,
-          "location": "Wall 1",
-          "orientation": 7,
           "width": 1.23,
-          "height": 0.38
+          "height": 0.38,
+          "location": "Wall 1",
+          "orientation": 7
         }
       ],
-      "sap_roofs": [
-        {
-          "name": "Roof 1",
-          "description": "Roof 1 ZINC FLAT",
-          "roof_type": 2,
-          "total_roof_area": 145,
-          "u_value": 0.129
-        },
-        {
-          "name": "Roof 2",
-          "description": "Roof 2 THATCH ROOF",
-          "roof_type": 2,
-          "total_roof_area": 93.03,
-          "u_value": 0.139
-        },
-        {
-          "name": "Roof 3",
-          "description": "Roof 3 DORMER",
-          "roof_type": 2,
-          "total_roof_area": 4.8,
-          "u_value": 0.19
-        },
-        {
-          "name": "Roof 4",
-          "description": "Roof 4 SLATE",
-          "roof_type": 2,
-          "total_roof_area": 157.54,
-          "u_value": 0.151
-        }
-      ],
-      "sap_floor_dimensions": [
-        {
-          "storey": 0,
-          "description": "Floor 1",
-          "floor_type": 1,
-          "total_floor_area": 127.88,
-          "storey_height": 2.65,
-          "heat_loss_area": 341.2,
-          "u_value": 0.13
-        },
-        {
-          "storey": 1,
-          "floor_type": 3,
-          "total_floor_area": 213.32,
-          "storey_height": 2.88,
-          "heat_loss_area": 0,
-          "u_value": 0
-        },
-        {
-          "storey": 2,
-          "floor_type": 3,
-          "total_floor_area": 347.69,
-          "storey_height": 3.07,
-          "heat_loss_area": 0,
-          "u_value": 0
-        },
-        {
-          "storey": 3,
-          "floor_type": 3,
-          "total_floor_area": 20.45,
-          "storey_height": 2.3,
-          "heat_loss_area": 0,
-          "u_value": 0
-        }
-      ],
+      "construction_year": 2010,
       "sap_thermal_bridges": {
         "thermal_bridge_code": 1
       },
-      "sap_walls": [
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
         {
-          "name": "Wall 1",
-          "description": "Wall 1 BRICK & FLINT",
-          "wall_type": 2,
-          "total_wall_area": 407.31,
-          "u_value": 0.166,
-          "is_curtain_walling": "false"
+          "storey": 0,
+          "u_value": 0.13,
+          "floor_type": 1,
+          "description": "Floor 1",
+          "storey_height": 2.65,
+          "heat_loss_area": 341.2,
+          "total_floor_area": 127.88
         },
         {
-          "name": "Wall 2",
-          "description": "Wall 2 CONCRETE",
-          "wall_type": 1,
-          "total_wall_area": 122.42,
-          "u_value": 0.168,
-          "is_curtain_walling": "false"
+          "storey": 1,
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 2.88,
+          "heat_loss_area": 0,
+          "total_floor_area": 213.32
         },
         {
-          "name": "Wall 3",
-          "description": "Wall 3 INT WALL",
-          "wall_type": 2,
-          "total_wall_area": 17.33,
-          "u_value": 0.181,
-          "is_curtain_walling": "false"
+          "storey": 2,
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 3.07,
+          "heat_loss_area": 0,
+          "total_floor_area": 347.69
         },
         {
-          "name": "Wall 4",
-          "description": "Wall 4 TF",
-          "wall_type": 2,
-          "total_wall_area": 236.58,
-          "u_value": 0.158,
-          "is_curtain_walling": "false"
+          "storey": 3,
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 2.3,
+          "heat_loss_area": 0,
+          "total_floor_area": 20.45
         }
       ],
       "thermal_mass_parameter": 250
     }
   ],
-  "sap_opening_types": [
-    {
-      "name": 1,
-      "description": "D7",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 2,
-      "description": "D12",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 3,
-      "description": "W27",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 4,
-      "description": "W28A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 5,
-      "description": "W29A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 6,
-      "description": "W30",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 7,
-      "description": "W31",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 8,
-      "description": "W32",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 9,
-      "description": "W25",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 10,
-      "description": "W26",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 11,
-      "description": "D3",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 12,
-      "description": "D11",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 13,
-      "description": "W34",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 14,
-      "description": "W33",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 15,
-      "description": "W20",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 16,
-      "description": "W21",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 17,
-      "description": "W35",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 18,
-      "description": "W36",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 19,
-      "description": "W37",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 20,
-      "description": "W22",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 21,
-      "description": "W23",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 22,
-      "description": "W24",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 23,
-      "description": "W24A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 24,
-      "description": "W38",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 25,
-      "description": "W39",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 26,
-      "description": "W40",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 27,
-      "description": "W41",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 28,
-      "description": "W42",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 29,
-      "description": "W1A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 30,
-      "description": "W2A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 31,
-      "description": "W1B",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 32,
-      "description": "W2B",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 33,
-      "description": "W18",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 34,
-      "description": "W19",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 35,
-      "description": "D4",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 36,
-      "description": "D6",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 37,
-      "description": "D5",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 38,
-      "description": "D9",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 39,
-      "description": "D10",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 40,
-      "description": "W17",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 41,
-      "description": "W14",
-      "data_source": 2,
-      "type": 5,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 42,
-      "description": "W16",
-      "data_source": 2,
-      "type": 5,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 43,
-      "description": "D1",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 44,
-      "description": "D2",
-      "data_source": 2,
-      "type": 2,
-      "glazing_type": 6,
-      "u_value": 1.4
-    },
-    {
-      "name": 45,
-      "description": "D8",
-      "data_source": 2,
-      "type": 1,
-      "glazing_type": 1,
-      "u_value": 1.4
-    },
-    {
-      "name": 46,
-      "description": "W9",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 47,
-      "description": "W29",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 48,
-      "description": "W28",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 49,
-      "description": "W13",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 50,
-      "description": "W9A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 51,
-      "description": "W15",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 52,
-      "description": "WF",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 53,
-      "description": "WG",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 54,
-      "description": "WH",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 55,
-      "description": "WI",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 56,
-      "description": "WJ",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 57,
-      "description": "W30A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 58,
-      "description": "W31A",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 59,
-      "description": "WLL",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 60,
-      "description": "WMM",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 61,
-      "description": "WAA",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 62,
-      "description": "WBB",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 63,
-      "description": "WCC",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 64,
-      "description": "WDD",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 65,
-      "description": "WO",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 66,
-      "description": "WP",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 67,
-      "description": "WQ",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 68,
-      "description": "W1",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 69,
-      "description": "W10",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 70,
-      "description": "W2",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 71,
-      "description": "W3",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 72,
-      "description": "W4",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 73,
-      "description": "W5",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 74,
-      "description": "W6",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 75,
-      "description": "W7",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 76,
-      "description": "W11",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 77,
-      "description": "W12",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 78,
-      "description": "WA",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 79,
-      "description": "WB",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 80,
-      "description": "WC",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 81,
-      "description": "WD",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 82,
-      "description": "WE",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 83,
-      "description": "WK",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 84,
-      "description": "WL",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 85,
-      "description": "WM",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 86,
-      "description": "WN",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 87,
-      "description": "WFF",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 88,
-      "description": "WGG",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 89,
-      "description": "WHH",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 90,
-      "description": "WII",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 91,
-      "description": "WJJ",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 92,
-      "description": "WKK",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 93,
-      "description": "WR",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 94,
-      "description": "WS",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 95,
-      "description": "WT",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 96,
-      "description": "WU",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 97,
-      "description": "WV",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 98,
-      "description": "WW",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 99,
-      "description": "WX",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 100,
-      "description": "WY",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
-    },
-    {
-      "name": 101,
-      "description": "WZ",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.4
+  "bedf_revision_number": 333,
+  "heating_cost_current": 2132,
+  "co2_emissions_current": 6.5,
+  "energy_rating_average": 60,
+  "energy_rating_current": 85,
+  "lighting_cost_current": 154,
+  "main_heating_controls": [
+    {
+      "description": "Time and temperature zone control",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
     }
   ],
-  "sap_ventilation": {
-    "open_fireplaces_count": 0,
-    "open_flues_count": 0,
-    "flueless_gas_fires_count": 0,
-    "pressure_test": 1,
-    "air_permeability": 6.373,
-    "sheltered_sides_count": 0,
-    "ventilation_type": 1,
-    "extract_fans_count": 9,
-    "psv_count": 0
+  "has_hot_water_cylinder": "true",
+  "heating_cost_potential": 2132,
+  "hot_water_cost_current": 105,
+  "co2_emissions_potential": 6.5,
+  "energy_rating_potential": 85,
+  "lighting_cost_potential": 154,
+  "hot_water_cost_potential": 105,
+  "is_in_smoke_control_area": "unknown",
+  "renewable_heat_incentive": {
+    "rhi_new_dwelling": {
+      "space_heating": 41938,
+      "water_heating": 2876
+    }
   },
-  "assessment_type": "SAP",
-  "schema_type": "SAP-Schema-16.2",
-  "building_reference_number": 1245
+  "seller_commission_report": "Y",
+  "building_reference_number": 12457,
+  "calculation_software_name": "NHER Plan Assessor",
+  "energy_consumption_current": 63,
+  "has_fixed_air_conditioning": "false",
+  "calculation_software_version": 5.4,
+  "energy_consumption_potential": 63,
+  "environmental_impact_current": 88,
+  "environmental_impact_potential": 88,
+  "has_heated_separate_conservatory": "false",
+  "co2_emissions_current_per_floor_area": 9
 }

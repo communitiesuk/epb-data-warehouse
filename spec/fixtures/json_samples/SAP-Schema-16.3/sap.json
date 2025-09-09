@@ -1,33 +1,14 @@
 {
-  "sap_version": 9.9,
-  "bedf_revision_number": 333,
-  "calculation_software_version": 3.59,
-  "inspection_date": "2014-04-04",
-  "report_type": 3,
-  "completion_date": "2014-04-04",
-  "registration_date": "2014-04-05",
-  "status": "entered",
-  "language_code": 1,
-  "restricted_access": 0,
-  "transaction_type": 6,
-  "seller_commission_report": "N",
-  "property_type": 0,
-  "address_line_1": "17, Street Terrace",
-  "post_town": "Town",
-  "postcode": "AA1 1AA",
-  "region_code": 3,
-  "country_code": "EAW",
-  "assessment_date": "2014-04-04",
-  "walls": [
+  "roofs": [
     {
-      "description": "Average thermal transmittance 0.28 W/m²K",
+      "description": "Average thermal transmittance 0.12 W/m²K",
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
   ],
-  "roofs": [
+  "walls": [
     {
-      "description": "Average thermal transmittance 0.12 W/m²K",
+      "description": "Average thermal transmittance 0.28 W/m²K",
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
@@ -39,11 +20,68 @@
       "environmental_efficiency_rating": 5
     }
   ],
+  "status": "entered",
   "windows": {
     "description": "High performance glazing",
     "energy_efficiency_rating": 5,
     "environmental_efficiency_rating": 5
   },
+  "lighting": {
+    "description": "Low energy lighting in all fixed outlets",
+    "energy_efficiency_rating": 5,
+    "environmental_efficiency_rating": 5
+  },
+  "postcode": "AA1 1AA",
+  "data_type": 2,
+  "hot_water": {
+    "description": "From main system",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "post_town": "Town",
+  "built_form": 4,
+  "living_area": 20.15,
+  "orientation": 7,
+  "region_code": 3,
+  "report_type": 3,
+  "sap_heating": {
+    "thermal_store": 1,
+    "has_solar_panel": "false",
+    "water_fuel_type": 1,
+    "water_heating_code": 901,
+    "hot_water_store_size": 180,
+    "main_heating_details": [
+      {
+        "burner_control": 3,
+        "main_fuel_type": 1,
+        "heat_emitter_type": 1,
+        "boiler_index_number": 16179,
+        "is_flue_fan_present": "true",
+        "main_heating_number": 1,
+        "main_heating_control": 2110,
+        "is_interlocked_system": "true",
+        "main_heating_category": 2,
+        "main_heating_fraction": 1,
+        "main_heating_flue_type": 2,
+        "main_heating_data_source": 1,
+        "has_delayed_start_thermostat": "true",
+        "load_or_weather_compensation": 2,
+        "is_central_heating_pump_in_heated_space": "true"
+      }
+    ],
+    "has_hot_water_cylinder": "true",
+    "has_cylinder_thermostat": "true",
+    "hot_water_store_heat_loss": 1.63,
+    "has_fixed_air_conditioning": "false",
+    "secondary_heating_category": 1,
+    "is_cylinder_in_heated_space": "true",
+    "is_hot_water_separately_timed": "true",
+    "is_primary_pipework_insulated": "true",
+    "hot_water_store_heat_loss_source": 2
+  },
+  "sap_version": 9.9,
+  "schema_type": "SAP-Schema-16.3",
+  "country_code": "EAW",
   "main_heating": [
     {
       "description": "Boiler and radiators, mains gas",
@@ -51,11 +89,68 @@
       "environmental_efficiency_rating": 4
     }
   ],
-  "main_heating_controls": [
+  "air_tightness": {
+    "description": "Air permeability 3.9 m³/h.m² (assumed)",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "dwelling_type": "Mid-terrace house",
+  "language_code": 1,
+  "property_type": 0,
+  "address_line_1": "17, Street Terrace",
+  "schema_version": "LIG-16.0",
+  "assessment_date": "2014-04-04",
+  "assessment_type": "SAP",
+  "completion_date": "2014-04-04",
+  "inspection_date": "2014-04-04",
+  "sap_ventilation": {
+    "psv_count": 0,
+    "pressure_test": 1,
+    "air_permeability": 3.89,
+    "open_flues_count": 0,
+    "ventilation_type": 1,
+    "extract_fans_count": 3,
+    "open_fireplaces_count": 0,
+    "sheltered_sides_count": 2,
+    "flueless_gas_fires_count": 0
+  },
+  "design_water_use": 1,
+  "total_floor_area": 96,
+  "transaction_type": 6,
+  "conservatory_type": 1,
+  "registration_date": "2014-04-05",
+  "restricted_access": 0,
+  "sap_energy_source": {
+    "electricity_tariff": 1,
+    "wind_turbines_count": 0,
+    "wind_turbine_terrain_type": 1,
+    "fixed_lighting_outlets_count": 16,
+    "low_energy_fixed_lighting_outlets_count": 16,
+    "low_energy_fixed_lighting_outlets_percentage": 100
+  },
+  "sap_opening_types": [
     {
-      "description": "Time and temperature zone control",
-      "energy_efficiency_rating": 5,
-      "environmental_efficiency_rating": 5
+      "name": "Doors (1)",
+      "type": 1,
+      "u_value": 1.4,
+      "data_source": 3,
+      "glazing_type": 1
+    },
+    {
+      "name": "Doors (2)",
+      "type": 1,
+      "u_value": 1.5,
+      "data_source": 2,
+      "glazing_type": 1
+    },
+    {
+      "name": "Windows (1)",
+      "type": 4,
+      "u_value": 1.5,
+      "data_source": 2,
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     }
   ],
   "secondary_heating": {
@@ -63,391 +158,297 @@
     "energy_efficiency_rating": 0,
     "environmental_efficiency_rating": 0
   },
-  "hot_water": {
-    "description": "From main system",
-    "energy_efficiency_rating": 4,
-    "environmental_efficiency_rating": 4
-  },
-  "lighting": {
-    "description": "Low energy lighting in all fixed outlets",
-    "energy_efficiency_rating": 5,
-    "environmental_efficiency_rating": 5
-  },
-  "air_tightness": {
-    "description": "Air permeability 3.9 m³/h.m² (assumed)",
-    "energy_efficiency_rating": 4,
-    "environmental_efficiency_rating": 4
-  },
-  "has_fixed_air_conditioning": "false",
-  "has_hot_water_cylinder": "true",
-  "has_heated_separate_conservatory": "false",
-  "dwelling_type": "Mid-terrace house",
-  "total_floor_area": 96,
-  "energy_rating_current": 83,
-  "energy_rating_potential": 83,
-  "environmental_impact_current": 85,
-  "energy_rating_average": 60,
-  "environmental_impact_potential": 85,
-  "energy_consumption_current": 85,
-  "energy_consumption_potential": 85,
-  "co2_emissions_current": 1.5,
-  "co2_emissions_potential": 1.5,
-  "co2_emissions_current_per_floor_area": 16,
-  "lighting_cost_current": 64,
-  "lighting_cost_potential": 64,
+  "lzc_energy_sources": [
+    9
+  ],
+  "sap_building_parts": [
+    {
+      "sap_roofs": [
+        {
+          "name": "Roof (1)",
+          "u_value": 0.11,
+          "roof_type": 2,
+          "description": "Pitched roof insulation at ceiling level",
+          "kappa_value": 8.75,
+          "total_roof_area": 41.96
+        },
+        {
+          "name": "Roof (2)",
+          "u_value": 0.2,
+          "roof_type": 2,
+          "description": "Flat roof - internal insulation",
+          "kappa_value": 8.75,
+          "total_roof_area": 4.69
+        }
+      ],
+      "sap_walls": [
+        {
+          "name": "Walls (1)",
+          "u_value": 0.29,
+          "wall_type": 2,
+          "description": "Masonry cavity wall",
+          "kappa_value": 46.25,
+          "total_wall_area": 26.5,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Walls (2)",
+          "u_value": 0.28,
+          "wall_type": 2,
+          "description": "Timber frame wall",
+          "kappa_value": 8.75,
+          "total_wall_area": 48,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Walls (3)",
+          "u_value": 0.22,
+          "wall_type": 3,
+          "description": "Insulated wall to garage",
+          "kappa_value": 8.75,
+          "total_wall_area": 7.29,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Party wall (1)",
+          "u_value": 0,
+          "wall_type": 4,
+          "kappa_value": 17.5,
+          "total_wall_area": 48.6
+        }
+      ],
+      "identifier": "Main Dwelling",
+      "overshading": 2,
+      "sap_openings": [
+        {
+          "name": 1,
+          "type": "Doors (2)",
+          "width": 2.69,
+          "height": 2.1,
+          "location": "Walls (2)",
+          "orientation": 7
+        },
+        {
+          "name": 2,
+          "type": "Windows (1)",
+          "width": 0.46,
+          "height": 1.88,
+          "location": "Walls (2)",
+          "orientation": 7
+        },
+        {
+          "name": 3,
+          "type": "Windows (1)",
+          "width": 0.67,
+          "height": 0.9,
+          "location": "Walls (2)",
+          "orientation": 3
+        },
+        {
+          "name": 4,
+          "type": "Windows (1)",
+          "width": 0.46,
+          "height": 1.88,
+          "location": "Walls (2)",
+          "orientation": 7
+        },
+        {
+          "name": 5,
+          "type": "Windows (1)",
+          "width": 1.45,
+          "height": 1.35,
+          "location": "Walls (2)",
+          "orientation": 3
+        },
+        {
+          "name": 6,
+          "type": "Windows (1)",
+          "width": 1.45,
+          "height": 1.35,
+          "location": "Walls (2)",
+          "orientation": 3
+        },
+        {
+          "name": 7,
+          "type": "Doors (1)",
+          "width": 1.01,
+          "height": 2,
+          "location": "Walls (3)",
+          "orientation": 0
+        },
+        {
+          "name": 8,
+          "type": "Doors (2)",
+          "width": 1.74,
+          "height": 2.1,
+          "location": "Walls (2)",
+          "orientation": 7
+        },
+        {
+          "name": 9,
+          "type": "Doors (2)",
+          "width": 1.79,
+          "height": 2.1,
+          "location": "Walls (2)",
+          "orientation": 3
+        },
+        {
+          "name": 10,
+          "type": "Doors (1)",
+          "width": 1.01,
+          "height": 2.1,
+          "location": "Walls (1)",
+          "orientation": 0
+        }
+      ],
+      "construction_year": 2013,
+      "sap_thermal_bridges": {
+        "thermal_bridges": [
+          {
+            "length": 9.8,
+            "psi_value": 0.06,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 10
+          },
+          {
+            "length": 4.2,
+            "psi_value": 0.04,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 19
+          },
+          {
+            "length": 2.6,
+            "psi_value": 0.28,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 20
+          },
+          {
+            "length": 6,
+            "psi_value": 0.08,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 22
+          },
+          {
+            "length": 33.6,
+            "psi_value": 0,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 23
+          },
+          {
+            "length": 25.86,
+            "psi_value": 0.05,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 4
+          },
+          {
+            "length": 12.73,
+            "psi_value": 0.3,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 2
+          },
+          {
+            "length": 12.73,
+            "psi_value": 0.04,
+            "psi_value_source": 2,
+            "thermal_bridge_type": 3
+          }
+        ],
+        "thermal_bridge_code": 5
+      },
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "storey": 0,
+          "u_value": 0.16,
+          "floor_type": 2,
+          "kappa_value": 30,
+          "storey_height": 2.4,
+          "heat_loss_area": 11.8,
+          "total_floor_area": 11.72
+        },
+        {
+          "storey": 1,
+          "u_value": 0.17,
+          "floor_type": 3,
+          "kappa_value": 30,
+          "storey_height": 2.4,
+          "heat_loss_area": 24.68,
+          "total_floor_area": 41.95
+        },
+        {
+          "storey": 2,
+          "u_value": 0,
+          "floor_type": 4,
+          "kappa_value": 0,
+          "storey_height": 2.4,
+          "heat_loss_area": 0,
+          "total_floor_area": 41.95
+        }
+      ]
+    }
+  ],
+  "bedf_revision_number": 333,
   "heating_cost_current": 260,
+  "co2_emissions_current": 1.5,
+  "energy_rating_average": 60,
+  "energy_rating_current": 83,
+  "lighting_cost_current": 64,
+  "main_heating_controls": [
+    {
+      "description": "Time and temperature zone control",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
+    }
+  ],
+  "has_hot_water_cylinder": "true",
   "heating_cost_potential": 260,
   "hot_water_cost_current": 93,
-  "hot_water_cost_potential": 93,
   "suggested_improvements": [
     {
       "sequence": 1,
-      "improvement_category": 3,
+      "typical_saving": 37,
+      "indicative_cost": "Â£4,000 - Â£6,000",
       "improvement_type": "N",
       "improvement_details": {
         "improvement_number": 19
       },
-      "typical_saving": 37,
-      "indicative_cost": "Â£4,000 - Â£6,000",
+      "improvement_category": 3,
       "energy_performance_rating": 84,
       "environmental_impact_rating": 88
     },
     {
       "sequence": 2,
-      "improvement_category": 3,
+      "typical_saving": 226,
+      "indicative_cost": "Â£11,000 - Â£20,000",
       "improvement_type": "U",
       "improvement_details": {
         "improvement_number": 34
       },
-      "typical_saving": 226,
-      "indicative_cost": "Â£11,000 - Â£20,000",
+      "improvement_category": 3,
       "energy_performance_rating": 94,
       "environmental_impact_rating": 96
     }
   ],
-  "lzc_energy_sources": [
-    9
-  ],
+  "co2_emissions_potential": 1.5,
+  "energy_rating_potential": 83,
+  "lighting_cost_potential": 64,
+  "hot_water_cost_potential": 93,
+  "is_in_smoke_control_area": "unknown",
   "renewable_heat_incentive": {
     "rhi_new_dwelling": {
       "space_heating": 3127,
       "water_heating": 2230
     }
   },
-  "data_type": 2,
-  "schema_version": "LIG-16.0",
-  "built_form": 4,
-  "living_area": 20.15,
-  "orientation": 7,
-  "conservatory_type": 1,
-  "design_water_use": 1,
-  "is_in_smoke_control_area": "unknown",
-  "sap_opening_types": [
-    {
-      "name": "Doors (1)",
-      "data_source": 3,
-      "type": 1,
-      "glazing_type": 1,
-      "u_value": 1.4
-    },
-    {
-      "name": "Doors (2)",
-      "data_source": 2,
-      "type": 1,
-      "glazing_type": 1,
-      "u_value": 1.5
-    },
-    {
-      "name": "Windows (1)",
-      "data_source": 2,
-      "type": 4,
-      "glazing_type": 6,
-      "solar_transmittance": 0.63,
-      "frame_factor": 0.7,
-      "u_value": 1.5
-    }
-  ],
-  "sap_building_parts": [
-    {
-      "building_part_number": 1,
-      "identifier": "Main Dwelling",
-      "construction_year": 2013,
-      "overshading": 2,
-      "sap_openings": [
-        {
-          "name": 1,
-          "type": "Doors (2)",
-          "location": "Walls (2)",
-          "orientation": 7,
-          "width": 2.69,
-          "height": 2.1
-        },
-        {
-          "name": 2,
-          "type": "Windows (1)",
-          "location": "Walls (2)",
-          "orientation": 7,
-          "width": 0.46,
-          "height": 1.88
-        },
-        {
-          "name": 3,
-          "type": "Windows (1)",
-          "location": "Walls (2)",
-          "orientation": 3,
-          "width": 0.67,
-          "height": 0.9
-        },
-        {
-          "name": 4,
-          "type": "Windows (1)",
-          "location": "Walls (2)",
-          "orientation": 7,
-          "width": 0.46,
-          "height": 1.88
-        },
-        {
-          "name": 5,
-          "type": "Windows (1)",
-          "location": "Walls (2)",
-          "orientation": 3,
-          "width": 1.45,
-          "height": 1.35
-        },
-        {
-          "name": 6,
-          "type": "Windows (1)",
-          "location": "Walls (2)",
-          "orientation": 3,
-          "width": 1.45,
-          "height": 1.35
-        },
-        {
-          "name": 7,
-          "type": "Doors (1)",
-          "location": "Walls (3)",
-          "orientation": 0,
-          "width": 1.01,
-          "height": 2
-        },
-        {
-          "name": 8,
-          "type": "Doors (2)",
-          "location": "Walls (2)",
-          "orientation": 7,
-          "width": 1.74,
-          "height": 2.1
-        },
-        {
-          "name": 9,
-          "type": "Doors (2)",
-          "location": "Walls (2)",
-          "orientation": 3,
-          "width": 1.79,
-          "height": 2.1
-        },
-        {
-          "name": 10,
-          "type": "Doors (1)",
-          "location": "Walls (1)",
-          "orientation": 0,
-          "width": 1.01,
-          "height": 2.1
-        }
-      ],
-      "sap_floor_dimensions": [
-        {
-          "storey": 0,
-          "floor_type": 2,
-          "total_floor_area": 11.72,
-          "storey_height": 2.4,
-          "heat_loss_area": 11.8,
-          "u_value": 0.16,
-          "kappa_value": 30
-        },
-        {
-          "storey": 1,
-          "floor_type": 3,
-          "total_floor_area": 41.95,
-          "storey_height": 2.4,
-          "heat_loss_area": 24.68,
-          "u_value": 0.17,
-          "kappa_value": 30
-        },
-        {
-          "storey": 2,
-          "floor_type": 4,
-          "total_floor_area": 41.95,
-          "storey_height": 2.4,
-          "heat_loss_area": 0,
-          "u_value": 0,
-          "kappa_value": 0
-        }
-      ],
-      "sap_roofs": [
-        {
-          "name": "Roof (1)",
-          "description": "Pitched roof insulation at ceiling level",
-          "roof_type": 2,
-          "total_roof_area": 41.96,
-          "u_value": 0.11,
-          "kappa_value": 8.75
-        },
-        {
-          "name": "Roof (2)",
-          "description": "Flat roof - internal insulation",
-          "roof_type": 2,
-          "total_roof_area": 4.69,
-          "u_value": 0.2,
-          "kappa_value": 8.75
-        }
-      ],
-      "sap_walls": [
-        {
-          "name": "Walls (1)",
-          "description": "Masonry cavity wall",
-          "wall_type": 2,
-          "total_wall_area": 26.5,
-          "u_value": 0.29,
-          "kappa_value": 46.25,
-          "is_curtain_walling": "false"
-        },
-        {
-          "name": "Walls (2)",
-          "description": "Timber frame wall",
-          "wall_type": 2,
-          "total_wall_area": 48,
-          "u_value": 0.28,
-          "kappa_value": 8.75,
-          "is_curtain_walling": "false"
-        },
-        {
-          "name": "Walls (3)",
-          "description": "Insulated wall to garage",
-          "wall_type": 3,
-          "total_wall_area": 7.29,
-          "u_value": 0.22,
-          "kappa_value": 8.75,
-          "is_curtain_walling": "false"
-        },
-        {
-          "name": "Party wall (1)",
-          "wall_type": 4,
-          "total_wall_area": 48.6,
-          "u_value": 0,
-          "kappa_value": 17.5
-        }
-      ],
-      "sap_thermal_bridges": {
-        "thermal_bridge_code": 5,
-        "thermal_bridges": [
-          {
-            "thermal_bridge_type": 10,
-            "length": 9.8,
-            "psi_value": 0.06,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 19,
-            "length": 4.2,
-            "psi_value": 0.04,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 20,
-            "length": 2.6,
-            "psi_value": 0.28,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 22,
-            "length": 6,
-            "psi_value": 0.08,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 23,
-            "length": 33.6,
-            "psi_value": 0,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 4,
-            "length": 25.86,
-            "psi_value": 0.05,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 2,
-            "length": 12.73,
-            "psi_value": 0.3,
-            "psi_value_source": 2
-          },
-          {
-            "thermal_bridge_type": 3,
-            "length": 12.73,
-            "psi_value": 0.04,
-            "psi_value_source": 2
-          }
-        ]
-      }
-    }
-  ],
-  "sap_ventilation": {
-    "open_fireplaces_count": 0,
-    "open_flues_count": 0,
-    "extract_fans_count": 3,
-    "psv_count": 0,
-    "flueless_gas_fires_count": 0,
-    "pressure_test": 1,
-    "air_permeability": 3.89,
-    "sheltered_sides_count": 2,
-    "ventilation_type": 1
-  },
-  "sap_heating": {
-    "main_heating_details": [
-      {
-        "main_heating_number": 1,
-        "main_heating_category": 2,
-        "main_heating_fraction": 1,
-        "main_heating_data_source": 1,
-        "boiler_index_number": 16179,
-        "burner_control": 3,
-        "main_fuel_type": 1,
-        "main_heating_control": 2110,
-        "heat_emitter_type": 1,
-        "main_heating_flue_type": 2,
-        "is_flue_fan_present": "true",
-        "is_central_heating_pump_in_heated_space": "true",
-        "is_interlocked_system": "true",
-        "has_delayed_start_thermostat": "true",
-        "load_or_weather_compensation": 2
-      }
-    ],
-    "secondary_heating_category": 1,
-    "has_fixed_air_conditioning": "false",
-    "water_heating_code": 901,
-    "water_fuel_type": 1,
-    "has_hot_water_cylinder": "true",
-    "thermal_store": 1,
-    "hot_water_store_size": 180,
-    "hot_water_store_heat_loss_source": 2,
-    "hot_water_store_heat_loss": 1.63,
-    "is_primary_pipework_insulated": "true",
-    "has_cylinder_thermostat": "true",
-    "is_cylinder_in_heated_space": "true",
-    "is_hot_water_separately_timed": "true",
-    "has_solar_panel": "false"
-  },
-  "sap_energy_source": {
-    "wind_turbines_count": 0,
-    "wind_turbine_terrain_type": 1,
-    "fixed_lighting_outlets_count": 16,
-    "low_energy_fixed_lighting_outlets_count": 16,
-    "low_energy_fixed_lighting_outlets_percentage": 100,
-    "electricity_tariff": 1
-  },
-  "assessment_type": "SAP",
-  "schema_type": "SAP-Schema-16.3",
-  "building_reference_number": 1245
+  "seller_commission_report": "N",
+  "building_reference_number": 12457,
+  "calculation_software_name": "SAP Calculator",
+  "energy_consumption_current": 85,
+  "has_fixed_air_conditioning": "false",
+  "calculation_software_version": 3.59,
+  "energy_consumption_potential": 85,
+  "environmental_impact_current": 85,
+  "environmental_impact_potential": 85,
+  "has_heated_separate_conservatory": "false",
+  "co2_emissions_current_per_floor_area": 16
 }

@@ -1,383 +1,384 @@
 {
-  "schema_version_original": "LIG-19.0",
-  "sap_version": 9.94,
-  "calculation_software_version": "2.1.1.0",
-  "inspection_date": "2020-06-03",
-  "report_type": 2,
-  "completion_date": "2020-06-04",
-  "registration_date": "2020-06-04",
-  "status": "entered",
-  "language_code": 1,
-  "tenure": 3,
-  "transaction_type": 8,
-  "property_type": 0,
-  "address_line_1": "15, Address Lane",
-  "address_line_2": "New Town",
-  "post_town": "Town",
-  "postcode": "A1 1AA",
-  "region_code": 19,
-  "country_code": "EAW",
-  "walls": [
-    {
-      "description": {
-        "language": "1",
-        "value": "Cavity wall, filled cavity"
-      },
-      "energy_efficiency_rating": 3,
-      "environmental_efficiency_rating": 3
-    },
-    {
-      "description": {
-        "language": "1",
-        "value": "Cavity wall, as built, insulated (assumed)"
-      },
-      "energy_efficiency_rating": 4,
-      "environmental_efficiency_rating": 4
-    }
-  ],
   "roofs": [
     {
       "description": {
-        "language": "1",
-        "value": "Pitched, 150 mm loft insulation"
+        "value": "Pitched, 150 mm loft insulation",
+        "language": "1"
       },
       "energy_efficiency_rating": 4,
       "environmental_efficiency_rating": 4
     },
     {
       "description": {
-        "language": "1",
-        "value": "Pitched, insulated (assumed)"
+        "value": "Pitched, insulated (assumed)",
+        "language": "1"
       },
       "energy_efficiency_rating": 3,
       "environmental_efficiency_rating": 3
+    }
+  ],
+  "walls": [
+    {
+      "description": {
+        "value": "Cavity wall, filled cavity",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    },
+    {
+      "description": {
+        "value": "Cavity wall, as built, insulated (assumed)",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
     }
   ],
   "floors": [
     {
       "description": {
-        "language": "1",
-        "value": "Solid, no insulation (assumed)"
+        "value": "Solid, no insulation (assumed)",
+        "language": "1"
       },
       "energy_efficiency_rating": 0,
       "environmental_efficiency_rating": 0
     }
   ],
+  "status": "entered",
+  "tenure": 3,
   "window": {
     "description": {
-      "language": "1",
-      "value": "Fully double glazed"
+      "value": "Fully double glazed",
+      "language": "1"
     },
     "energy_efficiency_rating": 3,
     "environmental_efficiency_rating": 3
   },
-  "main_heating": [
-    {
-      "description": {
-        "language": "1",
-        "value": "Boiler and radiators, mains gas"
-      },
-      "energy_efficiency_rating": 4,
-      "environmental_efficiency_rating": 4
-    }
-  ],
-  "main_heating_controls": [
-    {
-      "description": {
-        "language": "1",
-        "value": "Programmer, room thermostat and TRVs"
-      },
-      "energy_efficiency_rating": 4,
-      "environmental_efficiency_rating": 4
-    }
-  ],
-  "hot_water": {
-    "description": {
-      "language": "1",
-      "value": "From main system"
-    },
-    "energy_efficiency_rating": 4,
-    "environmental_efficiency_rating": 4
-  },
   "lighting": {
     "description": {
-      "language": "1",
-      "value": "Low energy lighting in 87% of fixed outlets"
+      "value": "Low energy lighting in 87% of fixed outlets",
+      "language": "1"
     },
     "energy_efficiency_rating": 5,
     "environmental_efficiency_rating": 5
   },
+  "postcode": "A1 1AA",
+  "hot_water": {
+    "description": {
+      "value": "From main system",
+      "language": "1"
+    },
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "post_town": "Town",
+  "built_form": 2,
+  "door_count": 1,
+  "glazed_area": 1,
+  "region_code": 19,
+  "report_type": 2,
+  "sap_heating": {
+    "cylinder_size": 1,
+    "water_heating_code": 901,
+    "water_heating_fuel": 26,
+    "instantaneous_wwhrs": {
+      "rooms_with_bath_and_or_shower": 1,
+      "rooms_with_mixer_shower_no_bath": 0,
+      "rooms_with_bath_and_mixer_shower": 0
+    },
+    "secondary_fuel_type": 9,
+    "main_heating_details": [
+      {
+        "has_fghrs": "N",
+        "main_fuel_type": 26,
+        "boiler_flue_type": 2,
+        "heat_emitter_type": 1,
+        "emitter_temperature": 0,
+        "main_heating_number": 1,
+        "main_heating_control": 2106,
+        "main_heating_category": 2,
+        "main_heating_fraction": 1,
+        "central_heating_pump_age": 0,
+        "main_heating_data_source": 1,
+        "main_heating_index_number": 15274
+      }
+    ],
+    "immersion_heating_type": "NA",
+    "secondary_heating_type": 631,
+    "has_fixed_air_conditioning": "false"
+  },
+  "sap_version": 9.94,
+  "schema_type": "RdSAP-Schema-19.0",
+  "country_code": "EAW",
+  "main_heating": [
+    {
+      "description": {
+        "value": "Boiler and radiators, mains gas",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "dwelling_type": {
+    "value": "Semi-detached house",
+    "language": "1"
+  },
+  "language_code": 1,
+  "property_type": 0,
+  "address_line_1": "15, Address Lane",
+  "address_line_2": "New Town",
+  "assessment_type": "RdSAP",
+  "completion_date": "2020-06-04",
+  "inspection_date": "2020-06-03",
+  "extensions_count": 1,
+  "measurement_type": 1,
+  "total_floor_area": 94,
+  "transaction_type": 8,
+  "conservatory_type": 2,
+  "heated_room_count": 5,
+  "pvc_window_frames": "false",
+  "registration_date": "2020-06-04",
+  "sap_energy_source": {
+    "mains_gas": "Y",
+    "meter_type": 3,
+    "photovoltaic_supply": {
+      "none_or_no_details": {
+        "pv_connection": 0,
+        "percent_roof_area": 0
+      }
+    },
+    "wind_turbines_count": 0,
+    "wind_turbines_terrain_type": 2
+  },
   "secondary_heating": {
     "description": {
-      "language": "1",
-      "value": "Room heaters, dual fuel (mineral and wood)"
+      "value": "Room heaters, dual fuel (mineral and wood)",
+      "language": "1"
     },
     "energy_efficiency_rating": 0,
     "environmental_efficiency_rating": 0
   },
-  "has_hot_water_cylinder": "false",
-  "has_heated_separate_conservatory": "false",
-  "dwelling_type": {
-    "language": "1",
-    "value": "Semi-detached house"
+  "lzc_energy_sources": [
+    11,
+    9
+  ],
+  "sap_building_parts": [
+    {
+      "identifier": "Main Dwelling",
+      "wall_dry_lined": "N",
+      "wall_thickness": 300,
+      "floor_heat_loss": 7,
+      "roof_construction": 4,
+      "wall_construction": 4,
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": {
+            "value": 2.47,
+            "quantity": "metres"
+          },
+          "floor_insulation": 1,
+          "total_floor_area": {
+            "value": 39.91,
+            "quantity": "square metres"
+          },
+          "party_wall_length": {
+            "value": 8.81,
+            "quantity": "metres"
+          },
+          "floor_construction": 1,
+          "heat_loss_perimeter": {
+            "value": 13.65,
+            "quantity": "metres"
+          }
+        },
+        {
+          "floor": 1,
+          "room_height": {
+            "value": 2.36,
+            "quantity": "metres"
+          },
+          "total_floor_area": {
+            "value": 39.91,
+            "quantity": "square metres"
+          },
+          "party_wall_length": {
+            "value": 8.81,
+            "quantity": "metres"
+          },
+          "heat_loss_perimeter": {
+            "value": 17.87,
+            "quantity": "metres"
+          }
+        }
+      ],
+      "wall_insulation_type": 2,
+      "construction_age_band": "D",
+      "party_wall_construction": 1,
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 2,
+      "roof_insulation_thickness": "150mm",
+      "wall_insulation_thickness": "NI",
+      "floor_insulation_thickness": "NI"
+    },
+    {
+      "identifier": "Extension",
+      "wall_dry_lined": "N",
+      "wall_thickness": 300,
+      "floor_heat_loss": 7,
+      "roof_construction": 5,
+      "wall_construction": 4,
+      "building_part_number": 2,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": {
+            "value": 2.34,
+            "quantity": "metres"
+          },
+          "floor_insulation": 1,
+          "total_floor_area": {
+            "value": 13.88,
+            "quantity": "square metres"
+          },
+          "party_wall_length": 0,
+          "floor_construction": 1,
+          "heat_loss_perimeter": {
+            "value": 10.8,
+            "quantity": "metres"
+          }
+        }
+      ],
+      "wall_insulation_type": 4,
+      "construction_age_band": "G",
+      "party_wall_construction": "NA",
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 4,
+      "roof_insulation_thickness": "ND",
+      "wall_insulation_thickness": "NI",
+      "floor_insulation_thickness": "NI"
+    }
+  ],
+  "low_energy_lighting": 87,
+  "solar_water_heating": "N",
+  "habitable_room_count": 5,
+  "heating_cost_current": {
+    "value": 666,
+    "currency": "GBP"
   },
-  "total_floor_area": 94,
-  "has_fixed_air_conditioning": "false",
-  "multiple_glazed_proportion": 100,
+  "insulated_door_count": 0,
+  "co2_emissions_current": 3.8,
   "energy_rating_average": 60,
   "energy_rating_current": 66,
-  "energy_rating_potential": 79,
-  "environmental_impact_current": 62,
-  "environmental_impact_potential": 75,
-  "energy_consumption_current": 222,
-  "energy_consumption_potential": 137,
-  "co2_emissions_current": 3.8,
-  "co2_emissions_potential": 2.4,
-  "co2_emissions_current_per_floor_area": 41,
   "lighting_cost_current": {
-    "currency": "GBP",
-    "value": 81
+    "value": 81,
+    "currency": "GBP"
   },
-  "lighting_cost_potential": {
-    "currency": "GBP",
-    "value": 81
-  },
-  "heating_cost_current": {
-    "currency": "GBP",
-    "value": 666
-  },
+  "main_heating_controls": [
+    {
+      "description": {
+        "value": "Programmer, room thermostat and TRVs",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "multiple_glazing_type": 3,
+  "open_fireplaces_count": 0,
+  "has_hot_water_cylinder": "false",
   "heating_cost_potential": {
-    "currency": "GBP",
-    "value": 615
+    "value": 615,
+    "currency": "GBP"
   },
   "hot_water_cost_current": {
-    "currency": "GBP",
-    "value": 107
+    "value": 107,
+    "currency": "GBP"
   },
-  "hot_water_cost_potential": {
-    "currency": "GBP",
-    "value": 74
-  },
+  "mechanical_ventilation": 0,
+  "percent_draughtproofed": 100,
   "suggested_improvements": [
     {
       "sequence": 1,
-      "improvement_category": 5,
+      "typical_saving": {
+        "value": 51,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£4,000 - £6,000",
       "improvement_type": "W2",
       "improvement_details": {
         "improvement_number": 58
       },
-      "typical_saving": {
-        "currency": "GBP",
-        "value": 51
-      },
-      "indicative_cost": "£4,000 - £6,000",
+      "improvement_category": 5,
       "energy_performance_rating": 68,
       "environmental_impact_rating": 65
     },
     {
       "sequence": 2,
-      "improvement_category": 5,
+      "typical_saving": {
+        "value": 33,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£4,000 - £6,000",
       "improvement_type": "N",
       "improvement_details": {
         "improvement_number": 19
       },
-      "typical_saving": {
-        "currency": "GBP",
-        "value": 33
-      },
-      "indicative_cost": "£4,000 - £6,000",
+      "improvement_category": 5,
       "energy_performance_rating": 70,
       "environmental_impact_rating": 67
     },
     {
       "sequence": 3,
-      "improvement_category": 5,
+      "typical_saving": {
+        "value": 316,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£3,500 - £5,500",
       "improvement_type": "U",
       "improvement_details": {
         "improvement_number": 34
       },
-      "typical_saving": {
-        "currency": "GBP",
-        "value": 316
-      },
-      "indicative_cost": "£3,500 - £5,500",
+      "improvement_category": 5,
       "energy_performance_rating": 79,
       "environmental_impact_rating": 75
     }
   ],
-  "lzc_energy_sources": [
-    11,
-    9
-  ],
-  "renewable_heat_incentive": {
-    "space_heating_existing_dwelling": 9825,
-    "impact_of_loft_insulation": -394,
-    "water_heating": 2207
+  "co2_emissions_potential": 2.4,
+  "energy_rating_potential": 79,
+  "lighting_cost_potential": {
+    "value": 81,
+    "currency": "GBP"
   },
-  "built_form": 2,
-  "extensions_count": 1,
-  "multiple_glazing_type": 3,
-  "pvc_window_frames": "false",
-  "glazed_area": 1,
-  "door_count": 1,
-  "insulated_door_count": 0,
+  "schema_version_original": "LIG-19.0",
+  "hot_water_cost_potential": {
+    "value": 74,
+    "currency": "GBP"
+  },
+  "renewable_heat_incentive": {
+    "water_heating": 2207,
+    "impact_of_loft_insulation": -394,
+    "space_heating_existing_dwelling": 9825
+  },
+  "building_reference_number": 12457,
+  "calculation_software_name": "Stroma RSAP Engine",
+  "energy_consumption_current": 222,
+  "has_fixed_air_conditioning": "false",
+  "multiple_glazed_proportion": 100,
+  "calculation_software_version": "2.1.1.0",
+  "energy_consumption_potential": 137,
+  "environmental_impact_current": 62,
+  "fixed_lighting_outlets_count": 15,
   "windows_transmission_details": {
     "u_value": 3.1,
-    "solar_transmittance": 0.76,
-    "data_source": 2
+    "data_source": 2,
+    "solar_transmittance": 0.76
   },
-  "percent_draughtproofed": 100,
-  "habitable_room_count": 5,
-  "heated_room_count": 5,
-  "fixed_lighting_outlets_count": 15,
-  "low_energy_fixed_lighting_outlets_count": 13,
-  "low_energy_lighting": 87,
-  "measurement_type": 1,
-  "mechanical_ventilation": 0,
-  "open_fireplaces_count": 0,
-  "solar_water_heating": "N",
-  "conservatory_type": 2,
-  "sap_building_parts": [
-    {
-      "building_part_number": 1,
-      "identifier": "Main Dwelling",
-      "construction_age_band": "D",
-      "sap_floor_dimensions": [
-        {
-          "floor": 0,
-          "floor_construction": 1,
-          "floor_insulation": 1,
-          "heat_loss_perimeter": {
-            "quantity": "metres",
-            "value": 13.65
-          },
-          "party_wall_length": {
-            "quantity": "metres",
-            "value": 8.81
-          },
-          "total_floor_area": {
-            "quantity": "square metres",
-            "value": 39.91
-          },
-          "room_height": {
-            "quantity": "metres",
-            "value": 2.47
-          }
-        },
-        {
-          "floor": 1,
-          "heat_loss_perimeter": {
-            "quantity": "metres",
-            "value": 17.87
-          },
-          "party_wall_length": {
-            "quantity": "metres",
-            "value": 8.81
-          },
-          "total_floor_area": {
-            "quantity": "square metres",
-            "value": 39.91
-          },
-          "room_height": {
-            "quantity": "metres",
-            "value": 2.36
-          }
-        }
-      ],
-      "floor_insulation_thickness": "NI",
-      "floor_heat_loss": 7,
-      "roof_construction": 4,
-      "roof_insulation_location": 2,
-      "roof_insulation_thickness": "150mm",
-      "wall_construction": 4,
-      "wall_insulation_type": 2,
-      "wall_thickness_measured": "Y",
-      "wall_thickness": 300,
-      "wall_dry_lined": "N",
-      "wall_insulation_thickness": "NI",
-      "party_wall_construction": 1
-    },
-    {
-      "building_part_number": 2,
-      "identifier": "Extension",
-      "construction_age_band": "G",
-      "sap_floor_dimensions": [
-        {
-          "floor": 0,
-          "floor_construction": 1,
-          "floor_insulation": 1,
-          "heat_loss_perimeter": {
-            "quantity": "metres",
-            "value": 10.8
-          },
-          "party_wall_length": 0,
-          "total_floor_area": {
-            "quantity": "square metres",
-            "value": 13.88
-          },
-          "room_height": {
-            "quantity": "metres",
-            "value": 2.34
-          }
-        }
-      ],
-      "floor_insulation_thickness": "NI",
-      "floor_heat_loss": 7,
-      "roof_construction": 5,
-      "roof_insulation_location": 4,
-      "roof_insulation_thickness": "ND",
-      "wall_construction": 4,
-      "wall_insulation_type": 4,
-      "wall_thickness_measured": "Y",
-      "wall_thickness": 300,
-      "wall_dry_lined": "N",
-      "wall_insulation_thickness": "NI",
-      "party_wall_construction": "NA"
-    }
-  ],
-  "sap_heating": {
-    "main_heating_details": [
-      {
-        "main_heating_number": 1,
-        "main_heating_category": 2,
-        "main_fuel_type": 26,
-        "main_heating_control": 2106,
-        "main_heating_data_source": 1,
-        "main_heating_index_number": 15274,
-        "boiler_flue_type": 2,
-        "heat_emitter_type": 1,
-        "main_heating_fraction": 1,
-        "has_fghrs": "N",
-        "emitter_temperature": 0,
-        "central_heating_pump_age": 0
-      }
-    ],
-    "water_heating_code": 901,
-    "water_heating_fuel": 26,
-    "secondary_heating_type": 631,
-    "secondary_fuel_type": 9,
-    "immersion_heating_type": "NA",
-    "cylinder_size": 1,
-    "has_fixed_air_conditioning": "false",
-    "instantaneous_wwhrs": {
-      "rooms_with_bath_and_or_shower": 1,
-      "rooms_with_mixer_shower_no_bath": 0,
-      "rooms_with_bath_and_mixer_shower": 0
-    }
-  },
-  "sap_energy_source": {
-    "meter_type": 3,
-    "mains_gas": "Y",
-    "wind_turbines_count": 0,
-    "wind_turbines_terrain_type": 2,
-    "photovoltaic_supply": {
-      "none_or_no_details": {
-        "percent_roof_area": 0,
-        "pv_connection": 0
-      }
-    }
-  },
-  "assessment_type": "EPC",
-  "schema_type": "RdSAP-Schema-19.0",
-  "building_reference_number": 1245
+  "environmental_impact_potential": 75,
+  "has_heated_separate_conservatory": "false",
+  "co2_emissions_current_per_floor_area": 41,
+  "low_energy_fixed_lighting_outlets_count": 13
 }

@@ -1,19 +1,4 @@
 {
-  "calculation_software_version": "13.05r16",
-  "schema_version_original": "SAP-19.0",
-  "sap_version": 10.2,
-  "walls": [
-    {
-      "description": "Solid brick, as built, no insulation (assumed)",
-      "energy_efficiency_rating": 1,
-      "environmental_efficiency_rating": 1
-    },
-    {
-      "description": "Cavity wall, as built, insulated (assumed)",
-      "energy_efficiency_rating": 4,
-      "environmental_efficiency_rating": 4
-    }
-  ],
   "roofs": [
     {
       "description": "Pitched, 25 mm loft insulation",
@@ -22,6 +7,18 @@
     },
     {
       "description": "Pitched, 250 mm loft insulation",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "walls": [
+    {
+      "description": "Solid brick, as built, no insulation (assumed)",
+      "energy_efficiency_rating": 1,
+      "environmental_efficiency_rating": 1
+    },
+    {
+      "description": "Cavity wall, as built, insulated (assumed)",
       "energy_efficiency_rating": 4,
       "environmental_efficiency_rating": 4
     }
@@ -38,11 +35,119 @@
       "environmental_efficiency_rating": 0
     }
   ],
+  "status": "entered",
+  "tenure": 1,
   "window": {
     "description": "Fully double glazed",
     "energy_efficiency_rating": 3,
     "environmental_efficiency_rating": 3
   },
+  "addendum": {
+    "stone_walls": "true",
+    "system_build": "true",
+    "addendum_numbers": [
+      1,
+      13
+    ]
+  },
+  "lighting": {
+    "description": "Low energy lighting in 50% of fixed outlets",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "postcode": "A0 0AA",
+  "hot_water": {
+    "description": "From main system",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "post_town": "Whitbury",
+  "built_form": 2,
+  "door_count": 3,
+  "region_code": 1,
+  "report_type": 2,
+  "sap_heating": {
+    "cylinder_size": 1,
+    "shower_outlets": {
+      "shower_outlet": {
+        "shower_wwhrs": 1,
+        "shower_outlet_type": 1
+      }
+    },
+    "water_heating_code": 901,
+    "water_heating_fuel": 26,
+    "instantaneous_wwhrs": {
+      "wwhrs_index_number1": 1,
+      "wwhrs_index_number2": 2
+    },
+    "secondary_fuel_type": 25,
+    "main_heating_details": [
+      {
+        "has_fghrs": "N",
+        "main_fuel_type": 26,
+        "boiler_flue_type": 2,
+        "fan_flue_present": "N",
+        "heat_emitter_type": 1,
+        "emitter_temperature": 0,
+        "main_heating_number": 1,
+        "boiler_ignition_type": 1,
+        "main_heating_control": 2106,
+        "main_heating_category": 2,
+        "main_heating_fraction": 1,
+        "sap_main_heating_code": 101,
+        "central_heating_pump_age": 0,
+        "main_heating_data_source": 1,
+        "main_heating_index_number": 17507
+      }
+    ],
+    "immersion_heating_type": "NA",
+    "has_fixed_air_conditioning": "false"
+  },
+  "sap_version": 10.2,
+  "sap_windows": [
+    {
+      "pvc_frame": "false",
+      "glazing_gap": 6,
+      "orientation": 1,
+      "window_type": 2,
+      "frame_factor": 1.0,
+      "glazing_type": 14,
+      "window_width": 1.2,
+      "window_height": 2.0,
+      "draught_proofed": "true",
+      "window_location": 0,
+      "window_wall_type": 6,
+      "permanent_shutters_present": "N",
+      "window_transmission_details": {
+        "u_value": 1.0,
+        "data_source": 2,
+        "solar_transmittance": 1.0
+      },
+      "permanent_shutters_insulated": "N"
+    },
+    {
+      "pvc_frame": "false",
+      "glazing_gap": 6,
+      "orientation": 1,
+      "window_type": 2,
+      "frame_factor": 1.0,
+      "glazing_type": 1,
+      "window_width": 1.2,
+      "window_height": 2.0,
+      "draught_proofed": "true",
+      "window_location": 1,
+      "window_wall_type": 6,
+      "permanent_shutters_present": "N",
+      "window_transmission_details": {
+        "u_value": 1.0,
+        "data_source": 2,
+        "solar_transmittance": 1.0
+      },
+      "permanent_shutters_insulated": "N"
+    }
+  ],
+  "schema_type": "RdSAP-Schema-21.0.1",
+  "country_code": "ENG",
   "main_heating": [
     {
       "description": "Boiler and radiators, anthracite",
@@ -55,6 +160,147 @@
       "environmental_efficiency_rating": 4
     }
   ],
+  "dwelling_type": "Mid-terrace house",
+  "language_code": 1,
+  "pressure_test": 6,
+  "property_type": 0,
+  "address_line_1": "1 Some Street",
+  "assessment_type": "RdSAP",
+  "completion_date": "2025-04-04",
+  "inspection_date": "2025-04-04",
+  "wet_rooms_count": 0,
+  "extensions_count": 0,
+  "measurement_type": 1,
+  "sap_flat_details": {
+    "level": 1,
+    "top_storey": "N",
+    "storey_count": 3,
+    "flat_location": 1,
+    "heat_loss_corridor": 2,
+    "unheated_corridor_length": 10
+  },
+  "total_floor_area": 55,
+  "transaction_type": 16,
+  "conservatory_type": 1,
+  "heated_room_count": 5,
+  "registration_date": "2025-04-04",
+  "sap_energy_source": {
+    "mains_gas": "Y",
+    "meter_type": 2,
+    "pv_batteries": {
+      "pv_battery": {
+        "battery_capacity": 5
+      }
+    },
+    "pv_connection": 0,
+    "pv_battery_count": 1,
+    "photovoltaic_supply": {
+      "none_or_no_details": {
+        "percent_roof_area": 0
+      }
+    },
+    "wind_turbines_count": 0,
+    "wind_turbine_details": {
+      "hub_height": 0,
+      "rotor_diameter": 0
+    },
+    "gas_smart_meter_present": "false",
+    "is_dwelling_export_capable": "false",
+    "wind_turbines_terrain_type": 4,
+    "electricity_smart_meter_present": "true"
+  },
+  "secondary_heating": {
+    "description": "Room heaters, electric",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "sap_building_parts": [
+    {
+      "identifier": "Main Dwelling",
+      "wall_dry_lined": "N",
+      "floor_heat_loss": 7,
+      "sap_room_in_roof": {
+        "floor_area": 100,
+        "construction_age_band": "B"
+      },
+      "roof_construction": 4,
+      "wall_construction": 4,
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": {
+            "value": 2.45,
+            "quantity": "metres"
+          },
+          "floor_insulation": 1,
+          "total_floor_area": {
+            "value": 45.82,
+            "quantity": "square metres"
+          },
+          "party_wall_length": {
+            "value": 7.9,
+            "quantity": "metres"
+          },
+          "floor_construction": 1,
+          "heat_loss_perimeter": {
+            "value": 19.5,
+            "quantity": "metres"
+          }
+        },
+        {
+          "floor": 1,
+          "room_height": {
+            "value": 2.59,
+            "quantity": "metres"
+          },
+          "total_floor_area": {
+            "value": 45.82,
+            "quantity": "square metres"
+          },
+          "party_wall_length": {
+            "value": 7.9,
+            "quantity": "metres"
+          },
+          "heat_loss_perimeter": {
+            "value": 19.5,
+            "quantity": "metres"
+          }
+        }
+      ],
+      "wall_insulation_type": 2,
+      "construction_age_band": "M",
+      "sap_alternative_wall_1": {
+        "wall_area": 10.4,
+        "wall_dry_lined": "N",
+        "wall_construction": 4,
+        "wall_insulation_type": 2,
+        "wall_thickness_measured": "N"
+      },
+      "sap_alternative_wall_2": {
+        "wall_area": 10.8,
+        "wall_dry_lined": "N",
+        "wall_construction": 4,
+        "wall_insulation_type": 2,
+        "wall_thickness_measured": "N"
+      },
+      "party_wall_construction": 0,
+      "wall_thickness_measured": "N",
+      "roof_insulation_location": 2,
+      "roof_insulation_thickness": "200mm",
+      "wall_insulation_thickness": "NI",
+      "floor_insulation_thickness": "NI"
+    }
+  ],
+  "open_chimneys_count": 1,
+  "solar_water_heating": "N",
+  "habitable_room_count": 5,
+  "heating_cost_current": 365.98,
+  "insulated_door_count": 2,
+  "co2_emissions_current": 2.4,
+  "energy_rating_average": 60,
+  "energy_rating_current": 50,
+  "lighting_cost_current": 123.45,
   "main_heating_controls": [
     {
       "description": "Programmer, room thermostat and TRVs",
@@ -67,332 +313,87 @@
       "environmental_efficiency_rating": 5
     }
   ],
-  "hot_water": {
-    "description": "From main system",
-    "energy_efficiency_rating": 4,
-    "environmental_efficiency_rating": 4
-  },
-  "lighting": {
-    "description": "Low energy lighting in 50% of fixed outlets",
-    "energy_efficiency_rating": 4,
-    "environmental_efficiency_rating": 4
-  },
-  "secondary_heating": {
-    "description": "Room heaters, electric",
-    "energy_efficiency_rating": 0,
-    "environmental_efficiency_rating": 0
-  },
   "has_hot_water_cylinder": "true",
-  "dwelling_type": "Mid-terrace house",
-  "total_floor_area": 55,
-  "has_fixed_air_conditioning": "false",
-  "multiple_glazed_proportion": 100,
-  "energy_rating_current": 50,
-  "energy_rating_potential": 72,
-  "energy_rating_average": 60,
-  "environmental_impact_current": 52,
-  "environmental_impact_potential": 74,
-  "energy_consumption_current": 230,
-  "energy_consumption_potential": 88,
-  "co2_emissions_current": 2.4,
-  "co2_emissions_current_per_floor_area": 20,
-  "co2_emissions_potential": 1.4,
-  "lighting_cost_current": 123.45,
-  "lighting_cost_potential": 84.23,
-  "heating_cost_current": 365.98,
   "heating_cost_potential": 250.34,
   "hot_water_cost_current": 200.4,
-  "hot_water_cost_potential": 180.43,
+  "insulated_door_u_value": 3,
+  "mechanical_ventilation": 6,
+  "percent_draughtproofed": 100,
   "suggested_improvements": [
     {
       "sequence": 1,
-      "improvement_category": 5,
+      "typical_saving": 139,
+      "indicative_cost": "£220 - £250",
       "improvement_type": "G",
       "improvement_details": {
         "improvement_number": 66
       },
-      "typical_saving": 139,
-      "indicative_cost": "£220 - £250",
+      "improvement_category": 5,
       "energy_performance_rating": 70,
       "environmental_impact_rating": 70
     },
     {
       "sequence": 2,
-      "improvement_category": 5,
+      "typical_saving": 49,
+      "indicative_cost": "£4,000 - £7,000",
       "improvement_type": "N",
       "improvement_details": {
         "improvement_number": 19
       },
-      "typical_saving": 49,
-      "indicative_cost": "£4,000 - £7,000",
+      "improvement_category": 5,
       "energy_performance_rating": 72,
       "environmental_impact_rating": 73
     },
     {
       "sequence": 3,
-      "improvement_category": 5,
+      "typical_saving": 286,
+      "indicative_cost": "£8,000 - £10,000",
       "improvement_type": "U",
       "improvement_details": {
         "improvement_number": 34
       },
-      "typical_saving": 286,
-      "indicative_cost": "£8,000 - £10,000",
+      "improvement_category": 5,
       "energy_performance_rating": 83,
       "environmental_impact_rating": 75
     }
   ],
+  "co2_emissions_potential": 1.4,
+  "energy_rating_potential": 72,
+  "lighting_cost_potential": 84.23,
+  "schema_version_original": "SAP-19.0",
+  "hot_water_cost_potential": 180.43,
   "renewable_heat_incentive": {
-    "space_heating_existing_dwelling": 13120,
     "water_heating": 2285,
     "impact_of_loft_insulation": -2114,
     "impact_of_cavity_insulation": -122,
-    "impact_of_solid_wall_insulation": -3560
+    "impact_of_solid_wall_insulation": -3560,
+    "space_heating_existing_dwelling": 13120
   },
-  "addendum": {
-    "addendum_numbers": [
-      1,
-      13
-    ],
-    "stone_walls": "true",
-    "system_build": "true"
-  },
-  "open_chimneys_count": 1,
-  "property_type": 0,
-  "built_form": 2,
-  "extensions_count": 0,
-  "door_count": 3,
-  "insulated_door_count": 2,
+  "building_reference_number": 12457,
+  "calculation_software_name": "SomeSoft RdSAP Calculator",
   "draughtproofed_door_count": 1,
-  "insulated_door_u_value": 3,
+  "mechanical_vent_duct_type": 3,
+  "energy_consumption_current": 230,
+  "has_fixed_air_conditioning": "false",
+  "multiple_glazed_proportion": 100,
+  "calculation_software_version": "13.05r16",
+  "energy_consumption_potential": 88,
+  "environmental_impact_current": 52,
   "windows_transmission_details": {
     "u_value": 2,
-    "solar_transmittance": 0.72,
-    "data_source": 2
+    "data_source": 2,
+    "solar_transmittance": 0.72
   },
-  "percent_draughtproofed": 100,
-  "habitable_room_count": 5,
-  "heated_room_count": 5,
-  "measurement_type": 1,
-  "mechanical_ventilation_index_number": 12,
-  "mechanical_ventilation": 6,
-  "mechanical_vent_duct_type": 3,
+  "cfl_fixed_lighting_bulbs_count": 5,
+  "environmental_impact_potential": 74,
+  "led_fixed_lighting_bulbs_count": 10,
   "mechanical_vent_duct_placement": 2,
   "mechanical_vent_duct_insulation": 2,
+  "pressure_test_certificate_number": 0,
+  "mechanical_ventilation_index_number": 12,
+  "co2_emissions_current_per_floor_area": 20,
+  "low_energy_fixed_lighting_bulbs_count": 16,
   "mechanical_vent_duct_insulation_level": 2,
   "mechanical_vent_measured_installation": "false",
-  "solar_water_heating": "N",
-  "conservatory_type": 1,
-  "sap_flat_details": {
-    "flat_location": 1,
-    "storey_count": 3,
-    "level": 1,
-    "top_storey": "N",
-    "heat_loss_corridor": 2,
-    "unheated_corridor_length": 10
-  },
-  "sap_building_parts": [
-    {
-      "building_part_number": 1,
-      "identifier": "Main Dwelling",
-      "construction_age_band": "M",
-      "sap_floor_dimensions": [
-        {
-          "floor": 0,
-          "floor_construction": 1,
-          "floor_insulation": 1,
-          "heat_loss_perimeter": {
-            "quantity": "metres",
-            "value": 19.5
-          },
-          "party_wall_length": {
-            "quantity": "metres",
-            "value": 7.9
-          },
-          "total_floor_area": {
-            "quantity": "square metres",
-            "value": 45.82
-          },
-          "room_height": {
-            "quantity": "metres",
-            "value": 2.45
-          }
-        },
-        {
-          "floor": 1,
-          "heat_loss_perimeter": {
-            "quantity": "metres",
-            "value": 19.5
-          },
-          "party_wall_length": {
-            "quantity": "metres",
-            "value": 7.9
-          },
-          "total_floor_area": {
-            "quantity": "square metres",
-            "value": 45.82
-          },
-          "room_height": {
-            "quantity": "metres",
-            "value": 2.59
-          }
-        }
-      ],
-      "floor_insulation_thickness": "NI",
-      "floor_heat_loss": 7,
-      "roof_construction": 4,
-      "roof_insulation_location": 2,
-      "roof_insulation_thickness": "200mm",
-      "wall_construction": 4,
-      "wall_insulation_type": 2,
-      "wall_thickness_measured": "N",
-      "wall_dry_lined": "N",
-      "wall_insulation_thickness": "NI",
-      "party_wall_construction": 0,
-      "sap_room_in_roof": {
-        "floor_area": 100,
-        "construction_age_band": "B"
-      },
-      "sap_alternative_wall_1": {
-        "wall_construction": 4,
-        "wall_insulation_type": 2,
-        "wall_area": 10.4,
-        "wall_thickness_measured": "N",
-        "wall_dry_lined": "N"
-      },
-      "sap_alternative_wall_2": {
-        "wall_construction": 4,
-        "wall_insulation_type": 2,
-        "wall_area": 10.8,
-        "wall_thickness_measured": "N",
-        "wall_dry_lined": "N"
-      }
-    }
-  ],
-  "sap_heating": {
-    "main_heating_details": [
-      {
-        "main_heating_number": 1,
-        "main_heating_category": 2,
-        "main_fuel_type": 26,
-        "main_heating_control": 2106,
-        "main_heating_data_source": 1,
-        "sap_main_heating_code": 101,
-        "main_heating_index_number": 17507,
-        "boiler_flue_type": 2,
-        "fan_flue_present": "N",
-        "heat_emitter_type": 1,
-        "main_heating_fraction": 1,
-        "has_fghrs": "N",
-        "emitter_temperature": 0,
-        "central_heating_pump_age": 0,
-        "boiler_ignition_type": 1
-      }
-    ],
-    "water_heating_code": 901,
-    "water_heating_fuel": 26,
-    "immersion_heating_type": "NA",
-    "cylinder_size": 1,
-    "has_fixed_air_conditioning": "false",
-    "instantaneous_wwhrs": {
-      "wwhrs_index_number1": 1,
-      "wwhrs_index_number2": 2
-    },
-    "secondary_fuel_type": 25,
-    "shower_outlets": {
-      "shower_outlet": {
-        "shower_outlet_type": 1,
-        "shower_wwhrs": 1
-      }
-    }
-  },
-  "sap_energy_source": {
-    "meter_type": 2,
-    "mains_gas": "Y",
-    "wind_turbines_count": 0,
-    "wind_turbines_terrain_type": 4,
-    "photovoltaic_supply": {
-      "none_or_no_details": {
-        "percent_roof_area": 0
-      }
-    },
-    "pv_battery_count": 1,
-    "pv_batteries": {
-      "pv_battery": {
-        "battery_capacity": 5
-      }
-    },
-    "electricity_smart_meter_present": "true",
-    "gas_smart_meter_present": "false",
-    "is_dwelling_export_capable": "false",
-    "wind_turbine_details": {
-      "rotor_diameter": 0,
-      "hub_height": 0
-    },
-    "pv_connection": 0
-  },
-  "sap_windows": [
-    {
-      "window_location": 0,
-      "window_height": 2.0,
-      "window_width": 1.2,
-      "draught_proofed": "true",
-      "glazing_type": 14,
-      "window_type": 2,
-      "orientation": 1,
-      "window_transmission_details": {
-        "data_source": 2,
-        "u_value": 1.0,
-        "solar_transmittance": 1.0
-      },
-      "pvc_frame": "false",
-      "glazing_gap": 6,
-      "frame_factor": 1.0,
-      "window_wall_type": 6,
-      "permanent_shutters_present": "N",
-      "permanent_shutters_insulated": "N"
-    },
-    {
-      "window_location": 1,
-      "window_height": 2.0,
-      "window_width": 1.2,
-      "draught_proofed": "true",
-      "glazing_type": 1,
-      "window_type": 2,
-      "orientation": 1,
-      "window_transmission_details": {
-        "data_source": 2,
-        "u_value": 1.0,
-        "solar_transmittance": 1.0
-      },
-      "pvc_frame": "false",
-      "glazing_gap": 6,
-      "frame_factor": 1.0,
-      "window_wall_type": 6,
-      "permanent_shutters_present": "N",
-      "permanent_shutters_insulated": "N"
-    }
-  ],
-  "cfl_fixed_lighting_bulbs_count": 5,
-  "led_fixed_lighting_bulbs_count": 10,
-  "low_energy_fixed_lighting_bulbs_count": 16,
-  "incandescent_fixed_lighting_bulbs_count": 0,
-  "pressure_test_certificate_number": 0,
-  "wet_rooms_count": 0,
-  "pressure_test": 6,
-  "inspection_date": "2025-04-04",
-  "report_type": 2,
-  "completion_date": "2025-04-04",
-  "registration_date": "2025-04-04",
-  "status": "entered",
-  "language_code": 1,
-  "region_code": 1,
-  "country_code": "ENG",
-  "transaction_type": 16,
-  "tenure": 1,
-  "address_line_1": "1 Some Street",
-  "post_town": "Whitbury",
-  "postcode": "A0 0AA",
-  "assessment_type": "EPC",
-  "schema_type": "RdSAP-Schema-21.0.1",
-  "building_reference_number": 1245
+  "incandescent_fixed_lighting_bulbs_count": 0
 }

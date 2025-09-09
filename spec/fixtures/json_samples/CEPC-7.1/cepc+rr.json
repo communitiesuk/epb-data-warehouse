@@ -1,254 +1,29 @@
 {
-  "issue_date": "2017-10-13",
-  "report_type": 3,
-  "valid_until": "2027-10-12",
-  "related_rrn": "9999-9999-3333-9999-2222",
-  "inspection_date": "2017-10-10",
-  "registration_date": "2017-10-13",
-  "status": "entered",
-  "language_code": 1,
-  "building_complexity": "Level 3",
-  "address_line_1": "99a Address Street",
-  "address_line_2": "Place Location",
-  "post_town": "New Town",
-  "postcode": "A1 1AA",
-  "property_type": "A1/A2 Retail and Financial/Professional services",
-  "is_heritage_site": "N",
-  "methodology": "SBEM",
-  "calculation_tool": "CLG, iSBEM, v5.3.a, SBEM, v5.3.a.0",
-  "output_engine": "EPCgen, v5.3.a.0",
-  "inspection_type": "Physical",
-  "summary_of_performance": {
-    "building_data": [
-      {
-        "analysis_type": "ACTUAL",
-        "area": 221.66,
-        "area_exterior": 578.13,
-        "weather": "NEW",
-        "q50_infiltration": 25,
-        "building_w_k": 756.843,
-        "building_w_m2k": 1.30912,
-        "building_alpha": 5.48977,
-        "activities": [
-          {
-            "id": 1078,
-            "area": 6.84
-          },
-          {
-            "id": 1077,
-            "area": 3.42
-          },
-          {
-            "id": 1074,
-            "area": 43.89
-          },
-          {
-            "id": 1305,
-            "area": 167.51
-          }
-        ],
-        "global_performance": {
-          "kwh_m2_heating": 162.325,
-          "kwh_m2_cooling": 0,
-          "kwh_m2_auxiliary": 2.09834,
-          "kwh_m2_lighting": 95.5093,
-          "kwh_m2_dhw": 1.42751,
-          "kwh_m2_equipment": 17.0788,
-          "kwh_m2_natural_gas": 0,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_oil": 0,
-          "kwh_m2_coal": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_supplied": 261.361,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_district_heating": 0,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_chp": 0,
-          "kwh_m2_ses": 0
-        },
-        "hvac_systems": [
-          {
-            "area": 54.15,
-            "type": "Other local room heater - fanned",
-            "heat_source": "Room heater",
-            "fuel_type": "Grid Supplied Electricity",
-            "mj_m2_heating_dem": 637.668,
-            "mj_m2_cooling_dem": 82.8076,
-            "kwh_m2_heating": 221.413,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_auxiliary": 8.58942,
-            "heating_sseff": 0.8,
-            "cooling_sseer": 0,
-            "heating_gen_seff": 1,
-            "cooling_gen_seer": 0,
-            "activities": [
-              {
-                "id": 1078,
-                "area": 6.84
-              },
-              {
-                "id": 1077,
-                "area": 3.42
-              },
-              {
-                "id": 1074,
-                "area": 43.89
-              }
-            ]
-          },
-          {
-            "area": 167.51,
-            "type": "Other local room heater - unfanned",
-            "heat_source": "Room heater",
-            "fuel_type": "Grid Supplied Electricity",
-            "mj_m2_heating_dem": 412.486,
-            "mj_m2_cooling_dem": 277.439,
-            "kwh_m2_heating": 143.224,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_auxiliary": 0,
-            "heating_sseff": 0.8,
-            "cooling_sseer": 0,
-            "heating_gen_seff": 1,
-            "cooling_gen_seer": 0,
-            "activities": [
-              {
-                "id": 1305,
-                "area": 167.51
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "analysis_type": "NOTIONAL",
-        "area": 221.66,
-        "area_exterior": 578.13,
-        "weather": "NEW",
-        "q50_infiltration": 5,
-        "building_w_k": 141.605,
-        "building_w_m2k": 0.244936,
-        "building_alpha": 12.3616,
-        "activities": [
-          {
-            "id": 1078,
-            "area": 6.84
-          },
-          {
-            "id": 1077,
-            "area": 3.42
-          },
-          {
-            "id": 1074,
-            "area": 43.89
-          },
-          {
-            "id": 1305,
-            "area": 167.51
-          }
-        ],
-        "global_performance": {
-          "kwh_m2_heating": 34.2821,
-          "kwh_m2_cooling": 0,
-          "kwh_m2_auxiliary": 0.559555,
-          "kwh_m2_lighting": 53.9687,
-          "kwh_m2_dhw": 1.64373,
-          "kwh_m2_equipment": 17.0788,
-          "kwh_m2_natural_gas": 0,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_oil": 35.9259,
-          "kwh_m2_coal": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_supplied": 54.5286,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_district_heating": 0,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_chp": 0,
-          "kwh_m2_ses": 0
-        },
-        "hvac_systems": [
-          {
-            "area": 54.15,
-            "type": "Other local room heater - fanned",
-            "heat_source": "Room heater",
-            "fuel_type": "Oil",
-            "mj_m2_heating_dem": 247.357,
-            "mj_m2_cooling_dem": 32.988,
-            "kwh_m2_heating": 83.8955,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_auxiliary": 2.29051,
-            "heating_sseff": 0.819,
-            "cooling_sseer": 0,
-            "heating_gen_seff": 0,
-            "cooling_gen_seer": 0,
-            "activities": [
-              {
-                "id": 1078,
-                "area": 6.84
-              },
-              {
-                "id": 1077,
-                "area": 3.42
-              },
-              {
-                "id": 1074,
-                "area": 43.89
-              }
-            ]
-          },
-          {
-            "area": 167.51,
-            "type": "Other local room heater - unfanned",
-            "heat_source": "Room heater",
-            "fuel_type": "Oil",
-            "mj_m2_heating_dem": 53.7903,
-            "mj_m2_cooling_dem": 153.68,
-            "kwh_m2_heating": 18.2439,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_auxiliary": 0,
-            "heating_sseff": 0.819,
-            "cooling_sseer": 0,
-            "heating_gen_seff": 0,
-            "cooling_gen_seer": 0,
-            "activities": [
-              {
-                "id": 1305,
-                "area": 167.51
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "transaction_type": 6,
-  "asset_rating": 93,
-  "new_build_benchmark": 27,
-  "existing_stock_benchmark": 79,
-  "ser": 72.8,
   "ber": 135.65,
+  "ser": 72.8,
   "ter": 39.05,
   "tyr": 114.44,
+  "status": "entered",
+  "postcode": "A1 1AA",
+  "post_town": "New Town",
   "energy_use": {
     "energy_consumption_current": 802.38
   },
-  "technical_information": {
-    "main_heating_fuel": "Grid Supplied Electricity",
-    "building_environment": "Heating and Natural Ventilation",
-    "floor_area": 222,
-    "building_level": 3
-  },
+  "issue_date": "2017-10-13",
+  "methodology": "SBEM",
+  "related_rrn": "9999-9999-3333-9999-2222",
+  "report_type": 3,
+  "schema_type": "CEPC-7.1",
+  "valid_until": "2027-10-12",
+  "asset_rating": 93,
+  "language_code": 1,
+  "output_engine": "EPCgen, v5.3.a.0",
+  "property_type": "A1/A2 Retail and Financial/Professional services",
+  "address_line_1": "99a Address Street",
+  "address_line_2": "Place Location",
+  "assessment_type": "CEPC",
+  "inspection_date": "2017-10-10",
+  "inspection_type": "Physical",
   "ac_questionnaire": {
     "ac_present": "No",
     "ac_rated_output": {
@@ -256,7 +31,232 @@
     },
     "ac_inspection_commissioned": 4
   },
-  "assessment_type": "CEPC",
-  "schema_type": "CEPC-7.1",
-  "building_reference_number": 1245
+  "calculation_tool": "CLG, iSBEM, v5.3.a, SBEM, v5.3.a.0",
+  "is_heritage_site": "N",
+  "transaction_type": 6,
+  "registration_date": "2017-10-13",
+  "building_complexity": "Level 3",
+  "new_build_benchmark": 27,
+  "technical_information": {
+    "floor_area": 222,
+    "building_level": 3,
+    "main_heating_fuel": "Grid Supplied Electricity",
+    "building_environment": "Heating and Natural Ventilation"
+  },
+  "summary_of_performance": {
+    "building_data": [
+      {
+        "area": 221.66,
+        "weather": "NEW",
+        "activities": [
+          {
+            "id": 1078,
+            "area": 6.84
+          },
+          {
+            "id": 1077,
+            "area": 3.42
+          },
+          {
+            "id": 1074,
+            "area": 43.89
+          },
+          {
+            "id": 1305,
+            "area": 167.51
+          }
+        ],
+        "building_w_k": 756.843,
+        "hvac_systems": [
+          {
+            "area": 54.15,
+            "type": "Other local room heater - fanned",
+            "fuel_type": "Grid Supplied Electricity",
+            "activities": [
+              {
+                "id": 1078,
+                "area": 6.84
+              },
+              {
+                "id": 1077,
+                "area": 3.42
+              },
+              {
+                "id": 1074,
+                "area": 43.89
+              }
+            ],
+            "heat_source": "Room heater",
+            "cooling_sseer": 0,
+            "heating_sseff": 0.8,
+            "kwh_m2_cooling": 0,
+            "kwh_m2_heating": 221.413,
+            "cooling_gen_seer": 0,
+            "heating_gen_seff": 1,
+            "kwh_m2_auxiliary": 8.58942,
+            "mj_m2_cooling_dem": 82.8076,
+            "mj_m2_heating_dem": 637.668
+          },
+          {
+            "area": 167.51,
+            "type": "Other local room heater - unfanned",
+            "fuel_type": "Grid Supplied Electricity",
+            "activities": [
+              {
+                "id": 1305,
+                "area": 167.51
+              }
+            ],
+            "heat_source": "Room heater",
+            "cooling_sseer": 0,
+            "heating_sseff": 0.8,
+            "kwh_m2_cooling": 0,
+            "kwh_m2_heating": 143.224,
+            "cooling_gen_seer": 0,
+            "heating_gen_seff": 1,
+            "kwh_m2_auxiliary": 0,
+            "mj_m2_cooling_dem": 277.439,
+            "mj_m2_heating_dem": 412.486
+          }
+        ],
+        "analysis_type": "ACTUAL",
+        "area_exterior": 578.13,
+        "building_alpha": 5.48977,
+        "building_w_m2k": 1.30912,
+        "q50_infiltration": 25,
+        "global_performance": {
+          "kwh_m2_chp": 0,
+          "kwh_m2_dhw": 1.42751,
+          "kwh_m2_lpg": 0,
+          "kwh_m2_oil": 0,
+          "kwh_m2_pvs": 0,
+          "kwh_m2_ses": 0,
+          "kwh_m2_coal": 0,
+          "kwh_m2_wind": 0,
+          "kwh_m2_biogas": 0,
+          "kwh_m2_biomass": 0,
+          "kwh_m2_cooling": 0,
+          "kwh_m2_heating": 162.325,
+          "kwh_m2_lighting": 95.5093,
+          "kwh_m2_supplied": 261.361,
+          "kwh_m2_auxiliary": 2.09834,
+          "kwh_m2_displaced": 0,
+          "kwh_m2_dual_fuel": 0,
+          "kwh_m2_equipment": 17.0788,
+          "kwh_m2_smokeless": 0,
+          "kwh_m2_anthracite": 0,
+          "kwh_m2_waste_heat": 0,
+          "kwh_m2_natural_gas": 0,
+          "kwh_m2_district_heating": 0
+        }
+      },
+      {
+        "area": 221.66,
+        "weather": "NEW",
+        "activities": [
+          {
+            "id": 1078,
+            "area": 6.84
+          },
+          {
+            "id": 1077,
+            "area": 3.42
+          },
+          {
+            "id": 1074,
+            "area": 43.89
+          },
+          {
+            "id": 1305,
+            "area": 167.51
+          }
+        ],
+        "building_w_k": 141.605,
+        "hvac_systems": [
+          {
+            "area": 54.15,
+            "type": "Other local room heater - fanned",
+            "fuel_type": "Oil",
+            "activities": [
+              {
+                "id": 1078,
+                "area": 6.84
+              },
+              {
+                "id": 1077,
+                "area": 3.42
+              },
+              {
+                "id": 1074,
+                "area": 43.89
+              }
+            ],
+            "heat_source": "Room heater",
+            "cooling_sseer": 0,
+            "heating_sseff": 0.819,
+            "kwh_m2_cooling": 0,
+            "kwh_m2_heating": 83.8955,
+            "cooling_gen_seer": 0,
+            "heating_gen_seff": 0,
+            "kwh_m2_auxiliary": 2.29051,
+            "mj_m2_cooling_dem": 32.988,
+            "mj_m2_heating_dem": 247.357
+          },
+          {
+            "area": 167.51,
+            "type": "Other local room heater - unfanned",
+            "fuel_type": "Oil",
+            "activities": [
+              {
+                "id": 1305,
+                "area": 167.51
+              }
+            ],
+            "heat_source": "Room heater",
+            "cooling_sseer": 0,
+            "heating_sseff": 0.819,
+            "kwh_m2_cooling": 0,
+            "kwh_m2_heating": 18.2439,
+            "cooling_gen_seer": 0,
+            "heating_gen_seff": 0,
+            "kwh_m2_auxiliary": 0,
+            "mj_m2_cooling_dem": 153.68,
+            "mj_m2_heating_dem": 53.7903
+          }
+        ],
+        "analysis_type": "NOTIONAL",
+        "area_exterior": 578.13,
+        "building_alpha": 12.3616,
+        "building_w_m2k": 0.244936,
+        "q50_infiltration": 5,
+        "global_performance": {
+          "kwh_m2_chp": 0,
+          "kwh_m2_dhw": 1.64373,
+          "kwh_m2_lpg": 0,
+          "kwh_m2_oil": 35.9259,
+          "kwh_m2_pvs": 0,
+          "kwh_m2_ses": 0,
+          "kwh_m2_coal": 0,
+          "kwh_m2_wind": 0,
+          "kwh_m2_biogas": 0,
+          "kwh_m2_biomass": 0,
+          "kwh_m2_cooling": 0,
+          "kwh_m2_heating": 34.2821,
+          "kwh_m2_lighting": 53.9687,
+          "kwh_m2_supplied": 54.5286,
+          "kwh_m2_auxiliary": 0.559555,
+          "kwh_m2_displaced": 0,
+          "kwh_m2_dual_fuel": 0,
+          "kwh_m2_equipment": 17.0788,
+          "kwh_m2_smokeless": 0,
+          "kwh_m2_anthracite": 0,
+          "kwh_m2_waste_heat": 0,
+          "kwh_m2_natural_gas": 0,
+          "kwh_m2_district_heating": 0
+        }
+      }
+    ]
+  },
+  "existing_stock_benchmark": 79,
+  "building_reference_number": 12457
 }

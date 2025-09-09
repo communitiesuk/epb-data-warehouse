@@ -1,266 +1,28 @@
 {
-  "issue_date": "2020-05-14",
-  "report_type": 1,
-  "valid_until": "2026-05-04",
-  "inspection_date": "2020-05-04",
-  "registration_date": "2020-05-04",
   "status": "entered",
+  "postcode": "SW1A 2AA",
+  "post_town": "Whitbury",
+  "dec_status": 1,
+  "issue_date": "2020-05-14",
+  "reason_type": 6,
+  "report_type": 1,
+  "schema_type": "CEPC-8.0.0",
+  "valid_until": "2026-05-04",
   "language_code": 1,
-  "building_complexity": "Level 3",
+  "output_engine": "MWW-91.1.1",
+  "property_type": "B1 Offices and Workshop businesses",
   "address_line_1": "Some Unit",
   "address_line_2": "2 Lonely Street",
   "address_line_3": "Some Area",
   "address_line_4": "Some County",
-  "post_town": "Whitbury",
-  "postcode": "SW1A 2AA",
-  "property_type": "B1 Offices and Workshop businesses",
-  "is_heritage_site": "N",
-  "calculation_tool": "DCLG, ORCalc, v3.6.3",
-  "output_engine": "MWW-91.1.1",
-  "summary_of_performance": {
-    "building_data": [
-      {
-        "analysis_type": "ACTUAL",
-        "area": 402.6,
-        "area_exterior": 1058.32,
-        "weather": "LON",
-        "q50_infiltration": 10,
-        "building_w_k": 411.86,
-        "building_w_m2k": 0.389164,
-        "building_alpha": 18.3412,
-        "activities": [
-          {
-            "id": 1005,
-            "area": 402.6
-          }
-        ],
-        "global_performance": {
-          "kwh_m2_heating": 41.0355,
-          "kwh_m2_cooling": 25.3865,
-          "kwh_m2_auxiliary": 39.0832,
-          "kwh_m2_lighting": 54.0787,
-          "kwh_m2_dhw": 2.77834,
-          "kwh_m2_equipment": 42.185,
-          "kwh_m2_natural_gas": 41.0355,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_oil": 0,
-          "kwh_m2_coal": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_supplied": 121.327,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_district_heating": 0,
-          "kwh_m2_displaced": 6.10442,
-          "kwh_m2_pvs": 3.07665,
-          "kwh_m2_wind": 3.02777,
-          "kwh_m2_chp": 0,
-          "kwh_m2_ses": 0.801605
-        },
-        "hvac_systems": [
-          {
-            "area": 402.6,
-            "type": "Fan coil systems",
-            "heat_source": "LTHW boiler",
-            "fuel_type": "Natural Gas",
-            "mj_m2_heating_dem": 122.171,
-            "mj_m2_cooling_dem": 179.401,
-            "kwh_m2_heating": 41.0355,
-            "kwh_m2_cooling": 25.3865,
-            "kwh_m2_auxiliary": 39.0832,
-            "heating_sseff": 0.827,
-            "cooling_sseer": 1.963,
-            "heating_gen_seff": 0.89,
-            "cooling_gen_seer": 2.5,
-            "activities": [
-              {
-                "id": 1005,
-                "area": 402.6
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "analysis_type": "NOTIONAL",
-        "area": 402.6,
-        "area_exterior": 1058.32,
-        "weather": "LON",
-        "q50_infiltration": 3,
-        "building_w_k": 362.524,
-        "building_w_m2k": 0.342547,
-        "building_alpha": 11.2489,
-        "activities": [
-          {
-            "id": 1005,
-            "area": 402.6
-          }
-        ],
-        "global_performance": {
-          "kwh_m2_heating": 18.1582,
-          "kwh_m2_cooling": 7.46769,
-          "kwh_m2_auxiliary": 14.0716,
-          "kwh_m2_lighting": 14.4489,
-          "kwh_m2_dhw": 3.33761,
-          "kwh_m2_equipment": 42.185,
-          "kwh_m2_natural_gas": 18.1582,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_oil": 3.33761,
-          "kwh_m2_coal": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_supplied": 35.9883,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_district_heating": 0,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_chp": 0,
-          "kwh_m2_ses": 0
-        },
-        "hvac_systems": [
-          {
-            "area": 402.6,
-            "type": "Fan coil systems",
-            "heat_source": "LTHW boiler",
-            "fuel_type": "Natural Gas",
-            "mj_m2_heating_dem": 53.5375,
-            "mj_m2_cooling_dem": 96.7814,
-            "kwh_m2_heating": 18.1581,
-            "kwh_m2_cooling": 7.46769,
-            "kwh_m2_auxiliary": 14.0716,
-            "heating_sseff": 0.819,
-            "cooling_sseer": 3.6,
-            "heating_gen_seff": 0,
-            "cooling_gen_seer": 0,
-            "activities": [
-              {
-                "id": 1005,
-                "area": 402.6
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "analysis_type": "REFERENCE",
-        "area": 402.6,
-        "area_exterior": 1058.32,
-        "weather": "LON",
-        "q50_infiltration": 10,
-        "building_w_k": 718.761,
-        "building_w_m2k": 0.679153,
-        "building_alpha": 10,
-        "activities": [
-          {
-            "id": 1005,
-            "area": 402.6
-          }
-        ],
-        "global_performance": {
-          "kwh_m2_heating": 71.9516,
-          "kwh_m2_cooling": 25.6538,
-          "kwh_m2_auxiliary": 2.16062,
-          "kwh_m2_lighting": 45.54,
-          "kwh_m2_dhw": 6.41192,
-          "kwh_m2_equipment": 42.185,
-          "kwh_m2_natural_gas": 78.3634,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_oil": 0,
-          "kwh_m2_coal": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_supplied": 73.3544,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_district_heating": 0,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_chp": 0,
-          "kwh_m2_ses": 0
-        },
-        "hvac_systems": [
-          {
-            "area": 402.6,
-            "type": "Fan coil systems",
-            "heat_source": "LTHW boiler",
-            "fuel_type": "Natural Gas",
-            "mj_m2_heating_dem": 189.088,
-            "mj_m2_cooling_dem": 207.795,
-            "kwh_m2_heating": 71.9516,
-            "kwh_m2_cooling": 25.6538,
-            "kwh_m2_auxiliary": 2.16062,
-            "heating_sseff": 0.73,
-            "cooling_sseer": 2.25,
-            "heating_gen_seff": 0,
-            "cooling_gen_seer": 0,
-            "activities": [
-              {
-                "id": 1005,
-                "area": 402.6
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "or_assessment_start_date": "2020-05-01",
-  "or_assessment_end_date": "2020-05-01",
-  "building_category": "C1",
-  "or_previous_data": {
-    "asset_rating": 100
-  },
-  "or_benchmark_data": {
-    "benchmarks": [
-      {
-        "benchmark_id": 1,
-        "floor_area": 15,
-        "name": "Library",
-        "occupancy_level": "level",
-        "tufa": 1840
-      }
-    ]
-  },
-  "or_energy_consumption": {
-    "electricity": {
-      "consumption": 422480,
-      "start_date": "2007-01-31",
-      "end_date": "2008-01-31",
-      "estimate": 1
-    },
-    "gas": {
-      "consumption": 310400,
-      "start_date": "2007-01-18",
-      "end_date": "2007-12-18",
-      "estimate": 0
-    }
-  },
-  "dec_status": 1,
-  "reason_type": 6,
-  "dec_related_party_disclosure": 4,
-  "dec_annual_energy_summary": {
-    "annual_energy_use_fuel_thermal": 1,
-    "annual_energy_use_electrical": 1,
-    "renewables_fuel_thermal": 1,
-    "renewables_electrical": 1,
-    "typical_thermal_use": 1,
-    "typical_electrical_use": 1
-  },
-  "technical_information": {
-    "building_environment": "Heating and Natural Ventilation",
-    "main_heating_fuel": "Natural Gas",
-    "floor_area": 99,
-    "other_fuel_description": "other",
-    "special_energy_uses": "special"
+  "assessment_type": "DEC",
+  "inspection_date": "2020-05-04",
+  "this_assessment": {
+    "heating_co2": 3,
+    "energy_rating": 1,
+    "nominated_date": "2020-01-01",
+    "renewables_co2": 0,
+    "electricity_co2": 7
   },
   "ac_questionnaire": {
     "ac_present": "Yes",
@@ -270,28 +32,266 @@
     "ac_estimated_output": 1,
     "ac_inspection_commissioned": 1
   },
-  "this_assessment": {
-    "nominated_date": "2020-01-01",
-    "energy_rating": 1,
-    "electricity_co2": 7,
-    "heating_co2": 3,
-    "renewables_co2": 0
+  "calculation_tool": "DCLG, ORCalc, v3.6.3",
+  "is_heritage_site": "N",
+  "or_previous_data": {
+    "asset_rating": 100
   },
   "year1_assessment": {
-    "nominated_date": "2019-01-01",
-    "energy_rating": 24,
-    "electricity_co2": 10,
     "heating_co2": 5,
-    "renewables_co2": 1
+    "energy_rating": 24,
+    "nominated_date": "2019-01-01",
+    "renewables_co2": 1,
+    "electricity_co2": 10
   },
   "year2_assessment": {
-    "nominated_date": "2018-01-01",
-    "energy_rating": 40,
-    "electricity_co2": 15,
     "heating_co2": 10,
-    "renewables_co2": 2
+    "energy_rating": 40,
+    "nominated_date": "2018-01-01",
+    "renewables_co2": 2,
+    "electricity_co2": 15
   },
-  "assessment_type": "DEC",
-  "schema_type": "CEPC-8.0.0",
-  "building_reference_number": 1245
+  "building_category": "C1",
+  "or_benchmark_data": {
+    "benchmarks": [
+      {
+        "name": "Library",
+        "tufa": 1840,
+        "floor_area": 15,
+        "benchmark_id": 1,
+        "occupancy_level": "level"
+      }
+    ]
+  },
+  "registration_date": "2020-05-04",
+  "building_complexity": "Level 3",
+  "or_energy_consumption": {
+    "gas": {
+      "end_date": "2007-12-18",
+      "estimate": 0,
+      "start_date": "2007-01-18",
+      "consumption": 310400
+    },
+    "electricity": {
+      "end_date": "2008-01-31",
+      "estimate": 1,
+      "start_date": "2007-01-31",
+      "consumption": 422480
+    }
+  },
+  "technical_information": {
+    "floor_area": 99,
+    "main_heating_fuel": "Natural Gas",
+    "special_energy_uses": "special",
+    "building_environment": "Heating and Natural Ventilation",
+    "other_fuel_description": "other"
+  },
+  "or_assessment_end_date": "2020-05-01",
+  "summary_of_performance": {
+    "building_data": [
+      {
+        "area": 402.6,
+        "weather": "LON",
+        "activities": [
+          {
+            "id": 1005,
+            "area": 402.6
+          }
+        ],
+        "building_w_k": 411.86,
+        "hvac_systems": [
+          {
+            "area": 402.6,
+            "type": "Fan coil systems",
+            "fuel_type": "Natural Gas",
+            "activities": [
+              {
+                "id": 1005,
+                "area": 402.6
+              }
+            ],
+            "heat_source": "LTHW boiler",
+            "cooling_sseer": 1.963,
+            "heating_sseff": 0.827,
+            "kwh_m2_cooling": 25.3865,
+            "kwh_m2_heating": 41.0355,
+            "cooling_gen_seer": 2.5,
+            "heating_gen_seff": 0.89,
+            "kwh_m2_auxiliary": 39.0832,
+            "mj_m2_cooling_dem": 179.401,
+            "mj_m2_heating_dem": 122.171
+          }
+        ],
+        "analysis_type": "ACTUAL",
+        "area_exterior": 1058.32,
+        "building_alpha": 18.3412,
+        "building_w_m2k": 0.389164,
+        "q50_infiltration": 10,
+        "global_performance": {
+          "kwh_m2_chp": 0,
+          "kwh_m2_dhw": 2.77834,
+          "kwh_m2_lpg": 0,
+          "kwh_m2_oil": 0,
+          "kwh_m2_pvs": 3.07665,
+          "kwh_m2_ses": 0.801605,
+          "kwh_m2_coal": 0,
+          "kwh_m2_wind": 3.02777,
+          "kwh_m2_biogas": 0,
+          "kwh_m2_biomass": 0,
+          "kwh_m2_cooling": 25.3865,
+          "kwh_m2_heating": 41.0355,
+          "kwh_m2_lighting": 54.0787,
+          "kwh_m2_supplied": 121.327,
+          "kwh_m2_auxiliary": 39.0832,
+          "kwh_m2_displaced": 6.10442,
+          "kwh_m2_dual_fuel": 0,
+          "kwh_m2_equipment": 42.185,
+          "kwh_m2_smokeless": 0,
+          "kwh_m2_anthracite": 0,
+          "kwh_m2_waste_heat": 0,
+          "kwh_m2_natural_gas": 41.0355,
+          "kwh_m2_district_heating": 0
+        }
+      },
+      {
+        "area": 402.6,
+        "weather": "LON",
+        "activities": [
+          {
+            "id": 1005,
+            "area": 402.6
+          }
+        ],
+        "building_w_k": 362.524,
+        "hvac_systems": [
+          {
+            "area": 402.6,
+            "type": "Fan coil systems",
+            "fuel_type": "Natural Gas",
+            "activities": [
+              {
+                "id": 1005,
+                "area": 402.6
+              }
+            ],
+            "heat_source": "LTHW boiler",
+            "cooling_sseer": 3.6,
+            "heating_sseff": 0.819,
+            "kwh_m2_cooling": 7.46769,
+            "kwh_m2_heating": 18.1581,
+            "cooling_gen_seer": 0,
+            "heating_gen_seff": 0,
+            "kwh_m2_auxiliary": 14.0716,
+            "mj_m2_cooling_dem": 96.7814,
+            "mj_m2_heating_dem": 53.5375
+          }
+        ],
+        "analysis_type": "NOTIONAL",
+        "area_exterior": 1058.32,
+        "building_alpha": 11.2489,
+        "building_w_m2k": 0.342547,
+        "q50_infiltration": 3,
+        "global_performance": {
+          "kwh_m2_chp": 0,
+          "kwh_m2_dhw": 3.33761,
+          "kwh_m2_lpg": 0,
+          "kwh_m2_oil": 3.33761,
+          "kwh_m2_pvs": 0,
+          "kwh_m2_ses": 0,
+          "kwh_m2_coal": 0,
+          "kwh_m2_wind": 0,
+          "kwh_m2_biogas": 0,
+          "kwh_m2_biomass": 0,
+          "kwh_m2_cooling": 7.46769,
+          "kwh_m2_heating": 18.1582,
+          "kwh_m2_lighting": 14.4489,
+          "kwh_m2_supplied": 35.9883,
+          "kwh_m2_auxiliary": 14.0716,
+          "kwh_m2_displaced": 0,
+          "kwh_m2_dual_fuel": 0,
+          "kwh_m2_equipment": 42.185,
+          "kwh_m2_smokeless": 0,
+          "kwh_m2_anthracite": 0,
+          "kwh_m2_waste_heat": 0,
+          "kwh_m2_natural_gas": 18.1582,
+          "kwh_m2_district_heating": 0
+        }
+      },
+      {
+        "area": 402.6,
+        "weather": "LON",
+        "activities": [
+          {
+            "id": 1005,
+            "area": 402.6
+          }
+        ],
+        "building_w_k": 718.761,
+        "hvac_systems": [
+          {
+            "area": 402.6,
+            "type": "Fan coil systems",
+            "fuel_type": "Natural Gas",
+            "activities": [
+              {
+                "id": 1005,
+                "area": 402.6
+              }
+            ],
+            "heat_source": "LTHW boiler",
+            "cooling_sseer": 2.25,
+            "heating_sseff": 0.73,
+            "kwh_m2_cooling": 25.6538,
+            "kwh_m2_heating": 71.9516,
+            "cooling_gen_seer": 0,
+            "heating_gen_seff": 0,
+            "kwh_m2_auxiliary": 2.16062,
+            "mj_m2_cooling_dem": 207.795,
+            "mj_m2_heating_dem": 189.088
+          }
+        ],
+        "analysis_type": "REFERENCE",
+        "area_exterior": 1058.32,
+        "building_alpha": 10,
+        "building_w_m2k": 0.679153,
+        "q50_infiltration": 10,
+        "global_performance": {
+          "kwh_m2_chp": 0,
+          "kwh_m2_dhw": 6.41192,
+          "kwh_m2_lpg": 0,
+          "kwh_m2_oil": 0,
+          "kwh_m2_pvs": 0,
+          "kwh_m2_ses": 0,
+          "kwh_m2_coal": 0,
+          "kwh_m2_wind": 0,
+          "kwh_m2_biogas": 0,
+          "kwh_m2_biomass": 0,
+          "kwh_m2_cooling": 25.6538,
+          "kwh_m2_heating": 71.9516,
+          "kwh_m2_lighting": 45.54,
+          "kwh_m2_supplied": 73.3544,
+          "kwh_m2_auxiliary": 2.16062,
+          "kwh_m2_displaced": 0,
+          "kwh_m2_dual_fuel": 0,
+          "kwh_m2_equipment": 42.185,
+          "kwh_m2_smokeless": 0,
+          "kwh_m2_anthracite": 0,
+          "kwh_m2_waste_heat": 0,
+          "kwh_m2_natural_gas": 78.3634,
+          "kwh_m2_district_heating": 0
+        }
+      }
+    ]
+  },
+  "or_assessment_start_date": "2020-05-01",
+  "building_reference_number": 12457,
+  "dec_annual_energy_summary": {
+    "typical_thermal_use": 1,
+    "renewables_electrical": 1,
+    "typical_electrical_use": 1,
+    "renewables_fuel_thermal": 1,
+    "annual_energy_use_electrical": 1,
+    "annual_energy_use_fuel_thermal": 1
+  },
+  "dec_related_party_disclosure": 4
 }

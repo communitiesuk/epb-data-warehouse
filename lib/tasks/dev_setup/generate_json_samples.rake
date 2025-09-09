@@ -30,20 +30,47 @@ end
 class GenerateJsonSamples
   def self.parse_assessment(xml:, assessment_id:, schema_type:, type:)
     meta_data = {
-      "assessment_type" => type.gsub("+rr", "").upcase,
+      "assessment_type" => assessment_type(schema_type:, type:),
       "schema_type" => schema_type,
-      "building_reference_number" => 1245,
+      "assessment_address_id" => "UPRN-000000012457",
     }
 
     document = UseCase::ParseXmlCertificate.new.execute(xml: xml.to_xml, assessment_id:, schema_type:)
     document.merge!(meta_data)
-    redacted_json(document:)
+    save_document(assessment_id:, certificate_data: document)
+    assessment = redacted_json(assessment_id:)
+    delete_rows(assessment_id:)
+
+    assessment
   end
 
-  def self.redacted_json(document:)
-    document.delete("uprn")
-    document.delete("calculation_software_name")
-    Domain::RedactedDocument.new(result: document.to_json).get_hash
+  def self.assessment_type(schema_type:, type:)
+    schema = schema_type.split("-")[0]
+    case schema
+    when "CEPC"
+      type.gsub("+rr", "").upcase
+    when "RdSAP"
+      "RdSAP"
+    else
+      type == "epc" ? schema : type.upcase.tr("D", "d")
+    end
+  end
+
+  def self.redacted_json(assessment_id:)
+    Container.documents_gateway.fetch_by_id(assessment_id:)
+  end
+
+  def self.delete_rows(assessment_id:)
+    sql = "DELETE FROM assessment_documents WHERE assessment_id ='#{assessment_id}'"
+    ActiveRecord::Base.connection.exec_query(sql)
+    sql = "DELETE  FROM assessment_search WHERE assessment_id ='#{assessment_id}'"
+    ActiveRecord::Base.connection.exec_query(sql)
+    nil
+  end
+
+  def self.save_document(assessment_id:, certificate_data:)
+    Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
+    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, created_at: Time.now, document: certificate_data, country_id: 1)
   end
 
   def self.get_rrn(xml:, type:, schema_type:)

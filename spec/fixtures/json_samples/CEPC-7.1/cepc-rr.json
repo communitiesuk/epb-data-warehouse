@@ -1,58 +1,58 @@
 {
+  "status": "cancelled",
+  "postcode": "SW1A 2AA",
+  "post_town": "Fulchester",
   "issue_date": "2020-05-14",
   "report_type": 4,
+  "schema_type": "CEPC-7.1",
   "valid_until": "2021-05-03",
-  "inspection_date": "2020-05-04",
-  "registration_date": "2020-05-05",
-  "status": "cancelled",
+  "long_payback": [
+    {
+      "co2_impact": "HIGH",
+      "recommendation": "Consider installing an air source heat pump.",
+      "recommendation_code": "EPC-R5"
+    }
+  ],
   "language_code": 1,
+  "other_payback": [
+    {
+      "co2_impact": "HIGH",
+      "recommendation": "Consider installing PV.",
+      "recommendation_code": "EPC-R4"
+    }
+  ],
+  "property_type": "B1 Offices and Workshop businesses",
+  "short_payback": [
+    {
+      "co2_impact": "HIGH",
+      "recommendation": "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+      "recommendation_code": "ECP-L5"
+    },
+    {
+      "co2_impact": "LOW",
+      "recommendation": "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+      "recommendation_code": "EPC-L7"
+    }
+  ],
   "address_line_1": "Some Unit",
   "address_line_2": "2 Lonely Street",
   "address_line_3": "Some Area",
   "address_line_4": "Some County",
-  "post_town": "Fulchester",
-  "postcode": "SW1A 2AA",
-  "property_type": "B1 Offices and Workshop businesses",
-  "calculation_tool": "CEPC Compute v0.2",
-  "formatted_report": "ZGVmYXVsdA==",
-  "short_payback": [
-    {
-      "recommendation_code": "ECP-L5",
-      "recommendation": "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-      "co2_impact": "HIGH"
-    },
-    {
-      "recommendation_code": "EPC-L7",
-      "recommendation": "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-      "co2_impact": "LOW"
-    }
-  ],
   "medium_payback": [
     {
-      "recommendation_code": "EPC-H7",
+      "co2_impact": "MEDIUM",
       "recommendation": "Add optimum start/stop to the heating system.",
-      "co2_impact": "MEDIUM"
+      "recommendation_code": "EPC-H7"
     }
   ],
-  "long_payback": [
-    {
-      "recommendation_code": "EPC-R5",
-      "recommendation": "Consider installing an air source heat pump.",
-      "co2_impact": "HIGH"
-    }
-  ],
-  "other_payback": [
-    {
-      "recommendation_code": "EPC-R4",
-      "recommendation": "Consider installing PV.",
-      "co2_impact": "HIGH"
-    }
-  ],
+  "assessment_type": "CEPC-RR",
+  "inspection_date": "2020-05-04",
+  "calculation_tool": "CEPC Compute v0.2",
+  "formatted_report": "ZGVmYXVsdA==",
+  "registration_date": "2020-05-05",
   "technical_information": {
     "floor_area": 10,
     "building_environment": "Natural Ventilation Only"
   },
-  "assessment_type": "CEPC-RR",
-  "schema_type": "CEPC-7.1",
-  "building_reference_number": 1245
+  "building_reference_number": 12457
 }
