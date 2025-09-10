@@ -1,22 +1,22 @@
 module Controller
   class FileController < BaseController
     get "/api/files/domestic/csv" do
-      file_name = "domestic/full-load/domestic.zip"
+      file_name = "full-load/domestic-csv.zip"
       redirect_to_s3_file(file_name)
     end
 
     get "/api/files/domestic/csv/info" do
-      file_name = "domestic/full-load/domestic.zip"
+      file_name = "full-load/domestic-csv.zip"
       get_s3_file_info(file_name)
     end
 
     get "/api/files/domestic/json" do
-      file_name = "domestic_json_documents/full-load/domestic_json_documents.zip"
+      file_name = "full-load/domestic-json.zip"
       redirect_to_s3_file(file_name)
     end
 
     get "/api/files/domestic/json/info" do
-      file_name = "domestic_json_documents/full-load/domestic_json_documents.zip"
+      file_name = "full-load/domestic-json.zip"
       get_s3_file_info(file_name)
     end
 

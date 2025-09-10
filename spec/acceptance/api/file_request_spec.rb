@@ -1,11 +1,11 @@
 describe "FileController" do
   include RSpecDataWarehouseApiServiceMixin
 
-  context "when requesting csv format" do
-    let(:file_path) do
-      "domestic/full-load/domestic.zip"
-    end
+  let(:domestic_file_path) do
+    "full-load/domestic"
+  end
 
+  context "when requesting csv format" do
     let(:response) do
       header("Authorization", "Bearer valid-bearer-token")
       get "/api/files/domestic/csv"
@@ -62,7 +62,7 @@ describe "FileController" do
       end
 
       it "redirects to file download" do
-        expect(response.headers["location"]).to include("https://user-data.s3.us-stubbed-1.amazonaws.com/#{file_path}?X-Amz-Algorithm=AWS4-HMAC")
+        expect(response.headers["location"]).to include("https://user-data.s3.us-stubbed-1.amazonaws.com/#{domestic_file_path}-csv.zip?X-Amz-Algorithm=AWS4-HMAC")
       end
     end
 
@@ -105,10 +105,6 @@ describe "FileController" do
   end
 
   context "when requesting json format" do
-    let(:file_path) do
-      "domestic_json_documents/full-load/domestic_json_documents.zip"
-    end
-
     let(:response) do
       header("Authorization", "Bearer valid-bearer-token")
       get "/api/files/domestic/json"
@@ -165,7 +161,7 @@ describe "FileController" do
       end
 
       it "redirects to file download" do
-        expect(response.headers["location"]).to include("https://user-data.s3.us-stubbed-1.amazonaws.com/#{file_path}?X-Amz-Algorithm=AWS4-HMAC")
+        expect(response.headers["location"]).to include("https://user-data.s3.us-stubbed-1.amazonaws.com/#{domestic_file_path}-json.zip?X-Amz-Algorithm=AWS4-HMAC")
       end
     end
 
