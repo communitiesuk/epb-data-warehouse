@@ -64,7 +64,7 @@ describe Gateway::CommercialSearchGateway do
         "aircon_kw_rating" => "100",
         "aircon_present" => "No",
         "floor_area" => "951",
-        "lodgement_datetime" => Time.parse("2021-03-19 00:00:00.000000000 +0000"),
+        "lodgement_datetime" => Time.parse("2021-07-21 11:26:28.045000000 +0000"),
         "other_fuel_desc" => "Other fuel test",
         "renewable_sources" => "Renewable sources test",
         "special_energy_uses" => "Test sp",
@@ -75,13 +75,11 @@ describe Gateway::CommercialSearchGateway do
         "building_environment" => "Air Conditioning",
         "constituency" => "E14000629",
         "constituency_label" => "Chelsea and Fulham",
-        "county" => "",
         "primary_energy_value" => "451.27",
         "report_type" => "3",
         "uprn" => "",
         "uprn_source" => "" }
     end
-
 
     let(:query_result) do
       gateway.fetch(**search_arguments)
@@ -95,7 +93,6 @@ describe Gateway::CommercialSearchGateway do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }
       expect(result).to eq cepc_expected_data
     end
-
 
     context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do
       it "returns an empty value for the building_reference_number" do
