@@ -39,31 +39,31 @@ describe "Commercial Recommendations Report" do
 
     let(:expected_report) do
       [{ "certificate_number" => "0000-0000-0000-0000-0001",
-         "payback_type" => "short",
+         "payback_type" => "SHORT",
          "recommendation_item" => 1,
          "recommendation" => "Consider replacing T8 lamps with retrofit T5 conversion kit.",
          "recommendation_code" => "ECP-L5",
          "related_certificate_number" => "0000-0000-0000-0000-0000" },
        { "certificate_number" => "0000-0000-0000-0000-0001",
-         "payback_type" => "short",
+         "payback_type" => "SHORT",
          "recommendation_item" => 2,
          "recommendation" => "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
          "recommendation_code" => "EPC-L7",
          "related_certificate_number" => "0000-0000-0000-0000-0000" },
        { "certificate_number" => "0000-0000-0000-0000-0001",
-         "payback_type" => "medium",
+         "payback_type" => "MEDIUM",
          "recommendation_item" => 3,
          "recommendation" => "Add optimum start/stop to the heating system.",
          "recommendation_code" => "EPC-H7",
          "related_certificate_number" => "0000-0000-0000-0000-0000" },
        { "certificate_number" => "0000-0000-0000-0000-0001",
-         "payback_type" => "long",
+         "payback_type" => "LONG",
          "recommendation_item" => 4,
          "recommendation" => "Consider installing an air source heat pump.",
          "recommendation_code" => "EPC-R5",
          "related_certificate_number" => "0000-0000-0000-0000-0000" },
        { "certificate_number" => "0000-0000-0000-0000-0001",
-         "payback_type" => "other",
+         "payback_type" => "OTHER",
          "recommendation_item" => 5,
          "recommendation" => "Consider installing PV.",
          "recommendation_code" => "EPC-R4",
@@ -115,7 +115,7 @@ describe "Commercial Recommendations Report" do
 
       it "returns the correct recommendation for payback short" do
         result = data.find { |row| row["certificate_number"] == "0000-0000-0000-0000-0009" && row["recommendation_code"] == "ECP-L5" }
-        expect(result["payback_type"]).to eq "short"
+        expect(result["payback_type"]).to eq "SHORT"
         expect(result["recommendation"]).to eq "Consider replacing T8 lamps with retrofit T5 conversion kit."
         expect(result["related_certificate_number"]).to eq "0000-0000-0000-0000-0008"
       end
@@ -139,7 +139,7 @@ describe "Commercial Recommendations Report" do
 
       it "returns the correct recommendations for payback other" do
         result = data.find { |row| row["certificate_number"] == "0000-0000-0000-0000-0099" && row["recommendation_item"] == 5 }
-        expect(result["payback_type"]).to eq "other"
+        expect(result["payback_type"]).to eq "OTHER"
         expect(result["recommendation"]).to eq "Consider installing PV."
         expect(result["related_certificate_number"]).to eq "0000-0000-0000-0000-0098"
       end
