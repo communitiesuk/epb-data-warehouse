@@ -19,7 +19,7 @@ describe "Commercial Recommendations Yesterday Report" do
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0001"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 1
+        "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0000"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment: "DEC", type: "dec", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0005"
@@ -31,7 +31,7 @@ describe "Commercial Recommendations Yesterday Report" do
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0005"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 1
+        "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0004"
       })
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{Date.today - 1}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
     end
@@ -102,7 +102,7 @@ describe "Commercial Recommendations Yesterday Report" do
           "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0007"
         })
         add_commercial(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-          "postcode": "SW10 0AA", "country_id": 1
+          "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0006"
         })
         ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{Date.today - 1}' WHERE assessment_id = '0000-0000-0000-0000-0007'", "SQL")
       end
@@ -126,7 +126,7 @@ describe "Commercial Recommendations Yesterday Report" do
           "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0009", registration_date: Time.now
         })
         add_commercial(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-          "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now
+          "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0008"
         })
         ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{Date.today - 1}' WHERE assessment_id = '0000-0000-0000-0000-0009'", "SQL")
       end

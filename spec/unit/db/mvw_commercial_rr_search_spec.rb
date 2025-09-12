@@ -19,13 +19,13 @@ describe "Commercial Recommendations Report" do
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0001", registration_date: Time.now
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now
+        "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0000"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0003", registration_date: Time.now
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now
+        "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0002"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment: "DEC", type: "dec", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0005", registration_date: Time.now
@@ -104,7 +104,7 @@ describe "Commercial Recommendations Report" do
           "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0009", registration_date: Time.now
         })
         add_commercial(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-          "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now
+          "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0008"
         })
         Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_rr_search")
       end
@@ -128,7 +128,7 @@ describe "Commercial Recommendations Report" do
           "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0099", registration_date: Time.now
         })
         add_commercial(assessment_id: "0000-0000-0000-0000-0099", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-          "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now
+          "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0098"
         })
         Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_rr_search")
       end
