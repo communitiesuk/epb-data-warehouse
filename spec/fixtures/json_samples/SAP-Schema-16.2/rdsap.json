@@ -915,7 +915,6 @@
   },
   "seller_commission_report": "Y",
   "building_reference_number": 12457,
-  "calculation_software_name": "Stroma RdSAP Software",
   "energy_consumption_current": 239,
   "has_fixed_air_conditioning": "false",
   "calculation_software_version": "1.4.1.0",

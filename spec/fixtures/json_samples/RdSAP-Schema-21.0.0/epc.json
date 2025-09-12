@@ -372,7 +372,6 @@
     "space_heating_existing_dwelling": 13120
   },
   "building_reference_number": 12457,
-  "calculation_software_name": "SomeSoft RdSAP Calculator",
   "draughtproofed_door_count": 1,
   "mechanical_vent_duct_type": 3,
   "energy_consumption_current": 230,

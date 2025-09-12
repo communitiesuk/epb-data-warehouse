@@ -455,7 +455,6 @@
     "space_heating_existing_dwelling": 11351
   },
   "building_reference_number": 12457,
-  "calculation_software_name": "iQ-Engine",
   "energy_consumption_current": 234,
   "has_fixed_air_conditioning": "false",
   "multiple_glazed_proportion": 100,
