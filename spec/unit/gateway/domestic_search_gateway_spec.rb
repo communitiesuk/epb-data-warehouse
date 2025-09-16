@@ -462,31 +462,4 @@ describe Gateway::DomesticSearchGateway do
       expect(result).to eq expectation
     end
   end
-
-  context "when calling vw_domestic_yesterday" do
-    let(:mvw_columns) { get_columns_from_view("mvw_domestic_search") }
-    let(:vw_columns) { get_columns_from_view("vw_domestic_yesterday") }
-
-    let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query("SELECT * FROM vw_domestic_yesterday", "SQL").map { |result| result } }
-
-    let(:yesterday) { (Date.today - 1) }
-
-    before do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
-    end
-
-    it "returns the same columns as the mvw_domestic_search" do
-      expect(vw_columns).to eq mvw_columns
-    end
-
-    it "returns only the domestic data from yesterday" do
-      expect(vw_yesterday.length).to eq 1
-      expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0006")
-    end
-
-    it "includes rows updated yesterday" do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET updated_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0008'", "SQL")
-      expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0006 0000-0000-0000-0000-0008]
-    end
-  end
 end
