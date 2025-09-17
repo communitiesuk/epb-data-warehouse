@@ -1,7 +1,7 @@
 require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
 
-describe "DomesticSearchController" do
+describe "DomesticController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"
   include_context "when saving ons data"
