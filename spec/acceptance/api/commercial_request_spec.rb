@@ -16,7 +16,7 @@ describe "CommercialController" do
     cepc = JSON.parse(File.read(path))
     postcode_epc = cepc.merge({ "postcode" => "SW1A 2AA" })
     council_constituency_epc = cepc.merge({ "postcode" => "ML9 9AR" })
-    eff_epc = cepc.merge({ "energy_rating_current" => 85 })
+    eff_epc = cepc.merge({ "asset_rating" => 35 })
     address_epc = cepc.merge({ "address_line_1" => "2 Banana Street" })
     country_id = 1
     rdsap = parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
@@ -40,6 +40,19 @@ describe "CommercialController" do
         response_body = JSON.parse(response.body)
         expect(response.status).to eq(200)
         expect(response_body["data"]["count"]).to eq 4
+      end
+    end
+
+    context "when optional search filters are added" do
+      let(:response) do
+        header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+        get "/api/commercial/count?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[A B] }
+      end
+
+      it "returns 1 row of data for efficiency rating filter" do
+        response_body = JSON.parse(response.body)
+        expect(response.status).to eq(200)
+        expect(response_body["data"]).to eq({ "count" => 1 })
       end
     end
   end
