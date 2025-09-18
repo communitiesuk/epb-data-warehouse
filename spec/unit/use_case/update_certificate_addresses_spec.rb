@@ -35,7 +35,7 @@ describe UseCase::UpdateCertificateAddresses do
 
   let(:assessment_search_gateway) do
     assessment_search_gateway = instance_double(Gateway::AssessmentSearchGateway)
-    allow(assessment_search_gateway).to receive(:update_attribute)
+    allow(assessment_search_gateway).to receive(:update_uprn)
     assessment_search_gateway
   end
 
@@ -88,12 +88,11 @@ describe UseCase::UpdateCertificateAddresses do
         expect(documents_gateway).to have_received(:set_top_level_attribute).with(assessment_id: "0000-0000-0000-0000-0000", top_level_attribute: "assessment_address_id", new_value: "UPRN-4444444444").exactly(1).times
       end
 
-      it "updates the assessment search store" do
+      it "updates the assessment search table" do
         use_case.execute
-        expect(assessment_search_gateway).to have_received(:update_attribute).exactly(3).times
-        expect(assessment_search_gateway).to have_received(:update_attribute).with(
+        expect(assessment_search_gateway).to have_received(:update_uprn).exactly(3).times
+        expect(assessment_search_gateway).to have_received(:update_uprn).with(
           assessment_id: "0000-0000-0000-0000-0001",
-          attribute_name: "assessment_address_id",
           new_value: "RRN-0000-0000-0000-0000-0001",
         ).exactly(1).times
       end
@@ -134,7 +133,7 @@ describe UseCase::UpdateCertificateAddresses do
 
     it "sends updates for all three certificates from the recovery list" do
       expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
-      expect(assessment_search_gateway).to have_received(:update_attribute).exactly(3).times
+      expect(assessment_search_gateway).to have_received(:update_uprn).exactly(3).times
     end
 
     it "does not register the assessments onto the recovery list" do

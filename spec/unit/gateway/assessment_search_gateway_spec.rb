@@ -17,7 +17,7 @@ describe Gateway::AssessmentSearchGateway do
   let(:assessment_id) { "0000-0000-0001-1234-0000" }
   let(:country_id) { 1 }
   let(:rdsap) do
-    parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "postcode" => "SW10 0AA" })
+    parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-1000000001245", different_fields: { "postcode" => "SW10 0AA" })
   end
 
   before(:all) do
@@ -66,7 +66,8 @@ describe Gateway::AssessmentSearchGateway do
           "current_energy_efficiency_band" => "E",
           "constituency" => "Chelsea and Fulham",
           "council" => "Hammersmith and Fulham",
-          "assessment_address_id" => "RRN-0000-0000-0000-0000-0000",
+          "assessment_address_id" => nil,
+          "uprn" => 1_000_000_001_245,
           "address" => "1 some street whitbury",
           "registration_date" => Time.parse("2020-05-04 00:00:00.000000000 +0000"),
           "assessment_type" => "RdSAP",
@@ -79,7 +80,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a CEPC" do
       let(:cepc_document) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "UPRN-1000000001245", type: "cepc", different_fields: { "postcode" => "W6 9ZD" })
       end
 
       before do
@@ -99,7 +100,8 @@ describe Gateway::AssessmentSearchGateway do
           "current_energy_efficiency_band" => "D",
           "council" => "Hammersmith and Fulham",
           "constituency" => "Chelsea and Fulham",
-          "assessment_address_id" => "RRN-0000-0000-0000-0000-0001",
+          "assessment_address_id" => nil,
+          "uprn" => 1_000_000_001_245,
           "address" => "60 maple syrup road candy mountain big rock",
           "registration_date" => Time.parse("2021-03-19 00:00:00 UTC"),
           "assessment_type" => "CEPC",
@@ -148,7 +150,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a DEC" do
       let(:dec) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "dec", different_fields: { "postcode" => "W6 9ZD" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", assessment_address_id: "UPRN-1000000001245", type: "dec", different_fields: { "postcode" => "W6 9ZD" })
       end
 
       before do
@@ -168,11 +170,13 @@ describe Gateway::AssessmentSearchGateway do
           "current_energy_efficiency_rating" => 1,
           "council" => "Hammersmith and Fulham",
           "constituency" => "Chelsea and Fulham",
-          "assessment_address_id" => "RRN-0000-0000-0000-0000-0001",
+          "assessment_address_id" => nil,
           "address" => "some unit 2 lonely street some area some county whitbury",
           "registration_date" => Time.parse("2020-05-04 00:00:00 UTC"),
           "assessment_type" => "DEC",
           "created_at" => Time.now,
+          "uprn" => 1_000_000_001_245,
+
         }
 
         expect(search.first).to eq expected_data
@@ -181,7 +185,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a DEC-RR" do
       let(:dec) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC-RR", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "dec-rr", different_fields: { "postcode" => "W6 9ZD" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC-RR", assessment_address_id: "UPRN-1000000001245", type: "dec-rr", different_fields: { "postcode" => "W6 9ZD" })
       end
 
       before do
@@ -201,11 +205,12 @@ describe Gateway::AssessmentSearchGateway do
           "current_energy_efficiency_band" => nil,
           "council" => "Hammersmith and Fulham",
           "constituency" => "Chelsea and Fulham",
-          "assessment_address_id" => "RRN-0000-0000-0000-0000-0001",
+          "assessment_address_id" => nil,
           "address" => "some unit 2 lonely street some area some county fulchester",
           "registration_date" => Time.parse("2020-05-04 00:00:00 UTC"),
           "assessment_type" => "DEC-RR",
           "created_at" => Time.now,
+          "uprn" => 1_000_000_001_245,
         }
 
         expect(search.first).to eq expected_data
@@ -214,7 +219,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a SAP" do
       let(:sap) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "epc", different_fields: { "postcode" => "ML9 9AR" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", assessment_address_id: "UPRN-1000000001245", type: "epc", different_fields: { "postcode" => "ML9 9AR" })
       end
 
       before do
@@ -234,11 +239,12 @@ describe Gateway::AssessmentSearchGateway do
           "current_energy_efficiency_band" => "C",
           "constituency" => "Lanark and Hamilton East",
           "council" => "South Lanarkshire",
-          "assessment_address_id" => "RRN-0000-0000-0000-0000-0001",
+          "assessment_address_id" => nil,
           "address" => "1 some street some area some county whitbury",
           "registration_date" => Time.parse("2022-05-09 00:00:00 UTC"),
           "assessment_type" => "SAP",
           "created_at" => Time.now,
+          "uprn" => 1_000_000_001_245,
         }
 
         expect(search.first).to eq expected_data
@@ -347,22 +353,38 @@ describe Gateway::AssessmentSearchGateway do
         expect(epc["address"]).to eq "14 whitbury"
       end
     end
+
+    context "when the epc does not have a URPN" do
+      before do
+        epc = rdsap.merge({ "assessment_address_id" => "RRN-0000-0000-0000-0000-0000" })
+        gateway.insert_assessment(assessment_id: "7777-0000-0000-0011-9996", document: epc, country_id:)
+      end
+
+      it "does have a value for a uprn" do
+        expect(search.find { |i| i["assessment_id"] == "7777-0000-0000-0011-9996" }["uprn"]).to be_nil
+      end
+    end
   end
 
-  describe "#update_attribute" do
+  describe "#update_uprn" do
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
       gateway.insert_assessment(assessment_id: "9999-0000-0000-0011-9996", document: rdsap, country_id:)
     end
 
-    it "updates the assessment search attribute" do
-      gateway.update_attribute(assessment_id: "9999-0000-0000-0011-9996", attribute_name: "assessment_address_id", new_value: "RRN-0000-0000-0000-0000-0011")
-      expect(search.first["assessment_address_id"]).to eq "RRN-0000-0000-0000-0000-0011"
+    it "updates the uprn data with a nil" do
+      gateway.update_uprn(assessment_id: "9999-0000-0000-0011-9996", new_value: "RRN-0000-0000-0000-0000-0011")
+      expect(search.first["uprn"]).to be_nil
+    end
+
+    it "updates the uprn data with a big int value" do
+      gateway.update_uprn(assessment_id: "9999-0000-0000-0011-9996", new_value: "UPRN-0000000001245")
+      expect(search.first["uprn"]).to eq 1245
     end
 
     context "when the assessment id is not found" do
       it "does not error" do
-        expect { gateway.update_attribute(assessment_id: "9999-0000-0000-0000-1111", attribute_name: "assessment_address_id", new_value: "RRN-0000-0000-0000-0000-0011") }.not_to raise_error
+        expect { gateway.update_uprn(assessment_id: "9999-0000-0000-0000-1111", new_value: "RRN-0000-0000-0000-0000-0011") }.not_to raise_error
       end
     end
   end
@@ -421,7 +443,7 @@ describe Gateway::AssessmentSearchGateway do
         "address_line_2" => nil,
         "address_line_3" => nil,
         "address_line_4" => nil,
-        "building_reference_number" => "1245",
+        "building_reference_number" => "",
         "constituency" => "Chelsea and Fulham",
         "council" => "Hammersmith and Fulham",
         "current_energy_efficiency_band" => "E",
@@ -447,7 +469,7 @@ describe Gateway::AssessmentSearchGateway do
       before do
         address_rdsap = rdsap.merge({ "address_line_1" => "2 Some street" })
         gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, created_at: "2025-07-22", country_id:)
-        gateway.update_attribute(assessment_id: "0000-0000-0000-0001", attribute_name: "address_line_1", new_value: "10 Some Street")
+        ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET address_line_1 = '10 Some Street' WHERE assessment_id = '0000-0000-0000-0001'")
       end
 
       it "returns one row for the exact address" do
@@ -660,6 +682,30 @@ describe Gateway::AssessmentSearchGateway do
     context "when calling count method returns the number of rows in the table" do
       it "returns assessments matching the filters" do
         expect(gateway.count(**args)).to eq 2
+      end
+    end
+  end
+
+  describe "#get_uprn" do
+    context "when the input has an UPRN value" do
+      it "returns a big integer" do
+        value = "UPRN-1000000001245"
+        expect = gateway.get_uprn(value)
+        expect(expect).to eq 1_000_000_001_245
+      end
+
+      it "returns a big integer for a value smaller value" do
+        value = "UPRN-0000000001245"
+        expect = gateway.get_uprn(value)
+        expect(expect).to eq 1245
+      end
+    end
+
+    context "when the input is an RRN value" do
+      it "returns a nil" do
+        value = "RRN-0000-0000-0000-0000-0000"
+        expect = gateway.get_uprn(value)
+        expect(expect).to be_nil
       end
     end
   end

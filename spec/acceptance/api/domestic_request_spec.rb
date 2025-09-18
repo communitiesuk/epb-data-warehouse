@@ -84,7 +84,7 @@ describe "DomesticController" do
         "addressLine2" => nil,
         "addressLine3" => nil,
         "addressLine4" => nil,
-        "buildingReferenceNumber" => "100121241798",
+        "buildingReferenceNumber" => "",
         "certificateNumber" => "0000-0000-0000-0000",
         "constituency" => "Chelsea and Fulham",
         "council" => "Hammersmith and Fulham",

@@ -28,7 +28,7 @@ module UseCase
         address_id = payload_arr[1]
         @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: address_id
         @assessment_attribute_gateway.update_assessment_attribute assessment_id:, attribute: ASSESSMENT_ADDRESS_ID_KEY, value: address_id
-        @assessment_search_gateway.update_attribute assessment_id:, attribute_name: ASSESSMENT_ADDRESS_ID_KEY, new_value: address_id
+        @assessment_search_gateway.update_uprn assessment_id:, new_value: address_id
         @audit_logs_gateway.insert_log(assessment_id:, event_type: EVENT_TYPE, timestamp: Time.now.utc)
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e

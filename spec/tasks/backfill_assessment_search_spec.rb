@@ -8,6 +8,7 @@ shared_context "when inserting epc documents" do
     parsed_epc["created_at"] = created_at.to_s unless created_at.nil?
     parsed_epc["registration_date"] = created_at.to_s unless created_at.nil?
     parsed_epc["postcode"] = postcode unless postcode.nil?
+    parsed_epc["assessment_address_id"] = "UPRN-1000000001245"
     import = Gateway::DocumentsGateway.new
     import.add_assessment(assessment_id:, document: parsed_epc)
     country_gateway = Gateway::AssessmentsCountryIdGateway.new
@@ -132,7 +133,7 @@ describe "Backfill assessment_search table rake" do
         Date.new(2025, 7, 14)
       end
       let(:columns_to_check) do
-        %w[assessment_id address_line_1 post_town postcode current_energy_efficiency_rating current_energy_efficiency_band council constituency address registration_date assessment_type created_at]
+        %w[assessment_id address_line_1 post_town postcode current_energy_efficiency_rating current_energy_efficiency_band council constituency address registration_date assessment_type created_at uprn]
       end
 
       before do
@@ -160,6 +161,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "Town",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -185,6 +187,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "Whitbury",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -210,6 +213,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "POSTTOWN",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -235,6 +239,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "Whitbury",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -260,6 +265,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "POSTTOWN",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -285,6 +291,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "Big Rock",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -310,6 +317,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "POSTTOWN",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -335,6 +343,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "Whitbury",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end
@@ -360,6 +369,7 @@ describe "Backfill assessment_search table rake" do
           "post_town" => "Fulchester",
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
+          "uprn" => 1_000_000_001_245,
         }
         expect(search.first).to eq(expected_result)
       end

@@ -27,7 +27,7 @@ class Gateway::AssessmentSearchGateway
       current_energy_efficiency_band,
       council,
       constituency,
-      assessment_address_id,
+      uprn,
       address,
       registration_date,
       assessment_type,
@@ -91,9 +91,9 @@ class Gateway::AssessmentSearchGateway
         ActiveRecord::Type::Integer.new,
       ),
       ActiveRecord::Relation::QueryAttribute.new(
-        "assessment_address_id",
-        document_clone[:assessment_address_id],
-        ActiveRecord::Type::String.new,
+        "urpn",
+        get_uprn(document_clone[:assessment_address_id]),
+        ActiveRecord::Type::BigInteger.new,
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "address",
@@ -120,17 +120,17 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
   end
 
-  def update_attribute(assessment_id:, attribute_name:, new_value:)
+  def update_uprn(assessment_id:, new_value:)
     sql = <<-SQL
       UPDATE assessment_search
-      SET #{attribute_name} = $1
+      SET uprn = $1
       WHERE assessment_id = $2
     SQL
 
     bindings = [
       ActiveRecord::Relation::QueryAttribute.new(
-        attribute_name.to_s,
-        new_value,
+        "uprn",
+        get_uprn(new_value),
         ActiveRecord::Type::String.new,
       ),
       ActiveRecord::Relation::QueryAttribute.new(
@@ -197,6 +197,12 @@ class Gateway::AssessmentSearchGateway
     sql = search_filter(**this_args)
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["count"]
+  end
+
+  def get_uprn(assessment_address_id)
+    return nil if assessment_address_id.nil? || assessment_address_id.include?("RRN-")
+
+    assessment_address_id.gsub("UPRN-", "").to_i
   end
 
 private
