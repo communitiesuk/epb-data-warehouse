@@ -32,8 +32,15 @@ describe "Create psql function to export and redact json data from assessment_do
       "occupier" => "William Gates",
       "assessment_type" => "RdSAP",
       "equipment_operator" => "some value",
-      "assessment_address_id" => "UPRN-0000000001245",
+      "assessment_address_id" => "UPRN-1000000001245",
+      "cancelled_at" => "2020-06-01",
+      "hashed_assessment_id" => "0000-0000-0000-0000-1111",
+      "opt_out" => false,
     }
+  end
+
+  let(:cepc_json_sample) do
+    json_sample.merge("assessment_type" => "CEPC", "related_rrn" => "0000-0000-0000-0000-0000")
   end
 
   before do
@@ -46,14 +53,13 @@ describe "Create psql function to export and redact json data from assessment_do
     expect(document["equipment_owner"]).to be_nil
     expect(document["owner"]).to be_nil
     expect(document["occupier"]).to be_nil
+    expect(document["cancelled_at"]).to be_nil
+    expect(document["hashed_assessment_id"]).to be_nil
+    expect(document["opt_out"]).to be_nil
   end
 
-  it "removes the URPN value supplied by the assessors" do
-    expect(document["uprn"]).to be_nil
-  end
-
-  it "adds the building_reference_number based on the value of the assessment_address_id converted into an integer" do
-    expect(document["building_reference_number"]).to eq 1245
+  it "adds the uprn based on the value of the assessment_address_id converted into an integer" do
+    expect(document["uprn"]).to eq 1_000_000_001_245
   end
 
   it "removes assessment_address_id key" do
@@ -66,8 +72,22 @@ describe "Create psql function to export and redact json data from assessment_do
       documents_gateway.add_assessment(assessment_id:, document: json_sample)
     end
 
-    it "adds the building_reference_number based on the value of the assessment_address_id converted into an integer" do
-      expect(document["building_reference_number"]).to be_nil
+    it "adds a nil value to uprn" do
+      expect(document).to include("uprn" => nil)
+    end
+  end
+
+  context "when the assessment_type is CEPC" do
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: cepc_json_sample)
+    end
+
+    it "removes related_rrn" do
+      expect(document["related_rrn"]).to be_nil
+    end
+
+    it "returns related_certificate_number" do
+      expect(document["related_certificate_number"]).to eql("0000-0000-0000-0000-0000")
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_18_104923) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_15_155020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -84,7 +84,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_104923) do
     t.datetime "registration_date", precision: nil, null: false
     t.string "assessment_type", limit: 8
     t.datetime "created_at", precision: nil
-    t.bigint "uprn"
     t.index ["address"], name: "index_assessment_search_on_address_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["assessment_address_id"], name: "index_assessment_search_on_assessment_address_id"
     t.index ["assessment_type"], name: "index_assessment_search_on_assessment_type"
@@ -94,7 +93,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_104923) do
     t.index ["current_energy_efficiency_band"], name: "index_assessment_search_on_current_energy_efficiency_band"
     t.index ["postcode"], name: "index_assessment_search_on_postcode"
     t.index ["registration_date"], name: "index_assessment_search_on_registration_date"
-    t.index ["uprn"], name: "index_assessment_search_on_uprn"
   end
 
   create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
