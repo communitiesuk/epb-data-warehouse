@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "roofs": [
     {
       "description": "Pitched, 300+ mm loft insulation",
@@ -281,7 +282,6 @@
     "space_heating_existing_dwelling": 9324
   },
   "seller_commission_report": "Y",
-  "building_reference_number": 12457,
   "energy_consumption_current": 144,
   "has_fixed_air_conditioning": "false",
   "multiple_glazed_proportion": 100,

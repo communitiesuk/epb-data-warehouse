@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "status": "entered",
   "postcode": "A00 0AA",
   "post_town": "Floatering",
@@ -6,7 +7,6 @@
   "issue_date": "2021-10-12",
   "methodology": "ORCalc",
   "reason_type": 1,
-  "related_rrn": "0000-0000-0000-0000-0001",
   "report_type": 1,
   "schema_type": "CEPC-8.0.0",
   "valid_until": "2022-01-31",
@@ -116,7 +116,6 @@
     }
   ],
   "or_assessment_start_date": "2020-08-31",
-  "building_reference_number": 12457,
   "dec_annual_energy_summary": {
     "typical_thermal_use": 1196.24,
     "renewables_electrical": 16.3,
@@ -125,5 +124,6 @@
     "annual_energy_use_electrical": 86.1,
     "annual_energy_use_fuel_thermal": 548.82
   },
+  "related_certificate_number": "0000-0000-0000-0000-0001",
   "dec_related_party_disclosure": 1
 }

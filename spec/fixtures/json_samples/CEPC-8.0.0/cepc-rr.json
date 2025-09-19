@@ -1,9 +1,9 @@
 {
+  "uprn": 12457,
   "status": "cancelled",
   "postcode": "SW1A 2AA",
   "post_town": "Fulchester",
   "issue_date": "2020-05-14",
-  "related_rrn": "0000-0000-0000-0000-0001",
   "report_type": 4,
   "schema_type": "CEPC-8.0.0",
   "valid_until": "2021-05-03",
@@ -55,5 +55,5 @@
     "floor_area": 10,
     "building_environment": "Natural Ventilation Only"
   },
-  "building_reference_number": 12457
+  "related_certificate_number": "0000-0000-0000-0000-0001"
 }

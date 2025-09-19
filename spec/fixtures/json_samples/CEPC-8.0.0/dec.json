@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "status": "entered",
   "postcode": "SW1A 2AA",
   "post_town": "Whitbury",
@@ -284,7 +285,6 @@
     ]
   },
   "or_assessment_start_date": "2020-05-01",
-  "building_reference_number": 12457,
   "dec_annual_energy_summary": {
     "typical_thermal_use": 1,
     "renewables_electrical": 1,

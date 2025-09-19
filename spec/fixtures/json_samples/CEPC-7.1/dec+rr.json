@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "status": "entered",
   "postcode": "A1 1AA",
   "post_town": "Town",
@@ -6,7 +7,6 @@
   "issue_date": "2015-12-14",
   "methodology": "ORCalc",
   "reason_type": 1,
-  "related_rrn": "0000-0000-0000-0000-0006",
   "report_type": 1,
   "schema_type": "CEPC-7.1",
   "valid_until": "2016-12-29",
@@ -103,7 +103,6 @@
   },
   "or_assessment_end_date": "2015-09-30",
   "or_assessment_start_date": "2014-09-30",
-  "building_reference_number": 12457,
   "dec_annual_energy_summary": {
     "typical_thermal_use": 176,
     "renewables_electrical": 0,
@@ -112,5 +111,6 @@
     "annual_energy_use_electrical": 49,
     "annual_energy_use_fuel_thermal": 118
   },
+  "related_certificate_number": "0000-0000-0000-0000-0006",
   "dec_related_party_disclosure": 4
 }

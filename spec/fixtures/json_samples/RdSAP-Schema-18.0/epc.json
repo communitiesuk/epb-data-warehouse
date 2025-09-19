@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "roofs": [
     {
       "description": {
@@ -395,7 +396,6 @@
     "impact_of_solid_wall_insulation": -1864,
     "space_heating_existing_dwelling": 10483
   },
-  "building_reference_number": 12457,
   "energy_consumption_current": 230,
   "has_fixed_air_conditioning": "false",
   "multiple_glazed_proportion": 100,

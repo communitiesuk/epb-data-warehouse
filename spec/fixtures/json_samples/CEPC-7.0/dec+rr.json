@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "status": "entered",
   "postcode": "PT4 1SK",
   "post_town": "POSTTOWN",
@@ -6,7 +7,6 @@
   "issue_date": "2016-02-23",
   "methodology": "ORCalc",
   "reason_type": 2,
-  "related_rrn": "3333-4444-5555-6666-7778",
   "report_type": 1,
   "schema_type": "CEPC-7.0",
   "valid_until": "2017-04-24",
@@ -113,7 +113,6 @@
   },
   "or_assessment_end_date": "2016-01-01",
   "or_assessment_start_date": "2015-01-01",
-  "building_reference_number": 12457,
   "dec_annual_energy_summary": {
     "typical_thermal_use": 244,
     "renewables_electrical": 0,
@@ -122,5 +121,6 @@
     "annual_energy_use_electrical": 61,
     "annual_energy_use_fuel_thermal": 161
   },
+  "related_certificate_number": "3333-4444-5555-6666-7778",
   "dec_related_party_disclosure": 3
 }

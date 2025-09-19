@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "roofs": [
     {
       "description": "Average thermal transmittance 0.11 W/m²K",
@@ -546,7 +547,6 @@
     }
   },
   "seller_commission_report": "Y",
-  "building_reference_number": 12457,
   "energy_consumption_current": 82,
   "has_fixed_air_conditioning": "false",
   "multiple_glazed_percentage": 100,

@@ -3,6 +3,7 @@
   "ser": 45.61,
   "ter": 31.05,
   "tyr": 90.98,
+  "uprn": 12457,
   "status": "entered",
   "postcode": "NE0 0AA",
   "post_town": "Big Rock",
@@ -327,6 +328,5 @@
       }
     ]
   },
-  "existing_stock_benchmark": 100,
-  "building_reference_number": 12457
+  "existing_stock_benchmark": 100
 }

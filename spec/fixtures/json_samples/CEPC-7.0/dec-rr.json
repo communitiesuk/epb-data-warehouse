@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "status": "entered",
   "postcode": "SW1A 2AA",
   "post_town": "Fulchester",
@@ -70,6 +71,5 @@
     "renewable_sources": "Renewable source",
     "special_energy_uses": "Special discount",
     "building_environment": "Air Conditioning"
-  },
-  "building_reference_number": 12457
+  }
 }

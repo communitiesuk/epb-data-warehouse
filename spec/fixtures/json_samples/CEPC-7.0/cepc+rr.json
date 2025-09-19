@@ -3,12 +3,12 @@
   "ser": 59.26,
   "ter": 39.95,
   "tyr": 106.52,
+  "uprn": 12457,
   "status": "entered",
   "postcode": "PT42 7AD",
   "post_town": "POSTTOWN",
   "issue_date": "2013-08-16",
   "methodology": "SBEM",
-  "related_rrn": "4444-5555-6666-7777-8889",
   "report_type": 3,
   "schema_type": "CEPC-7.0",
   "valid_until": "2023-08-15",
@@ -272,5 +272,5 @@
     ]
   },
   "existing_stock_benchmark": 90,
-  "building_reference_number": 12457
+  "related_certificate_number": "4444-5555-6666-7777-8889"
 }

@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "roofs": [
     {
       "description": "Pitched, 25 mm loft insulation",
@@ -318,7 +319,6 @@
     "impact_of_solid_wall_insulation": -3560,
     "space_heating_existing_dwelling": 13120
   },
-  "building_reference_number": 12457,
   "energy_consumption_current": 230,
   "multiple_glazed_proportion": 100,
   "calculation_software_version": "13.05r16",

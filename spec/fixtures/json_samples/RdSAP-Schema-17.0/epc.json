@@ -1,4 +1,5 @@
 {
+  "uprn": 12457,
   "roofs": [
     {
       "description": {
@@ -334,7 +335,6 @@
     "water_heating": 4818,
     "space_heating_existing_dwelling": 2415
   },
-  "building_reference_number": 12457,
   "energy_consumption_current": 427,
   "has_fixed_air_conditioning": "false",
   "multiple_glazed_proportion": 100,

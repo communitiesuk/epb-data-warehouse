@@ -3,6 +3,7 @@
   "ser": 72.8,
   "ter": 39.05,
   "tyr": 114.44,
+  "uprn": 12457,
   "status": "entered",
   "postcode": "A1 1AA",
   "post_town": "New Town",
@@ -11,7 +12,6 @@
   },
   "issue_date": "2017-10-13",
   "methodology": "SBEM",
-  "related_rrn": "9999-9999-3333-9999-2222",
   "report_type": 3,
   "schema_type": "CEPC-7.1",
   "valid_until": "2027-10-12",
@@ -258,5 +258,5 @@
     ]
   },
   "existing_stock_benchmark": 79,
-  "building_reference_number": 12457
+  "related_certificate_number": "9999-9999-3333-9999-2222"
 }

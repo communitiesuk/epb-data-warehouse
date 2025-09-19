@@ -3,6 +3,7 @@
   "ser": 42.07,
   "ter": 23.2,
   "tyr": 67.98,
+  "uprn": 12457,
   "status": "entered",
   "postcode": "BT4 3SR",
   "post_town": "Whitbury",
@@ -10,7 +11,6 @@
     "energy_consumption_current": 413.22
   },
   "issue_date": "2020-05-14",
-  "related_rrn": "4192-1535-8427-8844-6702",
   "report_type": 3,
   "schema_type": "CEPC-7.1",
   "valid_until": "2026-05-04",
@@ -282,5 +282,5 @@
   ],
   "existing_stock_benchmark": 81,
   "or_assessment_start_date": "2020-05-14",
-  "building_reference_number": 12457
+  "related_certificate_number": "4192-1535-8427-8844-6702"
 }
