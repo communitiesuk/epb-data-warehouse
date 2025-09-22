@@ -1,4 +1,8 @@
+require_relative "../../shared_context/shared_json_document"
+
 describe "VwJsonDocumentsYesterday" do
+  include_context "when exporting json data"
+
   let(:documents_gateway) { Gateway::DocumentsGateway.new }
 
   let(:assessment_search_gateway) { Gateway::AssessmentSearchGateway.new }
@@ -67,15 +71,17 @@ describe "VwJsonDocumentsYesterday" do
     end
 
     it "redacts PII from the json document" do
-      expect(redacted_document["scheme_assessor_id"]).to be_nil
-      expect(redacted_document["equipment_operator"]).to be_nil
-      expect(redacted_document["equipment_owner"]).to be_nil
-      expect(redacted_document["owner"]).to be_nil
-      expect(redacted_document["occupier"]).to be_nil
+      redacted_keys.each do |key|
+        expect(redacted_document[key]).to be_nil
+      end
     end
 
     it "contains the assessment_type column" do
       expect(result.first["assessment_type"]).to eq "RdSAP"
+    end
+
+    it "updates the uprn value" do
+      expect(JSON.parse(redacted_document)["uprn"]).to eq 1245
     end
 
     it "contains the year column" do

@@ -1,5 +1,5 @@
-desc "Update uprn in assessment_search with assessment_address_id data"
 namespace :one_off do
+  desc "Update uprn in assessment_search with assessment_address_id data"
   task :update_uprn_assessment_search do
     Gateway::AssessmentSearchGateway.new
     sql = <<-SQL

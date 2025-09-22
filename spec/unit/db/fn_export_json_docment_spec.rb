@@ -1,6 +1,8 @@
-require_relative "../../shared_context/shared_lodgement"
+require_relative "../../shared_context/shared_json_document"
 
 describe "Create psql function to export and redact json data from assessment_documents" do
+  include_context "when exporting json data"
+
   let(:documents_gateway) { Gateway::DocumentsGateway.new }
   let(:assessment_id) { "8570-6826-6530-4969-0202" }
 
@@ -48,14 +50,9 @@ describe "Create psql function to export and redact json data from assessment_do
   end
 
   it "redacts PII from the json document" do
-    expect(document["scheme_assessor_id"]).to be_nil
-    expect(document["equipment_operator"]).to be_nil
-    expect(document["equipment_owner"]).to be_nil
-    expect(document["owner"]).to be_nil
-    expect(document["occupier"]).to be_nil
-    expect(document["cancelled_at"]).to be_nil
-    expect(document["hashed_assessment_id"]).to be_nil
-    expect(document["opt_out"]).to be_nil
+    redacted_keys.each do |key|
+      expect(document[key]).to be_nil
+    end
   end
 
   it "adds the uprn based on the value of the assessment_address_id converted into an integer" do
