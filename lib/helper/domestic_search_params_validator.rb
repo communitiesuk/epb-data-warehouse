@@ -12,6 +12,10 @@ module Helper
 
       this_args[:postcode] = Helper::PostcodeValidator.validate(this_args[:postcode]) unless this_args[:postcode].nil?
 
+      unless this_args[:uprn].nil? || this_args[:uprn].is_a?(Integer)
+        raise Boundary::InvalidArgumentType, "uprn should be an integer"
+      end
+
       unless this_args[:council].nil?
         councils = Container.ons_gateway.councils.map { |c| c["name"] }
         this_args[:council].each do |council|

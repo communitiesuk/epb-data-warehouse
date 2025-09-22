@@ -84,13 +84,13 @@ describe "DomesticController" do
         "addressLine2" => nil,
         "addressLine3" => nil,
         "addressLine4" => nil,
-        "buildingReferenceNumber" => "",
         "certificateNumber" => "0000-0000-0000-0000",
         "constituency" => "Chelsea and Fulham",
         "council" => "Hammersmith and Fulham",
         "currentEnergyEfficiencyBand" => "B",
         "postTown" => "Whitbury",
         "postcode" => "SW10 0AA",
+        "uprn" => 100_121_241_798,
         "registrationDate" => "2020-05-04T00:00:00.000Z",
       }
     end
@@ -318,7 +318,22 @@ describe "DomesticController" do
 
         it "raises an error for the invalid postcode" do
           response_body = JSON.parse(response.body)
-          expect(response_body["data"]["error"]).to include "please prove a valid postcode"
+          expect(response_body["data"]["error"]).to include "please provide a valid postcode"
+        end
+      end
+
+      context "when uprn is not an integer" do
+        let(:response) do
+          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { uprn: "not-an-integer" }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the invalid uprn type" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "the uprn should be an integer"
         end
       end
 

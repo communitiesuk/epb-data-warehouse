@@ -443,12 +443,12 @@ describe Gateway::AssessmentSearchGateway do
         "address_line_2" => nil,
         "address_line_3" => nil,
         "address_line_4" => nil,
-        "building_reference_number" => "",
         "constituency" => "Chelsea and Fulham",
         "council" => "Hammersmith and Fulham",
         "current_energy_efficiency_band" => "E",
         "post_town" => "Whitbury",
         "postcode" => "SW10 0AA",
+        "uprn" => 1245,
         "registration_date" => Date.new(2021, 11, 1),
       }
       expect(gateway.fetch_assessments(**args).first).to eq expected_result
@@ -567,6 +567,24 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
 
+    context "when filtering by uprn" do
+      before do
+        uprn_rdsap = rdsap.merge({ "assessment_address_id" => "UPRN-0000000009234" })
+        gateway.insert_assessment(assessment_id: "0000-7000-0044-0044", document: uprn_rdsap, created_at: "2025-07-22", country_id:)
+      end
+
+      it "returns one row matching the uprn" do
+        uprn_args = args.merge({ uprn: 9234 })
+        expect(gateway.fetch_assessments(**uprn_args).length).to eq 1
+        expect(gateway.fetch_assessments(**uprn_args).first["certificate_number"]).to eq("0000-7000-0044-0044")
+      end
+
+      it "returns rows if uprn is nil" do
+        uprn_args = args.merge({ uprn: nil })
+        expect(gateway.fetch_assessments(**uprn_args)).not_to be_empty
+      end
+    end
+
     context "when filtering by eff_rating" do
       before do
         eff_rating_rdsap = rdsap.merge({ "energy_rating_current" => 95 })
@@ -607,22 +625,6 @@ describe Gateway::AssessmentSearchGateway do
       it "returns results for the relevant EPCs" do
         results = gateway.fetch_assessments(**all_args)
         expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001]
-      end
-    end
-
-    context "when an assessment has a RRN value saved into the assessment_address_id attribute" do
-      let(:all_args) do
-        args.merge({
-          postcode: "SW10 0AA",
-          eff_rating: %w[A B C D E F G],
-          council: ["Hammersmith and Fulham"],
-          address: "street",
-        })
-      end
-
-      it "returns one row with no value for building_reference_number" do
-        results = gateway.fetch_assessments(**all_args).find { |i| i["certificate_number"] == "0000-0000-0000-0001" }
-        expect(results["building_reference_number"]).to eq ""
       end
     end
 

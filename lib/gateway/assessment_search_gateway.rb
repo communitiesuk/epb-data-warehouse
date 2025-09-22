@@ -161,20 +161,18 @@ class Gateway::AssessmentSearchGateway
     this_args = args.first
     sql = <<-SQL
         SELECT assessment_id AS certificate_number,
-               address_line_1,
-               address_line_2,
-               address_line_3,
-               address_line_4,
-               postcode,
-               post_town,
-               council,
-               constituency,
-               current_energy_efficiency_band,
-               registration_date,
-                CASE WHEN starts_with(assessment_address_id, 'UPRN') THEN
-                (REPLACE(assessment_address_id,  'UPRN-', '')::BIGINT)::varchar(15)
-                ELSE '' END as building_reference_number#{' '}
-               FROM assessment_search
+              address_line_1,
+              address_line_2,
+              address_line_3,
+              address_line_4,
+              postcode,
+              post_town,
+              council,
+              constituency,
+              current_energy_efficiency_band,
+              registration_date,
+              uprn
+        FROM assessment_search
     SQL
 
     this_args[:sql] = sql
@@ -302,6 +300,14 @@ private
       )
     end
 
+    unless this_args[:uprn].nil?
+      arr << ActiveRecord::Relation::QueryAttribute.new(
+        "uprn",
+        this_args[:uprn],
+        ActiveRecord::Type::BigInteger.new,
+      )
+    end
+
     if this_args[:row_limit]
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "limit",
@@ -367,6 +373,11 @@ private
 
     unless this_args[:postcode].nil?
       sql << " AND postcode = $#{index}"
+      index += 1
+    end
+
+    unless this_args[:uprn].nil?
+      sql << " AND uprn = $#{index}"
       index += 1
     end
 

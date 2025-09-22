@@ -153,6 +153,7 @@ paths:
           - multiple councils
           - multiple constituencies
           - a postcode
+          - UPRN
           - multiple efficiency rating (eff_rating)
           - a partial address
       operationId: search-assessments
@@ -198,6 +199,12 @@ paths:
             type: string
             example: 'FL23 4JA'
         - in: query
+          name: uprn
+          description: The UPRN (unique property reference number) for a property
+          schema:
+            type: integer
+            example: 100023336956
+        - in: query
           name: eff_rating[]
           description: The array of Efficiency Ratings used for the search filter
           schema:
@@ -207,7 +214,7 @@ paths:
             example: ['A', 'B', 'C']
         - in: query
           name: address
-          description: Partial address to be used for the search filter
+          description: The partial or the full address to be searched for
           schema:
             type: string
           example: '9 new union'
@@ -236,7 +243,7 @@ paths:
                     addressLine2: null
                     addressLine3: null
                     addressLine4: null
-                    buildingReferenceNumber: "100121241798"
+                    uprn: 100121241798
                     certificateNumber: "0000-0000-0000-0000"
                     constituency: "Chelsea and Fulham"
                     council: "Hammersmith and Fulham"
@@ -269,7 +276,11 @@ paths:
                 invalid_postcode:
                   summary: Invalid postcode
                   value:
-                    error: "The search query was invalid - please prove a valid postcode"
+                    error: "The search query was invalid - please provide a valid postcode"
+                invalid_uprn:
+                  summary: Invalid UPRN
+                  value:
+                    error: "The search query was invalid - the uprn should be an integer"
                 invalid_council:
                   summary: Invalid council
                   value:
@@ -497,8 +508,9 @@ components:
         addressLine4:
           nullable: true
           type: string
-        buildingReferenceNumber:
-          type: string
+        uprn:
+          nullable: true
+          type: integer
         certificateNumber:
           type: string
         constituency:
