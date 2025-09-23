@@ -243,6 +243,18 @@ describe "DomesticController" do
           expect(response_body["data"].length).to eq 4
         end
       end
+
+      context "when the uprn param is passed" do
+        let(:response) do
+          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01&page_size=4&uprn=100121241799"
+        end
+
+        it "returns the correct number of rows" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 1
+        end
+      end
     end
 
     context "when getting an error response" do

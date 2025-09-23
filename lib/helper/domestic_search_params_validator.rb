@@ -12,8 +12,8 @@ module Helper
 
       this_args[:postcode] = Helper::PostcodeValidator.validate(this_args[:postcode]) unless this_args[:postcode].nil?
 
-      unless this_args[:uprn].nil? || this_args[:uprn].is_a?(Integer)
-        raise Boundary::InvalidArgumentType, "uprn should be an integer"
+      if !this_args[:uprn].nil? && this_args[:uprn].to_i.zero?
+        raise Boundary::InvalidArgumentType, "uprn should be an integer great than 0"
       end
 
       unless this_args[:council].nil?

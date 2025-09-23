@@ -33,6 +33,13 @@ describe Helper::DomesticSearchParamsValidator, type: :helper do
     end
   end
 
+  context "when the uprn is zero" do
+    it "raises an InvalidArgumentType error" do
+      search_arguments[:uprn] = "0"
+      expect { described_class.validate(**search_arguments) }.to raise_error(Boundary::InvalidArgumentType)
+    end
+  end
+
   context "when the Council is invalid" do
     it "raises an CouncilNotFound error" do
       invalid_council_args = search_arguments.merge({ council: ["invalid council"] })

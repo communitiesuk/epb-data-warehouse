@@ -280,7 +280,7 @@ paths:
                 invalid_uprn:
                   summary: Invalid UPRN
                   value:
-                    error: "The search query was invalid - the uprn should be an integer"
+                    error: "The search query was invalid - the uprn should be an integer greater than 0"
                 invalid_council:
                   summary: Invalid council
                   value:

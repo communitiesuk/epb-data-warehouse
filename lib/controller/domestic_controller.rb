@@ -37,7 +37,7 @@ module Controller
       includes_today_error = "The search query was invalid - the date cannot include today"
       json_api_response code: 400, data: { error: includes_today_error }
     rescue Boundary::InvalidArgumentType
-      uprn_invalid_type_error = "The search query was invalid - the uprn should be an integer"
+      uprn_invalid_type_error = "The search query was invalid - the uprn should be an integer greater than 0"
       json_api_response code: 400, data: { error: uprn_invalid_type_error }
     rescue Errors::PostcodeNotValid
       postcode_invalid_error = "The search query was invalid - please provide a valid postcode"
