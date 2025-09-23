@@ -119,7 +119,7 @@ paths:
                   value:
                     error: "The search query was invalid - please provide a valid date range"
                 includes_today:
-                  summary: Date range includes today, which is not allowed
+                  summary: Date range should not include today
                   value:
                     error: "The search query was invalid - the date cannot include today"
 
@@ -154,7 +154,7 @@ paths:
           - multiple constituencies
           - a postcode
           - UPRN
-          - multiple efficiency rating (eff_rating)
+          - multiple efficiency rating bands
           - a partial address
       operationId: search-assessments
       security:
@@ -178,7 +178,7 @@ paths:
             example: '2025-08-10'
         - in: query
           name: council[]
-          description: The array of Local Authorities used for the search filter
+          description: A local authority name
           schema:
             type: array
             items:
@@ -186,7 +186,7 @@ paths:
             example: ['Manchester', 'Birmingham']
         - in: query
           name: constituency[]
-          description: The array of Parliamentary Constituencies used for the search filter
+          description: A parliamentary constituency
           schema:
             type: array
             items:
@@ -194,7 +194,7 @@ paths:
             example: ['Aldershot', 'Banbury']
         - in: query
           name: postcode
-          description: The postcode of the address being searched for
+          description: The postcode
           schema:
             type: string
             example: 'FL23 4JA'
@@ -206,7 +206,7 @@ paths:
             example: 100023336956
         - in: query
           name: eff_rating[]
-          description: The array of Efficiency Ratings used for the search filter
+          description: An efficiency rating band
           schema:
             type: array
             items:
@@ -214,7 +214,7 @@ paths:
             example: ['A', 'B', 'C']
         - in: query
           name: address
-          description: The partial or the full address to be searched for
+          description: A partial or full address
           schema:
             type: string
           example: '9 new union'
