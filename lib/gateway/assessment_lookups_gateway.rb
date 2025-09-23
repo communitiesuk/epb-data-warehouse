@@ -60,6 +60,16 @@ module Gateway
       assessment_lookups
     end
 
+    def fetch_lookups
+      sql = <<-SQL
+        SELECT DISTINCT attribute_name as lookup_name FROM
+                assessment_attributes a
+        JOIN assessment_attribute_lookups aal ON a.attribute_id = aal.attribute_id
+        ORDER BY attribute_name#{'    '}
+      SQL
+      ActiveRecord::Base.connection.exec_query(sql).map { |row| row["lookup_name"] }
+    end
+
   private
 
     def insert_attribute_lookups(lookup_id, attribute_id, type_of_assessment, schema_version)
