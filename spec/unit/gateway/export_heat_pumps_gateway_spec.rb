@@ -1,6 +1,5 @@
 require_relative "../../shared_context/shared_lodgement"
 require_relative "../../shared_context/shared_ons_data"
-require "csv"
 
 describe Gateway::ExportHeatPumpsGateway do
   subject(:gateway) { described_class.new }

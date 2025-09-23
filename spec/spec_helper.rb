@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "csv"
 require "epb_view_models"
 require "epb-auth-tools"
 require "active_support"
