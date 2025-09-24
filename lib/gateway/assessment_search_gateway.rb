@@ -91,7 +91,7 @@ class Gateway::AssessmentSearchGateway
         ActiveRecord::Type::Integer.new,
       ),
       ActiveRecord::Relation::QueryAttribute.new(
-        "urpn",
+        "uprn",
         get_uprn(document_clone[:assessment_address_id]),
         ActiveRecord::Type::BigInteger.new,
       ),
