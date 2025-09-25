@@ -27,6 +27,7 @@ describe "DomesticController" do
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: council_constituency_rdsap, created_at: "2023-05-05", country_id:)
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: address_rdsap, created_at: "2022-05-05", country_id:)
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0004", document: sap, created_at: "2022-01-01", country_id: 1)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0005", document: eff_rdsap, created_at: Date.today.strftime("%y-%m-%d"), country_id:)
   end
 
   context "when requesting a response from /api/domestic/count" do
@@ -47,7 +48,7 @@ describe "DomesticController" do
       context "when optional search filters are added" do
         let(:response) do
           header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-          get "/api/domestic/count?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[A B] }
+          get "/api/domestic/count", { eff_rating: %w[A B] }
         end
 
         it "returns 1 row of data for efficiency rating filter" do
@@ -102,7 +103,7 @@ describe "DomesticController" do
     end
 
     context "when the response is a success" do
-      context "when no optional search params are passed" do
+      context "when the date range is passed" do
         let(:response) do
           get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01"
         end
@@ -139,7 +140,7 @@ describe "DomesticController" do
       context "when the postcode param is passed" do
         let(:response) do
           header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { postcode: "SW1A 2AA" }
+          get "/api/domestic/search", { postcode: "SW1A 2AA" }
         end
 
         it "returns the correct assessment" do
@@ -152,11 +153,11 @@ describe "DomesticController" do
 
       context "when the council param is passed" do
         let(:response) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire"] }
+          get "/api/domestic/search", { council: ["South Lanarkshire"] }
         end
 
         let(:multiple_responses) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { council: ["South Lanarkshire", "Hammersmith and Fulham"] }
+          get "/api/domestic/search", { council: ["South Lanarkshire", "Hammersmith and Fulham"] }
         end
 
         it "returns the correct assessment" do
@@ -175,11 +176,11 @@ describe "DomesticController" do
 
       context "when the constituency param is passed" do
         let(:response) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East"] }
+          get "/api/domestic/search", { constituency: ["Lanark and Hamilton East"] }
         end
 
         let(:multiple_responses) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] }
+          get "/api/domestic/search", { constituency: ["Lanark and Hamilton East", "Chelsea and Fulham"] }
         end
 
         it "returns the correct assessment" do
@@ -198,11 +199,11 @@ describe "DomesticController" do
 
       context "when the eff_rating param is passed" do
         let(:response) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B] }
+          get "/api/domestic/search", { eff_rating: %w[B] }
         end
 
         let(:multiple_responses) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { eff_rating: %w[B E] }
+          get "/api/domestic/search", { eff_rating: %w[B E] }
         end
 
         it "returns the correct assessment" do
@@ -221,7 +222,7 @@ describe "DomesticController" do
 
       context "when the address param is passed" do
         let(:response) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01", { address: "2 Banana Street" }
+          get "/api/domestic/search", { address: "2 Banana Street" }
         end
 
         it "returns the correct assessment" do
@@ -246,7 +247,7 @@ describe "DomesticController" do
     end
 
     context "when getting an error response" do
-      context "when dates are missing" do
+      context "when no params are passed and dates are missing" do
         let(:response) do
           get "/api/domestic/search"
         end
@@ -255,9 +256,9 @@ describe "DomesticController" do
           expect(response.status).to eq(400)
         end
 
-        it "raises an error for the missing dates" do
+        it "raises an error for the missing params" do
           response_body = JSON.parse(response.body)
-          expect(response_body["data"]["error"]).to include "please provide a valid date range"
+          expect(response_body["data"]["error"]).to include "please provide a valid date range or search parameter"
         end
       end
 
@@ -309,7 +310,7 @@ describe "DomesticController" do
 
       context "when postcode is invalid" do
         let(:response) do
-          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { postcode: "invalid postcode" }
+          get "/api/domestic/search", { postcode: "invalid postcode" }
         end
 
         it "returns 400" do
@@ -324,7 +325,7 @@ describe "DomesticController" do
 
       context "when council is invalid" do
         let(:response) do
-          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { council: ["invalid council"] }
+          get "/api/domestic/search", { council: ["invalid council"] }
         end
 
         it "returns 400" do
@@ -339,7 +340,7 @@ describe "DomesticController" do
 
       context "when constituency is invalid" do
         let(:response) do
-          get "/api/domestic/search?date_start=2014-01-01&date_end=2018-01-01", { constituency: ["invalid constituency"] }
+          get "/api/domestic/search", { constituency: ["invalid constituency"] }
         end
 
         it "returns 400" do

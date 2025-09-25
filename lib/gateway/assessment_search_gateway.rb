@@ -273,18 +273,20 @@ private
       end
     end
 
-    arr.concat [
-      ActiveRecord::Relation::QueryAttribute.new(
-        "date_start",
-        this_args[:date_start],
-        ActiveRecord::Type::Date.new,
-      ),
-      ActiveRecord::Relation::QueryAttribute.new(
-        "date_end",
-        this_args[:date_end],
-        ActiveRecord::Type::Date.new,
-      ),
-    ]
+    unless this_args[:date_start].nil? || this_args[:date_end].nil?
+      arr.concat [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_start",
+          this_args[:date_start],
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_end",
+          this_args[:date_end],
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+    end
 
     unless this_args[:address].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
@@ -356,21 +358,26 @@ private
       index += this_args[:constituency].size
     end
 
-    sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
-    sql << "registration_date BETWEEN $#{index} AND $#{index + 1}"
-    index += 2
+    unless this_args[:date_start].nil? || this_args[:date_end].nil?
+      sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
+      sql << "registration_date BETWEEN $#{index} AND $#{index + 1}"
+      index += 2
+    end
 
     unless this_args[:address].nil?
-      sql << " AND address LIKE $#{index}"
+      sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
+      sql << "address LIKE $#{index}"
       index += 1
     end
 
     unless this_args[:postcode].nil?
-      sql << " AND postcode = $#{index}"
+      sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
+      sql << "postcode = $#{index}"
       index += 1
     end
 
-    sql << " AND NOT created_at::date = CURRENT_DATE"
+    sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
+    sql << "NOT created_at::date = CURRENT_DATE"
 
     if this_args[:limit]
       sql << " ORDER BY registration_date DESC"
