@@ -35,7 +35,7 @@ class Gateway::AuditLogsGateway
                  CASE#{'  '}
                    WHEN event_type = 'cancelled' THEN 'removed'
                    WHEN event_type = 'opt_out'   THEN 'removed'
-                   WHEN event_type = 'address_id_updated' THEN 'address_id_update'
+                   WHEN event_type = 'address_id_updated' THEN 'uprn_updated'
                  END as event_type,
                  timestamp
           FROM audit_logs

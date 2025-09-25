@@ -113,7 +113,7 @@ describe Gateway::AuditLogsGateway do
 
       it "presents removed and address_id_update as new event_type names" do
         result = gateway.fetch_logs(date_start: "2025-01-01", date_end: "2025-03-01")
-        expect(result.map { |l| l["event_type"] }).to eq %w[removed removed address_id_update]
+        expect(result.map { |l| l["event_type"] }).to eq %w[removed removed uprn_updated]
       end
 
       it "does not return logs with event_type 'opt_in'" do
