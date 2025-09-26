@@ -109,6 +109,10 @@ class Container
     @get_heat_pump_counts_by_floor_area_use_case ||= UseCase::GetHeatPumpCountsByFloorArea.new(export_gateway: export_heat_pumps_gateway)
   end
 
+  def self.fetch_look_ups_use_case
+    @fetch_look_ups_use_case ||= UseCase::FetchLookups.new(gateway: assessment_lookups_gateway)
+  end
+
   def self.export_heat_pumps_gateway
     @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
   end

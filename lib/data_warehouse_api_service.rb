@@ -17,4 +17,5 @@ class DataWarehouseApiService < Controller::BaseController
   use Controller::CommercialController
   use Controller::DeltasController
   use Controller::FileController
+  use Controller::CodesController
 end
