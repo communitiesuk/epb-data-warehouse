@@ -1,6 +1,6 @@
 require_relative "../../shared_context/shared_json_document"
 
-describe "VwDomesticDocuments" do
+describe "VwExportDocuments" do
   include_context "when exporting json data"
 
   let(:documents_gateway) { Gateway::DocumentsGateway.new }
@@ -27,7 +27,6 @@ describe "VwDomesticDocuments" do
       "scheme_assessor_id" => "EES/008538",
       "region_code" => 17,
       "country_code" => "EAW",
-      "uprn" => "UPRN-0000000001245",
       "owner" => "Unknown",
       "occupier" => "William Gates",
       "assessment_type" => "RdSAP",
@@ -36,14 +35,14 @@ describe "VwDomesticDocuments" do
     }
   end
 
-  context "when fetching from vw_domestic_documents_2020" do
+  context "when fetching from vw_export_documents_2020" do
     before do
       documents_gateway.add_assessment(assessment_id:, document: assessment_data_to_redact)
       assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_to_redact, country_id: 1)
     end
 
     let(:redacted_row) do
-      sql = "SELECT * FROM vw_domestic_documents_2020 WHERE certificate_number='#{assessment_id}'"
+      sql = "SELECT * FROM vw_export_documents_2020 WHERE certificate_number='#{assessment_id}'"
       result = ActiveRecord::Base.connection.exec_query(sql)
       result.first
     end
@@ -73,7 +72,7 @@ describe "VwDomesticDocuments" do
 
   context "when generating redacted documents tables" do
     let(:redacted_table_names) do
-      sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name LIKE 'vw_domestic_documents_%';"
+      sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name LIKE 'vw_export_documents_%';"
       result = ActiveRecord::Base.connection.exec_query(sql)
       result
     end
