@@ -2,7 +2,6 @@ module Controller
   class ApiBaseController < Controller::BaseController
     SEARCH_SCHEMA = {
       type: "object",
-      required: %w[date_start date_end],
       properties: {
         date_start: {
           type: "string",
@@ -36,6 +35,18 @@ module Controller
         },
 
       },
+      anyOf: [
+        { required: %w[date_start date_end] },
+        {
+          anyOf: [
+            { required: %w[council] },
+            { required: %w[constituency] },
+            { required: %w[postcode] },
+            { required: %w[eff_rating] },
+            { required: %w[address] },
+          ],
+        },
+      ],
     }.freeze
 
     def get_count(assessment_type:)

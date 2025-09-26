@@ -30,7 +30,10 @@ module Controller
       assessment_search_use_case = Container.assessment_search_use_case
       result = assessment_search_use_case.execute(**execute_params)
       json_api_response code: 200, data: result, pagination: pagination_hash
-    rescue Boundary::Json::ValidationError, Boundary::InvalidDates
+    rescue Boundary::Json::ValidationError
+      params_missing_error = "The search query was invalid - please provide a valid date range or search parameter"
+      json_api_response code: 400, data: { error: params_missing_error }
+    rescue Boundary::InvalidDates
       dates_missing_error = "The search query was invalid - please provide a valid date range"
       json_api_response code: 400, data: { error: dates_missing_error }
     rescue Boundary::InvalidArgument

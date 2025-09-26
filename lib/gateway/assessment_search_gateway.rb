@@ -161,18 +161,18 @@ class Gateway::AssessmentSearchGateway
     this_args = args.first
     sql = <<-SQL
         SELECT assessment_id AS certificate_number,
-              address_line_1,
-              address_line_2,
-              address_line_3,
-              address_line_4,
-              postcode,
-              post_town,
-              council,
-              constituency,
-              current_energy_efficiency_band,
-              registration_date,
-              uprn
-        FROM assessment_search
+               address_line_1,
+               address_line_2,
+               address_line_3,
+               address_line_4,
+               postcode,
+               post_town,
+               council,
+               constituency,
+               current_energy_efficiency_band,
+               registration_date,
+               uprn
+               FROM assessment_search
     SQL
 
     this_args[:sql] = sql
@@ -271,18 +271,20 @@ private
       end
     end
 
-    arr.concat [
-      ActiveRecord::Relation::QueryAttribute.new(
-        "date_start",
-        this_args[:date_start],
-        ActiveRecord::Type::Date.new,
-      ),
-      ActiveRecord::Relation::QueryAttribute.new(
-        "date_end",
-        this_args[:date_end],
-        ActiveRecord::Type::Date.new,
-      ),
-    ]
+    unless this_args[:date_start].nil? || this_args[:date_end].nil?
+      arr.concat [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_start",
+          this_args[:date_start],
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_end",
+          this_args[:date_end],
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+    end
 
     unless this_args[:address].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
@@ -362,9 +364,12 @@ private
       index += this_args[:constituency].size
     end
 
-    sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
-    sql << "registration_date BETWEEN $#{index} AND $#{index + 1}"
-    index += 2
+    sql << " WHERE 0 = 0"
+
+    unless this_args[:date_start].nil? || this_args[:date_end].nil?
+      sql << " AND registration_date BETWEEN $#{index} AND $#{index + 1}"
+      index += 2
+    end
 
     unless this_args[:address].nil?
       sql << " AND address LIKE $#{index}"

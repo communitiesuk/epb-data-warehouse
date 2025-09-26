@@ -3,12 +3,12 @@ module Helper
     def self.validate(*args)
       this_args = args[0]
 
-      start_date = Date.parse(this_args[:date_start])
-      end_date = Date.parse(this_args[:date_end])
-
-      raise Boundary::InvalidDates if start_date > end_date
-
-      raise Boundary::InvalidArgument, "date range includes today" if end_date >= Date.today
+      unless this_args[:date_start].nil? || this_args[:date_end].nil?
+        start_date = Date.parse(this_args[:date_start]) unless this_args[:date_start].nil?
+        end_date = Date.parse(this_args[:date_end]) unless this_args[:date_end].nil?
+        raise Boundary::InvalidDates if start_date > end_date
+        raise Boundary::InvalidArgument, "date range includes today" if end_date >= Date.today
+      end
 
       this_args[:postcode] = Helper::PostcodeValidator.validate(this_args[:postcode]) unless this_args[:postcode].nil?
 

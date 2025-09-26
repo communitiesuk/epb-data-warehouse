@@ -162,16 +162,14 @@ paths:
       parameters:
         - in: query
           name: date_start
-          description: The start date for the date range of the search (YYYY-mm-dd)
-          required: true
+          description: The start date for the date range of the search (YYYY-mm-dd) required if no other search option is specified
           schema:
             type: string
             format: date
             example: '2025-07-10'
         - in: query
           name: date_end
-          description: The end date for the date range of the search (YYYY-mm-dd)
-          required: true
+          description: The end date for the date range of the search (YYYY-mm-dd) required if no other search option is specified, defaults to yesterday if not provided
           schema:
             type: string
             format: date
@@ -265,8 +263,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               examples:
-                missing_dates:
-                  summary: Missing or invalid dates
+                missing_params:
+                  summary: Missing search parameters
+                  value:
+                    error: "The search query was invalid - please provide a valid date range or search parameter"
+                invalid_dates:
+                  summary: Start date is after end date
                   value:
                     error: "The search query was invalid - please provide a valid date range"
                 includes_today:
