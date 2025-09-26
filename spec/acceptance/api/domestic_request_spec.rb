@@ -247,7 +247,7 @@ describe "DomesticController" do
 
       context "when the uprn param is passed" do
         let(:response) do
-          get "/api/domestic/search?date_start=2018-01-01&date_end=2025-01-01&page_size=4&uprn=100121241799"
+          get "/api/domestic/search?uprn=100121241799"
         end
 
         it "returns the correct number of rows" do

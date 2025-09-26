@@ -27,6 +27,9 @@ module Controller
         address: {
           type: "string",
         },
+        uprn: {
+          type: "string",
+        },
         current_page: {
           type: "integer",
         },
@@ -44,6 +47,7 @@ module Controller
             { required: %w[postcode] },
             { required: %w[eff_rating] },
             { required: %w[address] },
+            { required: %w[uprn] },
           ],
         },
       ],
