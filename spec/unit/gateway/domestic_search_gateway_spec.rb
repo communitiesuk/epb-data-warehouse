@@ -23,7 +23,7 @@ describe Gateway::DomesticSearchGateway do
     assessment_address_id = "UPRN-000000001245"
     schema_type = "SAP-Schema-19.0.0"
     add_countries
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id:, schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id: "RRN-000000001245", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
       "postcode": "W6 9ZD", "country_id": 1
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", assessment_address_id:, schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
@@ -272,8 +272,7 @@ describe Gateway::DomesticSearchGateway do
           "number_heated_rooms" => nil,
           "number_open_fireplaces" => "0",
           "unheated_corridor_length" => nil,
-          "building_reference_number" => "1245",
-          "uprn_source" => "",
+          "uprn" => 1245,
           "energy_tariff" => "24 hour",
           "floor_height" => "2.8",
           "glazed_type" => nil,
@@ -348,7 +347,7 @@ describe Gateway::DomesticSearchGateway do
           "certificate_number" => "0000-0000-0000-0000-0006",
           "secondheat_description" => "Room heaters, electric",
           "total_floor_area" => "55",
-          "building_reference_number" => "",
+          "uprn" => nil,
           "unheated_corridor_length" => "10",
           "walls_description" => "Solid brick, as built, no insulation (assumed)",
           "walls_energy_eff" => "Very Poor",
@@ -438,16 +437,9 @@ describe Gateway::DomesticSearchGateway do
     end
 
     context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do
-      before do
-        Gateway::AssessmentAttributesGateway.new.update_assessment_attribute(assessment_id: "0000-0000-0000-0000-0000",
-                                                                             attribute: "assessment_address_id",
-                                                                             value: "certificate_number-0000-0000-0000-0000-1234")
-        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
-      end
-
-      it "returns an empty value for the building_reference_number" do
+      it "returns a nil value for the uprn" do
         results = gateway.fetch(**search_arguments)
-        expect(results.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0000" }["building_reference_number"]).to eq ""
+        expect(results.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0000" }["uprn"]).to be_nil
       end
     end
   end

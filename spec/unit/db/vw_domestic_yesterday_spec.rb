@@ -37,7 +37,7 @@ describe "Domestic Report Yesterday" do
     let(:yesterday) { (Date.today - 1) }
 
     before do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
     end
 
     it "returns the same columns as the mvw_domestic_search" do

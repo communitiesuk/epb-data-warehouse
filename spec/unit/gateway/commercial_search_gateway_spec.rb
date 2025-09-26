@@ -48,7 +48,7 @@ describe Gateway::CommercialSearchGateway do
         "posttown" => "Big Rock",
         "property_type" => "A1/A2 Retail and Financial/Professional services",
         "asset_rating" => "84",
-        "building_reference_number" => "",
+        "uprn" => nil,
         "asset_rating_band" => "D",
         "inspection_date" => "2021-03-19",
         "local_authority" => "E09000013",
@@ -76,9 +76,7 @@ describe Gateway::CommercialSearchGateway do
         "constituency" => "E14000629",
         "constituency_label" => "Chelsea and Fulham",
         "primary_energy_value" => "451.27",
-        "report_type" => "3",
-        "uprn" => "",
-        "uprn_source" => "" }
+        "report_type" => "3" }
     end
 
     let(:query_result) do
@@ -95,9 +93,9 @@ describe Gateway::CommercialSearchGateway do
     end
 
     context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do
-      it "returns an empty value for the building_reference_number" do
+      it "returns a nil value for the uprn" do
         results = gateway.fetch(**search_arguments)
-        expect(results.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }["building_reference_number"]).to eq ""
+        expect(results.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }["uprn"]).to be_nil
       end
     end
 
