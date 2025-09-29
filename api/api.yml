@@ -9,7 +9,7 @@ info:
   version: 0.0.1
 
 servers:
-  - url: 'https://api.get-energy-performance-data.epb-integration.communities.gov.uk'
+  - url: 'https://api.get-energy-performance-data.epb-staging.communities.gov.uk'
     description: Integration Service
   - url: 'https://api.get-energy-performance-data.epb-staging.communities.gov.uk'
     description: Staging Service
