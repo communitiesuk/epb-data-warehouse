@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_26_114138) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_01_100544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -108,6 +108,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_114138) do
     t.datetime "timestamp", null: false
     t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
     t.unique_constraint ["assessment_id", "event_type"], name: "idx_audit_log_rrn_event"
+  end
+
+  create_table "commercial_reports", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.string "related_rrn", null: false
+    t.index ["related_rrn"], name: "index_commercial_reports_on_related_rrn"
   end
 
   create_table "countries", primary_key: "country_id", id: :integer, default: nil, force: :cascade do |t|
