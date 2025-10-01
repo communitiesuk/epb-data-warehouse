@@ -23,6 +23,7 @@ describe "Acceptance::ImportCertificate" do
       assessment_attribute_gateway: eav_gateway,
       documents_gateway: Gateway::DocumentsGateway.new,
       assessment_search_gateway:,
+      commercial_reports_gateway:,
       logger:,
     )
     UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
@@ -34,6 +35,10 @@ describe "Acceptance::ImportCertificate" do
 
   let(:assessment_search_gateway) do
     instance_double(Gateway::AssessmentSearchGateway)
+  end
+
+  let(:commercial_reports_gateway) do
+    instance_double(Gateway::CommercialReportsGateway)
   end
 
   let(:certificate_gateway) do
@@ -87,6 +92,7 @@ describe "Acceptance::ImportCertificate" do
     queues_gateway.push_to_queue(:assessments, ids)
     allow(assessments_country_id_gateway).to receive(:insert)
     allow(assessment_search_gateway).to receive(:insert_assessment)
+    allow(commercial_reports_gateway).to receive(:insert_report)
     use_case.execute
   end
 
@@ -133,6 +139,7 @@ describe "Acceptance::ImportCertificate" do
         assessment_attribute_gateway: eav_gateway,
         documents_gateway: Gateway::DocumentsGateway.new,
         assessment_search_gateway:,
+        commercial_reports_gateway:,
         logger:,
       )
       UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,

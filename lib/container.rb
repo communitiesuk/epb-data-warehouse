@@ -39,6 +39,10 @@ class Container
     @assessment_search_gateway ||= Gateway::AssessmentSearchGateway.new
   end
 
+  def self.commercial_reports_gateway
+    @commercial_reports_gateway ||= Gateway::CommercialReportsGateway.new
+  end
+
   def self.assessment_search_use_case
     @assessment_search_use_case ||= UseCase::AssessmentSearch.new(assessment_search_gateway:)
   end
@@ -71,6 +75,7 @@ class Container
     @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway,
                                                                              documents_gateway:,
                                                                              assessment_search_gateway:,
+                                                                             commercial_reports_gateway:,
                                                                              logger:
   end
 

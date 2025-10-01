@@ -25,11 +25,12 @@ describe Gateway::CommercialSearchGateway do
 
       type_of_assessment = "CEPC"
 
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "cepc", add_to_assessment_search: true, different_fields: {
-        "postcode" => "SW10 0AA", "country_id": 1
+        "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0007"
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment:, type: "cepc+rr", add_to_assessment_search: true, different_fields: {
-        "postcode" => "SW10 0AA", "country_id": 1
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment: "CEPC-RR", type: "cepc-rr", add_to_assessment_search: true, different_fields: {
+        "postcode" => "SW10 0AA", "related_rrn" => "0000-0000-0000-0000-0006", "country_id": 1
       })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", add_to_assessment_search: true, different_fields: {
         "postcode": "SW10 0AA", "country_id": 2
@@ -83,8 +84,8 @@ describe Gateway::CommercialSearchGateway do
       gateway.fetch(**search_arguments)
     end
 
-    it "returns a dataset with only the 2 commercial EPCs" do
-      expect(query_result.length).to eq 2
+    it "returns a dataset with only one commercial EPCs" do
+      expect(query_result.length).to eq 1
     end
 
     it "returns a dataset with the required data for cepc" do
@@ -109,6 +110,23 @@ describe Gateway::CommercialSearchGateway do
 
       it "returns the correct columns" do
         expect(csv_fixture.headers.sort.map(&:downcase) - cepc_expected_data.keys).to eq []
+      end
+    end
+
+    context "when checking commercial_reports table" do
+      let(:commercial_reports_result) do
+        ActiveRecord::Base.connection.exec_query(
+          "SELECT * FROM commercial_reports",
+        )
+      end
+
+      it "inserts a new commercial report record" do
+        expect(commercial_reports_result.length).to eq 1
+        expect(commercial_reports_result.first["assessment_id"]).to eq "0000-0000-0000-0000-0006"
+      end
+
+      it "inserts a new commercial report record with the correct related_certificate_number" do
+        expect(commercial_reports_result.first["related_rrn"]).to eq "0000-0000-0000-0000-0007"
       end
     end
   end

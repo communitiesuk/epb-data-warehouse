@@ -5,6 +5,7 @@ describe UseCase::ImportCertificateData do
 
   let(:documents_gateway) { instance_double(Gateway::DocumentsGateway) }
   let(:assessment_search_gateway) { instance_double(Gateway::AssessmentSearchGateway) }
+  let(:commercial_reports_gateway) { instance_double(Gateway::CommercialReportsGateway) }
 
   let(:logger) do
     logger = instance_double(Logger)
@@ -15,6 +16,7 @@ describe UseCase::ImportCertificateData do
   let!(:use_case) do
     described_class.new assessment_attribute_gateway: assessment_attributes_gateway,
                         assessment_search_gateway:,
+                        commercial_reports_gateway:,
                         documents_gateway:,
                         logger:
   end
@@ -24,6 +26,7 @@ describe UseCase::ImportCertificateData do
     allow(assessment_attributes_gateway).to receive(:add_attribute_values)
     allow(documents_gateway).to receive(:add_assessment)
     allow(assessment_search_gateway).to receive(:insert_assessment)
+    allow(commercial_reports_gateway).to receive(:insert_report)
   end
 
   context "when a simple attribute is passed to the usecase" do
@@ -192,6 +195,30 @@ describe UseCase::ImportCertificateData do
 
     it "passes the attribute data to the documents gateway for saving" do
       expect(documents_gateway).to have_received(:add_assessment).with(assessment_id:, document: certificate_data)
+    end
+  end
+
+  context "when passing data to the use case" do
+    it "does not save data to the commercial reports table for domestic" do
+      certificate_data = {
+        "assessment_type" => "SAP",
+      }
+      assessment_id = "0000-0000-0000-0000-0000"
+
+      use_case.execute(assessment_id:, certificate_data:)
+
+      expect(commercial_reports_gateway).not_to have_received(:insert_report)
+    end
+
+    it "saves data to the commercial reports table for CEPC with recommendations" do
+      certificate_data = {
+        "assessment_type" => "CEPC",
+        "related_rrn" => "0000-0000-0000-0000-2222",
+      }
+      assessment_id = "2222-2222-2222-2222-2222"
+
+      use_case.execute(assessment_id:, certificate_data:)
+      expect(commercial_reports_gateway).to have_received(:insert_report).with(assessment_id:, related_rrn: "0000-0000-0000-0000-2222")
     end
   end
 end

@@ -15,6 +15,8 @@ describe "Commercial Recommendations Report" do
       import_postcode_directory_data
       add_countries
       schema_type = "CEPC-8.0.0"
+
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
       add_commercial(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0001", registration_date: Time.now
       })
@@ -31,7 +33,7 @@ describe "Commercial Recommendations Report" do
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0005", registration_date: Time.now
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "DEC", type: "dec-rr", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 1, registration_date: Time.now
+        "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0004", registration_date: Time.now
       })
 
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_rr_search")
