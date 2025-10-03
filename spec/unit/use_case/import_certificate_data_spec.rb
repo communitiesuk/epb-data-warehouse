@@ -220,5 +220,20 @@ describe UseCase::ImportCertificateData do
       use_case.execute(assessment_id:, certificate_data:)
       expect(commercial_reports_gateway).to have_received(:insert_report).with(assessment_id:, related_rrn: "0000-0000-0000-0000-2222")
     end
+
+    context "when the certificate is a DEC with no RR" do
+
+
+      it "does not save data to the commercial reports table" do
+        certificate_data = {
+          "assessment_type" => "CEPC",
+        }
+        assessment_id = "2222-2222-2222-2222-2222"
+
+        use_case.execute(assessment_id:, certificate_data:)
+        expect(commercial_reports_gateway).not_to have_received(:insert_report)
+      end
+
+    end
   end
 end
