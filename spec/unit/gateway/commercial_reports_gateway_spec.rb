@@ -29,5 +29,16 @@ describe Gateway::CommercialReportsGateway do
         expect(commercial_reports_result.first["related_rrn"]).to eq "0000-0000-0000-0000-2222"
       end
     end
+
+    context "when the assessment_id already exists" do
+      before do
+        gateway.insert_report(assessment_id:, related_rrn:)
+      end
+
+      it "does not raise an error" do
+        expect{gateway.insert_report(assessment_id:, related_rrn: "0000-0000-0000-0000-1115") }.not_to raise_error
+      end
+
+    end
   end
 end

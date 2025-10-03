@@ -3,6 +3,8 @@ class Gateway::CommercialReportsGateway
     sql = <<-SQL
             INSERT INTO commercial_reports(assessment_id, related_rrn)
             VALUES($1, $2)
+            ON CONFLICT (assessment_id) DO UPDATE SET related_rrn= $2;
+          
     SQL
 
     bindings = [
