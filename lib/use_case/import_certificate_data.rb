@@ -43,7 +43,7 @@ module UseCase
     end
 
     def save_commercial_report_data(assessment_id:, related_rrn:)
-      commercial_reports_gateway.insert_report(assessment_id:, related_rrn:)
+      commercial_reports_gateway.insert_report(assessment_id:, related_rrn:) unless related_rrn.nil?
     end
   end
 end
