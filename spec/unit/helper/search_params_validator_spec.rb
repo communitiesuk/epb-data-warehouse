@@ -1,4 +1,4 @@
-describe Helper::DomesticSearchParamsValidator, type: :helper do
+describe Helper::SearchParamsValidator, type: :helper do
   let(:search_arguments) do
     { date_start: "2023-12-01", date_end: "2023-12-23" }
   end

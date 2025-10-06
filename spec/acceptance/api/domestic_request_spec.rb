@@ -316,7 +316,7 @@ describe "DomesticController" do
 
         it "raises an error for no results found" do
           response_body = JSON.parse(response.body)
-          expect(response_body["data"]["error"]).to include "No domestic assessments could be found for that query"
+          expect(response_body["data"]["error"]).to include "No assessments could be found for that query"
         end
       end
 

@@ -20,13 +20,15 @@ describe "CommercialController" do
     address_epc = cepc.merge({ "address_line_1" => "2 Banana Street" })
     country_id = 1
     rdsap = parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-100121241798", different_fields: { "postcode" => "SW10 0AA" })
+    cepc_two = parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "UPRN-1000000001245", type: "cepc", different_fields: { "postcode" => "W6 9ZD" })
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: eff_epc, created_at: "2024-01-01", country_id:)
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: postcode_epc, created_at: "2023-01-01", country_id:)
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: council_constituency_epc, created_at: "2023-05-05", country_id:)
     search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: address_epc, created_at: "2022-05-05", country_id:)
-    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0003", document: rdsap, created_at: "2022-05-05", country_id:)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0004", document: rdsap, created_at: "2022-05-05", country_id:)
+    search_assessment_gateway.insert_assessment(assessment_id: "0000-0000-0000-0000-0000", document: cepc_two, created_at: "2022-05-06", country_id:)
   end
 
   context "when requesting a response from /api/commercial/count" do
@@ -36,10 +38,10 @@ describe "CommercialController" do
         get "/api/commercial/count?date_start=2018-01-01&date_end=2025-01-01"
       end
 
-      it "returns 4 rows of CEPC data" do
+      it "returns 5 rows of CEPC data" do
         response_body = JSON.parse(response.body)
         expect(response.status).to eq(200)
-        expect(response_body["data"]["count"]).to eq 4
+        expect(response_body["data"]["count"]).to eq 5
       end
     end
 
@@ -53,6 +55,240 @@ describe "CommercialController" do
         response_body = JSON.parse(response.body)
         expect(response.status).to eq(200)
         expect(response_body["data"]).to eq({ "count" => 1 })
+      end
+    end
+  end
+
+  context "when requesting a response from /api/non-domestic/search" do
+    let(:authenticate_user_use_case) do
+      instance_double(UseCase::AuthenticateUser)
+    end
+
+    before do
+      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+      allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+      header("Authorization", "Bearer valid-bearer-token")
+    end
+
+    context "when the response is a success" do
+      context "when the date range is passed" do
+        let(:response) do
+          get "/api/non-domestic/search?date_start=2018-01-01&date_end=2025-01-01"
+        end
+
+        let(:expected_data) do
+          {
+            "addressLine1" => "60 Maple Syrup Road",
+            "addressLine2" => "Candy Mountain",
+            "addressLine3" => nil,
+            "addressLine4" => nil,
+            "certificateNumber" => "0000-0000-0000-0000-0000",
+            "constituency" => "Chelsea and Fulham",
+            "council" => "Hammersmith and Fulham",
+            "currentEnergyEfficiencyBand" => "D",
+            "postTown" => "Big Rock",
+            "postcode" => "W6 9ZD",
+            "registrationDate" => "2021-03-19T00:00:00.000Z",
+            "uprn" => 1_000_000_001_245,
+          }
+        end
+
+        let(:expected_pagination) do
+          {
+            "totalRecords" => 5,
+            "currentPage" => 1,
+            "totalPages" => 1,
+            "nextPage" => nil,
+            "prevPage" => nil,
+            "pageSize" => 5000,
+          }
+        end
+
+        it "returns a successful response with data" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"].length).to eq 5
+        end
+
+        it "returns expected data" do
+          response_body = JSON.parse(response.body)
+          result = response_body["data"].find { |i| i["certificateNumber"] == "0000-0000-0000-0000-0000" }
+          expect(result).to eq expected_data
+        end
+
+        it "includes pagination data" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["pagination"]).to eq(expected_pagination)
+        end
+      end
+
+      context "when the response is not a success" do
+        context "when no parameters passed" do
+          let(:response) do
+            get "/api/non-domestic/search"
+          end
+
+          it "returns 400" do
+            expect(response.status).to eq(400)
+          end
+
+          it "raises an error for the missing params" do
+            response_body = JSON.parse(response.body)
+            expect(response_body["data"]["error"]).to include "please provide a valid date range or search parameter"
+          end
+        end
+
+        context "when dates are out of range" do
+          let(:response) do
+            get "/api/non-domestic/search?date_start=2025-01-01&date_end=2018-01-01"
+          end
+
+          it "returns 400" do
+            expect(response.status).to eq(400)
+          end
+
+          it "raises an error for the invalid date range" do
+            response_body = JSON.parse(response.body)
+            expect(response_body["data"]["error"]).to include "please provide a valid date range"
+            expect(response_body["data"]["error"]).not_to include "or search parameter"
+          end
+        end
+
+        context "when date range includes today" do
+          let(:response) do
+            tomorrow = Date.tomorrow.strftime "%Y-%m-%d"
+            get "/api/non-domestic/search?date_start=2014-01-01", { date_end: tomorrow }
+          end
+
+          it "returns 400" do
+            expect(response.status).to eq(400)
+          end
+
+          it "raises an error for the date range including today" do
+            response_body = JSON.parse(response.body)
+            expect(response_body["data"]["error"]).to include "the date cannot include today"
+          end
+        end
+
+        context "when no results found" do
+          let(:response) do
+            get "/api/non-domestic/search?date_start=2018-01-01&date_end=2018-02-01"
+          end
+
+          it "returns 404" do
+            expect(response.status).to eq(404)
+          end
+
+          it "raises an error for no results found" do
+            response_body = JSON.parse(response.body)
+            expect(response_body["data"]["error"]).to include "No assessments could be found for that query"
+          end
+        end
+
+        context "when postcode is invalid" do
+          let(:response) do
+            get "/api/non-domestic/search", { postcode: "invalid postcode" }
+          end
+
+          it "returns 400" do
+            expect(response.status).to eq(400)
+          end
+
+          it "raises an error for the invalid postcode" do
+            response_body = JSON.parse(response.body)
+            expect(response_body["data"]["error"]).to include "please provide a valid postcode"
+          end
+        end
+      end
+
+      context "when uprn is not an integer" do
+        let(:response) do
+          get "/api/non-domestic/search", { uprn: "not-an-integer" }
+        end
+
+        it "returns 400" do
+          expect(response.status).to eq(400)
+        end
+
+        it "raises an error for the invalid uprn type" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["data"]["error"]).to include "the uprn should be an integer"
+        end
+      end
+    end
+
+    context "when council is invalid" do
+      let(:response) do
+        get "/api/non-domestic/search", { council: ["invalid council"] }
+      end
+
+      it "returns 400" do
+        expect(response.status).to eq(400)
+      end
+
+      it "raises an error for the council name not found" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]["error"]).to include "provide valid council name(s)"
+      end
+    end
+
+    context "when constituency is invalid" do
+      let(:response) do
+        get "/api/non-domestic/search", { constituency: ["invalid constituency"] }
+      end
+
+      it "returns 400" do
+        expect(response.status).to eq(400)
+      end
+
+      it "raises an error for the constituency name not found" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]["error"]).to include "provide valid constituency name(s)"
+      end
+    end
+
+    context "when current_page is negative" do
+      let(:response) do
+        get "/api/non-domestic/search?date_start=2018-01-01&date_end=2025-02-01", { current_page: -1 }
+      end
+
+      it "returns 400" do
+        expect(response.status).to eq(400)
+      end
+
+      it "raises an error for the pagination out of range error" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]["error"]).to include "The requested page number -1 is out of range. Please provide a page number between 1 and 1"
+      end
+    end
+
+    context "when page_size is greater than 5000" do
+      let(:response) do
+        get "/api/non-domestic/search?date_start=2014-01-01&date_end=2022-01-01", { page_size: 5001 }
+      end
+
+      it "returns 400" do
+        expect(response.status).to eq(400)
+      end
+
+      it "raises an error for the pagination out of range error" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]["error"]).to include "The requested page size 5001 is out of range. Please provide a page size between 1 and 5000"
+      end
+    end
+
+    context "when page_size is less than 1" do
+      let(:response) do
+        get "/api/non-domestic/search?date_start=2014-01-01&date_end=2022-01-01", { page_size: 0 }
+      end
+
+      it "returns 400" do
+        expect(response.status).to eq(400)
+      end
+
+      it "raises an error for the pagination out of range error" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]["error"]).to include "The requested page size 0 is out of range. Please provide a page size between 1 and 5000"
       end
     end
   end

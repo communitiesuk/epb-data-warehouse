@@ -1,5 +1,5 @@
 module Helper
-  class DomesticSearchParamsValidator
+  class SearchParamsValidator
     def self.validate(*args)
       this_args = args[0]
 
