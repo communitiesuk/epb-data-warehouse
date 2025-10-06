@@ -197,12 +197,12 @@ describe UseCase::ImportEnums do
         FROM assessment_attribute_lookups aal
         INNER JOIN assessment_lookups al on aal.lookup_id = al.id
         INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = 'A' AND schema_version IN('SAP-Schema-16.3', 'SAP-Schema-17.1/SAP')
+        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = 'A' AND schema_version IN('SAP-Schema-16.3', 'SAP-Schema-17.1')
         ORDER BY schema_version")
     end
 
     it "returns values for SAP 16.3 and SAP 17" do
-      expect(data.rows.flatten).to eq(%w[SAP-Schema-16.3 SAP-Schema-17.1/SAP])
+      expect(data.rows.flatten).to eq(%w[SAP-Schema-16.3 SAP-Schema-17.1])
     end
   end
 

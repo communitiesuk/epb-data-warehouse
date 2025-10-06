@@ -5,7 +5,6 @@ module UseCase
       @assessment_attribute_gateway = assessment_attribute_gateway
       @xsd_presenter = xsd_presenter
       @xsd_config_gateway = xsd_config_gateway
-      # pp "#{ENV["GEM_HOME"]}/epb_view_models-1.0.9/lib/
     end
 
     def execute
@@ -41,7 +40,7 @@ module UseCase
                                                  lookup_value: value.to_s,
                                                  attribute_id:,
                                                  type_of_assessment: attribute["type_of_assessment"] || nil,
-                                                 schema_version:,
+                                                 schema_version: schema_version.nil? ? nil : schema_version.gsub("/SAP", ""),
                                                  attribute_name: attribute["attribute_name"],
                                                ))
       end
