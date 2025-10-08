@@ -11,19 +11,13 @@ describe "DeltasController" do
         "timestamp" => "2025-02-01T00:00:01.000Z" }
     end
 
-    let(:authenticate_user_use_case) do
-      instance_double(UseCase::AuthenticateUser)
-    end
-
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE audit_logs")
 
       audit_logs_gateway.insert_log(assessment_id: "0000-0000-0000-0000", event_type: "opt_out", timestamp: "2025-02-01 00:00:01")
       audit_logs_gateway.insert_log(assessment_id: "0000-0000-0000-0001", event_type: "cancelled", timestamp: "2025-02-02 00:00:01")
       audit_logs_gateway.insert_log(assessment_id: "0000-0000-0000-0002", event_type: "address_id_updated", timestamp: "2025-02-03 00:00:01")
-      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
-      allow(authenticate_user_use_case).to receive(:execute).and_return(true)
-      header("Authorization", "Bearer valid-bearer-token")
+      stub_bearer_token_access
     end
 
     context "when the response is a success" do

@@ -76,9 +76,6 @@ describe "DomesticController" do
   end
 
   context "when requesting a response from /api/domestic/search" do
-    let(:authenticate_user_use_case) do
-      instance_double(UseCase::AuthenticateUser)
-    end
     let(:expected_data) do
       {
         "addressLine1" => "1 Some Street",
@@ -97,9 +94,7 @@ describe "DomesticController" do
     end
 
     before do
-      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
-      allow(authenticate_user_use_case).to receive(:execute).and_return(true)
-      header("Authorization", "Bearer valid-bearer-token")
+      stub_bearer_token_access
     end
 
     context "when the response is a success" do

@@ -12,9 +12,7 @@ describe "CodesController" do
       let(:response) do
         get "/api/codes"
       end
-      let(:authenticate_user_use_case) do
-        instance_double(UseCase::AuthenticateUser)
-      end
+
       let(:body) do
         JSON.parse(response.body)
       end

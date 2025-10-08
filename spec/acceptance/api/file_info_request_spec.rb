@@ -7,14 +7,8 @@ describe "get .get-energy-certificate-data.epb-frontend/domestic/csv/info" do
       get "/api/files/domestic/csv/info"
     end
 
-    let(:authenticate_user_use_case) do
-      instance_double(UseCase::AuthenticateUser)
-    end
-
     before do
-      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
-      allow(authenticate_user_use_case).to receive(:execute).with("valid-bearer-token").and_return(true)
-      header("Authorization", "Bearer valid-bearer-token")
+      stub_bearer_token_access
     end
 
     context "when the file exists" do

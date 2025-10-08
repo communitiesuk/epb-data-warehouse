@@ -60,14 +60,8 @@ describe "CommercialController" do
   end
 
   context "when requesting a response from /api/non-domestic/search" do
-    let(:authenticate_user_use_case) do
-      instance_double(UseCase::AuthenticateUser)
-    end
-
     before do
-      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
-      allow(authenticate_user_use_case).to receive(:execute).and_return(true)
-      header("Authorization", "Bearer valid-bearer-token")
+      stub_bearer_token_access
     end
 
     context "when the response is a success" do
