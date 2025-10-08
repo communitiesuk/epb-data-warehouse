@@ -159,21 +159,33 @@ class Gateway::AssessmentSearchGateway
 
   def fetch_assessments(*args)
     this_args = args.first
-    sql = <<-SQL
-        SELECT assessment_id AS certificate_number,
-               address_line_1,
-               address_line_2,
-               address_line_3,
-               address_line_4,
-               postcode,
-               post_town,
-               council,
-               constituency,
-               current_energy_efficiency_band,
-               registration_date,
-               uprn
-               FROM assessment_search
+
+    select_fields = <<-SQL
+      s.assessment_id AS certificate_number,
+      s.address_line_1,
+      s.address_line_2,
+      s.address_line_3,
+      s.address_line_4,
+      s.postcode,
+      s.post_town,
+      s.council,
+      s.constituency,
+      s.current_energy_efficiency_band,
+      s.registration_date,
+      s.uprn
     SQL
+
+    is_cepc = this_args[:assessment_type].include?("CEPC")
+
+    select_fields << ", cr.related_rrn" if is_cepc
+
+    sql = <<-SQL
+      SELECT
+        #{select_fields}
+      FROM assessment_search s
+    SQL
+
+    sql << " JOIN commercial_reports cr ON s.assessment_id = cr.assessment_id" if is_cepc
 
     this_args[:sql] = sql
     this_args[:limit] = true
