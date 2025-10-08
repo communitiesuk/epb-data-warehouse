@@ -36,9 +36,8 @@ describe Gateway::CommercialReportsGateway do
       end
 
       it "does not raise an error" do
-        expect{gateway.insert_report(assessment_id:, related_rrn: "0000-0000-0000-0000-1115") }.not_to raise_error
+        expect { gateway.insert_report(assessment_id:, related_rrn: "0000-0000-0000-0000-1115") }.not_to raise_error
       end
-
     end
   end
 end
