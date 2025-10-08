@@ -23,6 +23,8 @@ tags:
     description: EPC certificate data
   - name: Files
     description: Bulk Certificate file downloads
+  - name: Codes
+    description: EPC data codes
 
 paths:
   /api/certificate:
@@ -71,6 +73,64 @@ paths:
               example:
                 errors:
                   - code: "Unexpected error message here"
+
+  /api/codes:
+    get:
+      tags:
+        - Codes
+      summary: /api/codes
+      description: |-
+       Fetch a list of codes currently available from which you can query for more info
+      operationId: look-up-codes
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodesResponse'
+
+  /api/codes/info:
+    get:
+      tags:
+        - Codes
+      summary: /api/codes/info
+      description: |-
+        Fetch the value(s) for a code by key and/or schema version
+      operationId: look-up-codes-values
+      security:
+        - bearerToken: [ ]
+      parameters:
+        - in: query
+          name: code
+          description: One of the codes provided by the /api/codes/ endpoint
+          required: true
+          schema:
+            type: string
+            example: 'built_form'
+        - in: query
+          name: key
+          description: the key found as a value in EPC data
+          required: false
+          schema:
+            type: string
+            example: '1'
+        - in: query
+          name: schema_version
+          description: the EPC schema version
+          required: false
+          schema:
+            type: string
+            example: 'RdSAP-Schema-17.0'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeInfoResponse'
 
   /api/deltas:
     get:
@@ -325,7 +385,7 @@ paths:
       summary: Download domestic full-load CSV
       description: |
         Redirects to a pre-signed S3 URL for the domestic full-load ZIP file.
-      operationId: download-domestic-full-load
+      operationId: download-domestic-full-load-csv
       security:
         - bearerToken: []
       responses:
@@ -368,7 +428,7 @@ paths:
       summary: Get info about domestic full-load CSV
       description: |
         Returns metadata about the domestic full-load ZIP file.
-      operationId: get-domestic-full-load-info
+      operationId: get-domestic-full-load-info-json
       security:
         - bearerToken: []
       responses:
@@ -410,7 +470,7 @@ paths:
       summary: Download domestic full-load JSON
       description: |
         Redirects to a pre-signed S3 URL for the domestic full-load ZIP file.
-      operationId: download-domestic-full-load
+      operationId: download-domestic-full-load-json
       security:
         - bearerToken: [ ]
       responses:
@@ -564,6 +624,7 @@ components:
                 properties:
                   code:
                     type: string
+
     DeltaEvent:
       type: object
       properties:
@@ -639,6 +700,45 @@ components:
       required:
         - data
         - pagination
+
+    CodesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+      example: {data: ["built_form","construction_age_band"]}
+
+    CodeInfoResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeValues'
+
+    CodeValues:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "NR"
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeValue'
+
+    CodeValue:
+      type: object
+      properties:
+        value:
+          type: string
+          example: "Detached"
+        schemaVersion:
+          type: string
+          example: "RdSAP-Schema-17.0"
+
 
   links: {}
   callbacks: {}
