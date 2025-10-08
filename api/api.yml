@@ -209,14 +209,14 @@ paths:
       summary: Search for domestic certificates
       description: |-
         Search EPCs by
-          - date_start and date_end **mandatory**
+          - date_start and date_end
           - multiple councils
           - multiple constituencies
           - a postcode
           - UPRN
           - multiple efficiency rating bands
           - a partial address
-      operationId: search-assessments
+      operationId: domestic-search-assessments
       security:
         - bearerToken: []
       parameters:
@@ -302,7 +302,7 @@ paths:
                     addressLine3: null
                     addressLine4: null
                     uprn: 100121241798
-                    certificateNumber: "0000-0000-0000-0000"
+                    certificateNumber: "0000-0000-0000-0000-0000"
                     constituency: "Chelsea and Fulham"
                     council: "Hammersmith and Fulham"
                     currentEnergyEfficiencyBand: "B"
@@ -366,7 +366,184 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                error: "No domestic assessments could be found for that query"
+                error: "No assessments could be found for that query"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                errors:
+                  - code: "Unexpected error message here"
+
+  /api/non-domestic/search:
+    get:
+      tags:
+        - Search
+        - Non-domestic
+      summary: Search for non-domestic certificates
+      description: |-
+        Search EPCs by
+          - date_start and date_end
+          - multiple councils
+          - multiple constituencies
+          - a postcode
+          - UPRN
+          - multiple efficiency rating bands
+          - a partial address
+      operationId: non-domestic-search-assessments
+      security:
+        - bearerToken: [ ]
+      parameters:
+        - in: query
+          name: date_start
+          description: The start date for the date range of the search (YYYY-mm-dd) required if no other search option is specified
+          schema:
+            type: string
+            format: date
+            example: '2025-07-10'
+        - in: query
+          name: date_end
+          description: The end date for the date range of the search (YYYY-mm-dd) required if no other search option is specified, defaults to yesterday if not provided
+          schema:
+            type: string
+            format: date
+            example: '2025-08-10'
+        - in: query
+          name: council[]
+          description: A local authority name
+          schema:
+            type: array
+            items:
+              type: string
+            example: [ 'Manchester', 'Birmingham' ]
+        - in: query
+          name: constituency[]
+          description: A parliamentary constituency
+          schema:
+            type: array
+            items:
+              type: string
+            example: [ 'Aldershot', 'Banbury' ]
+        - in: query
+          name: postcode
+          description: The postcode
+          schema:
+            type: string
+            example: 'FL23 4JA'
+        - in: query
+          name: uprn
+          description: The UPRN (unique property reference number) for a property
+          schema:
+            type: integer
+            example: 100023336956
+        - in: query
+          name: eff_rating[]
+          description: An efficiency rating band
+          schema:
+            type: array
+            items:
+              type: string
+            example: [ 'A', 'B', 'C' ]
+        - in: query
+          name: address
+          description: A partial or full address
+          schema:
+            type: string
+          example: '9 new union'
+        - in: query
+          name: current_page
+          description: The page number for search result pagination
+          schema:
+            type: integer
+          example: 1
+        - in: query
+          name: page_size
+          description: The number of rows returned for each page (Max size is 5000)
+          schema:
+            type: integer
+          example: 5000
+      responses:
+        '200':
+          description: Assessment search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessmentSearchResult'
+              example:
+                data:
+                  - addressLine1: "1 Some Street"
+                    addressLine2: null
+                    addressLine3: null
+                    addressLine4: null
+                    uprn: 100121241798
+                    certificateNumber: "0000-0000-0000-0000-0000"
+                    constituency: "Chelsea and Fulham"
+                    council: "Hammersmith and Fulham"
+                    currentEnergyEfficiencyBand: "B"
+                    postTown: "Whitbury"
+                    postcode: "SW10 0AA"
+                    registrationDate: "2020-05-04T00:00:00.000Z"
+                    relatedRrn: "0000-0000-0000-0000-1111"
+                pagination:
+                  totalRecords: 4
+                  currentPage: 1
+                  totalPages: 1
+                  nextPage: null
+                  prevPage: null
+                  pageSize: 5000
+        '400':
+          description: Bad request - missing or malformed parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missing_params:
+                  summary: Missing search parameters
+                  value:
+                    error: "The search query was invalid - please provide a valid date range or search parameter"
+                invalid_dates:
+                  summary: Start date is after end date
+                  value:
+                    error: "The search query was invalid - please provide a valid date range"
+                includes_today:
+                  summary: Date includes today
+                  value:
+                    error: "The search query was invalid - the date cannot include today"
+                invalid_postcode:
+                  summary: Invalid postcode
+                  value:
+                    error: "The search query was invalid - please provide a valid postcode"
+                invalid_uprn:
+                  summary: Invalid UPRN
+                  value:
+                    error: "The search query was invalid - the uprn should be an integer greater than 0"
+                invalid_council:
+                  summary: Invalid council
+                  value:
+                    error: "The search query was invalid - provide valid council name(s)"
+                invalid_constituency:
+                  summary: Invalid constituency
+                  value:
+                    error: "The search query was invalid - provide valid constituency name(s)"
+                page_out_of_range:
+                  summary: Page out of range
+                  value:
+                    error: "The requested page number 15 is out of range. Total pages: 12"
+                invalid_page_size:
+                  summary: Invalid page size
+                  value:
+                    error: "The search query was invalid - provide valid page_size between 1 and 5000"
+        '404':
+          description: No assessments found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "No assessments could be found for that query"
         '500':
           description: Internal server error
           content:
