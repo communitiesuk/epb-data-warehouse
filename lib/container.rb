@@ -118,6 +118,10 @@ class Container
     @fetch_look_ups_use_case ||= UseCase::FetchLookups.new(gateway: assessment_lookups_gateway)
   end
 
+  def self.fetch_look_up_values_use_case
+    @fetch_look_up_values_use_case ||= UseCase::FetchLookupValues.new(gateway: assessment_lookups_gateway)
+  end
+
   def self.export_heat_pumps_gateway
     @export_heat_pumps_gateway ||= Gateway::ExportHeatPumpsGateway.new
   end

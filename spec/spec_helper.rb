@@ -94,6 +94,13 @@ def clear_materialized_views
   end
 end
 
+def stub_bearer_token_access
+  authenticate_user_use_case = instance_double(UseCase::AuthenticateUser)
+  allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+  allow(authenticate_user_use_case).to receive(:execute).and_return(true)
+  header("Authorization", "Bearer valid-bearer-token")
+end
+
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 
