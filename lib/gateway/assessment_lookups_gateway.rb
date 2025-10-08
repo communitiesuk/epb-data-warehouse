@@ -70,6 +70,49 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql).map { |row| row["lookup_name"] }
     end
 
+    def fetch_lookups_values(name:, lookup_key: nil, schema_version: nil)
+      sql = <<-SQL
+      SELECT lookup_key as key , lookup_value as value, schema_version
+      FROM assessment_attribute_lookups aal
+      INNER JOIN assessment_lookups al on aal.lookup_id = al.id
+      JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
+     WHERE schema_version NOT LIKE '%-NI-%'
+    AND  ((regexp_match(schema_version, '[0-9]+\.?[0-9]*'))[1]::numeric > 15
+                                OR schema_version NOT IN ('CEPC-5.0', 'CEPC-5.1', 'CEPC-6.0'))
+      AND attribute_name = $1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "name",
+          name,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+      index = 2
+
+      if lookup_key
+        bindings << ActiveRecord::Relation::QueryAttribute.new(
+          "lookup_key",
+          lookup_key,
+          ActiveRecord::Type::String.new,
+        )
+        sql << " AND lookup_key = $#{index}"
+        index += 1
+      end
+
+      if schema_version
+        bindings << ActiveRecord::Relation::QueryAttribute.new(
+          "schema_version",
+          schema_version,
+          ActiveRecord::Type::String.new,
+        )
+        sql << " AND schema_version = $#{index}"
+      end
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row }
+    end
+
   private
 
     def insert_attribute_lookups(lookup_id, attribute_id, type_of_assessment, schema_version)

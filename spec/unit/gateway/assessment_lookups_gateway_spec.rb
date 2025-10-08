@@ -3,6 +3,10 @@ require_relative "../../shared_context/shared_import_enums"
 describe Gateway::AssessmentLookupsGateway do
   subject(:gateway) { described_class.new }
 
+  before(:all) do
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0 SAP-Schema-15.0 RdSAP-Schema-NI-20.0.0])
+  end
+
   include_context "when saving enum data to lookup tables"
 
   let(:attributes_gateway) { Gateway::AssessmentAttributesGateway.new }
@@ -85,6 +89,80 @@ describe Gateway::AssessmentLookupsGateway do
 
     it "returns a list of lookups" do
       expect(gateway.fetch_lookups).to eq expected
+    end
+  end
+
+  describe "#fetch_lookups_values" do
+    let(:expected) do
+      [{ "key" => "1", "value" => "Detached", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1" },
+       { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0/SAP" },
+       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0/SAP" },
+       { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" },
+       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" },
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" }]
+    end
+
+    context "when filtering by name" do
+      let(:results) do
+        gateway.fetch_lookups_values(name: "built_form")
+      end
+
+      it "returns codes including the schema version" do
+        expect(results).to eq expected
+      end
+
+      it "include all valid schema versions" do
+        expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0/SAP]
+      end
+
+      it "returns the correct number of records" do
+        expect(results.size).to eq 13
+      end
+
+      it "returns the correct number of lookup values for a schema" do
+        expect(results.count { |i| i["schema_version"] == "RdSAP-Schema-21.0.1" }).to eq 7
+      end
+    end
+
+    context "when filtering by name and lookup key" do
+      let(:results) do
+        gateway.fetch_lookups_values(name: "built_form", lookup_key: "1")
+      end
+
+      it "returns the value for a house" do
+        expect(results.uniq! { |i| i["value"] }.first["value"]).to eq "Detached"
+      end
+    end
+
+    context "when filtering by name and lookup key and schema version" do
+      let(:results) do
+        gateway.fetch_lookups_values(name: "built_form", lookup_key: "NR", schema_version: "RdSAP-Schema-21.0.1")
+      end
+
+      it "returns the value for a house" do
+        expect(results).to eq [{ "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1" }]
+      end
+    end
+
+    context "when filtering for a code that is also in non-domestic" do
+      before do
+        import_look_ups(schema_versions: %w[CEPC-8.0.0])
+      end
+
+      let(:commercial_results) do
+        gateway.fetch_lookups_values(name: "transaction_type", schema_version: "CEPC-8.0.0")
+      end
+
+      it "returns codes including the schema version" do
+        expect(commercial_results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq ["CEPC-8.0.0"]
+      end
     end
   end
 end
