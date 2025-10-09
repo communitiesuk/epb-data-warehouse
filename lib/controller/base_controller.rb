@@ -50,18 +50,10 @@ module Controller
     def json_api_response(
       code: 200,
       data: {},
-      meta: {},
-      pagination: {},
-      burrow_key: false,
-      data_key: :data
+      pagination: {}
     )
-      if burrow_key
-        data, meta = meta, data
-        data[burrow_key] = meta.delete(data_key)
-      end
 
       response_data = { data: }
-      response_data[:meta] = meta if meta.empty?
       response_data[:pagination] = pagination unless pagination.empty?
       json_response(response_data, code)
     end
