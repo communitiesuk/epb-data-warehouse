@@ -419,40 +419,73 @@ describe Gateway::AssessmentSearchGateway do
       }
     end
 
+    let(:non_domestic_args) do
+      {
+        date_start: "2018-07-21",
+        date_end: "2025-10-08",
+        assessment_type: %w[CEPC],
+        row_limit: 5,
+      }
+    end
+
     let(:cepc) do
-      parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD" })
+      parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "RRN-0000-0000-0000-0000-0001", type: "cepc", different_fields: { "postcode" => "W6 9ZD", related_rrn: "0000-0000-0000-0000-1111" })
     end
 
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
-
+      Gateway::CommercialReportsGateway.new.insert_report(assessment_id: "0001-0000-0000-0000-0000", related_rrn: "0000-0000-0000-0000-1111")
       newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-01", "assessment_address_id" => "UPRN-000000001245"  })
       gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: newer_rdsap, created_at: "2025-07-22", country_id:)
       gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, created_at: "2025-07-22", country_id:)
 
       3.times do |i|
-        assessment_id = "0001-0000-0000-#{i.to_s.rjust(4, '0')}"
+        assessment_id = "0001-0000-0000-0000-#{i.to_s.rjust(4, '0')}"
         gateway.insert_assessment(assessment_id:, document: cepc, created_at: "2025-07-22", country_id:)
       end
     end
 
-    it "returns the required columns" do
-      expected_result = {
-        "certificate_number" => "0000-0000-0000-0000",
-        "address_line_1" => "1 Some Street",
-        "address_line_2" => nil,
-        "address_line_3" => nil,
-        "address_line_4" => nil,
-        "constituency" => "Chelsea and Fulham",
-        "council" => "Hammersmith and Fulham",
-        "current_energy_efficiency_band" => "E",
-        "post_town" => "Whitbury",
-        "postcode" => "SW10 0AA",
-        "uprn" => 1245,
-        "registration_date" => Date.new(2021, 11, 1),
-      }
-      expect(gateway.fetch_assessments(**args).first).to eq expected_result
+    context "when requesting domestic assessments" do
+      it "returns the required columns" do
+        expected_result = {
+          "certificate_number" => "0000-0000-0000-0000",
+          "address_line_1" => "1 Some Street",
+          "address_line_2" => nil,
+          "address_line_3" => nil,
+          "address_line_4" => nil,
+          "constituency" => "Chelsea and Fulham",
+          "council" => "Hammersmith and Fulham",
+          "current_energy_efficiency_band" => "E",
+          "post_town" => "Whitbury",
+          "postcode" => "SW10 0AA",
+          "uprn" => 1245,
+          "registration_date" => Date.new(2021, 11, 1),
+        }
+        expect(gateway.fetch_assessments(**args).first).to eq expected_result
+      end
     end
+
+    context "when requesting non-domestic assessments" do
+      it "returns the required columns" do
+        expected_result = {
+          "certificate_number" => "0001-0000-0000-0000-0000",
+          "address_line_1" => "60 Maple Syrup Road",
+          "address_line_2" => "Candy Mountain",
+          "address_line_3" => nil,
+          "address_line_4" => nil,
+          "constituency" => "Chelsea and Fulham",
+          "council" => "Hammersmith and Fulham",
+          "current_energy_efficiency_band" => "D",
+          "post_town" => "Big Rock",
+          "postcode" => "W6 9ZD",
+          "uprn" => nil,
+          "registration_date" => Date.new(2021, 3, 19),
+          "related_rrn" => "0000-0000-0000-0000-1111",
+        }
+        expect(gateway.fetch_assessments(**non_domestic_args).first).to eq expected_result
+      end
+    end
+
 
     context "when filtering by assessment_type" do
       it "returns data for domestic" do
