@@ -72,6 +72,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           createdAt: "2021-07-21T11:26:28.045Z",
           cancelledAt: "2021-09-05T14:34:56.634Z",
           hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
+          greenDeal: false,
         })
         use_case.execute(assessment_id)
         expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
@@ -84,7 +85,8 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                                typeOfAssessment: "RdSAP",
                                                                                optOut: true,
                                                                                createdAt: "2021-07-21T11:26:28.045Z",
-                                                                               cancelledAt: "2021-09-05T14:34:56.634Z" })
+                                                                               cancelledAt: "2021-09-05T14:34:56.634Z",
+                                                                               greenDeal: false })
         end
 
         it "forms together certificate data and passes it into the import certificate data use case" do
@@ -110,7 +112,8 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                                assessmentAddressId: "UPRN-000000000000",
                                                                                typeOfAssessment: "RdSAP",
                                                                                optOut: false,
-                                                                               createdAt: "2021-07-21T11:26:28.045Z" })
+                                                                               createdAt: "2021-07-21T11:26:28.045Z",
+                                                                               greenDeal: false })
           use_case.execute assessment_id
         end
 
@@ -251,6 +254,25 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
 
       it "does not send the country_id to the assessments_country_id_gateway" do
         expect(assessments_country_id_gateway).not_to have_received(:insert)
+      end
+    end
+
+    context "when the certificate is attached to a green deal" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: true,
+                                                                             createdAt: "2021-07-21T11:26:28.045Z",
+                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
+                                                                             hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
+                                                                             countryId: nil,
+                                                                             greenDeal: true })
+        use_case.execute(assessment_id)
+      end
+
+      it "does not save the EPC" do
+        expect(import_certificate_data_use_case).not_to have_received(:execute)
       end
     end
   end

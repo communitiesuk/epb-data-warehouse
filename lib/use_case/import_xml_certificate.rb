@@ -61,6 +61,7 @@ module UseCase
                                   schema_type: meta_data[:schemaType],
                                   assessment_id:)
       raise UnimportableAssessment if certificate.nil?
+      raise UnimportableAssessment if meta_data[:greenDeal] == true
 
       certificate["assessment_address_id"] = meta_data[:assessmentAddressId]
       certificate["created_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:createdAt]) if meta_data[:createdAt]
