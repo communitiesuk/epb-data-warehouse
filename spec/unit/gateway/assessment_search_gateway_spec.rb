@@ -486,7 +486,6 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
 
-
     context "when filtering by assessment_type" do
       it "returns data for domestic" do
         domestic_args = args.merge({ assessment_type: %w[RdSAP SAP] })
