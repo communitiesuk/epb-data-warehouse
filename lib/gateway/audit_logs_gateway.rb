@@ -52,7 +52,7 @@ class Gateway::AuditLogsGateway
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "date_end",
-        date_end,
+        (Date.parse(date_end) + 1).to_s,
         ActiveRecord::Type::DateTime.new,
       ),
     ]
