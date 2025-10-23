@@ -409,7 +409,7 @@ describe Gateway::AssessmentSearchGateway do
     end
   end
 
-  describe "#fetch_assesments" do
+  describe "#fetch_assessments" do
     let(:args) do
       {
         date_start: "2014-12-01",
@@ -529,7 +529,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when filtering for dates" do
       before do
-        date_rdsap = rdsap.merge({ "registration_date" => "2022-02-05" })
+        date_rdsap = rdsap.merge({ "registration_date" => "2022-02-05T12:00:00.000+00:00" })
         gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, created_at: "2025-07-22", country_id:)
       end
 
@@ -537,6 +537,13 @@ describe Gateway::AssessmentSearchGateway do
         date_args = args.merge({ date_start: "2021-12-01", date_end: "2024-12-09" })
         expect(gateway.fetch_assessments(**date_args).length).to eq 1
         expect(gateway.fetch_assessments(**date_args).first["certificate_number"]).to eq("0000-0000-0020-0123")
+      end
+
+      it "returns one row for a single date" do
+        date_args = args.merge({ date_start: "2022-02-05", date_end: "2022-02-05" })
+        result = gateway.fetch_assessments(**date_args)
+        expect(result.length).to eq 1
+        expect(result.first["certificate_number"]).to eq("0000-0000-0020-0123")
       end
     end
 
