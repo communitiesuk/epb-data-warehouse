@@ -39,6 +39,16 @@ describe "DeltasController" do
         response_body = JSON.parse(response.body)
         expect(response_body["data"].find { |i| i["certificateNumber"] == "0000-0000-0000-0000" }).to eq opt_out_expected_data
       end
+
+      context "when there is a single date range" do
+        let(:response) do
+          get "/api/deltas?date_start=2025-02-01&date_end=2025-02-01"
+        end
+
+        it "returns 200" do
+          expect(response.status).to eq(200)
+        end
+      end
     end
 
     context "when getting an error response" do
