@@ -292,7 +292,7 @@ private
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "date_end",
-          this_args[:date_end],
+          (Date.parse(this_args[:date_end]) + 1).to_s,
           ActiveRecord::Type::Date.new,
         ),
       ]
