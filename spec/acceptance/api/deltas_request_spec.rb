@@ -49,6 +49,20 @@ describe "DeltasController" do
           expect(response.status).to eq(200)
         end
       end
+
+      context "when the date range include yesterday" do
+        before { Timecop.freeze("2025-02-04 11:00:00 UTC") }
+
+        after { Timecop.return }
+
+        let(:deltas_response) do
+          get "/api/deltas?date_start=2025-02-02&date_end=2025-02-03"
+        end
+
+        it "returns 200" do
+          expect(deltas_response.status).to eq(200)
+        end
+      end
     end
 
     context "when getting an error response" do
