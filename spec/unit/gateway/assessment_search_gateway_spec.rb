@@ -539,11 +539,17 @@ describe Gateway::AssessmentSearchGateway do
         expect(gateway.fetch_assessments(**date_args).first["certificate_number"]).to eq("0000-0000-0020-0123")
       end
 
-      it "returns one row for a single date" do
-        date_args = args.merge({ date_start: "2022-02-05", date_end: "2022-02-05" })
-        result = gateway.fetch_assessments(**date_args)
-        expect(result.length).to eq 1
-        expect(result.first["certificate_number"]).to eq("0000-0000-0020-0123")
+      context "when the date range is a single day" do
+        before do
+          single_day_rdsap = rdsap.merge({ "registration_date" => "2023-03-03T23:59:59.000+00:00" })
+          gateway.insert_assessment(assessment_id: "0000-0000-0030-0123", document: single_day_rdsap, created_at: "2025-07-22", country_id:)
+        end
+
+        it "returns assessments for that day up to 23:59:59" do
+          date_args = args.merge({ date_start: "2023-03-03", date_end: "2023-03-03" })
+          expect(gateway.fetch_assessments(**date_args).length).to eq 1
+          expect(gateway.fetch_assessments(**date_args).first["certificate_number"]).to eq("0000-0000-0030-0123")
+        end
       end
     end
 
