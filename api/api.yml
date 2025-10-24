@@ -810,8 +810,8 @@ components:
           example: "0000-0000-0000-0002-1111"
         eventType:
           type: string
-          enum: [opt_out, cancelled, uprn_updated]
-          example: "opt_out"
+          enum: [removed, uprn_updated]
+          example: "removed"
         timestamp:
           type: string
           format: date-time
