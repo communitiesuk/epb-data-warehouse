@@ -44,7 +44,7 @@ describe Gateway::DomesticSearchGateway do
       "postcode": "W6 9ZD", "country_id": 1, related_rrn: "0000-0000-0000-0000-0055"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
-      "postcode": "SW10 0AA", "country_id": 1
+      "registration_date": "2020-05-06T23:59:59.000+00:00", "postcode": "SW10 0AA", "country_id": 1
     })
     add_assessment_eav(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "postcode": "ML9 9AR", "country_id": 1
@@ -53,7 +53,7 @@ describe Gateway::DomesticSearchGateway do
       "postcode": "SW1A 2AA", "country_id": 1
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
-      "registration_date": "2021-12-06T12:00:00.000+00:00", "postcode": "SW1A 2AA", "country_id": 1
+      "registration_date": "2021-12-06T00:00:00.000+00:00", "postcode": "SW1A 2AA", "country_id": 1
     })
     import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
@@ -94,6 +94,13 @@ describe Gateway::DomesticSearchGateway do
       it "returns expected data when searching for a single date" do
         search_arguments = { date_start: "2021-12-06", date_end: "2021-12-06" }
         expect(gateway.fetch(**search_arguments).length).to eq(1)
+        expect(gateway.fetch(**search_arguments)[0]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
+      end
+
+      it "includes results up to 23:59:59 on the end date" do
+        search_arguments = { date_start: "2020-05-06", date_end: "2020-05-06" }
+        expect(gateway.fetch(**search_arguments).length).to eq(1)
+        expect(gateway.fetch(**search_arguments)[0]["certificate_number"]).to eq("0000-0000-0000-0000-0006")
       end
     end
 
@@ -336,7 +343,7 @@ describe Gateway::DomesticSearchGateway do
           "lighting_description" => "Low energy lighting in 50% of fixed outlets",
           "lighting_energy_eff" => "Good",
           "lighting_env_eff" => "Good",
-          "lodgement_date" => "2020-05-04",
+          "lodgement_date" => "2020-05-06T23:59:59.000+00:00",
           "low_energy_lighting" => "100",
           "low_energy_fixed_lighting_outlets_count" => "16",
           "main_fuel" => "mains gas (not community)",
@@ -398,7 +405,7 @@ describe Gateway::DomesticSearchGateway do
           "glazed_area" => nil,
           "glazed_type" => nil,
           "inspection_date" => "2025-04-04",
-          "lodgement_date" => "2021-12-06T12:00:00.000+00:00",
+          "lodgement_date" => "2021-12-06T00:00:00.000+00:00",
           "low_energy_fixed_lighting_outlets_count" => "31",
           "low_energy_lighting" => "100",
           "mechanical_ventilation" => "positive input from outside",
