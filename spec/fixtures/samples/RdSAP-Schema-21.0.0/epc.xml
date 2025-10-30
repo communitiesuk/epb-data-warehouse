@@ -360,7 +360,7 @@
       <CFL-Fixed-Lighting-Bulbs-Count>5</CFL-Fixed-Lighting-Bulbs-Count>
       <LED-Fixed-Lighting-Bulbs-Count>10</LED-Fixed-Lighting-Bulbs-Count>
       <Low-Energy-Fixed-Lighting-Bulbs-Count>16</Low-Energy-Fixed-Lighting-Bulbs-Count>
-      <Incandescent-Fixed-Lighting-Bulbs-Count>0</Incandescent-Fixed-Lighting-Bulbs-Count>
+      <Incandescent-Fixed-Lighting-Bulbs-Count>5</Incandescent-Fixed-Lighting-Bulbs-Count>
       <Pressure-Test-Certificate-Number>0</Pressure-Test-Certificate-Number>
       <Wet-Rooms-Count>0</Wet-Rooms-Count>
       <Pressure-Test>6</Pressure-Test>

@@ -299,7 +299,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                       "cfl_fixed_lighting_bulbs_count" => 5,
                       "led_fixed_lighting_bulbs_count" => 10,
                       "low_energy_fixed_lighting_bulbs_count" => 16,
-                      "incandescent_fixed_lighting_bulbs_count" => 0,
+                      "incandescent_fixed_lighting_bulbs_count" => 5,
                       "pressure_test_certificate_number" => 0,
                       "wet_rooms_count" => 0,
                       "pressure_test" => 6,

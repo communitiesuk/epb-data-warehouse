@@ -24,7 +24,7 @@ describe Gateway::DomesticSearchGateway do
     schema_type = "SAP-Schema-19.0.0"
     add_countries
 
-    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
+    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports")
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id: "RRN-000000001245", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
       "postcode": "W6 9ZD", "country_id": 1
     })
@@ -46,16 +46,19 @@ describe Gateway::DomesticSearchGateway do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "registration_date": "2020-05-06T23:59:59.000+00:00", "postcode": "SW10 0AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "postcode": "ML9 9AR", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "RdSAP-Schema-21.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "postcode": "SW1A 2AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "registration_date": "2021-12-06T00:00:00.000+00:00", "postcode": "SW1A 2AA", "country_id": 1
     })
-    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0])
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
+    })
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0 SAP-Schema-16.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end
 
@@ -94,7 +97,7 @@ describe Gateway::DomesticSearchGateway do
       it "returns expected data when searching for a single date" do
         search_arguments = { date_start: "2021-12-06", date_end: "2021-12-06" }
         expect(gateway.fetch(**search_arguments).length).to eq(1)
-        expect(gateway.fetch(**search_arguments)[0]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
+        expect(gateway.fetch(**search_arguments)[0]["certificate_number"]).to eq("0000-0000-0000-0000-0009")
       end
 
       it "includes results up to 23:59:59 on the end date" do
@@ -126,8 +129,8 @@ describe Gateway::DomesticSearchGateway do
         expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0000")
         expect(result[1]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
         expect(result[2]["certificate_number"]).to eq("0000-0000-0000-0000-0002")
-        expect(result[3]["certificate_number"]).to eq("0000-0000-0000-0000-0007")
-        expect(result[4]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
+        expect(result[3]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
+        expect(result[4]["certificate_number"]).to eq("0000-0000-0000-0000-0009")
       end
     end
 
@@ -159,8 +162,8 @@ describe Gateway::DomesticSearchGateway do
         expect(result[0]["certificate_number"]).to eq("0000-0000-0000-0000-0000")
         expect(result[1]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
         expect(result[2]["certificate_number"]).to eq("0000-0000-0000-0000-0002")
-        expect(result[3]["certificate_number"]).to eq("0000-0000-0000-0000-0007")
-        expect(result[4]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
+        expect(result[3]["certificate_number"]).to eq("0000-0000-0000-0000-0008")
+        expect(result[4]["certificate_number"]).to eq("0000-0000-0000-0000-0009")
       end
     end
 
@@ -205,7 +208,7 @@ describe Gateway::DomesticSearchGateway do
     context "when checking the materialized view results" do
       let(:csv_fixture) { read_csv_fixture("domestic") }
 
-      let(:expected_sap_data) do
+      let(:expected_sap_1900_data) do
         { "certificate_number" => "0000-0000-0000-0000-0001",
           "address" => "1 some street some area some county",
           "address1" => "1 Some Street",
@@ -300,8 +303,76 @@ describe Gateway::DomesticSearchGateway do
           "property_type" => "House" }
       end
 
-      let(:expected_rdsap_data) do
-        expected_sap_data.merge(
+      let(:expected_sap_160_data) do
+        expected_sap_1900_data.merge(
+          "address" => "28, place drive",
+          "address1" => "28, Place Drive",
+          "address2" => nil,
+          "address3" => nil,
+          "built_form" => "Detached",
+          "certificate_number" => "0000-0000-0000-0000-0011",
+          "co2_emiss_curr_per_floor_area" => "16",
+          "co2_emissions_current" => "1.3",
+          "co2_emissions_potential" => "1.3",
+          "construction_age_band" => nil,
+          "current_energy_efficiency" => "82",
+          "current_energy_rating" => "B",
+          "energy_consumption_current" => "87",
+          "energy_consumption_potential" => "82",
+          "energy_tariff" => "standard tariff",
+          "environment_impact_current" => "86",
+          "environment_impact_potential" => "87",
+          "fixed_lighting_outlets_count" => nil,
+          "flat_storey_count" => 1,
+          "floor_description" => "Average thermal transmittance 0.25 W/m²K",
+          "floor_energy_eff" => "Good",
+          "floor_env_eff" => "Good",
+          "floor_height" => "2.32",
+          "floor_level" => "2",
+          "heating_cost_current" => "213",
+          "heating_cost_potential" => "215",
+          "hot_water_cost_current" => "94",
+          "hot_water_cost_potential" => "94",
+          "hot_water_env_eff" => "Good",
+          "hotwater_description" => "From main system",
+          "inspection_date" => "2012-09-29",
+          "lighting_cost_current" => "66",
+          "lighting_cost_potential" => "46",
+          "lighting_description" => "Low energy lighting in 57% of fixed outlets",
+          "lighting_energy_eff" => "Good",
+          "lighting_env_eff" => "Good",
+          "lodgement_date" => "2020-04-05T12:00:00.000+00:00",
+          "low_energy_fixed_lighting_outlets_count" => nil,
+          "low_energy_lighting" => nil,
+          "main_fuel" => "Gas: mains gas",
+          "mainheat_description" => "Boiler and radiators, mains gas",
+          "mainheat_energy_eff" => "Good",
+          "mainheat_env_eff" => "Good",
+          "multi_glaze_proportion" => nil,
+          "number_open_fireplaces" => nil,
+          "posttown" => "Town",
+          "potential_energy_efficiency" => "83",
+          "potential_energy_rating" => "B",
+          "property_type" => nil,
+          "roof_description" => "(other premises above)",
+          "roof_energy_eff" => "N/A",
+          "roof_env_eff" => "N/A",
+          "secondheat_description" => "None",
+          "tenure" => nil,
+          "total_floor_area" => "80",
+          "transaction_type" => nil,
+          "walls_description" => "Average thermal transmittance 0.34 W/m²K",
+          "walls_energy_eff" => "Good",
+          "walls_env_eff" => "Good",
+          "wind_turbine_count" => 0,
+          "windows_description" => "Fully double glazed",
+          "windows_energy_eff" => "Good",
+          "windows_env_eff" => "Good",
+        )
+      end
+
+      let(:expected_rdsap_2000_data) do
+        expected_sap_1900_data.merge(
           "address" => "1 some street",
           "address2" => nil,
           "address3" => nil,
@@ -375,16 +446,16 @@ describe Gateway::DomesticSearchGateway do
       end
 
       let(:expected_rdsap_2100_data) do
-        expected_rdsap_data.merge(
-          "certificate_number" => "0000-0000-0000-0000-0007",
+        expected_rdsap_2000_data.merge(
+          "certificate_number" => "0000-0000-0000-0000-0008",
           "construction_age_band" => "England and Wales: 2022 onwards",
-          "fixed_lighting_outlets_count" => "0",
+          "fixed_lighting_outlets_count" => "36",
           "glazed_area" => nil,
           "glazed_type" => nil,
           "inspection_date" => "2023-12-01",
           "lodgement_date" => "2023-12-01",
           "low_energy_fixed_lighting_outlets_count" => "31",
-          "low_energy_lighting" => "100",
+          "low_energy_lighting" => "86",
           "mechanical_ventilation" => "positive input from outside",
           "number_open_fireplaces" => "1",
           "photo_supply" => "0",
@@ -398,10 +469,10 @@ describe Gateway::DomesticSearchGateway do
       end
 
       let(:expected_rdsap_2101_data) do
-        expected_rdsap_data.merge(
-          "certificate_number" => "0000-0000-0000-0000-0008",
+        expected_rdsap_2000_data.merge(
+          "certificate_number" => "0000-0000-0000-0000-0009",
           "construction_age_band" => "England and Wales: 2022 onwards",
-          "fixed_lighting_outlets_count" => "0",
+          "fixed_lighting_outlets_count" => "31",
           "glazed_area" => nil,
           "glazed_type" => nil,
           "inspection_date" => "2025-04-04",
@@ -426,26 +497,31 @@ describe Gateway::DomesticSearchGateway do
       end
 
       it "returns the correct columns" do
-        expect(csv_fixture.headers.sort.map(&:downcase) - expected_sap_data.keys).to eq []
+        expect(csv_fixture.headers.sort.map(&:downcase) - expected_sap_1900_data.keys).to eq []
       end
 
-      it "returns a row with the required data for SAP" do
+      it "returns a row with the required data for SAP 16.0" do
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0011" }
+        expect(result).to eq expected_sap_160_data
+      end
+
+      it "returns a row with the required data for SAP 19.0.0" do
         result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0001" }
-        expect(result).to eq expected_sap_data
+        expect(result).to eq expected_sap_1900_data
       end
 
-      it "returns a row with the required data for RdSAP" do
+      it "returns a row with the required data for RdSAP 20.0.0" do
         result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }
-        expect(result).to eq expected_rdsap_data
+        expect(result).to eq expected_rdsap_2000_data
       end
 
       it "returns a row with the required data for RdSAP 21.0.0" do
-        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0007" }
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0008" }
         expect(result).to eq expected_rdsap_2100_data
       end
 
       it "returns a row with the required data for RdSAP 21.0.1" do
-        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0008" }
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0009" }
         expect(result).to eq expected_rdsap_2101_data
       end
     end
@@ -460,7 +536,7 @@ describe Gateway::DomesticSearchGateway do
 
   describe "#fetch_certificate_numbers" do
     let(:expectation) do
-      [{ "certificate_number" => "0000-0000-0000-0000-0000" }, { "certificate_number" => "0000-0000-0000-0000-0001" }, { "certificate_number" => "0000-0000-0000-0000-0002" }, { "certificate_number" => "0000-0000-0000-0000-0007" }, { "certificate_number" => "0000-0000-0000-0000-0008" }]
+      [{ "certificate_number" => "0000-0000-0000-0000-0000" }, { "certificate_number" => "0000-0000-0000-0000-0001" }, { "certificate_number" => "0000-0000-0000-0000-0002" }, { "certificate_number" => "0000-0000-0000-0000-0008" }, { "certificate_number" => "0000-0000-0000-0000-0009" }]
     end
 
     it "returns a list of certificate_number" do
