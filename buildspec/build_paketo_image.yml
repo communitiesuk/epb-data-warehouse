@@ -14,7 +14,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Paketo image...
-      - pack build ebpr-data-warehouse-image --builder paketobuildpacks/builder-jammy-full:0.3.387 --post-buildpack paketo-buildpacks/npm-install@1.1.1 --post-buildpack paketo-buildpacks/ruby --default-process rake
+      - pack build ebpr-data-warehouse-image --builder paketobuildpacks/builder-jammy-full --post-buildpack paketo-buildpacks/npm-install@1.1.1 --post-buildpack paketo-buildpacks/ruby --default-process rake
 
   post_build:
     commands:
