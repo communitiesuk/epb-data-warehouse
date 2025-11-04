@@ -38,11 +38,14 @@ describe "Create psql function to export and redact json data from assessment_do
       "cancelled_at" => "2020-06-01",
       "hashed_assessment_id" => "0000-0000-0000-0000-1111",
       "opt_out" => false,
+      "energy_rating_current" => 75,
     }
   end
 
   let(:cepc_json_sample) do
-    json_sample.merge("assessment_type" => "CEPC", "related_rrn" => "0000-0000-0000-0000-0000")
+    sample = json_sample.merge("assessment_type" => "CEPC", "related_rrn" => "0000-0000-0000-0000-0000", "asset_rating" => 25)
+    sample.delete("energy_rating_current")
+    sample
   end
 
   before do
@@ -61,6 +64,10 @@ describe "Create psql function to export and redact json data from assessment_do
 
   it "removes assessment_address_id key" do
     expect(document["assessment_address_id"]).to be_nil
+  end
+
+  it "has a current_energy_efficiency_band of C" do
+    expect(document["current_energy_efficiency_band"]).to eq "C"
   end
 
   context "when the assessment_address_id is an RRN" do
@@ -85,6 +92,42 @@ describe "Create psql function to export and redact json data from assessment_do
 
     it "returns related_certificate_number" do
       expect(document["related_certificate_number"]).to eql("0000-0000-0000-0000-0000")
+    end
+
+    it "has a current_energy_efficiency_band of A" do
+      expect(document["current_energy_efficiency_band"]).to eq "A"
+    end
+  end
+
+  context "when the assessment_type is DEC" do
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: dec_sample)
+    end
+
+    let(:dec_sample) do
+      sample = json_sample.merge("assessment_type" => "DEC", "related_rrn" => "0000-0000-0000-0000-0000", "this_assessment" => { "energy_rating" => 38 })
+      sample.delete("energy_rating_current")
+      sample
+    end
+
+    it "has a current_energy_efficiency_band of B" do
+      expect(document["current_energy_efficiency_band"]).to eq "B"
+    end
+  end
+
+  context "when the assessment_type is DEC-RR" do
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: dec_rr_sample)
+    end
+
+    let(:dec_rr_sample) do
+      sample = json_sample.merge("assessment_type" => "DEC-RR", "related_rrn" => "0000-0000-0000-0000-0000")
+      sample.delete("energy_rating_current")
+      sample
+    end
+
+    it "has no energy band" do
+      expect(document["current_energy_efficiency_band"]).to be_nil
     end
   end
 end

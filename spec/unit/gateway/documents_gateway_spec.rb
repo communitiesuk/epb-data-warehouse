@@ -206,7 +206,8 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
           registration_date: "2020-06-01",
           schema_version_original: "LIG-19.0",
           uprn: 1245,
-          calculation_software_version: "4.05r0005" }
+          calculation_software_version: "4.05r0005",
+          current_energy_efficiency_band: "A" }
       end
 
       let(:json_sample) do
@@ -232,6 +233,7 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
           "assessment_type" => "RdSAP",
           "equipment_operator" => "some value",
           "assessment_address_id" => "UPRN-0000000001245",
+
         }
       end
 
