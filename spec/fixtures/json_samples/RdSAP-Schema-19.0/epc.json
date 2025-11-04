@@ -376,6 +376,7 @@
     "data_source": 2,
     "solar_transmittance": 0.76
   },
+  "current_energy_efficiency_band": "D",
   "environmental_impact_potential": 75,
   "has_heated_separate_conservatory": "false",
   "co2_emissions_current_per_floor_area": 41,

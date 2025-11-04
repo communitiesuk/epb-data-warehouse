@@ -386,6 +386,7 @@
     "solar_transmittance": 0.72
   },
   "cfl_fixed_lighting_bulbs_count": 5,
+  "current_energy_efficiency_band": "E",
   "environmental_impact_potential": 74,
   "led_fixed_lighting_bulbs_count": 10,
   "mechanical_vent_duct_placement": 2,

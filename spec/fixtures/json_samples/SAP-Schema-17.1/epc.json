@@ -553,6 +553,7 @@
   "calculation_software_version": "4.12r02",
   "energy_consumption_potential": 34,
   "environmental_impact_current": 85,
+  "current_energy_efficiency_band": "B",
   "environmental_impact_potential": 93,
   "has_heated_separate_conservatory": "false",
   "co2_emissions_current_per_floor_area": 14

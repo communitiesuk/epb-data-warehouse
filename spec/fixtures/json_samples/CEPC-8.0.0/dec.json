@@ -293,5 +293,6 @@
     "annual_energy_use_electrical": 1,
     "annual_energy_use_fuel_thermal": 1
   },
-  "dec_related_party_disclosure": 4
+  "dec_related_party_disclosure": 4,
+  "current_energy_efficiency_band": "A"
 }

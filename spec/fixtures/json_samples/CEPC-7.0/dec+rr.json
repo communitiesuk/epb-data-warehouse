@@ -122,5 +122,6 @@
     "annual_energy_use_fuel_thermal": 161
   },
   "related_certificate_number": "3333-4444-5555-6666-7778",
-  "dec_related_party_disclosure": 3
+  "dec_related_party_disclosure": 3,
+  "current_energy_efficiency_band": "D"
 }

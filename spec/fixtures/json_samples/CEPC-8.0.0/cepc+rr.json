@@ -462,5 +462,6 @@
     ]
   },
   "existing_stock_benchmark": 100,
-  "related_certificate_number": "0000-0000-0000-0000-0001"
+  "related_certificate_number": "0000-0000-0000-0000-0001",
+  "current_energy_efficiency_band": "D"
 }

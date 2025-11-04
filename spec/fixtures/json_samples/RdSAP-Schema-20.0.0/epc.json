@@ -331,6 +331,7 @@
     "solar_transmittance": 0.72
   },
   "multiple_glazed_proportion_nr": "NR",
+  "current_energy_efficiency_band": "E",
   "environmental_impact_potential": 74,
   "co2_emissions_current_per_floor_area": 20,
   "low_energy_fixed_lighting_outlets_count": 16

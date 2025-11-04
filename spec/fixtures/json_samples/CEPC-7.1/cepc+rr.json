@@ -258,5 +258,6 @@
     ]
   },
   "existing_stock_benchmark": 79,
-  "related_certificate_number": "9999-9999-3333-9999-2222"
+  "related_certificate_number": "9999-9999-3333-9999-2222",
+  "current_energy_efficiency_band": "D"
 }

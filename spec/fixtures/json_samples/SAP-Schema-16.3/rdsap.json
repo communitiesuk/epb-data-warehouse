@@ -361,6 +361,7 @@
   "energy_consumption_potential": 247,
   "environmental_impact_current": 37,
   "fixed_lighting_outlets_count": 7,
+  "current_energy_efficiency_band": "D",
   "environmental_impact_potential": 63,
   "has_heated_separate_conservatory": "false",
   "co2_emissions_current_per_floor_area": 84,

@@ -282,5 +282,6 @@
   ],
   "existing_stock_benchmark": 81,
   "or_assessment_start_date": "2020-05-14",
-  "related_certificate_number": "4192-1535-8427-8844-6702"
+  "related_certificate_number": "4192-1535-8427-8844-6702",
+  "current_energy_efficiency_band": "D"
 }

@@ -328,5 +328,6 @@
       }
     ]
   },
-  "existing_stock_benchmark": 100
+  "existing_stock_benchmark": 100,
+  "current_energy_efficiency_band": "D"
 }

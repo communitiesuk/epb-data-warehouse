@@ -603,6 +603,7 @@
   "calculation_software_version": "13.05r16",
   "energy_consumption_potential": 53,
   "environmental_impact_current": 94,
+  "current_energy_efficiency_band": "C",
   "environmental_impact_potential": 96,
   "electricity_smart_meter_present": "false",
   "has_heated_separate_conservatory": "false",
