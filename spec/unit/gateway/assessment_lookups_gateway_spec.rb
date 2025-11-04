@@ -4,7 +4,7 @@ describe Gateway::AssessmentLookupsGateway do
   subject(:gateway) { described_class.new }
 
   before(:all) do
-    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0 SAP-Schema-15.0 RdSAP-Schema-NI-20.0.0])
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0 SAP-Schema-19.0.0 SAP-Schema-15.0 RdSAP-Schema-NI-20.0.0])
   end
 
   include_context "when saving enum data to lookup tables"
@@ -80,7 +80,7 @@ describe Gateway::AssessmentLookupsGateway do
 
   describe "#fetch_lookups" do
     before do
-      import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0])
+      import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0 SAP-Schema-19.0.0])
     end
 
     let(:expected) do
@@ -101,12 +101,12 @@ describe Gateway::AssessmentLookupsGateway do
        { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
        { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
        { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0/SAP" },
-       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0/SAP" },
-       { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" },
-       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" },
-       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" },
-       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0/SAP" }]
+       { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0" },
+       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0" },
+       { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
+       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0" }]
     end
 
     context "when filtering by name" do
@@ -119,7 +119,7 @@ describe Gateway::AssessmentLookupsGateway do
       end
 
       it "include all valid schema versions" do
-        expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0/SAP]
+        expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0]
       end
 
       it "returns the correct number of records" do

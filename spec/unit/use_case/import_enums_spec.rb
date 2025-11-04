@@ -293,6 +293,140 @@ describe UseCase::ImportEnums do
     end
   end
 
+  context "when saving property types for RdSAP" do
+    before do
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_property_type.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    let(:lookups_gateway) do
+      Gateway::AssessmentLookupsGateway.new
+    end
+
+    let(:attribute_name) do
+      "property_type"
+    end
+
+    it "save the transaction type for all versions of RdSAP" do
+      rdsap_schemas = %w[RdSAP-Schema-17.0
+                         RdSAP-Schema-17.1
+                         RdSAP-Schema-18.0
+                         RdSAP-Schema-19.0
+                         RdSAP-Schema-20.0.0
+                         RdSAP-Schema-21.0.0
+                         RdSAP-Schema-21.0.1
+                         RdSAP-Schema-NI-17.3
+                         RdSAP-Schema-NI-17.4
+                         RdSAP-Schema-NI-18.0
+                         RdSAP-Schema-NI-19.0
+                         RdSAP-Schema-NI-20.0.0
+                         RdSAP-Schema-NI-21.0.0
+                         RdSAP-Schema-NI-21.0.1 ]
+      expect(fetch_schemas(attribute_name:).sort).to include(*rdsap_schemas)
+    end
+
+    it "save the enums from the RdSAP 17.0" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "RdSAP-Schema-17.0")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  0 => "House",
+                       1 => "Bungalow",
+                       2 => "Flat",
+                       3 => "Maisonette",
+                       4 => "Park home" }
+
+      expect(result).to eq(expectation)
+    end
+
+    it "save the enums from the RdSAP 19.0" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "RdSAP-Schema-19.0")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  0 => "House",
+                       1 => "Bungalow",
+                       2 => "Flat",
+                       3 => "Maisonette",
+                       4 => "Park home" }
+
+      expect(result).to eq(expectation)
+    end
+
+    it "save the enums from the RdSAP 21.0.1" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "RdSAP-Schema-21.0.1")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  0 => "House",
+                       1 => "Bungalow",
+                       2 => "Flat",
+                       3 => "Maisonette",
+                       4 => "Park home" }
+
+      expect(result).to eq(expectation)
+    end
+  end
+
+  context "when saving property types for SAP" do
+    before do
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_property_type.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    let(:lookups_gateway) do
+      Gateway::AssessmentLookupsGateway.new
+    end
+
+    let(:attribute_name) do
+      "property_type"
+    end
+
+    it "save the transaction type for all versions of SAP" do
+      sap_schemas = %w[
+        SAP-Schema-16.0
+        SAP-Schema-16.1
+        SAP-Schema-16.2
+        SAP-Schema-16.3
+        SAP-Schema-17.0
+        SAP-Schema-17.1
+        SAP-Schema-18.0.0
+        SAP-Schema-19.0.0
+        SAP-Schema-19.1.0
+      ]
+      expect(fetch_schemas(attribute_name:).sort).to include(*sap_schemas)
+    end
+
+    it "save the enums from the sap 16.1" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "SAP-Schema-16.1")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  0 => "House",
+                       1 => "Bungalow",
+                       2 => "Flat",
+                       3 => "Maisonette" }
+
+      expect(result).to eq(expectation)
+    end
+
+    it "save the enums from the sap 17.0" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "SAP-Schema-17.0")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  0 => "House",
+                       1 => "Bungalow",
+                       2 => "Flat",
+                       3 => "Maisonette",
+                       4 => "Park home" }
+
+      expect(result).to eq(expectation)
+    end
+  end
+
   context "when saving the energy tariff enums" do
     let(:lookups_gateway)  do
       Gateway::AssessmentLookupsGateway.new

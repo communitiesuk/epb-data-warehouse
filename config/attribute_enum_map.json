@@ -66,6 +66,12 @@
       "xsd_node_name": "PropertyTypeCode"
     },
     {
+      "attribute_name": "property_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "PropertyTypeCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/SAP-EPC/UDT/SharedDomains.xsd"
+    },
+    {
       "attribute_name": "tenure",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "TenureCode"
@@ -74,6 +80,13 @@
       "attribute_name": "tenure",
       "type_of_assessment": "SAP",
       "xsd_node_name": "TenureCode"
+    },
+    {
+      "attribute_name": "tenure",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Tenure",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Tenure-Code": "Tenure-Text" }
     },
     {
       "attribute_name": "transaction_type",
@@ -89,7 +102,6 @@
       "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
       "node_hash": { "Transaction-Code": "Transaction-Text" }
     },
-
     {
       "attribute_name": "transaction_type",
       "type_of_assessment": "SAP",
@@ -97,7 +109,6 @@
       "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
       "node_hash": { "Transaction-Code": "Transaction-Text" }
     },
-
     {
       "attribute_name": "transaction_type",
       "type_of_assessment": "SAP",

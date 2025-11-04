@@ -93,6 +93,13 @@
       "xsd_node_name": "TenureCode"
     },
     {
+      "attribute_name": "tenure",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Tenure",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Tenure-Code": "Tenure-Text" }
+    },
+    {
       "attribute_name": "mechanical_ventilation",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "VentilationTypeCode"
