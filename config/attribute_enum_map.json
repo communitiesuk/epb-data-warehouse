@@ -91,6 +91,21 @@
     },
 
     {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Transaction-Type",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Transaction-Code": "Transaction-Text" }
+    },
+
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "TransactionType",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16.0/SAP-EPC/UDT/SharedDomains.xsd"
+    },
+
+    {
       "attribute_name": "improvement_summary",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "//Recommendation",

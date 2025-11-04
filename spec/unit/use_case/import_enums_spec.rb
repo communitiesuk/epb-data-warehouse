@@ -1,4 +1,6 @@
 describe UseCase::ImportEnums do
+  include_context "when saving enum data to lookup tables"
+
   let(:use_case) do
     described_class.new(assessment_lookups_gateway: gateway, xsd_presenter: presenter, assessment_attribute_gateway: attribute_gateway, xsd_config_gateway:)
   end
@@ -56,10 +58,10 @@ describe UseCase::ImportEnums do
       )
     end
 
-    it "receive the array and loop over it 4 times - once for each unique key" do
+    it "receive the array and loop over it for every lookup in each schema" do
       use_case.execute
       expect(presenter).to have_received(:get_enums_by_type).exactly(1).times
-      expect(gateway).to have_received(:add_lookup).exactly(4).times
+      expect(gateway).to have_received(:add_lookup).exactly(8).times
     end
   end
 
@@ -231,6 +233,61 @@ describe UseCase::ImportEnums do
     it "save the enums from the xml definitions" do
       result = saved_data.rows.to_h
       expectation = { "6" => "New dwelling", "1" => "Marketed sale", "2" => "Non-marketed sale", "8" => "Rental", "9" => "Assessment for Green Deal", "10" => "Following Green Deal", "11" => "FiT application", "12" => "RHI application", "13" => "ECO assessment", "5" => "None of the above", "14" => "Stock condition survey", "16" => "Grant scheme", "17" => "Non-grant scheme", "15" => "Re-mortgaging" }
+
+      expect(result).to eq(expectation)
+    end
+  end
+
+  context "when saving transaction types for SAP" do
+    before do
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_transaction_type_map.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    let(:lookups_gateway) do
+      Gateway::AssessmentLookupsGateway.new
+    end
+
+    let(:attribute_name) do
+      "transaction_type"
+    end
+
+    it "save the transaction type for all versions of SAP" do
+      sap_schemas = %w[SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-NI-17.3 SAP-Schema-NI-17.4 SAP-Schema-NI-18.0.0]
+      expect(fetch_schemas(attribute_name:).sort).to eq sap_schemas
+    end
+
+    it "save the enums from the sap 16.1" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "SAP-Schema-16.1")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  1 => "Marketed sale",
+                       2 => "Non-marketed sale",
+                       5 => "None of the above",
+                       6 => "New dwelling",
+                       8 => "Rental",
+                       9 => "Assessment for Green Deal",
+                       10 => "Following Green Deal",
+                       11 => "FiT application" }
+
+      expect(result).to eq(expectation)
+    end
+
+    it "save the enums from the sap 17.0" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "SAP-Schema-17.0")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  1 => "Marketed sale",
+                       2 => "Non-marketed sale",
+                       5 => "None of the above",
+                       6 => "New dwelling",
+                       8 => "Rental",
+                       9 => "Assessment for Green Deal",
+                       10 => "Following Green Deal",
+                       11 => "FiT application" }
 
       expect(result).to eq(expectation)
     end

@@ -19,12 +19,8 @@ module UseCase
           raise Boundary::EnumImportError.new(attribute["xsd_node_name"], e.message)
         end
 
-        if @xsd_presenter.variation_between_schema_versions?(enum_hashes)
-          enum_hashes.each do |schema_version, values|
-            save_lookup(values:, attribute:, schema_version:)
-          end
-        else
-          save_lookup(values: enum_hashes.first[1], attribute:)
+        enum_hashes.each do |schema_version, values|
+          save_lookup(values:, attribute:, schema_version:)
         end
       end
     end
