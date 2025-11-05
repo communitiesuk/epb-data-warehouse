@@ -3,13 +3,11 @@ class FixDomesticMvwAndYesterdayVwDataPoints < ActiveRecord::Migration[7.0]
     <<~SQL
       SELECT
         ad.assessment_id AS CERTIFICATE_NUMBER,
-        get_attribute_value('address_line_1', ad.assessment_id) AS ADDRESS1,
-        get_attribute_value('address_line_2', ad.assessment_id) AS ADDRESS2,
-        get_attribute_value('address_line_3', ad.assessment_id) AS ADDRESS3,
-        LOWER(CONCAT_WS(' ', (document ->> 'address_line_1')::varchar,
-                    (document ->> 'address_line_2')::varchar,
-                    (document ->> 'address_line_3')::varchar)) AS ADDRESS,
-        get_attribute_value('postcode', ad.assessment_id)::VARCHAR AS POSTCODE,
+        s.address_line_1 AS ADDRESS1,
+        s.address_line_2 AS ADDRESS2,
+        s.address_line_2 AS ADDRESS3,
+        CONCAT_WS(', ', s.address_line_1, s.address_line_2, s.address_line_3) AS ADDRESS,
+        s.postcode AS POSTCODE,
         get_attribute_value('inspection_date', ad.assessment_id) AS INSPECTION_DATE,
         s.uprn,
         get_attribute_value('environmental_impact_potential', ad.assessment_id) AS ENVIRONMENT_IMPACT_POTENTIAL,
@@ -20,21 +18,27 @@ class FixDomesticMvwAndYesterdayVwDataPoints < ActiveRecord::Migration[7.0]
         get_attribute_value('co2_emissions_current_per_floor_area', ad.assessment_id) AS CO2_EMISS_CURR_PER_FLOOR_AREA,
         get_attribute_value('co2_emissions_potential', ad.assessment_id) AS CO2_EMISSIONS_POTENTIAL,
         get_attribute_value('total_floor_area', ad.assessment_id) AS TOTAL_FLOOR_AREA,
-        get_attribute_value('registration_date', ad.assessment_id) AS LODGEMENT_DATE,
+        s.registration_date AS LODGEMENT_DATE,
         get_attribute_value('report_type', ad.assessment_id) AS REPORT_TYPE,
-        get_attribute_value('post_town', ad.assessment_id) AS POSTTOWN,
-        get_attribute_value('created_at', ad.assessment_id) AS LODGEMENT_DATETIME,
-        get_attribute_value('energy_rating_current', ad.assessment_id) AS CURRENT_ENERGY_EFFICIENCY,
-        energy_band_calculator(get_attribute_value('energy_rating_current', ad.assessment_id)::INTEGER, ad.document ->> 'assessment_type') AS CURRENT_ENERGY_RATING,
+        s.post_town AS POSTTOWN,
+        s.created_at AS LODGEMENT_DATETIME,
+        s.current_energy_efficiency_rating::VARCHAR AS CURRENT_ENERGY_EFFICIENCY,
+        s.current_energy_efficiency_band AS CURRENT_ENERGY_RATING,
         get_attribute_value('energy_rating_potential', ad.assessment_id) AS POTENTIAL_ENERGY_EFFICIENCY,
         energy_band_calculator(get_attribute_value('energy_rating_potential', ad.assessment_id)::INTEGER, ad.document ->> 'assessment_type') AS POTENTIAL_ENERGY_RATING,
         get_attribute_value('extensions_count', ad.assessment_id) AS EXTENSION_COUNT,
-        COALESCE(get_attribute_value('open_fireplaces_count', ad.assessment_id), get_attribute_value('open_chimneys_count', ad.assessment_id),  get_attribute_json('sap_ventilation', ad.assessment_id) ->> 'open_chimneys_count') AS NUMBER_OPEN_FIREPLACES,
+        COALESCE(
+            get_attribute_value('open_fireplaces_count', ad.assessment_id),
+            get_attribute_value('open_chimneys_count', ad.assessment_id),
+            get_attribute_json('sap_ventilation', ad.assessment_id) ->> 'open_chimneys_count',
+            get_attribute_json('sap_ventilation', ad.assessment_id) ->> 'open_fireplaces_count'
+        ) AS NUMBER_OPEN_FIREPLACES,
         get_attribute_value('heated_room_count', ad.assessment_id) AS NUMBER_HEATED_ROOMS,
         get_attribute_value('habitable_room_count', ad.assessment_id) AS NUMBER_HABITABLE_ROOMS,
       #{'         '}
         COALESCE(
             get_attribute_value('low_energy_lighting', ad.assessment_id)::TEXT,
+            get_attribute_json('sap_energy_source', ad.assessment_id) ->> 'low_energy_fixed_lighting_outlets_percentage',
             ROUND(
                 sum_attribute_values(ARRAY['cfl_fixed_lighting_bulbs_count', 'led_fixed_lighting_bulbs_count', 'low_energy_fixed_lighting_bulbs_count'], ad.assessment_id)
                 / NULLIF(
@@ -61,6 +65,7 @@ class FixDomesticMvwAndYesterdayVwDataPoints < ActiveRecord::Migration[7.0]
       #{'         '}
         COALESCE(
           get_attribute_value('low_energy_fixed_lighting_outlets_count', ad.assessment_id)::TEXT,
+          get_attribute_json('sap_energy_source', ad.assessment_id) ->> 'low_energy_fixed_lighting_outlets_count',
           (
             sum_attribute_values(ARRAY['cfl_fixed_lighting_bulbs_count', 'led_fixed_lighting_bulbs_count', 'low_energy_fixed_lighting_bulbs_count'], ad.assessment_id)
           )::TEXT,
@@ -154,6 +159,7 @@ class FixDomesticMvwAndYesterdayVwDataPoints < ActiveRecord::Migration[7.0]
       #{'  '}
         COALESCE(
           get_attribute_value('fixed_lighting_outlets_count', ad.assessment_id),
+          get_attribute_json('sap_energy_source', ad.assessment_id) ->> 'fixed_lighting_outlets_count',
           (
             sum_attribute_values(ARRAY['cfl_fixed_lighting_bulbs_count', 'led_fixed_lighting_bulbs_count', 'low_energy_fixed_lighting_bulbs_count', 'incandescent_fixed_lighting_bulbs_count'], ad.assessment_id)
           )::TEXT,

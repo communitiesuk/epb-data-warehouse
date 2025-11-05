@@ -55,10 +55,19 @@ describe Gateway::DomesticSearchGateway do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "registration_date": "2021-12-06T00:00:00.000+00:00", "postcode": "SW1A 2AA", "country_id": 1
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment:, type: "rdsap", add_to_assessment_search: true, different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
+    })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0/SAP SAP-Schema-19.0.0 SAP-Schema-16.0])
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0013", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment:, type: "rdsap", add_to_assessment_search: true, different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
+    })
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0 SAP-Schema-16.0 SAP-Schema-16.1])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end
 
@@ -210,7 +219,7 @@ describe Gateway::DomesticSearchGateway do
 
       let(:expected_sap_1900_data) do
         { "certificate_number" => "0000-0000-0000-0000-0001",
-          "address" => "1 some street some area some county",
+          "address" => "1 Some Street, Some Area, Some County",
           "address1" => "1 Some Street",
           "address2" => "Some Area",
           "address3" => "Some County",
@@ -303,9 +312,76 @@ describe Gateway::DomesticSearchGateway do
           "property_type" => "House" }
       end
 
-      let(:expected_sap_160_data) do
+      let(:expected_sap_160_rdsap_data) do
         expected_sap_1900_data.merge(
-          "address" => "28, place drive",
+          "certificate_number" => "0000-0000-0000-0000-0010",
+          "address" => "11, Street Road",
+          "address1" => "11, Street Road",
+          "address2" => nil,
+          "address3" => nil,
+          "built_form" => "Detached",
+          "co2_emiss_curr_per_floor_area" => "28",
+          "co2_emissions_current" => "2.9",
+          "construction_age_band" => "England and Wales: 1967-1975",
+          "current_energy_efficiency" => "73",
+          "energy_consumption_current" => "144",
+          "energy_consumption_potential" => "64",
+          "energy_tariff" => nil,
+          "environment_impact_current" => "72",
+          "environment_impact_potential" => "86",
+          "extension_count" => "1",
+          "fixed_lighting_outlets_count" => "15",
+          "flat_storey_count" => 1,
+          "floor_description" => "Solid, no insulation (assumed)",
+          "floor_energy_eff" => "N/A",
+          "floor_env_eff" => "N/A",
+          "floor_height" => nil,
+          "floor_level" => nil,
+          "heating_cost_current" => "494",
+          "heating_cost_potential" => "428",
+          "hot_water_cost_current" => "90",
+          "hot_water_cost_potential" => "64",
+          "hot_water_env_eff" => "Good",
+          "hotwater_description" => "From main system",
+          "inspection_date" => "2012-09-27",
+          "lighting_cost_current" => "73",
+          "lighting_cost_potential" => "55",
+          "lighting_description" => "Low energy lighting in 67% of fixed outlets",
+          "lighting_energy_eff" => "Good",
+          "lighting_env_eff" => "Good",
+          "lodgement_date" => "2020-04-05T12:00:00.000+00:00",
+          "low_energy_fixed_lighting_outlets_count" => "10",
+          "low_energy_lighting" => "67",
+          "main_fuel" => nil,
+          "mainheat_description" => "Boiler and radiators, mains gas",
+          "mainheat_energy_eff" => "Good",
+          "mainheat_env_eff" => "Good",
+          "number_habitable_rooms" => "5",
+          "number_heated_rooms" => "5",
+          "posttown" => "Town",
+          "potential_energy_efficiency" => "86",
+          "potential_energy_rating" => "B",
+          "property_type" => "Bungalow",
+          "report_type" => "2",
+          "roof_description" => "Pitched, 300+ mm loft insulation",
+          "secondheat_description" => "None",
+          "solar_water_heating_flag" => "N",
+          "tenure" => nil,
+          "total_floor_area" => "107",
+          "transaction_type" => "marketed sale",
+          "walls_description" => "Cavity wall, filled cavity",
+          "walls_energy_eff" => "Good",
+          "walls_env_eff" => "Good",
+          "wind_turbine_count" => 0,
+          "windows_description" => nil,
+          "windows_energy_eff" => nil,
+          "windows_env_eff" => nil,
+        )
+      end
+
+      let(:expected_sap_160_sap_data) do
+        expected_sap_1900_data.merge(
+          "address" => "28, Place Drive",
           "address1" => "28, Place Drive",
           "address2" => nil,
           "address3" => nil,
@@ -322,7 +398,7 @@ describe Gateway::DomesticSearchGateway do
           "energy_tariff" => "standard tariff",
           "environment_impact_current" => "86",
           "environment_impact_potential" => "87",
-          "fixed_lighting_outlets_count" => nil,
+          "fixed_lighting_outlets_count" => "7",
           "flat_storey_count" => 1,
           "floor_description" => "Average thermal transmittance 0.25 W/m²K",
           "floor_energy_eff" => "Good",
@@ -342,25 +418,25 @@ describe Gateway::DomesticSearchGateway do
           "lighting_energy_eff" => "Good",
           "lighting_env_eff" => "Good",
           "lodgement_date" => "2020-04-05T12:00:00.000+00:00",
-          "low_energy_fixed_lighting_outlets_count" => nil,
-          "low_energy_lighting" => nil,
+          "low_energy_fixed_lighting_outlets_count" => "4",
+          "low_energy_lighting" => "57",
           "main_fuel" => "Gas: mains gas",
           "mainheat_description" => "Boiler and radiators, mains gas",
           "mainheat_energy_eff" => "Good",
           "mainheat_env_eff" => "Good",
           "multi_glaze_proportion" => nil,
-          "number_open_fireplaces" => nil,
+          "number_open_fireplaces" => "0",
           "posttown" => "Town",
           "potential_energy_efficiency" => "83",
           "potential_energy_rating" => "B",
-          "property_type" => nil,
+          "property_type" => "Flat",
           "roof_description" => "(other premises above)",
           "roof_energy_eff" => "N/A",
           "roof_env_eff" => "N/A",
           "secondheat_description" => "None",
           "tenure" => nil,
           "total_floor_area" => "80",
-          "transaction_type" => nil,
+          "transaction_type" => "new dwelling",
           "walls_description" => "Average thermal transmittance 0.34 W/m²K",
           "walls_energy_eff" => "Good",
           "walls_env_eff" => "Good",
@@ -371,9 +447,114 @@ describe Gateway::DomesticSearchGateway do
         )
       end
 
+      let(:expected_sap_161_sap_data) do
+        expected_sap_160_sap_data.merge(
+          "certificate_number" => "0000-0000-0000-0000-0012",
+          "built_form" => "Mid-Terrace",
+          "co2_emiss_curr_per_floor_area" => "22",
+          "co2_emissions_potential" => "1.2",
+          "current_energy_efficiency" => "79",
+          "current_energy_rating" => "C",
+          "energy_consumption_current" => "119",
+          "energy_consumption_potential" => "110",
+          "environment_impact_current" => "83",
+          "environment_impact_potential" => "84",
+          "fixed_lighting_outlets_count" => "9",
+          "flat_storey_count" => 2,
+          "floor_description" => "Average thermal transmittance 0.18 W/m²K",
+          "floor_energy_eff" => "Very Good",
+          "floor_env_eff" => "Very Good",
+          "floor_height" => "2.37",
+          "floor_level" => nil,
+          "heating_cost_current" => "236",
+          "heating_cost_potential" => "240",
+          "hot_water_cost_current" => "76",
+          "hot_water_cost_potential" => "76",
+          "inspection_date" => "2013-01-12",
+          "lighting_cost_potential" => "39",
+          "lighting_description" => "Low energy lighting in 33% of fixed outlets",
+          "lighting_energy_eff" => "Average",
+          "lighting_env_eff" => "Average",
+          "low_energy_fixed_lighting_outlets_count" => "3",
+          "low_energy_lighting" => "33",
+          "potential_energy_efficiency" => "80",
+          "potential_energy_rating" => "C",
+          "property_type" => "House",
+          "roof_description" => "Average thermal transmittance 0.15 W/m²K",
+          "roof_energy_eff" => "Good",
+          "roof_env_eff" => "Good",
+          "total_floor_area" => "59",
+          "transaction_type" => "New dwelling",
+          "walls_description" => "Average thermal transmittance 0.30 W/m²K",
+        )
+      end
+
+      let(:expected_sap_161_rdsap_data) do
+        expected_sap_160_sap_data.merge(
+          "certificate_number" => "0000-0000-0000-0000-0013",
+          "address" => "15, What the Dickens Road",
+          "address1" => "15, What the Dickens Road",
+          "built_form" => "Mid-Terrace",
+          "co2_emiss_curr_per_floor_area" => "47",
+          "co2_emissions_current" => "3.4",
+          "co2_emissions_potential" => "1.0",
+          "construction_age_band" => "England and Wales: 1930-1949",
+          "current_energy_efficiency" => "61",
+          "current_energy_rating" => "D",
+          "energy_consumption_current" => "244",
+          "energy_consumption_potential" => "66",
+          "energy_tariff" => nil,
+          "environment_impact_current" => "59",
+          "environment_impact_potential" => "86",
+          "extension_count" => "1",
+          "fixed_lighting_outlets_count" => "11",
+          "flat_storey_count" => 2,
+          "floor_description" => "Suspended, no insulation (assumed)",
+          "floor_energy_eff" => "N/A",
+          "floor_env_eff" => "N/A",
+          "floor_height" => nil,
+          "floor_level" => nil,
+          "heating_cost_current" => "546",
+          "heating_cost_potential" => "378",
+          "hot_water_cost_current" => "127",
+          "hot_water_cost_potential" => "68",
+          "inspection_date" => "2013-01-09",
+          "lighting_cost_current" => "69",
+          "lighting_cost_potential" => "42",
+          "lighting_description" => "Low energy lighting in 36% of fixed outlets",
+          "lighting_energy_eff" => "Average",
+          "lighting_env_eff" => "Average",
+          "low_energy_fixed_lighting_outlets_count" => "4",
+          "low_energy_lighting" => "36",
+          "main_fuel" => nil,
+          "main_heating_controls" => "Room thermostat only",
+          "mainheatc_energy_eff" => "Poor",
+          "mainheatc_env_eff" => "Poor",
+          "mainheatcont_description" => "Room thermostat only",
+          "multi_glaze_proportion" => "100",
+          "number_habitable_rooms" => "5",
+          "number_heated_rooms" => "5",
+          "potential_energy_efficiency" => "85",
+          "potential_energy_rating" => "B",
+          "property_type" => "House",
+          "report_type" => "2",
+          "roof_description" => "Pitched, 300+ mm loft insulation",
+          "roof_energy_eff" => "Very Good",
+          "roof_env_eff" => "Very Good",
+          "solar_water_heating_flag" => "N",
+          "total_floor_area" => "72",
+          "tenure" => "Rented (social)",
+          "transaction_type" => "Rental",
+          "walls_description" => "Cavity wall, filled cavity",
+          "windows_description" => nil,
+          "windows_energy_eff" => nil,
+          "windows_env_eff" => nil,
+        )
+      end
+
       let(:expected_rdsap_2000_data) do
         expected_sap_1900_data.merge(
-          "address" => "1 some street",
+          "address" => "1 Some Street",
           "address2" => nil,
           "address3" => nil,
           "report_type" => "2",
@@ -500,9 +681,24 @@ describe Gateway::DomesticSearchGateway do
         expect(csv_fixture.headers.sort.map(&:downcase) - expected_sap_1900_data.keys).to eq []
       end
 
-      it "returns a row with the required data for SAP 16.0" do
+      it "returns a row with the required data for SAP 16.0 and of assessment_type rdsap" do
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0010" }
+        expect(result).to eq expected_sap_160_rdsap_data
+      end
+
+      it "returns a row with the required data for SAP 16.0 and of assessment_type sap" do
         result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0011" }
-        expect(result).to eq expected_sap_160_data
+        expect(result).to eq expected_sap_160_sap_data
+      end
+
+      it "returns a row with the required data for SAP 16.1 and of assessment_type sap" do
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0012" }
+        expect(result).to eq expected_sap_161_sap_data
+      end
+
+      it "returns a row with the required data for SAP 16.1 and of assessment_type rdsap" do
+        result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0013" }
+        expect(result).to eq expected_sap_161_rdsap_data
       end
 
       it "returns a row with the required data for SAP 19.0.0" do
