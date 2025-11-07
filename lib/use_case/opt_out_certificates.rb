@@ -29,19 +29,17 @@ module UseCase
 
       assessment_ids.each do |assessment_id|
         meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
-        unless should_exclude?(meta_data:)
-          if meta_data[:optOut]
-            save_attribute_to_stores assessment_id:, attribute: OPT_OUT, value: now_in_db_format
-            delete_from_search assessment_id:
-          else
-            delete_attribute_from_stores assessment_id:,
-                                         attribute: OPT_OUT
+        if meta_data[:optOut]
+          save_attribute_to_stores assessment_id:, attribute: OPT_OUT, value: now_in_db_format
+          delete_from_search assessment_id:
+        else
+          delete_attribute_from_stores assessment_id:,
+                                       attribute: OPT_OUT
 
-            save_attribute_to_stores assessment_id:,
-                                     attribute: OPT_IN,
-                                     value: now_in_db_format
-            add_back_onto_queue assessment_id:
-          end
+          save_attribute_to_stores assessment_id:,
+                                   attribute: OPT_IN,
+                                   value: now_in_db_format
+          add_back_onto_queue assessment_id:
         end
 
         clear_assessment_on_recovery_list assessment_id

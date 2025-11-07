@@ -30,7 +30,7 @@ module UseCase
 
       assessment_ids.each do |assessment_id|
         meta_data = @api_gateway.fetch_meta_data(assessment_id)
-        unless (meta_data[:cancelledAt].nil? && meta_data[:notForIssueAt].nil?) || should_exclude?(meta_data:)
+        if is_cancelled?(meta_data:) || is_green_deal?(meta_data:)
           @assessment_attribute_gateway.delete_attributes_by_assessment assessment_id
           @documents_gateway.delete_assessment(assessment_id:)
           @assessments_country_id_gateway.delete_assessment(assessment_id:)

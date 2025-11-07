@@ -75,7 +75,7 @@ describe UseCase::CancelCertificates do
 
     context "when processing cancellations where there is a cancelled_at attribute present" do
       before do
-        allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: "2021-08-13T08:12:51.205Z", notForIssueAt: nil })
+        allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: "2021-08-13T08:12:51.205Z", notForIssueAt: nil, greenDeal: false })
       end
 
       it "saves the relevant certificates to database" do
@@ -122,23 +122,6 @@ describe UseCase::CancelCertificates do
       end
 
       it "clears all the assessments from the recovery list regardless of cancelled_at date" do
-        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
-      end
-    end
-
-    context "when processing cancellations where one of the cancellations is of type AC-REPORT and therefore excluded" do
-      before do
-        allow(api_gateway).to receive(:fetch_meta_data).with("1235-0000-0000-0000-0000").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "AC-REPORT", notForIssueAt: nil })
-        allow(api_gateway).to receive(:fetch_meta_data).with("0000-9999-0000-0000-0001").and_return({ cancelledAt: nil, notForIssueAt: nil })
-        allow(api_gateway).to receive(:fetch_meta_data).with("0000-0000-0000-0000-0002").and_return({ cancelledAt: Time.now.utc.xmlschema(3), typeOfAssessment: "DEC", notForIssueAt: nil })
-        use_case.execute
-      end
-
-      it "skips over the certificate whose cancellation date is null" do
-        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(1).times
-      end
-
-      it "clears all the assessments from the recovery list regardless of type of assessment" do
         expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(3).times
       end
     end
@@ -190,6 +173,21 @@ describe UseCase::CancelCertificates do
 
       it "registers an attempt for the assessment that failed" do
         expect(recovery_list_gateway).to have_received(:register_attempt).with(payload: failed_assessment, queue: :cancelled)
+      end
+    end
+
+    context "when processing cancellations for green deals" do
+      before do
+        allow(api_gateway).to receive(:fetch_meta_data).and_return({ cancelledAt: nil, notForIssueAt: nil, greenDeal: true })
+        use_case.execute
+      end
+
+      it "sends the updates for the other two certificates to the EAV store" do
+        expect(eav_database_gateway).to have_received(:delete_attributes_by_assessment).exactly(3).times
+      end
+
+      it "sends the updates for the other two certificates to the document store" do
+        expect(documents_gateway).to have_received(:delete_assessment).exactly(3).times
       end
     end
   end
