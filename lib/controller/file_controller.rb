@@ -20,6 +20,26 @@ module Controller
       get_s3_file_info(file_name)
     end
 
+    get "/api/files/non-domestic/csv" do
+      file_name = "full-load/non-domestic-csv.zip"
+      redirect_to_s3_file(file_name)
+    end
+
+    get "/api/files/non-domestic/csv/info" do
+      file_name = "full-load/non-domestic-csv.zip"
+      get_s3_file_info(file_name)
+    end
+
+    get "/api/files/non-domestic/json" do
+      file_name = "full-load/non-domestic-json.zip"
+      redirect_to_s3_file(file_name)
+    end
+
+    get "/api/files/non-domestic/json/info" do
+      file_name = "full-load/non-domestic-json.zip"
+      get_s3_file_info(file_name)
+    end
+
   private
 
     def redirect_to_s3_file(file_name)
