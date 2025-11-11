@@ -724,6 +724,261 @@ paths:
                 example:
                   error: "Internal Server Error"
 
+  /api/files/non-domestic/csv:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Download non domestic full-load CSV
+      description: |
+        Redirects to a pre-signed S3 URL for the non domestic full-load ZIP file.
+      operationId: download-non-domestic-full-load-csv
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/non-domestic/csv/info:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Get info about non-domestic full-load CSV
+      description: |
+        Returns metadata about the non-domestic full-load ZIP file.
+      operationId: get-non-domestic-full-load-info-json
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/non-domestic/json:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Download non-domestic full-load JSON
+      description: |
+        Redirects to a pre-signed S3 URL for the non-domestic full-load ZIP file.
+      operationId: download-non-domestic-full-load-json
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/non-domestic/json/info:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Get info about non domestic full-load JSON
+      description: |
+        Returns metadata about the non domestic full-load ZIP file.
+      operationId: get-non-domestic-full-load-info
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/non-domestic-recommendations/json:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Download non-domestic recommendations full-load JSON
+      description: |
+        Redirects to a pre-signed S3 URL for the non-domestic recommendations full-load ZIP file.
+      operationId: download-non-domestic-recommendations-full-load-json
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/non-domestic-recommendations/json/info:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Get info about non domestic full-load JSON
+      description: |
+        Returns metadata about the non domestic recommendations full-load ZIP file.
+      operationId: get-non-domestic-recommendations-full-load-info
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
 components:
   securitySchemes:
     bearerToken:
