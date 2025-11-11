@@ -123,7 +123,8 @@ describe Gateway::XsdConfigGateway do
        { "attribute_name" => "built_form", "type_of_assessment" => "RdSAP" },
        { "attribute_name" => "built_form", "type_of_assessment" => "SAP" },
        { "attribute_name" => "energy_efficiency_rating", "type_of_assessment" => "RdSAP" },
-       { "attribute_name" => "energy_efficiency_rating", "type_of_assessment" => "SAP" }]
+       { "attribute_name" => "energy_efficiency_rating", "type_of_assessment" => "SAP" },
+       {"attribute_name" => "ventilation_type", "type_of_assessment" => "RdSAP"}]
     end
 
     it "does not raise an error due the the json being mistyped" do
