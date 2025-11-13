@@ -1,5 +1,5 @@
 module Helper
-  class SearchParamsValidator
+  class SearchParams
     def self.validate(*args)
       this_args = args[0]
 
@@ -31,6 +31,22 @@ module Helper
       end
 
       raise Errors::OutOfPageSizeRangeError if this_args[:row_limit] < 1 || this_args[:row_limit] > 5000
+    end
+
+    def self.title_case(input)
+      return nil if input.nil? || input.empty?
+
+      arr = []
+      input.each do |i|
+        arr << i.split(" ").map { |word| word.match?(/and/i) ? word.downcase : word.capitalize }.join(" ")
+      end
+      arr
+    end
+
+    def self.format_band(input)
+      return nil if input.nil? || input.empty?
+
+      input.map(&:capitalize)
     end
   end
 end

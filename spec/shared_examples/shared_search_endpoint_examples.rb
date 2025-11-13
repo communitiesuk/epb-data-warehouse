@@ -1,49 +1,4 @@
 shared_examples "a search API endpoint" do |type:|
-  context "when requesting a response from /api/#{type}/count" do
-    context "when the response is a success" do
-      context "when no optional search filters are added" do
-        let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-          get "/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01"
-        end
-
-        it "returns 5 rows of data" do
-          response_body = JSON.parse(response.body)
-          expect(response.status).to eq(200)
-          expect(response_body["data"]).to eq({ "count" => 5 })
-        end
-      end
-
-      context "when optional search filters are added" do
-        let(:response) do
-          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-          get "/api/#{type}/count", { eff_rating: %w[A B] }
-        end
-
-        it "returns 1 row of data for efficiency rating filter" do
-          response_body = JSON.parse(response.body)
-          expect(response.status).to eq(200)
-          expect(response_body["data"]).to eq({ "count" => 1 })
-        end
-      end
-    end
-
-    context "when using a wrong token" do
-      let(:response) do
-        header("Authorization", "Bearer #{get_valid_jwt(%w[warehouse:read])}")
-        get("/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01")
-      end
-
-      it "returns status 403" do
-        expect(response.status).to eq(403)
-      end
-
-      it "raises an error due to the missing token" do
-        expect(response.body).to include "You are not authorised to perform this request"
-      end
-    end
-  end
-
   context "when requesting a response from /api/#{type}/search" do
     let(:expected_data) do
       if type == "domestic"
@@ -135,11 +90,11 @@ shared_examples "a search API endpoint" do |type:|
 
       context "when the council param is passed" do
         let(:response) do
-          get "/api/#{type}/search", { council: ["South Lanarkshire"] }
+          get "/api/#{type}/search", { council: ["South lanarkshire"] }
         end
 
         let(:multiple_responses) do
-          get "/api/#{type}/search", { council: ["South Lanarkshire", "Hammersmith and Fulham"] }
+          get "/api/#{type}/search", { council: ["South Lanarkshire", "hammersmith and Fulham"] }
         end
 
         it "returns the correct assessment" do
@@ -158,7 +113,7 @@ shared_examples "a search API endpoint" do |type:|
 
       context "when the constituency param is passed" do
         let(:response) do
-          get "/api/#{type}/search", { constituency: ["Lanark and Hamilton East"] }
+          get "/api/#{type}/search", { constituency: ["lanark and Hamilton East"] }
         end
 
         let(:multiple_responses) do
@@ -185,7 +140,7 @@ shared_examples "a search API endpoint" do |type:|
         end
 
         let(:multiple_responses) do
-          get "/api/#{type}/search", { eff_rating: %w[B E] }
+          get "/api/#{type}/search", { eff_rating: %w[B e] }
         end
 
         it "returns the correct assessment" do
@@ -437,6 +392,53 @@ shared_examples "a search API endpoint" do |type:|
           response_body = JSON.parse(response.body)
           expect(response_body["data"]["error"]).to include "The requested page size 0 is out of range. Please provide a page size between 1 and 5000"
         end
+      end
+    end
+  end
+end
+
+shared_examples "a count API endpoint" do |type:|
+  context "when requesting a response from /api/#{type}/count" do
+    context "when the response is a success" do
+      context "when no optional search filters are added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01"
+        end
+
+        it "returns 5 rows of data" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"]).to eq({ "count" => 5 })
+        end
+      end
+
+      context "when optional search filters are added" do
+        let(:response) do
+          header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
+          get "/api/#{type}/count", { eff_rating: %w[A B] }
+        end
+
+        it "returns 1 row of data for efficiency rating filter" do
+          response_body = JSON.parse(response.body)
+          expect(response.status).to eq(200)
+          expect(response_body["data"]).to eq({ "count" => 1 })
+        end
+      end
+    end
+
+    context "when using a wrong token" do
+      let(:response) do
+        header("Authorization", "Bearer #{get_valid_jwt(%w[warehouse:read])}")
+        get("/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01")
+      end
+
+      it "returns status 403" do
+        expect(response.status).to eq(403)
+      end
+
+      it "raises an error due to the missing token" do
+        expect(response.body).to include "You are not authorised to perform this request"
       end
     end
   end

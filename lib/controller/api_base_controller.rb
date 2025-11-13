@@ -61,21 +61,22 @@ module Controller
       execute_params = {
         date_start: params[:date_start],
         date_end: params[:date_end],
-        council: params[:council],
-        constituency: params[:constituency],
+        council: Helper::SearchParams.title_case(params[:council]),
+        constituency: Helper::SearchParams.title_case(params[:constituency]),
         postcode: params[:postcode],
         uprn: params[:uprn],
-        eff_rating: params[:eff_rating],
+        eff_rating: Helper::SearchParams.format_band(params[:eff_rating]),
         assessment_type:,
         address: params[:address],
         current_page: params[:current_page],
         row_limit: params[:page_size],
       }
 
-      Helper::SearchParamsValidator.validate(**execute_params)
+      Helper::SearchParams.validate(**execute_params)
       pagination_use_case = Container.get_pagination_use_case
       pagination_use_case.row_limit = params[:page_size]
       pagination_hash = pagination_use_case.execute(**execute_params)
+
       assessment_search_use_case = Container.assessment_search_use_case
       result = assessment_search_use_case.execute(**execute_params)
       json_api_response code: 200, data: result, pagination: pagination_hash
