@@ -263,7 +263,7 @@ paths:
             type: integer
             example: 100023336956
         - in: query
-          name: eff_rating[]
+          name: efficiency_rating[]
           description: An efficiency rating band
           schema:
             type: array
@@ -439,7 +439,7 @@ paths:
             type: integer
             example: 100023336956
         - in: query
-          name: eff_rating[]
+          name: efficiency_rating[]
           description: An efficiency rating band
           schema:
             type: array

@@ -20,10 +20,11 @@ module Controller
         postcode: {
           type: "string",
         },
-        eff_rating: {
+        efficiency_rating: {
           type: "array",
           items: { type: "string" },
         },
+
         address: {
           type: "string",
         },
@@ -45,7 +46,7 @@ module Controller
             { required: %w[council] },
             { required: %w[constituency] },
             { required: %w[postcode] },
-            { required: %w[eff_rating] },
+            { required: %w[efficiency_rating] },
             { required: %w[address] },
             { required: %w[uprn] },
           ],
@@ -65,7 +66,7 @@ module Controller
         constituency: Helper::SearchParams.title_case(params[:constituency]),
         postcode: params[:postcode],
         uprn: params[:uprn],
-        eff_rating: Helper::SearchParams.format_band(params[:eff_rating]),
+        eff_rating: Helper::SearchParams.format_band(params[:efficiency_rating]),
         assessment_type:,
         address: params[:address],
         current_page: params[:current_page],
@@ -116,14 +117,13 @@ module Controller
     end
 
     def get_count(assessment_type:)
-      params_body SEARCH_SCHEMA
       execute_params = {
         date_start: params[:date_start],
         date_end: params[:date_end],
         council: params[:council],
         constituency: params[:constituency],
         postcode: params[:postcode],
-        eff_rating: params[:eff_rating],
+        eff_rating: params[:efficiency_rating],
         assessment_type:,
       }
       use_case = Container.count_certificates_use_case

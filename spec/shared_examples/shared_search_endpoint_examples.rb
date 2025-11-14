@@ -134,13 +134,13 @@ shared_examples "a search API endpoint" do |type:|
         end
       end
 
-      context "when the eff_rating param is passed" do
+      context "when the efficiency_rating param is passed" do
         let(:response) do
-          get "/api/#{type}/search", { eff_rating: %w[B] }
+          get "/api/#{type}/search", { efficiency_rating: %w[B] }
         end
 
         let(:multiple_responses) do
-          get "/api/#{type}/search", { eff_rating: %w[B e] }
+          get "/api/#{type}/search", { efficiency_rating: %w[B e] }
         end
 
         it "returns the correct assessment" do
@@ -416,7 +416,7 @@ shared_examples "a count API endpoint" do |type:|
       context "when optional search filters are added" do
         let(:response) do
           header("Authorization", "Bearer #{get_valid_jwt(%w[epb-data-front:read])}")
-          get "/api/#{type}/count", { eff_rating: %w[A B] }
+          get "/api/#{type}/count", { efficiency_rating: %w[A B] }
         end
 
         it "returns 1 row of data for efficiency rating filter" do
