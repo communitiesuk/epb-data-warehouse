@@ -27,7 +27,7 @@
   "dependencies": {
     "csv-parse": "^6.1.0",
     "csv-stream": "^0.2.0",
-    "fast-xml-parser": "^5.3.0",
+    "fast-xml-parser": "^5.3.2",
     "node-fetch": "^3.3.2",
     "pg": "^8.13.3",
     "pg-promise": "^12.2.0",
