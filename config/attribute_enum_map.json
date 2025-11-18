@@ -21,10 +21,24 @@
       "xsd_node_name": "GlazedAreaCode"
     },
     {
+      "attribute_name": "glazed_area",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "GlazedAreaCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/UDT/SAP-Domains.xsd"
+    },
+    {
       "attribute_name": "glazed_type",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "SAP-GlazingTypeCode"
     },
+    {
+      "attribute_name": "glazed_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "SAP-GlazingTypeCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/UDT/SAP-Domains.xsd"
+
+    },
+
     {
       "attribute_name": "heat_loss_corridor",
       "type_of_assessment": "RdSAP",
