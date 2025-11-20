@@ -308,7 +308,7 @@ paths:
                     currentEnergyEfficiencyBand: "B"
                     postTown: "Whitbury"
                     postcode: "SW10 0AA"
-                    registrationDate: "2020-05-04T00:00:00.000Z"
+                    registrationDate: "2020-05-04"
                 pagination:
                   totalRecords: 4
                   currentPage: 1
@@ -484,7 +484,7 @@ paths:
                     currentEnergyEfficiencyBand: "B"
                     postTown: "Whitbury"
                     postcode: "SW10 0AA"
-                    registrationDate: "2020-05-04T00:00:00.000Z"
+                    registrationDate: "2020-05-04"
                     relatedRrn: "0000-0000-0000-0000-1111"
                 pagination:
                   totalRecords: 4

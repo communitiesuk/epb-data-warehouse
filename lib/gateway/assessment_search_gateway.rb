@@ -171,7 +171,7 @@ class Gateway::AssessmentSearchGateway
       s.council,
       s.constituency,
       s.current_energy_efficiency_band,
-      s.registration_date,
+      to_char(s.registration_date, 'YYYY-MM-DD') as  registration_date,
       s.uprn
     SQL
 

@@ -14,7 +14,7 @@ shared_examples "a search API endpoint" do |type:|
           "postTown" => "Whitbury",
           "postcode" => "SW10 0AA",
           "uprn" => 100_121_241_798,
-          "registrationDate" => "2020-05-04T00:00:00.000Z",
+          "registrationDate" => "2020-05-04",
         }
       else
         {
@@ -28,7 +28,7 @@ shared_examples "a search API endpoint" do |type:|
           "currentEnergyEfficiencyBand" => "B",
           "postTown" => "Big Rock",
           "postcode" => "SW10 0AA",
-          "registrationDate" => "2021-03-19T00:00:00.000Z",
+          "registrationDate" => "2021-03-19",
           "uprn" => 100_121_241_798,
           "relatedRrn" => "0000-0000-0000-0000-1111",
         }

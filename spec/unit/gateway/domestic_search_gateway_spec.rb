@@ -661,7 +661,7 @@ describe Gateway::DomesticSearchGateway do
           "glazed_area" => nil,
           "glazed_type" => nil,
           "inspection_date" => "2025-04-04",
-          "lodgement_date" => "2021-12-06T00:00:00.000+00:00",
+          "lodgement_date" => "2021-12-06",
           "low_energy_fixed_lighting_outlets_count" => "31",
           "low_energy_lighting" => "100",
           "mechanical_ventilation" => "positive input from outside",
