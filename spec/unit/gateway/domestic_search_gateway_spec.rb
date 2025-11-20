@@ -335,8 +335,10 @@ describe Gateway::DomesticSearchGateway do
           "floor_description" => "Solid, no insulation (assumed)",
           "floor_energy_eff" => "N/A",
           "floor_env_eff" => "N/A",
-          "floor_height" => nil,
+          "floor_height" => "2.33",
           "floor_level" => nil,
+          "glazed_area" => "Normal",
+          "glazed_type" => "double glazing installed during or after 2002",
           "heating_cost_current" => "494",
           "heating_cost_potential" => "428",
           "hot_water_cost_current" => "90",
@@ -373,9 +375,9 @@ describe Gateway::DomesticSearchGateway do
           "walls_energy_eff" => "Good",
           "walls_env_eff" => "Good",
           "wind_turbine_count" => 0,
-          "windows_description" => nil,
-          "windows_energy_eff" => nil,
-          "windows_env_eff" => nil,
+          "windows_description" => "Fully double glazed",
+          "windows_energy_eff" => "Good",
+          "windows_env_eff" => "Good",
         )
       end
 
@@ -512,8 +514,10 @@ describe Gateway::DomesticSearchGateway do
           "floor_description" => "Suspended, no insulation (assumed)",
           "floor_energy_eff" => "N/A",
           "floor_env_eff" => "N/A",
-          "floor_height" => nil,
+          "floor_height" => "2.43",
           "floor_level" => nil,
+          "glazed_area" => "Normal",
+          "glazed_type" => "double glazing, unknown install date",
           "heating_cost_current" => "546",
           "heating_cost_potential" => "378",
           "hot_water_cost_current" => "127",
@@ -546,9 +550,9 @@ describe Gateway::DomesticSearchGateway do
           "tenure" => "Rented (social)",
           "transaction_type" => "Rental",
           "walls_description" => "Cavity wall, filled cavity",
-          "windows_description" => nil,
-          "windows_energy_eff" => nil,
-          "windows_env_eff" => nil,
+          "windows_description" => "Fully double glazed",
+          "windows_energy_eff" => "Average",
+          "windows_env_eff" => "Average",
         )
       end
 
