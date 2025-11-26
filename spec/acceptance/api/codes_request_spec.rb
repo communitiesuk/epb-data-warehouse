@@ -1,8 +1,5 @@
 describe "CodesController" do
   include RSpecDataWarehouseApiServiceMixin
-  before do
-    stub_bearer_token_access
-  end
 
   context "when requesting a response from /api/codes" do
     context "when the response is a success" do
@@ -18,6 +15,7 @@ describe "CodesController" do
       end
 
       before do
+        stub_bearer_token_access
         allow(Container).to receive(:fetch_look_ups_use_case).and_return(use_case)
         allow(use_case).to receive(:execute).and_return(%w[energy_tariff floor_level])
       end
@@ -33,6 +31,10 @@ describe "CodesController" do
   end
 
   context "when requesting a response from /api/codes/info?code=built_form" do
+    before do
+      stub_bearer_token_access
+    end
+
     let(:use_case) do
       instance_double(UseCase::FetchLookupValues)
     end
@@ -78,4 +80,7 @@ describe "CodesController" do
       end
     end
   end
+
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "codes"
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "codes/info?code=built_form"
 end
