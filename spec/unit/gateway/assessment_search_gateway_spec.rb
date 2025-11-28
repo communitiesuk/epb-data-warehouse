@@ -550,11 +550,14 @@ describe Gateway::AssessmentSearchGateway do
 
       context "when the date range is a single day" do
         before do
-          single_day_rdsap = rdsap.merge({ "registration_date" => "2023-03-03T23:59:59.000+00:00" })
-          gateway.insert_assessment(assessment_id: "0000-0000-0030-0123", document: single_day_rdsap, created_at: "2025-07-22", country_id:)
+          day_one_rdsap = rdsap.merge({ "registration_date" => "2023-03-03T00:00:00.000+00:00" })
+          day_two_rdsap = rdsap.merge({ "registration_date" => "2023-03-04T00:00:00.000+00:00" })
+
+          gateway.insert_assessment(assessment_id: "0000-0000-0030-0123", document: day_one_rdsap, created_at: "2025-07-22", country_id:)
+          gateway.insert_assessment(assessment_id: "0000-0000-0030-0323", document: day_two_rdsap, created_at: "2025-07-22", country_id:)
         end
 
-        it "returns assessments for that day up to 23:59:59" do
+        it "returns only the assessments for 2023-03-03" do
           date_args = args.merge({ date_start: "2023-03-03", date_end: "2023-03-03" })
           results = gateway.fetch_assessments(**date_args)
           expect(results.length).to eq 1
