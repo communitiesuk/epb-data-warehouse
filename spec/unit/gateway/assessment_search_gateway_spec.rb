@@ -558,7 +558,6 @@ describe Gateway::AssessmentSearchGateway do
         expect(results.length).to eq 3
       end
 
-
       it "includes the EPC lodged on the last day within the range" do
         date_args = args.merge({ date_start: "2022-02-04", date_end: "2022-12-09" })
         results = gateway.fetch_assessments(**date_args).select { |i| i["certificate_number"] == "0000-0000-0020-01237" }

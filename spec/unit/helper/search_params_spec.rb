@@ -4,10 +4,26 @@ describe Helper::SearchParams, type: :helper do
   end
 
   describe "#validate" do
-    context "when the dates are out of range" do
+    context "when the start date is before the end date" do
       it "raises an InvalidDates error" do
         search_arguments[:date_start] = "2023-12-24"
         search_arguments[:date_end] = "2023-12-23"
+        expect { described_class.validate(**search_arguments) }.to raise_error(Boundary::InvalidDates)
+      end
+    end
+
+    context "when the start date is invalid" do
+      it "does not raises an InvalidDates error" do
+        search_arguments[:date_start] = "2023-13-20"
+        search_arguments[:date_end] = "2024-11-01"
+        expect { described_class.validate(**search_arguments) }.to raise_error(Boundary::InvalidDates)
+      end
+    end
+
+    context "when the end date is invalid" do
+      it "does not raises an InvalidDates error" do
+        search_arguments[:date_start] = "2023-11-20"
+        search_arguments[:date_end] = "2023-11-31"
         expect { described_class.validate(**search_arguments) }.to raise_error(Boundary::InvalidDates)
       end
     end

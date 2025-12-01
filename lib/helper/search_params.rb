@@ -4,6 +4,12 @@ module Helper
       this_args = args[0]
 
       unless this_args[:date_start].nil? || this_args[:date_end].nil?
+        begin
+          Date.parse(this_args[:date_start])
+          Date.parse(this_args[:date_end])
+        rescue Date::Error
+          raise Boundary::InvalidDates
+        end
         start_date = Date.parse(this_args[:date_start]) unless this_args[:date_start].nil?
         end_date = Date.parse(this_args[:date_end]) unless this_args[:date_end].nil?
         raise Boundary::InvalidDates if start_date > end_date
