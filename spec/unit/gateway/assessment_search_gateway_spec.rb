@@ -537,15 +537,32 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when filtering for dates" do
       before do
-        date_rdsap = rdsap.merge({ "registration_date" => "2022-02-05T12:00:00.000+00:00" })
+        before_rdsap = rdsap.merge({ "registration_date" => "2021-12-24T12:00:00.000+00:00" })
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: before_rdsap, created_at: "2025-07-22", country_id:)
+
+        date_rdsap = rdsap.merge({ "registration_date" => "2022-02-04T12:00:00.000+00:00" })
         gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, created_at: "2025-07-22", country_id:)
+        date_rdsap = rdsap.merge({ "registration_date" => "2022-04-08T12:00:00.000+00:00" })
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-01235", document: date_rdsap, created_at: "2025-07-22", country_id:)
+
+        date_rdsap = rdsap.merge({ "registration_date" => "2022-12-09T12:00:00.000+00:00" })
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-01237", document: date_rdsap, created_at: "2025-07-22", country_id:)
+
+        after_rdsap = rdsap.merge({ "registration_date" => "2024-12-13T12:00:00.000+00:00" })
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-01237", document: after_rdsap, created_at: "2025-07-22", country_id:)
       end
 
-      it "returns one row for the date range" do
-        date_args = args.merge({ date_start: "2021-12-01", date_end: "2024-12-09" })
+      it "returns rows for only the EPCs lodged within the date range" do
+        date_args = args.merge({ date_start: "2022-02-04", date_end: "2022-12-09" })
         results = gateway.fetch_assessments(**date_args)
+        expect(results.length).to eq 3
+      end
+
+
+      it "includes the EPC lodged on the last day within the range" do
+        date_args = args.merge({ date_start: "2022-02-04", date_end: "2022-12-09" })
+        results = gateway.fetch_assessments(**date_args).select { |i| i["certificate_number"] == "0000-0000-0020-01237" }
         expect(results.length).to eq 1
-        expect(results.first["certificate_number"]).to eq("0000-0000-0020-0123")
       end
 
       context "when the date range is a single day" do

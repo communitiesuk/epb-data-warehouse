@@ -288,12 +288,12 @@ private
         ActiveRecord::Relation::QueryAttribute.new(
           "date_start",
           this_args[:date_start],
-          ActiveRecord::Type::Date.new,
+          ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "date_end",
-          Date.parse(this_args[:date_end]).to_s,
-          ActiveRecord::Type::Date.new,
+          "#{this_args[:date_end]} 12:00:00",
+          ActiveRecord::Type::String.new,
         ),
       ]
     end
