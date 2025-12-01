@@ -216,7 +216,7 @@ paths:
           - UPRN
           - multiple efficiency rating bands
           - a partial address
-      operationId: domestic-search-assessments
+      operationId: domestic-search-certificates
       security:
         - bearerToken: []
       parameters:
@@ -290,11 +290,11 @@ paths:
           example: 5000
       responses:
         '200':
-          description: Assessment search results
+          description: Certificate search results
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AssessmentSearchResult'
+                $ref: '#/components/schemas/CertificateSearchResult'
               example:
                 data:
                   - addressLine1: "1 Some Street"
@@ -360,13 +360,13 @@ paths:
                   value:
                     error: "The search query was invalid - provide valid page_size between 1 and 5000"
         '404':
-          description: No assessments found
+          description: No certificates found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                error: "No assessments could be found for that query"
+                error: "No certificates could be found for that query"
         '500':
           description: Internal server error
           content:
@@ -392,7 +392,7 @@ paths:
           - UPRN
           - multiple efficiency rating bands
           - a partial address
-      operationId: non-domestic-search-assessments
+      operationId: non-domestic-search-certificates
       security:
         - bearerToken: [ ]
       parameters:
@@ -466,11 +466,11 @@ paths:
           example: 5000
       responses:
         '200':
-          description: Assessment search results
+          description: Certificate search results
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AssessmentSearchResult'
+                $ref: '#/components/schemas/CertificateSearchResult'
               example:
                 data:
                   - addressLine1: "1 Some Street"
@@ -537,13 +537,13 @@ paths:
                   value:
                     error: "The search query was invalid - provide valid page_size between 1 and 5000"
         '404':
-          description: No assessments found
+          description: No certificates found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
-                error: "No assessments could be found for that query"
+                error: "No certificates could be found for that query"
         '500':
           description: Internal server error
           content:
@@ -988,7 +988,7 @@ components:
 
   schemas:
 
-    EnergyAssessmentSearchResult:
+    EnergyCertificateSearchResult:
       type: object
       properties:
         addressLine1:
@@ -1120,13 +1120,13 @@ components:
       required:
         - data
 
-    AssessmentSearchResult:
+    CertificateSearchResult:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/EnergyAssessmentSearchResult'
+            $ref: '#/components/schemas/EnergyCertificateSearchResult'
         pagination:
           $ref: '#/components/schemas/PaginationMetadata'
       required:
