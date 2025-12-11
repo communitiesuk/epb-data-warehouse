@@ -16,7 +16,7 @@ shared_examples "a search API endpoint" do |type:|
           "uprn" => 100_121_241_798,
           "registrationDate" => "2020-05-04",
         }
-      else
+      elsif type == "non-domestic"
         {
           "addressLine1" => "60 Maple Syrup Road",
           "addressLine2" => "Candy Mountain",
@@ -31,6 +31,21 @@ shared_examples "a search API endpoint" do |type:|
           "registrationDate" => "2021-03-19",
           "uprn" => 100_121_241_798,
           "relatedRrn" => "0000-0000-0000-0000-1111",
+        }
+      else
+        {
+          "addressLine1" => "Swim & Fitness Centre",
+          "addressLine2" => "Swimming Lane",
+          "addressLine3" => nil,
+          "addressLine4" => nil,
+          "certificateNumber" => "0000-0000-0000-0000-0000",
+          "constituency" => "Chelsea and Fulham",
+          "council" => "Hammersmith and Fulham",
+          "currentEnergyEfficiencyBand" => "B",
+          "postTown" => "Floatering",
+          "postcode" => "SW10 0AA",
+          "registrationDate" => "2021-10-12",
+          "uprn" => 100_121_241_798,
         }
       end
     end
@@ -146,7 +161,7 @@ shared_examples "a search API endpoint" do |type:|
         it "returns the correct assessment" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"].length).to eq 1
+          expect(response_body["data"].length).to eq type == "dec" ? 4 : 1
           expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0000-0000")
         end
 
@@ -155,7 +170,14 @@ shared_examples "a search API endpoint" do |type:|
           expect(multiple_responses.status).to eq(200)
           domestic_count = 4
           non_domestic_count = 2
-          expect(response_body["data"].length).to eq type == "domestic" ? domestic_count : non_domestic_count
+          dec_count = 4
+          expect(response_body["data"].length).to eq(
+            case type
+            when "domestic" then domestic_count
+            when "non-domestic" then non_domestic_count
+            else dec_count
+            end,
+          )
         end
       end
 
@@ -419,10 +441,10 @@ shared_examples "a count API endpoint" do |type:|
           get "/api/#{type}/count", { efficiency_rating: %w[A B] }
         end
 
-        it "returns 1 row of data for efficiency rating filter" do
+        it "returns correct number of rows of data for efficiency rating filter" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"]).to eq({ "count" => 1 })
+          expect(response_body["data"]).to eq type == "dec" ? { "count" => 4 } : { "count" => 1 }
         end
       end
     end

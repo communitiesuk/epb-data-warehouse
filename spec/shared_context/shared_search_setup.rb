@@ -11,8 +11,16 @@ shared_context "when requesting a search endpoint" do |property_type|
 
     country_id = 1
 
-    type_of_assessment = property_type == "domestic" ? "RdSAP" : "CEPC"
-    type = property_type == "domestic" ? "epc" : "cepc"
+    type_of_assessment = case property_type
+                         when "domestic" then "RdSAP"
+                         when "dec" then "DEC"
+                         else "CEPC"
+                         end
+    type = case property_type
+           when "domestic" then "epc"
+           when "dec" then "dec+rr"
+           else "cepc"
+           end
     schema_type = property_type == "domestic" ? "RdSAP-Schema-20.0.0" : "CEPC-8.0.0"
 
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, type:, add_to_assessment_search: true, different_fields: {
@@ -34,6 +42,9 @@ shared_context "when requesting a search endpoint" do |property_type|
       country_id:, "postcode" => "SW10 0AA", "asset_rating" => 110, "created_at" => Date.today.strftime("%y-%m-%d")
     }.merge(property_type == "domestic" ? { "energy_rating_current" => 85 } : { "asset_rating" => 35, "related_rrn" => "0000-0000-0000-0000-1111" }))
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0099", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", add_to_assessment_search: true, different_fields: {
+      country_id:, "postcode" => "SW10 0AA"
+    }.merge(property_type == "domestic" ? {} : { "asset_rating" => 110, "related_rrn" => "0000-0000-0000-0000-1111" }))
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0088", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", type: "dec+rr", add_to_assessment_search: true, different_fields: {
       country_id:, "postcode" => "SW10 0AA"
     }.merge(property_type == "domestic" ? {} : { "asset_rating" => 110, "related_rrn" => "0000-0000-0000-0000-1111" }))
   end
