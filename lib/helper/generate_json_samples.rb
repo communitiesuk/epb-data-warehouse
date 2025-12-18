@@ -1,35 +1,4 @@
-require_relative '../../helper/generate_json_samples'
-
-namespace :dev_setup do
-  desc "convert each xml sample to redacted json format"
-  task :generate_json_examples do
-    Tasks::TaskHelpers.quit_if_production
-
-    output_dir = "#{Dir.pwd}/spec/fixtures/json_samples"
-    mkdir output_dir unless Dir.exist? output_dir
-
-    sample_files = Helper::GenerateJsonSamples.get_sample_files
-    sample_files.each do |file|
-      arr = file.split("/")
-      schema_type = arr[arr.size - 2]
-      type = arr[arr.size - 1].gsub(".xml", "")
-      xml = Nokogiri.XML Samples.xml(schema_type, type)
-      assessment_id = Helper::GenerateJsonSamples.get_rrn(xml:, type:, schema_type:)
-      redacted_json = Helper::GenerateJsonSamples.parse_assessment(xml:, assessment_id:, schema_type:, type:)
-      new_dir_path =  "#{output_dir}/#{schema_type}"
-      new_file_path = "#{new_dir_path}/#{type}.json"
-      mkdir new_dir_path unless Dir.exist? new_dir_path
-      File.delete new_file_path if File.exist? new_file_path
-
-      File.open(new_file_path, "w") do |f|
-        f.write(JSON.pretty_generate(redacted_json))
-      end
-    end
-    puts "--XML Samples converted to redacted json format and written to #{output_dir}---"
-  end
-end
-
-class GenerateJsonSamples
+class Helper::GenerateJsonSamples
   def self.parse_assessment(xml:, assessment_id:, schema_type:, type:)
     meta_data = {
       "assessment_type" => assessment_type(schema_type:, type:),
@@ -42,8 +11,13 @@ class GenerateJsonSamples
     save_document(assessment_id:, certificate_data: document)
     assessment = redacted_json(assessment_id:)
     delete_rows(assessment_id:)
+    update_keys(assessment)
+  end
 
-    assessment
+  def self.update_keys(hash)
+    JSON.parse(hash.to_json).deep_transform_keys { |k|
+      k.camelize(:lower)
+    }
   end
 
   def self.assessment_type(schema_type:, type:)
@@ -92,4 +66,6 @@ class GenerateJsonSamples
     end
     sample_files
   end
+
+  private_class_method :save_document, :delete_rows, :assessment_type, :update_keys, :redacted_json
 end
