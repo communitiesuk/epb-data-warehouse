@@ -15,9 +15,9 @@ class Helper::GenerateJsonSamples
   end
 
   def self.update_keys(hash)
-    JSON.parse(hash.to_json).deep_transform_keys { |k|
+    JSON.parse(hash.to_json).deep_transform_keys do |k|
       k.camelize(:lower)
-    }
+    end
   end
 
   def self.assessment_type(schema_type:, type:)

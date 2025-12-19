@@ -1,4 +1,4 @@
-require_relative '../../helper/generate_json_samples'
+require_relative "../../helper/generate_json_samples"
 
 namespace :dev_setup do
   desc "convert each xml sample to redacted json format"

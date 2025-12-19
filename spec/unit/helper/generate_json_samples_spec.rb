@@ -88,7 +88,7 @@ describe Helper::GenerateJsonSamples do
       schema_type = "RdSAP-Schema-20.0.0"
       type = "epc"
       xml = Nokogiri.XML Samples.xml(schema_type, type)
-      assessment_id = Helper::GenerateJsonSamples.get_rrn(xml:, type:, schema_type:)
+      assessment_id = described_class.get_rrn(xml:, type:, schema_type:)
       json = described_class.parse_assessment(xml:, assessment_id:, schema_type:, type:)
       expect(json).to eq expected_json
     end
@@ -100,7 +100,7 @@ describe Helper::GenerateJsonSamples do
     end
 
     let(:sample_files) do
-      Helper::GenerateJsonSamples.get_sample_files
+      described_class.get_sample_files
     end
 
     it "returns all the expected sample files" do
