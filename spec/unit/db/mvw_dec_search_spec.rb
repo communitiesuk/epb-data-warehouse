@@ -196,12 +196,12 @@ describe "DEC Report" do
     end
   end
 
-  # context "when checking the columns of the materialized view" do
-  #   let(:csv_fixture) { read_csv_fixture("dec") }
-  #
-  #   it "returns the correct columns" do
-  #     expect(csv_fixture.headers.sort.map(&:downcase) - expected_dec_7_data.keys).to eq []
-  #     expect(expected_dec_7_data.keys - csv_fixture.headers.sort.map(&:downcase)).to eq []
-  #   end
-  # end
+  context "when checking the columns of the materialized view" do
+    let(:csv_fixture) { read_csv_fixture("dec") }
+
+    it "returns the correct columns" do
+      expect(csv_fixture.headers.sort.map(&:downcase) - expected_dec_7_data.keys).to eq []
+      expect(expected_dec_7_data.keys - csv_fixture.headers.sort.map(&:downcase)).to eq []
+    end
+  end
 end
