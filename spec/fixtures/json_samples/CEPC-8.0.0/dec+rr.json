@@ -2,129 +2,129 @@
   "uprn": 12457,
   "status": "entered",
   "postcode": "A00 0AA",
-  "post_town": "Floatering",
-  "dec_status": 0,
-  "issue_date": "2021-10-12",
+  "postTown": "Floatering",
+  "decStatus": 0,
+  "issueDate": "2021-10-12",
   "methodology": "ORCalc",
-  "reason_type": 1,
-  "report_type": 1,
-  "schema_type": "CEPC-8.0.0",
-  "valid_until": "2022-01-31",
-  "language_code": 1,
-  "output_engine": "ORGen v4.0.4",
-  "property_type": "Fitness And Health Centre; Swimming Pool Centre",
-  "address_line_1": "Swim & Fitness Centre",
-  "address_line_2": "Swimming Lane",
-  "assessment_type": "DEC",
-  "inspection_date": "2021-09-02",
-  "this_assessment": {
-    "heating_co2": 156,
-    "energy_rating": 42,
-    "nominated_date": "2021-09-01",
-    "renewables_co2": 13,
-    "electricity_co2": 70
+  "reasonType": 1,
+  "reportType": 1,
+  "schemaType": "CEPC-8.0.0",
+  "validUntil": "2022-01-31",
+  "languageCode": 1,
+  "outputEngine": "ORGen v4.0.4",
+  "propertyType": "Fitness And Health Centre; Swimming Pool Centre",
+  "addressLine1": "Swim & Fitness Centre",
+  "addressLine2": "Swimming Lane",
+  "assessmentType": "DEC",
+  "inspectionDate": "2021-09-02",
+  "thisAssessment": {
+    "heatingCo2": 156,
+    "energyRating": 42,
+    "nominatedDate": "2021-09-01",
+    "renewablesCo2": 13,
+    "electricityCo2": 70
   },
-  "ac_questionnaire": {
-    "ac_present": "Yes",
-    "ac_rated_output": {
-      "ac_kw_rating": 30
+  "acQuestionnaire": {
+    "acPresent": "Yes",
+    "acRatedOutput": {
+      "acKwRating": 30
     },
-    "ac_inspection_commissioned": 1
+    "acInspectionCommissioned": 1
   },
-  "calculation_tool": "CLG, ORCalc, v4.0.4",
-  "or_building_data": {
-    "hvac_system": "Radiators",
-    "internal_environment": "Heating and Mechanical Ventilation",
-    "assessment_period_alignment": "End Of Main Heating Fuel Period"
+  "calculationTool": "CLG, ORCalc, v4.0.4",
+  "orBuildingData": {
+    "hvacSystem": "Radiators",
+    "internalEnvironment": "Heating and Mechanical Ventilation",
+    "assessmentPeriodAlignment": "End Of Main Heating Fuel Period"
   },
-  "or_previous_data": {
-    "asset_rating": 45
+  "orPreviousData": {
+    "assetRating": 45
   },
-  "building_category": "H7; H6;",
-  "or_benchmark_data": {
+  "buildingCategory": "H7; H6;",
+  "orBenchmarkData": {
     "benchmarks": [
       {
         "name": "Gymnasium",
         "tufa": 110.382,
         "benchmark": "Fitness And Health Centre",
-        "floor_area": 110.382,
-        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
-        "benchmark_id": 1,
-        "occupancy_level": "Standard Occupancy"
+        "floorArea": 110.382,
+        "areaMetric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "benchmarkId": 1,
+        "occupancyLevel": "Standard Occupancy"
       },
       {
         "name": "Swimming pool",
         "tufa": 1358.936,
         "benchmark": "Swimming Pool Centre",
-        "floor_area": 1358.936,
-        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
-        "benchmark_id": 2,
-        "occupancy_level": "Standard Occupancy"
+        "floorArea": 1358.936,
+        "areaMetric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "benchmarkId": 2,
+        "occupancyLevel": "Standard Occupancy"
       }
     ],
-    "main_benchmark": "Swimming Pool Centre"
+    "mainBenchmark": "Swimming Pool Centre"
   },
-  "registration_date": "2021-10-12",
-  "location_description": "Swimming pool with gumnasium.",
-  "or_usable_floor_area": {
-    "ufa_1": {
+  "registrationDate": "2021-10-12",
+  "locationDescription": "Swimming pool with gumnasium.",
+  "orUsableFloorArea": {
+    "ufa1": {
       "name": "Basement Plant",
-      "floor_area": 118.16
+      "floorArea": 118.16
     },
-    "ufa_2": {
+    "ufa2": {
       "name": "Basement void around pool",
-      "floor_area": 179.673
+      "floorArea": 179.673
     },
-    "ufa_3": {
+    "ufa3": {
       "name": "Ground Plant",
-      "floor_area": 146.223
+      "floorArea": 146.223
     },
-    "ufa_4": {
+    "ufa4": {
       "name": "First Floor Plant",
-      "floor_area": 49.807
+      "floorArea": 49.807
     },
-    "total_ufa": 493.863
+    "totalUfa": 493.863
   },
-  "or_energy_consumption": {
+  "orEnergyConsumption": {
     "gas": {
-      "end_date": "2021-08-31",
+      "endDate": "2021-08-31",
       "estimate": 0,
-      "start_date": "2020-09-01",
+      "startDate": "2020-09-01",
       "consumption": 805167
     },
     "electricity": {
-      "end_date": "2021-08-31",
+      "endDate": "2021-08-31",
       "estimate": 0,
-      "start_date": "2020-09-01",
+      "startDate": "2020-09-01",
       "consumption": 126161
     }
   },
-  "technical_information": {
-    "floor_area": 1469.318,
-    "main_heating_fuel": "Natural Gas",
-    "building_environment": "Heating and Mechanical Ventilation",
-    "separately_metered_electric_heating": 0
+  "technicalInformation": {
+    "floorArea": 1469.318,
+    "mainHeatingFuel": "Natural Gas",
+    "buildingEnvironment": "Heating and Mechanical Ventilation",
+    "separatelyMeteredElectricHeating": 0
   },
-  "or_assessment_end_date": "2021-08-31",
-  "renewable_energy_source": [
+  "orAssessmentEndDate": "2021-08-31",
+  "renewableEnergySource": [
     {
       "name": "CHP",
-      "end_date": "2021-08-31",
+      "endDate": "2021-08-31",
       "generation": 24589,
-      "start_date": "2020-09-01",
-      "energy_type": 0
+      "startDate": "2020-09-01",
+      "energyType": 0
     }
   ],
-  "or_assessment_start_date": "2020-08-31",
-  "dec_annual_energy_summary": {
-    "typical_thermal_use": 1196.24,
-    "renewables_electrical": 16.3,
-    "typical_electrical_use": 238.61,
-    "renewables_fuel_thermal": 0,
-    "annual_energy_use_electrical": 86.1,
-    "annual_energy_use_fuel_thermal": 548.82
+  "orAssessmentStartDate": "2020-08-31",
+  "decAnnualEnergySummary": {
+    "typicalThermalUse": 1196.24,
+    "renewablesElectrical": 16.3,
+    "typicalElectricalUse": 238.61,
+    "renewablesFuelThermal": 0,
+    "annualEnergyUseElectrical": 86.1,
+    "annualEnergyUseFuelThermal": 548.82
   },
-  "related_certificate_number": "0000-0000-0000-0000-0001",
-  "dec_related_party_disclosure": 1,
-  "current_energy_efficiency_band": "B"
+  "relatedCertificateNumber": "0000-0000-0000-0000-0001",
+  "decRelatedPartyDisclosure": 1,
+  "currentEnergyEfficiencyBand": "B"
 }

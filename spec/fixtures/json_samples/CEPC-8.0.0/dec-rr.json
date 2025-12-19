@@ -2,74 +2,74 @@
   "uprn": 12457,
   "status": "entered",
   "postcode": "SW1A 2AA",
-  "post_town": "Fulchester",
-  "issue_date": "2020-05-04",
-  "report_type": 2,
-  "schema_type": "CEPC-8.0.0",
-  "valid_until": "2028-05-03",
-  "long_payback": [
+  "postTown": "Fulchester",
+  "issueDate": "2020-05-04",
+  "reportType": 2,
+  "schemaType": "CEPC-8.0.0",
+  "validUntil": "2028-05-03",
+  "longPayback": [
     {
-      "co2_impact": "LOW",
+      "co2Impact": "LOW",
       "recommendation": "Consider replacing or improving glazing",
-      "recommendation_code": "ECP-F4"
+      "recommendationCode": "ECP-F4"
     }
   ],
-  "language_code": 1,
-  "other_payback": [
+  "languageCode": 1,
+  "otherPayback": [
     {
-      "co2_impact": "HIGH",
+      "co2Impact": "HIGH",
       "recommendation": "Add a big wind turbine",
-      "recommendation_code": "ECP-H2"
+      "recommendationCode": "ECP-H2"
     }
   ],
-  "property_type": "University campus",
-  "short_payback": [
+  "propertyType": "University campus",
+  "shortPayback": [
     {
-      "co2_impact": "MEDIUM",
+      "co2Impact": "MEDIUM",
       "recommendation": "Consider thinking about maybe possibly getting a solar panel but only one.",
-      "recommendation_code": "ECP-L5"
+      "recommendationCode": "ECP-L5"
     },
     {
-      "co2_impact": "LOW",
+      "co2Impact": "LOW",
       "recommendation": "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
-      "recommendation_code": "EPC-L7"
+      "recommendationCode": "EPC-L7"
     }
   ],
-  "site_services": {
-    "service_1": {
+  "siteServices": {
+    "service1": {
       "quantity": 751445,
       "description": "Electricity"
     },
-    "service_2": {
+    "service2": {
       "quantity": 72956,
       "description": "Gas"
     },
-    "service_3": {
+    "service3": {
       "quantity": 0,
       "description": "Not used"
     }
   },
-  "address_line_1": "Some Unit",
-  "address_line_2": "2 Lonely Street",
-  "address_line_3": "Some Area",
-  "address_line_4": "Some County",
-  "medium_payback": [
+  "addressLine1": "Some Unit",
+  "addressLine2": "2 Lonely Street",
+  "addressLine3": "Some Area",
+  "addressLine4": "Some County",
+  "mediumPayback": [
     {
-      "co2_impact": "LOW",
+      "co2Impact": "LOW",
       "recommendation": "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
-      "recommendation_code": "ECP-C1"
+      "recommendationCode": "ECP-C1"
     }
   ],
-  "assessment_type": "DEC-RR",
-  "inspection_date": "2020-05-04",
-  "inspection_type": "Physical",
-  "calculation_tool": "DCLG, ORCalc, v3.6.2",
-  "formatted_report": "ZGVmYXVsdA==",
-  "registration_date": "2020-05-04",
-  "technical_information": {
-    "floor_area": 10,
-    "renewable_sources": "Renewable source",
-    "special_energy_uses": "Special discount",
-    "building_environment": "Air Conditioning"
+  "assessmentType": "DEC-RR",
+  "inspectionDate": "2020-05-04",
+  "inspectionType": "Physical",
+  "calculationTool": "DCLG, ORCalc, v3.6.2",
+  "formattedReport": "ZGVmYXVsdA==",
+  "registrationDate": "2020-05-04",
+  "technicalInformation": {
+    "floorArea": 10,
+    "renewableSources": "Renewable source",
+    "specialEnergyUses": "Special discount",
+    "buildingEnvironment": "Air Conditioning"
   }
 }

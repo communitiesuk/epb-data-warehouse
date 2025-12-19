@@ -2,126 +2,126 @@
   "uprn": 12457,
   "status": "entered",
   "postcode": "PT4 1SK",
-  "post_town": "POSTTOWN",
-  "dec_status": 0,
-  "issue_date": "2016-02-23",
+  "postTown": "POSTTOWN",
+  "decStatus": 0,
+  "issueDate": "2016-02-23",
   "methodology": "ORCalc",
-  "reason_type": 2,
-  "report_type": 1,
-  "schema_type": "CEPC-7.0",
-  "valid_until": "2017-04-24",
-  "language_code": 1,
-  "output_engine": "ORGen v3.6.2",
-  "property_type": "Schools And Seasonal Public Buildings; Swimming Pool Centre",
-  "address_line_1": "Mr Blobby's Sports Academy",
-  "address_line_2": "Mr Blobby's Academy",
-  "address_line_3": "Blobby Custard Lane",
-  "assessment_type": "DEC",
-  "inspection_date": "2016-04-11",
-  "this_assessment": {
-    "heating_co2": 153,
-    "energy_rating": 77,
-    "nominated_date": "2016-02-23",
-    "renewables_co2": 0,
-    "electricity_co2": 163
+  "reasonType": 2,
+  "reportType": 1,
+  "schemaType": "CEPC-7.0",
+  "validUntil": "2017-04-24",
+  "languageCode": 1,
+  "outputEngine": "ORGen v3.6.2",
+  "propertyType": "Schools And Seasonal Public Buildings; Swimming Pool Centre",
+  "addressLine1": "Mr Blobby's Sports Academy",
+  "addressLine2": "Mr Blobby's Academy",
+  "addressLine3": "Blobby Custard Lane",
+  "assessmentType": "DEC",
+  "inspectionDate": "2016-04-11",
+  "thisAssessment": {
+    "heatingCo2": 153,
+    "energyRating": 77,
+    "nominatedDate": "2016-02-23",
+    "renewablesCo2": 0,
+    "electricityCo2": 163
   },
-  "ac_questionnaire": {
-    "ac_present": "Yes",
-    "ac_rated_output": {
-      "ac_rating_unknown_flag": 1
+  "acQuestionnaire": {
+    "acPresent": "Yes",
+    "acRatedOutput": {
+      "acRatingUnknownFlag": 1
     },
-    "ac_estimated_output": 2,
-    "ac_inspection_commissioned": 4
+    "acEstimatedOutput": 2,
+    "acInspectionCommissioned": 4
   },
-  "calculation_tool": "Property-Tectonics Ltd, Lifespan DEC, v3.6.1",
-  "or_building_data": {
-    "hvac_system": "Radiators",
-    "internal_environment": "Mixed-mode with Natural Ventilation",
-    "assessment_period_alignment": "End Of Main Heating Fuel Period"
+  "calculationTool": "Property-Tectonics Ltd, Lifespan DEC, v3.6.1",
+  "orBuildingData": {
+    "hvacSystem": "Radiators",
+    "internalEnvironment": "Mixed-mode with Natural Ventilation",
+    "assessmentPeriodAlignment": "End Of Main Heating Fuel Period"
   },
-  "or_previous_data": {
-    "asset_rating": 0,
-    "previous_rating_1": {
+  "orPreviousData": {
+    "assetRating": 0,
+    "previousRating1": {
       "or": 95,
       "ormm": 11,
       "oryyyy": 2014
     },
-    "previous_rating_2": {
+    "previousRating2": {
       "or": 113,
       "ormm": 11,
       "oryyyy": 2013
     }
   },
-  "year1_assessment": {
-    "heating_co2": 176,
-    "energy_rating": 95,
-    "nominated_date": "2014-11-30",
-    "renewables_co2": 0,
-    "electricity_co2": 266
+  "year1Assessment": {
+    "heatingCo2": 176,
+    "energyRating": 95,
+    "nominatedDate": "2014-11-30",
+    "renewablesCo2": 0,
+    "electricityCo2": 266
   },
-  "year2_assessment": {
-    "heating_co2": 238,
-    "energy_rating": 113,
-    "nominated_date": "2013-11-30",
-    "renewables_co2": 0,
-    "electricity_co2": 333
+  "year2Assessment": {
+    "heatingCo2": 238,
+    "energyRating": 113,
+    "nominatedDate": "2013-11-30",
+    "renewablesCo2": 0,
+    "electricityCo2": 333
   },
-  "building_category": "S3; H6",
-  "or_benchmark_data": {
+  "buildingCategory": "S3; H6",
+  "orBenchmarkData": {
     "benchmarks": [
       {
         "name": "Secondary school",
         "tufa": 4646.48,
         "benchmark": "Schools And Seasonal Public Buildings",
-        "floor_area": 4646.48,
-        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
-        "benchmark_id": 1,
-        "occupancy_level": "Extended Occupancy"
+        "floorArea": 4646.48,
+        "areaMetric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "benchmarkId": 1,
+        "occupancyLevel": "Extended Occupancy"
       },
       {
         "name": "Swimming pool",
         "tufa": 254.52,
         "benchmark": "Swimming Pool Centre",
-        "floor_area": 254.52,
-        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
-        "benchmark_id": 2,
-        "occupancy_level": "Extended Occupancy"
+        "floorArea": 254.52,
+        "areaMetric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "benchmarkId": 2,
+        "occupancyLevel": "Extended Occupancy"
       }
     ],
-    "main_benchmark": "Schools And Seasonal Public Buildings"
+    "mainBenchmark": "Schools And Seasonal Public Buildings"
   },
-  "registration_date": "2016-04-25",
-  "or_energy_consumption": {
+  "registrationDate": "2016-04-25",
+  "orEnergyConsumption": {
     "gas": {
-      "end_date": "2016-01-01",
+      "endDate": "2016-01-01",
       "estimate": 0,
-      "start_date": "2015-01-01",
+      "startDate": "2015-01-01",
       "consumption": 786655
     },
     "electricity": {
-      "end_date": "2015-12-31",
+      "endDate": "2015-12-31",
       "estimate": 0,
-      "start_date": "2015-01-01",
+      "startDate": "2015-01-01",
       "consumption": 296820
     }
   },
-  "technical_information": {
-    "floor_area": 4901,
-    "main_heating_fuel": "Natural Gas",
-    "building_environment": "Mixed-mode with Natural Ventilation",
-    "separately_metered_electric_heating": 0
+  "technicalInformation": {
+    "floorArea": 4901,
+    "mainHeatingFuel": "Natural Gas",
+    "buildingEnvironment": "Mixed-mode with Natural Ventilation",
+    "separatelyMeteredElectricHeating": 0
   },
-  "or_assessment_end_date": "2016-01-01",
-  "or_assessment_start_date": "2015-01-01",
-  "dec_annual_energy_summary": {
-    "typical_thermal_use": 244,
-    "renewables_electrical": 0,
-    "typical_electrical_use": 67,
-    "renewables_fuel_thermal": 0,
-    "annual_energy_use_electrical": 61,
-    "annual_energy_use_fuel_thermal": 161
+  "orAssessmentEndDate": "2016-01-01",
+  "orAssessmentStartDate": "2015-01-01",
+  "decAnnualEnergySummary": {
+    "typicalThermalUse": 244,
+    "renewablesElectrical": 0,
+    "typicalElectricalUse": 67,
+    "renewablesFuelThermal": 0,
+    "annualEnergyUseElectrical": 61,
+    "annualEnergyUseFuelThermal": 161
   },
-  "related_certificate_number": "3333-4444-5555-6666-7778",
-  "dec_related_party_disclosure": 3,
-  "current_energy_efficiency_band": "D"
+  "relatedCertificateNumber": "3333-4444-5555-6666-7778",
+  "decRelatedPartyDisclosure": 3,
+  "currentEnergyEfficiencyBand": "D"
 }

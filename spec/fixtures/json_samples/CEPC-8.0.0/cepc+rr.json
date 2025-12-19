@@ -6,45 +6,45 @@
   "uprn": 12457,
   "status": "entered",
   "postcode": "NE0 0AA",
-  "post_town": "Big Rock",
-  "energy_use": {
-    "energy_consumption_current": 451.27
+  "postTown": "Big Rock",
+  "energyUse": {
+    "energyConsumptionCurrent": 451.27
   },
-  "issue_date": "2021-03-19",
+  "issueDate": "2021-03-19",
   "methodology": "SBEM",
-  "report_type": 3,
-  "schema_type": "CEPC-8.0.0",
-  "valid_until": "2031-03-18",
-  "asset_rating": 84,
-  "language_code": 1,
-  "output_engine": "EPCgen, v5.6.b.0",
-  "property_type": "A1/A2 Retail and Financial/Professional services",
-  "address_line_1": "60 Maple Syrup Road",
-  "address_line_2": "Candy Mountain",
-  "assessment_type": "CEPC",
-  "inspection_date": "2021-03-19",
-  "inspection_type": "Physical",
-  "ac_questionnaire": {
-    "ac_present": "No",
-    "ac_rated_output": {
-      "ac_rating_unknown_flag": 1
+  "reportType": 3,
+  "schemaType": "CEPC-8.0.0",
+  "validUntil": "2031-03-18",
+  "assetRating": 84,
+  "languageCode": 1,
+  "outputEngine": "EPCgen, v5.6.b.0",
+  "propertyType": "A1/A2 Retail and Financial/Professional services",
+  "addressLine1": "60 Maple Syrup Road",
+  "addressLine2": "Candy Mountain",
+  "assessmentType": "CEPC",
+  "inspectionDate": "2021-03-19",
+  "inspectionType": "Physical",
+  "acQuestionnaire": {
+    "acPresent": "No",
+    "acRatedOutput": {
+      "acRatingUnknownFlag": 1
     },
-    "ac_inspection_commissioned": 4
+    "acInspectionCommissioned": 4
   },
-  "calculation_tool": "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.b.0",
-  "is_heritage_site": "N",
-  "transaction_type": 1,
-  "registration_date": "2021-03-19",
-  "building_complexity": "Level 3",
-  "new_build_benchmark": 34,
-  "technical_information": {
-    "floor_area": 951,
-    "building_level": 3,
-    "main_heating_fuel": "Grid Supplied Electricity",
-    "building_environment": "Air Conditioning"
+  "calculationTool": "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.b.0",
+  "isHeritageSite": "N",
+  "transactionType": 1,
+  "registrationDate": "2021-03-19",
+  "buildingComplexity": "Level 3",
+  "newBuildBenchmark": 34,
+  "technicalInformation": {
+    "floorArea": 951,
+    "buildingLevel": 3,
+    "mainHeatingFuel": "Grid Supplied Electricity",
+    "buildingEnvironment": "Air Conditioning"
   },
-  "summary_of_performance": {
-    "building_data": [
+  "summaryOfPerformance": {
+    "buildingData": [
       {
         "area": 951.34,
         "weather": "NEW",
@@ -74,12 +74,12 @@
             "area": 30.09
           }
         ],
-        "building_w_k": 314.665,
-        "hvac_systems": [
+        "buildingWK": 314.665,
+        "hvacSystems": [
           {
             "area": 353.64,
             "type": "No Heating or Cooling",
-            "fuel_type": "Oil",
+            "fuelType": "Oil",
             "activities": [
               {
                 "id": 1067,
@@ -94,21 +94,21 @@
                 "area": 258.42
               }
             ],
-            "heat_source": "LTHW boiler",
-            "cooling_sseer": 0,
-            "heating_sseff": 0,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_heating": 0,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 4.9793,
-            "mj_m2_cooling_dem": 44.0312,
-            "mj_m2_heating_dem": 79.1732
+            "heatSource": "LTHW boiler",
+            "coolingSseer": 0,
+            "heatingSseff": 0,
+            "kwhM2Cooling": 0,
+            "kwhM2Heating": 0,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 4.9793,
+            "mjM2CoolingDem": 44.0312,
+            "mjM2HeatingDem": 79.1732
           },
           {
             "area": 567.61,
             "type": "Split or multi-split system",
-            "fuel_type": "Grid Supplied Electricity",
+            "fuelType": "Grid Supplied Electricity",
             "activities": [
               {
                 "id": 1078,
@@ -119,68 +119,68 @@
                 "area": 490.62
               }
             ],
-            "heat_source": "Heat pump: air source",
-            "cooling_sseer": 2.457,
-            "heating_sseff": 3.466,
-            "kwh_m2_cooling": 65.3618,
-            "kwh_m2_heating": 2.17225,
-            "cooling_gen_seer": 3.46,
-            "heating_gen_seff": 3.72,
-            "kwh_m2_auxiliary": 6.9318,
-            "mj_m2_cooling_dem": 578.138,
-            "mj_m2_heating_dem": 27.1043
+            "heatSource": "Heat pump: air source",
+            "coolingSseer": 2.457,
+            "heatingSseff": 3.466,
+            "kwhM2Cooling": 65.3618,
+            "kwhM2Heating": 2.17225,
+            "coolingGenSeer": 3.46,
+            "heatingGenSeff": 3.72,
+            "kwhM2Auxiliary": 6.9318,
+            "mjM2CoolingDem": 578.138,
+            "mjM2HeatingDem": 27.1043
           },
           {
             "area": 30.09,
             "type": "Other local room heater - unfanned",
-            "fuel_type": "Grid Supplied Electricity",
+            "fuelType": "Grid Supplied Electricity",
             "activities": [
               {
                 "id": 1077,
                 "area": 30.09
               }
             ],
-            "heat_source": "Direct or storage electric heater",
-            "cooling_sseer": 0,
-            "heating_sseff": 0.8,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_heating": 101.261,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 1,
-            "kwh_m2_auxiliary": 28.4481,
-            "mj_m2_cooling_dem": 72.0834,
-            "mj_m2_heating_dem": 291.63
+            "heatSource": "Direct or storage electric heater",
+            "coolingSseer": 0,
+            "heatingSseff": 0.8,
+            "kwhM2Cooling": 0,
+            "kwhM2Heating": 101.261,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 1,
+            "kwhM2Auxiliary": 28.4481,
+            "mjM2CoolingDem": 72.0834,
+            "mjM2HeatingDem": 291.63
           }
         ],
-        "analysis_type": "ACTUAL",
-        "area_exterior": 509.17,
-        "building_alpha": 4.09978,
-        "building_w_m2k": 0.617996,
-        "q50_infiltration": 25,
-        "global_performance": {
-          "kwh_m2_chp": 0,
-          "kwh_m2_dhw": 1.61017,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_oil": 0,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_ses": 0,
-          "kwh_m2_coal": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_cooling": 38.9976,
-          "kwh_m2_heating": 4.49883,
-          "kwh_m2_lighting": 94.9991,
-          "kwh_m2_supplied": 146.993,
-          "kwh_m2_auxiliary": 6.88654,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_equipment": 19.5261,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_natural_gas": 0,
-          "kwh_m2_district_heating": 0
+        "analysisType": "ACTUAL",
+        "areaExterior": 509.17,
+        "buildingAlpha": 4.09978,
+        "buildingWM2k": 0.617996,
+        "q50Infiltration": 25,
+        "globalPerformance": {
+          "kwhM2Chp": 0,
+          "kwhM2Dhw": 1.61017,
+          "kwhM2Lpg": 0,
+          "kwhM2Oil": 0,
+          "kwhM2Pvs": 0,
+          "kwhM2Ses": 0,
+          "kwhM2Coal": 0,
+          "kwhM2Wind": 0,
+          "kwhM2Biogas": 0,
+          "kwhM2Biomass": 0,
+          "kwhM2Cooling": 38.9976,
+          "kwhM2Heating": 4.49883,
+          "kwhM2Lighting": 94.9991,
+          "kwhM2Supplied": 146.993,
+          "kwhM2Auxiliary": 6.88654,
+          "kwhM2Displaced": 0,
+          "kwhM2DualFuel": 0,
+          "kwhM2Equipment": 19.5261,
+          "kwhM2Smokeless": 0,
+          "kwhM2Anthracite": 0,
+          "kwhM2WasteHeat": 0,
+          "kwhM2NaturalGas": 0,
+          "kwhM2DistrictHeating": 0
         }
       },
       {
@@ -212,12 +212,12 @@
             "area": 30.09
           }
         ],
-        "building_w_k": 106.722,
-        "hvac_systems": [
+        "buildingWK": 106.722,
+        "hvacSystems": [
           {
             "area": 353.64,
             "type": "No Heating or Cooling",
-            "fuel_type": "Oil",
+            "fuelType": "Oil",
             "activities": [
               {
                 "id": 1067,
@@ -232,21 +232,21 @@
                 "area": 258.42
               }
             ],
-            "heat_source": "LTHW boiler",
-            "cooling_sseer": 0,
-            "heating_sseff": 0,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_heating": 0,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 2.98759,
-            "mj_m2_cooling_dem": 22.3547,
-            "mj_m2_heating_dem": 24.8966
+            "heatSource": "LTHW boiler",
+            "coolingSseer": 0,
+            "heatingSseff": 0,
+            "kwhM2Cooling": 0,
+            "kwhM2Heating": 0,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 2.98759,
+            "mjM2CoolingDem": 22.3547,
+            "mjM2HeatingDem": 24.8966
           },
           {
             "area": 567.61,
             "type": "Split or multi-split system",
-            "fuel_type": "Grid Supplied Electricity",
+            "fuelType": "Grid Supplied Electricity",
             "activities": [
               {
                 "id": 1078,
@@ -257,68 +257,68 @@
                 "area": 490.62
               }
             ],
-            "heat_source": "Heat pump: air source",
-            "cooling_sseer": 3.6,
-            "heating_sseff": 2.43,
-            "kwh_m2_cooling": 23.8278,
-            "kwh_m2_heating": 0.00251615,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 3.77382,
-            "mj_m2_cooling_dem": 308.809,
-            "mj_m2_heating_dem": 0.0220112
+            "heatSource": "Heat pump: air source",
+            "coolingSseer": 3.6,
+            "heatingSseff": 2.43,
+            "kwhM2Cooling": 23.8278,
+            "kwhM2Heating": 0.00251615,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 3.77382,
+            "mjM2CoolingDem": 308.809,
+            "mjM2HeatingDem": 0.0220112
           },
           {
             "area": 30.09,
             "type": "Other local room heater - unfanned",
-            "fuel_type": "Oil",
+            "fuelType": "Oil",
             "activities": [
               {
                 "id": 1077,
                 "area": 30.09
               }
             ],
-            "heat_source": "Direct or storage electric heater",
-            "cooling_sseer": 0,
-            "heating_sseff": 0.819,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_heating": 35.9561,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 7.58617,
-            "mj_m2_cooling_dem": 78.2393,
-            "mj_m2_heating_dem": 106.013
+            "heatSource": "Direct or storage electric heater",
+            "coolingSseer": 0,
+            "heatingSseff": 0.819,
+            "kwhM2Cooling": 0,
+            "kwhM2Heating": 35.9561,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 7.58617,
+            "mjM2CoolingDem": 78.2393,
+            "mjM2HeatingDem": 106.013
           }
         ],
-        "analysis_type": "NOTIONAL",
-        "area_exterior": 509.17,
-        "building_alpha": 12.5855,
-        "building_w_m2k": 0.2096,
-        "q50_infiltration": 3,
-        "global_performance": {
-          "kwh_m2_chp": 0,
-          "kwh_m2_dhw": 1.45546,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_oil": 2.59272,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_ses": 0,
-          "kwh_m2_coal": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_cooling": 14.2167,
-          "kwh_m2_heating": 1.13875,
-          "kwh_m2_lighting": 41.9026,
-          "kwh_m2_supplied": 59.7228,
-          "kwh_m2_auxiliary": 3.60214,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_equipment": 19.5261,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_natural_gas": 0,
-          "kwh_m2_district_heating": 0
+        "analysisType": "NOTIONAL",
+        "areaExterior": 509.17,
+        "buildingAlpha": 12.5855,
+        "buildingWM2k": 0.2096,
+        "q50Infiltration": 3,
+        "globalPerformance": {
+          "kwhM2Chp": 0,
+          "kwhM2Dhw": 1.45546,
+          "kwhM2Lpg": 0,
+          "kwhM2Oil": 2.59272,
+          "kwhM2Pvs": 0,
+          "kwhM2Ses": 0,
+          "kwhM2Coal": 0,
+          "kwhM2Wind": 0,
+          "kwhM2Biogas": 0,
+          "kwhM2Biomass": 0,
+          "kwhM2Cooling": 14.2167,
+          "kwhM2Heating": 1.13875,
+          "kwhM2Lighting": 41.9026,
+          "kwhM2Supplied": 59.7228,
+          "kwhM2Auxiliary": 3.60214,
+          "kwhM2Displaced": 0,
+          "kwhM2DualFuel": 0,
+          "kwhM2Equipment": 19.5261,
+          "kwhM2Smokeless": 0,
+          "kwhM2Anthracite": 0,
+          "kwhM2WasteHeat": 0,
+          "kwhM2NaturalGas": 0,
+          "kwhM2DistrictHeating": 0
         }
       },
       {
@@ -350,12 +350,12 @@
             "area": 30.09
           }
         ],
-        "building_w_k": 193.204,
-        "hvac_systems": [
+        "buildingWK": 193.204,
+        "hvacSystems": [
           {
             "area": 353.64,
             "type": "No Heating or Cooling",
-            "fuel_type": "Natural Gas",
+            "fuelType": "Natural Gas",
             "activities": [
               {
                 "id": 1067,
@@ -370,21 +370,21 @@
                 "area": 258.42
               }
             ],
-            "heat_source": "LTHW boiler",
-            "cooling_sseer": 0,
-            "heating_sseff": 0,
-            "kwh_m2_cooling": 0,
-            "kwh_m2_heating": 0,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 0,
-            "mj_m2_cooling_dem": 13.1255,
-            "mj_m2_heating_dem": 71.1616
+            "heatSource": "LTHW boiler",
+            "coolingSseer": 0,
+            "heatingSseff": 0,
+            "kwhM2Cooling": 0,
+            "kwhM2Heating": 0,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 0,
+            "mjM2CoolingDem": 13.1255,
+            "mjM2HeatingDem": 71.1616
           },
           {
             "area": 567.61,
             "type": "Split or multi-split system",
-            "fuel_type": "Natural Gas",
+            "fuelType": "Natural Gas",
             "activities": [
               {
                 "id": 1078,
@@ -395,73 +395,73 @@
                 "area": 490.62
               }
             ],
-            "heat_source": "LTHW boiler",
-            "cooling_sseer": 2.25,
-            "heating_sseff": 0.73,
-            "kwh_m2_cooling": 49.5997,
-            "kwh_m2_heating": 6.49072,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 2.47934,
-            "mj_m2_cooling_dem": 401.756,
-            "mj_m2_heating_dem": 17.0576
+            "heatSource": "LTHW boiler",
+            "coolingSseer": 2.25,
+            "heatingSseff": 0.73,
+            "kwhM2Cooling": 49.5997,
+            "kwhM2Heating": 6.49072,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 2.47934,
+            "mjM2CoolingDem": 401.756,
+            "mjM2HeatingDem": 17.0576
           },
           {
             "area": 30.09,
             "type": "Other local room heater - unfanned",
-            "fuel_type": "Natural Gas",
+            "fuelType": "Natural Gas",
             "activities": [
               {
                 "id": 1077,
                 "area": 30.09
               }
             ],
-            "heat_source": "LTHW boiler",
-            "cooling_sseer": 2.25,
-            "heating_sseff": 0.73,
-            "kwh_m2_cooling": 25.4056,
-            "kwh_m2_heating": 84.553,
-            "cooling_gen_seer": 0,
-            "heating_gen_seff": 0,
-            "kwh_m2_auxiliary": 12.1545,
-            "mj_m2_cooling_dem": 205.785,
-            "mj_m2_heating_dem": 222.205
+            "heatSource": "LTHW boiler",
+            "coolingSseer": 2.25,
+            "heatingSseff": 0.73,
+            "kwhM2Cooling": 25.4056,
+            "kwhM2Heating": 84.553,
+            "coolingGenSeer": 0,
+            "heatingGenSeff": 0,
+            "kwhM2Auxiliary": 12.1545,
+            "mjM2CoolingDem": 205.785,
+            "mjM2HeatingDem": 222.205
           }
         ],
-        "analysis_type": "REFERENCE",
-        "area_exterior": 509.17,
-        "building_alpha": 10,
-        "building_w_m2k": 0.379449,
-        "q50_infiltration": 10,
-        "global_performance": {
-          "kwh_m2_chp": 0,
-          "kwh_m2_dhw": 2.7961,
-          "kwh_m2_lpg": 0,
-          "kwh_m2_oil": 0,
-          "kwh_m2_pvs": 0,
-          "kwh_m2_ses": 0,
-          "kwh_m2_coal": 0,
-          "kwh_m2_wind": 0,
-          "kwh_m2_biogas": 0,
-          "kwh_m2_biomass": 0,
-          "kwh_m2_cooling": 30.3968,
-          "kwh_m2_heating": 6.54699,
-          "kwh_m2_lighting": 78.7393,
-          "kwh_m2_supplied": 110.999,
-          "kwh_m2_auxiliary": 1.86372,
-          "kwh_m2_displaced": 0,
-          "kwh_m2_dual_fuel": 0,
-          "kwh_m2_equipment": 19.5261,
-          "kwh_m2_smokeless": 0,
-          "kwh_m2_anthracite": 0,
-          "kwh_m2_waste_heat": 0,
-          "kwh_m2_natural_gas": 9.34308,
-          "kwh_m2_district_heating": 0
+        "analysisType": "REFERENCE",
+        "areaExterior": 509.17,
+        "buildingAlpha": 10,
+        "buildingWM2k": 0.379449,
+        "q50Infiltration": 10,
+        "globalPerformance": {
+          "kwhM2Chp": 0,
+          "kwhM2Dhw": 2.7961,
+          "kwhM2Lpg": 0,
+          "kwhM2Oil": 0,
+          "kwhM2Pvs": 0,
+          "kwhM2Ses": 0,
+          "kwhM2Coal": 0,
+          "kwhM2Wind": 0,
+          "kwhM2Biogas": 0,
+          "kwhM2Biomass": 0,
+          "kwhM2Cooling": 30.3968,
+          "kwhM2Heating": 6.54699,
+          "kwhM2Lighting": 78.7393,
+          "kwhM2Supplied": 110.999,
+          "kwhM2Auxiliary": 1.86372,
+          "kwhM2Displaced": 0,
+          "kwhM2DualFuel": 0,
+          "kwhM2Equipment": 19.5261,
+          "kwhM2Smokeless": 0,
+          "kwhM2Anthracite": 0,
+          "kwhM2WasteHeat": 0,
+          "kwhM2NaturalGas": 9.34308,
+          "kwhM2DistrictHeating": 0
         }
       }
     ]
   },
-  "existing_stock_benchmark": 100,
-  "related_certificate_number": "0000-0000-0000-0000-0001",
-  "current_energy_efficiency_band": "D"
+  "existingStockBenchmark": 100,
+  "relatedCertificateNumber": "0000-0000-0000-0000-0001",
+  "currentEnergyEfficiencyBand": "D"
 }
