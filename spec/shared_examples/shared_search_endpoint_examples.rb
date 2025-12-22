@@ -277,7 +277,7 @@ shared_examples "a search API endpoint" do |type:|
 
         it "raises an error for no results found" do
           response_body = JSON.parse(response.body)
-          expect(response_body["data"]["error"]).to include "No assessments could be found for that query"
+          expect(response_body["data"]["error"]).to include "No certificates could be found for that query"
         end
       end
 

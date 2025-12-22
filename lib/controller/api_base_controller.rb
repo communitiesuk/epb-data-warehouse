@@ -103,7 +103,7 @@ module Controller
       constituency_not_found_error = "The search query was invalid - provide valid constituency name(s)"
       json_api_response code: 400, data: { error: constituency_not_found_error }
     rescue Boundary::NoData
-      no_data_error = "No assessments could be found for that query"
+      no_data_error = "No certificates could be found for that query"
       json_api_response code: 404, data: { error: no_data_error }
     rescue Errors::OutOfPaginationRangeError => e
       out_of_pagination_range_error = "The requested page number #{params[:current_page]} is out of range. #{e.message}"
