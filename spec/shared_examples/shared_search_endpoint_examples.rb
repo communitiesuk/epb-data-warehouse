@@ -161,7 +161,7 @@ shared_examples "a search API endpoint" do |type:|
         it "returns the correct assessment" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"].length).to eq type == "dec" ? 4 : 1
+          expect(response_body["data"].length).to eq type == "display" ? 4 : 1
           expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0000-0000")
         end
 

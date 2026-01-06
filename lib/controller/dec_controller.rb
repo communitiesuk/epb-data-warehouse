@@ -4,7 +4,7 @@ module Controller
       get_count(assessment_type: %w[DEC])
     end
 
-    get "/api/dec/search" do
+    get "/api/display/search" do
       get_search_result(assessment_type: %w[DEC])
     end
   end
