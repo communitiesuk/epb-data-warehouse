@@ -504,5 +504,6 @@
   "currentEnergyEfficiencyBand": "B",
   "environmentalImpactPotential": 94,
   "hasHeatedSeparateConservatory": "false",
+  "potentialEnergyEfficiencyBand": "A",
   "co2EmissionsCurrentPerFloorArea": 11
 }

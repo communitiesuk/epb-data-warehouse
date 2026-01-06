@@ -389,6 +389,7 @@
   "ledFixedLightingBulbsCount": 10,
   "mechanicalVentDuctPlacement": 2,
   "mechanicalVentDuctInsulation": 2,
+  "potentialEnergyEfficiencyBand": "C",
   "pressureTestCertificateNumber": 0,
   "mechanicalVentilationIndexNumber": 12,
   "co2EmissionsCurrentPerFloorArea": 20,

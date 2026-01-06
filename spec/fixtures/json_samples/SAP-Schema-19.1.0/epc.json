@@ -607,5 +607,6 @@
   "environmentalImpactPotential": 96,
   "electricitySmartMeterPresent": "false",
   "hasHeatedSeparateConservatory": "false",
+  "potentialEnergyEfficiencyBand": "C",
   "co2EmissionsCurrentPerFloorArea": 5.6
 }

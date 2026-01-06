@@ -333,6 +333,7 @@
   "multipleGlazedProportionNr": "NR",
   "currentEnergyEfficiencyBand": "E",
   "environmentalImpactPotential": 74,
+  "potentialEnergyEfficiencyBand": "C",
   "co2EmissionsCurrentPerFloorArea": 20,
   "lowEnergyFixedLightingOutletsCount": 16
 }
