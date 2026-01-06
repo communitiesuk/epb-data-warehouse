@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_06_141909) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_06_145251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -95,6 +95,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_06_141909) do
     t.index ["postcode"], name: "index_assessment_search_on_postcode"
     t.index ["registration_date"], name: "index_assessment_search_on_registration_date"
     t.index ["uprn"], name: "index_assessment_search_on_uprn"
+  end
+
+  create_table "assessments_address_id", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.string "address_id"
+    t.bigint "matched_uprn"
+    t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
 
   create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
