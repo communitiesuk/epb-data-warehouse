@@ -11,6 +11,7 @@ describe "Create psql function to export and redact json data from assessment_do
     result = ActiveRecord::Base.connection.exec_query(sql)
     JSON.parse(result.first["document"])
   end
+
   let(:json_sample) do
     {
       "schema_version_original" => "LIG-19.0",
@@ -39,6 +40,7 @@ describe "Create psql function to export and redact json data from assessment_do
       "hashed_assessment_id" => "0000-0000-0000-0000-1111",
       "opt_out" => false,
       "energy_rating_current" => 75,
+      "energy_rating_potential" => 75,
     }
   end
 
@@ -58,7 +60,11 @@ describe "Create psql function to export and redact json data from assessment_do
     end
   end
 
-  it "adds the uprn based on the value of the assessment_address_id converted into an integer" do
+  it "adds the potential_energy_efficiency_band key based on the energy_rating_potential" do
+    expect(document["potential_energy_efficiency_band"]).to eq "C"
+  end
+
+  it "produces" do
     expect(document["uprn"]).to eq 1_000_000_001_245
   end
 

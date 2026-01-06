@@ -55,6 +55,7 @@ describe Helper::GenerateJsonSamples do
         "percentDraughtproofed" => 100,
         "postTown" => "Whitbury",
         "postcode" => "A0 0AA",
+        "potentialEnergyEfficiencyBand" => "C",
         "propertyType" => 0,
         "regionCode" => 1,
         "registrationDate" => "2020-05-04",
