@@ -1,6 +1,6 @@
 module Controller
-  class DecController < Controller::ApiBaseController
-    get "/api/dec/count", auth_token_has_all: %w[epb-data-front:read] do
+  class DisplayController < Controller::ApiBaseController
+    get "/api/display/count", auth_token_has_all: %w[epb-data-front:read] do
       get_count(assessment_type: %w[DEC])
     end
 

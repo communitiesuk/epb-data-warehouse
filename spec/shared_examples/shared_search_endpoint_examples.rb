@@ -444,7 +444,7 @@ shared_examples "a count API endpoint" do |type:|
         it "returns correct number of rows of data for efficiency rating filter" do
           response_body = JSON.parse(response.body)
           expect(response.status).to eq(200)
-          expect(response_body["data"]).to eq type == "dec" ? { "count" => 4 } : { "count" => 1 }
+          expect(response_body["data"]).to eq type == "display" ? { "count" => 4 } : { "count" => 1 }
         end
       end
     end
