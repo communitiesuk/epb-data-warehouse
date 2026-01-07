@@ -952,7 +952,7 @@ paths:
       summary: Get info about non-domestic full-load CSV
       description: |
         Returns metadata about the non-domestic full-load ZIP file.
-      operationId: get-non-domestic-full-load-info-json
+      operationId: get-non-domestic-full-load-info-csv
       security:
         - bearerToken: [ ]
       responses:
@@ -1123,6 +1123,263 @@ paths:
       description: |
         Returns metadata about the non domestic recommendations full-load ZIP file.
       operationId: get-non-domestic-recommendations-full-load-info
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/display/csv:
+    get:
+      tags:
+        - Files
+        - Display
+      summary: Download display full-load CSV
+      description: |
+        Redirects to a pre-signed S3 URL for the non domestic full-load ZIP file.
+      operationId: download-display-full-load-csv
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/display/csv/info:
+    get:
+      tags:
+        - Files
+        - Display
+      summary: Get info about non-domestic full-load CSV
+      description: |
+        Returns metadata about the display full-load ZIP file.
+      operationId: get-dispplay-full-load-info-csv
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+
+  /api/files/display/json:
+    get:
+      tags:
+        - Files
+        - Display
+      summary: Download display full-load JSON
+      description: |
+        Redirects to a pre-signed S3 URL for the non-domestic full-load ZIP file.
+      operationId: download-display-full-load-json
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+
+  /api/files/display/json/info:
+    get:
+      tags:
+        - Files
+        - Display
+      summary: Get info about display full-load JSON
+      description: |
+        Returns metadata about the display full-load ZIP file.
+      operationId: get-non-display-full-load-info-json
+      security:
+        - bearerToken: [ ]
+      responses:
+        '200':
+          description: File information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfoResponse'
+
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/display-recommendations/json:
+    get:
+      tags:
+        - Files
+        - Non-domestic
+      summary: Download display recommendations full-load JSON
+      description: |
+        Redirects to a pre-signed S3 URL for the non-domestic recommendations full-load ZIP file.
+      operationId: download-display-recommendations-full-load-json
+      security:
+        - bearerToken: [ ]
+      responses:
+        '302':
+          description: Redirect to pre-signed S3 URL
+          headers:
+            Location:
+              description: Pre-signed S3 URL
+              schema:
+                type: string
+                format: uri
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "File not found"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Internal Server Error"
+
+  /api/files/display-recommendations/json/info:
+    get:
+      tags:
+        - Files
+        - Display
+      summary: Get info about display full-load JSON
+      description: |
+        Returns metadata about the display recommendations full-load ZIP file.
+      operationId: get-display-recommendations-full-load-info
       security:
         - bearerToken: [ ]
       responses:

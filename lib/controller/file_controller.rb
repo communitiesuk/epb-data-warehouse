@@ -50,6 +50,36 @@ module Controller
       get_s3_file_info(file_name)
     end
 
+    get "/api/files/display/csv" do
+      file_name = "full-load/display-csv.zip"
+      redirect_to_s3_file(file_name)
+    end
+
+    get "/api/files/display/csv/info" do
+      file_name = "full-load/display-csv.zip"
+      get_s3_file_info(file_name)
+    end
+
+    get "/api/files/display/json" do
+      file_name = "full-load/display-json.zip"
+      redirect_to_s3_file(file_name)
+    end
+
+    get "/api/files/display/csv/info" do
+      file_name = "full-load/display-json.zip"
+      get_s3_file_info(file_name)
+    end
+
+    get "/api/files/display-recommendations/json" do
+      file_name = "full-load/display-recommendations-json.zip"
+      redirect_to_s3_file(file_name)
+    end
+
+    get "/api/files/display-recommendations/json/info" do
+      file_name = "full-load/display-recommendations-json.zip"
+      get_s3_file_info(file_name)
+    end
+
   private
 
     def redirect_to_s3_file(file_name)
