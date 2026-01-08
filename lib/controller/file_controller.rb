@@ -65,7 +65,7 @@ module Controller
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/display/csv/info" do
+    get "/api/files/display/json/info" do
       file_name = "full-load/display-json.zip"
       get_s3_file_info(file_name)
     end
