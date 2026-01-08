@@ -154,6 +154,15 @@ class Container
                                                                                        logger:
   end
 
+  def self.update_certificate_matched_addresses_use_case
+    @update_certificate_matched_addresses_use_case ||= UseCase::UpdateCertificateMatchedAddresses.new documents_gateway:,
+                                                                                                      queues_gateway:,
+                                                                                                      recovery_list_gateway:,
+                                                                                                      assessment_search_gateway:,
+                                                                                                      assessments_address_id_gateway:,
+                                                                                                      logger:
+  end
+
   def self.pull_queues_use_case
     @pull_queues_use_case ||= UseCase::PullQueues.new
   end
