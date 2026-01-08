@@ -132,5 +132,25 @@ describe "ImportEnumsXsd Rake" do
         end
       end
     end
+
+    context "when the rake is run in AWS" do
+      let(:write_to_s3_use_case) do
+        instance_double(UseCase::WriteLookUpCodesS3)
+      end
+
+      before do
+        ENV["STAGE"] = "something"
+        ENV["UD_BUCKET_NAME"] = "epb-user-data"
+        allow(UseCase::WriteLookUpCodesS3).to receive(:new).and_return(write_to_s3_use_case)
+        allow(write_to_s3_use_case).to receive(:execute)
+        task.invoke("spec/config/task_attribute_enum_map.json")
+        ENV.delete("STAGE")
+        ENV.delete("UD_BUCKET_NAME")
+      end
+
+      it "sends the data to S3" do
+        expect(write_to_s3_use_case).to have_received(:execute).with(bucket: "epb-user-data", file_name: "codes.csv").exactly(1).times
+      end
+    end
   end
 end

@@ -1,10 +1,20 @@
 require "aws-sdk-s3"
+require "csv"
 
 module Gateway
   class S3Gateway
     def initialize(s3_client: nil)
       @s3_client = s3_client || get_s3_client
       @signer_client = Aws::S3::Presigner.new(client: @s3_client)
+    end
+
+    def write_csv_file(file_name:, data:, bucket:)
+      file_csv = CSV.generate(
+        write_headers: true,
+        headers: data.first.keys,
+      ) { |csv| data.each { |row| csv << row } }
+
+      @s3_client.put_object(bucket:, key: file_name, body: file_csv)
     end
 
     def get_presigned_url(bucket:, file_name:, expires_in:)

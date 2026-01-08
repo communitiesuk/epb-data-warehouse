@@ -113,6 +113,16 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row }
     end
 
+    def fetch_look_up_csv_data
+      sql = <<-SQL
+        SELECT aa.attribute_name as code,  al.lookup_key as key, al.lookup_value as value, schema_version
+        FROM assessment_lookups al
+        JOIN assessment_attribute_lookups aal on aal.lookup_id = al.id
+        JOIN public.assessment_attributes aa on aal.attribute_id = aa.attribute_id
+      SQL
+      ActiveRecord::Base.connection.exec_query(sql).to_a
+    end
+
   private
 
     def insert_attribute_lookups(lookup_id, attribute_id, type_of_assessment, schema_version)

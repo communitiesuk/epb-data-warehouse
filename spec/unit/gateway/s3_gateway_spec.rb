@@ -10,15 +10,15 @@ describe Gateway::S3Gateway do
     )
   end
 
+  before(:all) do
+    WebMock.enable!
+  end
+
+  after(:all) do
+    WebMock.disable!
+  end
+
   describe "#get_presigned_url" do
-    before(:all) do
-      WebMock.enable!
-    end
-
-    after(:all) do
-      WebMock.disable!
-    end
-
     context "when creating a presigned url of an existing file" do
       let(:signed_url) do
         gateway.get_presigned_url(bucket: "user-data", file_name: "folder/test.csv", expires_in: 60)
@@ -51,14 +51,6 @@ describe Gateway::S3Gateway do
   end
 
   describe "#get_file_info" do
-    before(:all) do
-      WebMock.enable!
-    end
-
-    after(:all) do
-      WebMock.disable!
-    end
-
     context "when getting file info of an existing file" do
       let(:response) do
         gateway.get_file_info(bucket: "user-data", file_name: "folder/test.csv")
@@ -93,6 +85,29 @@ describe Gateway::S3Gateway do
       it "raises a FileNotFound error" do
         expect { gateway.get_file_info(bucket: "user-data", file_name: "banana.zip") }.to raise_error(Errors::FileNotFound, "banana.zip")
       end
+    end
+  end
+
+  describe "#write_csv_file" do
+    let(:data) { [{ built_form: 1, construction_age_band: "2" }, { built_form: 5, construction_age_band: "NR" }] }
+
+    let(:domain) { "https://user-data.s3.eu-west-2.amazonaws.com" }
+
+    before do
+      WebMock.stub_request(:put, /#{domain}.*/)
+    end
+
+    it "sends the data to s3 to write the file" do
+      expect { gateway.write_csv_file(data:, bucket: "user-data", file_name: "look-up.csv") }.not_to raise_error
+      expect(WebMock).to have_requested(
+        :put,
+        "#{domain}/look-up.csv",
+      ).with(
+        body: 'built_form,construction_age_band
+1,2
+5,NR
+',
+      )
     end
   end
 end

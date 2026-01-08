@@ -165,4 +165,35 @@ describe Gateway::AssessmentLookupsGateway do
       end
     end
   end
+
+  describe "#fetch_look_up_csv_data" do
+    before(:all) do
+      import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0])
+    end
+
+    let(:results) do
+      gateway.fetch_look_up_csv_data
+    end
+
+    let(:look_up_codes) do
+      %w[built_form construction_age_band cylinder_insulation_thickness energy_efficiency_rating energy_tariff glazed_area glazed_type heat_loss_corridor improvement_description improvement_summary main_fuel mechanical_ventilation property_type tenure transaction_type ventilation_type water_heating_fuel]
+    end
+
+    it "returns all the rows for look ups loaded" do
+      expect(results.length).to eq 550
+    end
+
+    it "returns codes including the schema version" do
+      expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[SAP-Schema-19.0.0 RdSAP-Schema-21.0.1]
+    end
+
+    it "returns the expected columns" do
+      expect(results.first.keys).to eq %w[code key value schema_version]
+    end
+
+    it "returns the distinct look up codes" do
+      attribute_names = results.uniq { |i| i["code"] }.map { |i| i["code"] }.sort
+      expect(attribute_names).to eq look_up_codes.sort
+    end
+  end
 end
