@@ -75,6 +75,7 @@ class Container
     @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway,
                                                                              documents_gateway:,
                                                                              assessment_search_gateway:,
+                                                                             assessments_address_id_gateway:,
                                                                              commercial_reports_gateway:,
                                                                              logger:
   end

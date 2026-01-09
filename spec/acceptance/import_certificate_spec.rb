@@ -21,6 +21,7 @@ describe "Acceptance::ImportCertificate" do
     eav_gateway = Gateway::AssessmentAttributesGateway.new
     certificate_data_use_case = UseCase::ImportCertificateData.new(
       assessment_attribute_gateway: eav_gateway,
+      assessments_address_id_gateway:,
       documents_gateway: Gateway::DocumentsGateway.new,
       assessment_search_gateway:,
       commercial_reports_gateway:,
@@ -35,6 +36,10 @@ describe "Acceptance::ImportCertificate" do
 
   let(:assessment_search_gateway) do
     instance_double(Gateway::AssessmentSearchGateway)
+  end
+
+  let(:assessments_address_id_gateway) do
+    instance_double(Gateway::AssessmentsAddressIdGateway)
   end
 
   let(:commercial_reports_gateway) do
@@ -92,6 +97,7 @@ describe "Acceptance::ImportCertificate" do
     queues_gateway.push_to_queue(:assessments, ids)
     allow(assessments_country_id_gateway).to receive(:insert)
     allow(assessment_search_gateway).to receive(:insert_assessment)
+    allow(assessments_address_id_gateway).to receive(:insert_or_update_address_id)
     allow(commercial_reports_gateway).to receive(:insert_report)
     use_case.execute
   end
@@ -115,6 +121,10 @@ describe "Acceptance::ImportCertificate" do
     it "saves the relevant search data in assessment_search table" do
       expect(assessment_search_gateway).to have_received(:insert_assessment).exactly(1).time
     end
+
+    it "saves the relevant address_id in assessments_address_id table" do
+      expect(assessments_address_id_gateway).to have_received(:insert_or_update_address_id).with(assessment_id: "0000-0000-0000-0000-0000", address_id: "RRN-0000-0000-0000-0000-0000")
+    end
   end
 
   context "when json is entered into the attribute value table" do
@@ -127,48 +137,6 @@ describe "Acceptance::ImportCertificate" do
   end
 
   context "when importing with data point exceeding character limit" do
-    subject(:use_case) do
-      UseCase::ImportCertificates.new import_xml_certificate_use_case:,
-                                      recovery_list_gateway:,
-                                      queues_gateway:
-    end
-
-    let(:import_xml_certificate_use_case) do
-      eav_gateway = Gateway::AssessmentAttributesGateway.new
-      certificate_data_use_case = UseCase::ImportCertificateData.new(
-        assessment_attribute_gateway: eav_gateway,
-        documents_gateway: Gateway::DocumentsGateway.new,
-        assessment_search_gateway:,
-        commercial_reports_gateway:,
-        logger:,
-      )
-      UseCase::ImportXmlCertificate.new import_certificate_data_use_case: certificate_data_use_case,
-                                        assessment_attribute_gateway: eav_gateway,
-                                        certificate_gateway:,
-                                        recovery_list_gateway:,
-                                        assessments_country_id_gateway:
-    end
-
-    let(:certificate_gateway) do
-      instance_double(Gateway::RegisterApiGateway)
-    end
-
-    let(:queues_gateway) do
-      Gateway::QueuesGateway.new(redis_client: redis)
-    end
-
-    let(:recovery_list_gateway) do
-      Gateway::RecoveryListGateway.new(redis_client: redis)
-    end
-
-    let(:logger) do
-      logger = instance_double(Logger)
-      allow(logger).to receive(:error)
-      logger
-    end
-
-    let(:redis) { MockRedis.new }
-
     let!(:xml_sample) do
       Samples.xml("CEPC-8.0.0", "dec_exceeds_character_count")
     end
@@ -214,6 +182,10 @@ describe "Acceptance::ImportCertificate" do
 
       it "saves the relevant search data in assessment_search table" do
         expect(assessment_search_gateway).to have_received(:insert_assessment).exactly(2).times
+      end
+
+      it "saves the relevant address_id in assessments_address_id table" do
+        expect(assessments_address_id_gateway).to have_received(:insert_or_update_address_id).with(assessment_id: "0000-0000-0000-0000-0000", address_id: "RRN-0000-0000-0000-0000-0000").exactly(2).times
       end
     end
 

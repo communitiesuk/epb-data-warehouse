@@ -5,6 +5,7 @@ describe UseCase::ImportCertificateData do
 
   let(:documents_gateway) { instance_double(Gateway::DocumentsGateway) }
   let(:assessment_search_gateway) { instance_double(Gateway::AssessmentSearchGateway) }
+  let(:assessments_address_id_gateway) { instance_double(Gateway::AssessmentsAddressIdGateway) }
   let(:commercial_reports_gateway) { instance_double(Gateway::CommercialReportsGateway) }
 
   let(:logger) do
@@ -16,6 +17,7 @@ describe UseCase::ImportCertificateData do
   let!(:use_case) do
     described_class.new assessment_attribute_gateway: assessment_attributes_gateway,
                         assessment_search_gateway:,
+                        assessments_address_id_gateway:,
                         commercial_reports_gateway:,
                         documents_gateway:,
                         logger:
@@ -26,6 +28,7 @@ describe UseCase::ImportCertificateData do
     allow(assessment_attributes_gateway).to receive(:add_attribute_values)
     allow(documents_gateway).to receive(:add_assessment)
     allow(assessment_search_gateway).to receive(:insert_assessment)
+    allow(assessments_address_id_gateway).to receive(:insert_or_update_address_id)
     allow(commercial_reports_gateway).to receive(:insert_report)
   end
 
