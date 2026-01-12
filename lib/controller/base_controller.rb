@@ -7,6 +7,7 @@ module Controller
     def initialize(app = nil, **_kwargs)
       super
       @json_helper = Helper::JsonHelper.new
+      @camel_case_keys = true
     end
 
     configure :development do
@@ -67,9 +68,13 @@ module Controller
     end
 
     def convert_to_json(hash)
-      JSON.parse(hash.to_json).deep_transform_keys { |k|
-        k.camelize(:lower)
-      }.to_json
+      if @camel_case_keys
+        JSON.parse(hash.to_json).deep_transform_keys { |k|
+          k.camelize(:lower)
+        }.to_json
+      else
+        hash.to_json
+      end
     end
 
     def params_body(schema)
