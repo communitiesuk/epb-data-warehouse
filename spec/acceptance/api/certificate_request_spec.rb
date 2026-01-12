@@ -26,7 +26,7 @@ describe "DomesticSearchController" do
         expect(response_body["data"]).to be_a(Hash)
       end
 
-      it 'returns a hash with snake case keys' do
+      it "returns a hash with snake case keys" do
         response_keys = JSON.parse(response.body)["data"].keys
         selected_keys = %w[assessment_type address_line_1 registration_date postcode transaction_type energy_rating_current]
         expect(response_keys).to include(*selected_keys)
