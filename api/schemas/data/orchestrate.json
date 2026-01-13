@@ -1,7 +1,23 @@
 {
+  "SAP-Schema-19.2.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-19.2.0/SAP/Templates/SAP-Report.xsd"
+  },
+  "SAP-Schema-19.1.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-19.1.0/SAP/Templates/SAP-Report.xsd"
+  },
+  "SAP-Schema-19.0.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-19.0.0/SAP/Templates/SAP-Report.xsd"
+  },
+  "SAP-Schema-18.0.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd"
+  },
   "SAP-Schema-17.1": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd"
+    "api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd"
   },
   "SAP-Schema-17.0": {
     "schema_path":
@@ -59,61 +75,65 @@
     "schema_path":
     "api/schemas/xml/SAP-Schema-10.2/Messages/ConditionReportCreateRequest_1.xsd"
   },
+  "SAP-Schema-NI-18.0.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-NI-18.0.0/SAP/Templates/SAP-Report.xsd"
+  },
   "SAP-Schema-NI-17.4": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-17.4/SAP/Templates/SAP-Report.xsd"
+    "api/schemas/xml/SAP-Schema-NI-17.4/SAP/Templates/SAP-Report.xsd"
   },
   "SAP-Schema-NI-17.3": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-17.3/SAP/Templates/SAP-Report.xsd"
+    "api/schemas/xml/SAP-Schema-NI-17.3/SAP/Templates/SAP-Report.xsd"
   },
   "SAP-Schema-NI-17.2": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-17.2/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-17.2/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-17.1": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-17.1/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-17.1/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-17.0": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-17.0/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-17.0/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-16.1": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-16.1/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-16.1/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-16.0": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-16.0/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-16.0/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-15.0": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-15.0/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-15.0/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-14.2": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-14.2/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-14.2/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-14.1": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-14.1/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-14.1/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-14.0": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-14.0/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-14.0/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-13.0": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-13.0/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-13.0/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-12.0": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-12.0/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-12.0/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "SAP-Schema-NI-11.2": {
     "schema_path":
-      "api/schemas/xml/SAP-Schema-NI-11.2/Messages/ConditionReportCreateRequest_1.xsd"
+    "api/schemas/xml/SAP-Schema-NI-11.2/Messages/ConditionReportCreateRequest_1.xsd"
   },
   "RdSAP-Schema-21.0.1": {
     "schema_path":
@@ -128,9 +148,9 @@
     "api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd"
   },
   "RdSAP-Schema-NI-21.0.1": {
-  "schema_path":
-  "api/schemas/xml/RdSAP-Schema-NI-21.0.1/RdSAP/Templates/RdSAP-Report.xsd"
-},
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-NI-21.0.1/RdSAP/Templates/RdSAP-Report.xsd"
+  },
   "RdSAP-Schema-NI-21.0.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-NI-21.0.0/RdSAP/Templates/RdSAP-Report.xsd"
@@ -170,14 +190,6 @@
   "RdSAP-Schema-17.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-17.0/RdSAP/Templates/RdSAP-Report.xsd"
-  },
-  "SAP-Schema-18.0.0": {
-    "schema_path":
-    "api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd"
-  },
-  "SAP-Schema-NI-18.0.0": {
-    "schema_path":
-    "api/schemas/xml/SAP-Schema-NI-18.0.0/SAP/Templates/SAP-Report.xsd"
   },
   "CEPC-8.0.0": {
     "schema_path": "api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"

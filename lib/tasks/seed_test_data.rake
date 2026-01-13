@@ -20,7 +20,7 @@ task :seed_test_data do
   pp "Loading SAP samples"
 
   sap_versions_sap = %w[SAP-Schema-15.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3]
-  sap_versions_epc = %w[SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0]
+  sap_versions_epc = %w[SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0]
 
   sap_versions_sap.each do |version|
     assessment_id = "2222-0000-0000-0000-#{assessment_index.to_s.rjust(4, '0')}"

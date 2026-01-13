@@ -3,16 +3,16 @@ RSpec.describe "the parser and the SAP configuration" do
 
   context "when loading xml from SAP" do
     let(:sap) do
-      Samples.xml("SAP-Schema-19.1.0")
+      Samples.xml("SAP-Schema-19.2.0")
     end
 
     it "parses the document in the expected format" do
-      expectation = { "schema_version_original" => "SAP-Schema-19.1.0",
-                      "sap_version" => 10.2,
-                      "sap_data_version" => 10.2,
+      expectation = { "schema_version_original" => "SAP-Schema-19.2.0",
+                      "sap_version" => 10.3,
+                      "sap_data_version" => 10.3,
                       "calculation_software_name" => "SomeSoft SAP Calculator",
                       "calculation_software_version" => "13.05r16",
-                      "user_interface_name" => "BRE SAP interface 10.2",
+                      "user_interface_name" => "BRE SAP interface 10.3",
                       "user_interface_version" => "1.0.1-alpha",
                       "inspection_date" => "2022-05-09",
                       "report_type" => 3,
@@ -34,7 +34,6 @@ RSpec.describe "the parser and the SAP configuration" do
                       "region_code" => 16,
                       "country_code" => "ENG",
                       "assessment_date" => "2022-05-09",
-                      "sap_flat_details" => { "level" => 1, "storeys" => 1 },
                       "walls" => [{ "description" => "Average thermal transmittance 0.18 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
                       "roofs" => [{ "description" => "Average thermal transmittance 0.13 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
                       "floors" => [{ "description" => "Average thermal transmittance 0.12 W/m²K", "energy_efficiency_rating" => 5, "environmental_efficiency_rating" => 5 }],
@@ -110,7 +109,7 @@ RSpec.describe "the parser and the SAP configuration" do
                              "main_heating_fraction" => 1,
                              "main_heating_data_source" => 3,
                              "main_heating_code" => 192,
-                             "main_fuel_type" => 47,
+                             "main_fuel_type" => 5,
                              "main_heating_control" => 2106,
                              "is_condensing_boiler" => "false",
                              "combi_boiler_type" => 4,
@@ -127,8 +126,10 @@ RSpec.describe "the parser and the SAP configuration" do
                              "community_heating_distribution_type" => 5,
                              "community_heating_use" => 3,
                              "heat_network_assessed_as_new" => "true",
+                             "heat_network_community_heating" => 0,
                              "heat_network_existing" => "true",
                              "heat_network_index_number" => 496_402,
+                             "heat_network_sleeved" => 1,
                              "sub_network_name" => "Test 1" }],
                          "secondary_heating_category" => 1,
                          "water_heating_code" => 901,
@@ -276,6 +277,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "living_area" => 41.35,
                       "lowest_storey_area" => 57.4,
                       "orientation" => 0,
+                      "part_o_cooling_required" => 1,
                       "cold_water_source" => 1,
                       "windows_overshading" => 2,
                       "is_in_smoke_control_area" => "unknown",
@@ -290,7 +292,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "data_type" => 1 }
 
       response = use_case.execute(xml: sap,
-                                  schema_type: "SAP-Schema-19.1.0",
+                                  schema_type: "SAP-Schema-19.2.0",
                                   assessment_id: "0000-0000-0000-0000-0000")
 
       expect(response).to eq(expectation)
