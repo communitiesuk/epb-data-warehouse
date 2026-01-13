@@ -2,58 +2,58 @@
   "uprn": 12457,
   "status": "cancelled",
   "postcode": "SW1A 2AA",
-  "postTown": "Fulchester",
-  "issueDate": "2020-05-14",
-  "reportType": 4,
-  "schemaType": "CEPC-7.0",
-  "validUntil": "2021-05-03",
-  "longPayback": [
+  "post_town": "Fulchester",
+  "issue_date": "2020-05-14",
+  "report_type": 4,
+  "schema_type": "CEPC-7.0",
+  "valid_until": "2021-05-03",
+  "long_payback": [
     {
-      "co2Impact": "HIGH",
+      "co2_impact": "HIGH",
       "recommendation": "Consider installing an air source heat pump.",
-      "recommendationCode": "EPC-R5"
+      "recommendation_code": "EPC-R5"
     }
   ],
-  "languageCode": 1,
-  "otherPayback": [
+  "language_code": 1,
+  "other_payback": [
     {
-      "co2Impact": "HIGH",
+      "co2_impact": "HIGH",
       "recommendation": "Consider installing PV.",
-      "recommendationCode": "EPC-R4"
+      "recommendation_code": "EPC-R4"
     }
   ],
-  "propertyType": "B1 Offices and Workshop businesses",
-  "shortPayback": [
+  "property_type": "B1 Offices and Workshop businesses",
+  "short_payback": [
     {
-      "co2Impact": "HIGH",
+      "co2_impact": "HIGH",
       "recommendation": "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-      "recommendationCode": "ECP-L5"
+      "recommendation_code": "ECP-L5"
     },
     {
-      "co2Impact": "LOW",
+      "co2_impact": "LOW",
       "recommendation": "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-      "recommendationCode": "EPC-L7"
+      "recommendation_code": "EPC-L7"
     }
   ],
-  "addressLine1": "Some Unit",
-  "addressLine2": "2 Lonely Street",
-  "addressLine3": "Some Area",
-  "addressLine4": "Some County",
-  "mediumPayback": [
+  "address_line_1": "Some Unit",
+  "address_line_2": "2 Lonely Street",
+  "address_line_3": "Some Area",
+  "address_line_4": "Some County",
+  "medium_payback": [
     {
-      "co2Impact": "MEDIUM",
+      "co2_impact": "MEDIUM",
       "recommendation": "Add optimum start/stop to the heating system.",
-      "recommendationCode": "EPC-H7"
+      "recommendation_code": "EPC-H7"
     }
   ],
-  "assessmentType": "CEPC-RR",
-  "inspectionDate": "2020-05-04",
-  "calculationTool": "CEPC Compute v0.2",
-  "formattedReport": "ZGVmYXVsdA==",
-  "registrationDate": "2020-05-05",
-  "technicalInformation": {
-    "floorArea": 10,
-    "buildingEnvironment": "Natural Ventilation Only"
+  "assessment_type": "CEPC-RR",
+  "inspection_date": "2020-05-04",
+  "calculation_tool": "CEPC Compute v0.2",
+  "formatted_report": "ZGVmYXVsdA==",
+  "registration_date": "2020-05-05",
+  "technical_information": {
+    "floor_area": 10,
+    "building_environment": "Natural Ventilation Only"
   },
-  "relatedCertificateNumber": "0000-0000-0000-0000-0001"
+  "related_certificate_number": "0000-0000-0000-0000-0001"
 }

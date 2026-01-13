@@ -2,116 +2,116 @@
   "uprn": 12457,
   "status": "entered",
   "postcode": "A1 1AA",
-  "postTown": "Town",
-  "decStatus": 0,
-  "issueDate": "2015-12-14",
+  "post_town": "Town",
+  "dec_status": 0,
+  "issue_date": "2015-12-14",
   "methodology": "ORCalc",
-  "reasonType": 1,
-  "reportType": 1,
-  "schemaType": "CEPC-7.1",
-  "validUntil": "2016-12-29",
-  "languageCode": 1,
-  "outputEngine": "ORGen v3.6.2",
-  "propertyType": "Schools And Seasonal Public Buildings",
-  "addressLine2": "Place Early Years Centre",
-  "addressLine3": "Address Road",
-  "assessmentType": "DEC",
-  "inspectionDate": "2015-12-09",
-  "thisAssessment": {
-    "heatingCo2": 28,
-    "energyRating": 80,
-    "nominatedDate": "2015-12-30",
-    "renewablesCo2": 0,
-    "electricityCo2": 33
+  "reason_type": 1,
+  "report_type": 1,
+  "schema_type": "CEPC-7.1",
+  "valid_until": "2016-12-29",
+  "language_code": 1,
+  "output_engine": "ORGen v3.6.2",
+  "property_type": "Schools And Seasonal Public Buildings",
+  "address_line_2": "Place Early Years Centre",
+  "address_line_3": "Address Road",
+  "assessment_type": "DEC",
+  "inspection_date": "2015-12-09",
+  "this_assessment": {
+    "heating_co2": 28,
+    "energy_rating": 80,
+    "nominated_date": "2015-12-30",
+    "renewables_co2": 0,
+    "electricity_co2": 33
   },
-  "acQuestionnaire": {
-    "acPresent": "No",
-    "acRatedOutput": {
-      "acRatingUnknownFlag": 1
+  "ac_questionnaire": {
+    "ac_present": "No",
+    "ac_rated_output": {
+      "ac_rating_unknown_flag": 1
     },
-    "acInspectionCommissioned": 4
+    "ac_inspection_commissioned": 4
   },
-  "calculationTool": "DCLG, ORCalc, v3.6.2",
-  "orBuildingData": {
-    "hvacSystem": "Convectors",
-    "internalEnvironment": "Heating and Natural Ventilation",
-    "assessmentPeriodAlignment": "End Of Main Heating Fuel Period"
+  "calculation_tool": "DCLG, ORCalc, v3.6.2",
+  "or_building_data": {
+    "hvac_system": "Convectors",
+    "internal_environment": "Heating and Natural Ventilation",
+    "assessment_period_alignment": "End Of Main Heating Fuel Period"
   },
-  "orPreviousData": {
-    "previousRating1": {
+  "or_previous_data": {
+    "previous_rating_1": {
       "or": 75,
       "ormm": 12,
       "oryyyy": 2014
     },
-    "previousRating2": {
+    "previous_rating_2": {
       "or": 75,
       "ormm": 12,
       "oryyyy": 2013
     }
   },
-  "year1Assessment": {
-    "heatingCo2": 24,
-    "energyRating": 75,
-    "nominatedDate": "2014-12-01",
-    "renewablesCo2": 0,
-    "electricityCo2": 30
+  "year1_assessment": {
+    "heating_co2": 24,
+    "energy_rating": 75,
+    "nominated_date": "2014-12-01",
+    "renewables_co2": 0,
+    "electricity_co2": 30
   },
-  "year2Assessment": {
-    "heatingCo2": 29,
-    "energyRating": 75,
-    "nominatedDate": "2013-12-01",
-    "renewablesCo2": 0,
-    "electricityCo2": 31
+  "year2_assessment": {
+    "heating_co2": 29,
+    "energy_rating": 75,
+    "nominated_date": "2013-12-01",
+    "renewables_co2": 0,
+    "electricity_co2": 31
   },
-  "buildingCategory": "S3;",
-  "orBenchmarkData": {
+  "building_category": "S3;",
+  "or_benchmark_data": {
     "benchmarks": [
       {
         "name": "Nursery or kindergarten",
         "tufa": 1219.2,
         "benchmark": "Schools And Seasonal Public Buildings",
-        "floorArea": 1219.2,
-        "areaMetric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
-        "benchmarkId": 1,
-        "occupancyLevel": "Extended Occupancy",
-        "totalEquivalent": 2437.5
+        "floor_area": 1219.2,
+        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "benchmark_id": 1,
+        "occupancy_level": "Extended Occupancy",
+        "total_equivalent": 2437.5
       }
     ],
-    "mainBenchmark": "Schools And Seasonal Public Buildings"
+    "main_benchmark": "Schools And Seasonal Public Buildings"
   },
-  "registrationDate": "2015-12-14",
-  "locationDescription": "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls.  The building is heated by gas fired boilers.",
-  "orEnergyConsumption": {
+  "registration_date": "2015-12-14",
+  "location_description": "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls.  The building is heated by gas fired boilers.",
+  "or_energy_consumption": {
     "gas": {
-      "endDate": "2015-09-30",
+      "end_date": "2015-09-30",
       "estimate": 0,
-      "startDate": "2014-09-30",
+      "start_date": "2014-09-30",
       "consumption": 143533
     },
     "electricity": {
-      "endDate": "2015-10-01",
+      "end_date": "2015-10-01",
       "estimate": 0,
-      "startDate": "2014-10-01",
+      "start_date": "2014-10-01",
       "consumption": 59477
     }
   },
-  "technicalInformation": {
-    "floorArea": 1219.2,
-    "mainHeatingFuel": "Natural Gas",
-    "buildingEnvironment": "Heating and Natural Ventilation",
-    "separatelyMeteredElectricHeating": 0
+  "technical_information": {
+    "floor_area": 1219.2,
+    "main_heating_fuel": "Natural Gas",
+    "building_environment": "Heating and Natural Ventilation",
+    "separately_metered_electric_heating": 0
   },
-  "orAssessmentEndDate": "2015-09-30",
-  "orAssessmentStartDate": "2014-09-30",
-  "decAnnualEnergySummary": {
-    "typicalThermalUse": 176,
-    "renewablesElectrical": 0,
-    "typicalElectricalUse": 51,
-    "renewablesFuelThermal": 0,
-    "annualEnergyUseElectrical": 49,
-    "annualEnergyUseFuelThermal": 118
+  "or_assessment_end_date": "2015-09-30",
+  "or_assessment_start_date": "2014-09-30",
+  "dec_annual_energy_summary": {
+    "typical_thermal_use": 176,
+    "renewables_electrical": 0,
+    "typical_electrical_use": 51,
+    "renewables_fuel_thermal": 0,
+    "annual_energy_use_electrical": 49,
+    "annual_energy_use_fuel_thermal": 118
   },
-  "relatedCertificateNumber": "0000-0000-0000-0000-0006",
-  "decRelatedPartyDisclosure": 4,
-  "currentEnergyEfficiencyBand": "D"
+  "related_certificate_number": "0000-0000-0000-0000-0006",
+  "dec_related_party_disclosure": 4,
+  "current_energy_efficiency_band": "D"
 }

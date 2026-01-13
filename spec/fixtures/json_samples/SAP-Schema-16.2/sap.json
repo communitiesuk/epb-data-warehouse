@@ -3,1221 +3,1221 @@
   "roofs": [
     {
       "description": "Average thermal transmittance 0.14 W/m²K",
-      "energyEfficiencyRating": 5,
-      "environmentalEfficiencyRating": 5
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
     }
   ],
   "walls": [
     {
       "description": "Average thermal transmittance 0.17 W/m²K",
-      "energyEfficiencyRating": 5,
-      "environmentalEfficiencyRating": 5
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
     }
   ],
   "floors": [
     {
       "description": "Average thermal transmittance 0.13 W/m²K",
-      "energyEfficiencyRating": 5,
-      "environmentalEfficiencyRating": 5
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
     }
   ],
   "status": "entered",
   "windows": {
     "description": "High performance glazing",
-    "energyEfficiencyRating": 5,
-    "environmentalEfficiencyRating": 5
+    "energy_efficiency_rating": 5,
+    "environmental_efficiency_rating": 5
   },
   "lighting": {
     "description": "Low energy lighting in all fixed outlets",
-    "energyEfficiencyRating": 5,
-    "environmentalEfficiencyRating": 5
+    "energy_efficiency_rating": 5,
+    "environmental_efficiency_rating": 5
   },
   "postcode": "AA1 1AA",
-  "dataType": 2,
-  "hotWater": {
+  "data_type": 2,
+  "hot_water": {
     "description": "From main system, plus solar",
-    "energyEfficiencyRating": 4,
-    "environmentalEfficiencyRating": 5
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 5
   },
-  "postTown": "Town",
-  "builtForm": 1,
-  "livingArea": 44.4,
+  "post_town": "Town",
+  "built_form": 1,
+  "living_area": 44.4,
   "orientation": 0,
-  "regionCode": 16,
-  "reportType": 3,
-  "sapHeating": {
-    "hasSolarPanel": "true",
-    "waterFuelType": 39,
-    "solarStoreVolume": 100,
-    "waterHeatingCode": 901,
-    "secondaryFuelType": 20,
-    "hotWaterStoreSize": 300,
-    "mainHeatingDetails": [
+  "region_code": 16,
+  "report_type": 3,
+  "sap_heating": {
+    "has_solar_panel": "true",
+    "water_fuel_type": 39,
+    "solar_store_volume": 100,
+    "water_heating_code": 901,
+    "secondary_fuel_type": 20,
+    "hot_water_store_size": 300,
+    "main_heating_details": [
       {
-        "mainFuelType": 39,
-        "heatEmitterType": 2,
-        "mainHeatingCode": 201,
-        "mainHeatingNumber": 1,
-        "mainHeatingControl": 2207,
-        "mainHeatingCategory": 4,
-        "mainHeatingFraction": 1,
-        "mainHeatingDataSource": 3,
-        "hasDelayedStartThermostat": "false",
-        "loadOrWeatherCompensation": 0,
-        "underfloorHeatEmitterType": 2,
-        "isMainHeatingHetasApproved": "false",
-        "isCentralHeatingPumpInHeatedSpace": "true"
+        "main_fuel_type": 39,
+        "heat_emitter_type": 2,
+        "main_heating_code": 201,
+        "main_heating_number": 1,
+        "main_heating_control": 2207,
+        "main_heating_category": 4,
+        "main_heating_fraction": 1,
+        "main_heating_data_source": 3,
+        "has_delayed_start_thermostat": "false",
+        "load_or_weather_compensation": 0,
+        "underfloor_heat_emitter_type": 2,
+        "is_main_heating_hetas_approved": "false",
+        "is_central_heating_pump_in_heated_space": "true"
       }
     ],
-    "hasHotWaterCylinder": "true",
-    "hasSolarPoweredPump": "false",
-    "secondaryHeatingCode": 633,
-    "hasCylinderThermostat": "true",
-    "solarPanelApertureArea": 5.26,
-    "hasFixedAirConditioning": "false",
-    "secondaryHeatingCategory": 10,
-    "solarPanelCollectorType": 3,
-    "isCylinderInHeatedSpace": "true",
-    "solarPanelCollectorPitch": 3,
-    "isHotWaterSeparatelyTimed": "true",
-    "isPrimaryPipeworkInsulated": "true",
-    "secondaryHeatingDataSource": 3,
-    "hotWaterStoreInsulationType": 1,
-    "hotWaterStoreHeatLossSource": 3,
-    "isSolarStoreCombinedCylinder": "true",
-    "solarPanelCollectorDataSource": 2,
-    "solarPanelCollectorOrientation": 3,
-    "solarPanelCollectorOvershading": 1,
-    "isHeatPumpAssistedByImmersion": "false",
-    "isSecondaryHeatingHetasApproved": "false",
-    "hotWaterStoreInsulationThickness": 80,
-    "solarPanelCollectorHeatLossRate": 3,
-    "solarPanelCollectorZeroLossEfficiency": 60
+    "has_hot_water_cylinder": "true",
+    "has_solar_powered_pump": "false",
+    "secondary_heating_code": 633,
+    "has_cylinder_thermostat": "true",
+    "solar_panel_aperture_area": 5.26,
+    "has_fixed_air_conditioning": "false",
+    "secondary_heating_category": 10,
+    "solar_panel_collector_type": 3,
+    "is_cylinder_in_heated_space": "true",
+    "solar_panel_collector_pitch": 3,
+    "is_hot_water_separately_timed": "true",
+    "is_primary_pipework_insulated": "true",
+    "secondary_heating_data_source": 3,
+    "hot_water_store_insulation_type": 1,
+    "hot_water_store_heat_loss_source": 3,
+    "is_solar_store_combined_cylinder": "true",
+    "solar_panel_collector_data_source": 2,
+    "solar_panel_collector_orientation": 3,
+    "solar_panel_collector_overshading": 1,
+    "is_heat_pump_assisted_by_immersion": "false",
+    "is_secondary_heating_hetas_approved": "false",
+    "hot_water_store_insulation_thickness": 80,
+    "solar_panel_collector_heat_loss_rate": 3,
+    "solar_panel_collector_zero_loss_efficiency": 60
   },
-  "sapVersion": 9.9,
-  "schemaType": "SAP-Schema-16.2",
-  "countryCode": "EAW",
-  "mainHeating": [
+  "sap_version": 9.9,
+  "schema_type": "SAP-Schema-16.2",
+  "country_code": "EAW",
+  "main_heating": [
     {
       "description": "Ground source heat pump, underfloor, electric",
-      "energyEfficiencyRating": 4,
-      "environmentalEfficiencyRating": 5
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 5
     }
   ],
-  "airTightness": {
+  "air_tightness": {
     "description": "Air permeability 6.4 m³/h.m² (as tested)",
-    "energyEfficiencyRating": 4,
-    "environmentalEfficiencyRating": 4
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
   },
-  "dwellingType": "Detached house",
-  "languageCode": 1,
-  "propertyType": 0,
-  "addressLine1": "17, Street Terrace",
-  "schemaVersion": "LIG-16.0",
-  "assessmentDate": "2013-02-06",
-  "assessmentType": "SAP",
-  "completionDate": "2013-02-06",
-  "inspectionDate": "2013-02-06",
-  "sapVentilation": {
-    "psvCount": 0,
-    "pressureTest": 1,
-    "airPermeability": 6.373,
-    "openFluesCount": 0,
-    "ventilationType": 1,
-    "extractFansCount": 9,
-    "openFireplacesCount": 0,
-    "shelteredSidesCount": 0,
-    "fluelessGasFiresCount": 0
+  "dwelling_type": "Detached house",
+  "language_code": 1,
+  "property_type": 0,
+  "address_line_1": "17, Street Terrace",
+  "schema_version": "LIG-16.0",
+  "assessment_date": "2013-02-06",
+  "assessment_type": "SAP",
+  "completion_date": "2013-02-06",
+  "inspection_date": "2013-02-06",
+  "sap_ventilation": {
+    "psv_count": 0,
+    "pressure_test": 1,
+    "air_permeability": 6.373,
+    "open_flues_count": 0,
+    "ventilation_type": 1,
+    "extract_fans_count": 9,
+    "open_fireplaces_count": 0,
+    "sheltered_sides_count": 0,
+    "flueless_gas_fires_count": 0
   },
-  "totalFloorArea": 709,
-  "transactionType": 6,
-  "conservatoryType": 1,
-  "registrationDate": "2013-02-06",
-  "restrictedAccess": 0,
-  "sapEnergySource": {
-    "pvArrays": [
+  "total_floor_area": 709,
+  "transaction_type": 6,
+  "conservatory_type": 1,
+  "registration_date": "2013-02-06",
+  "restricted_access": 0,
+  "sap_energy_source": {
+    "pv_arrays": [
       {
         "pitch": 3,
-        "peakPower": 3.6,
+        "peak_power": 3.6,
         "orientation": 5,
         "overshading": 1
       }
     ],
-    "electricityTariff": 1,
-    "windTurbinesCount": 0,
-    "windTurbineTerrainType": 3,
-    "fixedLightingOutletsCount": 40,
-    "lowEnergyFixedLightingOutletsCount": 40,
-    "lowEnergyFixedLightingOutletsPercentage": 100
+    "electricity_tariff": 1,
+    "wind_turbines_count": 0,
+    "wind_turbine_terrain_type": 3,
+    "fixed_lighting_outlets_count": 40,
+    "low_energy_fixed_lighting_outlets_count": 40,
+    "low_energy_fixed_lighting_outlets_percentage": 100
   },
-  "sapOpeningTypes": [
+  "sap_opening_types": [
     {
       "name": 1,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D7",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 2,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D12",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 3,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W27",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 4,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W28A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 5,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W29A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 6,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W30",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 7,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W31",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 8,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W32",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 9,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W25",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 10,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W26",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 11,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D3",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 12,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D11",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 13,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W34",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 14,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W33",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 15,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W20",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 16,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W21",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 17,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W35",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 18,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W36",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 19,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W37",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 20,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W22",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 21,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W23",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 22,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W24",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 23,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W24A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 24,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W38",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 25,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W39",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 26,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W40",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 27,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W41",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 28,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W42",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 29,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W1A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 30,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W2A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 31,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W1B",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 32,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W2B",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 33,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W18",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 34,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W19",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 35,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D4",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 36,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D6",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 37,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D5",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 38,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D9",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 39,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D10",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 40,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W17",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 41,
       "type": 5,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W14",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 42,
       "type": 5,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W16",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 43,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D1",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 44,
       "type": 2,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D2",
-      "glazingType": 6
+      "glazing_type": 6
     },
     {
       "name": 45,
       "type": 1,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "D8",
-      "glazingType": 1
+      "glazing_type": 1
     },
     {
       "name": 46,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W9",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 47,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W29",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 48,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W28",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 49,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W13",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 50,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W9A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 51,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W15",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 52,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WF",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 53,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WG",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 54,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WH",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 55,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WI",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 56,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WJ",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 57,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W30A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 58,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W31A",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 59,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WLL",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 60,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WMM",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 61,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WAA",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 62,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WBB",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 63,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WCC",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 64,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WDD",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 65,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WO",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 66,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WP",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 67,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WQ",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 68,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W1",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 69,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W10",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 70,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W2",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 71,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W3",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 72,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W4",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 73,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W5",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 74,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W6",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 75,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W7",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 76,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W11",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 77,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "W12",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 78,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WA",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 79,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WB",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 80,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WC",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 81,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WD",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 82,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WE",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 83,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WK",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 84,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WL",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 85,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WM",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 86,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WN",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 87,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WFF",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 88,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WGG",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 89,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WHH",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 90,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WII",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 91,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WJJ",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 92,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WKK",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 93,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WR",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 94,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WS",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 95,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WT",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 96,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WU",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 97,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WV",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 98,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WW",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 99,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WX",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 100,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WY",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     },
     {
       "name": 101,
       "type": 4,
-      "uValue": 1.4,
-      "dataSource": 2,
+      "u_value": 1.4,
+      "data_source": 2,
       "description": "WZ",
-      "frameFactor": 0.7,
-      "glazingType": 6,
-      "solarTransmittance": 0.63
+      "frame_factor": 0.7,
+      "glazing_type": 6,
+      "solar_transmittance": 0.63
     }
   ],
-  "secondaryHeating": {
+  "secondary_heating": {
     "description": "Room heaters, wood logs",
-    "energyEfficiencyRating": 0,
-    "environmentalEfficiencyRating": 0
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
   },
-  "lzcEnergySources": [
+  "lzc_energy_sources": [
     4,
     7,
     10,
     11
   ],
-  "sapBuildingParts": [
+  "sap_building_parts": [
     {
-      "sapRoofs": [
+      "sap_roofs": [
         {
           "name": "Roof 1",
-          "uValue": 0.129,
-          "roofType": 2,
+          "u_value": 0.129,
+          "roof_type": 2,
           "description": "Roof 1 ZINC FLAT",
-          "totalRoofArea": 145
+          "total_roof_area": 145
         },
         {
           "name": "Roof 2",
-          "uValue": 0.139,
-          "roofType": 2,
+          "u_value": 0.139,
+          "roof_type": 2,
           "description": "Roof 2 THATCH ROOF",
-          "totalRoofArea": 93.03
+          "total_roof_area": 93.03
         },
         {
           "name": "Roof 3",
-          "uValue": 0.19,
-          "roofType": 2,
+          "u_value": 0.19,
+          "roof_type": 2,
           "description": "Roof 3 DORMER",
-          "totalRoofArea": 4.8
+          "total_roof_area": 4.8
         },
         {
           "name": "Roof 4",
-          "uValue": 0.151,
-          "roofType": 2,
+          "u_value": 0.151,
+          "roof_type": 2,
           "description": "Roof 4 SLATE",
-          "totalRoofArea": 157.54
+          "total_roof_area": 157.54
         }
       ],
-      "sapWalls": [
+      "sap_walls": [
         {
           "name": "Wall 1",
-          "uValue": 0.166,
-          "wallType": 2,
+          "u_value": 0.166,
+          "wall_type": 2,
           "description": "Wall 1 BRICK & FLINT",
-          "totalWallArea": 407.31,
-          "isCurtainWalling": "false"
+          "total_wall_area": 407.31,
+          "is_curtain_walling": "false"
         },
         {
           "name": "Wall 2",
-          "uValue": 0.168,
-          "wallType": 1,
+          "u_value": 0.168,
+          "wall_type": 1,
           "description": "Wall 2 CONCRETE",
-          "totalWallArea": 122.42,
-          "isCurtainWalling": "false"
+          "total_wall_area": 122.42,
+          "is_curtain_walling": "false"
         },
         {
           "name": "Wall 3",
-          "uValue": 0.181,
-          "wallType": 2,
+          "u_value": 0.181,
+          "wall_type": 2,
           "description": "Wall 3 INT WALL",
-          "totalWallArea": 17.33,
-          "isCurtainWalling": "false"
+          "total_wall_area": 17.33,
+          "is_curtain_walling": "false"
         },
         {
           "name": "Wall 4",
-          "uValue": 0.158,
-          "wallType": 2,
+          "u_value": 0.158,
+          "wall_type": 2,
           "description": "Wall 4 TF",
-          "totalWallArea": 236.58,
-          "isCurtainWalling": "false"
+          "total_wall_area": 236.58,
+          "is_curtain_walling": "false"
         }
       ],
       "identifier": "Main Dwelling",
       "overshading": 1,
-      "sapOpenings": [
+      "sap_openings": [
         {
           "name": 1,
           "type": 1,
@@ -2027,85 +2027,85 @@
           "orientation": 7
         }
       ],
-      "constructionYear": 2010,
-      "sapThermalBridges": {
-        "thermalBridgeCode": 1
+      "construction_year": 2010,
+      "sap_thermal_bridges": {
+        "thermal_bridge_code": 1
       },
-      "buildingPartNumber": 1,
-      "sapFloorDimensions": [
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
         {
           "storey": 0,
-          "uValue": 0.13,
-          "floorType": 1,
+          "u_value": 0.13,
+          "floor_type": 1,
           "description": "Floor 1",
-          "storeyHeight": 2.65,
-          "heatLossArea": 341.2,
-          "totalFloorArea": 127.88
+          "storey_height": 2.65,
+          "heat_loss_area": 341.2,
+          "total_floor_area": 127.88
         },
         {
           "storey": 1,
-          "uValue": 0,
-          "floorType": 3,
-          "storeyHeight": 2.88,
-          "heatLossArea": 0,
-          "totalFloorArea": 213.32
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 2.88,
+          "heat_loss_area": 0,
+          "total_floor_area": 213.32
         },
         {
           "storey": 2,
-          "uValue": 0,
-          "floorType": 3,
-          "storeyHeight": 3.07,
-          "heatLossArea": 0,
-          "totalFloorArea": 347.69
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 3.07,
+          "heat_loss_area": 0,
+          "total_floor_area": 347.69
         },
         {
           "storey": 3,
-          "uValue": 0,
-          "floorType": 3,
-          "storeyHeight": 2.3,
-          "heatLossArea": 0,
-          "totalFloorArea": 20.45
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 2.3,
+          "heat_loss_area": 0,
+          "total_floor_area": 20.45
         }
       ],
-      "thermalMassParameter": 250
+      "thermal_mass_parameter": 250
     }
   ],
-  "bedfRevisionNumber": 333,
-  "heatingCostCurrent": 2132,
-  "co2EmissionsCurrent": 6.5,
-  "energyRatingAverage": 60,
-  "energyRatingCurrent": 85,
-  "lightingCostCurrent": 154,
-  "mainHeatingControls": [
+  "bedf_revision_number": 333,
+  "heating_cost_current": 2132,
+  "co2_emissions_current": 6.5,
+  "energy_rating_average": 60,
+  "energy_rating_current": 85,
+  "lighting_cost_current": 154,
+  "main_heating_controls": [
     {
       "description": "Time and temperature zone control",
-      "energyEfficiencyRating": 5,
-      "environmentalEfficiencyRating": 5
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
     }
   ],
-  "hasHotWaterCylinder": "true",
-  "heatingCostPotential": 2132,
-  "hotWaterCostCurrent": 105,
-  "co2EmissionsPotential": 6.5,
-  "energyRatingPotential": 85,
-  "lightingCostPotential": 154,
-  "hotWaterCostPotential": 105,
-  "isInSmokeControlArea": "unknown",
-  "renewableHeatIncentive": {
-    "rhiNewDwelling": {
-      "spaceHeating": 41938,
-      "waterHeating": 2876
+  "has_hot_water_cylinder": "true",
+  "heating_cost_potential": 2132,
+  "hot_water_cost_current": 105,
+  "co2_emissions_potential": 6.5,
+  "energy_rating_potential": 85,
+  "lighting_cost_potential": 154,
+  "hot_water_cost_potential": 105,
+  "is_in_smoke_control_area": "unknown",
+  "renewable_heat_incentive": {
+    "rhi_new_dwelling": {
+      "space_heating": 41938,
+      "water_heating": 2876
     }
   },
-  "sellerCommissionReport": "Y",
-  "energyConsumptionCurrent": 63,
-  "hasFixedAirConditioning": "false",
-  "calculationSoftwareVersion": 5.4,
-  "energyConsumptionPotential": 63,
-  "environmentalImpactCurrent": 88,
-  "currentEnergyEfficiencyBand": "B",
-  "environmentalImpactPotential": 88,
-  "hasHeatedSeparateConservatory": "false",
-  "potentialEnergyEfficiencyBand": "B",
-  "co2EmissionsCurrentPerFloorArea": 9
+  "seller_commission_report": "Y",
+  "energy_consumption_current": 63,
+  "has_fixed_air_conditioning": "false",
+  "calculation_software_version": 5.4,
+  "energy_consumption_potential": 63,
+  "environmental_impact_current": 88,
+  "current_energy_efficiency_band": "B",
+  "environmental_impact_potential": 88,
+  "has_heated_separate_conservatory": "false",
+  "potential_energy_efficiency_band": "B",
+  "co2_emissions_current_per_floor_area": 9
 }
