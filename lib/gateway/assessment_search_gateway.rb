@@ -120,11 +120,14 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
   end
 
-  def update_uprn(assessment_id:, new_value:)
+  def update_uprn(assessment_id:, new_value:, override: true)
+    conditions = ["assessment_id = $2"]
+    conditions << "uprn IS NULL" unless override
+
     sql = <<-SQL
-      UPDATE assessment_search
-      SET uprn = $1
-      WHERE assessment_id = $2
+    UPDATE assessment_search
+    SET uprn = $1
+    WHERE #{conditions.join(' AND ')}
     SQL
 
     bindings = [

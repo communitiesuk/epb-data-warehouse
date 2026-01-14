@@ -387,6 +387,18 @@ describe Gateway::AssessmentSearchGateway do
         expect { gateway.update_uprn(assessment_id: "9999-0000-0000-0000-1111", new_value: "RRN-0000-0000-0000-0000-0011") }.not_to raise_error
       end
     end
+
+    context "when setting override parameter" do
+      it "does not update the uprn when override is false" do
+        gateway.update_uprn(assessment_id: "9999-0000-0000-0011-9996", new_value: "2000000002222", override: false)
+        expect(search.first["uprn"]).to eq 1_000_000_001_245
+      end
+
+      it "updates the uprn when override is true" do
+        gateway.update_uprn(assessment_id: "9999-0000-0000-0011-9996", new_value: "2000000002222", override: true)
+        expect(search.first["uprn"]).to eq 2_000_000_002_222
+      end
+    end
   end
 
   describe "#delete_assessment" do
