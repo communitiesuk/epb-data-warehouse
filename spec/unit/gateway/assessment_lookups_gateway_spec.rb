@@ -168,7 +168,7 @@ describe Gateway::AssessmentLookupsGateway do
 
   describe "#fetch_look_up_csv_data" do
     before(:all) do
-      import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0])
+      import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0 CEPC-8.0.0])
     end
 
     let(:results) do
@@ -180,11 +180,11 @@ describe Gateway::AssessmentLookupsGateway do
     end
 
     it "returns all the rows for look ups loaded" do
-      expect(results.length).to eq 550
+      expect(results.length).to eq 557
     end
 
     it "returns codes including the schema version" do
-      expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[SAP-Schema-19.0.0 RdSAP-Schema-21.0.1]
+      expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[SAP-Schema-19.0.0 RdSAP-Schema-21.0.1 CEPC-8.0.0]
     end
 
     it "returns the expected columns" do

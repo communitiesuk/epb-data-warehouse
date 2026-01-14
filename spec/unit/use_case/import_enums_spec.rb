@@ -458,4 +458,23 @@ describe UseCase::ImportEnums do
       expect(enum_value).to eq("standard tariff")
     end
   end
+
+  context "when saving enums for CEPC" do
+    before(:all) do
+      lookups_gateway = Gateway::AssessmentLookupsGateway.new
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_cepc.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    it "returns the expected transaction_type enum value for a '1'" do
+      enum_value = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "transaction_type", lookup_key: "1", schema_version: "CEPC-8.0.0")
+      expect(enum_value.first["value"]).to eq("Mandatory issue (Marketed sale).")
+    end
+
+    it "returns the all transaction_types CEPC" do
+      enum_value = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "transaction_type", schema_version: "CEPC-8.0.0")
+      expect(enum_value.length).to eq 7
+    end
+  end
 end

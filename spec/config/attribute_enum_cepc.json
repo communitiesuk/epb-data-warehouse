@@ -1,0 +1,44 @@
+{
+  "nodes" : [
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Transaction-Type",
+      "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
+      "node_hash": { "Transaction-Code": "Transaction-Text" }
+    },
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "//Transaction-Type",
+      "xsd_path": "/api/schemas/xml/RdSAP**/RdSAP/ExternalDefinitions.xml",
+      "node_hash": { "Transaction-Code": "Transaction-Text" }
+    },
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "//Transaction-Type",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Transaction-Code": "Transaction-Text" }
+    },
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "//Transaction-Type",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/Messages/ExternalDefinitions.xml",
+      "node_hash": { "Transaction-Code": "Transaction-Text" }
+    },
+
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "CEPC",
+      "xsd_node_name": "TransactionType"
+    }
+  ],
+
+  "paths" : {
+    "rdsap" : "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+    "sap"  : "/api/schemas/xml/SAP**/SAP/UDT/*-Domains.xsd",
+    "cepc" : "/api/schemas/xml/CEPC**/Reports/Reported-Data.xsd"
+  }
+}
