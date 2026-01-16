@@ -1,5 +1,8 @@
 module Gateway
   class AssessmentLookupsGateway
+    class AssessmentLookups < ActiveRecord::Base
+    end
+
     def add_lookup(assessment_lookup)
       ActiveRecord::Base.transaction do
         lookup_id = insert_or_get_lookup(
@@ -76,10 +79,7 @@ module Gateway
       FROM assessment_attribute_lookups aal
       INNER JOIN assessment_lookups al on aal.lookup_id = al.id
       JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-     WHERE schema_version NOT LIKE '%-NI-%'
-    AND  ((regexp_match(schema_version, '[0-9]+\.?[0-9]*'))[1]::numeric > 15
-                                OR schema_version NOT IN ('CEPC-5.0', 'CEPC-5.1', 'CEPC-6.0'))
-      AND attribute_name = $1
+     WHERE  attribute_name = $1
       SQL
 
       bindings = [
@@ -121,6 +121,19 @@ module Gateway
         JOIN public.assessment_attributes aa on aal.attribute_id = aa.attribute_id
       SQL
       ActiveRecord::Base.connection.exec_query(sql).to_a
+    end
+
+    def valid_schema_version?(schema_version)
+      is_valid = false
+      version_number = schema_version.scan(/\d+/).first.to_i
+      return false if schema_version.include?("-NI-")
+
+      if schema_version.include?("SAP")
+        is_valid = true if version_number > 15
+      elsif schema_version.include?("CEPC")
+        is_valid = true if version_number > 6
+      end
+      is_valid
     end
 
   private

@@ -21,6 +21,10 @@ describe UseCase::ImportEnums do
     XmlPresenter::Xsd.new
   end
 
+  before do
+    allow(gateway).to receive(:valid_schema_version?).and_return(true)
+  end
+
   context "when receiving enums that have variations between schema versions for an attribute" do
     before do
       allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
@@ -28,8 +32,8 @@ describe UseCase::ImportEnums do
       allow(gateway).to receive(:truncate_tables)
 
       allow(presenter).to receive(:get_enums_by_type).and_return(
-        { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
-          "RdSap-17.0.0" => { "1" => "a1", "2" => "b1", "3" => "c1", "nr" => "other1" } },
+        { "RdSAP-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
+          "RdSAP-17.0.0" => { "1" => "a1", "2" => "b1", "3" => "c1", "nr" => "other1" } },
       )
     end
 
@@ -38,6 +42,33 @@ describe UseCase::ImportEnums do
       expect(gateway).to have_received(:truncate_tables).exactly(1).times
       expect(presenter).to have_received(:get_enums_by_type).exactly(2).times
       expect(gateway).to have_received(:add_lookup).exactly(16).times
+      expect(gateway).to have_received(:valid_schema_version?).exactly(4).times
+    end
+  end
+
+  context "when there a are invalid schemes" do
+    before do
+      allow(xsd_config_gateway).to receive(:nodes_and_paths).and_return([{
+        "attribute_name" => "construction_age_band",
+        "type_of_assessment" => "RdSAP",
+        "xsd_node_name" => "test",
+        "xsd_path" => "/api/schemas/xml/RdSAP**/RdSAP/UDT/*-Domains.xsd",
+      }])
+
+      allow(gateway).to receive(:add_lookup).with(anything).and_return(1)
+      allow(attribute_gateway).to receive(:add_attribute).and_return("1")
+      allow(gateway).to receive(:truncate_tables)
+      allow(gateway).to receive(:valid_schema_version?).with("RdSAP-NI-17.0.0").and_return false
+
+      allow(presenter).to receive(:get_enums_by_type).and_return(
+        { "RdSAP-18.0.0" => { "1" => "a" },
+          "RdSAP-NI-17.0.0" => { "1" => "a1", "2" => "b1", "3" => "c1", "nr" => "other1" } },
+      )
+    end
+
+    it "only saves the 1 set of look ups for the valid schema" do
+      use_case.execute
+      expect(gateway).to have_received(:add_lookup).exactly(1).times
     end
   end
 
@@ -53,8 +84,8 @@ describe UseCase::ImportEnums do
       allow(gateway).to receive(:truncate_tables)
       allow(attribute_gateway).to receive(:add_attribute).and_return("1")
       allow(presenter).to receive(:get_enums_by_type).and_return(
-        { "RdSap-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
-          "RdSap-17.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" } },
+        { "RdSAP-18.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" },
+          "RdSAP-17.0.0" => { "1" => "a", "2" => "b", "3" => "c", "nr" => "other" } },
       )
     end
 
@@ -133,56 +164,23 @@ describe UseCase::ImportEnums do
       use_case.execute
     end
 
-    it "returns the expected enum value for a L in England and Northern Ireland" do
-      enum_value = ActiveRecord::Base.connection.exec_query("SELECT lookup_value
-        FROM assessment_attribute_lookups aal
-        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
-        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        WHERE aa.attribute_name = 'construction_age_band' and lookup_key = 'A'").first["lookup_value"]
+    it "returns the expected enum value for a L in England" do
+      enum_value = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "construction_age_band", lookup_key: "A", schema_version: "RdSAP-Schema-17.0").first["value"]
       expect(enum_value).to eq("England and Wales: before 1900")
     end
 
     it "only has L values for the expected schema versions" do
-      expected_versions = %w[RdSAP-Schema-20.0.0
-                             RdSAP-Schema-19.0
-                             RdSAP-Schema-18.0
-                             RdSAP-Schema-17.1
-                             RdSAP-Schema-17.0
-                             RdSAP-Schema-NI-20.0.0
-                             RdSAP-Schema-NI-19.0
-                             RdSAP-Schema-NI-18.0
-                             RdSAP-Schema-NI-17.4
-                             RdSAP-Schema-NI-17.3]
-
-      data = ActiveRecord::Base.connection.exec_query("SELECT DISTINCT schema_version
-        FROM assessment_attribute_lookups aal
-        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
-        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = 'L' AND aal.type_of_assessment='RdSAP'")
-
-      expect(data.rows.flatten - expected_versions).to eq([])
-    end
-
-    it "checks the schemas that use 0" do
-      schemes_that_use_0 = %w[
+      expected_versions = %w[
+        RdSAP-Schema-21.0.0
+        RdSAP-Schema-21.0.1
         RdSAP-Schema-20.0.0
         RdSAP-Schema-19.0
         RdSAP-Schema-18.0
         RdSAP-Schema-17.1
         RdSAP-Schema-17.0
-        RdSAP-Schema-NI-20.0.0
-        RdSAP-Schema-NI-19.0
-        RdSAP-Schema-NI-18.0
-        RdSAP-Schema-NI-17.4
-        RdSAP-Schema-NI-17.3
       ]
-
-      data = ActiveRecord::Base.connection.exec_query("SELECT DISTINCT schema_version
-        FROM assessment_attribute_lookups aal
-        INNER JOIN assessment_lookups al on aal.lookup_id = al.id
-        INNER JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-        WHERE aa.attribute_name = 'construction_age_band' AND lookup_key = '0'")
-      expect(schemes_that_use_0 - data.rows.flatten).to eq([])
+      data = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "construction_age_band", lookup_key: "L").map { |i| i["schema_version"] }
+      expect(data.sort).to eq expected_versions.sort
     end
   end
 
@@ -254,7 +252,7 @@ describe UseCase::ImportEnums do
     end
 
     it "save the transaction type for all versions of SAP" do
-      sap_schemas = %w[SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0 SAP-Schema-NI-17.3 SAP-Schema-NI-17.4 SAP-Schema-NI-18.0.0]
+      sap_schemas = %w[SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0]
       expect(fetch_schemas(attribute_name:).sort).to eq sap_schemas
     end
 
@@ -315,14 +313,7 @@ describe UseCase::ImportEnums do
                          RdSAP-Schema-19.0
                          RdSAP-Schema-20.0.0
                          RdSAP-Schema-21.0.0
-                         RdSAP-Schema-21.0.1
-                         RdSAP-Schema-NI-17.3
-                         RdSAP-Schema-NI-17.4
-                         RdSAP-Schema-NI-18.0
-                         RdSAP-Schema-NI-19.0
-                         RdSAP-Schema-NI-20.0.0
-                         RdSAP-Schema-NI-21.0.0
-                         RdSAP-Schema-NI-21.0.1 ]
+                         RdSAP-Schema-21.0.1]
       expect(fetch_schemas(attribute_name:).sort).to include(*rdsap_schemas)
     end
 
