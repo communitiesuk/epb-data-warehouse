@@ -67,7 +67,11 @@ describe Gateway::DomesticSearchGateway do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0013", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment:, type: "rdsap", add_to_assessment_search: true, different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0 SAP-Schema-16.0 SAP-Schema-16.1])
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0014", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
+    })
+
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-15.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end
 
@@ -93,6 +97,13 @@ describe Gateway::DomesticSearchGateway do
       expect(data[0]["certificate_number"]).to eq "0000-0000-0000-0000-0000"
       expect(data[0]["transaction_type"]).to eq "Marketed sale"
       expect(data[0]["property_type"]).to eq "House"
+    end
+
+    it "does not fetch SAP-Schema-15.0 assessments" do
+      data = gateway.fetch(**search_arguments)
+      expect(data.length).to eq 5
+      expect(data.map { |row| row["certificate_number"] })
+        .not_to include("0000-0000-0000-0000-0014")
     end
 
     context "when filtering by a date range" do
