@@ -90,6 +90,12 @@ describe "Backfill assessment_search table rake" do
         expect(search.length).to eq(3)
       end
 
+      it "doesn't save SAP 15 assessments" do
+        save_new_epc(schema: "SAP-Schema-15.0", assessment_id: "0000-6666-4444-3333-1111", assessment_type: "SAP", sample_type: "sap")
+        task.invoke
+        expect(search.length).to eq(3)
+      end
+
       it "uses the created_at value when available" do
         created_at = Date.new(2025, 7, 14)
         save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-3333", assessment_type: "RdSAP", sample_type: "epc", created_at:)

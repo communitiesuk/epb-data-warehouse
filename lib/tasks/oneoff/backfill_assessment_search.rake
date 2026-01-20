@@ -29,6 +29,7 @@ namespace :one_off do
                         WHERE ase.assessment_id = d.assessment_id)
       )
       AND d.document ->> 'assessment_type' != 'AC-CERT'
+      AND d.document ->> 'schema_type' NOT LIKE 'SAP-Schema-15%'
       #{date_range_sql}
     SQL
     count = 0
