@@ -153,7 +153,17 @@ class Container
                                                                                                       queues_gateway:,
                                                                                                       recovery_list_gateway:,
                                                                                                       assessment_search_gateway:,
+                                                                                                      queue_name: :matched_address_update,
                                                                                                       logger:
+  end
+
+  def self.backfill_update_certificate_matched_addresses_use_case
+    @backfill_update_certificate_matched_addresses_use_case ||= UseCase::UpdateCertificateMatchedAddresses.new documents_gateway:,
+                                                                                                               queues_gateway:,
+                                                                                                               recovery_list_gateway:,
+                                                                                                               assessment_search_gateway:,
+                                                                                                               queue_name: :backfill_matched_address_update,
+                                                                                                               logger:
   end
 
   def self.pull_queues_use_case

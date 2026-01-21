@@ -8,7 +8,7 @@ module UseCase
       @assessment_search_gateway = assessment_search_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
-      @queue_name = :matched_address_update
+      @queue_name = queue_name
     end
 
     def execute(from_recovery_list: false)
@@ -23,8 +23,10 @@ module UseCase
         payload_arr = assessment.split(":")
         assessment_id = payload_arr[0]
         matched_uprn = payload_arr[1]
+        update_document = @queue_name == :matched_address_update
+
         if address_id_valid?(matched_uprn)
-          @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn
+          @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: update_document
           @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
         end
         clear_assessment_on_recovery_list payload: assessment

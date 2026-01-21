@@ -102,9 +102,9 @@ module Gateway
       JSON.parse(result.first["document"], symbolize_names: true)
     end
 
-    def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:)
+    def set_top_level_attribute(assessment_id:, top_level_attribute:, new_value:, update: true)
       sql = <<-SQL
-        UPDATE assessment_documents SET document=jsonb_set(document, '{#{top_level_attribute}}', $1::jsonb), updated_at=$2 WHERE assessment_id=$3
+        UPDATE assessment_documents SET document=jsonb_set(document, '{#{top_level_attribute}}', $1::jsonb)
       SQL
 
       bindings = [
@@ -113,17 +113,23 @@ module Gateway
           new_value,
           ActiveRecord::Type::Json.new,
         ),
-        ActiveRecord::Relation::QueryAttribute.new(
+      ]
+      if update
+        sql << ", updated_at=$2 WHERE assessment_id=$3"
+        bindings << ActiveRecord::Relation::QueryAttribute.new(
           "updated_at",
           Time.now.utc,
           ActiveRecord::Type::DateTime.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "assessment_id",
-          assessment_id,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
+        )
+      else
+        sql << "WHERE assessment_id=$2"
+      end
+
+      bindings << ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+      )
 
       ActiveRecord::Base.connection.exec_query(sql, "SET_ATTR_SQL", bindings)
     end

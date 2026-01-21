@@ -7,6 +7,7 @@ module UseCase
         opt_out_certificates
         update_certificate_addresses
         update_certificate_matched_addresses
+        backfill_update_certificate_matched_addresses
       ].each { |use_case| use_case(use_case).execute(from_recovery_list:) }
     end
   end

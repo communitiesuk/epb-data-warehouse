@@ -71,6 +71,10 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
     ActiveRecord::Base.connection.exec_query("SELECT document ->>'tenure' AS tenure FROM assessment_documents WHERE assessment_id='#{assessment_id}'").first["tenure"]
   end
 
+  let(:updated_at) do
+    ActiveRecord::Base.connection.exec_query("SELECT updated_at FROM assessment_documents WHERE assessment_id='#{assessment_id}'").first["updated_at"]
+  end
+
   before do
     ActiveRecord::Base.connection.reset_pk_sequence!("assessment_documents")
   end
@@ -104,11 +108,17 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
     context "with a simple attribute value" do
       before do
         gateway.add_assessment(assessment_id:, document: assessment_data)
+        Timecop.freeze(Time.utc(2023, 12, 13, 12, 30, 0))
         gateway.set_top_level_attribute(assessment_id:, top_level_attribute: "tenure", new_value: "5")
+        Timecop.freeze(Time.utc(2021, 12, 13))
       end
 
       it "updates the record so the stored data is the updated version" do
         expect(tenure).to eq "5"
+      end
+
+      it "updates the updated_at value" do
+        expect(updated_at).to eq "2023-12-13 12:30:00 UTC"
       end
     end
 
@@ -120,6 +130,23 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
 
       it "updates the record so the stored data is the updated version" do
         expect(tenure).to eq "2021-11-26T14:13:11.000Z"
+      end
+    end
+
+    context "when setting update flag to false" do
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        Timecop.freeze(Time.utc(2024, 12, 13, 12, 30, 0))
+        gateway.set_top_level_attribute(assessment_id:, top_level_attribute: "tenure", new_value: "5", update: false)
+        Timecop.freeze(Time.utc(2021, 12, 13))
+      end
+
+      it "updates the record so the stored data is the updated version" do
+        expect(tenure).to eq "5"
+      end
+
+      it "keeps the original the updated_at value" do
+        expect(updated_at).to eq "2021-12-13 00:00:00 UTC"
       end
     end
   end
