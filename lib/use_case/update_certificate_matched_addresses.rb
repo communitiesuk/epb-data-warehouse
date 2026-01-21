@@ -2,11 +2,10 @@ module UseCase
   class UpdateCertificateMatchedAddresses
     ASSESSMENT_ADDRESS_ID_KEY = "matched_uprn".freeze
 
-    def initialize(queues_gateway:, documents_gateway:, assessment_search_gateway:, assessments_address_id_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, queue_name:, logger: nil)
       @queues_gateway = queues_gateway
       @documents_gateway = documents_gateway
       @assessment_search_gateway = assessment_search_gateway
-      @assessments_address_id_gateway = assessments_address_id_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
       @queue_name = :matched_address_update
@@ -27,7 +26,6 @@ module UseCase
         if address_id_valid?(matched_uprn)
           @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn
           @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
-          @assessments_address_id_gateway.insert_or_update_matched_uprn assessment_id:, matched_uprn: matched_uprn
         end
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e

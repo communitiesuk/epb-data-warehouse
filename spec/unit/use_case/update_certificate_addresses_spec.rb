@@ -6,7 +6,6 @@ describe UseCase::UpdateCertificateAddresses do
                         queues_gateway:,
                         documents_gateway:,
                         assessment_search_gateway:,
-                        assessments_address_id_gateway:,
                         recovery_list_gateway:,
                         audit_logs_gateway:,
                         logger:
@@ -38,12 +37,6 @@ describe UseCase::UpdateCertificateAddresses do
     assessment_search_gateway = instance_double(Gateway::AssessmentSearchGateway)
     allow(assessment_search_gateway).to receive(:update_uprn)
     assessment_search_gateway
-  end
-
-  let(:assessments_address_id_gateway) do
-    assessments_address_id_gateway = instance_double(Gateway::AssessmentsAddressIdGateway)
-    allow(assessments_address_id_gateway).to receive(:insert_or_update_address_id)
-    assessments_address_id_gateway
   end
 
   let(:queues_gateway) do
@@ -111,15 +104,6 @@ describe UseCase::UpdateCertificateAddresses do
                                                                         assessment_id: "0000-0000-0000-0000-0001",
                                                                         event_type: "address_id_updated",
                                                                       )).exactly(1).times
-      end
-
-      it "updates the assessments address id table" do
-        use_case.execute
-        expect(assessments_address_id_gateway).to have_received(:insert_or_update_address_id).exactly(3).times
-        expect(assessments_address_id_gateway).to have_received(:insert_or_update_address_id).with(
-          assessment_id: "0000-0000-0000-0000-0001",
-          address_id: "RRN-0000-0000-0000-0000-0001",
-        ).exactly(1).times
       end
 
       it "clears the assessments from the recovery list" do

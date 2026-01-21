@@ -5,7 +5,6 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     described_class.new queues_gateway:,
                         documents_gateway:,
                         assessment_search_gateway:,
-                        assessments_address_id_gateway:,
                         recovery_list_gateway:,
                         logger:
   end
@@ -24,12 +23,6 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     assessment_search_gateway = instance_double(Gateway::AssessmentSearchGateway)
     allow(assessment_search_gateway).to receive(:update_uprn)
     assessment_search_gateway
-  end
-
-  let(:assessments_address_id_gateway) do
-    assessments_address_id_gateway = instance_double(Gateway::AssessmentsAddressIdGateway)
-    allow(assessments_address_id_gateway).to receive(:insert_or_update_matched_uprn)
-    assessments_address_id_gateway
   end
 
   let(:queues_gateway) do
@@ -82,15 +75,6 @@ describe UseCase::UpdateCertificateMatchedAddresses do
           assessment_id: "0000-0000-0000-0000-0001",
           new_value: "8888888888",
           override: false,
-        ).exactly(1).times
-      end
-
-      it "updates the assessments address id table" do
-        use_case.execute
-        expect(assessments_address_id_gateway).to have_received(:insert_or_update_matched_uprn).exactly(3).times
-        expect(assessments_address_id_gateway).to have_received(:insert_or_update_matched_uprn).with(
-          assessment_id: "0000-0000-0000-0000-0001",
-          matched_uprn: "8888888888",
         ).exactly(1).times
       end
 

@@ -75,7 +75,6 @@ class Container
     @import_certificate_data_use_case ||= UseCase::ImportCertificateData.new assessment_attribute_gateway: assessment_attributes_gateway,
                                                                              documents_gateway:,
                                                                              assessment_search_gateway:,
-                                                                             assessments_address_id_gateway:,
                                                                              commercial_reports_gateway:,
                                                                              logger:
   end
@@ -131,10 +130,6 @@ class Container
     @assessments_country_id_gateway ||= Gateway::AssessmentsCountryIdGateway.new
   end
 
-  def self.assessments_address_id_gateway
-    @assessments_address_id_gateway ||= Gateway::AssessmentsAddressIdGateway.new
-  end
-
   def self.file_gateway
     @file_gateway ||= Gateway::FileGateway.new
   end
@@ -149,7 +144,6 @@ class Container
                                                                                        queues_gateway:,
                                                                                        recovery_list_gateway:,
                                                                                        assessment_search_gateway:,
-                                                                                       assessments_address_id_gateway:,
                                                                                        audit_logs_gateway:,
                                                                                        logger:
   end
@@ -159,7 +153,6 @@ class Container
                                                                                                       queues_gateway:,
                                                                                                       recovery_list_gateway:,
                                                                                                       assessment_search_gateway:,
-                                                                                                      assessments_address_id_gateway:,
                                                                                                       logger:
   end
 
