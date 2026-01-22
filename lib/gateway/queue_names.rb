@@ -2,7 +2,7 @@ module Gateway
   module QueueNames
     class InvalidNameError < StandardError; end
 
-    QUEUE_NAMES = %i[assessments cancelled opt_outs assessments_address_update matched_address_update].freeze
+    QUEUE_NAMES = %i[assessments cancelled opt_outs assessments_address_update matched_address_update backfill_matched_address_update].freeze
 
   private
 
