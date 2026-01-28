@@ -1,10 +1,12 @@
 module UseCase
   class UpdateCertificateMatchedAddresses
+    include Helper::MetaDataRule
     ASSESSMENT_ADDRESS_ID_KEY = "matched_uprn".freeze
 
-    def initialize(queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, queue_name:, logger: nil)
+    def initialize(queues_gateway:, documents_gateway:, certificate_gateway:, assessment_search_gateway:, recovery_list_gateway:, queue_name:, logger: nil)
       @queues_gateway = queues_gateway
       @documents_gateway = documents_gateway
+      @certificate_gateway = certificate_gateway
       @assessment_search_gateway = assessment_search_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
@@ -26,8 +28,20 @@ module UseCase
         update_document = @queue_name == :matched_address_update
 
         if address_id_valid?(matched_uprn)
-          @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: update_document
-          @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
+          if update_document
+            meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
+            unless meta_data.nil? || should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
+              if @documents_gateway.check_id_exists?(assessment_id: assessment_id)
+                @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: update_document
+                @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
+              else
+                next
+              end
+            end
+          else
+            @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: update_document
+            @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
+          end
         end
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
