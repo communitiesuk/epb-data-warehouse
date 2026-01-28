@@ -288,4 +288,43 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
       end
     end
   end
+
+  describe "check_id_exists" do
+    context "when checking an assessment_id exist in the document and search_assessment table" do
+      let(:assessment_id) { "8570-6826-6530-4969-0211" }
+
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
+      end
+
+      it "returns true" do
+        expect(gateway.check_id_exists?(assessment_id:)).to be true
+      end
+    end
+
+    context "when the assessment does not exist in the assessment search table" do
+      let(:assessment_id) { "8570-6826-6530-4969-0212" }
+
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+      end
+
+      it "returns false" do
+        expect(gateway.check_id_exists?(assessment_id:)).to be false
+      end
+    end
+
+    context "when the assessment does not exist in the documents table" do
+      let(:assessment_id) { "8570-6826-6530-4969-0213" }
+
+      before do
+        Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
+      end
+
+      it "returns false" do
+        expect(gateway.check_id_exists?(assessment_id:)).to be false
+      end
+    end
+  end
 end

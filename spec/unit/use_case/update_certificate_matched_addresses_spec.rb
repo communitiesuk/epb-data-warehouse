@@ -3,6 +3,7 @@ require "time"
 describe UseCase::UpdateCertificateMatchedAddresses do
   subject(:use_case) do
     described_class.new queues_gateway:,
+                        certificate_gateway:,
                         documents_gateway:,
                         assessment_search_gateway:,
                         recovery_list_gateway:,
@@ -14,8 +15,19 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     :matched_address_update
   end
 
+  let(:certificate_gateway) do
+    certificate_gateway = instance_double(Gateway::RegisterApiGateway)
+    allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                         assessmentAddressId: "UPRN-000000000000",
+                                                                         typeOfAssessment: "RdSAP",
+                                                                         optOut: false,
+                                                                         createdAt: nil })
+    certificate_gateway
+  end
+
   let(:documents_gateway) do
     documents_gateway = instance_double(Gateway::DocumentsGateway)
+    allow(documents_gateway).to receive(:check_id_exists?).and_return(true)
     allow(documents_gateway).to receive(:set_top_level_attribute)
     documents_gateway
   end
@@ -63,6 +75,16 @@ describe UseCase::UpdateCertificateMatchedAddresses do
         expect(queues_gateway).to have_received(:consume_queue).with(queue_name).exactly(1).times
       end
 
+      it "checks the document and search assessment table has the assessment" do
+        use_case.execute
+        expect(documents_gateway).to have_received(:check_id_exists?).exactly(3).times
+      end
+
+      it "fetches the metadata for the assessment" do
+        use_case.execute
+        expect(certificate_gateway).to have_received(:fetch_meta_data).exactly(3).times
+      end
+
       it "updates the relevant certificates in the document store updating the 'updated_at' value" do
         use_case.execute
         expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
@@ -88,6 +110,65 @@ describe UseCase::UpdateCertificateMatchedAddresses do
         use_case.execute
         expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
       end
+    end
+  end
+
+  context "when the assessment is not yet in the document or search assessment table" do
+    before do
+      allow(queues_gateway).to receive(:consume_queue).and_return(payload)
+      allow(documents_gateway).to receive(:check_id_exists?).and_return(false)
+    end
+
+    it "checks the document and search assessment table has the assessment" do
+      use_case.execute
+      expect(documents_gateway).to have_received(:check_id_exists?).exactly(3).times
+    end
+
+    it "does not attempt to update the documents table" do
+      use_case.execute
+      expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+    end
+
+    it "does not attempt to update the search assessments table" do
+      use_case.execute
+      expect(assessment_search_gateway).not_to have_received(:update_uprn)
+    end
+
+    it "does not clear the assessments with a valid matched uprn from the recovery list" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(2).times
+    end
+  end
+
+  context "when the assessment should not be imported to the data warehouse" do
+    before do
+      allow(queues_gateway).to receive(:consume_queue).and_return(payload)
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                           assessmentAddressId: "UPRN-000000000000",
+                                                                           typeOfAssessment: "RdSAP",
+                                                                           optOut: false,
+                                                                           createdAt: nil,
+                                                                           greenDeal: true })
+    end
+
+    it "fetches the metadata for the assessment" do
+      use_case.execute
+      expect(certificate_gateway).to have_received(:fetch_meta_data).exactly(3).times
+    end
+
+    it "does not attempt to update the documents table" do
+      use_case.execute
+      expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+    end
+
+    it "does not attempt to update the search assessments table" do
+      use_case.execute
+      expect(assessment_search_gateway).not_to have_received(:update_uprn)
+    end
+
+    it "clears the assessments from the recovery list" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
     end
   end
 
@@ -123,6 +204,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     subject(:use_case) do
       described_class.new queues_gateway:,
                           documents_gateway:,
+                          certificate_gateway:,
                           assessment_search_gateway:,
                           recovery_list_gateway:,
                           queue_name: :backfill_matched_address_update,
@@ -140,6 +222,11 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     it "fetches the correct queue" do
       use_case.execute
       expect(queues_gateway).to have_received(:consume_queue).with(queue_name).exactly(1).times
+    end
+
+    it "does not fetch metadata for the assessment" do
+      use_case.execute
+      expect(certificate_gateway).not_to have_received(:fetch_meta_data)
     end
 
     it "updates the relevant certificates in the document store without updating 'updated_at' value" do
