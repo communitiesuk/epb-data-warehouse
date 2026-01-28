@@ -1,16 +1,14 @@
 module UseCase
-  class UpdateCertificateMatchedAddresses
-    include Helper::MetaDataRule
+  class UpdateCertificateMatchedAddressesBackfill
     ASSESSMENT_ADDRESS_ID_KEY = "matched_uprn".freeze
 
-    def initialize(queues_gateway:, documents_gateway:, certificate_gateway:, assessment_search_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, logger: nil)
       @queues_gateway = queues_gateway
       @documents_gateway = documents_gateway
-      @certificate_gateway = certificate_gateway
       @assessment_search_gateway = assessment_search_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
-      @queue_name = :matched_address_update
+      @queue_name = :backfill_matched_address_update
     end
 
     def execute(from_recovery_list: false)
@@ -27,15 +25,8 @@ module UseCase
         matched_uprn = payload_arr[1]
 
         if address_id_valid?(matched_uprn)
-          meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
-          unless meta_data.nil? || should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
-            if @documents_gateway.check_id_exists?(assessment_id: assessment_id)
-              @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: true
-              @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
-            else
-              next
-            end
-          end
+          @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: false
+          @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
         end
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
