@@ -63,6 +63,17 @@ describe "CodesController" do
       it "returns the expected data" do
         expect(JSON.parse(response.body)["data"]).to eq response_data
       end
+
+      context "when parsing the schema version" do
+        let(:response) do
+          get "/api/codes/info?code=built_form&schemaVersion=RdSAP-21.0.0"
+        end
+
+        it "passes the schemaVersion to the use case" do
+          response
+          expect(use_case).to have_received(:execute).with(name: "built_form", schema_version: "RdSAP-21.0.0", lookup_key: nil)
+        end
+      end
     end
 
     context "when the no data is found" do

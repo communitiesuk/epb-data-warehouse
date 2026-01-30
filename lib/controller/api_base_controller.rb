@@ -24,7 +24,6 @@ module Controller
           type: "array",
           items: { type: "string" },
         },
-
         address: {
           type: "string",
         },
@@ -37,7 +36,6 @@ module Controller
         page_size: {
           type: "integer",
         },
-
       },
       anyOf: [
         { required: %w[date_start date_end] },

@@ -7,7 +7,7 @@ module Controller
         code: {
           type: "string",
         },
-        schema_version: {
+        schemaVersion: {
           type: "string",
         },
         key: {
@@ -25,7 +25,7 @@ module Controller
     get "/api/codes/info" do
       execute_params = {
         name: params[:code],
-        schema_version: params[:schema_version],
+        schema_version: params[:schemaVersion],
         lookup_key: params[:key],
       }
 

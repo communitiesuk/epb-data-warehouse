@@ -118,7 +118,7 @@ paths:
             type: string
             example: '1'
         - in: query
-          name: schema_version
+          name: schemaVersion
           description: the EPC schema version
           required: false
           schema:
