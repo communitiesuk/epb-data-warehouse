@@ -298,8 +298,8 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
         Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
       end
 
-      it "returns true" do
-        expect(gateway.check_id_exists?(assessment_id:)).to be true
+      it "returns true if include_search_table is true" do
+        expect(gateway.check_id_exists?(assessment_id:, include_search_table: true)).to be true
       end
     end
 
@@ -310,8 +310,12 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
         gateway.add_assessment(assessment_id:, document: assessment_data)
       end
 
-      it "returns false" do
-        expect(gateway.check_id_exists?(assessment_id:)).to be false
+      it "returns false if include_search_table is true" do
+        expect(gateway.check_id_exists?(assessment_id:, include_search_table: true)).to be false
+      end
+
+      it "returns true if include_search_table is false" do
+        expect(gateway.check_id_exists?(assessment_id:, include_search_table: false)).to be true
       end
     end
 
@@ -324,6 +328,10 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
 
       it "returns false" do
         expect(gateway.check_id_exists?(assessment_id:)).to be false
+      end
+
+      it "returns false if include_search_table is true" do
+        expect(gateway.check_id_exists?(assessment_id:, include_search_table: true)).to be false
       end
     end
   end

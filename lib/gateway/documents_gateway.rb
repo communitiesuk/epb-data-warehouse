@@ -102,13 +102,14 @@ module Gateway
       JSON.parse(result.first["document"], symbolize_names: true)
     end
 
-    def check_id_exists?(assessment_id:)
+    def check_id_exists?(assessment_id:, include_search_table: false)
       sql = <<-SQL
         SELECT assessment_id
         FROM assessment_documents ad
         WHERE ad.assessment_id = $1
-        AND EXISTS (SELECT * FROM assessment_search s WHERE s.assessment_id = ad.assessment_id)
       SQL
+
+      sql << "AND EXISTS (SELECT * FROM assessment_search s WHERE s.assessment_id = ad.assessment_id)" if include_search_table
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(

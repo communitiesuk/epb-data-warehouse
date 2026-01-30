@@ -20,7 +20,8 @@ describe UseCase::UpdateCertificateMatchedAddresses do
                                                                          assessmentAddressId: "UPRN-000000000000",
                                                                          typeOfAssessment: "RdSAP",
                                                                          optOut: false,
-                                                                         createdAt: nil })
+                                                                         createdAt: nil,
+                                                                         countryId: 1 })
     certificate_gateway
   end
 
@@ -143,7 +144,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
       expect(assessment_search_gateway).not_to have_received(:update_uprn)
     end
 
-    it "does not clear the assessments with a valid matched uprn from the recovery list" do
+    it "clears the assessments with an invalid matched uprn" do
       use_case.execute
       expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(2).times
     end
@@ -178,6 +179,85 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     it "clears the assessments from the recovery list" do
       use_case.execute
       expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
+    end
+  end
+
+  context "when the assessment is not expected in the assessment_search table" do
+    before do
+      allow(queues_gateway).to receive(:consume_queue).and_return(payload)
+    end
+
+    context "when the type of assessment is AC-CERT" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return(
+          { schemaType: "CEPC-8.0.0",
+            assessmentAddressId: "UPRN-000000000000",
+            typeOfAssessment: "AC-CERT",
+            optOut: false,
+            createdAt: nil,
+            greenDeal: false,
+            countryId: 1 },
+        )
+      end
+
+      it "fetches the metadata for the assessment" do
+        use_case.execute
+        expect(certificate_gateway).to have_received(:fetch_meta_data).exactly(3).times
+      end
+
+      it "checks the assessment_document table has the assessment" do
+        use_case.execute
+        expect(documents_gateway).to have_received(:check_id_exists?).with(assessment_id: anything, include_search_table: false).exactly(3).times
+      end
+
+      it "updates the relevant certificates in the document store updating the 'updated_at' value" do
+        use_case.execute
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+      end
+
+      it "does not attempt to update the search assessments table" do
+        use_case.execute
+        expect(assessment_search_gateway).not_to have_received(:update_uprn)
+      end
+
+      it "clears the assessments from the recovery list" do
+        use_case.execute
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
+      end
+    end
+
+    context "when the country id is not valid" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return(
+          { schemaType: "CEPC-NI-8.0.0",
+            assessmentAddressId: "UPRN-000000000000",
+            typeOfAssessment: "CEPC",
+            optOut: false,
+            createdAt: nil,
+            greenDeal: false,
+            countryId: 3 },
+        )
+      end
+
+      it "checks the assessment_document table has the assessment" do
+        use_case.execute
+        expect(documents_gateway).to have_received(:check_id_exists?).with(assessment_id: anything, include_search_table: false).exactly(3).times
+      end
+
+      it "updates the relevant certificates in the document store updating the 'updated_at' value" do
+        use_case.execute
+        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+      end
+
+      it "does not attempt to update the search assessments table" do
+        use_case.execute
+        expect(assessment_search_gateway).not_to have_received(:update_uprn)
+      end
+
+      it "clears the assessments from the recovery list" do
+        use_case.execute
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
+      end
     end
   end
 
