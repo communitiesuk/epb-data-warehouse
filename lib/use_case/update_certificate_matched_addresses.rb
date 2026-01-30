@@ -20,9 +20,14 @@ module UseCase
         if address_id_valid?(matched_uprn)
           meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
           unless meta_data.nil? || should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
-            if @documents_gateway.check_id_exists?(assessment_id: assessment_id)
+
+            check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && Gateway::AssessmentSearchGateway::VALID_COUNTRY_IDS.include?(meta_data[:countryId])
+
+            if @documents_gateway.check_id_exists?(assessment_id: assessment_id, include_search_table: check_assessment_search)
               @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: true
-              @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
+              if check_assessment_search
+                @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
+              end
             else
               next
             end
