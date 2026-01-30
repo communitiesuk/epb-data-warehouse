@@ -29,19 +29,25 @@ module UseCase
                 @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
               end
             else
-              next
+              raise "Assessment with id #{assessment_id} not imported yet, waiting for longer"
             end
           end
         end
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
-        report_to_sentry e
-        @logger.error "Error of type #{e.class} when updating an EPC address using #{assessment}: '#{e.message}'" if @logger.respond_to?(:error)
+        report_to_sentry e if is_on_last_attempt(payload: assessment)
+        @logger.error "Error of type #{e.class} when updating an EPC matched_uprn for #{assessment}: '#{e.message}'" if @logger.respond_to?(:error)
         register_attempt_to_recovery_list payload: assessment unless e.is_a?(Errors::ConnectionApiError)
       end
     rescue StandardError => e
       report_to_sentry e
-      @logger.error "Error of type #{e.class} when updating EPC address_ids certificates: '#{e.message}'" if @logger.respond_to?(:error)
+      @logger.error "Error of type #{e.class} when updating matched_uprn on certificates: '#{e.message}'" if @logger.respond_to?(:error)
+    end
+
+  private
+
+    def register_assessments_to_recovery_list(assessment_ids)
+      @recovery_list_gateway.register_assessments(*assessment_ids, queue: @queue_name, retries: 50)
     end
   end
 end

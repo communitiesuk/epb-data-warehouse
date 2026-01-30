@@ -47,6 +47,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     allow(gateway).to receive(:clear_assessment)
     allow(gateway).to receive(:register_attempt)
     allow(gateway).to receive(:register_assessments)
+    allow(gateway).to receive(:retries_left)
     gateway
   end
 
@@ -129,6 +130,11 @@ describe UseCase::UpdateCertificateMatchedAddresses do
       allow(documents_gateway).to receive(:check_id_exists?).and_return(false)
     end
 
+    it "registers the assessments in the recovery list" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:register_assessments).with(*payload, queue: :matched_address_update, retries: 50).once
+    end
+
     it "checks the document and search assessment table has the assessment" do
       use_case.execute
       expect(documents_gateway).to have_received(:check_id_exists?).exactly(3).times
@@ -148,37 +154,92 @@ describe UseCase::UpdateCertificateMatchedAddresses do
       use_case.execute
       expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(2).times
     end
+
+    it "registers the attempts in the recovery list" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:register_attempt).exactly(3).times
+    end
+  end
+
+  context "when the assessment is on its last attempt" do
+    before do
+      allow(queues_gateway).to receive(:consume_queue).and_return(payload)
+      allow(documents_gateway).to receive(:check_id_exists?).and_return(false)
+      allow(recovery_list_gateway).to receive(:retries_left).and_return(1)
+      allow(Object).to receive(:report_to_sentry)
+    end
+
+    it "reports the error to sentry", skip: "We can't spy report_to_sentry calls" do
+      use_case.execute
+      expect(Object).to have_received(:report_to_sentry)
+    end
   end
 
   context "when the assessment should not be imported to the data warehouse" do
     before do
       allow(queues_gateway).to receive(:consume_queue).and_return(payload)
-      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
-                                                                           assessmentAddressId: "UPRN-000000000000",
-                                                                           typeOfAssessment: "RdSAP",
-                                                                           optOut: false,
-                                                                           createdAt: nil,
-                                                                           greenDeal: true })
     end
 
-    it "fetches the metadata for the assessment" do
-      use_case.execute
-      expect(certificate_gateway).to have_received(:fetch_meta_data).exactly(3).times
+    context "when the assessment has a Green Deal attached" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: false,
+                                                                             createdAt: nil,
+                                                                             greenDeal: true })
+      end
+
+      it "fetches the metadata for the assessment" do
+        use_case.execute
+        expect(certificate_gateway).to have_received(:fetch_meta_data).exactly(3).times
+      end
+
+      it "does not attempt to update the documents table" do
+        use_case.execute
+        expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+      end
+
+      it "does not attempt to update the search assessments table" do
+        use_case.execute
+        expect(assessment_search_gateway).not_to have_received(:update_uprn)
+      end
+
+      it "clears the assessments from the recovery list" do
+        use_case.execute
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
+      end
     end
 
-    it "does not attempt to update the documents table" do
-      use_case.execute
-      expect(documents_gateway).not_to have_received(:set_top_level_attribute)
-    end
+    context "when the assessment type is AC-REPORT" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "CEPC-8.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "AC-REPORT",
+                                                                             optOut: false,
+                                                                             createdAt: nil,
+                                                                             greenDeal: false })
+      end
 
-    it "does not attempt to update the search assessments table" do
-      use_case.execute
-      expect(assessment_search_gateway).not_to have_received(:update_uprn)
-    end
+      it "fetches the metadata for the assessment" do
+        use_case.execute
+        expect(certificate_gateway).to have_received(:fetch_meta_data).exactly(3).times
+      end
 
-    it "clears the assessments from the recovery list" do
-      use_case.execute
-      expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
+      it "does not attempt to update the documents table" do
+        use_case.execute
+        expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+      end
+
+      it "does not attempt to update the search assessments table" do
+        use_case.execute
+        expect(assessment_search_gateway).not_to have_received(:update_uprn)
+      end
+
+      it "clears the assessments from the recovery list" do
+        use_case.execute
+        expect(recovery_list_gateway).to have_received(:clear_assessment).exactly(5).times
+      end
     end
   end
 

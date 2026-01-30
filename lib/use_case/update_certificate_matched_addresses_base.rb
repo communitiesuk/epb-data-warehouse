@@ -34,6 +34,10 @@ module UseCase
       @recovery_list_gateway.register_attempt payload:, queue: @queue_name
     end
 
+    def is_on_last_attempt(payload:)
+      @recovery_list_gateway.retries_left(payload:, queue: @queue_name) == 1
+    end
+
     def register_assessments_to_recovery_list(assessment_ids)
       @recovery_list_gateway.register_assessments(*assessment_ids, queue: @queue_name)
     end
