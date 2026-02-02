@@ -67,7 +67,7 @@ describe Gateway::DomesticSearchGateway do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0013", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment:, type: "rdsap", add_to_assessment_search: true, different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0014", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0014", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment:, type: "sap", add_to_assessment_search: false, different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
 
