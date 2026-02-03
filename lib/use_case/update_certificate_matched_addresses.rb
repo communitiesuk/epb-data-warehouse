@@ -19,7 +19,10 @@ module UseCase
 
         if address_id_valid?(matched_uprn)
           meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
-          unless meta_data.nil? || should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
+
+          raise "Missing meta_data for assessment with id #{assessment_id}, waiting for longer" if meta_data.nil?
+
+          unless should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
 
             check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && Gateway::AssessmentSearchGateway::VALID_COUNTRY_IDS.include?(meta_data[:countryId])
 

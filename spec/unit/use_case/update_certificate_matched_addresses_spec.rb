@@ -124,6 +124,18 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     end
   end
 
+  context "when the metadata is nil when fetched" do
+    before do
+      allow(queues_gateway).to receive(:consume_queue).and_return(payload)
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return(nil)
+    end
+
+    it "registers the attempts in the recovery list" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:register_attempt).exactly(3).times
+    end
+  end
+
   context "when the assessment is not yet in the document or search assessment table" do
     before do
       allow(queues_gateway).to receive(:consume_queue).and_return(payload)
