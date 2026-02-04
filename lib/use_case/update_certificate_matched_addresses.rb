@@ -18,6 +18,8 @@ module UseCase
         assessment_id = payload_arr[0]
         matched_uprn = payload_arr[1]
 
+        @logger.error "DEBUG processing this assessment: '#{assessment}', assessment_id: #{assessment_id}, matched_uprn: '#{matched_uprn}'"
+
         if address_id_valid?(matched_uprn)
           meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
 
@@ -28,8 +30,10 @@ module UseCase
             check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && Gateway::AssessmentSearchGateway::VALID_COUNTRY_IDS.include?(meta_data[:countryId])
 
             if @documents_gateway.check_id_exists?(assessment_id: assessment_id, include_search_table: check_assessment_search)
+              @logger.error "DEBUG querying assessment_id: '#{assessment_id}' about to update documents table"
               @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: true
               if check_assessment_search
+                @logger.error "DEBUG querying assessment_id: '#{assessment_id}' about to update asssessments search table"
                 @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
               end
             else
@@ -41,6 +45,7 @@ module UseCase
         else
           @logger.error "DEBUG address id not valid for #{assessment_id} with matched_uprn: '#{matched_uprn}'"
         end
+        @logger.error "DEBUG clearing assessment_id: '#{assessment_id}' from the queue"
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
         report_to_sentry e if is_on_last_attempt(payload: assessment)
