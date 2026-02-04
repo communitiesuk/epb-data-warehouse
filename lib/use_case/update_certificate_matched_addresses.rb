@@ -11,7 +11,7 @@ module UseCase
 
     def execute(from_recovery_list: false)
       payload = get_payload(from_recovery_list:)
-      @logger.error "DEBUG payload: '#{payload}'"
+      @logger.error "DEBUG payload: '#{payload}'" unless payload.empty?
 
       payload.each do |assessment|
         payload_arr = assessment.split(":")
