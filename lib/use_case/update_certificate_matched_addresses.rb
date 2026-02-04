@@ -11,6 +11,7 @@ module UseCase
 
     def execute(from_recovery_list: false)
       payload = get_payload(from_recovery_list:)
+      @logger.error "DEBUG payload: '#{payload}'"
 
       payload.each do |assessment|
         payload_arr = assessment.split(":")
@@ -34,7 +35,11 @@ module UseCase
             else
               raise "Assessment with id #{assessment_id} not imported yet, waiting for longer"
             end
+          else
+            @logger.error "DEBUG AC report: #{should_exclude?(meta_data:)} , green_deal: #{is_green_deal?(meta_data:)} or cancelled: #{is_cancelled?(meta_data:)} for #{assessment_id} "
           end
+        else
+          @logger.error "DEBUG address id not valid for #{assessment_id} with matched_uprn: '#{matched_uprn}'"
         end
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
