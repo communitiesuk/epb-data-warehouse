@@ -296,4 +296,25 @@ RSpec.describe "the parser and the SAP configuration" do
       expect(response).to eq(expectation)
     end
   end
+
+  context "when the SAP has SAP-Compliance-Report as the root node" do
+    let(:sap) do
+      Samples.xml("SAP-Schema-19.1.0", "epc_sap_compliance")
+    end
+
+    let(:response) do
+      use_case.execute(xml: sap,
+                       schema_type: "SAP-Schema-19.1.0",
+                       assessment_id: "0000-0000-0000-0000-0000")
+    end
+
+    it "the parsed document does not include the sap_report root node" do
+      expect(response.keys).not_to include("sap_report")
+    end
+
+    it "does include the root keys" do
+      keys = %w[calculation_software_name calculation_software_version user_interface_name user_interface_version inspection_date report_type completion_date registration_date status language_code tenure transaction_type seller_commission_report property_type scheme_assessor_id address_line_1 address_line_2 address_line_3 post_town postcode uprn region_code country_code assessment_date walls roofs floors windows main_heating main_heating_controls secondary_heating hot_water lighting air_tightness has_fixed_air_conditioning has_hot_water_cylinder has_heated_separate_conservatory dwelling_type total_floor_area multiple_glazed_percentage energy_rating_average energy_rating_current energy_rating_potential environmental_impact_current environmental_impact_potential energy_consumption_current energy_consumption_potential co2_emissions_current co2_emissions_potential co2_emissions_current_per_floor_area lighting_cost_current lighting_cost_potential heating_cost_current heating_cost_potential hot_water_cost_current hot_water_cost_potential renewable_heat_incentive suggested_improvements sap_flat_details sap_energy_source sap_heating sap_building_parts sap_ventilation sap_opening_types built_form living_area lowest_storey_area orientation cold_water_source windows_overshading is_in_smoke_control_area sap_lighting conservatory_type terrain_type is_dwelling_export_capable gas_smart_meter_present electricity_smart_meter_present data_type]
+      expect(response.keys).to eq keys
+    end
+  end
 end

@@ -23,6 +23,7 @@ module XmlPresenter
         ]
         # bases is a list of higher level nodes in which other data is nested. These unnecessary layers of nesting will be removed to bring the nested data closer to the root of the object.
         bases(%w[
+          SAP-Report
           Report-Header
           Energy-Assessment
           Property-Summary
