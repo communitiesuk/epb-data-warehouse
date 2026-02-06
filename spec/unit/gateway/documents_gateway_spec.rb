@@ -335,4 +335,59 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
       end
     end
   end
+
+  describe "#update_matched_uprn" do
+    let(:assessment_documents) do
+      ActiveRecord::Base.connection.exec_query("SELECT assessment_id, matched_uprn from assessment_documents where assessment_id='#{assessment_id}'", "SQL")
+    end
+
+    context "when updating an assessment matched uprn" do
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        Timecop.freeze(Time.utc(2024, 12, 13, 12, 30, 0)) do
+          gateway.update_matched_uprn(assessment_id:, matched_uprn: "100000000012")
+        end
+      end
+
+      it "saves the matched uprn in the document row" do
+        expect(assessment_documents.first["matched_uprn"]).to eq("100000000012".to_i)
+      end
+
+      it "updates the updated_at value" do
+        expect(updated_at).to eq "2024-12-13 12:30:00 UTC"
+      end
+    end
+
+    context "when updating an assessment with an existing matched_uprn" do
+      before do
+        gateway.add_assessment(assessment_id:, document: assessment_data)
+        gateway.update_matched_uprn(assessment_id:, matched_uprn: "100000000012")
+        gateway.update_matched_uprn(assessment_id:, matched_uprn: "100000000013")
+      end
+
+      it "saves the last matched uprn in the document row" do
+        expect(assessment_documents.first["matched_uprn"]).to eq("100000000013".to_i)
+      end
+    end
+
+    context "when setting update flag to false" do
+      before do
+        Timecop.freeze(Time.utc(2022, 12, 13, 11, 30, 0)) do
+          gateway.add_assessment(assessment_id:, document: assessment_data)
+        end
+
+        Timecop.freeze(Time.utc(2024, 12, 13, 12, 30, 0)) do
+          gateway.update_matched_uprn(assessment_id:, matched_uprn: "100000000014", update: false)
+        end
+      end
+
+      it "updates the matched_uprn column" do
+        expect(assessment_documents.first["matched_uprn"]).to eq("100000000014".to_i)
+      end
+
+      it "keeps the original the updated_at value" do
+        expect(updated_at).to eq "2022-12-13 11:30:00 UTC"
+      end
+    end
+  end
 end

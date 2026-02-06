@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_09_095345) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_09_101817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -49,6 +49,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_09_095345) do
 
   create_table "assessment_documents", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.jsonb "document", null: false
+    t.bigint "matched_uprn"
     t.datetime "updated_at", null: false
     t.datetime "warehouse_created_at", null: false
     t.index "((document ->> 'assessment_type'::text))", name: "index_document_assessment_type"

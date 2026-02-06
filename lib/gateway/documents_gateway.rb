@@ -192,5 +192,37 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
+
+    def update_matched_uprn(assessment_id:, matched_uprn:, update: true)
+      sql = <<-SQL
+        UPDATE assessment_documents SET matched_uprn=$1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "matched_uprn",
+          matched_uprn,
+          ActiveRecord::Type::BigInteger.new,
+        ),
+      ]
+      if update
+        sql << ", updated_at=$2 WHERE assessment_id=$3"
+        bindings << ActiveRecord::Relation::QueryAttribute.new(
+          "updated_at",
+          Time.now.utc,
+          ActiveRecord::Type::DateTime.new,
+        )
+      else
+        sql << "WHERE assessment_id=$2"
+      end
+
+      bindings << ActiveRecord::Relation::QueryAttribute.new(
+        "assessment_id",
+        assessment_id,
+        ActiveRecord::Type::String.new,
+      )
+
+      ActiveRecord::Base.connection.exec_query(sql, "MATCHED_UPRN_SQL", bindings)
+    end
   end
 end
