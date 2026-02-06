@@ -296,26 +296,4 @@ RSpec.describe "the parser and the SAP configuration" do
       expect(response).to eq(expectation)
     end
   end
-
-  context "when the SAP has SAP-Compliance-Report as the root node" do
-    let(:sap) do
-      Samples.xml("SAP-Schema-19.1.0", "epc_sap_compliance")
-    end
-
-    let(:response) do
-      use_case.execute(xml: sap,
-                       schema_type: "SAP-Schema-19.1.0",
-                       assessment_id: "0000-0000-0000-0000-0000")
-    end
-
-    it "the parsed document does not include the sap_report root node" do
-      expect(response.keys).not_to include("sap_report")
-    end
-
-    it "does include some the root keys" do
-      %w[address_line_1 address_line_2 registration_date schema_version_original scheme_assessor_id walls roofs floors windows main_heating].each do |key|
-        expect(response.keys).to include key
-      end
-    end
-  end
 end

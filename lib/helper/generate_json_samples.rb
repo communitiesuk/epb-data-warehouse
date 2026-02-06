@@ -58,7 +58,7 @@ class Helper::GenerateJsonSamples
   def self.get_sample_files
     samples_dir = "#{Dir.pwd}/spec/fixtures/samples"
     sample_files = Dir.glob("#{samples_dir}/**/*.xml")
-    rejected_files = %w[ac-cert redacted dec_exceeds 15 NI epc_sap_compliance]
+    rejected_files = %w[ac-cert redacted dec_exceeds 15 NI]
     rejected_files.each do |i|
       sample_files.reject! { |f| f.include? i }
     end

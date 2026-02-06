@@ -25,7 +25,9 @@ module UseCase
 
           raise "Missing meta_data for assessment with id #{assessment_id}, waiting for longer" if meta_data.nil?
 
-          unless should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
+          if should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
+            @logger.error "DEBUG AC report: #{should_exclude?(meta_data:)} , green_deal: #{is_green_deal?(meta_data:)} or cancelled: #{is_cancelled?(meta_data:)} for #{assessment_id} "
+          else
 
             check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && Gateway::AssessmentSearchGateway::VALID_COUNTRY_IDS.include?(meta_data[:countryId])
 
@@ -39,8 +41,6 @@ module UseCase
             else
               raise "Assessment with id #{assessment_id} not imported yet, waiting for longer"
             end
-          else
-            @logger.error "DEBUG AC report: #{should_exclude?(meta_data:)} , green_deal: #{is_green_deal?(meta_data:)} or cancelled: #{is_cancelled?(meta_data:)} for #{assessment_id} "
           end
         else
           @logger.error "DEBUG address id not valid for #{assessment_id} with matched_uprn: '#{matched_uprn}'"
