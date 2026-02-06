@@ -1,7 +1,5 @@
 module UseCase
   class UpdateCertificateMatchedAddressesBackfill < UpdateCertificateMatchedAddressesBase
-    ASSESSMENT_ADDRESS_ID_KEY = "matched_uprn".freeze
-
     def initialize(queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, logger: nil)
       super
       @queue_name = :backfill_matched_address_update
@@ -16,7 +14,7 @@ module UseCase
         matched_uprn = payload_arr[1]
 
         if address_id_valid?(matched_uprn)
-          @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: false
+          @documents_gateway.update_matched_uprn assessment_id:, matched_uprn: matched_uprn, update: false
           @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
         end
         clear_assessment_on_recovery_list payload: assessment

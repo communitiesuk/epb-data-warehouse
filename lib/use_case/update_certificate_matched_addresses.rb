@@ -1,7 +1,6 @@
 module UseCase
   class UpdateCertificateMatchedAddresses < UpdateCertificateMatchedAddressesBase
     include Helper::MetaDataRule
-    ASSESSMENT_ADDRESS_ID_KEY = "matched_uprn".freeze
 
     def initialize(queues_gateway:, documents_gateway:, certificate_gateway:, assessment_search_gateway:, recovery_list_gateway:, logger: nil)
       super(queues_gateway:, documents_gateway:, assessment_search_gateway:, recovery_list_gateway:, logger:)
@@ -33,7 +32,7 @@ module UseCase
 
             if @documents_gateway.check_id_exists?(assessment_id: assessment_id, include_search_table: check_assessment_search)
               @logger.error "DEBUG querying assessment_id: '#{assessment_id}' about to update documents table"
-              @documents_gateway.set_top_level_attribute assessment_id:, top_level_attribute: ASSESSMENT_ADDRESS_ID_KEY, new_value: matched_uprn, update: true
+              @documents_gateway.update_matched_uprn assessment_id:, matched_uprn: matched_uprn, update: true
               if check_assessment_search
                 @logger.error "DEBUG querying assessment_id: '#{assessment_id}' about to update asssessments search table"
                 @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false

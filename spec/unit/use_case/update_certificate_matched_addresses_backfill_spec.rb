@@ -16,7 +16,7 @@ describe UseCase::UpdateCertificateMatchedAddressesBackfill do
   let(:documents_gateway) do
     documents_gateway = instance_double(Gateway::DocumentsGateway)
     allow(documents_gateway).to receive(:check_id_exists?).and_return(true)
-    allow(documents_gateway).to receive(:set_top_level_attribute)
+    allow(documents_gateway).to receive(:update_matched_uprn)
     documents_gateway
   end
 
@@ -70,11 +70,10 @@ describe UseCase::UpdateCertificateMatchedAddressesBackfill do
 
     it "updates the relevant certificates in the document store without updating 'updated_at' value" do
       use_case.execute
-      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
-      expect(documents_gateway).to have_received(:set_top_level_attribute).with(
+      expect(documents_gateway).to have_received(:update_matched_uprn).exactly(3).times
+      expect(documents_gateway).to have_received(:update_matched_uprn).with(
         assessment_id: "0000-0000-0000-0000-0000",
-        top_level_attribute: "matched_uprn",
-        new_value: "4444444444",
+        matched_uprn: "4444444444",
         update: false,
       ).exactly(1).times
     end

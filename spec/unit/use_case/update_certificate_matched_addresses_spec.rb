@@ -28,7 +28,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
   let(:documents_gateway) do
     documents_gateway = instance_double(Gateway::DocumentsGateway)
     allow(documents_gateway).to receive(:check_id_exists?).and_return(true)
-    allow(documents_gateway).to receive(:set_top_level_attribute)
+    allow(documents_gateway).to receive(:update_matched_uprn)
     documents_gateway
   end
 
@@ -98,11 +98,10 @@ describe UseCase::UpdateCertificateMatchedAddresses do
 
       it "updates the relevant certificates in the document store updating the 'updated_at' value" do
         use_case.execute
-        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
-        expect(documents_gateway).to have_received(:set_top_level_attribute).with(
+        expect(documents_gateway).to have_received(:update_matched_uprn).exactly(3).times
+        expect(documents_gateway).to have_received(:update_matched_uprn).with(
           assessment_id: "0000-0000-0000-0000-0000",
-          top_level_attribute: "matched_uprn",
-          new_value: "4444444444",
+          matched_uprn: "4444444444",
           update: true,
         ).exactly(1).times
       end
@@ -154,7 +153,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
 
     it "does not attempt to update the documents table" do
       use_case.execute
-      expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+      expect(documents_gateway).not_to have_received(:update_matched_uprn)
     end
 
     it "does not attempt to update the search assessments table" do
@@ -209,7 +208,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
 
       it "does not attempt to update the documents table" do
         use_case.execute
-        expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+        expect(documents_gateway).not_to have_received(:update_matched_uprn)
       end
 
       it "does not attempt to update the search assessments table" do
@@ -240,7 +239,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
 
       it "does not attempt to update the documents table" do
         use_case.execute
-        expect(documents_gateway).not_to have_received(:set_top_level_attribute)
+        expect(documents_gateway).not_to have_received(:update_matched_uprn)
       end
 
       it "does not attempt to update the search assessments table" do
@@ -285,7 +284,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
 
       it "updates the relevant certificates in the document store updating the 'updated_at' value" do
         use_case.execute
-        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+        expect(documents_gateway).to have_received(:update_matched_uprn).exactly(3).times
       end
 
       it "does not attempt to update the search assessments table" do
@@ -319,7 +318,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
 
       it "updates the relevant certificates in the document store updating the 'updated_at' value" do
         use_case.execute
-        expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+        expect(documents_gateway).to have_received(:update_matched_uprn).with(assessment_id: anything, matched_uprn: anything, update: true).exactly(3).times
       end
 
       it "does not attempt to update the search assessments table" do
@@ -353,7 +352,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     end
 
     it "sends updates for all three certificates from the recovery list" do
-      expect(documents_gateway).to have_received(:set_top_level_attribute).exactly(3).times
+      expect(documents_gateway).to have_received(:update_matched_uprn).exactly(3).times
       expect(assessment_search_gateway).to have_received(:update_uprn).exactly(3).times
     end
 
