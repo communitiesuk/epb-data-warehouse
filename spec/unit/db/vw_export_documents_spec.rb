@@ -78,7 +78,26 @@ describe "VwExportDocuments" do
     end
 
     it "generates the correct number of tables" do
-      expect(redacted_table_names.length).to eq 14
+      expect(redacted_table_names.length).to eq 15
+    end
+  end
+
+  context "when checking that vw_export_documents exist in DB from 2012 until current year" do
+    let(:current_year) { Time.now.year }
+
+    let(:view_names) do
+      sql = "SELECT table_name
+                 FROM  information_schema.views
+                 WHERE  table_schema NOT IN ('information_schema', 'pg_catalog')
+                 AND table_name LIKE 'vw_export_documents_%'"
+      ActiveRecord::Base.connection.exec_query(sql).rows.flatten
+    end
+
+    it "includes vw_export_documents views for every year from 2012 to current year" do
+      expected = (2012..current_year).map { |year| "vw_export_documents_#{year}" }
+      missing = expected - view_names
+
+      expect(missing).to eq([])
     end
   end
 end
