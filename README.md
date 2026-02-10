@@ -12,7 +12,7 @@ EPBR Data storage application. Takes data stored in EPB-Register-Api database an
 
 ## Creating a local database
 
-Ensure you have Postgres 11 installed. If you are working on a Mac, [this tutorial](https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb) will take you through the process.
+Ensure you have Postgres 14+ installed. If you are working on a Mac, [this tutorial](https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb) will take you through the process.
 
 Be sure that `DATABASE_URL` is set, for example
 ```
