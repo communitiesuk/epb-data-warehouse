@@ -10,41 +10,30 @@ module UseCase
 
     def execute(from_recovery_list: false)
       payload = get_payload(from_recovery_list:)
-      @logger.error "DEBUG payload: '#{payload}'" unless payload.empty?
 
       payload.each do |assessment|
         payload_arr = assessment.split(":")
         assessment_id = payload_arr[0]
         matched_uprn = payload_arr[1]
 
-        @logger.error "DEBUG processing this assessment: '#{assessment}', assessment_id: #{assessment_id}, matched_uprn: '#{matched_uprn}'"
-
         if address_id_valid?(matched_uprn)
           meta_data = @certificate_gateway.fetch_meta_data(assessment_id)
 
           raise "Missing meta_data for assessment with id #{assessment_id}, waiting for longer" if meta_data.nil?
 
-          if should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
-            @logger.error "DEBUG AC report: #{should_exclude?(meta_data:)} , green_deal: #{is_green_deal?(meta_data:)} or cancelled: #{is_cancelled?(meta_data:)} for #{assessment_id} "
-          else
-
+          unless should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
             check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && Gateway::AssessmentSearchGateway::VALID_COUNTRY_IDS.include?(meta_data[:countryId])
 
             if @documents_gateway.check_id_exists?(assessment_id: assessment_id, include_search_table: check_assessment_search)
-              @logger.error "DEBUG querying assessment_id: '#{assessment_id}' about to update documents table"
               @documents_gateway.update_matched_uprn assessment_id:, matched_uprn: matched_uprn, update: true
               if check_assessment_search
-                @logger.error "DEBUG querying assessment_id: '#{assessment_id}' about to update asssessments search table"
                 @assessment_search_gateway.update_uprn assessment_id:, new_value: matched_uprn, override: false
               end
             else
               raise "Assessment with id #{assessment_id} not imported yet, waiting for longer"
             end
           end
-        else
-          @logger.error "DEBUG address id not valid for #{assessment_id} with matched_uprn: '#{matched_uprn}'"
         end
-        @logger.error "DEBUG clearing assessment_id: '#{assessment_id}' from the queue"
         clear_assessment_on_recovery_list payload: assessment
       rescue StandardError => e
         report_to_sentry e if is_on_last_attempt(payload: assessment)
