@@ -7,7 +7,7 @@ describe "Create psql function to export and redact json data from assessment_do
   let(:assessment_id) { "8570-6826-6530-4969-0202" }
 
   let(:document) do
-    sql = "SELECT fn_export_json_document(document) as document FROM assessment_documents WHERE assessment_id='#{assessment_id}'"
+    sql = "SELECT fn_export_json_document(document, matched_uprn) as document FROM assessment_documents WHERE assessment_id='#{assessment_id}'"
     result = ActiveRecord::Base.connection.exec_query(sql)
     JSON.parse(result.first["document"])
   end
@@ -134,6 +134,73 @@ describe "Create psql function to export and redact json data from assessment_do
 
     it "has no energy band" do
       expect(document["current_energy_efficiency_band"]).to be_nil
+    end
+  end
+
+  context "when there's a matched uprn but a valid address_id" do
+    let(:valid_address_id_sample) do
+      sample = json_sample.clone
+      sample
+    end
+
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: valid_address_id_sample)
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: "10000003".to_i)
+    end
+
+    after do
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
+    end
+
+    it "returns Energy Assessor on uprn_source" do
+      expect(document["uprn_source"]).to eq("Energy Assessor")
+    end
+
+    it "returns uprn nil" do
+      expect(document["uprn"]).to eq("1000000001245".to_i)
+    end
+  end
+
+  context "when there's a matched uprn and no valid address_id" do
+    let(:invalid_address_id_sample) do
+      sample = json_sample.merge("assessment_address_id" => "RRN-0000-0000-0000-0000-0000")
+      sample
+    end
+
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: invalid_address_id_sample)
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: "10000003".to_i)
+    end
+
+    after do
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
+    end
+
+    it "returns Address Matched on uprn_source" do
+      expect(document["uprn_source"]).to eq("Address Matched")
+    end
+
+    it "returns address matched uprn" do
+      expect(document["uprn"]).to eq("10000003".to_i)
+    end
+  end
+
+  context "when there's no matched uprn and no valid address_id" do
+    let(:invalid_address_id_sample) do
+      sample = json_sample.merge("assessment_address_id" => "RRN-0000-0000-0000-0000-0000")
+      sample
+    end
+
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: invalid_address_id_sample)
+    end
+
+    it "returns nothing on uprn_source" do
+      expect(document["uprn_source"]).to eq("")
+    end
+
+    it "returns uprn nil" do
+      expect(document["uprn"]).to be_nil
     end
   end
 end
