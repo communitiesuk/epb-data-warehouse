@@ -78,8 +78,12 @@ describe Gateway::DomesticSearchGateway do
   describe "#initialize" do
     let(:csv_fixture) { read_csv_fixture("domestic") }
 
+    let(:expected_columns) do
+      %w[address address1 address2 address3 built_form certificate_number co2_emiss_curr_per_floor_area co2_emissions_current co2_emissions_potential constituency constituency_label construction_age_band country current_energy_efficiency current_energy_rating energy_consumption_current energy_consumption_potential energy_tariff environment_impact_current environment_impact_potential extension_count fixed_lighting_outlets_count flat_storey_count flat_top_storey floor_description floor_energy_eff floor_env_eff floor_height floor_level glazed_area glazed_type heat_loss_corridor heating_cost_current heating_cost_potential hot_water_cost_current hot_water_cost_potential hot_water_energy_eff hot_water_env_eff hotwater_description inspection_date lighting_cost_current lighting_cost_potential lighting_description lighting_energy_eff lighting_env_eff local_authority local_authority_label lodgement_date lodgement_datetime low_energy_fixed_lighting_outlets_count low_energy_lighting main_fuel main_heating_controls mainheat_description mainheat_energy_eff mainheat_env_eff mainheatc_energy_eff mainheatc_env_eff mainheatcont_description mains_gas_flag mechanical_ventilation multi_glaze_proportion number_habitable_rooms number_heated_rooms number_open_fireplaces photo_supply postcode posttown potential_energy_efficiency potential_energy_rating property_type region report_type roof_description roof_energy_eff roof_env_eff secondheat_description sheating_energy_eff sheating_env_eff solar_water_heating_flag tenure total_floor_area transaction_type unheated_corridor_length uprn uprn_source walls_description walls_energy_eff walls_env_eff wind_turbine_count windows_description windows_energy_eff windows_env_eff]
+    end
+
     it "returns the correct columns" do
-      expect(csv_fixture.headers.sort.map(&:downcase) - gateway.columns).to eq []
+      expect(gateway.columns.sort.map(&:downcase)).to eq expected_columns.sort
     end
   end
 
@@ -320,7 +324,8 @@ describe Gateway::DomesticSearchGateway do
           "constituency_label" => "Chelsea and Fulham",
           "constituency" => "E14000629",
           "transaction_type" => "Marketed sale",
-          "property_type" => "House" }
+          "property_type" => "House",
+          "uprn_source" => "Energy Assessor" }
       end
 
       let(:expected_sap_160_rdsap_data) do
@@ -638,6 +643,7 @@ describe Gateway::DomesticSearchGateway do
           "windows_energy_eff" => "Average",
           "windows_env_eff" => "Average",
           "local_authority" => "E09000013",
+          "uprn_source" => nil,
         )
       end
 
