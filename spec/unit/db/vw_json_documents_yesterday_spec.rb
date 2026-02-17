@@ -41,6 +41,10 @@ describe "VwJsonDocumentsYesterday" do
     ActiveRecord::Base.connection.exec_query(sql)
   end
 
+  let(:redacted_document) do
+    result.first["document"]
+  end
+
   before do
     documents_gateway.add_assessment(assessment_id:, document: assessment_data_sample)
     assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_sample, country_id: 1)
@@ -60,10 +64,6 @@ describe "VwJsonDocumentsYesterday" do
       documents_gateway.add_assessment(assessment_id: assessment_id_yesterday, document: assessment_data_sample_from_yesterday)
       assessment_search_gateway.insert_assessment(assessment_id: assessment_id_yesterday, document: assessment_data_sample_from_yesterday, country_id: 1)
       Timecop.return
-    end
-
-    let(:redacted_document) do
-      result.first["document"]
     end
 
     it "returns the expected certificate" do
@@ -86,6 +86,56 @@ describe "VwJsonDocumentsYesterday" do
 
     it "contains the year column" do
       expect(result.first["year"]).to eq 2020
+    end
+  end
+
+  context "when fetching from vw_json_documents_yesterday with address matching data and the assessment_address_id starts with RRN" do
+    let(:assessment_id_yesterday) do
+      "0000-0000-0000-0000-0002"
+    end
+
+    before do
+      Timecop.freeze(Date.yesterday.to_time.change(hour: 12, min: 30)) do
+        assessment_data_sample_from_yesterday = assessment_data_sample.merge({ "rrn" => assessment_id_yesterday, "assessment_address_id" => "RRN-#{assessment_id_yesterday}" })
+        documents_gateway.add_assessment(assessment_id: assessment_id_yesterday, document: assessment_data_sample_from_yesterday)
+        documents_gateway.update_matched_uprn(assessment_id: assessment_id_yesterday, matched_uprn: "200000000001")
+        assessment_search_gateway.insert_assessment(assessment_id: assessment_id_yesterday, document: assessment_data_sample_from_yesterday, country_id: 1)
+      end
+    end
+
+    after do
+      documents_gateway.update_matched_uprn(assessment_id: assessment_id_yesterday, matched_uprn: nil)
+    end
+
+    it "updates the uprn value" do
+      expect(JSON.parse(redacted_document)["uprn"]).to eq "200000000001".to_i
+    end
+
+    it "updates the uprn_source value" do
+      expect(JSON.parse(redacted_document)["uprn_source"]).to eq "Address Matched"
+    end
+  end
+
+  context "when fetching from vw_json_documents_yesterday without a valid matched uprn and the assessment_address_id starts with RRN" do
+    let(:assessment_id_yesterday) do
+      "0000-0000-0000-0000-0002"
+    end
+
+    before do
+      Timecop.freeze(Date.yesterday.to_time.change(hour: 12, min: 30)) do
+        assessment_data_sample_from_yesterday = assessment_data_sample.merge({ "rrn" => assessment_id_yesterday, "assessment_address_id" => "RRN-#{assessment_id_yesterday}" })
+        documents_gateway.add_assessment(assessment_id: assessment_id_yesterday, document: assessment_data_sample_from_yesterday)
+        documents_gateway.update_matched_uprn(assessment_id: assessment_id_yesterday, matched_uprn: nil)
+        assessment_search_gateway.insert_assessment(assessment_id: assessment_id_yesterday, document: assessment_data_sample_from_yesterday, country_id: 1)
+      end
+    end
+
+    it "updates the uprn value" do
+      expect(JSON.parse(redacted_document)["uprn"]).to be_nil
+    end
+
+    it "updates the uprn_source value" do
+      expect(JSON.parse(redacted_document)["uprn_source"]).to eq ""
     end
   end
 end

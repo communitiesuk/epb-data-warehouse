@@ -35,20 +35,24 @@ describe "VwExportDocuments" do
     }
   end
 
+  let(:assessment_data_with_invalid_address_id) do
+    assessment_data_to_redact.merge({ "assessment_address_id" => "RRN-0000-0000-0000-0000-1245" })
+  end
+
+  let(:redacted_row) do
+    sql = "SELECT * FROM vw_export_documents_2020 WHERE certificate_number='#{assessment_id}'"
+    result = ActiveRecord::Base.connection.exec_query(sql)
+    result.first
+  end
+
+  let(:redacted_document) do
+    redacted_row["document"]
+  end
+
   context "when fetching from vw_export_documents_2020" do
     before do
       documents_gateway.add_assessment(assessment_id:, document: assessment_data_to_redact)
       assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_to_redact, country_id: 1)
-    end
-
-    let(:redacted_row) do
-      sql = "SELECT * FROM vw_export_documents_2020 WHERE certificate_number='#{assessment_id}'"
-      result = ActiveRecord::Base.connection.exec_query(sql)
-      result.first
-    end
-
-    let(:redacted_document) do
-      redacted_row["document"]
     end
 
     it "redacts PII from the json document" do
@@ -65,8 +69,47 @@ describe "VwExportDocuments" do
       expect(JSON.parse(redacted_document)["uprn"]).to eq 1245
     end
 
+    it "updates the uprn_source value" do
+      expect(JSON.parse(redacted_document)["uprn_source"]).to eq "Energy Assessor"
+    end
+
     it "contains the year column" do
       expect(redacted_row["year"]).to eq 2020
+    end
+  end
+
+  context "when including matched_uprn and the assessment_address_id starts with RRN" do
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: assessment_data_with_invalid_address_id)
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: "123400000055")
+      assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_with_invalid_address_id, country_id: 1)
+    end
+
+    after do
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
+    end
+
+    it "updates the uprn value with the matched uprn" do
+      expect(JSON.parse(redacted_document)["uprn"]).to eq "123400000055".to_i
+    end
+
+    it "updates the uprn_source value with Address Matched" do
+      expect(JSON.parse(redacted_document)["uprn_source"]).to eq "Address Matched"
+    end
+  end
+
+  context "when there isn't a matched_uprn and the assessment_address_id starts with RRN" do
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: assessment_data_with_invalid_address_id)
+      assessment_search_gateway.insert_assessment(assessment_id:, document: assessment_data_with_invalid_address_id, country_id: 1)
+    end
+
+    it "updates the uprn value to be nil" do
+      expect(JSON.parse(redacted_document)["uprn"]).to be_nil
+    end
+
+    it "updates the uprn_source to be an empty string" do
+      expect(JSON.parse(redacted_document)["uprn_source"]).to eq ""
     end
   end
 

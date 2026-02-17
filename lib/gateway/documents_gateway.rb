@@ -82,7 +82,7 @@ module Gateway
 
     def fetch_by_id(assessment_id:)
       sql = <<-SQL
-        SELECT fn_export_json_document(ad.document) as document
+        SELECT fn_export_json_document(ad.document, ad.matched_uprn) as document
         FROM assessment_documents ad
         WHERE ad.assessment_id = $1
         AND EXISTS (SELECT * FROM assessment_search s WHERE s.assessment_id = ad.assessment_id)

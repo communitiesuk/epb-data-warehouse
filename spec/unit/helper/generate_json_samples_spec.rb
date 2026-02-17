@@ -2,6 +2,7 @@ describe Helper::GenerateJsonSamples do
   describe "#parse_assessment" do
     let(:expected_json) do
       { "uprn" => 12_457,
+        "uprn_source" => "Energy Assessor",
         "roofs" => [{ "description" => "Pitched, 25 mm loft insulation", "energy_efficiency_rating" => 2, "environmental_efficiency_rating" => 2 }, { "description" => "Pitched, 250 mm loft insulation", "energy_efficiency_rating" => 4, "environmental_efficiency_rating" => 4 }],
         "walls" => [{ "description" => "Solid brick, as built, no insulation (assumed)", "energy_efficiency_rating" => 1, "environmental_efficiency_rating" => 1 }, { "description" => "Cavity wall, as built, insulated (assumed)", "energy_efficiency_rating" => 4, "environmental_efficiency_rating" => 4 }],
         "floors" => [{ "description" => "Suspended, no insulation (assumed)", "energy_efficiency_rating" => 0, "environmental_efficiency_rating" => 0 }, { "description" => "Solid, insulated (assumed)", "energy_efficiency_rating" => 0, "environmental_efficiency_rating" => 0 }],

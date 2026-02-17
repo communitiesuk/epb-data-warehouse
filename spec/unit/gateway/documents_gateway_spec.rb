@@ -233,6 +233,7 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
           registration_date: "2020-06-01",
           schema_version_original: "LIG-19.0",
           uprn: 1245,
+          uprn_source: "Energy Assessor",
           calculation_software_version: "4.05r0005",
           current_energy_efficiency_band: "A",
           potential_energy_efficiency_band: "A" }
