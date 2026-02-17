@@ -148,6 +148,7 @@
     }
   ],
   "schema_type": "RdSAP-Schema-21.0.0",
+  "uprn_source": "Energy Assessor",
   "country_code": "ENG",
   "main_heating": [
     {

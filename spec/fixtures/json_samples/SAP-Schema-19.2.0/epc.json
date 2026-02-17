@@ -69,7 +69,7 @@
     "main_heating_details": [
       {
         "has_fghrs": "false",
-        "main_fuel_type": 47,
+        "main_fuel_type": 5,
         "combi_boiler_type": 4,
         "heat_emitter_type": 1,
         "main_heating_code": 192,
@@ -98,10 +98,12 @@
     "sap_community_heating_systems": [
       {
         "sub_network_name": "Test 1",
+        "heat_network_sleeved": 1,
         "community_heating_use": 3,
         "heat_network_existing": "true",
         "heat_network_index_number": 496402,
         "heat_network_assessed_as_new": "true",
+        "heat_network_community_heating": 0,
         "community_heating_distribution_type": 5,
         "community_heating_distribution_loss_factor": 1.26
       }
@@ -109,8 +111,8 @@
     "hot_water_store_heat_loss_source": 2,
     "is_heat_pump_assisted_by_immersion": "false"
   },
-  "sap_version": 10.2,
-  "schema_type": "SAP-Schema-19.1.0",
+  "sap_version": 10.3,
+  "schema_type": "SAP-Schema-19.2.0",
   "uprn_source": "Energy Assessor",
   "country_code": "ENG",
   "main_heating": [
@@ -174,11 +176,7 @@
     "mechanical_vent_duct_insulation_level": 2,
     "is_mechanical_vent_approved_installer_scheme": "true"
   },
-  "sap_data_version": 10.2,
-  "sap_flat_details": {
-    "level": 1,
-    "storeys": 1
-  },
+  "sap_data_version": 10.3,
   "total_floor_area": 165,
   "transaction_type": 1,
   "cold_water_source": 1,
@@ -515,7 +513,7 @@
       "construction_age_band": "A"
     }
   ],
-  "user_interface_name": "BRE SAP interface 10.2",
+  "user_interface_name": "BRE SAP interface 10.3",
   "windows_overshading": 2,
   "heating_cost_current": {
     "value": 365.98,
@@ -584,7 +582,8 @@
     "value": 84.23,
     "currency": "GBP"
   },
-  "schema_version_original": "SAP-Schema-19.1.0",
+  "part_o_cooling_required": 1,
+  "schema_version_original": "SAP-Schema-19.2.0",
   "hot_water_cost_potential": {
     "value": 180.43,
     "currency": "GBP"

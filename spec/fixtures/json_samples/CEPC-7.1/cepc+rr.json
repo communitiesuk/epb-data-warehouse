@@ -14,6 +14,7 @@
   "methodology": "SBEM",
   "report_type": 3,
   "schema_type": "CEPC-7.1",
+  "uprn_source": "Energy Assessor",
   "valid_until": "2027-10-12",
   "asset_rating": 93,
   "language_code": 1,

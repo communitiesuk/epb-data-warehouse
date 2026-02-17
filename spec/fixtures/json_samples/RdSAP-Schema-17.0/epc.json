@@ -93,6 +93,7 @@
   },
   "sap_version": 9.92,
   "schema_type": "RdSAP-Schema-17.0",
+  "uprn_source": "Energy Assessor",
   "country_code": "EAW",
   "main_heating": [
     {

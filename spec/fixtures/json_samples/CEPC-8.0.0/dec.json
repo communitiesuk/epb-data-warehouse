@@ -8,6 +8,7 @@
   "reason_type": 6,
   "report_type": 1,
   "schema_type": "CEPC-8.0.0",
+  "uprn_source": "Energy Assessor",
   "valid_until": "2026-05-04",
   "language_code": 1,
   "output_engine": "MWW-91.1.1",

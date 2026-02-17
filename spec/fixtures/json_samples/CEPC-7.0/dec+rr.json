@@ -9,6 +9,7 @@
   "reason_type": 2,
   "report_type": 1,
   "schema_type": "CEPC-7.0",
+  "uprn_source": "Energy Assessor",
   "valid_until": "2017-04-24",
   "language_code": 1,
   "output_engine": "ORGen v3.6.2",
