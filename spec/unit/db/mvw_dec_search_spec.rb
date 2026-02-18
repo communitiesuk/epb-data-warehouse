@@ -7,6 +7,7 @@ describe "DEC Report" do
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_dec_search")
   end
+
   let(:expected_dec_7_data) do
     { "certificate_number" => "0000-0000-0000-0000-0001",
       "constituency" => "E14000629",
@@ -60,7 +61,8 @@ describe "DEC Report" do
       "yr2_electricity_co2" => "333",
       "yr2_heating_co2" => "238",
       "yr2_operational_rating" => "113",
-      "yr2_renewables_co2" => "0" }
+      "yr2_renewables_co2" => "0",
+      "uprn_source" => nil }
   end
   let(:expected_dec_7_1_data) do
     expected_dec_7_data.merge(
@@ -146,6 +148,8 @@ describe "DEC Report" do
       "yr2_heating_co2" => "10",
       "yr2_operational_rating" => "40",
       "yr2_renewables_co2" => "2",
+      "uprn_source" => "Energy Assessor",
+      "uprn" => 1,
     )
   end
 
@@ -168,7 +172,7 @@ describe "DEC Report" do
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0005"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", add_to_assessment_search: true, different_fields: {
-      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006"
+      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006", "assessment_address_id" => "UPRN-00000000001"
     })
 
     import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
@@ -197,11 +201,25 @@ describe "DEC Report" do
   end
 
   context "when checking the columns of the materialized view" do
-    let(:csv_fixture) { read_csv_fixture("dec") }
+    let(:expected_columns) do
+      %w[ac_inspection_commissioned address address1 address2 address3 aircon_kw_rating aircon_present annual_electrical_fuel_usage annual_thermal_fuel_usage building_category building_environment certificate_number constituency constituency_label country current_operational_rating electric_co2 estimated_aircon_kw_rating heating_co2 inspection_date local_authority local_authority_label lodgement_date lodgement_datetime main_benchmark main_heating_fuel nominated_date occupancy_level operational_rating_band or_assessment_end_date other_fuel postcode posttown property_type renewable_sources renewables_co2 renewables_electrical renewables_fuel_thermal report_type special_energy_uses total_floor_area typical_electrical_fuel_usage typical_thermal_fuel_usage typical_thermal_use uprn yr1_electricity_co2 yr1_heating_co2 yr1_operational_rating yr1_renewables_co2 yr2_electricity_co2 yr2_heating_co2 yr2_operational_rating yr2_renewables_co2 uprn_source]
+    end
+
+    let(:columns) do
+      sql = <<-SQL
+        SELECT a.attname
+        FROM pg_attribute a
+          JOIN pg_class t on a.attrelid = t.oid
+        WHERE a.attnum > 0
+          AND NOT a.attisdropped
+          AND t.relname = 'mvw_dec_search'
+        ORDER BY a.attname
+      SQL
+      ActiveRecord::Base.connection.exec_query(sql).map { |i| i["attname"] }
+    end
 
     it "returns the correct columns" do
-      expect(csv_fixture.headers.sort.map(&:downcase) - expected_dec_7_data.keys).to eq []
-      expect(expected_dec_7_data.keys - csv_fixture.headers.sort.map(&:downcase)).to eq []
+      expect(columns.sort.map(&:downcase)).to eq expected_columns.sort.map(&:downcase)
     end
   end
 end
