@@ -27,6 +27,7 @@ describe "Create psql function to export and redact json data from assessment_do
       "tenure" => 1,
       "transaction_type" => 1,
       "property_type" => 0,
+      "matched_uprn" => 12_345,
       "scheme_assessor_id" => "EES/008538",
       "region_code" => 17,
       "country_code" => "EAW",
