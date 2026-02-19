@@ -36,4 +36,21 @@ shared_context "when exporting data" do
       end
     end
   end
+
+  def mview_columns(mvw_name)
+    sql = <<-SQL
+        SELECT a.attname
+        FROM pg_attribute a
+          JOIN pg_class t on a.attrelid = t.oid
+        WHERE a.attnum > 0
+          AND NOT a.attisdropped
+          AND t.relname = '#{mvw_name}'
+    SQL
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result["attname"] }
+  end
+
+  def filter_mview(query_result:, date_start:, date_end:)
+    query_result.select { |i| i["lodgement_date"] >= date_start && i["lodgement_date"] <= date_end }
+  end
 end

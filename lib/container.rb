@@ -197,14 +197,6 @@ class Container
     instance_variables.each { |var| instance_variable_set(var, nil) }
   end
 
-  def self.domestic_search_gateway
-    @domestic_search_gateway ||= Gateway::DomesticSearchGateway.new
-  end
-
-  def self.domestic_search_use_case
-    @domestic_search_use_case ||= UseCase::DomesticSearch.new(search_gateway: domestic_search_gateway, ons_gateway: ons_gateway)
-  end
-
   def self.count_certificates_use_case
     @count_certificates_use_case ||= UseCase::CountCertificates.new(assessment_search_gateway: assessment_search_gateway)
   end

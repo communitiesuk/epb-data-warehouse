@@ -205,21 +205,8 @@ describe "DEC Report" do
       %w[ac_inspection_commissioned address address1 address2 address3 aircon_kw_rating aircon_present annual_electrical_fuel_usage annual_thermal_fuel_usage building_category building_environment certificate_number constituency constituency_label country current_operational_rating electric_co2 estimated_aircon_kw_rating heating_co2 inspection_date local_authority local_authority_label lodgement_date lodgement_datetime main_benchmark main_heating_fuel nominated_date occupancy_level operational_rating_band or_assessment_end_date other_fuel postcode posttown property_type renewable_sources renewables_co2 renewables_electrical renewables_fuel_thermal report_type special_energy_uses total_floor_area typical_electrical_fuel_usage typical_thermal_fuel_usage typical_thermal_use uprn yr1_electricity_co2 yr1_heating_co2 yr1_operational_rating yr1_renewables_co2 yr2_electricity_co2 yr2_heating_co2 yr2_operational_rating yr2_renewables_co2 uprn_source]
     end
 
-    let(:columns) do
-      sql = <<-SQL
-        SELECT a.attname
-        FROM pg_attribute a
-          JOIN pg_class t on a.attrelid = t.oid
-        WHERE a.attnum > 0
-          AND NOT a.attisdropped
-          AND t.relname = 'mvw_dec_search'
-        ORDER BY a.attname
-      SQL
-      ActiveRecord::Base.connection.exec_query(sql).map { |i| i["attname"] }
-    end
-
     it "returns the correct columns" do
-      expect(columns.sort.map(&:downcase)).to eq expected_columns.sort.map(&:downcase)
+      expect(mview_columns("mvw_dec_search").sort.map(&:downcase)).to eq expected_columns.sort.map(&:downcase)
     end
   end
 end
