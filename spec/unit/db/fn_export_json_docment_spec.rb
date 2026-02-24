@@ -137,7 +137,7 @@ describe "Create psql function to export and redact json data from assessment_do
     end
   end
 
-  context "when there's a matched uprn but a valid address_id" do
+  context "when there's a matched UPRN and a valid address_id" do
     let(:valid_address_id_sample) do
       sample = json_sample.clone
       sample
@@ -145,10 +145,6 @@ describe "Create psql function to export and redact json data from assessment_do
 
     before do
       documents_gateway.add_assessment(assessment_id:, document: valid_address_id_sample)
-      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: "10000003".to_i)
-    end
-
-    after do
       documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
     end
 
@@ -161,7 +157,7 @@ describe "Create psql function to export and redact json data from assessment_do
     end
   end
 
-  context "when there's a matched uprn and no valid address_id" do
+  context "when there's a matched UPRN and the address_id is an RRN" do
     let(:invalid_address_id_sample) do
       sample = json_sample.merge("assessment_address_id" => "RRN-0000-0000-0000-0000-0000")
       sample
@@ -185,7 +181,7 @@ describe "Create psql function to export and redact json data from assessment_do
     end
   end
 
-  context "when there's no matched uprn and no valid address_id" do
+  context "when there's no matched UPRN and the address_id is an RRN" do
     let(:invalid_address_id_sample) do
       sample = json_sample.merge("assessment_address_id" => "RRN-0000-0000-0000-0000-0000")
       sample
@@ -196,6 +192,27 @@ describe "Create psql function to export and redact json data from assessment_do
     end
 
     it "returns nothing on uprn_source" do
+      expect(document["uprn_source"]).to eq("")
+    end
+
+    it "returns uprn nil" do
+      expect(document["uprn"]).to be_nil
+    end
+  end
+
+  context "when there's an RRN address_id and no matched URPN" do
+    let(:valid_address_id_sample) do
+      sample = json_sample.clone
+      sample["assessment_address_id"] = "RRN-0000-0000-0000-0000-1111"
+      sample
+    end
+
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: valid_address_id_sample)
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
+    end
+
+    it "returns Energy Assessor on uprn_source" do
       expect(document["uprn_source"]).to eq("")
     end
 
