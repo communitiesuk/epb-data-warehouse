@@ -298,7 +298,7 @@ DEPENDENCIES
   pg (~> 1.5)
   puma (~> 7.1)
   rack-test (~> 2.2.0)
-  rackup (~> 2.1)
+  rackup (~> 2.3)
   rake (~> 13.2)
   redis (~> 5.3)
   rexml (~> 3.3)
