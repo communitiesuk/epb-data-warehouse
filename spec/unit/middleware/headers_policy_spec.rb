@@ -15,9 +15,14 @@ describe Middleware::HeadersPolicy do
       expect(headers["Strict-Transport-Security"]).to eq "max-age=300; includeSubDomains; preload"
     end
 
+    it "includes the Cache-Control header" do
+      _, headers, = middleware.call(nil)
+      expect(headers["Cache-Control"]).to eq "no-store"
+    end
+
     it "the header do not include the deprecated keys 'x-frame-options' and 'x-xss-protection'" do
       _, headers, = middleware.call(nil)
-      header_keys = %w[content-type strict-transport-security]
+      header_keys = %w[content-type strict-transport-security cache-control]
       expect(headers.keys).to eq header_keys
     end
   end
