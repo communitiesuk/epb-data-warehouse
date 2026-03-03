@@ -221,4 +221,50 @@ describe "Create psql function to export and redact json data from assessment_do
       expect(document["uprn"]).to be_nil
     end
   end
+
+  context "when there's an LPRN address_id and no matched URPN" do
+    let(:valid_address_id_sample) do
+      sample = json_sample.clone
+      sample["assessment_address_id"] = "LPRN-000000000012"
+      sample
+    end
+
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: valid_address_id_sample)
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
+    end
+
+    it "returns Energy Assessor on uprn_source" do
+      expect(document["uprn_source"]).to eq("")
+    end
+
+    it "returns uprn nil" do
+      expect(document["uprn"]).to be_nil
+    end
+  end
+
+  context "when there's a matched UPRN and the address_id is an LPRN" do
+    let(:invalid_address_id_sample) do
+      sample = json_sample.clone
+      sample["assessment_address_id"] = "LPRN-000000000013"
+      sample
+    end
+
+    before do
+      documents_gateway.add_assessment(assessment_id:, document: invalid_address_id_sample)
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: "10000004".to_i)
+    end
+
+    after do
+      documents_gateway.update_matched_uprn(assessment_id:, matched_uprn: nil)
+    end
+
+    it "returns Address Matched on uprn_source" do
+      expect(document["uprn_source"]).to eq("Address Matched")
+    end
+
+    it "returns address matched uprn" do
+      expect(document["uprn"]).to eq("10000004".to_i)
+    end
+  end
 end
