@@ -16,72 +16,72 @@
   <Energy-Assessment>
     <Property-Summary>
       <Wall>
-        <Description>Solid brick, as built, no insulation (assumed)</Description>
+        <Description language="1">Solid brick, as built, no insulation (assumed)</Description>
         <Energy-Efficiency-Rating>1</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
       </Wall>
       <Wall>
-        <Description>Cavity wall, as built, insulated (assumed)</Description>
+        <Description language="1">Cavity wall, as built, insulated (assumed)</Description>
         <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Wall>
       <Roof>
-        <Description>Pitched, 25 mm loft insulation</Description>
+        <Description language="1">Pitched, 25 mm loft insulation</Description>
         <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
       </Roof>
       <Roof>
-        <Description>Pitched, 250 mm loft insulation</Description>
+        <Description language="1">Pitched, 250 mm loft insulation</Description>
         <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Roof>
       <Floor>
-        <Description>Suspended, no insulation (assumed)</Description>
+        <Description language="1">Suspended, no insulation (assumed)</Description>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Floor>
       <Floor>
-        <Description>Solid, insulated (assumed)</Description>
+        <Description language="1">Solid, insulated (assumed)</Description>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Floor>
       <Window>
-        <Description>Fully double glazed</Description>
+        <Description language="1">Fully double glazed</Description>
         <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Window>
       <Main-Heating>
-        <Description>Boiler and radiators, anthracite</Description>
+        <Description language="1">Boiler and radiators, anthracite</Description>
         <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
       </Main-Heating>
       <Main-Heating>
-        <Description>Boiler and radiators, mains gas</Description>
+        <Description language="1">Boiler and radiators, mains gas</Description>
         <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Main-Heating>
       <Main-Heating-Controls>
-        <Description>Programmer, room thermostat and TRVs</Description>
+        <Description language="1">Programmer, room thermostat and TRVs</Description>
         <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Main-Heating-Controls>
       <Main-Heating-Controls>
-        <Description>Time and temperature zone control</Description>
+        <Description language="1">Time and temperature zone control</Description>
         <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
       </Main-Heating-Controls>
       <Hot-Water>
-        <Description>From main system</Description>
+        <Description language="1">From main system</Description>
         <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Hot-Water>
       <Lighting>
-        <Description>Low energy lighting in 50% of fixed outlets</Description>
+        <Description language="1">Low energy lighting in 50% of fixed outlets</Description>
         <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Lighting>
       <Secondary-Heating>
-        <Description>Room heaters, electric</Description>
+        <Description language="1">Room heaters, electric</Description>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Secondary-Heating>

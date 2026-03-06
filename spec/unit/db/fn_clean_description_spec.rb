@@ -20,7 +20,6 @@ describe "When testing PSL function fn_clean_descriptions" do
       'Average thermal transmittance 0.15 W/m{"language" => "1", "value" => "\u00B2K"}'
     end
 
-
     let(:stripped_description) do
       sql = "SELECT fn_clean_description('#{desc}') as desc"
       result = ActiveRecord::Base.connection.exec_query(sql)
