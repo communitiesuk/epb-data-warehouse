@@ -2,36 +2,54 @@
   "uprn": 12457,
   "roofs": [
     {
-      "description": "Pitched, 25 mm loft insulation",
+      "description": {
+        "value": "Pitched, 25 mm loft insulation",
+        "language": "1"
+      },
       "energy_efficiency_rating": 2,
       "environmental_efficiency_rating": 2
     },
     {
-      "description": "Pitched, 250 mm loft insulation",
+      "description": {
+        "value": "Pitched, 250 mm loft insulation",
+        "language": "1"
+      },
       "energy_efficiency_rating": 4,
       "environmental_efficiency_rating": 4
     }
   ],
   "walls": [
     {
-      "description": "Solid brick, as built, no insulation (assumed)",
+      "description": {
+        "value": "Solid brick, as built, no insulation (assumed)",
+        "language": "1"
+      },
       "energy_efficiency_rating": 1,
       "environmental_efficiency_rating": 1
     },
     {
-      "description": "Cavity wall, as built, insulated (assumed)",
+      "description": {
+        "value": "Cavity wall, as built, insulated (assumed)",
+        "language": "1"
+      },
       "energy_efficiency_rating": 4,
       "environmental_efficiency_rating": 4
     }
   ],
   "floors": [
     {
-      "description": "Suspended, no insulation (assumed)",
+      "description": {
+        "value": "Suspended, no insulation (assumed)",
+        "language": "1"
+      },
       "energy_efficiency_rating": 0,
       "environmental_efficiency_rating": 0
     },
     {
-      "description": "Solid, insulated (assumed)",
+      "description": {
+        "value": "Solid, insulated (assumed)",
+        "language": "1"
+      },
       "energy_efficiency_rating": 0,
       "environmental_efficiency_rating": 0
     }
@@ -39,7 +57,10 @@
   "status": "entered",
   "tenure": 1,
   "window": {
-    "description": "Fully double glazed",
+    "description": {
+      "value": "Fully double glazed",
+      "language": "1"
+    },
     "energy_efficiency_rating": 3,
     "environmental_efficiency_rating": 3
   },
@@ -52,13 +73,19 @@
     ]
   },
   "lighting": {
-    "description": "Low energy lighting in 50% of fixed outlets",
+    "description": {
+      "value": "Low energy lighting in 50% of fixed outlets",
+      "language": "1"
+    },
     "energy_efficiency_rating": 4,
     "environmental_efficiency_rating": 4
   },
   "postcode": "A0 0AA",
   "hot_water": {
-    "description": "From main system",
+    "description": {
+      "value": "From main system",
+      "language": "1"
+    },
     "energy_efficiency_rating": 4,
     "environmental_efficiency_rating": 4
   },
@@ -152,12 +179,18 @@
   "country_code": "ENG",
   "main_heating": [
     {
-      "description": "Boiler and radiators, anthracite",
+      "description": {
+        "value": "Boiler and radiators, anthracite",
+        "language": "1"
+      },
       "energy_efficiency_rating": 3,
       "environmental_efficiency_rating": 1
     },
     {
-      "description": "Boiler and radiators, mains gas",
+      "description": {
+        "value": "Boiler and radiators, mains gas",
+        "language": "1"
+      },
       "energy_efficiency_rating": 4,
       "environmental_efficiency_rating": 4
     }
@@ -212,7 +245,10 @@
     "electricity_smart_meter_present": "true"
   },
   "secondary_heating": {
-    "description": "Room heaters, electric",
+    "description": {
+      "value": "Room heaters, electric",
+      "language": "1"
+    },
     "energy_efficiency_rating": 0,
     "environmental_efficiency_rating": 0
   },
@@ -305,12 +341,18 @@
   "lighting_cost_current": 123.45,
   "main_heating_controls": [
     {
-      "description": "Programmer, room thermostat and TRVs",
+      "description": {
+        "value": "Programmer, room thermostat and TRVs",
+        "language": "1"
+      },
       "energy_efficiency_rating": 4,
       "environmental_efficiency_rating": 4
     },
     {
-      "description": "Time and temperature zone control",
+      "description": {
+        "value": "Time and temperature zone control",
+        "language": "1"
+      },
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
