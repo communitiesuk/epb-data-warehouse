@@ -188,7 +188,7 @@ describe Gateway::AssessmentLookupsGateway do
     end
 
     it "returns the expected columns" do
-      expect(results.first.keys).to eq %w[code key value schema_version]
+      expect(results.first.keys).to eq %w[code key value schema_version assessment_type]
     end
 
     it "returns the distinct look up codes" do
