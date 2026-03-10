@@ -75,11 +75,11 @@ module Gateway
 
     def fetch_lookups_values(name:, lookup_key: nil, schema_version: nil)
       sql = <<-SQL
-      SELECT lookup_key as key , lookup_value as value, schema_version
+      SELECT lookup_key as key , lookup_value as value, schema_version, aal.type_of_assessment as assessment_type
       FROM assessment_attribute_lookups aal
       INNER JOIN assessment_lookups al on aal.lookup_id = al.id
       JOIN assessment_attributes aa on aal.attribute_id = aa.attribute_id
-     WHERE  attribute_name = $1
+      WHERE  attribute_name = $1
       SQL
 
       bindings = [

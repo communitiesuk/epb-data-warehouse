@@ -1603,8 +1603,10 @@ components:
           example: "Detached"
         schemaVersion:
           type: string
-          example: "RdSAP-Schema-17.0"
-
+          example: "RdSAP-Schema-21.0.0"
+        assessmentType:
+          type: string
+          example: "RdSAP"
 
   links: {}
   callbacks: {}

@@ -4,7 +4,7 @@ describe Gateway::AssessmentLookupsGateway do
   subject(:gateway) { described_class.new }
 
   before(:all) do
-    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0 SAP-Schema-19.0.0 SAP-Schema-15.0 RdSAP-Schema-NI-20.0.0])
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 SAP-Schema-19.0.0 SAP-Schema-19.0.0])
   end
 
   include_context "when saving enum data to lookup tables"
@@ -94,19 +94,19 @@ describe Gateway::AssessmentLookupsGateway do
 
   describe "#fetch_lookups_values" do
     let(:expected) do
-      [{ "key" => "1", "value" => "Detached", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1" },
-       { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0" },
-       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0" },
-       { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
-       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
-       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
-       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0" }]
+      [{ "key" => "1", "value" => "Detached", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+       { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
+       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
+       { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+       { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+       { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+       { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0",  "assessment_type" => "SAP" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0",  "assessment_type" => "SAP" }]
     end
 
     context "when filtering by name" do
@@ -147,7 +147,7 @@ describe Gateway::AssessmentLookupsGateway do
       end
 
       it "returns the value for a house" do
-        expect(results).to eq [{ "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1" }]
+        expect(results).to eq [{ "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" }]
       end
     end
 

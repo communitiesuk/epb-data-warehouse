@@ -4,37 +4,37 @@ describe UseCase::FetchLookupValues do
   end
 
   let(:data) do
-    [{ "key" => "1", "value" => "Detached", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "2", "value" => "Semi-Detached", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1" },
-     { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0" },
-     { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0" },
-     { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
-     { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
-     { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0" },
-     { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0" }]
+    [{ "key" => "1", "value" => "Detached", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "2", "value" => "Semi-Detached", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+     { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+     { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+     { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+     { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+     { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+     { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" }]
   end
 
   let(:expected) do
     [{ key: "1",
-       values: [{ value: "Detached", schema_version: "RdSAP-Schema-21.0.1" },
-                { value: "Detached", schema_version: "SAP-Schema-19.0.0" }] },
+       values: [{ value: "Detached", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" },
+                { value: "Detached", schema_version: "SAP-Schema-19.0.0", assessment_type: "SAP" }] },
      { key: "2",
-       values: [{ value: "Semi-Detached", schema_version: "RdSAP-Schema-21.0.1" },
-                { value: "Semi-Detached", schema_version: "SAP-Schema-19.0.0" }] },
+       values: [{ value: "Semi-Detached", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" },
+                { value: "Semi-Detached", schema_version: "SAP-Schema-19.0.0", assessment_type: "SAP" }] },
      { key: "3",
-       values: [{ value: "End-Terrace", schema_version: "RdSAP-Schema-21.0.1" },
-                { value: "End-Terrace", schema_version: "SAP-Schema-19.0.0" }] },
+       values: [{ value: "End-Terrace", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" },
+                { value: "End-Terrace", schema_version: "SAP-Schema-19.0.0", assessment_type: "SAP" }] },
      { key: "4",
-       values: [{ value: "Mid-Terrace", schema_version: "RdSAP-Schema-21.0.1" },
-                { value: "Mid-Terrace", schema_version: "SAP-Schema-19.0.0" }] },
-     { key: "5", values: [{ value: "Enclosed End-Terrace", schema_version: "RdSAP-Schema-21.0.1" }, { value: "Enclosed End-Terrace", schema_version: "SAP-Schema-19.0.0" }] },
-     { key: "6", values: [{ value: "Enclosed Mid-Terrace", schema_version: "RdSAP-Schema-21.0.1" }, { value: "Enclosed Mid-Terrace", schema_version: "SAP-Schema-19.0.0" }] },
-     { key: "NR", values: [{ value: "Not Recorded", schema_version: "RdSAP-Schema-21.0.1" }] }]
+       values: [{ value: "Mid-Terrace", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" },
+                { value: "Mid-Terrace", schema_version: "SAP-Schema-19.0.0", assessment_type: "SAP" }] },
+     { key: "5", values: [{ value: "Enclosed End-Terrace", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" }, { value: "Enclosed End-Terrace", schema_version: "SAP-Schema-19.0.0", assessment_type: "SAP" }] },
+     { key: "6", values: [{ value: "Enclosed Mid-Terrace", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" }, { value: "Enclosed Mid-Terrace", schema_version: "SAP-Schema-19.0.0", assessment_type: "SAP" }] },
+     { key: "NR", values: [{ value: "Not Recorded", schema_version: "RdSAP-Schema-21.0.1", assessment_type: "RdSAP" }] }]
   end
 
   let(:gateway) do

@@ -11,7 +11,7 @@ module Domain
   private
 
     def get_values(key)
-      keys_to_extract = %i[value schema_version]
+      keys_to_extract = %i[value schema_version assessment_type]
       @data.select { |row| row[:key] == key }.map { |i| i.select { |key, _| keys_to_extract.include? key } }
     end
   end

@@ -41,14 +41,16 @@ describe "CodesController" do
 
     context "when the response is a success" do
       let(:data)  do
-        [{ "key" => "1", "values" => ["value" => "test", "schema_version" => "RdSAP-21.0.0"] }, { "key" => "2", "values" => ["value" => "something", "schema_version" => "CEPC-8.0.0"] }]
+        [{ "key" => "1", "values" => ["value" => "test", "schema_version" => "RdSAP-21.0.0", "assessment_type" => "RdSAP"] },
+         { "key" => "2", "values" => ["value" => "something", "schema_version" => "CEPC-8.0.0", "assessment_type" => "CEPC"] }]
       end
       let(:response) do
         get "/api/codes/info?code=built_form"
       end
 
       let(:response_data) do
-        [{ "key" => "1", "values" => ["value" => "test", "schemaVersion" => "RdSAP-21.0.0"] }, { "key" => "2", "values" => ["value" => "something", "schemaVersion" => "CEPC-8.0.0"] }]
+        [{ "key" => "1", "values" => ["value" => "test", "schemaVersion" => "RdSAP-21.0.0", "assessmentType" => "RdSAP"] },
+         { "key" => "2", "values" => ["value" => "something", "schemaVersion" => "CEPC-8.0.0", "assessmentType" => "CEPC"] }]
       end
 
       before do
