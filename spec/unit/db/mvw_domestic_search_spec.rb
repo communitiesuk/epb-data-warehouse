@@ -97,6 +97,11 @@ describe "Domestic Materialized View" do
     expect(date_filtered_results[2]["certificate_number"]).to eq "0000-0000-0000-0000-0002"
   end
 
+  it "the lodgement date is in the correct format" do
+    expect(date_filtered_results[1]["lodgement_date"].class).to eq String
+    expect(date_filtered_results[0]["lodgement_date"].to_s).to eq "2022-05-09"
+  end
+
   it "translates enum values into strings using the user defined function" do
     expect(date_filtered_results[0]["certificate_number"]).to eq "0000-0000-0000-0000-0000"
     expect(date_filtered_results[0]["transaction_type"]).to eq "Marketed sale"
@@ -309,7 +314,7 @@ describe "Domestic Materialized View" do
         "lighting_description" => "Low energy lighting in 67% of fixed outlets",
         "lighting_energy_eff" => "Good",
         "lighting_env_eff" => "Good",
-        "lodgement_date" => "2020-04-05T12:00:00.000+00:00",
+        "lodgement_date" => "2020-04-05",
         "low_energy_fixed_lighting_outlets_count" => "10",
         "low_energy_lighting" => "67",
         "main_fuel" => nil,
@@ -377,7 +382,7 @@ describe "Domestic Materialized View" do
         "lighting_description" => "Low energy lighting in 57% of fixed outlets",
         "lighting_energy_eff" => "Good",
         "lighting_env_eff" => "Good",
-        "lodgement_date" => "2020-04-05T12:00:00.000+00:00",
+        "lodgement_date" => "2020-04-05",
         "low_energy_fixed_lighting_outlets_count" => "4",
         "low_energy_lighting" => "57",
         "main_fuel" => "Gas: mains gas",
@@ -557,7 +562,7 @@ describe "Domestic Materialized View" do
         "lighting_description" => "Low energy lighting in 50% of fixed outlets",
         "lighting_energy_eff" => "Good",
         "lighting_env_eff" => "Good",
-        "lodgement_date" => "2020-05-06T23:59:59.000+00:00",
+        "lodgement_date" => "2020-05-06",
         "low_energy_lighting" => "100",
         "low_energy_fixed_lighting_outlets_count" => "16",
         "main_fuel" => "mains gas (not community)",

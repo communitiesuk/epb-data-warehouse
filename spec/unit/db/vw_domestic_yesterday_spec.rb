@@ -26,6 +26,9 @@ describe "Domestic Report Yesterday" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
       "postcode": "SW1A 2AA", "country_id": 1
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+      "postcode": "SW1A 2AA", "country_id": 1
+    })
   end
 
   context "when calling vw_domestic_yesterday" do
@@ -49,8 +52,10 @@ describe "Domestic Report Yesterday" do
       expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0006")
     end
 
-    it "includes rows updated yesterday" do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET updated_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0008'", "SQL")
+    it "includes the rows updated yesterday stored in the audit logs" do
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0008", event_type: "address_id_updated", timestamp: yesterday)
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0009", event_type: "address_id_updated", timestamp: Date.today)
+
       expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0006 0000-0000-0000-0000-0008]
     end
   end
