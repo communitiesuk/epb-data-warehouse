@@ -13,6 +13,7 @@ phases:
       - 'cat release.json | jq -r ''.zipball_url'' | xargs -t curl -L -o swagger-ui.zip && unzip -q swagger-ui.zip && cp -R $(ls -d sw*/|head -n 1)/dist ./dist && rm -rf ./sw*'
       - 'if [ ! -d "./dist" ]; then echo "Error: ./swagger-ui/dist not found"; exit 1; fi'
       - 'sed -i ''s+https://petstore.swagger.io/v2/swagger.json+https://raw.githubusercontent.com/communitiesuk/epb-data-warehouse/main/api/api.yml+g'' "dist/swagger-initializer.js"'
+      - 'sed -i ''s+url:+supportedSubmitMethods: [],\n    url:+g'' "dist/swagger-initializer.js"'
       - 'cat release.json | jq -r ''.published_at'' | xargs -I ISO8601 date -d ''ISO8601'' +"%Y%m%d%H%M.%S" | xargs -I % find dist -type f -name "*" -exec touch -a -m -t % {} +'
       - cd ..
   post_build:
