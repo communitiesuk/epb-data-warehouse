@@ -9,12 +9,8 @@ info:
   version: 0.0.1
 
 servers:
-  - url: 'https://api.get-energy-performance-data.epb-integration.communities.gov.uk'
-    description: Integration Service
-  - url: 'https://api.get-energy-performance-data.epb-staging.communities.gov.uk'
-    description: Staging Service
   - url: 'https://api.get-energy-performance-data.communities.gov.uk'
-    description: Production/Live Service
+    description: Base URL for the Energy Performance of Buildings Data API
 
 tags:
   - name: Domestic
