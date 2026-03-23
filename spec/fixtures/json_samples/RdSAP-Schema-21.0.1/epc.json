@@ -212,7 +212,10 @@
     "storey_count": 3,
     "flat_location": 1,
     "heat_loss_corridor": 2,
-    "unheated_corridor_length": 10
+    "unheated_corridor_length": {
+      "value": 10,
+      "quantity": "metres"
+    }
   },
   "total_floor_area": 55,
   "transaction_type": 16,

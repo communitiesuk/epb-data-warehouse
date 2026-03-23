@@ -125,7 +125,9 @@ RSpec.describe "the parser and the rdsap configuration" do
                          "level" => 1,
                          "top_storey" => "N",
                          "heat_loss_corridor" => 2,
-                         "unheated_corridor_length" => 10 },
+                         "unheated_corridor_length" =>
+                           { "value" => 10,
+                             "quantity" => "metres" } },
                       "sap_building_parts" =>
                        [{ "building_part_number" => 1,
                           "identifier" => "Main Dwelling",

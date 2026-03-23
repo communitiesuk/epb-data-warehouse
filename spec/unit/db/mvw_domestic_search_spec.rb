@@ -632,6 +632,7 @@ describe "Domestic Materialized View" do
         "number_open_fireplaces" => "1",
         "photo_supply" => "0",
         "transaction_type" => "Grant scheme",
+        "unheated_corridor_length" => "10",
         "postcode" => "SW1A 2AA",
         "constituency" => "E14001172",
         "constituency_label" => "Cities of London and Westminster",
