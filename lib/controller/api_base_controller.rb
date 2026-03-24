@@ -60,8 +60,8 @@ module Controller
       execute_params = {
         date_start: params[:date_start],
         date_end: params[:date_end],
-        council: Helper::SearchParams.title_case(params[:council]),
-        constituency: Helper::SearchParams.title_case(params[:constituency]),
+        council: params[:council],
+        constituency: params[:constituency],
         postcode: params[:postcode],
         uprn: params[:uprn],
         eff_rating: Helper::SearchParams.format_band(params[:efficiency_rating]),
@@ -71,7 +71,7 @@ module Controller
         row_limit: params[:page_size],
       }
 
-      Helper::SearchParams.validate(**execute_params)
+      execute_params = Helper::SearchParams.validate(**execute_params)
       pagination_use_case = Container.get_pagination_use_case
       pagination_use_case.row_limit = params[:page_size]
       pagination_hash = pagination_use_case.execute(**execute_params)

@@ -23,28 +23,38 @@ module Helper
       end
 
       unless this_args[:council].nil?
-        councils = Container.ons_gateway.councils.map { |c| c["name"] }
-        this_args[:council].each do |council|
-          raise Errors::CouncilNotFound, "provide valid council name(s)" unless councils.include?(council)
+        council = this_args[:council].clone
+        lower_councils = Container.ons_gateway.councils.map { |c| c[:lower_name] }
+        begin
+          validate_name(ons_data_lower: lower_councils, arg: council)
+          this_args[:council] = title_case(council, Container.ons_gateway.councils)
+        rescue Errors::InvalidName
+          raise Errors::CouncilNotFound, "provide valid council name(s)"
         end
       end
 
       unless this_args[:constituency].nil?
-        constituencies = Container.ons_gateway.constituencies.map { |c| c["name"] }
-        this_args[:constituency].each do |constituency|
-          raise Errors::ConstituencyNotFound, "provide valid constituency name(s)" unless constituencies.include?(constituency)
+        constituency = this_args[:constituency].clone
+        lower_constituencies = Container.ons_gateway.constituencies.map { |c| c[:lower_name] }
+        begin
+          validate_name(ons_data_lower: lower_constituencies, arg: constituency)
+          this_args[:constituency] = title_case(constituency, Container.ons_gateway.constituencies)
+        rescue Errors::InvalidName
+          raise Errors::ConstituencyNotFound, "provide valid constituency name(s)"
         end
       end
 
       raise Errors::OutOfPageSizeRangeError if this_args[:row_limit] < 1 || this_args[:row_limit] > 5000
+
+      this_args
     end
 
-    def self.title_case(input)
+    def self.title_case(input, data)
       return nil if input.nil? || input.empty?
 
       arr = []
       input.each do |i|
-        arr << i.split(" ").map { |word| word.match?(/and/i) ? word.downcase : word.capitalize }.join(" ")
+        arr << data.find { |row| row[:lower_name] == i.downcase }[:name]
       end
       arr
     end
@@ -53,6 +63,12 @@ module Helper
       return nil if input.nil? || input.empty?
 
       input.map(&:capitalize)
+    end
+
+    def self.validate_name(ons_data_lower:, arg:)
+      arg.each do |input|
+        raise Errors::InvalidName unless ons_data_lower.include?(input.downcase)
+      end
     end
   end
 end
