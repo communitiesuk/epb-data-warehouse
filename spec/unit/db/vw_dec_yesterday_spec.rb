@@ -23,10 +23,13 @@ describe "DEC Report Yesterday" do
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", add_to_assessment_search: true, different_fields: {
-      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0003"
+      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0004"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", add_to_assessment_search: true, different_fields: {
-      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0004"
+      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0005"
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", add_to_assessment_search: true, different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006"
     })
   end
 
@@ -51,8 +54,10 @@ describe "DEC Report Yesterday" do
       expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
     end
 
-    it "includes rows updated yesterday" do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET updated_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0002'", "SQL")
+    it "includes the rows updated yesterday stored in the audit logs" do
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0002", event_type: "address_id_updated", timestamp: yesterday)
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0003", event_type: "address_id_updated", timestamp: Date.today)
+
       expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
     end
   end
