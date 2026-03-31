@@ -39,7 +39,7 @@ describe "DEC Report Yesterday" do
 
     let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query("SELECT * FROM vw_dec_yesterday", "SQL").map { |result| result } }
 
-    let(:yesterday) { (Date.today - 1) }
+    let(:yesterday) { (Time.now - 1.day) }
 
     before do
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
