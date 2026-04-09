@@ -60,17 +60,17 @@
     <Assessment-Date>2022-05-09</Assessment-Date>
     <Property-Summary>
       <Walls>
-        <Description>Average thermal transmittance 0.18 W/m²K</Description>
+        <Description language="1">Average thermal transmittance 0.18 W/m²K</Description>
         <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
       </Walls>
       <Roof>
-        <Description>Average thermal transmittance 0.13 W/m²K</Description>
+        <Description language="1">Average thermal transmittance 0.13 W/m²K</Description>
         <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
       </Roof>
       <Floor>
-        <Description>Average thermal transmittance 0.12 W/m²K</Description>
+        <Description language="1">Average thermal transmittance 0.12 W/m²K</Description>
         <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
       </Floor>

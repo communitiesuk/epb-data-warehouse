@@ -215,7 +215,12 @@ module XmlPresenter
     end
 
     def buffer_value(value)
-      if @value_buffer.length == 1 && !@unstripped_first_value_chunk.nil?
+      first_hash_equal = @value_buffer.length.positive? &&
+        value.is_a?(Hash) &&
+        @value_buffer[0].is_a?(Hash) &&
+        @value_buffer[0].keys == value.keys
+
+      if !first_hash_equal && @value_buffer.length == 1 && !@unstripped_first_value_chunk.nil?
         @value_buffer[0] = @unstripped_first_value_chunk
       end
       @value_buffer << value
@@ -229,7 +234,14 @@ module XmlPresenter
       when 1
         final_value = @value_buffer.first
       else
-        final_value = @value_buffer.join
+        if @value_buffer.all? { |val| val.is_a?(Hash) } && @value_buffer.all? { |h| h.key?("value") }
+          base_hash = @value_buffer.first.dup
+          joined_values = @value_buffer.map { |h| h["value"] }.join
+          base_hash["value"] = joined_values
+          final_value = base_hash
+        else
+          final_value = @value_buffer.join
+        end
       end
       if final_value.is_a?(String) && final_value.length > 2704
         final_value = final_value.truncate(2703)

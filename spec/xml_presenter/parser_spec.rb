@@ -390,4 +390,55 @@ RSpec.describe XmlPresenter::Parser do
       expect(parser.parse(xml)).to eq expected
     end
   end
+
+  context "with nodes including attributes and non ASCII characters in the value" do
+    let(:parser) { described_class.new }
+
+    it "parses the units correctly" do
+      xml = '<Roof>
+        <Description language="1">Average thermal transmittance 0.13 W/m²K</Description>
+        <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
+      </Roof>'
+      expected = { "description" => {
+                     "language" => "1",
+                     "value" => "Average thermal transmittance 0.13 W/m²K",
+                   },
+                   "energy_efficiency_rating" => 5,
+                   "environmental_efficiency_rating" => 5 }
+      expect(parser.parse(xml)).to eq expected
+    end
+
+    it "parses Welsh characters correctly" do
+      xml = '<Air-Tightness>
+        <Description language="2">Athreiddedd aer 4.5 m³/h.m² (wedi’i brofi)</Description>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+      </Air-Tightness>'
+      expected = { "description" => {
+                     "language" => "2",
+                     "value" => "Athreiddedd aer 4.5 m³/h.m² (wedi’i brofi)",
+                   },
+                   "energy_efficiency_rating" => 4,
+                   "environmental_efficiency_rating" => 4 }
+      expect(parser.parse(xml)).to eq expected
+    end
+
+    it "parses newline characters correctly" do
+      xml = '<Wall>
+				<Description language="1">Co
+with external insulation</Description>
+				<Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
+				<Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
+			</Wall>'
+
+      expected = { "description" => {
+                     "language" => "1",
+                     "value" => "Co\nwith external insulation",
+                   },
+                   "energy_efficiency_rating" => 5,
+                   "environmental_efficiency_rating" => 5 }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end
