@@ -2,21 +2,30 @@
   "uprn": 12457,
   "roofs": [
     {
-      "description": "Average thermal transmittance 0.13 W/m²K",
+      "description": {
+        "value": "Average thermal transmittance 0.13 W/m²K",
+        "language": "1"
+      },
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
   ],
   "walls": [
     {
-      "description": "Average thermal transmittance 0.18 W/m²K",
+      "description": {
+        "value": "Average thermal transmittance 0.18 W/m²K",
+        "language": "1"
+      },
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
   ],
   "floors": [
     {
-      "description": "Average thermal transmittance 0.12 W/m²K",
+      "description": {
+        "value": "Average thermal transmittance 0.12 W/m²K",
+        "language": "1"
+      },
       "energy_efficiency_rating": 5,
       "environmental_efficiency_rating": 5
     }
