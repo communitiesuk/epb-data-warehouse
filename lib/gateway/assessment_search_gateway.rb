@@ -304,7 +304,7 @@ private
     unless this_args[:address].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "address",
-        "%#{this_args[:address].downcase}%",
+        "%#{this_args[:address]}%",
         ActiveRecord::Type::String.new,
       )
     end

@@ -192,6 +192,19 @@ shared_examples "a search API endpoint" do |type:|
           expect(response_body["data"].length).to eq 1
           expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0000-0003")
         end
+
+        context "when the address has non-alphanumeric characters" do
+          let(:response) do
+            get "/api/#{type}/search", { address: "2, Banana   Street" }
+          end
+
+          it "returns the correct assessment" do
+            response_body = JSON.parse(response.body)
+            expect(response.status).to eq(200)
+            expect(response_body["data"].length).to eq 1
+            expect(response_body["data"].first["certificateNumber"]).to eq("0000-0000-0000-0000-0003")
+          end
+        end
       end
 
       context "when the page_size param is passed" do

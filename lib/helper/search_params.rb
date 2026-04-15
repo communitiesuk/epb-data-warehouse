@@ -70,5 +70,9 @@ module Helper
         raise Errors::InvalidName unless ons_data_lower.include?(input.downcase)
       end
     end
+
+    def self.clean_address(address)
+      address.to_s.downcase.gsub(/[^\p{Alnum}]/, " ").squish
+    end
   end
 end

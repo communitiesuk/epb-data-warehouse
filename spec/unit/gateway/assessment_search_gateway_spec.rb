@@ -525,22 +525,15 @@ describe Gateway::AssessmentSearchGateway do
       end
 
       it "returns one row for the exact address" do
-        address = "2 Some street"
+        address = "2 some street whitbury"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
         expect(gateway.fetch_assessments(**address_args).length).to eq 1
-        expect(gateway.fetch_assessments(**address_args).first["address_line_1"]).to eq(address)
+        expect(gateway.fetch_assessments(**address_args).first["address_line_1"]).to eq("2 Some street")
         expect(gateway.fetch_assessments(**address_args).first["certificate_number"]).to eq("0000-0000-0010-0123")
       end
 
       it "returns all the rows matching partial address" do
-        address = "Some street"
-        address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
-        result = gateway.fetch_assessments(**address_args)
-        expect(result.map { |r| r["address_line_1"] }.sort).to eq expected_result
-      end
-
-      it "returns all the rows matching partial address regardless of casing" do
-        address = "SOme StrEet"
+        address = "some street"
         address_args = args.merge({ assessment_type: %w[RdSAP SAP], address: })
         result = gateway.fetch_assessments(**address_args)
         expect(result.map { |r| r["address_line_1"] }.sort).to eq expected_result

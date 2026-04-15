@@ -66,7 +66,7 @@ module Controller
         uprn: params[:uprn],
         eff_rating: Helper::SearchParams.format_band(params[:efficiency_rating]),
         assessment_type:,
-        address: params[:address],
+        address: Helper::SearchParams.clean_address(params[:address]),
         current_page: params[:current_page],
         row_limit: params[:page_size],
       }
