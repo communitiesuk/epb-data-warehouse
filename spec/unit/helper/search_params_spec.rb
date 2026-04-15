@@ -216,11 +216,11 @@ describe Helper::SearchParams, type: :helper do
       end
     end
 
-    context "when there is non-alphanumeric characters" do
-      let(:address) { "1, Main Address, Town, SW1A 2AA" }
+    context "when there are non-alphanumeric characters" do
+      let(:address) { "1, Main Address, Town?, $teve's county, SW1A 2AA" }
 
       it "removes the non-alphanumeric characters" do
-        expect(described_class.clean_address(address)).to eq("1 main address town sw1a 2aa")
+        expect(described_class.clean_address(address)).to eq("1 main address town teves county sw1a 2aa")
       end
     end
 

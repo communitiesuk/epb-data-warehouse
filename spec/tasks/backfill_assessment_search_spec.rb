@@ -151,7 +151,7 @@ describe "Backfill assessment_search table rake" do
         task.invoke
         expect(search.length).to eq(1)
         expected_result = {
-          "address" => "28, place drive town",
+          "address" => "28 place drive town",
           "address_line_1" => "28, Place Drive",
           "address_line_2" => nil,
           "address_line_3" => nil,
@@ -203,7 +203,7 @@ describe "Backfill assessment_search table rake" do
         task.invoke
         expect(search.length).to eq(1)
         expected_result = {
-          "address" => "42, moria mines lane posttown",
+          "address" => "42 moria mines lane posttown",
           "address_line_1" => "42, Moria Mines Lane",
           "address_line_2" => nil,
           "address_line_3" => nil,
@@ -307,7 +307,7 @@ describe "Backfill assessment_search table rake" do
         task.invoke
         expect(search.length).to eq(1)
         expected_result = {
-          "address" => "mr blobby's sports academy mr blobby's academy blobby custard lane posttown",
+          "address" => "mr blobbys sports academy mr blobbys academy blobby custard lane posttown",
           "address_line_1" => "Mr Blobby's Sports Academy",
           "address_line_2" => "Mr Blobby's Academy",
           "address_line_3" => "Blobby Custard Lane",

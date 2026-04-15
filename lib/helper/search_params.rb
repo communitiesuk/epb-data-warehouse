@@ -72,7 +72,7 @@ module Helper
     end
 
     def self.clean_address(address)
-      address.to_s.downcase.gsub(/[^\p{Alnum}]/, " ").squish
+      address.to_s.downcase.gsub(/[^a-zA-Z0-9\s]/, "").squish
     end
   end
 end

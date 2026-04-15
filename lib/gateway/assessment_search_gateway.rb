@@ -241,7 +241,8 @@ private
     keys.each do |key|
       arr.append(document[key]) unless document[key].nil?
     end
-    arr.map(&:to_s).reject(&:empty?).join(" ").downcase
+    full_address = arr.map(&:to_s).reject(&:empty?).join(" ")
+    Helper::SearchParams.clean_address(full_address)
   end
 
   def get_bindings(*args)
