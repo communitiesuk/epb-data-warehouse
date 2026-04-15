@@ -19,6 +19,20 @@ module Gateway
       !resp.count.zero?
     end
 
+    def get_opt_in_users
+      users = @table.scan(
+        filter_expression: "OptOut = :o",
+        expression_attribute_values: {
+          ":o" => false,
+        },
+      )
+      emails = []
+      users.items.each do |item|
+        emails << item["EmailAddress"] unless item["EmailAddress"].nil?
+      end
+      emails
+    end
+
   private
 
     def get_dynamo_db_client
