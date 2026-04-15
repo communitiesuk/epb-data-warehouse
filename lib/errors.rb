@@ -97,4 +97,13 @@ module Errors
 
   class KmsDecryptionError < RuntimeError
   end
+
+  class NotifySendEmailError < RuntimeError
+  end
+
+  class NotifyServerError < RuntimeError
+  end
+
+  class NotifyRateLimit < RuntimeError
+  end
 end

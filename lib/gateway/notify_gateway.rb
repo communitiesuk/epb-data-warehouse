@@ -21,6 +21,20 @@ module Gateway
       )
     end
 
+    def send_data_users_email(template_id:, email_address:)
+      response = @client.send_email(
+        email_address:,
+        template_id:,
+      )
+      response.id
+    rescue Notifications::Client::BadRequestError, Notifications::Client::AuthError => e
+      raise Errors::NotifySendEmailError, e.message
+    rescue Notifications::Client::RateLimitError
+      raise Errors::NotifyRateLimit
+    rescue Notifications::Client::ServerError
+      raise Errors::NotifyServerError
+    end
+
     def check_email_status
       @client.get_notification(@response.id)
     end
