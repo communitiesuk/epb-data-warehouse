@@ -94,4 +94,7 @@ module Errors
 
   class MissingBearerToken < ApiError
   end
+
+  class KmsDecryptionError < RuntimeError
+  end
 end

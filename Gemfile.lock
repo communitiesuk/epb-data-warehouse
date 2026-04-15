@@ -286,6 +286,7 @@ DEPENDENCIES
   activesupport (~> 8.1)
   async (~> 2.21)
   aws-sdk-dynamodb (~> 1.146)
+  aws-sdk-kms (~> 1)
   aws-sdk-s3 (= 1.209.0)
   concurrent-ruby (~> 1.3)
   csv (~> 3.3)
