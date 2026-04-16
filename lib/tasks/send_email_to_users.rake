@@ -1,3 +1,5 @@
+require "notifications/client"
+
 desc "Send users an email"
 task :send_email_to_users do
   production_send = ENV["PRODUCTION_SEND"] || false
