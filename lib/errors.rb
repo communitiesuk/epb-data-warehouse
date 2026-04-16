@@ -106,4 +106,7 @@ module Errors
 
   class NotifyRateLimit < RuntimeError
   end
+
+  class SendEmailToUsersError < RuntimeError
+  end
 end
