@@ -176,13 +176,15 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     before do
       allow(queues_gateway).to receive(:consume_queue).and_return(payload)
       allow(documents_gateway).to receive(:check_id_exists?).and_return(false)
-      allow(recovery_list_gateway).to receive(:retries_left).and_return(1)
-      allow(Object).to receive(:report_to_sentry)
+      allow(recovery_list_gateway).to receive(:retries_left).and_return(3, 1, 2)
+      allow(Sentry).to receive(:capture_exception)
     end
 
-    it "reports the error to sentry", skip: "We can't spy report_to_sentry calls" do
+    it "reports the error to sentry" do
       use_case.execute
-      expect(Object).to have_received(:report_to_sentry)
+      expect(Sentry).to have_received(:capture_exception).once.with(
+        an_instance_of(RuntimeError).and(have_attributes(message: "Assessment with id 0000-0000-0000-0000-0001 not imported yet, waiting for longer")),
+      )
     end
   end
 

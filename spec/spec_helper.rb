@@ -15,6 +15,7 @@ require "concurrent"
 require "mock_redis"
 require "webmock/rspec"
 require "timecop"
+require "sentry-ruby"
 
 require_relative "samples"
 require_relative "test_loader"
@@ -62,7 +63,9 @@ def gateway(name)
   Services.gateway name
 end
 
-def report_to_sentry(_); end
+def report_to_sentry(exception)
+  Sentry.capture_exception(exception)
+end
 
 def get_valid_jwt(scopes = [], sup = {})
   token =
@@ -154,6 +157,10 @@ RSpec.configure do |config|
 
   config.before do
     Container.reset!
+  end
+
+  config.before do
+    # allow(Sentry).to receive(:capture_exception)
   end
 
   config.before(:all, :set_with_timecop) { Timecop.freeze(Time.utc(2021, 12, 13)) }

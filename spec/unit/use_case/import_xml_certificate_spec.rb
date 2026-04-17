@@ -301,6 +301,34 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
     end
   end
 
+  context "when the certificate gateway raises an error and it's not the last attempt" do
+    before do
+      allow(certificate_gateway).to receive(:fetch).and_raise(StandardError)
+      allow(certificate_gateway).to receive(:fetch_meta_data)
+      allow(recovery_list_gateway).to receive(:retries_left).and_return(2)
+      allow(Sentry).to receive(:capture_exception)
+    end
+
+    it "does not report to sentry" do
+      use_case.execute(assessment_id)
+      expect(Sentry).not_to have_received(:capture_exception)
+    end
+  end
+
+  context "when the certificate gateway raises an error and it's the last attempt" do
+    before do
+      allow(certificate_gateway).to receive(:fetch).and_raise(StandardError)
+      allow(certificate_gateway).to receive(:fetch_meta_data)
+      allow(recovery_list_gateway).to receive(:retries_left).and_return(1)
+      allow(Sentry).to receive(:capture_exception)
+    end
+
+    it "reports the error to sentry" do
+      use_case.execute(assessment_id)
+      expect(Sentry).to have_received(:capture_exception)
+    end
+  end
+
   context "when the certificate gateway has a bad connection to the api" do
     before do
       allow(certificate_gateway).to receive(:fetch).and_raise(Errors::ConnectionApiError)

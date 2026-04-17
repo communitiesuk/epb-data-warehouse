@@ -97,7 +97,7 @@ module UseCase
     end
 
     def is_on_last_attempt(assessment_id)
-      @recovery_list_gateway.retries_left(payload: assessment_id, queue: :assessments) >= 1
+      @recovery_list_gateway.retries_left(payload: assessment_id, queue: :assessments) == 1
     end
   end
 end
