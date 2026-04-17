@@ -11,7 +11,7 @@ module UseCase
       emails.each do |encrypted_email|
         email = @kms_gateway.decrypt(encrypted_email)
         @notify_gateway.send_data_users_email(template_id: notify_template_id, email_address: email)
-      rescue Errors::KmsDecryptionError
+      rescue Errors::KmsDecryptionError, Errors::NotifySendEmailError
         next
       end
     end
