@@ -61,6 +61,10 @@ describe UseCase::SendEmailToUsers do
       it "skips over the error and sends emails to the rest" do
         expect(notify_gateway).to have_received(:send_data_users_email).exactly(2).times
       end
+
+      it "does not raise that error" do
+        expect { use_case.execute(template_id) }.not_to raise_error
+      end
     end
 
     context "when the rate limit is reached" do

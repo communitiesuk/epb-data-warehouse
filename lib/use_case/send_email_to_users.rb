@@ -9,12 +9,10 @@ module UseCase
     def execute(notify_template_id)
       emails = @user_credentials_gateway.get_opt_in_users
       emails.each do |encrypted_email|
-        begin
-          email = @kms_gateway.decrypt(encrypted_email)
-        rescue Errors::KmsDecryptionError
-          next
-        end
+        email = @kms_gateway.decrypt(encrypted_email)
         @notify_gateway.send_data_users_email(template_id: notify_template_id, email_address: email)
+      rescue Errors::KmsDecryptionError
+        next
       end
     end
   end
