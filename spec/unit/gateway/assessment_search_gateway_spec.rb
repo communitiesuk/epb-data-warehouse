@@ -354,21 +354,21 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
 
-    context "when the address lines contain non alphanumeric characters" do
+    context "when the address lines contain commas" do
       let(:doc) do
         parse_assessment(assessment_id: "9999-0000-0000-0000-9997",
                          schema_type: "RdSAP-Schema-20.0.0",
                          type_of_assessment: "RdSAP",
-                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => "1, Main Street", "address_line_2" => "Westward   Ho!" })
+                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => "1,2 Main Street", "address_line_2" => "Westward   Ho!" })
       end
 
       before do
         gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9997", document: doc, country_id:)
       end
 
-      it "produces the correct address" do
+      it "formats the address to not include commas" do
         epc = search.find { |i| i["assessment_id"] == "9999-0000-0000-0000-9997" }
-        expect(epc["address"]).to eq "1 main street westward ho whitbury"
+        expect(epc["address"]).to eq "1 2 main street westward ho! whitbury"
       end
     end
 

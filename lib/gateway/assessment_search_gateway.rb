@@ -242,7 +242,7 @@ private
       arr.append(document[key]) unless document[key].nil?
     end
     full_address = arr.map(&:to_s).reject(&:empty?).join(" ")
-    Helper::SearchParams.clean_address(full_address)
+    Helper::SearchParams.format_address(full_address)
   end
 
   def get_bindings(*args)

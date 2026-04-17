@@ -207,20 +207,20 @@ describe Helper::SearchParams, type: :helper do
     end
   end
 
-  describe "#clean_address" do
+  describe "#format_address" do
     context "when the input is in uppercase" do
       let(:address) { "1 Main Address Town SW1A 2AA" }
 
       it "return the input in lowercase" do
-        expect(described_class.clean_address(address)).to eq("1 main address town sw1a 2aa")
+        expect(described_class.format_address(address)).to eq("1 main address town sw1a 2aa")
       end
     end
 
-    context "when there are non-alphanumeric characters" do
-      let(:address) { "1, Main Address, Town?, $teve's county, SW1A 2AA" }
+    context "when there are commas" do
+      let(:address) { "1,2 Main Address, Town?, Steve's county! SW1A 2AA" }
 
-      it "removes the non-alphanumeric characters" do
-        expect(described_class.clean_address(address)).to eq("1 main address town teves county sw1a 2aa")
+      it "removes only the commas and replaces them with a space" do
+        expect(described_class.format_address(address)).to eq("1 2 main address town? steve's county! sw1a 2aa")
       end
     end
 
@@ -228,7 +228,7 @@ describe Helper::SearchParams, type: :helper do
       let(:address) { " 1 Main  Address       Town SW1A 2AA " }
 
       it "removes additional whitespaces" do
-        expect(described_class.clean_address(address)).to eq("1 main address town sw1a 2aa")
+        expect(described_class.format_address(address)).to eq("1 main address town sw1a 2aa")
       end
     end
   end

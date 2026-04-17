@@ -71,8 +71,8 @@ module Helper
       end
     end
 
-    def self.clean_address(address)
-      address.to_s.downcase.gsub(/[^a-zA-Z0-9\s]/, "").squish
+    def self.format_address(address)
+      address.to_s.downcase.tr(",", " ").squish
     end
   end
 end
