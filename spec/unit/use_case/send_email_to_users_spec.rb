@@ -14,7 +14,7 @@ describe UseCase::SendEmailToUsers do
   let(:notify_template_id) { "template_id" }
 
   let(:unsubscribe_link) do
-    "https://get-energy-performance-data/api/my-account/toggle-email-notifications"
+    "https://get-energy-performance-data/api/my-account/"
   end
 
   let(:use_case) do

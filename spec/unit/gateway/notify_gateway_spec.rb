@@ -63,7 +63,7 @@ describe Gateway::NotifyGateway do
 
   context "when sending email to data users" do
     let(:unsubscribe_link) do
-      "https://get-energy-performance-data/api/my-account/toggle-email-notifications"
+      "https://get-energy-performance-data/api/my-account"
     end
 
     describe "#send_data_users_email" do
@@ -93,7 +93,7 @@ describe Gateway::NotifyGateway do
         it "a message is sent to the notify api" do
           gateway.send_data_users_email(template_id:, email_address:, unsubscribe_link:)
           expect(WebMock).to have_requested(:post, "https://api.notifications.service.gov.uk/v2/notifications/email").with(
-            body: '{"email_address":"sender@something.com","template_id":"b46eb2e7-f7d3-4092-9865-76b57cc24922","personalisation":{"unsubscribe_link":"https://get-energy-performance-data/api/my-account/toggle-email-notifications"}}',
+            body: '{"email_address":"sender@something.com","template_id":"b46eb2e7-f7d3-4092-9865-76b57cc24922","personalisation":{"unsubscribe_link":"https://get-energy-performance-data/api/my-account"}}',
           )
         end
       end

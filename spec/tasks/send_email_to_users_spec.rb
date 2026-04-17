@@ -9,7 +9,7 @@ describe "Sending emails to users" do
     end
 
     let(:unsubscribe_link) do
-      "https://#{ENV['DATA_SERVICE_URL']}/api/my-account/toggle-email-notifications"
+      "https://#{ENV['DATA_SERVICE_URL']}/api/my-account"
     end
 
     let(:test_user_emails_arr) do

@@ -14,7 +14,7 @@ task :send_email_to_users do
   kms_gateway = test_users.nil? ? Gateway::KmsGateway.new : Helper::TaskGatewayStubs::KmsGateway.new
   user_credentials_gateway = test_users.nil? ? Gateway::UserCredentialsGateway.new : Helper::TaskGatewayStubs::UserCredentialsGateway.new(test_users)
   notify_gateway = Gateway::NotifyGateway.new(notify_client)
-  unsubscribe_link = "https://#{ENV['DATA_SERVICE_URL']}/api/my-account/toggle-email-notifications"
+  unsubscribe_link = "https://#{ENV['DATA_SERVICE_URL']}/api/my-account"
 
   UseCase::SendEmailToUsers.new(user_credentials_gateway:, notify_gateway:, kms_gateway:).execute(notify_template_id:, unsubscribe_link:)
 end
