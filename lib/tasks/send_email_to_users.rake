@@ -4,7 +4,7 @@ desc "Send users an email"
 task :send_email_to_users do
   production_send = ENV["PRODUCTION_SEND"] || false
   test_users = ENV["TEST_USERS"]
-  template_id = ENV["NOTIFY_DATA_EMAIL_USERS_TEMPLATE_ID"]
+  notify_template_id = ENV["NOTIFY_DATA_EMAIL_USERS_TEMPLATE_ID"]
 
   if !production_send & test_users.nil?
     raise Errors::SendEmailToUsersError, "ENV variable PRODUCTION_SEND ENV must set as true"
@@ -14,6 +14,7 @@ task :send_email_to_users do
   kms_gateway = test_users.nil? ? Gateway::KmsGateway.new : Helper::TaskGatewayStubs::KmsGateway.new
   user_credentials_gateway = test_users.nil? ? Gateway::UserCredentialsGateway.new : Helper::TaskGatewayStubs::UserCredentialsGateway.new(test_users)
   notify_gateway = Gateway::NotifyGateway.new(notify_client)
+  unsubscribe_link = "https://#{ENV['DATA_SERVICE_URL']}/api/my-account/toggle-email-notifications"
 
-  UseCase::SendEmailToUsers.new(user_credentials_gateway:, notify_gateway:, kms_gateway:).execute(template_id)
+  UseCase::SendEmailToUsers.new(user_credentials_gateway:, notify_gateway:, kms_gateway:).execute(notify_template_id:, unsubscribe_link:)
 end

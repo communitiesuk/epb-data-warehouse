@@ -8,6 +8,10 @@ describe "Sending emails to users" do
       "dave@test.com, jo@test.com"
     end
 
+    let(:unsubscribe_link) do
+      "https://#{ENV['DATA_SERVICE_URL']}/api/my-account/toggle-email-notifications"
+    end
+
     let(:test_user_emails_arr) do
       test_user_emails.split(",").map(&:strip)
     end
@@ -58,10 +62,12 @@ describe "Sending emails to users" do
       end
 
       ENV["NOTIFY_DATA_EMAIL_USERS_TEMPLATE_ID"] = "some_template_id"
+      ENV["DATA_SERVICE_URL"] = "get-energy-performance-data"
     end
 
     after do
       ENV.delete("NOTIFY_EMAIL_USERS_TEMPLATE_ID")
+      ENV.delete("DATA_SERVICE_URL")
     end
 
     context "when sending messages to emails passed as an ENV variable" do
@@ -88,7 +94,7 @@ describe "Sending emails to users" do
 
       it "sends emails to stubbed users" do
         test_user_emails_arr.each do |email|
-          expect(notify_gateway).to have_received(:send_data_users_email).with({ email_address: email, template_id: "some_template_id" }).exactly(1).times
+          expect(notify_gateway).to have_received(:send_data_users_email).with({ email_address: email, template_id: "some_template_id", unsubscribe_link: }).exactly(1).times
         end
       end
     end
@@ -109,7 +115,7 @@ describe "Sending emails to users" do
 
       it "sends emails users" do
         test_user_emails_arr.each do |email|
-          expect(notify_gateway).to have_received(:send_data_users_email).with({ email_address: email, template_id: "some_template_id" }).exactly(1).times
+          expect(notify_gateway).to have_received(:send_data_users_email).with({ email_address: email, template_id: "some_template_id", unsubscribe_link: }).exactly(1).times
         end
       end
     end

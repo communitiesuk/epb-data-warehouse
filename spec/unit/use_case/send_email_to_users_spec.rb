@@ -11,7 +11,11 @@ describe UseCase::SendEmailToUsers do
     instance_double(Gateway::NotifyGateway)
   end
 
-  let(:template_id) { "template_id" }
+  let(:notify_template_id) { "template_id" }
+
+  let(:unsubscribe_link) do
+    "https://get-energy-performance-data/api/my-account/toggle-email-notifications"
+  end
 
   let(:use_case) do
     described_class.new(user_credentials_gateway:, notify_gateway:, kms_gateway:)
@@ -31,7 +35,7 @@ describe UseCase::SendEmailToUsers do
       allow(notify_gateway).to receive(:send_data_users_email)
       allow(kms_gateway).to receive(:decrypt).with(encrypted_emails[0]).and_return(emails[0])
       allow(kms_gateway).to receive(:decrypt).with(encrypted_emails[1]).and_return(emails[1])
-      use_case.execute(template_id)
+      use_case.execute(notify_template_id:, unsubscribe_link:)
     end
 
     it "extracts the emails addresses" do
@@ -44,7 +48,7 @@ describe UseCase::SendEmailToUsers do
 
     it "sends message to notify for each user" do
       emails.each do |email|
-        expect(notify_gateway).to have_received(:send_data_users_email).with(template_id:, email_address: email).exactly(1).times
+        expect(notify_gateway).to have_received(:send_data_users_email).with(template_id: notify_template_id, email_address: email, unsubscribe_link:).exactly(1).times
       end
     end
 
@@ -55,7 +59,7 @@ describe UseCase::SendEmailToUsers do
 
       before do
         emails.insert(1, bad_email)
-        allow(notify_gateway).to receive(:send_data_users_email).with(template_id: template_id, email_address: bad_email).and_raise(Errors::NotifySendEmailError)
+        allow(notify_gateway).to receive(:send_data_users_email).with(template_id: notify_template_id, email_address: bad_email, unsubscribe_link:).and_raise(Errors::NotifySendEmailError)
       end
 
       it "skips over the error and sends emails to the rest" do
@@ -63,7 +67,7 @@ describe UseCase::SendEmailToUsers do
       end
 
       it "does not raise that error" do
-        expect { use_case.execute(template_id) }.not_to raise_error
+        expect { use_case.execute(notify_template_id:, unsubscribe_link:) }.not_to raise_error
       end
     end
 
@@ -73,7 +77,7 @@ describe UseCase::SendEmailToUsers do
       end
 
       it "the error is bubbled up to the use case" do
-        expect { use_case.execute(template_id) }.to raise_error(Errors::NotifyRateLimit)
+        expect { use_case.execute(notify_template_id:, unsubscribe_link:) }.to raise_error(Errors::NotifyRateLimit)
       end
     end
   end

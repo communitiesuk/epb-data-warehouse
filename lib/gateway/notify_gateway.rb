@@ -21,10 +21,14 @@ module Gateway
       )
     end
 
-    def send_data_users_email(template_id:, email_address:)
+    def send_data_users_email(template_id:, email_address:, unsubscribe_link:)
       response = @client.send_email(
         email_address:,
         template_id:,
+        personalisation: {
+          unsubscribe_link: unsubscribe_link,
+
+        },
       )
       response.id
     rescue Notifications::Client::BadRequestError, Notifications::Client::AuthError => e

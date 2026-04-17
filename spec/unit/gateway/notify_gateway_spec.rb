@@ -62,6 +62,10 @@ describe Gateway::NotifyGateway do
   end
 
   context "when sending email to data users" do
+    let(:unsubscribe_link) do
+      "https://get-energy-performance-data/api/my-account/toggle-email-notifications"
+    end
+
     describe "#send_data_users_email" do
       let(:email_address) { "sender@something.com" }
       let(:mocked_response) do
@@ -83,13 +87,13 @@ describe Gateway::NotifyGateway do
         end
 
         it "returns the response id" do
-          expect(gateway.send_data_users_email(template_id:, email_address:)).to eq("201b576e-c09b-467b-9dfa-9c3b689ee730")
+          expect(gateway.send_data_users_email(template_id:, email_address:, unsubscribe_link:)).to eq("201b576e-c09b-467b-9dfa-9c3b689ee730")
         end
 
         it "a message is sent to the notify api" do
-          gateway.send_data_users_email(template_id:, email_address:)
+          gateway.send_data_users_email(template_id:, email_address:, unsubscribe_link:)
           expect(WebMock).to have_requested(:post, "https://api.notifications.service.gov.uk/v2/notifications/email").with(
-            body: '{"email_address":"sender@something.com","template_id":"b46eb2e7-f7d3-4092-9865-76b57cc24922"}',
+            body: '{"email_address":"sender@something.com","template_id":"b46eb2e7-f7d3-4092-9865-76b57cc24922","personalisation":{"unsubscribe_link":"https://get-energy-performance-data/api/my-account/toggle-email-notifications"}}',
           )
         end
       end
@@ -101,7 +105,7 @@ describe Gateway::NotifyGateway do
         end
 
         it "re-raises the rate limit error" do
-          expect { gateway.send_data_users_email(template_id:, email_address:) }.to raise_error Errors::NotifyRateLimit
+          expect { gateway.send_data_users_email(template_id:, email_address:, unsubscribe_link:) }.to raise_error Errors::NotifyRateLimit
         end
       end
     end
