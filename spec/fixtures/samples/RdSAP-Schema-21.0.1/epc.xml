@@ -147,6 +147,9 @@
         <Environmental-Impact-Rating>75</Environmental-Impact-Rating>
       </Improvement>
     </Suggested-Improvements>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>4</LZC-Energy-Source>
+    </LZC-Energy-Sources>
     <Renewable-Heat-Incentive>
       <Space-Heating-Existing-Dwelling>13120</Space-Heating-Existing-Dwelling>
       <Water-Heating>2285</Water-Heating>
