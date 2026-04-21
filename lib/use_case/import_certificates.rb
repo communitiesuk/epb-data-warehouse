@@ -1,11 +1,11 @@
 module UseCase
   class ImportCertificates
-    def initialize(import_xml_certificate_use_case:, queues_gateway:, recovery_list_gateway:, logger: nil)
+    def initialize(import_xml_certificate_use_case:, queues_gateway:, recovery_list_gateway:, logger: nil, queue_name: :assessments)
       @import_xml_certificate_use_case = import_xml_certificate_use_case
       @queues_gateway = queues_gateway
       @recovery_list_gateway = recovery_list_gateway
       @logger = logger
-      @queue_name = :assessments
+      @queue_name = queue_name
     end
 
     def execute(from_recovery_list: false)
@@ -25,7 +25,7 @@ module UseCase
       Helper::Stopwatch.log_elapsed_time @logger, "Batch of size #{assessment_ids.length} imported" do
         assessment_ids.each do |assessment_id|
           Helper::Stopwatch.log_elapsed_time @logger, "Assessment #{assessment_id} imported" do
-            @import_xml_certificate_use_case.execute(assessment_id)
+            @import_xml_certificate_use_case.execute(assessment_id, queue_name: @queue_name)
           end
         end
       end

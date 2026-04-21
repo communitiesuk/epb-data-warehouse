@@ -13,7 +13,7 @@ module UseCase
       @logger = logger
     end
 
-    def execute(assessment_id)
+    def execute(assessment_id, queue_name:)
       xml = nil
       meta_data = nil
 
@@ -77,27 +77,27 @@ module UseCase
         @assessments_country_id_gateway.insert(assessment_id:, country_id:) unless country_id.nil?
       end
 
-      clear_from_recovery_list assessment_id
+      clear_from_recovery_list assessment_id, queue_name
     rescue UnimportableAssessment
-      clear_from_recovery_list assessment_id
+      clear_from_recovery_list assessment_id, queue_name
     rescue StandardError => e
-      report_to_sentry(e) if is_on_last_attempt(assessment_id)
+      report_to_sentry(e) if is_on_last_attempt(assessment_id, queue_name)
       @logger.error "Error of type #{e.class} when importing RRN #{assessment_id}: '#{e.message}'" if @logger.respond_to?(:error)
-      register_attempt_to_recovery_list assessment_id unless e.is_a?(Errors::ConnectionApiError)
+      register_attempt_to_recovery_list assessment_id, queue_name unless e.is_a?(Errors::ConnectionApiError)
     end
 
   private
 
-    def clear_from_recovery_list(assessment_id)
-      @recovery_list_gateway.clear_assessment payload: assessment_id, queue: :assessments
+    def clear_from_recovery_list(assessment_id, queue_name)
+      @recovery_list_gateway.clear_assessment payload: assessment_id, queue: queue_name
     end
 
-    def register_attempt_to_recovery_list(assessment_id)
-      @recovery_list_gateway.register_attempt(payload: assessment_id, queue: :assessments)
+    def register_attempt_to_recovery_list(assessment_id, queue_name)
+      @recovery_list_gateway.register_attempt(payload: assessment_id, queue: queue_name)
     end
 
-    def is_on_last_attempt(assessment_id)
-      @recovery_list_gateway.retries_left(payload: assessment_id, queue: :assessments) == 1
+    def is_on_last_attempt(assessment_id, queue_name)
+      @recovery_list_gateway.retries_left(payload: assessment_id, queue: queue_name) == 1
     end
   end
 end

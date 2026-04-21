@@ -74,7 +74,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
           greenDeal: false,
         })
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
         expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
       end
 
@@ -90,7 +90,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
         end
 
         it "forms together certificate data and passes it into the import certificate data use case" do
-          use_case.execute(assessment_id)
+          use_case.execute(assessment_id, queue_name: :assessments)
           expect(import_certificate_data_use_case).to have_received(:execute).with(
             assessment_id:,
             certificate_data: include({
@@ -114,7 +114,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                                optOut: false,
                                                                                createdAt: "2021-07-21T11:26:28.045Z",
                                                                                greenDeal: false })
-          use_case.execute assessment_id
+          use_case.execute(assessment_id, queue_name: :assessments)
         end
 
         it "does not produce a data structure containing a cancelled_at key" do
@@ -142,7 +142,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: false,
                                                                              createdAt: "2021-07-21T11:26:28.045Z" })
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
       end
 
       it "does not trigger an import" do
@@ -161,7 +161,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: false,
                                                                              createdAt: nil })
-        use_case.execute assessment_id
+        use_case.execute(assessment_id, queue_name: :assessments)
       end
 
       it "does not produce a data structure containing a created_at key" do
@@ -180,7 +180,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "AC-REPORT",
                                                                              optOut: false,
                                                                              createdAt: "2021-07-21T11:26:28.045Z" })
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
       end
 
       it "does not trigger an import" do
@@ -204,7 +204,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
       end
 
       it "forms together certificate data and passes it into the import certificate data use case" do
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
         expect(import_certificate_data_use_case).to have_received(:execute).with(
           assessment_id:,
           certificate_data: include({
@@ -231,7 +231,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
                                                                              countryId: 1 })
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
       end
 
       it "sends the country_id to the assessments_country_id_gateway" do
@@ -249,7 +249,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
                                                                              countryId: nil })
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
       end
 
       it "does not send the country_id to the assessments_country_id_gateway" do
@@ -268,7 +268,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
                                                                              countryId: nil,
                                                                              greenDeal: true })
-        use_case.execute(assessment_id)
+        use_case.execute(assessment_id, queue_name: :assessments)
       end
 
       it "does not save the EPC" do
@@ -281,7 +281,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
     before do
       allow(certificate_gateway).to receive(:fetch).and_raise(StandardError)
       allow(certificate_gateway).to receive(:fetch_meta_data)
-      use_case.execute(assessment_id)
+      use_case.execute(assessment_id, queue_name: :assessments)
     end
 
     it "does not trigger an import" do
@@ -310,7 +310,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
     end
 
     it "does not report to sentry" do
-      use_case.execute(assessment_id)
+      use_case.execute(assessment_id, queue_name: :assessments)
       expect(Sentry).not_to have_received(:capture_exception)
     end
   end
@@ -324,7 +324,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
     end
 
     it "reports the error to sentry" do
-      use_case.execute(assessment_id)
+      use_case.execute(assessment_id, queue_name: :assessments)
       expect(Sentry).to have_received(:capture_exception)
     end
   end
@@ -333,7 +333,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
     before do
       allow(certificate_gateway).to receive(:fetch).and_raise(Errors::ConnectionApiError)
       allow(certificate_gateway).to receive(:fetch_meta_data)
-      use_case.execute(assessment_id)
+      use_case.execute(assessment_id, queue_name: :assessments)
     end
 
     it "does not report an attempt to process the assessment onto the recovery list" do

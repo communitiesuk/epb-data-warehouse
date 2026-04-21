@@ -42,15 +42,15 @@ describe UseCase::ImportCertificates do
     it "calls the import XML certificate use case" do
       expect { use_case.execute }.not_to raise_error
 
-      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0000")
-      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0001")
-      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0002")
+      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0000", queue_name: :assessments)
+      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0001", queue_name: :assessments)
+      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0002", queue_name: :assessments)
     end
 
     it "calls the method to removes the assessment id from the redis queue" do
-      allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000")
-      allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001")
-      allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002")
+      allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0000", queue_name: :assessments)
+      allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0001", queue_name: :assessments)
+      allow(import_xml_certificate_use_case).to receive(:execute).with("0000-0000-0000-0000-0002", queue_name: :assessments)
 
       expect { use_case.execute }.not_to raise_error
     end
@@ -73,6 +73,70 @@ describe UseCase::ImportCertificates do
       use_case.execute
 
       expect(logger).to have_received(:error).with(include "bang!")
+    end
+  end
+
+  context "when validating the queue name" do
+    let(:valid_queue_names) do
+      Gateway::QueueNames::QUEUE_NAMES
+    end
+
+    it "is is valid" do
+      expect(valid_queue_names.include?(:assessments)).to be true
+    end
+  end
+
+  context "when a custom queue name is provided" do
+    subject(:use_case) do
+      described_class.new import_xml_certificate_use_case:,
+                          queues_gateway:,
+                          recovery_list_gateway:,
+                          logger:,
+                          queue_name:
+    end
+
+    let(:queue_name) { :assessments_backfill }
+
+    before do
+      allow(queues_gateway).to receive(:consume_queue).and_return(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
+      allow(import_xml_certificate_use_case).to receive(:execute)
+    end
+
+    it "consumes from the correct queue" do
+      use_case.execute
+      expect(queues_gateway).to have_received(:consume_queue).with(queue_name)
+    end
+
+    it "registers assessments onto the correct recovery list queue" do
+      use_case.execute
+      expect(recovery_list_gateway).to have_received(:register_assessments).with("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", queue: queue_name)
+    end
+
+    it "calls the import XML certificate use case with the correct queue name" do
+      use_case.execute
+      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0000", queue_name: queue_name)
+      expect(import_xml_certificate_use_case).to have_received(:execute).with("0000-0000-0000-0000-0001", queue_name: queue_name)
+    end
+
+    context "when fetching from the recovery list" do
+      before do
+        allow(recovery_list_gateway).to receive(:assessments).with(queue: queue_name).and_return(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
+      end
+
+      it "fetches assessments from the correct recovery list queue" do
+        use_case.execute from_recovery_list: true
+        expect(recovery_list_gateway).to have_received(:assessments).with(queue: queue_name)
+      end
+    end
+
+    context "when validating the queue name" do
+      let(:valid_queue_names) do
+        Gateway::QueueNames::QUEUE_NAMES
+      end
+
+      it "is is valid" do
+        expect(valid_queue_names.include?(queue_name)).to be true
+      end
     end
   end
 

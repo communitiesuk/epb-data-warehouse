@@ -86,6 +86,14 @@ class Container
                                                                       logger:
   end
 
+  def self.import_certificates_backfill_use_case
+    @import_certificates_backfill_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case:,
+                                                                               queues_gateway:,
+                                                                               recovery_list_gateway:,
+                                                                               queue_name: :assessments_backfill,
+                                                                               logger:
+  end
+
   def self.import_xml_certificate_use_case
     @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case:,
                                                                            assessment_attribute_gateway: assessment_attributes_gateway,
