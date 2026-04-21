@@ -47,11 +47,10 @@ describe "Sending emails to users" do
     before do
       allow(Notifications::Client).to receive(:new).and_return(notify_client)
       allow(Gateway::KmsGateway).to receive(:new).and_return(kms_gateway)
-      allow(Gateway::NotifyGateway).to receive(:new).with(notify_client).and_return(notify_gateway)
-      allow(Helper::TaskGatewayStubs::UserCredentialsGateway).to receive(:new).and_return(stub_user_credentials_gateway)
-      allow(Helper::TaskGatewayStubs::KmsGateway).to receive(:new).and_return(stub_kms_gateway)
       allow(Gateway::UserCredentialsGateway).to receive(:new).and_return(user_credentials_gateway)
-      allow(notify_gateway).to receive(:send_data_users_email)
+      allow(Gateway::NotifyGateway).to receive(:new).with(notify_client).and_return(notify_gateway)
+      allow(Helper::TaskGatewayStubs::KmsGateway).to receive(:new).and_return(stub_kms_gateway)
+      allow(Helper::TaskGatewayStubs::UserCredentialsGateway).to receive(:new).and_return(stub_user_credentials_gateway)
       allow(stub_user_credentials_gateway).to receive(:get_opt_in_users).and_return(test_user_emails_arr)
       allow(user_credentials_gateway).to receive(:get_opt_in_users).and_return(encrypted_emails)
       allow(stub_kms_gateway).to receive(:decrypt)
@@ -60,6 +59,8 @@ describe "Sending emails to users" do
         allow(stub_kms_gateway).to receive(:decrypt).with(email).and_return(email)
         allow(kms_gateway).to receive(:decrypt).with(encrypted_emails[i]).and_return(email)
       end
+
+      allow(notify_gateway).to receive(:send_data_users_email)
 
       ENV["NOTIFY_DATA_EMAIL_USERS_TEMPLATE_ID"] = "some_template_id"
       ENV["DATA_SERVICE_URL"] = "get-energy-performance-data"
@@ -88,7 +89,7 @@ describe "Sending emails to users" do
         expect(stub_kms_gateway).to have_received(:decrypt).exactly(2).times
       end
 
-      it "does not get data from dynam db" do
+      it "does not get data from DynamoDB" do
         expect(user_credentials_gateway).not_to have_received(:get_opt_in_users)
       end
 
@@ -109,7 +110,7 @@ describe "Sending emails to users" do
         ENV.delete("PRODUCTION_SEND")
       end
 
-      it "extracts users from Dynamo db" do
+      it "extracts users from DynamoDB" do
         expect(user_credentials_gateway).to have_received(:get_opt_in_users)
       end
 
