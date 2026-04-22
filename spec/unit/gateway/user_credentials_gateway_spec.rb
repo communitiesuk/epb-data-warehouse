@@ -248,5 +248,73 @@ describe Gateway::UserCredentialsGateway do
         expect(gateway.get_opt_in_users).to eq %w[encrypted_email_1 encrypted_email_2]
       end
     end
+
+    context "when email results are paginated" do
+      let(:first_page_query_body) do
+        {
+          "FilterExpression": "OptOut = :o",
+          "ExpressionAttributeValues": { ":o": { "BOOL": false } },
+          "TableName": "test_users_table",
+        }.to_json
+      end
+
+      let(:second_page_query_body) do
+        {
+          "FilterExpression": "OptOut = :o",
+          "ExpressionAttributeValues": { ":o": { "BOOL": false } },
+          "ExclusiveStartKey": { "UserId": { "S": user_id } },
+          "TableName": "test_users_table",
+        }.to_json
+      end
+
+      let(:first_page_response) do
+        {
+          "Items" => [
+            {
+              "UserId" => { "S" => user_id },
+              "OneLoginSub" => { "S" => sub_id },
+              "CreatedAt" => { "S" => Time.now.to_s },
+              "EmailAddress" => { "S" => "encrypted_email_1" },
+              "OptOut" => { "BOOL" => false },
+              "BearerToken" => { "S" => "the-bearer-token" },
+            },
+          ],
+          "Count" => 1,
+          "LastEvaluatedKey" => { "UserId" => { "S" => user_id } },
+        }.to_json
+      end
+
+      let(:second_page_response) do
+        {
+          "Items" => [
+            {
+              "UserId" => { "S" => user_id },
+              "OneLoginSub" => { "S" => sub_id },
+              "CreatedAt" => { "S" => Time.now.to_s },
+              "EmailAddress" => { "S" => "encrypted_email_2" },
+              "OptOut" => { "BOOL" => false },
+              "BearerToken" => { "S" => "the-bearer-token" },
+            },
+          ],
+          "Count" => 1,
+        }.to_json
+      end
+
+      before do
+        stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com/")
+          .with(body: first_page_query_body,
+                headers: { "X-Amz-Target" => "DynamoDB_20120810.Scan" })
+          .to_return(status: 200, body: first_page_response)
+
+        stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com/")
+          .with(body: second_page_query_body,
+                headers: { "X-Amz-Target" => "DynamoDB_20120810.Scan" })
+          .to_return(status: 200, body: second_page_response)
+      end
+
+      it "returns emails from all pages" do
+        expect(gateway.get_opt_in_users).to eq %w[encrypted_email_1 encrypted_email_2]
+      end
+    end
   end
 end
