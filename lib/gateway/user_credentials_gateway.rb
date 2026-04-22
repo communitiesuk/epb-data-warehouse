@@ -10,13 +10,20 @@ module Gateway
     end
 
     def bearer_token_exists?(bearer_token)
-      resp = @table.scan(
+      params = {
         filter_expression: "BearerToken = :bearer_token",
-        expression_attribute_values: {
-          ":bearer_token" => bearer_token,
-        },
-      )
-      !resp.count.zero?
+        expression_attribute_values: { ":bearer_token" => bearer_token },
+      }
+
+      loop do
+        resp = @table.scan(params)
+        return true if resp.items.any?
+        break unless resp.last_evaluated_key
+
+        params[:exclusive_start_key] = resp.last_evaluated_key
+      end
+
+      false
     end
 
     def get_opt_in_users
