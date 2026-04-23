@@ -104,13 +104,6 @@ describe "Backfill assessment_search table rake" do
         epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-3333" }
         expect(epc["created_at"]).to eq "2025-07-14"
       end
-
-      it "uses the registration_date when created_at is not available" do
-        save_new_epc(schema: "RdSAP-Schema-19.0", assessment_id: "0000-6666-4444-3333-8888", assessment_type: "RdSAP", sample_type: "epc")
-        task.invoke
-        epc = search.find { |i| i["assessment_id"] == "0000-6666-4444-3333-8888" }
-        expect(epc["created_at"]).to eq "2020-06-04"
-      end
     end
 
     context "when dates are set using environment variables" do

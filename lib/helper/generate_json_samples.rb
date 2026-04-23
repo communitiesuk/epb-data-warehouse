@@ -4,6 +4,7 @@ class Helper::GenerateJsonSamples
       "assessment_type" => assessment_type(schema_type:, type:),
       "schema_type" => schema_type,
       "assessment_address_id" => "UPRN-000000012457",
+      "created_at" => Time.now,
     }
 
     document = UseCase::ParseXmlCertificate.new.execute(xml: xml.to_xml, assessment_id:, schema_type:)
@@ -44,7 +45,7 @@ class Helper::GenerateJsonSamples
 
   def self.save_document(assessment_id:, certificate_data:)
     Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
-    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, created_at: Time.now, document: certificate_data, country_id: 1)
+    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: 1)
   end
 
   def self.get_rrn(xml:, type:, schema_type:)

@@ -13,11 +13,16 @@ describe Gateway::AssessmentSearchGateway do
     )
   end
 
+  let(:created_at) do
+    "2025-07-22T09:54:32.000Z"
+  end
+
   let(:event_type) { "cancelled" }
   let(:assessment_id) { "0000-0000-0001-1234-0000" }
   let(:country_id) { 1 }
   let(:rdsap) do
-    parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-1000000001245", different_fields: { "postcode" => "SW10 0AA" })
+    parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-1000000001245",
+                     different_fields: { "postcode" => "SW10 0AA", "created_at" => created_at })
   end
 
   before(:all) do
@@ -71,7 +76,7 @@ describe Gateway::AssessmentSearchGateway do
           "address" => "1 some street whitbury",
           "registration_date" => Time.parse("2020-05-04 00:00:00.000000000 +0000"),
           "assessment_type" => "RdSAP",
-          "created_at" => Time.now,
+          "created_at" => Time.parse(created_at),
         }
 
         expect(search.first).to eq expected_rdsap
@@ -80,7 +85,8 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a CEPC" do
       let(:cepc_document) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "UPRN-1000000001245", type: "cepc", different_fields: { "postcode" => "W6 9ZD" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", assessment_address_id: "UPRN-1000000001245",
+                         type: "cepc", different_fields: { "postcode" => "W6 9ZD", "created_at" => created_at })
       end
 
       before do
@@ -105,7 +111,7 @@ describe Gateway::AssessmentSearchGateway do
           "address" => "60 maple syrup road candy mountain big rock",
           "registration_date" => Time.parse("2021-03-19 00:00:00 UTC"),
           "assessment_type" => "CEPC",
-          "created_at" => Time.now,
+          "created_at" => Time.parse(created_at),
         }
 
         expect(search.first).to eq expected_data
@@ -114,7 +120,7 @@ describe Gateway::AssessmentSearchGateway do
       context "when the asset rating is nil" do
         let(:assessment_id) { "0000-0000-0000-0000-0000" }
         let(:cepc) do
-          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => nil })
+          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => nil, "created_at" => created_at })
         end
 
         before do
@@ -132,7 +138,7 @@ describe Gateway::AssessmentSearchGateway do
       context "when the asset rating is A+" do
         let(:assessment_id) { "0000-0000-0000-0000-0000" }
         let(:cepc) do
-          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => -1 })
+          parse_assessment(assessment_id:, schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: { "postcode" => "W6 9ZD", "asset_rating" => -1, "created_at" => created_at })
         end
 
         before do
@@ -150,7 +156,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a DEC" do
       let(:dec) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", assessment_address_id: "UPRN-1000000001245", type: "dec", different_fields: { "postcode" => "W6 9ZD" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", assessment_address_id: "UPRN-1000000001245", type: "dec", different_fields: { "postcode" => "W6 9ZD", "created_at" => created_at })
       end
 
       before do
@@ -174,7 +180,7 @@ describe Gateway::AssessmentSearchGateway do
           "address" => "some unit 2 lonely street some area some county whitbury",
           "registration_date" => Time.parse("2020-05-04 00:00:00 UTC"),
           "assessment_type" => "DEC",
-          "created_at" => Time.now,
+          "created_at" => Time.parse(created_at),
           "uprn" => 1_000_000_001_245,
 
         }
@@ -185,7 +191,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a DEC-RR" do
       let(:dec) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC-RR", assessment_address_id: "UPRN-1000000001245", type: "dec-rr", different_fields: { "postcode" => "W6 9ZD" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC-RR", assessment_address_id: "UPRN-1000000001245", type: "dec-rr", different_fields: { "postcode" => "W6 9ZD", "created_at" => created_at })
       end
 
       before do
@@ -209,7 +215,7 @@ describe Gateway::AssessmentSearchGateway do
           "address" => "some unit 2 lonely street some area some county fulchester",
           "registration_date" => Time.parse("2020-05-04 00:00:00 UTC"),
           "assessment_type" => "DEC-RR",
-          "created_at" => Time.now,
+          "created_at" => Time.parse(created_at),
           "uprn" => 1_000_000_001_245,
         }
 
@@ -219,7 +225,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when saving a SAP" do
       let(:sap) do
-        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", assessment_address_id: "UPRN-1000000001245", type: "epc", different_fields: { "postcode" => "ML9 9AR" })
+        parse_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", assessment_address_id: "UPRN-1000000001245", type: "epc", different_fields: { "postcode" => "ML9 9AR", "created_at" => created_at })
       end
 
       before do
@@ -243,7 +249,7 @@ describe Gateway::AssessmentSearchGateway do
           "address" => "1 some street some area some county whitbury",
           "registration_date" => Time.parse("2022-05-09 00:00:00 UTC"),
           "assessment_type" => "SAP",
-          "created_at" => Time.now,
+          "created_at" => Time.parse(created_at),
           "uprn" => 1_000_000_001_245,
         }
 
@@ -341,7 +347,7 @@ describe Gateway::AssessmentSearchGateway do
         parse_assessment(assessment_id: "9999-0000-0000-0000-9997",
                          schema_type: "RdSAP-Schema-20.0.0",
                          type_of_assessment: "RdSAP",
-                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => 14 })
+                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => 14, "created_at" => created_at })
       end
 
       before do
@@ -359,7 +365,7 @@ describe Gateway::AssessmentSearchGateway do
         parse_assessment(assessment_id: "9999-0000-0000-0000-9997",
                          schema_type: "RdSAP-Schema-20.0.0",
                          type_of_assessment: "RdSAP",
-                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => "1,2 Main Street", "address_line_2" => "Westward   Ho!" })
+                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "address_line_1" => "1,2 Main Street", "address_line_2" => "Westward   Ho!", "created_at" => created_at })
       end
 
       before do
@@ -465,13 +471,15 @@ describe Gateway::AssessmentSearchGateway do
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
       Gateway::CommercialReportsGateway.new.insert_report(assessment_id: "0001-0000-0000-0000-0000", related_rrn: "0000-0000-0000-0000-1111")
-      newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-01", "assessment_address_id" => "UPRN-000000001245"  })
-      gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: newer_rdsap, created_at: "2025-07-22", country_id:)
-      gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, created_at: "2025-07-22", country_id:)
+      newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-01", "assessment_address_id" => "UPRN-000000001245" })
+
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: newer_rdsap, country_id:)
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, country_id:)
 
       3.times do |i|
         assessment_id = "0001-0000-0000-0000-#{i.to_s.rjust(4, '0')}"
-        gateway.insert_assessment(assessment_id:, document: cepc, created_at: "2025-07-22", country_id:)
+        cepc["created_at"] = created_at
+        gateway.insert_assessment(assessment_id:, document: cepc, country_id:)
       end
     end
 
@@ -538,7 +546,7 @@ describe Gateway::AssessmentSearchGateway do
 
       before do
         address_rdsap = rdsap.merge({ "address_line_1" => "2 Some street" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0010-0123", document: address_rdsap, country_id:)
         ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET address_line_1 = '10 Some Street' WHERE assessment_id = '0000-0000-0000-0001'")
       end
 
@@ -561,18 +569,18 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering for dates" do
       before do
         before_rdsap = rdsap.merge({ "registration_date" => "2021-12-24T12:00:00.000+00:00" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: before_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: before_rdsap, country_id:)
 
         date_rdsap = rdsap.merge({ "registration_date" => "2022-02-04T12:00:00.000+00:00" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: date_rdsap, country_id:)
         date_rdsap = rdsap.merge({ "registration_date" => "2022-04-08T12:00:00.000+00:00" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-01235", document: date_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-01235", document: date_rdsap, country_id:)
 
         date_rdsap = rdsap.merge({ "registration_date" => "2022-12-09T12:00:00.000+00:00" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-01237", document: date_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-01237", document: date_rdsap, country_id:)
 
         after_rdsap = rdsap.merge({ "registration_date" => "2024-12-13T12:00:00.000+00:00" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-01237", document: after_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-01237", document: after_rdsap, country_id:)
       end
 
       it "returns rows for only the EPCs lodged within the date range" do
@@ -592,8 +600,8 @@ describe Gateway::AssessmentSearchGateway do
           day_one_rdsap = rdsap.merge({ "registration_date" => "2023-03-03T00:00:00.000+00:00" })
           day_two_rdsap = rdsap.merge({ "registration_date" => "2023-03-04T00:00:00.000+00:00" })
 
-          gateway.insert_assessment(assessment_id: "0000-0000-0030-0123", document: day_one_rdsap, created_at: "2025-07-22", country_id:)
-          gateway.insert_assessment(assessment_id: "0000-0000-0030-0323", document: day_two_rdsap, created_at: "2025-07-22", country_id:)
+          gateway.insert_assessment(assessment_id: "0000-0000-0030-0123", document: day_one_rdsap, country_id:)
+          gateway.insert_assessment(assessment_id: "0000-0000-0030-0323", document: day_two_rdsap, country_id:)
         end
 
         it "returns only the assessments for 2023-03-03" do
@@ -608,7 +616,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by council" do
       before do
         postcode_rdsap = rdsap.merge({ "postcode" => "SW1A 2AA" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0022-0022", document: postcode_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0022-0022", document: postcode_rdsap, country_id:)
       end
 
       it "returns one row for the council" do
@@ -627,7 +635,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by constituency" do
       before do
         postcode_rdsap = rdsap.merge({ "postcode" => "ML9 9AR" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0033-0033", document: postcode_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0033-0033", document: postcode_rdsap, country_id:)
       end
 
       it "returns one row matching the constituency" do
@@ -646,7 +654,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by postcode" do
       before do
         postcode_rdsap = rdsap.merge({ "postcode" => "AB1 2CD" })
-        gateway.insert_assessment(assessment_id: "0000-0000-0044-0044", document: postcode_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0044-0044", document: postcode_rdsap, country_id:)
       end
 
       it "returns one row matching the postcode" do
@@ -670,7 +678,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by uprn" do
       before do
         uprn_rdsap = rdsap.merge({ "assessment_address_id" => "UPRN-0000000009234" })
-        gateway.insert_assessment(assessment_id: "0000-7000-0044-0044", document: uprn_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-7000-0044-0044", document: uprn_rdsap, country_id:)
       end
 
       it "returns one row matching the uprn" do
@@ -689,7 +697,7 @@ describe Gateway::AssessmentSearchGateway do
     context "when filtering by eff_rating" do
       before do
         eff_rating_rdsap = rdsap.merge({ "energy_rating_current" => 95 })
-        gateway.insert_assessment(assessment_id: "0000-0000-0044-0044", document: eff_rating_rdsap, created_at: "2025-07-22", country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0044-0044", document: eff_rating_rdsap, country_id:)
       end
 
       it "returns one row matching the eff_rating" do
@@ -705,7 +713,7 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when the search table has data lodged today" do
       before do
-        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap, created_at: Time.now, country_id:)
+        gateway.insert_assessment(assessment_id: "0000-0000-0020-0123", document: rdsap.merge({ "created_at" => Time.now }), country_id:)
       end
 
       it "ignores the assessment created today" do
@@ -735,7 +743,7 @@ describe Gateway::AssessmentSearchGateway do
         12.times do |i|
           assessment_id = "0005-0000-0000-#{i.to_s.rjust(4, '0')}"
           newer_rdsap = rdsap.merge({ "registration_date" => "2021-11-#{i + 1}" })
-          gateway.insert_assessment(assessment_id:, document: newer_rdsap, created_at: "2025-07-22", country_id:)
+          gateway.insert_assessment(assessment_id:, document: newer_rdsap,  country_id:)
         end
       end
 
@@ -776,10 +784,10 @@ describe Gateway::AssessmentSearchGateway do
 
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search;")
-      date_rdsap = rdsap.merge({ "registration_date" => "2012-02-05" })
-      gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: date_rdsap, created_at: "2025-07-22", country_id:)
-      gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap, created_at: "2025-07-23", country_id:)
-      gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: rdsap, created_at: "2025-07-24", country_id:)
+      date_rdsap = rdsap.merge({ "registration_date" => "2012-02-05", "created_at" => created_at })
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0000", document: date_rdsap, country_id:)
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0001", document: rdsap.merge({ "created_at" => Time.parse("2025-07-23T00:00:00.000+00:00") }), country_id:)
+      gateway.insert_assessment(assessment_id: "0000-0000-0000-0002", document: rdsap.merge({ "created_at" => Time.parse("2025-07-24T00:00:00.000+00:00") }), country_id:)
     end
 
     context "when calling count method returns the number of rows in the table" do

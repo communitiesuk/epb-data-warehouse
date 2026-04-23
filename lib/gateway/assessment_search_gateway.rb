@@ -7,13 +7,13 @@ class Gateway::AssessmentSearchGateway
 
   def initialize; end
 
-  def insert_assessment(assessment_id:, document:, country_id:, created_at: nil)
+  def insert_assessment(assessment_id:, document:, country_id:)
     document_clone = document.clone
     document_clone.deep_symbolize_keys!
     return unless VALID_COUNTRY_IDS.include?(country_id)
     return if document_clone[:assessment_type] == AC_CERTIFICATE_TYPE
 
-    created_at ||= Time.now
+    created_at = document_clone[:created_at] || Time.now
     sql = <<-SQL
     INSERT INTO assessment_search (
       assessment_id,
