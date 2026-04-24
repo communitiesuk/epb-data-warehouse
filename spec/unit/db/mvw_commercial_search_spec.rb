@@ -38,7 +38,7 @@ describe "Commercial Materialized View" do
       "aircon_kw_rating" => "100",
       "aircon_present" => "No",
       "floor_area" => "951",
-      "lodgement_datetime" => Time.parse("2021-07-21 11:26:28.045000000 +0000"),
+      "lodgement_datetime" => "2021-07-21 11:26:28",
       "other_fuel_desc" => "Other fuel test",
       "renewable_sources" => "Renewable sources test",
       "special_energy_uses" => "Test sp",

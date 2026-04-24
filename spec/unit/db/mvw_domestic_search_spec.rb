@@ -241,7 +241,7 @@ describe "Domestic Materialized View" do
         "posttown" => "Whitbury",
         "construction_age_band" => "England and Wales: before 1900",
         "tenure" => "owner-occupied",
-        "lodgement_datetime" => "2021-07-21T11:26:28.045Z",
+        "lodgement_datetime" => "2021-07-21 11:26:28",
         "fixed_lighting_outlets_count" => "18",
         "low_energy_fixed_lighting_outlets_count" => "17",
         "current_energy_efficiency" => "72",
