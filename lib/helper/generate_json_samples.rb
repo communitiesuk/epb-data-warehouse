@@ -4,7 +4,7 @@ class Helper::GenerateJsonSamples
       "assessment_type" => assessment_type(schema_type:, type:),
       "schema_type" => schema_type,
       "assessment_address_id" => "UPRN-000000012457",
-      "created_at" => Time.now,
+      "created_at" => "2025-08-18 20:54:31.000000",
     }
 
     document = UseCase::ParseXmlCertificate.new.execute(xml: xml.to_xml, assessment_id:, schema_type:)

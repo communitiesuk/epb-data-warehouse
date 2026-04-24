@@ -32,7 +32,7 @@ describe Helper::GenerateJsonSamples do
         "sap_windows" => [{ "orientation" => 1, "window_area" => 200.1, "window_type" => 2, "glazing_type" => 1, "window_location" => 0 }, { "orientation" => 2, "window_area" => 180.2, "window_type" => 1, "glazing_type" => 2, "window_location" => 1 }],
         "schema_type" => "RdSAP-Schema-20.0.0",
         "country_code" => "EAW",
-        "created_at" => "2025-07-04T13:00:00.000+01:00",
+        "created_at" => "2025-08-18 20:54:31.000000",
         "main_heating" => [{ "description" => "Boiler and radiators, anthracite", "energy_efficiency_rating" => 3, "environmental_efficiency_rating" => 1 }, { "description" => "Boiler and radiators, mains gas", "energy_efficiency_rating" => 4, "environmental_efficiency_rating" => 4 }],
         "dwelling_type" => "Mid-terrace house",
         "language_code" => 1,
