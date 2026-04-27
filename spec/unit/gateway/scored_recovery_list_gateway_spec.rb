@@ -117,7 +117,7 @@ describe Gateway::ScoredRecoveryListGateway do
       let(:expected_eval_call) do
         [
           "local queue_key = KEYS[1]\nlocal now = tonumber(ARGV[1])\nlocal timeout = tonumber(ARGV[2])\nlocal limit = tonumber(ARGV[3])\nlocal next_visible_at = now + timeout\n\nlocal items = redis.call('ZRANGEBYSCORE', queue_key, '-inf', now, 'LIMIT', 0, limit)\n\nif #items > 0 then\n  local args = {}\n  for i, item in ipairs(items) do\n    table.insert(args, next_visible_at)\n    table.insert(args, item)\n  end\n  redis.call('ZADD', queue_key, unpack(args))\nend\nreturn items\n",
-          { argv: [1_756_986_000.0, 120, 50],
+          { argv: [1_756_989_600.0, 120, 50],
             keys: %w[matched_address_update_recovery_scored] },
         ]
       end
@@ -134,7 +134,7 @@ describe Gateway::ScoredRecoveryListGateway do
       end
 
       it "calls eval with the expected script and arguments" do
-        Timecop.freeze(2025, 9, 4, 12, 40, 0) do
+        Timecop.freeze(Time.utc(2025, 9, 4, 12, 40, 0)) do
           gateway_for_assessments.assessments(queue:)
         end
         expect(assessments_redis).to have_received(:eval).with(*expected_eval_call)
@@ -153,7 +153,7 @@ describe Gateway::ScoredRecoveryListGateway do
 
     context "when running the redis script in ruby" do
       before do
-        Timecop.freeze(2025, 9, 4, 12, 40, 0) do
+        Timecop.freeze(Time.utc(2025, 9, 4, 12, 40, 0)) do
           gateway_for_register_attempt.register_assessments(*payloads, queue: queue, retries: 50)
           payloads.each do |payload|
             register_attempt_redis.zadd(scored_recovery_queue, Time.now.to_f + 100, payload)
@@ -165,7 +165,7 @@ describe Gateway::ScoredRecoveryListGateway do
 
       context "when registering an attempt" do
         it "sets the score to now" do
-          expect(register_attempt_redis.zscore(scored_recovery_queue, "0000-0000-0000-0000-0001:1000000001")).to eq(Time.new(2025, 9, 4, 12, 40, 0).to_f)
+          expect(register_attempt_redis.zscore(scored_recovery_queue, "0000-0000-0000-0000-0001:1000000001")).to eq(Time.utc(2025, 9, 4, 12, 40, 0).to_f)
         end
 
         it "decreases the number of remaining attempts" do
@@ -193,7 +193,7 @@ describe Gateway::ScoredRecoveryListGateway do
       let(:expected_eval_call) do
         [
           "local hash_key = KEYS[1]\nlocal zset_key = KEYS[2]\nlocal payload = ARGV[1]\nlocal now = tonumber(ARGV[2])\n\nlocal attempts = redis.call('HGET', hash_key, payload)\n\nif not attempts or tonumber(attempts) <= 1 then\n  redis.call('HDEL', hash_key, payload)\n  redis.call('ZREM', zset_key, payload)\nelse\n  redis.call('HINCRBY', hash_key, payload, -1)\n  redis.call('ZADD', zset_key, now, payload)\nend\n",
-          { argv: ["0000-0000-0000-0000-0002:1000000002", 1_756_986_000.0],
+          { argv: ["0000-0000-0000-0000-0002:1000000002", 1_756_989_600.0],
             keys: %w[matched_address_update_recovery matched_address_update_recovery_scored] },
         ]
       end
@@ -210,7 +210,7 @@ describe Gateway::ScoredRecoveryListGateway do
       end
 
       it "calls eval with the expected script and arguments" do
-        Timecop.freeze(2025, 9, 4, 12, 40, 0) do
+        Timecop.freeze(Time.utc(2025, 9, 4, 12, 40, 0)) do
           gateway_for_register_attempt.register_attempt(payload: "0000-0000-0000-0000-0002:1000000002", queue:)
         end
         expect(register_attempt_redis).to have_received(:eval).with(*expected_eval_call)
