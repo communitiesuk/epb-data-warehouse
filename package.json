@@ -25,7 +25,7 @@
     "node": "~20"
   },
   "dependencies": {
-    "csv-parse": "^6.1.0",
+    "csv-parse": "^6.2.1",
     "csv-stream": "^0.2.0",
     "fast-xml-parser": "^5.3.2",
     "node-fetch": "^3.3.2",
