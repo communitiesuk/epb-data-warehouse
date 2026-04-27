@@ -32,7 +32,7 @@ describe "DEC Report" do
       "local_authority" => "E09000013",
       "local_authority_label" => "Hammersmith and Fulham",
       "lodgement_date" => "2016-04-25",
-      "lodgement_datetime" => "2021-07-21 11:26:28",
+      "lodgement_datetime" => Time.parse("2021-07-21 11:26:28.045000000 +0000"),
       "main_benchmark" => "Schools And Seasonal Public Buildings",
       "main_heating_fuel" => "Natural Gas",
       "nominated_date" => "2016-02-23",
