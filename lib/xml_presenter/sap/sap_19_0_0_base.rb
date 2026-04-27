@@ -73,6 +73,12 @@ module XmlPresenter
           "Addendum-Number" => "addendum_numbers",
           "SAP-Thermal-Bridge" => "thermal_bridges",
         })
+        string_nodes %w[
+          Address-Line-1
+          Address-Line-2
+          Address-Line-3
+          Address-Line-4
+        ]
       end
     end
   end

@@ -51,6 +51,12 @@ module XmlPresenter
           "Main-Heating-Controls" => "main_heating_controls",
           "Addendum-Number" => "addendum_numbers",
         })
+        string_nodes %w[
+          Address-Line-1
+          Address-Line-2
+          Address-Line-3
+          Address-Line-4
+        ]
       end
     end
   end

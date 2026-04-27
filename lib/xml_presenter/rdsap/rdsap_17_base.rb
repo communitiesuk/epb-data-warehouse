@@ -52,6 +52,12 @@ module XmlPresenter
           "Addendum-Number" => "addendum_numbers",
         })
         nodes_ignoring_attributes(%w[Energy-Consumption-Current Energy-Consumption-Potential])
+        string_nodes %w[
+          Address-Line-1
+          Address-Line-2
+          Address-Line-3
+          Address-Line-4
+        ]
       end
     end
   end

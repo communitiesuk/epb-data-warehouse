@@ -2,7 +2,7 @@ require "nokogiri"
 
 module XmlPresenter
   class Parser
-    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, specified_report: nil, ignored_attributes: [], nodes_ignoring_attributes: [])
+    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, specified_report: nil, ignored_attributes: [], nodes_ignoring_attributes: [], string_nodes: [])
       @excludes = excludes
       @includes = includes
       @bases = bases
@@ -12,6 +12,7 @@ module XmlPresenter
       @specified_report = specified_report
       @ignored_attributes = ignored_attributes
       @nodes_ignoring_attributes = nodes_ignoring_attributes
+      @string_nodes = string_nodes
     end
 
     def parse(xml)
@@ -37,7 +38,8 @@ module XmlPresenter
                                                       rootless_list_nodes: @rootless_list_nodes,
                                                       root_node: root_node_option(xml),
                                                       ignored_attributes: @ignored_attributes,
-                                                      nodes_ignoring_attributes: @nodes_ignoring_attributes
+                                                      nodes_ignoring_attributes: @nodes_ignoring_attributes,
+                                                      string_nodes: @string_nodes
       @sax_parser ||= Nokogiri::XML::SAX::Parser.new @assessment_document
     end
 
@@ -98,7 +100,7 @@ module XmlPresenter
   end
 
   class AssessmentDocument < Nokogiri::XML::SAX::Document
-    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, root_node: nil, ignored_attributes: [], nodes_ignoring_attributes: [])
+    def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, root_node: nil, ignored_attributes: [], nodes_ignoring_attributes: [], string_nodes: [])
       @excludes = excludes
       @includes = includes
       @bases = bases
@@ -108,6 +110,7 @@ module XmlPresenter
       @root_node = root_node
       @ignored_attributes = ignored_attributes
       @nodes_ignoring_attributes = nodes_ignoring_attributes
+      @string_nodes = string_nodes
       super()
     end
 
@@ -176,7 +179,7 @@ module XmlPresenter
         store_first_chunk string
       end
 
-      value = try_as_number stripped
+      value = force_string_node? ? stripped : try_as_number(stripped)
 
       if @attrs.length.positive?
         value = @attrs.to_h.merge({ "value" => value })
@@ -285,6 +288,10 @@ module XmlPresenter
 
     def is_base?(name)
       @bases.concat(@excludes).include?(name) || name == @source_position[0]
+    end
+
+    def force_string_node?
+      @string_nodes.include?(@source_position.last)
     end
 
     def is_numeric?(string)

@@ -237,7 +237,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                       "seller_commission_report" => "Y",
                       "property_type" => 2,
                       "scheme_assessor_id" => "SCHE023344",
-                      "address_line_1" => 5,
+                      "address_line_1" => "5",
                       "address_line_2" => "Street Lane",
                       "address_line_3" => "District",
                       "post_town" => "POSTTOWN",

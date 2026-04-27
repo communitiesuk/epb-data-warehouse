@@ -441,4 +441,14 @@ with external insulation</Description>
       expect(parser.parse(xml)).to eq expected
     end
   end
+
+  context "with string nodes defined" do
+    let(:parser) { described_class.new string_nodes: %w[Address-Line-1] }
+
+    it "keeps a purely numeric value as a string" do
+      xml = "<Root><Address-Line-1>5</Address-Line-1></Root>"
+      expected = { "address_line_1" => "5" }
+      expect(parser.parse(xml)).to eq expected
+    end
+  end
 end
