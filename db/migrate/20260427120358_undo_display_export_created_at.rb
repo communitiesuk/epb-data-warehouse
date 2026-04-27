@@ -19,7 +19,7 @@ class UndoDisplayExportCreatedAt < ActiveRecord::Migration[8.1]
         get_attribute_value('property_type', ad.assessment_id) AS PROPERTY_TYPE,
         get_attribute_value('inspection_date', ad.assessment_id) AS INSPECTION_DATE,
         get_attribute_value('registration_date', ad.assessment_id) AS LODGEMENT_DATE,
-       get_attribute_value('created_at', ad.assessment_id)::TIMESTAMP AS LODGEMENT_DATETIME,
+        get_attribute_value('created_at', ad.assessment_id)::TIMESTAMP AS LODGEMENT_DATETIME,
         get_attribute_json('or_benchmark_data',  ad.assessment_id) ->> 'main_benchmark' AS MAIN_BENCHMARK,
         get_attribute_json('technical_information',  ad.assessment_id) ->> 'main_heating_fuel' AS MAIN_HEATING_FUEL,
         get_attribute_json('technical_information',  ad.assessment_id) ->> 'special_energy_uses' AS SPECIAL_ENERGY_USES,
