@@ -23,6 +23,10 @@ class Container
     @recovery_list_gateway ||= Gateway::RecoveryListGateway.new
   end
 
+  def self.scored_recovery_list_gateway
+    @scored_recovery_list_gateway ||= Gateway::ScoredRecoveryListGateway.new
+  end
+
   def self.documents_gateway
     @documents_gateway ||= Gateway::DocumentsGateway.new
   end
@@ -89,7 +93,7 @@ class Container
   def self.import_certificates_backfill_use_case
     @import_certificates_backfill_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case:,
                                                                                queues_gateway:,
-                                                                               recovery_list_gateway:,
+                                                                               recovery_list_gateway: scored_recovery_list_gateway,
                                                                                queue_name: :assessments_backfill,
                                                                                logger:
   end
