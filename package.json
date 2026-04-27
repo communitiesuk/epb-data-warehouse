@@ -8,8 +8,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "populate_ons_postcode": "npm i && node lib/tasks/populate_ons_postcode.js",
-    "show_current_ons_postcode_version": "npm i && node lib/tasks/show_current_ons_postcode_version.js",
+    "populate_ons_postcode": "npm ci && node lib/tasks/populate_ons_postcode.js",
+    "show_current_ons_postcode_version": "npm ci && node lib/tasks/show_current_ons_postcode_version.js",
     "fmt": "npx standard --fix lib/tasks"
   },
   "repository": {
