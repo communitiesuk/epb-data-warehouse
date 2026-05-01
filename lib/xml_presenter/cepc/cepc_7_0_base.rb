@@ -68,6 +68,12 @@ module XmlPresenter
           "Equipment-Operator" => "equipment_operator",
           "Equipment-Owner" => "equipment_owner",
         })
+        string_nodes %w[
+          Address-Line-1
+          Address-Line-2
+          Address-Line-3
+          Address-Line-4
+        ]
         pick_root_node(root_node: "Report", sub_node: "RRN")
       end
     end

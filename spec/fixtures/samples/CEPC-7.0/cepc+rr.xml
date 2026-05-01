@@ -27,7 +27,7 @@
           <Address-Line-1/>
           <Address-Line-2>Acme Coffee</Address-Line-2>
           <Address-Line-3>13 Old Street</Address-Line-3>
-          <Address-Line-4/>
+          <Address-Line-4>11</Address-Line-4>
           <Post-Town>POSTTOWN</Post-Town>
           <Postcode>PT42 7AD</Postcode>
         </Property-Address>

@@ -19,6 +19,7 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
                       "uprn" => 987_345_673_489,
                       "address_line_2" => "Acme Coffee",
                       "address_line_3" => "13 Old Street",
+                      "address_line_4" => "11",
                       "post_town" => "POSTTOWN",
                       "postcode" => "PT42 7AD",
                       "property_type" => "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",

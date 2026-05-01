@@ -248,11 +248,11 @@ describe "Backfill assessment_search table rake" do
         task.invoke
         expect(search.length).to eq(1)
         expected_result = {
-          "address" => "acme coffee 13 old street posttown",
+          "address" => "acme coffee 13 old street 11 posttown",
           "address_line_1" => nil,
           "address_line_2" => "Acme Coffee",
           "address_line_3" => "13 Old Street",
-          "address_line_4" => nil,
+          "address_line_4" => "11",
           "assessment_address_id" => nil,
           "assessment_id" => "4444-5555-6666-7777-8888",
           "assessment_type" => "CEPC",
