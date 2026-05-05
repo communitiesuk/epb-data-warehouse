@@ -3,6 +3,8 @@ describe Gateway::ScoredRecoveryListGateway do
     described_class.new(redis_client: redis)
   end
 
+  let(:visibility_timeout) { 120 }
+  let(:cooldown_period) { 5 }
   let(:redis) { MockRedis.new }
 
   let(:payloads) do
@@ -23,7 +25,9 @@ describe Gateway::ScoredRecoveryListGateway do
   describe "#register_assessments" do
     context "when registering payloads to the queue" do
       before do
-        gateway.register_assessments(*payloads, queue:)
+        Timecop.freeze(Time.utc(2025, 9, 4, 12, 40, 0)) do
+          gateway.register_assessments(*payloads, queue:)
+        end
       end
 
       it "adds the payload to the recovery queue" do
@@ -32,6 +36,15 @@ describe Gateway::ScoredRecoveryListGateway do
 
       it "adds the payload into the scored-recovery queue" do
         expect(redis.zrangebyscore(scored_recovery_queue, "-inf", "+inf")).to eq payloads
+      end
+
+      it "adds the payloads with the score of now + the visibility timeout" do
+        scores = redis.zrangebyscore(scored_recovery_queue, "-inf", "+inf", with_scores: true).to_h
+        expected_time = Time.utc(2025, 9, 4, 12, 40, 0).to_f + visibility_timeout
+        expect(scores).to eq(
+          { "0000-0000-0000-0000-0001:1000000001" => expected_time,
+            "0000-0000-0000-0000-0002:1000000002" => expected_time },
+        )
       end
     end
 
@@ -86,24 +99,28 @@ describe Gateway::ScoredRecoveryListGateway do
       described_class.new redis_client: assessments_redis
     end
 
-    context "when assessments are fetched but one is already being processed" do
+    context "when assessments are fetched but only one is available to be processed" do
       before do
         gateway_for_assessments.register_assessments(*payloads, queue: queue)
-        assessments_redis.zadd(scored_recovery_queue, Time.now.to_f + 90, "0000-0000-0000-0000-0002:1000000002")
+        assessments_redis.zadd(scored_recovery_queue, Time.now.to_f, "0000-0000-0000-0000-0002:1000000002")
       end
 
-      it "only returns the assessments not already being processed" do
-        expect(gateway_for_assessments.assessments(queue:)).to eq ["0000-0000-0000-0000-0001:1000000001"]
+      it "only returns the assessments available for processing" do
+        expect(gateway_for_assessments.assessments(queue:)).to eq ["0000-0000-0000-0000-0002:1000000002"]
       end
     end
 
     context "when assessments are fetched" do
       before do
-        gateway_for_assessments.register_assessments(*payloads, queue: queue)
+        Timecop.freeze(Time.utc(2025, 9, 4, 12, 40, 0)) do
+          gateway_for_assessments.register_assessments(*payloads, queue: queue)
+        end
       end
 
       it "returns all the assessments" do
-        expect(gateway_for_assessments.assessments(queue:)).to eq payloads
+        Timecop.freeze(Time.utc(2025, 9, 4, 12, 40, 0).to_f + visibility_timeout) do
+          expect(gateway_for_assessments.assessments(queue:)).to eq payloads
+        end
       end
     end
 
@@ -164,8 +181,8 @@ describe Gateway::ScoredRecoveryListGateway do
       end
 
       context "when registering an attempt" do
-        it "sets the score to now" do
-          expect(register_attempt_redis.zscore(scored_recovery_queue, "0000-0000-0000-0000-0001:1000000001")).to eq(Time.utc(2025, 9, 4, 12, 40, 0).to_f)
+        it "sets the score to now + COOLDOWN_PERIOD" do
+          expect(register_attempt_redis.zscore(scored_recovery_queue, "0000-0000-0000-0000-0001:1000000001")).to eq(Time.utc(2025, 9, 4, 12, 40, 0).to_f + cooldown_period)
         end
 
         it "decreases the number of remaining attempts" do
@@ -192,8 +209,8 @@ describe Gateway::ScoredRecoveryListGateway do
     context "when executing the function" do
       let(:expected_eval_call) do
         [
-          "local hash_key = KEYS[1]\nlocal zset_key = KEYS[2]\nlocal payload = ARGV[1]\nlocal now = tonumber(ARGV[2])\n\nlocal attempts = redis.call('HGET', hash_key, payload)\n\nif not attempts or tonumber(attempts) <= 1 then\n  redis.call('HDEL', hash_key, payload)\n  redis.call('ZREM', zset_key, payload)\nelse\n  redis.call('HINCRBY', hash_key, payload, -1)\n  redis.call('ZADD', zset_key, now, payload)\nend\n",
-          { argv: ["0000-0000-0000-0000-0002:1000000002", 1_756_989_600.0],
+          "local attempts_queue = KEYS[1]\nlocal scores_queue = KEYS[2]\nlocal payload = ARGV[1]\nlocal next_visible_time = tonumber(ARGV[2])\n\nlocal attempts = redis.call('HGET', attempts_queue, payload)\n\nif not attempts or tonumber(attempts) <= 1 then\n  redis.call('HDEL', attempts_queue, payload)\n  redis.call('ZREM', scores_queue, payload)\nelse\n  redis.call('HINCRBY', attempts_queue, payload, -1)\n  redis.call('ZADD', scores_queue, next_visible_time, payload)\nend\n",
+          { argv: ["0000-0000-0000-0000-0002:1000000002", 1_756_989_600.0 + cooldown_period],
             keys: %w[matched_address_update_recovery matched_address_update_recovery_scored] },
         ]
       end
@@ -242,20 +259,14 @@ describe Gateway::ScoredRecoveryListGateway do
 end
 
 class AssessmentsMockRedis < MockRedis
-  # We define the method directly, bypassing RSpec stubs and the Kernel#eval collision
   def eval(_script, keys: [], argv: [], **_options)
-    # 1. Parse args just like the Lua script
     queue_key = keys[0]
     now = argv[0].to_f
     timeout = argv[1].to_f
     limit = argv[2].to_i
 
-    # 2. Run the Ruby "Shim" logic (calling methods on 'self')
-
-    # Logic: ZRANGEBYSCORE (Find items available now)
     items = zrangebyscore(queue_key, "-inf", now, limit: [0, limit])
 
-    # Logic: ZADD (Lock items for the future)
     if items.any?
       next_visible_at = now + timeout
       updates = items.map { |item| [next_visible_at, item] }
@@ -267,19 +278,19 @@ end
 
 class RegisterAttemptMockRedis < MockRedis
   def eval(_script, keys: [], argv: [], **_options)
-    hash_key = keys[0]
-    zset_key = keys[1]
+    attempts_queue = keys[0]
+    scores_queue = keys[1]
     payload = argv[0]
-    now = argv[1].to_f
+    next_visible_time = argv[1].to_f
 
-    attempts = hget(hash_key, payload).to_i
+    attempts = hget(attempts_queue, payload).to_i
 
     if attempts <= 1
-      hdel(hash_key, payload)
-      zrem(zset_key, payload)
+      hdel(attempts_queue, payload)
+      zrem(scores_queue, payload)
     else
-      hincrby(hash_key, payload, -1)
-      zadd(zset_key, now, payload)
+      hincrby(attempts_queue, payload, -1)
+      zadd(scores_queue, next_visible_time, payload)
     end
   end
 end

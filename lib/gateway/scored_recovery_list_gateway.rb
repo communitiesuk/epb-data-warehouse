@@ -6,6 +6,7 @@ module Gateway
     include RedisFromEnv
 
     VISIBILITY_TIMEOUT = 120
+    COOLDOWN_PERIOD = 5
 
     def initialize(redis_client: nil)
       @redis = redis_client || redis_from_env
@@ -44,8 +45,8 @@ module Gateway
 
       redis.hset(name_for_queue(queue), *assessment_ids.map { |id| [id, retries] }.flatten)
 
-      current_time = Time.now.to_f
-      zadd_args = assessment_ids.flat_map { |id| [current_time, id] }
+      next_visible_time = Time.now.to_f + VISIBILITY_TIMEOUT
+      zadd_args = assessment_ids.flat_map { |id| [next_visible_time, id] }
       redis.zadd(name_for_queue_scored(queue), zadd_args)
     end
 
@@ -59,25 +60,26 @@ module Gateway
 
     def register_attempt(payload:, queue:)
       validate_queue_name queue
+      next_visible_time = Time.now.to_f + COOLDOWN_PERIOD
       redis.eval(
         <<~LUA,
-          local hash_key = KEYS[1]
-          local zset_key = KEYS[2]
+          local attempts_queue = KEYS[1]
+          local scores_queue = KEYS[2]
           local payload = ARGV[1]
-          local now = tonumber(ARGV[2])
+          local next_visible_time = tonumber(ARGV[2])
 
-          local attempts = redis.call('HGET', hash_key, payload)
+          local attempts = redis.call('HGET', attempts_queue, payload)
 
           if not attempts or tonumber(attempts) <= 1 then
-            redis.call('HDEL', hash_key, payload)
-            redis.call('ZREM', zset_key, payload)
+            redis.call('HDEL', attempts_queue, payload)
+            redis.call('ZREM', scores_queue, payload)
           else
-            redis.call('HINCRBY', hash_key, payload, -1)
-            redis.call('ZADD', zset_key, now, payload)
+            redis.call('HINCRBY', attempts_queue, payload, -1)
+            redis.call('ZADD', scores_queue, next_visible_time, payload)
           end
         LUA
         keys: [name_for_queue(queue), name_for_queue_scored(queue)],
-        argv: [payload, Time.now.to_f],
+        argv: [payload, next_visible_time],
       )
     end
 
