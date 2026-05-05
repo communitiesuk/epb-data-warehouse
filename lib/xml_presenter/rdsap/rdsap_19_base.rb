@@ -45,6 +45,7 @@ module XmlPresenter
           SAP-Special-Features
           Air-Change-Rates
           PV-Arrays
+          Alternative-Improvements
         ]
         rootless_list_nodes({
           "Wall" => "walls",

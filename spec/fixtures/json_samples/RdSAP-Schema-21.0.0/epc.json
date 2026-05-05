@@ -70,12 +70,12 @@
   "report_type": 2,
   "sap_heating": {
     "cylinder_size": 1,
-    "shower_outlets": {
-      "shower_outlet": {
+    "shower_outlets": [
+      {
         "shower_wwhrs": 1,
         "shower_outlet_type": 1
       }
-    },
+    ],
     "water_heating_code": 901,
     "water_heating_fuel": 26,
     "instantaneous_wwhrs": {
@@ -190,11 +190,11 @@
   "sap_energy_source": {
     "mains_gas": "Y",
     "meter_type": 2,
-    "pv_batteries": {
-      "pv_battery": {
+    "pv_batteries": [
+      {
         "battery_capacity": 5
       }
-    },
+    ],
     "pv_connection": 0,
     "pv_battery_count": 1,
     "photovoltaic_supply": {

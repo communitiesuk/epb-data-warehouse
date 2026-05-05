@@ -42,6 +42,7 @@ module XmlPresenter
           Main-Heating-Details
           Storage-Heaters
           PV-Arrays
+          Alternative-Improvements
         ]
         rootless_list_nodes({
           "Wall" => "walls",
