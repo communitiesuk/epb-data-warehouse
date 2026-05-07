@@ -86,12 +86,12 @@ class Container
   def self.import_certificates_use_case
     @import_certificates_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case:,
                                                                       queues_gateway:,
-                                                                      recovery_list_gateway:,
+                                                                      recovery_list_gateway: scored_recovery_list_gateway,
                                                                       logger:
   end
 
   def self.import_certificates_backfill_use_case
-    @import_certificates_backfill_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_backfill_use_case,
+    @import_certificates_backfill_use_case ||= UseCase::ImportCertificates.new import_xml_certificate_use_case: import_xml_certificate_use_case,
                                                                                queues_gateway:,
                                                                                recovery_list_gateway: scored_recovery_list_gateway,
                                                                                queue_name: :assessments_backfill,
@@ -102,18 +102,9 @@ class Container
     @import_xml_certificate_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case:,
                                                                            assessment_attribute_gateway: assessment_attributes_gateway,
                                                                            certificate_gateway: register_api_gateway,
-                                                                           recovery_list_gateway:,
+                                                                           recovery_list_gateway: scored_recovery_list_gateway,
                                                                            logger:,
                                                                            assessments_country_id_gateway:
-  end
-
-  def self.import_xml_certificate_backfill_use_case
-    @import_xml_certificate_backfill_use_case ||= UseCase::ImportXmlCertificate.new import_certificate_data_use_case:,
-                                                                                    assessment_attribute_gateway: assessment_attributes_gateway,
-                                                                                    certificate_gateway: register_api_gateway,
-                                                                                    recovery_list_gateway: scored_recovery_list_gateway,
-                                                                                    logger:,
-                                                                                    assessments_country_id_gateway:
   end
 
   def self.opt_out_certificates_use_case

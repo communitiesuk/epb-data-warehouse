@@ -18,4 +18,25 @@ describe Container do
       expect { described_class.send method }.not_to raise_error
     end
   end
+
+  describe ".import_certificates_use_case" do
+    it "uses a ScoredRecoveryListGateway as the recovery_list_gateway" do
+      gateway = described_class.import_certificates_use_case.instance_variable_get(:@recovery_list_gateway)
+      expect(gateway).to be_an_instance_of(Gateway::ScoredRecoveryListGateway)
+    end
+  end
+
+  describe ".import_certificates_backfill_use_case" do
+    it "uses a ScoredRecoveryListGateway as the recovery_list_gateway" do
+      gateway = described_class.import_certificates_backfill_use_case.instance_variable_get(:@recovery_list_gateway)
+      expect(gateway).to be_an_instance_of(Gateway::ScoredRecoveryListGateway)
+    end
+  end
+
+  describe ".import_xml_certificate_use_case" do
+    it "uses a ScoredRecoveryListGateway as the recovery_list_gateway" do
+      gateway = described_class.import_xml_certificate_use_case.instance_variable_get(:@recovery_list_gateway)
+      expect(gateway).to be_an_instance_of(Gateway::ScoredRecoveryListGateway)
+    end
+  end
 end
