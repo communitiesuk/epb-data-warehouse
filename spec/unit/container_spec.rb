@@ -39,4 +39,18 @@ describe Container do
       expect(gateway).to be_an_instance_of(Gateway::ScoredRecoveryListGateway)
     end
   end
+
+  describe ".update_certificate_matched_addresses_use_case" do
+    it "uses a ScoredRecoveryListGateway as the recovery_list_gateway" do
+      gateway = described_class.update_certificate_matched_addresses_use_case.instance_variable_get(:@recovery_list_gateway)
+      expect(gateway).to be_an_instance_of(Gateway::ScoredRecoveryListGateway)
+    end
+  end
+
+  describe ".backfill_update_certificate_matched_addresses_use_case" do
+    it "uses a ScoredRecoveryListGateway as the recovery_list_gateway" do
+      gateway = described_class.backfill_update_certificate_matched_addresses_use_case.instance_variable_get(:@recovery_list_gateway)
+      expect(gateway).to be_an_instance_of(Gateway::ScoredRecoveryListGateway)
+    end
+  end
 end

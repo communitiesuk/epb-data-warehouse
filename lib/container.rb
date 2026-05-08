@@ -164,7 +164,7 @@ class Container
     @update_certificate_matched_addresses_use_case ||= UseCase::UpdateCertificateMatchedAddresses.new documents_gateway:,
                                                                                                       queues_gateway:,
                                                                                                       certificate_gateway: register_api_gateway,
-                                                                                                      recovery_list_gateway:,
+                                                                                                      recovery_list_gateway: scored_recovery_list_gateway,
                                                                                                       assessment_search_gateway:,
                                                                                                       logger:
   end
@@ -172,7 +172,7 @@ class Container
   def self.backfill_update_certificate_matched_addresses_use_case
     @backfill_update_certificate_matched_addresses_use_case ||= UseCase::UpdateCertificateMatchedAddressesBackfill.new documents_gateway:,
                                                                                                                        queues_gateway:,
-                                                                                                                       recovery_list_gateway:,
+                                                                                                                       recovery_list_gateway: scored_recovery_list_gateway,
                                                                                                                        assessment_search_gateway:,
                                                                                                                        logger:
   end
