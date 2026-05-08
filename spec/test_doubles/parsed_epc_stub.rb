@@ -559,4 +559,29 @@ class ParsedEpcStub
           "low_energy_fixed_lighting_outlets_percentage" => 100,
           "electricity_tariff" => 1 } }
   end
+
+  def self.sap_with_broken_list_nodes
+    { "registration_date" => "2022-06-15",
+      "assessment_type" => "SAP",
+      "schema_type" => "SAP-Schema-19.1.0",
+      "sap_energy_source" => {
+        "wind_turbines_count" => 0,
+      },
+      "sap_heating" => {},
+      "alternative_improvements" => { "improvement" => { "sequence" => 1, "improvement_type" => "A" } } }
+  end
+
+  def self.rdsap_with_broken_list_nodes
+    { "registration_date" => "2023-03-10",
+      "assessment_type" => "RdSAP",
+      "schema_type" => "RdSAP-Schema-21.0.1",
+      "sap_energy_source" => {
+        "wind_turbines_count" => 0,
+        "pv_batteries" => { "pv_battery" => { "battery_capacity" => 3.0 } },
+      },
+      "sap_heating" => {
+        "shower_outlets" => { "shower_outlet" => { "shower_outlet_name" => "Ensuite shower" } },
+      },
+      "alternative_improvements" => { "improvement" => { "sequence" => 2, "improvement_type" => "B" } } }
+  end
 end

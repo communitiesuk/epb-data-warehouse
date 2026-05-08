@@ -1,17 +1,5 @@
 shared_context "when saving epcs for fix_lzc_energy_node update" do
-  def save_epc(schema:, assessment_id:, type:, stub: nil)
-    if stub.nil?
-      sample = Samples.xml(schema)
-      use_case = UseCase::ParseXmlCertificate.new
-      parsed_epc = use_case.execute(xml: sample, schema_type: schema, assessment_id:)
-    else
-      parsed_epc = stub
-    end
-    parsed_epc["assessment_type"] = type
-    parsed_epc["schema_type"] = schema
-    import = UseCase::ImportCertificateData.new(assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, documents_gateway: Gateway::DocumentsGateway.new, assessment_search_gateway: Gateway::AssessmentSearchGateway.new, commercial_reports_gateway: Gateway::CommercialReportsGateway.new)
-    import.execute(assessment_id:, certificate_data: parsed_epc)
-  end
+  include_context "when saving EPCs"
 
   def get_node_value(assessment_id)
     sql = <<-SQL
