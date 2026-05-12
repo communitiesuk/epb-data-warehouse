@@ -20,12 +20,12 @@ shared_context "when saving epcs for fix_list_nodes_serialised_as_objects update
     JSON.parse(raw).dig(*path)
   end
 
-  def get_alternative_improvements_eav(assessment_id)
+  def get_eav_value(assessment_id, attribute_name, *path)
     sql = <<~SQL
       SELECT aav.json
       FROM assessment_attribute_values aav
       JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id
-      WHERE aav.assessment_id = $1 AND aa.attribute_name = 'alternative_improvements'
+      WHERE aav.assessment_id = $1 AND aa.attribute_name = $2
     SQL
 
     bindings = [
@@ -34,10 +34,16 @@ shared_context "when saving epcs for fix_list_nodes_serialised_as_objects update
         assessment_id,
         ActiveRecord::Type::String.new,
       ),
+      ActiveRecord::Relation::QueryAttribute.new(
+        "attribute_name",
+        attribute_name,
+        ActiveRecord::Type::String.new,
+      ),
     ]
 
     row = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)[0]
-    JSON.parse(row["json"])
+    parsed = JSON.parse(row["json"])
+    path.empty? ? parsed : parsed.dig(*path)
   end
 
   def num_incorrect_nodes
@@ -121,8 +127,20 @@ describe "Fix list nodes serialised as objects Rake" do
 
       it "parses SAP alternative_improvements EAV value as an array" do
         run_task
-        eav_value = get_alternative_improvements_eav("1111-0000-0000-0000-0001")
+        eav_value = get_eav_value("1111-0000-0000-0000-0001", "alternative_improvements")
         expect(eav_value).to eq([{ "improvement" => { "improvement_type" => "A", "sequence" => 1 } }])
+      end
+
+      it "parses RdSAP pv_batteries as an array in the EAV store" do
+        run_task
+        eav_value = get_eav_value("2222-0000-0000-0000-0002", "sap_energy_source", "pv_batteries")
+        expect(eav_value).to eq([{ "pv_battery" => { "battery_capacity" => 3.0 } }])
+      end
+
+      it "parses RdSAP shower_outlets as an array in the EAV store" do
+        run_task
+        eav_value = get_eav_value("2222-0000-0000-0000-0002", "sap_heating", "shower_outlets")
+        expect(eav_value).to eq([{ "shower_outlet" => { "shower_outlet_name" => "Ensuite shower" } }])
       end
 
       it "does not double-wrap an already correct array in the document store" do

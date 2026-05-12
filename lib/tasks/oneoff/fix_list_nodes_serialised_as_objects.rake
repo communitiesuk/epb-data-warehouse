@@ -5,16 +5,25 @@ module FixListNodesSerialisedAsObjects
         attribute_name: "pv_batteries",
         document_path: "'{sap_energy_source,pv_batteries}'",
         doc_value_expr: "ad.document->'sap_energy_source'->'pv_batteries'",
+        eav_attribute_name: "sap_energy_source",
+        eav_json_path: "'{pv_batteries}'",
+        eav_value_expr: "aav.json->'pv_batteries'",
       },
       {
         attribute_name: "shower_outlets",
         document_path: "'{sap_heating,shower_outlets}'",
         doc_value_expr: "ad.document->'sap_heating'->'shower_outlets'",
+        eav_attribute_name: "sap_heating",
+        eav_json_path: "'{shower_outlets}'",
+        eav_value_expr: "aav.json->'shower_outlets'",
       },
       {
         attribute_name: "alternative_improvements",
         document_path: "'{alternative_improvements}'",
         doc_value_expr: "ad.document->'alternative_improvements'",
+        eav_attribute_name: "alternative_improvements",
+        eav_json_path: nil,
+        eav_value_expr: "aav.json",
       },
     ].freeze
   end
@@ -79,15 +88,31 @@ module FixListNodesSerialisedAsObjects
   def self.update_eav(assessment_ids:, node:)
     return if assessment_ids.empty?
 
-    sql = <<~SQL
-      UPDATE assessment_attribute_values aav
-      SET json = jsonb_build_array(aav.json)
-      FROM assessment_attributes aa
-      WHERE aav.attribute_id = aa.attribute_id
-        AND aav.assessment_id = ANY($1)
-        AND aa.attribute_name = $2
-        AND jsonb_typeof(aav.json) = 'object'
-    SQL
+    sql = if node[:eav_json_path].nil?
+            <<~SQL
+              UPDATE assessment_attribute_values aav
+              SET json = jsonb_build_array(#{node[:eav_value_expr]})
+              FROM assessment_attributes aa
+              WHERE aav.attribute_id = aa.attribute_id
+                AND aav.assessment_id = ANY($1)
+                AND aa.attribute_name = $2
+                AND jsonb_typeof(#{node[:eav_value_expr]}) = 'object'
+            SQL
+          else
+            <<~SQL
+              UPDATE assessment_attribute_values aav
+              SET json = jsonb_set(
+                aav.json,
+                #{node[:eav_json_path]},
+                jsonb_build_array(#{node[:eav_value_expr]})
+              )
+              FROM assessment_attributes aa
+              WHERE aav.attribute_id = aa.attribute_id
+                AND aav.assessment_id = ANY($1)
+                AND aa.attribute_name = $2
+                AND jsonb_typeof(#{node[:eav_value_expr]}) = 'object'
+            SQL
+          end
 
     bindings = [
       ActiveRecord::Relation::QueryAttribute.new(
@@ -97,7 +122,7 @@ module FixListNodesSerialisedAsObjects
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "attribute_name",
-        node[:attribute_name],
+        node[:eav_attribute_name],
         ActiveRecord::Type::String.new,
       ),
     ]
