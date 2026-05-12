@@ -61,6 +61,33 @@ module FixListNodesSerialisedAsObjects
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row["assessment_id"] }
   end
 
+  def self.fetch_broken_eav_assessment_ids(year:, node:)
+    sql = <<~SQL
+      SELECT aav.assessment_id
+      FROM assessment_attribute_values aav
+      JOIN assessment_attributes aa ON aav.attribute_id = aa.attribute_id
+      JOIN assessment_search s ON s.assessment_id = aav.assessment_id
+      WHERE EXTRACT(YEAR FROM s.registration_date) = $1
+        AND aa.attribute_name = $2
+        AND jsonb_typeof(#{node[:eav_value_expr]}) = 'object'
+    SQL
+
+    bindings = [
+      ActiveRecord::Relation::QueryAttribute.new(
+        "year",
+        year,
+        ActiveRecord::Type::Integer.new,
+      ),
+      ActiveRecord::Relation::QueryAttribute.new(
+        "attribute_name",
+        node[:eav_attribute_name],
+        ActiveRecord::Type::String.new,
+      ),
+    ]
+
+    ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row["assessment_id"] }
+  end
+
   def self.update_json(assessment_ids:, node:)
     return if assessment_ids.empty?
 
@@ -150,6 +177,30 @@ namespace :one_off do
         next if assessment_ids.empty?
 
         FixListNodesSerialisedAsObjects.update_json(assessment_ids:, node:)
+        FixListNodesSerialisedAsObjects.update_eav(assessment_ids:, node:)
+      end
+    end
+
+    ActiveRecord::Base.connection.close
+  end
+
+  desc "Update pv_batteries, shower_outlets and alternative_improvements list nodes serialised as objects instead of arrays in the EAV table only"
+  task :fix_list_nodes_serialised_as_objects_in_eav do
+    start_year = ENV["START_YEAR"]&.to_i
+    end_year   = ENV["END_YEAR"]&.to_i
+
+    years = FixListNodesSerialisedAsObjects.years_to_process(start_year:, end_year:)
+
+    puts "Processing years: #{years.join(', ')}"
+
+    years.each do |year|
+      puts "Processing year: #{year}"
+
+      FixListNodesSerialisedAsObjects::NODES_TO_FIX.each do |node|
+        assessment_ids = FixListNodesSerialisedAsObjects.fetch_broken_eav_assessment_ids(year:, node:)
+        puts "  #{node[:attribute_name]}: #{assessment_ids.size} assessments to fix in EAV"
+        next if assessment_ids.empty?
+
         FixListNodesSerialisedAsObjects.update_eav(assessment_ids:, node:)
       end
     end

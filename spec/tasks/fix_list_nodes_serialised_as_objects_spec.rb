@@ -239,4 +239,46 @@ describe "Fix list nodes serialised as objects Rake" do
       end
     end
   end
+
+  context "when calling the EAV-only rake task" do
+    subject!(:task) { get_task("one_off:fix_list_nodes_serialised_as_objects_in_eav") }
+
+    include_context "when saving epcs for fix_list_nodes_serialised_as_objects update"
+
+    before do
+      allow($stdout).to receive(:puts)
+      allow($stdout).to receive(:write)
+      save_epc(schema: "SAP-Schema-19.1.0", assessment_id: "5555-0000-0000-0000-0005", type: "SAP", stub: ParsedEpcStub.sap_with_broken_list_nodes, registration_date: Date.new(2022, 6, 1))
+      save_epc(schema: "RdSAP-Schema-21.0.1", assessment_id: "6666-0000-0000-0000-0006", type: "RdSAP", stub: ParsedEpcStub.rdsap_with_broken_list_nodes, registration_date: Date.new(2022, 6, 1))
+
+      FixListNodesSerialisedAsObjects.update_json(
+        assessment_ids: %w[5555-0000-0000-0000-0005],
+        node: FixListNodesSerialisedAsObjects::NODES_TO_FIX.find { |node| node[:attribute_name] == "alternative_improvements" },
+      )
+      FixListNodesSerialisedAsObjects.update_json(
+        assessment_ids: %w[6666-0000-0000-0000-0006],
+        node: FixListNodesSerialisedAsObjects::NODES_TO_FIX.find { |node| node[:attribute_name] == "pv_batteries" },
+      )
+      FixListNodesSerialisedAsObjects.update_json(
+        assessment_ids: %w[6666-0000-0000-0000-0006],
+        node: FixListNodesSerialisedAsObjects::NODES_TO_FIX.find { |node| node[:attribute_name] == "shower_outlets" },
+      )
+    end
+
+    it "fixes EAV rows when the document JSON has already been corrected" do
+      expect(get_node_value("5555-0000-0000-0000-0005", "alternative_improvements")).to be_a(Array)
+      expect(get_node_value("6666-0000-0000-0000-0006", "sap_energy_source", "pv_batteries")).to be_a(Array)
+      expect(get_node_value("6666-0000-0000-0000-0006", "sap_heating", "shower_outlets")).to be_a(Array)
+
+      expect(get_eav_value("5555-0000-0000-0000-0005", "alternative_improvements")).to be_a(Hash)
+      expect(get_eav_value("6666-0000-0000-0000-0006", "sap_energy_source", "pv_batteries")).to be_a(Hash)
+      expect(get_eav_value("6666-0000-0000-0000-0006", "sap_heating", "shower_outlets")).to be_a(Hash)
+
+      task.invoke
+
+      expect(get_eav_value("5555-0000-0000-0000-0005", "alternative_improvements")).to eq([{ "improvement" => { "improvement_type" => "A", "sequence" => 1 } }])
+      expect(get_eav_value("6666-0000-0000-0000-0006", "sap_energy_source", "pv_batteries")).to eq([{ "pv_battery" => { "battery_capacity" => 3.0 } }])
+      expect(get_eav_value("6666-0000-0000-0000-0006", "sap_heating", "shower_outlets")).to eq([{ "shower_outlet" => { "shower_outlet_name" => "Ensuite shower" } }])
+    end
+  end
 end
