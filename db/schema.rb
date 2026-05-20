@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_27_164008) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_20_144308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -140,6 +140,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_27_164008) do
     t.string "type", null: false
     t.string "type_code", null: false
     t.index ["area_code"], name: "index_ons_postcode_directory_names_on_area_code"
+    t.index ["area_code"], name: "uniq_area_code", unique: true
     t.index ["name"], name: "index_ons_postcode_directory_names_on_name"
     t.index ["type_code"], name: "index_ons_postcode_directory_names_on_type_code"
   end
