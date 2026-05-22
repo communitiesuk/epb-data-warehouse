@@ -530,7 +530,7 @@ RSpec.describe "the parser and the CEPC (NI) configuration" do
           "medium_payback" =>
              [{ "recommendation_code" => "BF22",
                 "recommendation" =>
-                 "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
+                 "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance. This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
                 "co2_impact" => "LOW" }],
           "long_payback" =>
              [{ "recommendation_code" => "AE8",

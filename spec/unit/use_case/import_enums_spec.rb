@@ -17,6 +17,14 @@ describe UseCase::ImportEnums do
     Gateway::XsdConfigGateway.new("spec/config/attribute_enum_map.json")
   end
 
+  let(:lookups_gateway) do
+    Gateway::AssessmentLookupsGateway.new
+  end
+
+  let(:assessment_attribute_gateway) do
+    Gateway::AssessmentAttributesGateway.new
+  end
+
   let(:presenter) do
     XmlPresenter::Xsd.new
   end
@@ -112,7 +120,7 @@ describe UseCase::ImportEnums do
 
     let(:use_case) do
       described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new,
-                          xsd_presenter: presenter, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+                          xsd_presenter: presenter, assessment_attribute_gateway: assessment_attribute_gateway, xsd_config_gateway: xsd_config)
     end
 
     before do
@@ -140,7 +148,7 @@ describe UseCase::ImportEnums do
 
     let(:use_case) do
       described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new,
-                          xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+                          xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: assessment_attribute_gateway, xsd_config_gateway: xsd_config)
     end
 
     before do
@@ -153,10 +161,6 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving the construction age band enums" do
-    let(:lookups_gateway)  do
-      Gateway::AssessmentLookupsGateway.new
-    end
-
     before(:all) do
       lookups_gateway = Gateway::AssessmentLookupsGateway.new
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/construction_age_band.json")
@@ -207,10 +211,6 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving transaction types for RdSAP" do
-    let(:lookups_gateway) do
-      Gateway::AssessmentLookupsGateway.new
-    end
-
     let(:saved_data) do
       ActiveRecord::Base.connection.exec_query("SELECT lookup_key, lookup_value
                 FROM assessment_lookups ")
@@ -241,10 +241,6 @@ describe UseCase::ImportEnums do
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_transaction_type_map.json")
       use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
       use_case.execute
-    end
-
-    let(:lookups_gateway) do
-      Gateway::AssessmentLookupsGateway.new
     end
 
     let(:attribute_name) do
@@ -296,10 +292,6 @@ describe UseCase::ImportEnums do
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_property_type.json")
       use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
       use_case.execute
-    end
-
-    let(:lookups_gateway) do
-      Gateway::AssessmentLookupsGateway.new
     end
 
     let(:attribute_name) do
@@ -367,10 +359,6 @@ describe UseCase::ImportEnums do
       use_case.execute
     end
 
-    let(:lookups_gateway) do
-      Gateway::AssessmentLookupsGateway.new
-    end
-
     let(:attribute_name) do
       "property_type"
     end
@@ -420,10 +408,6 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving the energy tariff enums" do
-    let(:lookups_gateway)  do
-      Gateway::AssessmentLookupsGateway.new
-    end
-
     before(:all) do
       lookups_gateway = Gateway::AssessmentLookupsGateway.new
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_energy_tariff.json")
@@ -466,6 +450,63 @@ describe UseCase::ImportEnums do
     it "returns the all transaction_types CEPC" do
       enum_value = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "transaction_type", schema_version: "CEPC-8.0.0")
       expect(enum_value.length).to eq 7
+    end
+  end
+
+  context "when the presenter returns enum values with surrounding newlines or whitespace" do
+    let(:xsd_config) { instance_double(Gateway::XsdConfigGateway) }
+
+    let(:use_case_real_gateways) do
+      described_class.new(
+        assessment_lookups_gateway: lookups_gateway,
+        xsd_presenter: presenter,
+        assessment_attribute_gateway: assessment_attribute_gateway,
+        xsd_config_gateway: xsd_config,
+      )
+    end
+
+    before do
+      allow(xsd_config).to receive(:nodes_and_paths).and_return([{
+        "attribute_name" => "tenure",
+        "type_of_assessment" => "RdSAP",
+        "xsd_node_name" => "TenureCode",
+        "xsd_path" => "/some/path",
+      }])
+      allow(presenter).to receive(:get_enums_by_type).and_return(
+        { "RdSAP-Schema-20.0.0" => {
+          "\n1\n" => "\nowner-occupied\n",
+          "2" => "\n  rented (social)\n  ",
+          "3" => "Solid fuel: wood pellets (in bags, for secondary\n            heating)\n          ",
+        } },
+      )
+      use_case_real_gateways.execute
+    end
+
+    it "strips newlines from the key" do
+      result = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "tenure", lookup_key: "1")
+      expect(result).not_to be_empty
+    end
+
+    it "strips newlines from the value" do
+      result = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "tenure", lookup_key: "1").first["value"]
+      expect(result).to eq("owner-occupied")
+    end
+
+    it "strips leading and trailing whitespace from values" do
+      result = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "tenure", lookup_key: "2").first["value"]
+      expect(result).to eq("rented (social)")
+    end
+
+    it "removes embedded newlines and surrounding whitespace" do
+      result = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "tenure", lookup_key: "3").first["value"]
+      expect(result).to eq("Solid fuel: wood pellets (in bags, for secondary heating)")
+    end
+
+    it "does not save any lookup value containing a newline" do
+      saved_values = ActiveRecord::Base.connection.exec_query(
+        "SELECT lookup_value FROM assessment_lookups WHERE lookup_value LIKE '%\n%'",
+      )
+      expect(saved_values.rows).to be_empty
     end
   end
 end

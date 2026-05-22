@@ -275,7 +275,7 @@ RSpec.describe "the parser and the CEPC configuration" do
                       "language_code" => 1,
                       "scheme_assessor_id" => "EMP/000044",
                       "location_description" =>
-                       "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls.  The building is heated by gas fired boilers.",
+                       "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls. The building is heated by gas fired boilers.",
                       "uprn" => 0,
                       "address_line_2" => "Place Early Years Centre",
                       "address_line_3" => "Address Road",
@@ -385,7 +385,7 @@ RSpec.describe "the parser and the CEPC configuration" do
                       "language_code" => 1,
                       "scheme_assessor_id" => "EMP/000044",
                       "location_description" =>
-                       "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls.  The building is heated by gas fired boilers.",
+                       "Refurbished and extended nursery school building with flat and pitched roof areas, double glazed windows and cavity walls. The building is heated by gas fired boilers.",
                       "uprn" => 0,
                       "address_line_2" => "Place Early Years Centre",
                       "address_line_3" => "Address Road",
@@ -400,7 +400,7 @@ RSpec.describe "the parser and the CEPC configuration" do
                       "short_payback" =>
                        [{ "recommendation_code" => "OM15",
                           "recommendation" =>
-                           "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
+                           "It is recommended that energy management techniques are introduced. These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
                           "co2_impact" => "MEDIUM" },
                         { "recommendation_code" => "CON2",
                           "recommendation" =>
@@ -445,7 +445,7 @@ RSpec.describe "the parser and the CEPC configuration" do
                           "co2_impact" => "MEDIUM" },
                         { "recommendation_code" => "BF22",
                           "recommendation" =>
-                           "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
+                           "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance. This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
                           "co2_impact" => "LOW" },
                         { "recommendation_code" => "BF9",
                           "recommendation" =>

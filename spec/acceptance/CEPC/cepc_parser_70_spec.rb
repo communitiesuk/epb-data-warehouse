@@ -425,7 +425,7 @@ RSpec.describe "the parser and the CEPC configuration for schema 7.0" do
                            "co2_impact" => "MEDIUM" },
                          { "recommendation_code" => "X9",
                            "recommendation" =>
-                             "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy assessor to undertake an inspection in compliance with the EPB Regulations SI 2007/991 as amended.)",
+                             "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44. (This could be an appropriate opportunity to engage an accredited energy assessor to undertake an inspection in compliance with the EPB Regulations SI 2007/991 as amended.)",
                            "co2_impact" => "MEDIUM" },
                          { "recommendation_code" => "SP3",
                            "recommendation" =>

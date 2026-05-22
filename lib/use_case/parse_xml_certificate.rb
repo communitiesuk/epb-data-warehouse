@@ -12,16 +12,31 @@ module UseCase
         parser.parse(xml)
       }
 
-      if use_subprocess
-        Parallel.map([0]) { |_|
-          parse.call
-        }.first
-      else
-        parse.call
-      end
+      result = if use_subprocess
+                 Parallel.map([0]) { |_|
+                   parse.call
+                 }.first
+               else
+                 parse.call
+               end
+
+      deep_clean_strings(result)
     end
 
   private
+
+    def deep_clean_strings(value)
+      case value
+      when Hash
+        value.transform_values { |v| deep_clean_strings(v) }
+      when Array
+        value.map { |v| deep_clean_strings(v) }
+      when String
+        value.squish
+      else
+        value
+      end
+    end
 
     def export_configuration(schema_type)
       export_config_file = {

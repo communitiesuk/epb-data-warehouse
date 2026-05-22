@@ -32,7 +32,7 @@ describe "ImportEnumsXsd Rake" do
         end
 
         it "saves Insulate hot water cylinder for Improvement-Number 1" do
-          expect(data.find { |i| i["lookup_key"] == "1" }["lookup_value"]).to eq "Insulate hot water cylinder with 80 mm jacket"
+          expect(data.find { |i| i["lookup_key"] == "1" }["lookup_value"]).to eq "Insulate hot water cylinder with 80 mm jacket"
         end
 
         it "saves party wall insulation Improvement-Number 63 in RD-SAP.21.0" do
@@ -85,7 +85,7 @@ describe "ImportEnumsXsd Rake" do
         end
 
         it "saves correct text for Improvement-Number 1" do
-          text = "Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness (or to suit the space available) for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast."
+          text = "Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness (or to suit the space available) for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast."
           expect(data.find { |i| i["lookup_key"] == "1" }["lookup_value"]).to eq text
         end
 

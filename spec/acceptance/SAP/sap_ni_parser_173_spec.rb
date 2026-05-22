@@ -158,7 +158,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                               "orientation" => 1,
                               "width" => 3.62,
                               "height" => 1 },
-                            { "name" => "Left  Side Windows",
+                            { "name" => "Left Side Windows",
                               "type" => "Windows",
                               "location" => "Walls (1)",
                               "orientation" => 7,
