@@ -77,6 +77,7 @@ describe Gateway::AssessmentSearchGateway do
           "registration_date" => Time.parse("2020-05-04 00:00:00.000000000 +0000"),
           "assessment_type" => "RdSAP",
           "created_at" => Time.parse(created_at),
+          "schema_type" => "RdSAP-Schema-20.0.0",
         }
 
         expect(search.first).to eq expected_rdsap
@@ -112,6 +113,7 @@ describe Gateway::AssessmentSearchGateway do
           "registration_date" => Time.parse("2021-03-19 00:00:00 UTC"),
           "assessment_type" => "CEPC",
           "created_at" => Time.parse(created_at),
+          "schema_type" => "CEPC-8.0.0",
         }
 
         expect(search.first).to eq expected_data
@@ -182,7 +184,7 @@ describe Gateway::AssessmentSearchGateway do
           "assessment_type" => "DEC",
           "created_at" => Time.parse(created_at),
           "uprn" => 1_000_000_001_245,
-
+          "schema_type" => "CEPC-8.0.0",
         }
 
         expect(search.first).to eq expected_data
@@ -217,6 +219,7 @@ describe Gateway::AssessmentSearchGateway do
           "assessment_type" => "DEC-RR",
           "created_at" => Time.parse(created_at),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "CEPC-8.0.0",
         }
 
         expect(search.first).to eq expected_data
@@ -251,6 +254,7 @@ describe Gateway::AssessmentSearchGateway do
           "assessment_type" => "SAP",
           "created_at" => Time.parse(created_at),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "SAP-Schema-19.0.0",
         }
 
         expect(search.first).to eq expected_data

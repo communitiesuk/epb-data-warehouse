@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_20_144308) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_02_101941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -85,6 +85,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_20_144308) do
     t.string "post_town", limit: 100
     t.string "postcode", limit: 10
     t.datetime "registration_date", precision: nil, null: false
+    t.string "schema_type", limit: 30
     t.bigint "uprn"
     t.index ["address"], name: "index_assessment_search_on_address_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["assessment_address_id"], name: "index_assessment_search_on_assessment_address_id"

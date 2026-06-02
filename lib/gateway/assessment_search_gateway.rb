@@ -31,13 +31,14 @@ class Gateway::AssessmentSearchGateway
       address,
       registration_date,
       assessment_type,
-      created_at
+      created_at,
+      schema_type
     )
     SELECT
       $1, $2, $3, $4, $5, $6, $7::varchar,
       COALESCE($8, 0), CASE WHEN COALESCE($8, 0) = 0 THEN NULL ELSE energy_band_calculator($8, $12) END,
       n.name, n1.name,
-      $9, $10, $11, $12, $13
+      $9, $10, $11, $12, $13, $14
     FROM (SELECT $7 AS postcode) p
     LEFT JOIN ons_postcode_directory d ON d.postcode = p.postcode
     LEFT JOIN ons_postcode_directory_names n  ON d.local_authority_code = n.area_code AND  n.type = 'Local authority'
@@ -114,6 +115,11 @@ class Gateway::AssessmentSearchGateway
         "created_at",
         created_at,
         ActiveRecord::Type::DateTime.new,
+      ),
+      ActiveRecord::Relation::QueryAttribute.new(
+        "schema_type",
+        document_clone[:schema_type],
+        ActiveRecord::Type::String.new,
       ),
     ]
 

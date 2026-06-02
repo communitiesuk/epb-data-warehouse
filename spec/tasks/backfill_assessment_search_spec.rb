@@ -161,6 +161,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "SAP-Schema-16.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -187,6 +188,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "SAP-Schema-19.1.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -213,6 +215,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "RdSAP-Schema-17.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -239,6 +242,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "RdSAP-Schema-21.0.1",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -265,6 +269,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "CEPC-7.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -291,6 +296,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "CEPC-8.0.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -317,6 +323,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "CEPC-7.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -343,6 +350,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "CEPC-8.0.0",
         }
         expect(search.first).to eq(expected_result)
       end
@@ -369,6 +377,7 @@ describe "Backfill assessment_search table rake" do
           "postcode" => "SW10 0AA",
           "registration_date" => Date.new(2025, 7, 14),
           "uprn" => 1_000_000_001_245,
+          "schema_type" => "CEPC-8.0.0",
         }
         expect(search.first).to eq(expected_result)
       end
