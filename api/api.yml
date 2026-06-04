@@ -307,6 +307,7 @@ paths:
                     postTown: "Whitbury"
                     postcode: "SW10 0AA"
                     registrationDate: "2020-05-04"
+                    schemaType: "RdSAP-Schema-20.0.0"
                 pagination:
                   totalRecords: 4
                   currentPage: 1
@@ -484,6 +485,7 @@ paths:
                     postcode: "SW10 0AA"
                     registrationDate: "2020-05-04"
                     relatedRrn: "0000-0000-0000-0000-1111"
+                    schemaType: "CEPC-8.0.0"
                 pagination:
                   totalRecords: 4
                   currentPage: 1
@@ -661,6 +663,7 @@ paths:
                     postcode: "SW10 0AA"
                     registrationDate: "2020-05-04"
                     relatedRrn: "0000-0000-0000-0000-1111"
+                    schemaType: "CEPC-8.0.0"
                 pagination:
                   totalRecords: 4
                   currentPage: 1
@@ -1452,6 +1455,8 @@ components:
         registrationDate:
           type: string
           format: date-time
+        schemaType:
+          type: string
 
     PaginationMetadata:
       type: object
