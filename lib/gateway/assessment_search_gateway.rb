@@ -181,7 +181,8 @@ class Gateway::AssessmentSearchGateway
       s.constituency,
       s.current_energy_efficiency_band,
       to_char(s.registration_date, 'YYYY-MM-DD') as  registration_date,
-      s.uprn
+      s.uprn,
+      s.schema_type
     SQL
 
     is_cepc = this_args[:assessment_type].include?("CEPC")

@@ -15,6 +15,7 @@ shared_examples "a search API endpoint" do |type:|
           "postcode" => "SW10 0AA",
           "uprn" => 100_121_241_798,
           "registrationDate" => "2020-05-04",
+          "schemaType" => "RdSAP-Schema-20.0.0",
         }
       elsif type == "non-domestic"
         {
@@ -31,6 +32,7 @@ shared_examples "a search API endpoint" do |type:|
           "registrationDate" => "2021-03-19",
           "uprn" => 100_121_241_798,
           "relatedRrn" => "0000-0000-0000-0000-1111",
+          "schemaType" => "CEPC-8.0.0",
         }
       else
         {
@@ -46,6 +48,7 @@ shared_examples "a search API endpoint" do |type:|
           "postcode" => "SW10 0AA",
           "registrationDate" => "2021-10-12",
           "uprn" => 100_121_241_798,
+          "schemaType" => "CEPC-8.0.0",
         }
       end
     end

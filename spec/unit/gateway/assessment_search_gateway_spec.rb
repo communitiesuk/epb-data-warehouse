@@ -506,6 +506,7 @@ describe Gateway::AssessmentSearchGateway do
           "postcode" => "SW10 0AA",
           "uprn" => 1245,
           "registration_date" => "2021-11-01",
+          "schema_type" => "RdSAP-Schema-20.0.0",
         }
         expect(results.first).to eq expected_result
       end
@@ -531,6 +532,7 @@ describe Gateway::AssessmentSearchGateway do
           "uprn" => nil,
           "registration_date" => "2021-03-19",
           "related_rrn" => "0000-0000-0000-0000-1111",
+          "schema_type" => "CEPC-8.0.0",
         }
         expect(gateway.fetch_assessments(**non_domestic_args).first).to eq expected_result
       end
