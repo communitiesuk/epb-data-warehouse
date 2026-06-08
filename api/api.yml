@@ -1333,7 +1333,7 @@ paths:
     get:
       tags:
         - Files
-        - Non-domestic
+        - Display
       summary: Download display recommendations full-load JSON
       description: |
         Redirects to a pre-signed S3 URL for the non-domestic recommendations full-load ZIP file.
