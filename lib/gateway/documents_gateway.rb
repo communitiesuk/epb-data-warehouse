@@ -82,10 +82,18 @@ module Gateway
 
     def fetch_by_id(assessment_id:)
       sql = <<-SQL
-        SELECT fn_export_json_document(ad.document, ad.matched_uprn) as document
-        FROM assessment_documents ad
-        WHERE ad.assessment_id = $1
-        AND EXISTS (SELECT * FROM assessment_search s WHERE s.assessment_id = ad.assessment_id)
+        WITH target_doc AS (
+        SELECT
+          fn_export_json_document(document, matched_uprn) as document,
+          (document->>'registration_date')::timestamp as reg_date,
+          assessment_id
+          FROM assessment_documents
+          WHERE assessment_id = $1
+        )
+        SELECT td.document as document
+        FROM assessment_search s
+        JOIN target_doc td ON s.assessment_id = td.assessment_id
+        WHERE s.registration_date = td.reg_date;
       SQL
 
       bindings = [

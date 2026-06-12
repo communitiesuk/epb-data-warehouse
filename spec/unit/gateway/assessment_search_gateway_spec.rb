@@ -22,7 +22,7 @@ describe Gateway::AssessmentSearchGateway do
   let(:country_id) { 1 }
   let(:rdsap) do
     parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-1000000001245",
-                     different_fields: { "postcode" => "SW10 0AA", "created_at" => created_at })
+                     different_fields: { "postcode" => "SW10 0AA", "created_at" => created_at, "registration_date" => "2020-05-04" })
   end
 
   before(:all) do
