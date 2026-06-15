@@ -82,18 +82,11 @@ module Gateway
 
     def fetch_by_id(assessment_id:)
       sql = <<-SQL
-        WITH target_doc AS (
         SELECT
           fn_export_json_document(document, matched_uprn) as document,
-          (document->>'registration_date')::timestamp as reg_date,
-          assessment_id
+          (document->>'registration_date')::timestamp as registration_date
           FROM assessment_documents
-          WHERE assessment_id = $1
-        )
-        SELECT td.document as document
-        FROM assessment_search s
-        JOIN target_doc td ON s.assessment_id = td.assessment_id
-        WHERE s.registration_date = td.reg_date;
+          WHERE assessment_id = $1;
       SQL
 
       bindings = [
@@ -106,6 +99,8 @@ module Gateway
       ]
       result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       return nil if result.empty?
+
+      return nil unless check_id_in_assessment_search(assessment_id:, registration_date: result.first["registration_date"])
 
       JSON.parse(result.first["document"], symbolize_names: true)
     end
@@ -231,6 +226,32 @@ module Gateway
       )
 
       ActiveRecord::Base.connection.exec_query(sql, "MATCHED_UPRN_SQL", bindings)
+    end
+
+  private
+
+    def check_id_in_assessment_search(assessment_id:, registration_date:)
+      sql = <<-SQL
+        SELECT 1
+        FROM assessment_search
+        WHERE assessment_id = $1
+        AND registration_date = $2;
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "registration_date",
+          registration_date,
+          ActiveRecord::Type::DateTime.new,
+        ),
+      ]
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+      !result.empty?
     end
   end
 end
