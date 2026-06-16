@@ -56,7 +56,7 @@ describe "Domestic Recommendations Report Yesterday" do
 
     let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query("SELECT * FROM vw_domestic_rr_yesterday", "SQL").map { |result| result } }
 
-    let(:yesterday) { (Date.today - 1) }
+    let(:yesterday) { Date.today - 1 }
 
     before do
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")

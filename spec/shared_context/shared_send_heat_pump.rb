@@ -20,7 +20,7 @@ shared_context "when sending heat pump data" do
   def notify_body
     {
       "status_code" => 400,
-      "errors" => ["error" => "BadRequestError", "message" => "App error"],
+      "errors" => [{ "error" => "BadRequestError", "message" => "App error" }],
     }
   end
 end
