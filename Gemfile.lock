@@ -247,7 +247,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     securerandom (0.4.1)
-    sentry-ruby (6.4.0)
+    sentry-ruby (6.6.2)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
@@ -334,7 +334,7 @@ DEPENDENCIES
   rspec (~> 3.12)
   rubocop-govuk (~> 5.2)
   rubocop-performance (~> 1.21)
-  sentry-ruby (~> 6.1)
+  sentry-ruby (~> 6.6)
   sinatra (~> 4.1)
   sinatra-activerecord (~> 2.0.28)
   sinatra-contrib
