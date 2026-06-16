@@ -11,15 +11,15 @@ module Gateway
 
     def bearer_token_exists?(bearer_token)
       params = {
-        filter_expression: "BearerToken = :bearer_token",
+        index_name: "BearerTokenIndex",
+        key_condition_expression: "BearerToken = :bearer_token",
         expression_attribute_values: { ":bearer_token" => bearer_token },
       }
-
-      scan_all_pages(params) do |items|
-        return true if items.any?
-      end
-
-      false
+      response = @table.client.query(
+        table_name: @table.name,
+        **params,
+      )
+      response.items.any?
     end
 
     def get_opt_in_users
