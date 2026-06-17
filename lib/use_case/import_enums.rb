@@ -20,6 +20,7 @@ module UseCase
         end
 
         enum_hashes.each do |schema_version, values|
+          schema_version = attribute["schema_version"] unless attribute["schema_version"].nil?
           next unless @assessment_lookups_gateway.valid_schema_version?(schema_version)
 
           save_lookup(values:, attribute:, schema_version:)

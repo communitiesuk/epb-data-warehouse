@@ -188,6 +188,32 @@ describe UseCase::ImportEnums do
     end
   end
 
+  context "when saving enums that override the schema version" do
+    let(:schema_version) { "SAP-Schema-16.0" }
+
+    before(:all) do
+      lookups_gateway = Gateway::AssessmentLookupsGateway.new
+      xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_map_schema_version_override.json")
+      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case.execute
+    end
+
+    it "returns the expected enum value for improvement 48" do
+      enum_value = Gateway::AssessmentLookupsGateway.new.fetch_lookups_values(name: "improvement_summary", lookup_key: "48", schema_version:).first["value"]
+      expect(enum_value).to eq("High performance external doors")
+    end
+
+    it "includes lookup keys 45 to 50 in the improvement_summary data" do
+      gateway = Gateway::AssessmentLookupsGateway.new
+      expected_keys = %w[45 46 47 48 49 50]
+
+      expected_keys.each do |lookup_key|
+        result = gateway.fetch_lookups_values(name: "improvement_summary", lookup_key: lookup_key, schema_version:)
+        expect(result).not_to be_empty
+      end
+    end
+  end
+
   context "when saving data across a range of SAP schemas" do
     before do
       lookups_gateway = Gateway::AssessmentLookupsGateway.new
