@@ -32,6 +32,7 @@ module Helper
       end
 
     def initialize
+      JSON::Validator.use_multi_json = false
       JSON::Validator.register_format_validator("email", EMAIL_FORMAT_PROC)
       JSON::Validator.register_format_validator("iso-date", DATE_FORMAT_PROC)
       JSON::Validator.register_format_validator(
