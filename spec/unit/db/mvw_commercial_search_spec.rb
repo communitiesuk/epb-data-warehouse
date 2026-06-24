@@ -34,7 +34,7 @@ describe "Commercial Materialized View" do
       "main_heating_fuel" => "Grid Supplied Electricity",
       "new_build_benchmark" => "34",
       "ac_inspection_commissioned" => "4",
-      "address" => "60 Maple Syrup Road",
+      "address" => "60 Maple Syrup Road, Candy Mountain",
       "aircon_kw_rating" => "100",
       "aircon_present" => "No",
       "floor_area" => "951",
