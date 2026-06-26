@@ -290,6 +290,16 @@ describe Gateway::AssessmentSearchGateway do
         gateway.insert_assessment(assessment_id:, document: rdsap, country_id:)
         expect(search.length).to eq 1
       end
+
+      it "updates the row with the new address lines" do
+        updated_document = rdsap.merge({ "address_line_1" => "Flat 2", "address_line_2" => "3456", "address_line_3" => "Some road", "address_line_4" => "Some part of town", "post_town" => "The post town" })
+        gateway.insert_assessment(assessment_id:, document: updated_document, country_id:)
+        expect(search.first["address_line_1"]).to eq "Flat 2"
+        expect(search.first["address_line_2"]).to eq "3456"
+        expect(search.first["address_line_3"]).to eq "Some road"
+        expect(search.first["address_line_4"]).to eq "Some part of town"
+        expect(search.first["post_town"]).to eq "The post town"
+      end
     end
 
     context "when the different assessment_ids are being saved" do
