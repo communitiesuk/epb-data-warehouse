@@ -45,7 +45,14 @@ class Gateway::AssessmentSearchGateway
     LEFT JOIN ons_postcode_directory_names n1
       ON d.westminster_parliamentary_constituency_code = n1.area_code AND n1.type = 'Westminster parliamentary constituency'
     LIMIT 1
-    ON CONFLICT (assessment_id, registration_date) DO NOTHING;
+    ON CONFLICT (assessment_id, registration_date)
+    DO UPDATE SET#{' '}
+      address_line_1 = excluded.address_line_1,
+      address_line_2 = excluded.address_line_2,
+      address_line_3 = excluded.address_line_3,
+      address_line_4 = excluded.address_line_4,
+      post_town = excluded.post_town,
+      address = excluded.address;
     SQL
 
     address = generate_address(document: document_clone)
