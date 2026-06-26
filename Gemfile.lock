@@ -299,7 +299,7 @@ GEM
       ffi (~> 1.17.2)
     yggdrasil-engine (1.2.2-x86_64-linux)
       ffi (~> 1.17.2)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.2)
 
 PLATFORMS
   aarch64-linux
@@ -341,7 +341,7 @@ DEPENDENCIES
   timecop (~> 0.9)
   unleash (~> 6.6.0)
   webmock (~> 3.26)
-  zeitwerk (~> 2.6)
+  zeitwerk (~> 2.8)
 
 RUBY VERSION
    ruby 3.4.7p58
