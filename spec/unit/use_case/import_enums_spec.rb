@@ -274,8 +274,24 @@ describe UseCase::ImportEnums do
     end
 
     it "save the transaction type for all versions of SAP" do
-      sap_schemas = %w[SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0]
+      sap_schemas = %w[SAP-Schema-15.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0]
       expect(fetch_schemas(attribute_name:).sort).to eq sap_schemas
+    end
+
+    it "save the enums from the sap 15.0" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "SAP-Schema-15.0")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  1 => "marketed sale",
+                       2 => "non marketed sale",
+                       3 => "rental (social)",
+                       4 => "rental (private)",
+                       5 => "not sale or rental",
+                       6 => "new dwelling",
+                       7 => "not recorded - this is for backwards compatibility only and should not be used" }
+
+      expect(result).to eq(expectation)
     end
 
     it "save the enums from the sap 16.1" do
@@ -391,6 +407,7 @@ describe UseCase::ImportEnums do
 
     it "save the transaction type for all versions of SAP" do
       sap_schemas = %w[
+        SAP-Schema-15.0
         SAP-Schema-16.0
         SAP-Schema-16.1
         SAP-Schema-16.2
@@ -403,6 +420,19 @@ describe UseCase::ImportEnums do
         SAP-Schema-19.2.0
       ]
       expect(fetch_schemas(attribute_name:).sort).to include(*sap_schemas)
+    end
+
+    it "save the enums from the sap 15.0" do
+      data = fetch_saved_data_by_schema_version(attribute_name:, schema_version: "SAP-Schema-15.0")
+      result = data.each_with_object({}) do |row, hash|
+        hash[row["lookup_key"].to_i] = row["lookup_value"]
+      end
+      expectation = {  0 => "House",
+                       1 => "Bungalow",
+                       2 => "Flat",
+                       3 => "Maisonette" }
+
+      expect(result).to eq(expectation)
     end
 
     it "save the enums from the sap 16.1" do

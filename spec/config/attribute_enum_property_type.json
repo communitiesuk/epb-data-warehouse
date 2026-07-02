@@ -14,7 +14,7 @@
       "attribute_name": "property_type",
       "type_of_assessment": "SAP",
       "xsd_node_name": "PropertyTypeCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16**/SAP-EPC/UDT/SharedDomains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]**/SAP-EPC/UDT/SharedDomains.xsd"
     },
     {
       "attribute_name": "transaction_type",
