@@ -29,6 +29,7 @@ describe "Add a partition to the assessment_search table for next month" do
     context "when the partition already exists" do
       before do
         task.invoke
+        task.reenable
       end
 
       it "does not add a duplicate partition" do
