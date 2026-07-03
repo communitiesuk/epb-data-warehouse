@@ -1,7 +1,7 @@
 require_relative "../shared_context/shared_partition"
 
 describe "Add a partition to the assessment_search table for next month" do
-  subject(:task) { get_task("create_historic_table_partitions") }
+  subject(:task) { get_task("one_off:create_historic_table_partitions") }
 
   include_context "when partitioning a table"
 
