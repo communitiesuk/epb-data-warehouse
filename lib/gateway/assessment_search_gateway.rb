@@ -32,13 +32,14 @@ class Gateway::AssessmentSearchGateway
       registration_date,
       assessment_type,
       created_at,
-      schema_type
+      schema_type,
+      country_id
     )
     SELECT
       $1, $2, $3, $4, $5, $6, $7::varchar,
       COALESCE($8, 0), CASE WHEN COALESCE($8, 0) = 0 THEN NULL ELSE energy_band_calculator($8, $12) END,
       n.name, n1.name,
-      $9, $10, $11, $12, $13, $14
+      $9, $10, $11, $12, $13, $14, $15
     FROM (SELECT $7 AS postcode) p
     LEFT JOIN ons_postcode_directory d ON d.postcode = p.postcode
     LEFT JOIN ons_postcode_directory_names n  ON d.local_authority_code = n.area_code AND  n.type = 'Local authority'
@@ -46,7 +47,7 @@ class Gateway::AssessmentSearchGateway
       ON d.westminster_parliamentary_constituency_code = n1.area_code AND n1.type = 'Westminster parliamentary constituency'
     LIMIT 1
     ON CONFLICT (assessment_id, registration_date)
-    DO UPDATE SET#{' '}
+    DO UPDATE SET
       address_line_1 = excluded.address_line_1,
       address_line_2 = excluded.address_line_2,
       address_line_3 = excluded.address_line_3,
@@ -127,6 +128,11 @@ class Gateway::AssessmentSearchGateway
         "schema_type",
         document_clone[:schema_type],
         ActiveRecord::Type::String.new,
+      ),
+      ActiveRecord::Relation::QueryAttribute.new(
+        "country_id",
+        country_id,
+        ActiveRecord::Type::BigInteger.new,
       ),
     ]
 
