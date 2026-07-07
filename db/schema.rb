@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_03_142716) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_06_160843) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -79,6 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_03_142716) do
     t.string "assessment_type", limit: 8
     t.string "constituency", limit: 45
     t.string "council", limit: 40
+    t.bigint "country_id"
     t.datetime "created_at", precision: nil
     t.string "current_energy_efficiency_band", limit: 2
     t.integer "current_energy_efficiency_rating"
