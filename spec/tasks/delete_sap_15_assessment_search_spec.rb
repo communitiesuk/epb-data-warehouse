@@ -16,16 +16,16 @@ describe "Delete SAP 15 certificates from assessment_search rake" do
 
     before do
       assessment_address_id = "UPRN-000000001245"
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment: "SAP", type: "sap", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment: "SAP", type: "rdsap", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment: "SAP", type: "rdsap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", assessment_address_id:, schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", type: "epc", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", assessment_address_id:, schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", type: "epc", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
     end

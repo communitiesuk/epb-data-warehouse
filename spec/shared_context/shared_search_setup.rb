@@ -23,28 +23,28 @@ shared_context "when requesting a search endpoint" do |property_type|
            end
     schema_type = property_type == "domestic" ? "RdSAP-Schema-20.0.0" : "CEPC-8.0.0"
 
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, type:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, type:, different_fields: {
       country_id:, "postcode" => "SW10 0AA", assessment_address_id: "UPRN-100121241798"
     }.merge(property_type == "domestic" ? { "energy_rating_current" => 85 } : { "asset_rating" => 35, "related_rrn" => "0000-0000-0000-0000-1111" }))
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, type:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, type:, different_fields: {
       country_id:, "postcode" => "SW1A 2AA", assessment_address_id: "UPRN-100121241799"
     }.merge(property_type == "domestic" ? {} : { "related_rrn" => "0000-0000-0000-0000-2222" }))
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, type:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, type:, different_fields: {
       country_id:, "postcode" => "ML9 9AR"
     }.merge(property_type == "domestic" ? {} : { "related_rrn" => "0000-0000-0000-0000-3333" }))
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, type:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type:, type_of_assessment:, type:, different_fields: {
       country_id:, "postcode" => "SW10 0AA", "address_line_1" => "2 Banana Street"
     }.merge(property_type == "domestic" ? {} : { "related_rrn" => "0000-0000-0000-0000-4444" }))
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", type: "epc", different_fields: {
       country_id:, "postcode" => "SW10 0AA", "energy_rating_current" => 72
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment:, type:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment:, type:, different_fields: {
       country_id:, "postcode" => "SW10 0AA", "asset_rating" => 110, "created_at" => Date.today.strftime("%y-%m-%d")
     }.merge(property_type == "domestic" ? { "energy_rating_current" => 85 } : { "asset_rating" => 35, "related_rrn" => "0000-0000-0000-0000-1111" }))
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0099", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0099", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
       country_id:, "postcode" => "SW10 0AA"
     }.merge(property_type == "domestic" ? {} : { "asset_rating" => 110, "related_rrn" => "0000-0000-0000-0000-1111" }))
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0088", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", type: "dec+rr", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0088", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", type: "dec+rr", different_fields: {
       country_id:, "postcode" => "SW10 0AA"
     }.merge(property_type == "domestic" ? {} : { "asset_rating" => 110, "related_rrn" => "0000-0000-0000-0000-1111" }))
   end

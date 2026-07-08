@@ -19,13 +19,13 @@ describe "Backfill commercial_reports table rake" do
     before(:all) do
       add_countries
 
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0011"
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.0", type_of_assessment: "CEPC", type: "cepc-rr", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.0", type_of_assessment: "CEPC", type: "cepc-rr", different_fields: {
         "related_rrn" => "0000-0000-0000-0000-0022", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment: "DEC", type: "dec-rr", add_to_assessment_search: true, different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment: "DEC", type: "dec-rr", different_fields: {
         "related_rrn" => "0000-0000-0000-0000-0033", "country_id": 1
       })
     end
@@ -45,7 +45,7 @@ describe "Backfill commercial_reports table rake" do
 
       context "when there are domestic assessments" do
         before do
-          add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", add_to_assessment_search: true, different_fields: {
+          add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
             "country_id": 2,
           })
         end
@@ -58,7 +58,7 @@ describe "Backfill commercial_reports table rake" do
 
       context "when there are valid assessments with no related_rrn" do
         before do
-          add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", type: "dec-rr", add_to_assessment_search: true, different_fields: {
+          add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "DEC", type: "dec-rr", different_fields: {
             "country_id": 2, "related_rrn" => nil
           })
         end

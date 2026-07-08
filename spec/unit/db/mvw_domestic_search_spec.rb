@@ -36,52 +36,52 @@ describe "Domestic Materialized View" do
     add_countries
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports")
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id: "RRN-000000001245", schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id: "RRN-000000001245", schema_type:, type_of_assessment:, different_fields: {
       "postcode": "W6 9ZD", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", assessment_address_id:, schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "SW10 0AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", assessment_address_id:, schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "SW1A 2AA", "energy_rating_current": 50, "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "BT1 1AA", "country_id": 3
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", assessment_address_id:, schema_type:, type_of_assessment:, add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "registration_date": "2024-12-06T12:00:00.000+00:00", "postcode": "SW10 0AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
       "postcode": "W6 9ZD", "country_id": 1, related_rrn: "0000-0000-0000-0000-0055"
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "registration_date": "2020-05-06T23:59:59.000+00:00", "postcode": "SW10 0AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "ML9 9AR", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.0", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "SW1A 2AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "registration_date": "2021-12-06T00:00:00.000+00:00", "postcode": "SW1A 2AA", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment: "RdSAP", type: "rdsap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", assessment_address_id:, schema_type: "SAP-Schema-16.0", type_of_assessment:, type: "sap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment:, type: "sap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0013", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment: "RdSAP", type: "rdsap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0013", assessment_address_id:, schema_type: "SAP-Schema-16.1", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2020-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0014", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment:, type: "sap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0014", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment:, type: "sap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0015", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment: "RdSAP", type: "rdsap", add_to_assessment_search: true, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0015", assessment_address_id:, schema_type: "SAP-Schema-15.0", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
 

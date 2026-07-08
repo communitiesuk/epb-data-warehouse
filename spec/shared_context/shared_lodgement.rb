@@ -48,7 +48,7 @@ shared_context "when lodging XML" do
     add_assessment_country_id(assessment_id:, document:)
   end
 
-  def add_assessment_eav(assessment_id:, schema_type:, type_of_assessment:, add_to_assessment_search: false, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil)
+  def add_assessment_eav(assessment_id:, schema_type:, type_of_assessment:, type: "epc", assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: nil)
     meta_data_sample = {
       "assessment_type" => type_of_assessment,
       "opt_out" => false,
@@ -73,9 +73,7 @@ shared_context "when lodging XML" do
     certificate_data.merge!(meta_data_sample)
     certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
     Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
-    if add_to_assessment_search
-      Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: certificate_data["country_id"])
-    end
+    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: certificate_data["country_id"])
     add_assessment_country_id(assessment_id:, document: certificate_data)
   end
 
