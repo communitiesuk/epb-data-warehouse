@@ -6,4 +6,7 @@ task :environment do
   ActiveRecord::Tasks::DatabaseTasks.migrations_paths = "db/migrate"
   ActiveRecord::Tasks::DatabaseTasks.database_configuration = DATABASE_CONFIG.to_hash
   ActiveRecord::Tasks::DatabaseTasks.seed_loader = LookupSeed.new
+  ActiveRecord.schema_format = :sql
+  # Do not dump the schema in production as it needs pgdump in the path
+  ActiveRecord.dump_schema_after_migration = false if ENV.fetch("RACK_ENV", nil) == "production"
 end
