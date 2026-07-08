@@ -27,6 +27,12 @@
       "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]**/UDT/SAP-Domains.xsd"
     },
     {
+      "attribute_name": "glazed_area",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "GlazedAreaCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]**/UDT/SAP-Domains.xsd"
+    },
+    {
       "attribute_name": "glazed_type",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "SAP-GlazingTypeCode"
@@ -36,7 +42,12 @@
       "type_of_assessment": "SAP",
       "xsd_node_name": "SAP-GlazingTypeCode",
       "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]**/UDT/SAP-Domains.xsd"
-
+    },
+    {
+      "attribute_name": "glazed_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "SAP-GlazingTypeCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]**/UDT/SAP-Domains.xsd"
     },
 
     {
@@ -44,6 +55,13 @@
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "HeatLossCorridorCode"
     },
+    {
+      "attribute_name": "heat_loss_corridor",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "HeatLossCorridorCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]**/UDT/SAP-Domains.xsd"
+    },
+
     {
       "attribute_name": "main_fuel",
       "type_of_assessment": "RdSAP",
@@ -196,14 +214,14 @@
       "attribute_name": "improvement_summary",
       "type_of_assessment": "SAP",
       "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16.[1-9]*/Messages/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]*/Messages/ExternalDefinitions.xml",
       "node_hash": { "Improvement-Number": "Improvement-Summary" }
     },
     {
       "attribute_name": "improvement_summary",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16.[1-9]*/Messages/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]*/Messages/ExternalDefinitions.xml",
       "node_hash": { "Improvement-Number": "Improvement-Summary" }
     },
     {
@@ -241,14 +259,14 @@
       "attribute_name": "improvement_description",
       "type_of_assessment": "SAP",
       "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16.[1-9]*/Messages/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]*/Messages/ExternalDefinitions.xml",
       "node_hash": { "Improvement-Number": "Improvement-Description" }
     },
     {
       "attribute_name": "improvement_description",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "//Recommendation",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-16.[1-9]*/Messages/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-1[56]*/Messages/ExternalDefinitions.xml",
       "node_hash": { "Improvement-Number": "Improvement-Description" }
     },
     {

@@ -87,6 +87,8 @@
 				<HIP:Property>
 					<HIP:Address>
 						<HIP:Address-Line-1>1 Street Lane</HIP:Address-Line-1>
+						<SAP:Address-Line-2>Some Street</SAP:Address-Line-2>
+						<SAP:Address-Line-3>Some Area</SAP:Address-Line-3>
 						<HIP:Post-Town>Some Town</HIP:Post-Town>
 						<HIP:Postcode>A11 1AA</HIP:Postcode>
 					</HIP:Address>
@@ -270,6 +272,11 @@
 					<HIP:Open-Fireplaces-Count>1</HIP:Open-Fireplaces-Count>
 					<HIP:Solar-Water-Heating>N</HIP:Solar-Water-Heating>
 					<HIP:Conservatory-Type>3</HIP:Conservatory-Type>
+					<HIP:SAP-Flat-Details>
+						<HIP:Level>3</HIP:Level>
+						<HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
+						<HIP:Unheated-Corridor-Length>10</HIP:Unheated-Corridor-Length>
+					</HIP:SAP-Flat-Details>
 					<HIP:SAP-Building-Parts>
 						<HIP:SAP-Building-Part>
 							<HIP:Building-Part-Number>1</HIP:Building-Part-Number>

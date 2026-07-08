@@ -88,7 +88,7 @@
           <SAP:Address>
             <SAP:Address-Line-1>Flat 1</SAP:Address-Line-1>
             <SAP:Address-Line-2>Block of Flats</SAP:Address-Line-2>
-            <SAP:Address-Line-3/>
+            <SAP:Address-Line-3>Some Street</SAP:Address-Line-3>
             <SAP:Post-Town>Some Town</SAP:Post-Town>
             <SAP:Postcode>AAA1 1AA</SAP:Postcode>
           </SAP:Address>
@@ -104,12 +104,12 @@
         <SAP:Assessment-Date>2011-11-15</SAP:Assessment-Date>
         <SAP:Property-Summary>
           <SAP:Walls>
-            <SAP:Description>Average thermal transmittance 0.35 W/m??K</SAP:Description>
+            <SAP:Description>Average thermal transmittance 0.35 W/m²K</SAP:Description>
             <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
             <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
           </SAP:Walls>
           <SAP:Roof>
-            <SAP:Description>Average thermal transmittance 0.15 W/m??K</SAP:Description>
+            <SAP:Description>Average thermal transmittance 0.15 W/m²K</SAP:Description>
             <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
             <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
           </SAP:Roof>
@@ -215,6 +215,7 @@
         <SAP:Schema-Version>LIG-15.0</SAP:Schema-Version>
         <SAP:SAP-Property-Details>
           <SAP:Property-Type>3</SAP:Property-Type>
+          <SAP:Built-Form>1</SAP:Built-Form>
           <SAP:Living-Area>62.28</SAP:Living-Area>
           <SAP:Orientation>8</SAP:Orientation>
           <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
