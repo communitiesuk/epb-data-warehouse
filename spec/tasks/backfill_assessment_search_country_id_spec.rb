@@ -33,6 +33,11 @@ describe "Backfill assessment_search country_id column rake" do
     allow($stdout).to receive(:puts)
   end
 
+  after do
+    ENV.delete("START_DATE")
+    ENV.delete("END_DATE")
+  end
+
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:backfill_assessment_search_country_id") }
 
