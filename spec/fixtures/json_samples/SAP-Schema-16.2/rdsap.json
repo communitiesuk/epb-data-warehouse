@@ -800,7 +800,7 @@
         "value": 637.67,
         "currency": "GBP"
       },
-      "indicative_cost": "£100  -  £350",
+      "indicative_cost": "£100 - £350",
       "improvement_type": "A",
       "improvement_details": {
         "improvement_number": 5
@@ -815,7 +815,7 @@
         "value": 1224.21,
         "currency": "GBP"
       },
-      "indicative_cost": "£500  -  £1,500",
+      "indicative_cost": "£500 - £1,500",
       "improvement_type": "B",
       "improvement_details": {
         "improvement_number": 6
@@ -830,7 +830,7 @@
         "value": 476.28,
         "currency": "GBP"
       },
-      "indicative_cost": "£800  -  £1,200",
+      "indicative_cost": "£800 - £1,200",
       "improvement_type": "W",
       "improvement_details": {
         "improvement_number": 47
@@ -845,7 +845,7 @@
         "value": 787.42,
         "currency": "GBP"
       },
-      "indicative_cost": "£80  -  £120",
+      "indicative_cost": "£80 - £120",
       "improvement_type": "D",
       "improvement_details": {
         "improvement_number": 10
@@ -875,7 +875,7 @@
         "value": 1219.36,
         "currency": "GBP"
       },
-      "indicative_cost": "£2,200  -  £3,000",
+      "indicative_cost": "£2,200 - £3,000",
       "improvement_type": "I",
       "improvement_details": {
         "improvement_number": 20
@@ -890,7 +890,7 @@
         "value": 310.6,
         "currency": "GBP"
       },
-      "indicative_cost": "£3,300  -  £6,500",
+      "indicative_cost": "£3,300 - £6,500",
       "improvement_type": "O",
       "improvement_details": {
         "improvement_number": 8

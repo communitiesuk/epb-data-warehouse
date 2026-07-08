@@ -112,7 +112,7 @@ describe Helper::GenerateJsonSamples do
     end
 
     it "returns all the expected sample files" do
-      expect(sample_files.length).to eq 37
+      expect(sample_files.length).to eq 39
     end
 
     it "files are being generated from the relevant xml samples" do
@@ -125,7 +125,7 @@ describe Helper::GenerateJsonSamples do
       end
     end
 
-    %w[ac-cert redacted dec_exceeds 15 NI].each do |i|
+    %w[ac-cert redacted dec_exceeds 14 NI].each do |i|
       it "files do not return an anything that contains #{i}" do
         expect(sample_files).not_to include a_string_matching(/#{i}/)
       end
