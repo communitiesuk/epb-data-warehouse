@@ -424,6 +424,10 @@ private
 
     sql << " AND NOT created_at::date = CURRENT_DATE"
 
+    unless Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
+      sql << " AND country_id != 3"
+    end
+
     if this_args[:limit]
       sql << " ORDER BY registration_date DESC"
       sql << " LIMIT $#{index}"

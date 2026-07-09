@@ -792,6 +792,28 @@ describe Gateway::AssessmentSearchGateway do
         expect(results.map { |i| i["certificate_number"] }).to eq %w[0005-0000-0000-0011 0005-0000-0000-0010 0005-0000-0000-0009 0005-0000-0000-0008 0005-0000-0000-0007]
       end
     end
+
+    context "when calling fetch_assessment method using the NI toggle" do
+      before do
+        gateway.insert_assessment(assessment_id: "0000-0000-0000-0099", document: rdsap, country_id: 4)
+
+        ActiveRecord::Base.connection.exec_query(
+          "UPDATE assessment_search SET country_id = 3 WHERE assessment_id = '0000-0000-0000-0099'",
+        )
+      end
+
+      it "returns only E&W assessments when the toggle is disabled" do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(false)
+        results = gateway.fetch_assessments(**args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001]
+      end
+
+      it "includes NI assessments when the toggle is enabled" do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(true)
+        results = gateway.fetch_assessments(**args)
+        expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001 0000-0000-0000-0099]
+      end
+    end
   end
 
   describe "#count" do
@@ -814,6 +836,26 @@ describe Gateway::AssessmentSearchGateway do
     context "when calling count method returns the number of rows in the table" do
       it "returns assessments matching the filters" do
         expect(gateway.count(**args)).to eq 2
+      end
+    end
+
+    context "when calling count method using the NI toggle" do
+      before do
+        gateway.insert_assessment(assessment_id: "0000-0000-0000-0099", document: rdsap, country_id: 4)
+
+        ActiveRecord::Base.connection.exec_query(
+          "UPDATE assessment_search SET country_id = 3 WHERE assessment_id = '0000-0000-0000-0099'",
+        )
+      end
+
+      it "returns only E&W assessments when the toggle is disabled" do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(false)
+        expect(gateway.count(**args)).to eq 2
+      end
+
+      it "includes NI assessments when the toggle is enabled" do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(true)
+        expect(gateway.count(**args)).to eq 3
       end
     end
   end
