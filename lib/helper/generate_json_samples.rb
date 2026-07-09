@@ -60,10 +60,10 @@ class Helper::GenerateJsonSamples
     samples_dir = "#{Dir.pwd}/spec/fixtures/samples"
     sample_files = Dir.glob("#{samples_dir}/**/*.xml")
     rejected_files = %w[ac-cert redacted dec_exceeds 14 NI]
-    rejected_files.each do |i|
-      sample_files.reject! { |f| f.include? i }
+    sample_files.reject do |absolute_path|
+      local_path = Pathname(absolute_path).relative_path_from(Pathname(Dir.pwd)).to_s
+      rejected_files.any? { local_path.include?(it) }
     end
-    sample_files
   end
 
   private_class_method :save_document, :delete_rows, :assessment_type, :update_keys, :redacted_json
