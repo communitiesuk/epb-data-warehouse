@@ -127,7 +127,9 @@ describe Helper::GenerateJsonSamples do
 
     %w[ac-cert redacted dec_exceeds 14 NI].each do |i|
       it "files do not return an anything that contains #{i}" do
-        expect(sample_files).not_to include a_string_matching(/#{i}/)
+        # Do not test the full absolute path as that can include "14" on the ci server
+        local_file_paths = sample_files.map { Pathname(it).relative_path_from(output_dir).to_s }
+        expect(local_file_paths).not_to include a_string_matching(/#{i}/)
       end
     end
   end
