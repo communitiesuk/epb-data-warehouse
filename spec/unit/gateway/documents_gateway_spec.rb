@@ -277,6 +277,77 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
       end
     end
 
+    context "when fetching a NI json document" do
+      let(:redaction_hash) do
+        { status: "entered",
+          tenure: 1,
+          region_code: 17,
+          report_type: 2,
+          sap_version: 9.94,
+          country_code: "EAW",
+          language_code: 1,
+          property_type: 0,
+          assessment_type: "RdSAP",
+          completion_date: "2020-06-01",
+          inspection_date: "2020-06-01",
+          transaction_type: 1,
+          registration_date: "2020-06-01",
+          schema_version_original: "LIG-19.0",
+          uprn: 1245,
+          uprn_source: "Energy Assessor",
+          calculation_software_version: "4.05r0005",
+          current_energy_efficiency_band: "A",
+          potential_energy_efficiency_band: "A" }
+      end
+
+      let(:json_sample) do
+        {
+          "schema_version_original" => "LIG-19.0",
+          "sap_version" => 9.94,
+          "calculation_software_version" => "4.05r0005",
+          "inspection_date" => "2020-06-01",
+          "report_type" => 2,
+          "completion_date" => "2020-06-01",
+          "registration_date" => "2020-06-01",
+          "status" => "entered",
+          "language_code" => 1,
+          "tenure" => 1,
+          "transaction_type" => 1,
+          "property_type" => 0,
+          "scheme_assessor_id" => "EES/008538",
+          "region_code" => 17,
+          "country_code" => "EAW",
+          "uprn" => "UPRN-0000000001245",
+          "owner" => "Unknown",
+          "occupier" => "William Gates",
+          "assessment_type" => "RdSAP",
+          "equipment_operator" => "some value",
+          "assessment_address_id" => "UPRN-0000000001245",
+
+        }
+      end
+      let(:assessment_id) { "0000-2222-3333-4444-1111" }
+
+      before do
+        gateway.add_assessment(assessment_id:, document: json_sample)
+        Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
+        Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id:, country_id: 3)
+      end
+
+      it "fetches the json document if the NI toggle is enabled" do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(true)
+        doc = gateway.fetch_by_id(assessment_id:)
+        expect(doc).to eq redaction_hash
+      end
+
+      it "doesn't return the json document if the NI toggle is disabled" do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(false)
+
+        doc = gateway.fetch_by_id(assessment_id:)
+        expect(doc).to be_nil
+      end
+    end
+
     context "when the EPC is opted out, there is no row in the assessment search table" do
       before do
         gateway.add_assessment(assessment_id:, document: assessment_data)

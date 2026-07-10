@@ -85,9 +85,14 @@ module Gateway
         SELECT
           fn_export_json_document(document, matched_uprn) as document,
           (document->>'registration_date')::timestamp as registration_date
-          FROM assessment_documents
-          WHERE assessment_id = $1;
+          FROM assessment_documents ad
+          LEFT JOIN assessments_country_ids aci ON aci.assessment_id = ad.assessment_id
+          WHERE ad.assessment_id = $1
       SQL
+
+      unless Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
+        sql << " AND aci.country_id != 3"
+      end
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
