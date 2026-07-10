@@ -45,7 +45,7 @@ class Helper::GenerateJsonSamples
 
   def self.save_document(assessment_id:, certificate_data:)
     Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
-    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: 1)
+    Container.assessment_search_gateway.insert_assessment(assessment_id:, document: certificate_data, country_id: 1)
   end
 
   def self.get_rrn(xml:, type:, schema_type:)

@@ -1,7 +1,6 @@
 namespace :one_off do
   desc "Delete SAP 15 certificates from assessment_search"
   task :delete_sap_15_assessment_search do
-    Gateway::AssessmentSearchGateway.new
     sql = <<~SQL
               DELETE FROM assessment_search s
               WHERE EXISTS (

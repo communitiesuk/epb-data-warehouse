@@ -13,7 +13,7 @@ shared_context "when saving EPCs" do
     import = UseCase::ImportCertificateData.new(
       assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new,
       documents_gateway: Gateway::DocumentsGateway.new,
-      assessment_search_gateway: Gateway::AssessmentSearchGateway.new,
+      assessment_search_gateway: Container.assessment_search_gateway,
       commercial_reports_gateway: Gateway::CommercialReportsGateway.new,
     )
     import.execute(assessment_id:, certificate_data: parsed_epc, country_id:)

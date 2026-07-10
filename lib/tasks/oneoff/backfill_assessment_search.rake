@@ -10,7 +10,7 @@ namespace :one_off do
     if !start_date.nil? && !end_date.nil?
       date_range_sql = "AND d.document ->> 'registration_date' BETWEEN '#{start_date}' AND '#{end_date}'"
     end
-    assessment_search_gateway = Gateway::AssessmentSearchGateway.new
+    assessment_search_gateway = Container.assessment_search_gateway
 
     sql = <<-SQL
       SELECT d.assessment_id, aci.country_id

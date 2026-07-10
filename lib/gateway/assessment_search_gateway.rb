@@ -2,15 +2,20 @@ class Gateway::AssessmentSearchGateway
   class AssessmentSearch < ActiveRecord::Base
   end
 
-  VALID_COUNTRY_IDS = [1, 2, 4].freeze
   AC_CERTIFICATE_TYPE = "AC-CERT".freeze
 
-  def initialize; end
+  def initialize
+    @valid_country_ids = fetch_valid_country_ids
+  end
+
+  def valid_country?(country_id)
+    @valid_country_ids.include?(country_id)
+  end
 
   def insert_assessment(assessment_id:, document:, country_id:)
     document_clone = document.clone
     document_clone.deep_symbolize_keys!
-    return unless VALID_COUNTRY_IDS.include?(country_id)
+    return unless valid_country?(country_id)
     return if document_clone[:assessment_type] == AC_CERTIFICATE_TYPE
 
     created_at = document_clone[:created_at] || Time.now
@@ -239,6 +244,18 @@ class Gateway::AssessmentSearchGateway
   end
 
 private
+
+  def fetch_valid_country_ids
+    sql = <<-SQL
+      SELECT countries.country_id
+      FROM countries
+      JOIN (VALUES ('ENG'), ('WLS'), ('EAW')) cons (c)
+      ON (country_code = c)
+      ORDER BY country_id
+    SQL
+
+    ActiveRecord::Base.connection.exec_query(sql).rows.flatten
+  end
 
   def get_energy_rating(document:)
     case document[:assessment_type]

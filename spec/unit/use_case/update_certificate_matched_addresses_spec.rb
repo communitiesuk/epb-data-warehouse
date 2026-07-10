@@ -35,6 +35,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
   let(:assessment_search_gateway) do
     assessment_search_gateway = instance_double(Gateway::AssessmentSearchGateway)
     allow(assessment_search_gateway).to receive(:update_uprn)
+    allow(assessment_search_gateway).to receive(:valid_country?).and_return(true)
     assessment_search_gateway
   end
 
@@ -311,6 +312,7 @@ describe UseCase::UpdateCertificateMatchedAddresses do
             greenDeal: false,
             countryId: 3 },
         )
+        allow(assessment_search_gateway).to receive(:valid_country?).with(3).and_return(false)
       end
 
       it "checks the assessment_document table has the assessment" do

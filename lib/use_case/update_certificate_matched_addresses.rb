@@ -22,7 +22,7 @@ module UseCase
           raise "Missing meta_data for assessment with id #{assessment_id}, waiting for longer" if meta_data.nil?
 
           unless should_exclude?(meta_data:) || is_green_deal?(meta_data:) || is_cancelled?(meta_data:)
-            check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && Gateway::AssessmentSearchGateway::VALID_COUNTRY_IDS.include?(meta_data[:countryId])
+            check_assessment_search = meta_data[:typeOfAssessment] != "AC-CERT" && @assessment_search_gateway.valid_country?(meta_data[:countryId])
 
             if @documents_gateway.check_id_exists?(assessment_id: assessment_id, include_search_table: check_assessment_search)
               @documents_gateway.update_matched_uprn assessment_id:, matched_uprn: matched_uprn, update: true

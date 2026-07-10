@@ -8,13 +8,13 @@ describe "DomesticSearchController" do
     "0000-0000-0000-0000-0000"
   end
 
-  context "when the request is authorized" do
-    before do
-      document = { assessment_type: "SAP", postcode: "SW10 1AA", registration_date: "2022-05-09", assessment_address_id: "UPRN-0000000001245" }
-      add_assessment(assessment_id:, schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
-      Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document:, country_id: 1)
-      stub_bearer_token_access
-    end
+   context "when the request is authorized" do
+     before do
+       document = { assessment_type: "SAP", postcode: "SW10 1AA", registration_date: "2022-05-09", assessment_address_id: "UPRN-0000000001245" }
+       add_assessment(assessment_id:, schema_type: "SAP-Schema-19.1.0", type_of_assessment: "SAP")
+       Container.assessment_search_gateway.insert_assessment(assessment_id:, document:, country_id: 1)
+       stub_bearer_token_access
+     end
 
     context "when the response is successful" do
       let(:response) do
