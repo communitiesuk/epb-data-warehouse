@@ -33,6 +33,11 @@ describe "Domestic Recommendations Report" do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+        "postcode": "BT1 0AA", "country_id": 3
+      })
+      ActiveRecord::Base.connection.execute("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0011', 'SAP', '2025-08-01', 3)")
+
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
     end
@@ -116,9 +121,13 @@ describe "Domestic Recommendations Report" do
       expect(items.length).to eq 4
     end
 
-    it "the grouped results have 2 certificate_numbers" do
+    it "the grouped results the expected certificate_numbers" do
       group = data.group_by { |i| i["certificate_number"] }
       expect(group.length).to eq 3
+    end
+
+    it "does not include the rows for NI assessments" do
+      expect(data.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0011")
     end
 
     context "when the json is not is an hash with a single item rather than an array" do

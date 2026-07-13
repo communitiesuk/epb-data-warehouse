@@ -72,8 +72,7 @@ shared_context "when lodging XML" do
     certificate_data = UseCase::ParseXmlCertificate.new.execute(xml:, assessment_id:, schema_type:)
     certificate_data.merge!(meta_data_sample)
     certificate_data.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
-    Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:)
-    Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: certificate_data, country_id: certificate_data["country_id"])
+    Container.import_certificate_data_use_case.execute(assessment_id:, certificate_data:, country_id: certificate_data["country_id"])
     add_assessment_country_id(assessment_id:, document: certificate_data)
   end
 
