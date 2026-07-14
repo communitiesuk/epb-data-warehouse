@@ -174,6 +174,11 @@ describe "DEC Report" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006", "assessment_address_id" => "UPRN-00000000001"
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0020", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0021"
+    })
+
+    ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0020', 'DEC', '2025-08-01', 3)")
 
     import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_dec_search")
@@ -192,6 +197,10 @@ describe "DEC Report" do
   it "returns a dataset with the required data for dec CEPC 8.0.0" do
     result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0003" }
     expect(result).to eq expected_dec_8_data
+  end
+
+  it "does not return any DEC for NI" do
+    expect(query_result.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0020")
   end
 
   context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do

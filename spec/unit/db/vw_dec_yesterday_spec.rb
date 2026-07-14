@@ -20,6 +20,7 @@ describe "DEC Report Yesterday" do
     import_postcode_directory_data
     add_countries
     type_of_assessment = "DEC"
+    yesterday = Time.now - 1.day
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
@@ -31,6 +32,12 @@ describe "DEC Report Yesterday" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", different_fields: {
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006"
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0011"
+    })
+
+    ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
+    ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, created_at, country_id) VALUES ('0000-0000-0000-0000-0010', 'DEC', '2025-08-01', '#{yesterday}', 3)")
   end
 
   context "when calling vw_dec_yesterday" do
@@ -41,10 +48,6 @@ describe "DEC Report Yesterday" do
 
     let(:yesterday) { Time.now - 1.day }
 
-    before do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
-    end
-
     it "returns the same columns as the mvw_dec_search" do
       expect(vw_columns).to eq mvw_columns
     end
@@ -52,6 +55,11 @@ describe "DEC Report Yesterday" do
     it "returns only the dec data from yesterday" do
       expect(vw_yesterday.length).to eq 1
       expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
+    end
+
+    it "does not return any DEC for NI from yesterday" do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0010'", "SQL")
+      expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0010")
     end
 
     it "includes the rows updated yesterday stored in the audit logs" do

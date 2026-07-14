@@ -15,6 +15,7 @@ describe "DEC Recommendations Yesterday Report" do
       import_postcode_directory_data
       add_countries
       schema_type = "CEPC-8.0.0"
+      yesterday = Date.today - 1
 
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
       add_commercial(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment: "DEC", type: "dec", different_fields: {
@@ -35,7 +36,14 @@ describe "DEC Recommendations Yesterday Report" do
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0004"
       })
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{Date.today - 1}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
+      add_commercial(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment: "DEC", type: "dec", different_fields: {
+        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0011"
+      })
+      add_commercial(assessment_id: "0000-0000-0000-0000-0011", schema_type:, type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
+        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0010"
+      })
+      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id, created_at) VALUES ('0000-0000-0000-0000-0011', 'DEC-RR', '2025-08-01', 3, '#{yesterday}')")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
     end
 
     let(:expected_report) do
@@ -94,6 +102,11 @@ describe "DEC Recommendations Yesterday Report" do
       it "returns the correct recommendations for a CEPC recommendation report" do
         result = vw_yesterday.select { |row| row["certificate_number"] == "0000-0000-0000-0000-0001" }
         expect(result).to eq expected_report
+      end
+
+      it "does not return recommendations for NI DEC-RR from yesterday" do
+        result = vw_yesterday.map { |row| row["certificate_number"] }
+        expect(result).not_to include("0000-0000-0000-0000-0011")
       end
     end
 
