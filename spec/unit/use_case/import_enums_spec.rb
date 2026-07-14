@@ -215,7 +215,7 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving data across a range of SAP schemas" do
-    before do
+    before(:all) do
       lookups_gateway = Gateway::AssessmentLookupsGateway.new
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/construction_age_band_sap.json")
       use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
@@ -263,9 +263,9 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving transaction types for SAP" do
-    before do
+    before(:all) do
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_transaction_type_map.json")
-      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case = described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
       use_case.execute
     end
 
@@ -330,9 +330,9 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving property types for RdSAP" do
-    before do
+    before(:all) do
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_property_type.json")
-      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case = described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
       use_case.execute
     end
 
@@ -395,9 +395,9 @@ describe UseCase::ImportEnums do
   end
 
   context "when saving property types for SAP" do
-    before do
+    before(:all) do
       xsd_config = Gateway::XsdConfigGateway.new("spec/config/attribute_enum_property_type.json")
-      use_case = described_class.new(assessment_lookups_gateway: lookups_gateway, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
+      use_case = described_class.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: Presenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: xsd_config)
       use_case.execute
     end
 
