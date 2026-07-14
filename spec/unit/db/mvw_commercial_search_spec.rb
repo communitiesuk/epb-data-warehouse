@@ -72,15 +72,25 @@ describe "Commercial Materialized View" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
       "postcode" => "SW10 0AA", "related_rrn" => "0000-0000-0000-0000-0006", "country_id": 1, "assessment_address_id" => "UPRN-000000000000"
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "CEPC-7.0", type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3, "assessment_address_id" => "UPRN-000000000000"
+    })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
       "postcode": "SW10 0AA", "country_id": 2
     })
+
+    ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0008', 'CEPC', '2025-08-01', 3)")
+
     import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_search")
   end
 
   it "returns a dataset with 2 commercial EPCs" do
     expect(query_result.length).to eq 2
+  end
+
+  it "does not return any commercial EPCs for NI" do
+    expect(query_result.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0008")
   end
 
   it "returns a the expected data for a CEPC" do

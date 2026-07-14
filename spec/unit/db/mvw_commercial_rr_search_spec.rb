@@ -35,6 +35,14 @@ describe "Commercial Recommendations Report" do
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "DEC", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0004", registration_date: Time.now
       })
+      add_commercial(assessment_id: "0000-0000-0000-0000-0006", schema_type:, type_of_assessment: "CEPC", type: "cepc", different_fields: {
+        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0007", registration_date: Time.now
+      })
+      add_commercial(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
+        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0006", registration_date: Time.now
+      })
+
+      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0007', 'CEPC', '2025-08-01', 3)")
 
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_rr_search")
     end
@@ -96,6 +104,11 @@ describe "Commercial Recommendations Report" do
       it "the reports contains the certificate numbers of the related CEPC" do
         result = ActiveRecord::Base.connection.exec_query("SELECT DISTINCT related_certificate_number FROM mvw_commercial_rr_search ORDER BY related_certificate_number").map { |row| row["related_certificate_number"] }
         expect(result).to eq %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0002]
+      end
+
+      it "does not return recommendations for NI CEPC-RR" do
+        result = ActiveRecord::Base.connection.exec_query("SELECT DISTINCT certificate_number FROM mvw_commercial_rr_search ORDER BY certificate_number").map { |row| row["certificate_number"] }
+        expect(result).not_to include("0000-0000-0000-0000-0007")
       end
     end
 
