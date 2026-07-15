@@ -56,6 +56,25 @@ describe "VwJsonDocumentsYesterday" do
     end
   end
 
+  context "when there are NI assessments in the database" do
+    let(:ni_assessment_id) { "8570-6826-6530-4969-0203" }
+
+    let(:ni_assessment_document) do
+      assessment_data_sample.merge({ "country_code" => "NIR" })
+    end
+
+    before do
+      Timecop.freeze(Date.yesterday.to_time.change(hour: 12, min: 30))
+      documents_gateway.add_assessment(assessment_id: ni_assessment_id, document: ni_assessment_document)
+      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, registration_date, country_id) VALUES ('#{ni_assessment_id}', '2018-05-11', 3)")
+      Timecop.return
+    end
+
+    it "does not include NI assessments in the redacted documents views" do
+      expect(result.rows).to be_empty
+    end
+  end
+
   context "when fetching from vw_json_documents_yesterday with some data" do
     before do
       Timecop.freeze(Date.yesterday.to_time.change(hour: 12, min: 30))
