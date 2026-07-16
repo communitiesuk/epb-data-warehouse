@@ -81,18 +81,26 @@ module Gateway
     end
 
     def fetch_by_id(assessment_id:)
+      if Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
+        sql_join = ""
+        sql_ni_condition = ""
+      else
+        sql_join = <<~SQL_JOIN
+          LEFT JOIN assessments_country_ids aci ON aci.assessment_id = ad.assessment_id
+          JOIN countries co ON co.country_id = aci.country_id
+        SQL_JOIN
+
+        sql_ni_condition = " AND co.country_code IN ('ENG', 'WAL', 'EAW')"
+      end
       sql = <<-SQL
         SELECT
           fn_export_json_document(document, matched_uprn) as document,
           (document->>'registration_date')::timestamp as registration_date
           FROM assessment_documents ad
-          LEFT JOIN assessments_country_ids aci ON aci.assessment_id = ad.assessment_id
+          #{sql_join}
           WHERE ad.assessment_id = $1
+          #{sql_ni_condition}
       SQL
-
-      unless Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
-        sql << " AND aci.country_id != 3"
-      end
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(

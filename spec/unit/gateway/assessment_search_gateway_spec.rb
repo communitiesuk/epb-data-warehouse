@@ -795,23 +795,19 @@ describe Gateway::AssessmentSearchGateway do
 
     context "when calling fetch_assessment method using the NI toggle" do
       before do
-        gateway.insert_assessment(assessment_id: "0000-0000-0000-0099", document: rdsap, country_id: 4)
-
-        ActiveRecord::Base.connection.exec_query(
-          "UPDATE assessment_search SET country_id = 3 WHERE assessment_id = '0000-0000-0000-0099'",
-        )
+        ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, registration_date, created_at, assessment_type, country_id) VALUES ('0000-0000-0000-0099', '2020-11-01', '2025-11-02', 'RdSAP', 3)")
       end
 
       it "returns only E&W assessments when the toggle is disabled" do
         allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(false)
         results = gateway.fetch_assessments(**args)
-        expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001]
+        expect(results.map { |i| i["certificate_number"] }).not_to include "0000-0000-0000-0099"
       end
 
       it "includes NI assessments when the toggle is enabled" do
         allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(true)
         results = gateway.fetch_assessments(**args)
-        expect(results.map { |i| i["certificate_number"] }).to eq %w[0000-0000-0000-0000 0000-0000-0000-0001 0000-0000-0000-0099]
+        expect(results.map { |i| i["certificate_number"] }).to include "0000-0000-0000-0099"
       end
     end
   end

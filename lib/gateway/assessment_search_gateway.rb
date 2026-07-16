@@ -210,11 +210,9 @@ class Gateway::AssessmentSearchGateway
 
     sql << " JOIN commercial_reports cr ON s.assessment_id = cr.assessment_id" if is_cepc
 
-    this_args[:sql] = sql
     this_args[:limit] = true
     bindings = get_bindings(**this_args)
-    sql = search_filter(**this_args)
-
+    sql << search_filter(**this_args)
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row }
   end
 
@@ -222,12 +220,11 @@ class Gateway::AssessmentSearchGateway
     this_args = args.first
     sql = <<~SQL
       SELECT COUNT(*)
-      FROM assessment_search
+      FROM assessment_search s
     SQL
 
-    this_args[:sql] = sql
     bindings = get_bindings(**this_args)
-    sql = search_filter(**this_args)
+    sql << search_filter(**this_args)
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["count"]
   end
@@ -366,7 +363,11 @@ private
 
   def search_filter(*args)
     this_args = args.first
-    sql = this_args[:sql]
+    sql = ""
+
+    unless Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
+      sql << " JOIN countries co ON s.country_id = co.country_id"
+    end
 
     index = 1
 
@@ -425,7 +426,7 @@ private
     sql << " AND NOT created_at::date = CURRENT_DATE"
 
     unless Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
-      sql << " AND country_id != 3"
+      sql << " AND co.country_code IN ('EAW', 'ENG', 'WLS')"
     end
 
     if this_args[:limit]
