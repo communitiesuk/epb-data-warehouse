@@ -93,20 +93,21 @@ describe Gateway::S3Gateway do
 
     let(:domain) { "https://user-data.s3.eu-west-2.amazonaws.com" }
 
-    before do
-      WebMock.stub_request(:put, /#{domain}.*/)
-    end
-
     it "sends the data to s3 to write the file" do
-      expect { gateway.write_csv_file(data:, bucket: "user-data", file_name: "look-up.csv") }.not_to raise_error
-      expect(WebMock).to have_requested(
-        :put,
-        "#{domain}/look-up.csv",
-      ).with(
-        body: 'built_form,construction_age_band
-1,2
-5,NR
-',
+      expect(s3_client).to receive(:put_object).with(
+        bucket: "user-data",
+        key: "look-up.csv",
+        body: <<~CSV,
+          built_form,construction_age_band
+          1,2
+          5,NR
+        CSV
+      )
+
+      gateway.write_csv_file(
+        data: data,
+        bucket: "user-data",
+        file_name: "look-up.csv",
       )
     end
   end
