@@ -80,5 +80,19 @@ describe UseCase::SendEmailToUsers do
         expect { use_case.execute(notify_template_id:, unsubscribe_link:) }.to raise_error(Errors::NotifyRateLimit)
       end
     end
+
+    context "when email addresses are not unique" do
+      let(:emails) do
+        %w[test@email.com name.test@email.com name.test@email.com]
+      end
+
+      let(:encrypted_emails) do
+        %w[encrypted_email_1 encrypted_email_2 encrypted_email_2]
+      end
+
+      it "only sends emails to the 2 unique users" do
+        expect(notify_gateway).to have_received(:send_data_users_email).exactly(2).times
+      end
+    end
   end
 end
