@@ -5,6 +5,11 @@ namespace :dev_setup do
   task :generate_json_examples do
     Tasks::TaskHelpers.quit_if_production
 
+    # Enable all feature toggles when running this task
+    Helper::Toggles.define_singleton_method(:enabled?) do |_toggle_name|
+      true
+    end
+
     output_dir = "#{Dir.pwd}/spec/fixtures/json_samples"
     mkdir output_dir unless Dir.exist? output_dir
 
