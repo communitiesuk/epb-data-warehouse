@@ -239,9 +239,8 @@ RSpec.describe "the parser and the rdsap configuration" do
                               "wwhrs_index_number2" => 2 },
                           "secondary_fuel_type" => 25,
                           "shower_outlets" =>
-                            { "shower_outlet" =>
-                                { "shower_outlet_type" => 1,
-                                  "shower_wwhrs" => 1 } } },
+                            [{ "shower_outlet_type" => 1,
+                               "shower_wwhrs" => 1 }] },
                       "sap_energy_source" =>
                         { "meter_type" => 2,
                           "mains_gas" => "Y",
@@ -252,8 +251,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                                 { "percent_roof_area" => 0 } },
                           "pv_battery_count" => 1,
                           "pv_batteries" =>
-                            { "pv_battery" =>
-                                { "battery_capacity" => 5 } },
+                            [{ "battery_capacity" => 5 }],
                           "electricity_smart_meter_present" => "true",
                           "gas_smart_meter_present" => "false",
                           "is_dwelling_export_capable" => "false",

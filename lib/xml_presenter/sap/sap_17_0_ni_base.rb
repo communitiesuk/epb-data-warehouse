@@ -63,6 +63,7 @@ module XmlPresenter
           Community-Heat-Sources
           SAP-Floor-Dimensions
           ReportList
+          Alternative-Improvements
         ]
         # rootless lists is a hash containing the names of data nodes which can appear multiple times but are not given a parent node (for example wall in the property summary). These node are listed as the keys and the name of the parent node we wish to give their list is added as the value.
         rootless_list_nodes({
