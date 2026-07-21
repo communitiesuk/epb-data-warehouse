@@ -330,7 +330,7 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
 
       before do
         gateway.add_assessment(assessment_id:, document: json_sample)
-        Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 1)
+        Gateway::AssessmentSearchGateway.new.insert_assessment(assessment_id:, document: assessment_data, country_id: 3)
         Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id:, country_id: 3)
       end
 

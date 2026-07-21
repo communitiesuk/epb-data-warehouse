@@ -178,8 +178,6 @@ describe "DEC Report" do
       "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0021"
     })
 
-    ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0020', 'DEC', '2025-08-01', 3)")
-
     import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_dec_search")
   end

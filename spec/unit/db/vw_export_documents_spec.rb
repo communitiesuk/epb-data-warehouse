@@ -134,7 +134,7 @@ describe "VwExportDocuments" do
 
     before do
       documents_gateway.add_assessment(assessment_id: ni_assessment_id, document: ni_assessment_document)
-      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, registration_date, country_id) VALUES ('#{ni_assessment_id}', '2018-05-11', 3)")
+      assessment_search_gateway.insert_assessment(assessment_id: ni_assessment_id, document: ni_assessment_document, country_id: 3)
     end
 
     it "does not include NI assessments in the redacted documents views" do

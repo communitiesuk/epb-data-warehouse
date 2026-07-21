@@ -303,13 +303,13 @@ describe UseCase::UpdateCertificateMatchedAddresses do
     context "when the country id is not valid" do
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data).and_return(
-          { schemaType: "CEPC-NI-8.0.0",
+          { schemaType: "CEPC-8.0.0",
             assessmentAddressId: "UPRN-000000000000",
             typeOfAssessment: "CEPC",
             optOut: false,
             createdAt: nil,
             greenDeal: false,
-            countryId: 3 },
+            countryId: 5 },
         )
       end
 

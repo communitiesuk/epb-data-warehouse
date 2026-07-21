@@ -37,7 +37,7 @@ describe "Non-Domestic Report Yesterday" do
       "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
     })
     ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
-    ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, created_at, country_id) VALUES ('0000-0000-0000-0000-0004', 'CEPC', '2025-08-01', '#{yesterday}', 3) ON CONFLICT DO NOTHING")
+    ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0004'", "SQL")
   end
 
   context "when calling vw_commercial_yesterday" do

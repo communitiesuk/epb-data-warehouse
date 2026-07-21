@@ -66,7 +66,7 @@ describe "VwJsonDocumentsYesterday" do
     before do
       Timecop.freeze(Date.yesterday.to_time.change(hour: 12, min: 30))
       documents_gateway.add_assessment(assessment_id: ni_assessment_id, document: ni_assessment_document)
-      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, registration_date, country_id) VALUES ('#{ni_assessment_id}', '2018-05-11', 3)")
+      assessment_search_gateway.insert_assessment(assessment_id: ni_assessment_id, document: ni_assessment_document, country_id: 3)
       Timecop.return
     end
 

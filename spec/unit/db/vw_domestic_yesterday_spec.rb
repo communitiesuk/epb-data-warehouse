@@ -45,7 +45,7 @@ describe "Domestic Report Yesterday" do
 
     before do
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
-      ActiveRecord::Base.connection.execute("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, created_at, country_id) VALUES ('#{ni_assessment_id}', 'SAP', '2025-08-01', '#{yesterday}', 3) ON CONFLICT DO NOTHING")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '#{ni_assessment_id}'", "SQL")
     end
 
     it "returns the same columns as the mvw_domestic_search" do

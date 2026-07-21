@@ -36,7 +36,6 @@ describe "Domestic Recommendations Report" do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3
       })
-      ActiveRecord::Base.connection.execute("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0011', 'SAP', '2025-08-01', 3)")
 
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")

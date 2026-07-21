@@ -2,7 +2,7 @@ class Gateway::AssessmentSearchGateway
   class AssessmentSearch < ActiveRecord::Base
   end
 
-  VALID_COUNTRY_IDS = [1, 2, 4].freeze
+  VALID_COUNTRY_IDS = [1, 2, 3, 4].freeze
   AC_CERTIFICATE_TYPE = "AC-CERT".freeze
 
   def initialize; end

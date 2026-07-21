@@ -85,8 +85,6 @@ describe "Domestic Materialized View" do
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
 
-    ActiveRecord::Base.connection.execute("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0003', 'SAP', '2025-08-01', 3)")
-
     import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-15.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end

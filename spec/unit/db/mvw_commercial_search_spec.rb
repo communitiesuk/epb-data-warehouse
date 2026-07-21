@@ -79,8 +79,6 @@ describe "Commercial Materialized View" do
       "postcode": "SW10 0AA", "country_id": 2
     })
 
-    ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0008', 'CEPC', '2025-08-01', 3)")
-
     import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_search")
   end

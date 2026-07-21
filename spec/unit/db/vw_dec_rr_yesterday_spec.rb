@@ -42,8 +42,8 @@ describe "DEC Recommendations Yesterday Report" do
       add_commercial(assessment_id: "0000-0000-0000-0000-0011", schema_type:, type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0010"
       })
-      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id, created_at) VALUES ('0000-0000-0000-0000-0011', 'DEC-RR', '2025-08-01', 3, '#{yesterday}')")
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0011'", "SQL")
     end
 
     let(:expected_report) do

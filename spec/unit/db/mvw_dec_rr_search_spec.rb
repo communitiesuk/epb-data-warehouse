@@ -42,8 +42,6 @@ describe "DEC Recommendations Report" do
         "postcode": "BT1 0AA", "country_id": 3, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0010"
       })
 
-      ActiveRecord::Base.connection.exec_query("INSERT INTO assessment_search (assessment_id, assessment_type, registration_date, country_id) VALUES ('0000-0000-0000-0000-0011', 'DEC-RR', '2025-08-01', 3)")
-
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_dec_rr_search")
     end
 
