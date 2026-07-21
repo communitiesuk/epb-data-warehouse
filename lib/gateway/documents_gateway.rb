@@ -42,7 +42,7 @@ module Gateway
         JOIN assessments_country_ids aci ON ad.assessment_id = aci.assessment_id
         JOIN countries c ON c.country_id = aci.country_id
         WHERE warehouse_created_at between $1 and $2
-        AND c.country_code IN ('ENG', 'WAL', 'EAW')
+        AND c.country_code IN ('ENG', 'WLS', 'EAW')
       SQL
 
       bindings = [
@@ -90,7 +90,7 @@ module Gateway
           JOIN countries co ON co.country_id = aci.country_id
         SQL_JOIN
 
-        sql_ni_condition = " AND co.country_code IN ('ENG', 'WAL', 'EAW')"
+        sql_ni_condition = " AND co.country_code IN ('ENG', 'WLS', 'EAW')"
       end
       sql = <<-SQL
         SELECT
