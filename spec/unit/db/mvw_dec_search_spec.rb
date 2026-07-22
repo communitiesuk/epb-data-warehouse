@@ -174,7 +174,7 @@ describe "DEC Report" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006", "assessment_address_id" => "UPRN-00000000001"
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0020", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0020", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
       "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0021"
     })
 

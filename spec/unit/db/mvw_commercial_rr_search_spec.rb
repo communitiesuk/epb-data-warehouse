@@ -35,10 +35,10 @@ describe "Commercial Recommendations Report" do
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment: "DEC", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1, "related_rrn": "0000-0000-0000-0000-0004", registration_date: Time.now
       })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0006", schema_type:, type_of_assessment: "CEPC", type: "cepc", different_fields: {
+      add_commercial(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0007", registration_date: Time.now
       })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
+      add_commercial(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0006", registration_date: Time.now
       })
 

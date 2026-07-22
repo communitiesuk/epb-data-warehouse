@@ -345,11 +345,29 @@ describe Gateway::AssessmentSearchGateway do
       end
     end
 
-    context "when the certificate is not in England or Wales" do
+    context "when the certificate is not in England or Wales or Northern Ireland" do
       it "does not save the document in the table" do
         invalid_country_id = 5
         gateway.insert_assessment(assessment_id:, document: rdsap, country_id: invalid_country_id)
         expect(search.length).to eq 0
+      end
+    end
+
+    context "when the EPC is from NI" do
+      let(:doc) do
+        parse_assessment(assessment_id: "4321-0000-1111-0000-5678",
+                         schema_type: "RdSAP-Schema-NI-20.0.0",
+                         type_of_assessment: "RdSAP",
+                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "created_at" => created_at })
+      end
+
+      before do
+        gateway.insert_assessment(assessment_id: "4321-0000-1111-0000-5678", document: doc, country_id: 3)
+      end
+
+      it "inserts the NI assessment with the correct country_id" do
+        epc = search.find { |i| i["assessment_id"] == "4321-0000-1111-0000-5678" }
+        expect(epc["country_id"]).to eq 3
       end
     end
 
@@ -405,24 +423,6 @@ describe Gateway::AssessmentSearchGateway do
 
       it "does have a value for a uprn" do
         expect(search.find { |i| i["assessment_id"] == "7777-0000-0000-0011-9996" }["uprn"]).to be_nil
-      end
-    end
-
-    context "when the EPC is from NI" do
-      let(:doc) do
-        parse_assessment(assessment_id: "4321-0000-1111-0000-5678",
-                         schema_type: "RdSAP-Schema-NI-20.0.0",
-                         type_of_assessment: "RdSAP",
-                         assessment_address_id: "RRN-0000-0000-0000-0000-0000", different_fields: { "created_at" => created_at })
-      end
-
-      before do
-        gateway.insert_assessment(assessment_id: "4321-0000-1111-0000-5678", document: doc, country_id: 3)
-      end
-
-      it "inserts the NI assessment with the correct country_id" do
-        epc = search.find { |i| i["assessment_id"] == "4321-0000-1111-0000-5678" }
-        expect(epc["country_id"]).to eq 3
       end
     end
   end

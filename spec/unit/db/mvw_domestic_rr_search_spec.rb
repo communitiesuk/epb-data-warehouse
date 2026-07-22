@@ -33,7 +33,7 @@ describe "Domestic Recommendations Report" do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
-      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", schema_type: "RdSAP-Schema-NI-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3
       })
 

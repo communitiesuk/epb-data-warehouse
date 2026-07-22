@@ -88,7 +88,7 @@ describe "Commercial Recommendations Yesterday Report" do
     context "when there are NI assessments lodged" do
       before do
         yesterday = Date.today - 1
-        schema_type = "CEPC-8.0.0"
+        schema_type = "CEPC-NI-8.0.0"
 
         add_commercial(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment: "CEPC", type: "cepc", different_fields: {
           "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0011", registration_date: Time.now

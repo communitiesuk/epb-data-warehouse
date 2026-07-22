@@ -33,7 +33,7 @@ describe "Non-Domestic Report Yesterday" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment:, type: "cepc+rr", different_fields: {
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0006"
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "cepc", different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "cepc", different_fields: {
       "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
     })
     ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")

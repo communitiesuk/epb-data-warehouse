@@ -39,7 +39,7 @@ describe "DEC Recommendations Yesterday Report" do
       add_commercial(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment: "DEC", type: "dec", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0011"
       })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0011", schema_type:, type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
+      add_commercial(assessment_id: "0000-0000-0000-0000-0011", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0010"
       })
       ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")

@@ -45,7 +45,7 @@ describe "Domestic Materialized View" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
       "postcode": "SW1A 2AA", "energy_rating_current": 50, "country_id": 1
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", assessment_address_id:, schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment:, different_fields: {
       "postcode": "BT1 1AA", "country_id": 3
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", assessment_address_id:, schema_type:, type_of_assessment:, different_fields: {

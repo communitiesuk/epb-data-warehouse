@@ -43,7 +43,7 @@ describe "Domestic Recommendations Report Yesterday" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "SW10 0AA",
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "RdSAP-Schema-NI-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "BT1 0AA",
     })
   end

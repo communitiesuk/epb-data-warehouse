@@ -335,6 +335,10 @@ describe Gateway::DocumentsGateway, :set_with_timecop do
         Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id:, country_id: 3)
       end
 
+      after do
+        allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(false)
+      end
+
       it "fetches the json document if the NI toggle is enabled" do
         allow(Helper::Toggles).to receive(:enabled?).with("data_warehouse_enable_NI_data").and_return(true)
         doc = gateway.fetch_by_id(assessment_id:)

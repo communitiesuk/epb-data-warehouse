@@ -58,7 +58,7 @@ shared_context "when lodging XML" do
     }
 
     xml_path = "RRN"
-    if type == "cepc"
+    if type == "cepc" && schema_type != "CEPC-NI-8.0.0"
       xml_path = "//CEPC:RRN"
     elsif type.end_with? "sap"
       xml_path = "//SAP:RRN"
