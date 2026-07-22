@@ -21,7 +21,7 @@ group :development do
 end
 
 group :rake do
-  gem "notifications-ruby-client", "~> 6.1"
+  gem "notifications-ruby-client", "~> 6.4"
 end
 
 gem "activerecord", "~> 8.1"
