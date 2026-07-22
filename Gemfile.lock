@@ -277,7 +277,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
-    unleash (6.6.0)
+    unleash (6.7.0)
       base64 (~> 0.3.0)
       ld-eventsource (= 2.2.4)
       logger (~> 1.6)
@@ -337,7 +337,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.28)
   sinatra-contrib
   timecop (~> 0.9)
-  unleash (~> 6.6.0)
+  unleash (~> 6.7.0)
   webmock (~> 3.26)
   zeitwerk (~> 2.8)
 
