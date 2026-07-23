@@ -72,9 +72,7 @@ module Controller
       }
 
       execute_params = Helper::SearchParams.validate(**execute_params)
-      pagination_use_case = Container.get_pagination_use_case
-      pagination_use_case.row_limit = params[:page_size]
-      pagination_hash = pagination_use_case.execute(**execute_params)
+      pagination_hash = Container.get_pagination_use_case.execute(**execute_params)
 
       assessment_search_use_case = Container.assessment_search_use_case
       result = assessment_search_use_case.execute(**execute_params)

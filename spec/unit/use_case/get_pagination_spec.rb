@@ -72,7 +72,6 @@ describe UseCase::GetPagination do
   context "when the row_limit is 100" do
     before do
       allow(assessment_search_gateway).to receive_messages(count: 1222)
-      use_case.row_limit = 100
     end
 
     let(:search_arguments) do
@@ -84,7 +83,7 @@ describe UseCase::GetPagination do
     end
 
     it "returns total pages of 1" do
-      result = use_case.execute(**search_arguments)
+      result = use_case.execute(**search_arguments, row_limit: 100)
       expect(result).to eq expected_return_hash
     end
   end
@@ -137,7 +136,6 @@ describe UseCase::GetPagination do
   context "when row_limit is smaller than the record set" do
     before do
       allow(assessment_search_gateway).to receive_messages(count: 100)
-      use_case.row_limit = 5000
     end
 
     let(:expected_return_hash) do
@@ -149,7 +147,7 @@ describe UseCase::GetPagination do
     end
 
     it "returns correct total pages value" do
-      result = use_case.execute(**search_arguments)
+      result = use_case.execute(**search_arguments, row_limit: 5000)
       expect(result).to eq expected_return_hash
     end
   end
