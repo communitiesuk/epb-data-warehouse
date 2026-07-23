@@ -26,7 +26,7 @@ end
 
 gem "activerecord", "~> 8.1"
 gem "activesupport", "~> 8.1"
-gem "async", "~> 2.42"
+gem "async", "~> 2.43"
 gem "aws-sdk-dynamodb", "~> 1.170"
 gem "aws-sdk-kms", "~> 1"
 gem "aws-sdk-s3", "1.228.0"
