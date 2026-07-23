@@ -7,13 +7,11 @@ module UseCase
       @row_limit = 5000
     end
 
-    def execute(*args)
-      this_args = args[0]
-
-      total_records = @assessment_search_gateway.count(**this_args.reject { |k, _v| k == :row_limit })
+    def execute(**args)
+      total_records = @assessment_search_gateway.count(**args.reject { |k, _v| k == :row_limit })
       raise Boundary::NoData, "assessment search" if total_records.zero?
 
-      current_page = this_args.delete(:current_page)&.to_i
+      current_page = args.delete(:current_page)&.to_i
       total_pages = (total_records / @row_limit.to_f).ceil
       raise Errors::OutOfPaginationRangeError, total_pages if current_page > total_pages || current_page < 1
 

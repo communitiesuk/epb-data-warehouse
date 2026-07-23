@@ -1,11 +1,8 @@
 class Gateway::AssessmentSearchGateway
-  class AssessmentSearch < ActiveRecord::Base
-  end
+  class AssessmentSearch < ActiveRecord::Base; end
 
   VALID_COUNTRY_IDS = [1, 2, 3, 4].freeze
   AC_CERTIFICATE_TYPE = "AC-CERT".freeze
-
-  def initialize; end
 
   def insert_assessment(assessment_id:, document:, country_id:)
     document_clone = document.clone
@@ -179,9 +176,7 @@ class Gateway::AssessmentSearchGateway
     ActiveRecord::Base.connection.delete(sql, "SQL", bindings)
   end
 
-  def fetch_assessments(*args)
-    this_args = args.first
-
+  def fetch_assessments(**args)
     select_fields = <<-SQL
       s.assessment_id AS certificate_number,
       s.address_line_1,
@@ -198,7 +193,7 @@ class Gateway::AssessmentSearchGateway
       s.schema_type
     SQL
 
-    is_cepc = this_args[:assessment_type].include?("CEPC")
+    is_cepc = args[:assessment_type].include?("CEPC")
 
     select_fields << ", cr.related_rrn" if is_cepc
 
@@ -210,21 +205,19 @@ class Gateway::AssessmentSearchGateway
 
     sql << " JOIN commercial_reports cr ON s.assessment_id = cr.assessment_id" if is_cepc
 
-    this_args[:limit] = true
-    bindings = get_bindings(**this_args)
-    sql << search_filter(**this_args)
+    bindings = get_bindings(**args)
+    sql << search_filter(**args)
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |row| row }
   end
 
-  def count(*args)
-    this_args = args.first
+  def count(**args)
     sql = <<~SQL
       SELECT COUNT(*)
       FROM assessment_search s
     SQL
 
-    bindings = get_bindings(**this_args)
-    sql << search_filter(**this_args)
+    bindings = get_bindings(**args)
+    sql << search_filter(**args)
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["count"]
   end
@@ -262,11 +255,10 @@ private
     Helper::SearchParams.format_address(full_address)
   end
 
-  def get_bindings(*args)
-    this_args = args.first
+  def get_bindings(**args)
     arr = []
 
-    this_args[:assessment_type].each_with_index do |type, idx|
+    args[:assessment_type].each_with_index do |type, idx|
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "assessment_type#{idx + 1}",
         type,
@@ -274,8 +266,8 @@ private
       )
     end
 
-    unless this_args[:eff_rating].nil?
-      this_args[:eff_rating].each_with_index do |rating, idx|
+    unless args[:eff_rating].nil?
+      args[:eff_rating].each_with_index do |rating, idx|
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "eff_rating_#{idx + 1}",
           rating,
@@ -284,8 +276,8 @@ private
       end
     end
 
-    unless this_args[:council].nil?
-      this_args[:council].each_with_index do |council, idx|
+    unless args[:council].nil?
+      args[:council].each_with_index do |council, idx|
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "council_#{idx + 1}",
           council,
@@ -294,8 +286,8 @@ private
       end
     end
 
-    unless this_args[:constituency].nil?
-      this_args[:constituency].each_with_index do |constituency, idx|
+    unless args[:constituency].nil?
+      args[:constituency].each_with_index do |constituency, idx|
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "constituency_#{idx + 1}",
           constituency,
@@ -304,55 +296,55 @@ private
       end
     end
 
-    unless this_args[:date_start].nil? || this_args[:date_end].nil?
+    unless args[:date_start].nil? || args[:date_end].nil?
       arr.concat [
         ActiveRecord::Relation::QueryAttribute.new(
           "date_start",
-          this_args[:date_start],
+          args[:date_start],
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "date_end",
-          "#{this_args[:date_end]} 12:00:00",
+          "#{args[:date_end]} 12:00:00",
           ActiveRecord::Type::String.new,
         ),
       ]
     end
 
-    unless this_args[:address].nil?
+    unless args[:address].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "address",
-        "%#{this_args[:address]}%",
+        "%#{args[:address]}%",
         ActiveRecord::Type::String.new,
       )
     end
 
-    unless this_args[:postcode].nil?
+    unless args[:postcode].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "postcode",
-        format_postcode(this_args[:postcode]),
+        format_postcode(args[:postcode]),
         ActiveRecord::Type::String.new,
       )
     end
 
-    unless this_args[:uprn].nil?
+    unless args[:uprn].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "uprn",
-        this_args[:uprn],
+        args[:uprn],
         ActiveRecord::Type::BigInteger.new,
       )
     end
 
-    if this_args[:row_limit]
+    if args[:row_limit]
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "limit",
-        this_args[:row_limit],
+        args[:row_limit],
         ActiveRecord::Type::Integer.new,
       )
-      unless this_args[:current_page].nil?
+      unless args[:current_page].nil?
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "offset",
-          calculate_offset(this_args[:current_page], this_args[:row_limit]),
+          calculate_offset(args[:current_page], args[:row_limit]),
           ActiveRecord::Type::Integer.new,
         )
       end
@@ -361,8 +353,7 @@ private
     arr
   end
 
-  def search_filter(*args)
-    this_args = args.first
+  def search_filter(**args)
     sql = ""
 
     unless Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
@@ -372,53 +363,53 @@ private
     index = 1
 
     sql << " JOIN ( VALUES "
-    sql << this_args[:assessment_type].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+    sql << args[:assessment_type].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
     sql << ") types (t) "
     sql << "ON (assessment_type = t)"
-    index += this_args[:assessment_type].size
+    index += args[:assessment_type].size
 
-    unless this_args[:eff_rating].nil?
+    unless args[:eff_rating].nil?
       sql << " JOIN ( VALUES "
-      sql << this_args[:eff_rating].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << args[:eff_rating].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
       sql << ") ratings (r) "
       sql << "ON (current_energy_efficiency_band = r)"
-      index += this_args[:eff_rating].size
+      index += args[:eff_rating].size
     end
 
-    unless this_args[:council].nil?
+    unless args[:council].nil?
       sql << " JOIN ( VALUES "
-      sql << this_args[:council].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << args[:council].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
       sql << ") councils (c) "
       sql << "ON (council = c)"
-      index += this_args[:council].size
+      index += args[:council].size
     end
 
-    unless this_args[:constituency].nil?
+    unless args[:constituency].nil?
       sql << " JOIN ( VALUES "
-      sql << this_args[:constituency].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << args[:constituency].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
       sql << ") cons (d) "
       sql << "ON (constituency = d)"
-      index += this_args[:constituency].size
+      index += args[:constituency].size
     end
 
     sql << " WHERE 0 = 0"
 
-    unless this_args[:date_start].nil? || this_args[:date_end].nil?
+    unless args[:date_start].nil? || args[:date_end].nil?
       sql << " AND registration_date BETWEEN $#{index} AND $#{index + 1}"
       index += 2
     end
 
-    unless this_args[:address].nil?
+    unless args[:address].nil?
       sql << " AND address LIKE $#{index}"
       index += 1
     end
 
-    unless this_args[:postcode].nil?
+    unless args[:postcode].nil?
       sql << " AND postcode = $#{index}"
       index += 1
     end
 
-    unless this_args[:uprn].nil?
+    unless args[:uprn].nil?
       sql << " AND uprn = $#{index}"
       index += 1
     end
@@ -429,10 +420,10 @@ private
       sql << " AND co.country_code IN ('EAW', 'ENG', 'WLS')"
     end
 
-    if this_args[:limit]
+    if args[:row_limit]
       sql << " ORDER BY registration_date DESC"
       sql << " LIMIT $#{index}"
-      sql << " OFFSET $#{index + 1}" unless this_args[:current_page].nil?
+      sql << " OFFSET $#{index + 1}" unless args[:current_page].nil?
     end
 
     sql

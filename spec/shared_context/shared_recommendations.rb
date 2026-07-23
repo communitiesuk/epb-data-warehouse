@@ -1,10 +1,9 @@
 shared_context "when fetching recommendations report" do
-  def get_bindings(*args)
-    this_args = args.first
+  def get_bindings(**args)
     arr = []
 
-    unless this_args[:eff_rating].nil?
-      this_args[:eff_rating].each_with_index do |rating, idx|
+    unless args[:eff_rating].nil?
+      args[:eff_rating].each_with_index do |rating, idx|
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "eff_rating_#{idx + 1}",
           rating,
@@ -16,18 +15,18 @@ shared_context "when fetching recommendations report" do
     arr.concat [
       ActiveRecord::Relation::QueryAttribute.new(
         "date_start",
-        this_args[:date_start],
+        args[:date_start],
         ActiveRecord::Type::Date.new,
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "date_end",
-        this_args[:date_end],
+        args[:date_end],
         ActiveRecord::Type::Date.new,
       ),
     ]
 
-    unless this_args[:council].nil?
-      this_args[:council].each_with_index do |council, idx|
+    unless args[:council].nil?
+      args[:council].each_with_index do |council, idx|
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "council_#{idx + 1}",
           council,
@@ -36,8 +35,8 @@ shared_context "when fetching recommendations report" do
       end
     end
 
-    unless this_args[:constituency].nil?
-      this_args[:constituency].each_with_index do |constituency, idx|
+    unless args[:constituency].nil?
+      args[:constituency].each_with_index do |constituency, idx|
         arr << ActiveRecord::Relation::QueryAttribute.new(
           "constituency_#{idx + 1}",
           constituency,
@@ -46,18 +45,18 @@ shared_context "when fetching recommendations report" do
       end
     end
 
-    unless this_args[:postcode].nil?
+    unless args[:postcode].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "postcode",
-        this_args[:postcode],
+        args[:postcode],
         ActiveRecord::Type::String.new,
       )
     end
 
-    unless this_args[:row_limit].nil?
+    unless args[:row_limit].nil?
       arr << ActiveRecord::Relation::QueryAttribute.new(
         "limit",
-        this_args[:row_limit],
+        args[:row_limit],
         ActiveRecord::Type::Integer.new,
       )
 
@@ -65,44 +64,43 @@ shared_context "when fetching recommendations report" do
     arr
   end
 
-  def search_filter(*args)
-    this_args = args.first
-    sql = this_args[:sql]
+  def search_filter(**args)
+    sql = args[:sql]
 
     index = 1
 
-    unless this_args[:eff_rating].nil?
+    unless args[:eff_rating].nil?
       sql << " JOIN ( VALUES "
-      sql << this_args[:eff_rating].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
+      sql << args[:eff_rating].each_with_index.map { |_, idx| "($#{index + idx})" }.join(", ")
       sql << ") vals (v) "
       sql << "ON (current_energy_rating = v)"
-      index += this_args[:eff_rating].size
+      index += args[:eff_rating].size
     end
 
     sql << (sql.include?("WHERE") ? " AND " : " WHERE ")
     sql << "lodgement_date BETWEEN $#{index} AND $#{index + 1}"
     index += 2
 
-    unless this_args[:council].nil?
+    unless args[:council].nil?
       sql << " AND local_authority_label IN ("
-      sql << this_args[:council].each_with_index.map { |_, idx| "$#{index + idx}" }.join(", ")
+      sql << args[:council].each_with_index.map { |_, idx| "$#{index + idx}" }.join(", ")
       sql << ")"
-      index += this_args[:council].size
+      index += args[:council].size
     end
 
-    unless this_args[:constituency].nil?
+    unless args[:constituency].nil?
       sql << " AND constituency_label IN ("
-      sql << this_args[:constituency].each_with_index.map { |_, idx| "$#{index + idx}" }.join(", ")
+      sql << args[:constituency].each_with_index.map { |_, idx| "$#{index + idx}" }.join(", ")
       sql << ")"
-      index += this_args[:constituency].size
+      index += args[:constituency].size
     end
 
-    unless this_args[:postcode].nil?
+    unless args[:postcode].nil?
       sql << " AND postcode = $#{index}"
       index += 1
     end
 
-    unless this_args[:row_limit].nil?
+    unless args[:row_limit].nil?
       sql << " ORDER BY certificate_number"
       sql << " LIMIT $#{index}"
     end

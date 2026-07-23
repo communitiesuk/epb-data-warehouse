@@ -4,12 +4,10 @@ module UseCase
       @assessment_search_gateway = assessment_search_gateway
     end
 
-    def execute(*args)
-      this_args = args[0]
+    def execute(**args)
+      args.delete(:eff_rating) if args[:eff_rating] && (args[:eff_rating].sort == %w[A B C D E F G])
 
-      this_args.delete(:eff_rating) if this_args[:eff_rating] && (this_args[:eff_rating].sort == %w[A B C D E F G])
-
-      result = @assessment_search_gateway.fetch_assessments(**this_args)
+      result = @assessment_search_gateway.fetch_assessments(**args)
 
       raise Boundary::NoData, "assessment search" if result.empty?
 
