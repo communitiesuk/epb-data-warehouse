@@ -306,16 +306,30 @@ describe Gateway::AssessmentSearchGateway do
         expect(search.first["post_town"]).to eq "The post town"
       end
 
-      it "updates the row with latest council and constituency from ons table" do
-        ActiveRecord::Base.connection.exec_query(
-          "UPDATE ons_postcode_directory_names SET name = 'Ealing' WHERE area_code = 'E09000013'",
+      context "when the council and constituency have been updated in the ons tables" do
+        before do
+          ActiveRecord::Base.connection.exec_query(
+            "UPDATE ons_postcode_directory_names SET name = 'Ealing' WHERE area_code = 'E09000013'",
           )
-        ActiveRecord::Base.connection.exec_query(
-          "UPDATE ons_postcode_directory_names SET name = 'Ealing Common' WHERE area_code = 'E14000629'",
+          ActiveRecord::Base.connection.exec_query(
+            "UPDATE ons_postcode_directory_names SET name = 'Ealing Common' WHERE area_code = 'E14000629'",
           )
-        gateway.insert_assessment(assessment_id:, document: rdsap, country_id:)
-        expect(search.first["council"]).to eq "Ealing"
-        expect(search.first["constituency"]).to eq "Ealing Common"
+        end
+
+        after do
+          ActiveRecord::Base.connection.exec_query(
+            "UPDATE ons_postcode_directory_names SET name = 'Hammersmith and Fulham' WHERE area_code = 'E09000013'",
+          )
+          ActiveRecord::Base.connection.exec_query(
+            "UPDATE ons_postcode_directory_names SET name = 'Chelsea and Fulham' WHERE area_code = 'E14000629'",
+          )
+        end
+
+        it "updates the row with latest council and constituency" do
+          gateway.insert_assessment(assessment_id:, document: rdsap, country_id:)
+          expect(search.first["council"]).to eq "Ealing"
+          expect(search.first["constituency"]).to eq "Ealing Common"
+        end
       end
     end
 
