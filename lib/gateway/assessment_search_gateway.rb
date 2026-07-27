@@ -50,7 +50,9 @@ class Gateway::AssessmentSearchGateway
       address_line_3 = excluded.address_line_3,
       address_line_4 = excluded.address_line_4,
       post_town = excluded.post_town,
-      address = excluded.address;
+      address = excluded.address,
+      council = excluded.council,
+      constituency = excluded.constituency;
     SQL
 
     address = generate_address(document: document_clone)
