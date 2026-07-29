@@ -1,0 +1,508 @@
+{
+  "uprn": 12457,
+  "roofs": [
+    {
+      "description": "Slate roof",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "slate roof",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "walls": [
+    {
+      "description": "Brick walls",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "Brick walls",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "floors": [
+    {
+      "description": "Tiled floor",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "Tiled floor",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "status": "entered",
+  "windows": {
+    "description": "Glass window",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "lighting": {
+    "description": "Energy saving bulbs",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "postcode": "SW1A 2AA",
+  "data_type": 2,
+  "hot_water": {
+    "description": "Gas boiler",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "post_town": "Whitbury",
+  "built_form": 2,
+  "created_at": "2025-08-18 20:54:31.000000",
+  "living_area": 11.92,
+  "orientation": 0,
+  "region_code": 2,
+  "report_type": 3,
+  "sap_heating": {
+    "thermal_store": 1,
+    "main_fuel_type": 36,
+    "has_solar_panel": "false",
+    "water_fuel_type": 1,
+    "heat_emitter_type": 1,
+    "water_heating_code": 901,
+    "boiler_index_number": 9895,
+    "is_flue_fan_present": "true",
+    "hot_water_store_size": 140,
+    "main_heating_control": 2106,
+    "is_interlocked_system": "true",
+    "main_heating_category": 2,
+    "has_hot_water_cylinder": "true",
+    "main_heating_flue_type": 2,
+    "has_cylinder_thermostat": "true",
+    "main_heating_data_source": 1,
+    "has_fixed_air_conditioning": "false",
+    "secondary_heating_category": 1,
+    "is_cylinder_in_heated_space": "true",
+    "has_delayed_start_thermostat": "false",
+    "is_hot_water_separately_timed": "true",
+    "is_primary_pipework_insulated": "true",
+    "is_main_heating_hetas_approved": "false",
+    "hot_water_store_insulation_type": 1,
+    "has_load_or_weather_compensation": "false",
+    "hot_water_store_heat_loss_source": 3,
+    "is_secondary_heating_hetas_approved": "false",
+    "hot_water_store_insulation_thickness": 50,
+    "is_central_heating_pump_in_heated_space": "true"
+  },
+  "sap_version": 9.81,
+  "schema_type": "SAP-Schema-14.0",
+  "uprn_source": "Energy Assessor",
+  "country_code": "EAW",
+  "main_heating": [
+    {
+      "description": "Gas boiler",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "air_tightness": {
+    "description": "Draft Exclusion",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "dwelling_type": "Mid-terrace house",
+  "language_code": 1,
+  "property_type": 0,
+  "address_line_1": "1 Some Street",
+  "address_line_2": "Some Area",
+  "address_line_3": "Some County",
+  "schema_version": "LIG-14.0",
+  "assessment_date": "2010-03-23",
+  "assessment_type": "SAP",
+  "completion_date": "2020-05-04",
+  "inspection_date": "2020-05-04",
+  "sap_ventilation": {
+    "wall_type": 2,
+    "pressure_test": 4,
+    "draughtstripping": 100,
+    "fans_vents_count": 4,
+    "open_flues_count": 0,
+    "ventilation_type": 1,
+    "ground_floor_type": 1,
+    "has_draught_lobby": "false",
+    "open_fireplaces_count": 0,
+    "sheltered_sides_count": 1,
+    "flueless_gas_fires_count": 0,
+    "mechanical_vent_specific_fan_power": 0.0
+  },
+  "total_floor_area": 69,
+  "transaction_type": 6,
+  "conservatory_type": 1,
+  "registration_date": "2020-05-04",
+  "restricted_access": 0,
+  "sap_energy_source": {
+    "pv_peak_power": 0.0,
+    "electricity_tariff": 1,
+    "wind_turbines_count": 0,
+    "wind_turbine_terrain_type": 1,
+    "fixed_lighting_outlets_count": 8,
+    "low_energy_fixed_lighting_outlets_count": 4,
+    "low_energy_fixed_lighting_outlets_percentage": 50
+  },
+  "sap_opening_types": [
+    {
+      "name": 1,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Lounge",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 2,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Lounge",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 3,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Bed 2",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 4,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Bed 2",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 5,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "En suite",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 6,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Kitchen",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 7,
+      "type": 2,
+      "u_value": 2.5,
+      "frame_type": 2,
+      "data_source": 3,
+      "description": "Hall",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "glazing_type": 4,
+      "isargonfilled": "true",
+      "solar_transmittance": 0.72
+    },
+    {
+      "name": 8,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Landing",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 9,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Bed 3",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 10,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "En suite",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    },
+    {
+      "name": 11,
+      "type": 4,
+      "u_value": 1.9,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "Bathroom",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "isargonfilled": "false",
+      "solar_transmittance": 0.63
+    }
+  ],
+  "secondary_heating": {
+    "description": "Electric heater",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "sap_building_parts": [
+    {
+      "overshading": 1,
+      "sap_openings": [
+        {
+          "name": 1,
+          "type": 1,
+          "width": 1.2,
+          "height": 2.1,
+          "location": "Filled cavity wall0",
+          "orientation": 5
+        },
+        {
+          "name": 2,
+          "type": 2,
+          "width": 0.75,
+          "height": 1.2,
+          "location": "Filled cavity wall0",
+          "orientation": 5
+        },
+        {
+          "name": 3,
+          "type": 3,
+          "width": 0.86,
+          "height": 1.05,
+          "location": "Filled cavity wall0",
+          "orientation": 5
+        },
+        {
+          "name": 4,
+          "type": 4,
+          "width": 0.86,
+          "height": 1.05,
+          "location": "Filled cavity wall0",
+          "orientation": 5
+        },
+        {
+          "name": 5,
+          "type": 5,
+          "width": 1.5,
+          "height": 1.05,
+          "location": "Timber frame1",
+          "orientation": 5
+        },
+        {
+          "name": 6,
+          "type": 6,
+          "width": 0.86,
+          "height": 1.05,
+          "location": "Filled cavity wall0",
+          "orientation": 1
+        },
+        {
+          "name": 7,
+          "type": 7,
+          "width": 0.94,
+          "height": 2.1,
+          "location": "Filled cavity wall0",
+          "orientation": 1
+        },
+        {
+          "name": 8,
+          "type": 8,
+          "width": 0.86,
+          "height": 1.05,
+          "location": "Filled cavity wall0",
+          "orientation": 1
+        },
+        {
+          "name": 9,
+          "type": 9,
+          "width": 0.86,
+          "height": 1.05,
+          "location": "Filled cavity wall0",
+          "orientation": 1
+        },
+        {
+          "name": 10,
+          "type": 10,
+          "width": 1.5,
+          "height": 1.05,
+          "location": "Timber frame1",
+          "orientation": 1
+        },
+        {
+          "name": 11,
+          "type": 11,
+          "width": 0.86,
+          "height": 1.05,
+          "location": "Filled cavity wall0",
+          "orientation": 7
+        }
+      ],
+      "construction_year": 1750,
+      "sap_exposed_roofs": [
+        {
+          "name": "Pitched roof, ins. 0",
+          "u_value": 0.15,
+          "description": "No information",
+          "total_roof_area": 18.4
+        },
+        {
+          "name": "Pitched roof, ins. 1",
+          "u_value": 0.2,
+          "description": "No information",
+          "total_roof_area": 17.6
+        }
+      ],
+      "sap_exposed_walls": [
+        {
+          "name": "Filled cavity wall0",
+          "u_value": 0.34,
+          "wall_type": 2,
+          "description": "Cavity construction",
+          "total_wall_area": 83.3,
+          "is_curtain_walling": "false"
+        },
+        {
+          "name": "Timber frame1",
+          "u_value": 0.33,
+          "wall_type": 2,
+          "description": "Timber construction",
+          "total_wall_area": 10.4,
+          "is_curtain_walling": "false"
+        }
+      ],
+      "sap_thermal_bridges": {
+        "thermal_bridge_code": 1,
+        "user_defined_y_value": 0.15
+      },
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "storey": 0,
+          "u_value": 0.22,
+          "floor_type": 2,
+          "storey_height": 2.4,
+          "heat_loss_area": 28.8,
+          "total_floor_area": 28.8
+        },
+        {
+          "storey": 1,
+          "u_value": 0.0,
+          "floor_type": 3,
+          "storey_height": 2.5,
+          "heat_loss_area": 0.0,
+          "total_floor_area": 28.8
+        },
+        {
+          "storey": 2,
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 2,
+          "heat_loss_area": 0,
+          "total_floor_area": 20.0
+        }
+      ]
+    }
+  ],
+  "has_special_feature": "false",
+  "bedf_revision_number": 251,
+  "heating_cost_current": 365.98,
+  "co2_emissions_current": 2.4,
+  "energy_rating_current": 50,
+  "lighting_cost_current": 123.45,
+  "main_heating_controls": [
+    {
+      "description": "Thermostat",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "has_hot_water_cylinder": "true",
+  "heating_cost_potential": 250.34,
+  "hot_water_cost_current": 200.4,
+  "suggested_improvements": [
+    {
+      "sequence": 1,
+      "typical_saving": 360,
+      "improvement_type": "A",
+      "improvement_details": {
+        "improvement_number": 5
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 50,
+      "environmental_impact_rating": 50
+    },
+    {
+      "sequence": 2,
+      "typical_saving": 99,
+      "improvement_type": "B",
+      "improvement_details": {
+        "improvement_texts": {
+          "improvement_description": "Improvement desc"
+        }
+      },
+      "improvement_category": 2,
+      "energy_performance_rating": 60,
+      "environmental_impact_rating": 64
+    }
+  ],
+  "co2_emissions_potential": 1.4,
+  "energy_rating_potential": 72,
+  "lighting_cost_potential": 84.23,
+  "hot_water_cost_potential": 180.43,
+  "is_in_smoke_control_area": "false",
+  "seller_commission_report": "Y",
+  "energy_consumption_current": 230,
+  "has_fixed_air_conditioning": "false",
+  "calculation_software_version": 4.2,
+  "energy_consumption_potential": 88,
+  "environmental_impact_current": 52,
+  "current_energy_efficiency_band": "E",
+  "environmental_impact_potential": 93,
+  "has_heated_separate_conservatory": "false",
+  "potential_energy_efficiency_band": "C",
+  "co2_emissions_current_per_floor_area": 20,
+  "additional_allowable_electricity_generation": 0
+}
