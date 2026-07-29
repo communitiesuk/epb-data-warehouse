@@ -16,6 +16,12 @@
     {
       "attribute_name": "transaction_type",
       "type_of_assessment": "SAP",
+      "xsd_node_name": "TransactionType",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-14**/SAP-EPC/UDT/SharedDomains.xsd"
+    },
+    {
+      "attribute_name": "transaction_type",
+      "type_of_assessment": "SAP",
       "xsd_node_name": "//Transaction-Type",
       "xsd_path": "/api/schemas/xml/SAP**/SAP/ExternalDefinitions.xml",
       "node_hash": { "Transaction-Code": "Transaction-Text" }
