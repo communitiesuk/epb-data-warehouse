@@ -24,6 +24,10 @@ describe "Domestic Recommendations Report" do
       import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
       import_use_case.execute
       add_countries
+
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", schema_type: "SAP-Schema-15.0", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "SAP-Schema-16.1", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
@@ -47,21 +51,6 @@ describe "Domestic Recommendations Report" do
       end
     end
 
-    let(:expected_sap_rr_data) do
-      [{ "certificate_number" => "0000-0000-0000-0000-0009",
-         "improvement_item" => 1,
-         "improvement_id" => "35",
-         "indicative_cost" => "£15",
-         "improvement_summary_text" => "Low energy lighting for all fixed outlets",
-         "improvement_descr_text" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings." },
-       { "certificate_number" => "0000-0000-0000-0000-0009",
-         "improvement_item" => 2,
-         "improvement_id" => "19",
-         "indicative_cost" => "£4,000 - £6,000",
-         "improvement_summary_text" => "Solar water heating",
-         "improvement_descr_text" => "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers." }]
-    end
-
     let(:expected_rdsap_data) do
       [{ "certificate_number" => "0000-0000-0000-0000-0006",
          "improvement_item" => 1,
@@ -83,46 +72,81 @@ describe "Domestic Recommendations Report" do
          "improvement_descr_text" => "An improvement desc" }]
     end
 
-    it "returns the recommendations for a the RdSAP assessment" do
-      items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }.sort_by { |i| i["improvement_item"] }
-      expect(items).to eq expected_rdsap_data
+    let(:expected_rdsap_21_0_1_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0010",
+         "improvement_item" => 1,
+         "improvement_id" => "66",
+         "indicative_cost" => "£220 - £250",
+         "improvement_summary_text" => "Internal insulation with cavity wall insulation",
+         "improvement_descr_text" => ".." },
+       { "certificate_number" => "0000-0000-0000-0000-0010",
+         "improvement_item" => 2,
+         "improvement_id" => "19",
+         "indicative_cost" => "£4,000 - £7,000",
+         "improvement_summary_text" => "Solar water heating",
+         "improvement_descr_text" => "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers." },
+       { "certificate_number" => "0000-0000-0000-0000-0010",
+         "improvement_item" => 3,
+         "improvement_id" => "34",
+         "indicative_cost" => "£8,000 - £10,000",
+         "improvement_summary_text" => "Solar photovoltaic panels, 2.5 kWp",
+         "improvement_descr_text" => "A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Photovoltaic Association has up-to-date information on local installers who are qualified electricians. It is best to obtain advice from a qualified electrician. Ask the electrician to explain the options." }]
     end
 
-    it "returns the recommendations for a the RdSAP 21.0.1 assessment" do
-      rdsap =
-        [{ "certificate_number" => "0000-0000-0000-0000-0010",
-           "improvement_item" => 1,
-           "improvement_id" => "66",
-           "indicative_cost" => "£220 - £250",
-           "improvement_summary_text" => "Internal insulation with cavity wall insulation",
-           "improvement_descr_text" => ".." },
-         { "certificate_number" => "0000-0000-0000-0000-0010",
-           "improvement_item" => 2,
-           "improvement_id" => "19",
-           "indicative_cost" => "£4,000 - £7,000",
-           "improvement_summary_text" => "Solar water heating",
-           "improvement_descr_text" => "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers." },
-         { "certificate_number" => "0000-0000-0000-0000-0010",
-           "improvement_item" => 3,
-           "improvement_id" => "34",
-           "indicative_cost" => "£8,000 - £10,000",
-           "improvement_summary_text" => "Solar photovoltaic panels, 2.5 kWp",
-           "improvement_descr_text" => "A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Photovoltaic Association has up-to-date information on local installers who are qualified electricians. It is best to obtain advice from a qualified electrician. Ask the electrician to explain the options." }]
-
-      items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0010" }.sort_by { |i| i["improvement_item"] }
-      expect(items).to eq rdsap
+    let(:expected_sap_16_1_rr_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0009",
+         "improvement_item" => 1,
+         "improvement_id" => "35",
+         "indicative_cost" => "£15",
+         "improvement_summary_text" => "Low energy lighting for all fixed outlets",
+         "improvement_descr_text" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings." },
+       { "certificate_number" => "0000-0000-0000-0000-0009",
+         "improvement_item" => 2,
+         "improvement_id" => "19",
+         "indicative_cost" => "£4,000 - £6,000",
+         "improvement_summary_text" => "Solar water heating",
+         "improvement_descr_text" => "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers." }]
     end
 
-    it "returns the recommendations text for the SAP of 16.1" do
-      items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0009" }.sort_by { |i| i["improvement_item"] }
-      expect(items[0]).to eq expected_sap_rr_data[0]
-      expect(items[1]).to eq expected_sap_rr_data[1]
-      expect(items.length).to eq 4
+    let(:expected_sap_15_0_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0012",
+         "improvement_descr_text" =>
+              "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.",
+         "improvement_id" => "35",
+         "improvement_item" => 1,
+         "improvement_summary_text" => "Low energy lighting for all fixed outlets",
+         "indicative_cost" => "??18" }]
+    end
+
+    context "when fetching RdSAP assessments" do
+      it "returns the recommendations for the RdSAP 20.0.0 assessment" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_rdsap_data
+      end
+
+      it "returns the recommendations for the RdSAP 21.0.1 assessment" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0010" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_rdsap_21_0_1_data
+      end
+    end
+
+    context "when fetching SAP assessments" do
+      it "returns the recommendations for SAP 15.0" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0012" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_15_0_data
+      end
+
+      it "returns the recommendations for SAP 16.1" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0009" }.sort_by { |i| i["improvement_item"] }
+        expect(items[0]).to eq expected_sap_16_1_rr_data[0]
+        expect(items[1]).to eq expected_sap_16_1_rr_data[1]
+        expect(items.length).to eq 4
+      end
     end
 
     it "the grouped results the expected certificate_numbers" do
       group = data.group_by { |i| i["certificate_number"] }
-      expect(group.length).to eq 3
+      expect(group.length).to eq 4
     end
 
     it "does not include the rows for NI assessments" do
