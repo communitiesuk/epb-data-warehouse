@@ -121,7 +121,7 @@ describe "VwExportDocuments" do
     end
 
     it "generates the correct number of tables" do
-      expect(redacted_table_names.length).to eq 16
+      expect(redacted_table_names.length).to eq 19
     end
   end
 
@@ -144,7 +144,7 @@ describe "VwExportDocuments" do
     end
   end
 
-  context "when checking that vw_export_documents exist in DB from 2011 until current year" do
+  context "when checking that vw_export_documents exist in DB from 2008 until current year" do
     let(:current_year) { Time.now.year }
 
     let(:view_names) do
@@ -155,8 +155,8 @@ describe "VwExportDocuments" do
       ActiveRecord::Base.connection.exec_query(sql).rows.flatten
     end
 
-    it "includes vw_export_documents views for every year from 2011 to current year" do
-      expected = (2011..current_year).map { |year| "vw_export_documents_#{year}" }
+    it "includes vw_export_documents views for every year from 2008 to current year" do
+      expected = (2008..current_year).map { |year| "vw_export_documents_#{year}" }
       missing = expected - view_names
 
       expect(missing).to eq([])
