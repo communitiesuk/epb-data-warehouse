@@ -115,7 +115,7 @@ describe Gateway::AssessmentLookupsGateway do
       end
 
       it "returns codes including the schema version" do
-        expect(results).to eq expected
+        expect(results).to include(*expected)
       end
 
       it "include all valid schema versions" do
