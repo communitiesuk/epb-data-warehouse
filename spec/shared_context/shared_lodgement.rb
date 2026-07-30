@@ -61,7 +61,7 @@ shared_context "when lodging XML" do
     if type == "cepc" && schema_type != "CEPC-NI-8.0.0"
       xml_path = "//CEPC:RRN"
     elsif type.end_with? "sap"
-      xml_path = "//SAP:RRN"
+      xml_path = "//*[local-name()='RRN']"
     end
 
     document = Nokogiri.XML Samples.xml(schema_type, type)

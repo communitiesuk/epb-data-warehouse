@@ -91,7 +91,7 @@ class AlterDomesticMvwNoEav < ActiveRecord::Migration[8.1]
         get_lookup_value('glazed_type', ad.document ->> 'multiple_glazing_type', s.assessment_type, ad.document ->> 'schema_type') AS GLAZED_TYPE,
         get_lookup_value('glazed_area', ad.document ->> 'glazed_area', s.assessment_type, ad.document ->> 'schema_type') AS GLAZED_AREA,
         get_lookup_value('heat_loss_corridor', ad.document -> 'sap_flat_details' ->> 'heat_loss_corridor', s.assessment_type, ad.document ->> 'schema_type') AS HEAT_LOSS_CORRIDOR,
-        get_lookup_value('main_fuel', ad.document -> 'sap_heating' -> 'main_heating_details'-> 0 ->> 'main_fuel_type', s.assessment_type, ad.document ->> 'schema_type') AS MAIN_FUEL,
+        get_lookup_value('main_fuel',COALESCE(ad.document -> 'sap_heating' ->> 'main_fuel_type', ad.document -> 'sap_heating' -> 'main_heating_details' -> 0 ->> 'main_fuel_type'), s.assessment_type, ad.document ->> 'schema_type') AS MAIN_FUEL,
         COALESCE(ad.document -> 'sap_flat_details' -> 'unheated_corridor_length' ->> 'value', ad.document -> 'sap_flat_details' ->> 'unheated_corridor_length') AS UNHEATED_CORRIDOR_LENGTH,
         ad.document -> 'sap_flat_details' ->> 'level' AS FLOOR_LEVEL,
         COALESCE(ad.document -> 'sap_flat_details' ->> 'top_storey',
