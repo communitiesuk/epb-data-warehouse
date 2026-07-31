@@ -25,6 +25,15 @@ describe "Domestic Recommendations Report" do
       import_use_case.execute
       add_countries
 
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0015", schema_type: "SAP-Schema-14.0", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0014", schema_type: "SAP-Schema-14.1", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0013", schema_type: "SAP-Schema-14.2", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", schema_type: "SAP-Schema-15.0", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
@@ -108,6 +117,51 @@ describe "Domestic Recommendations Report" do
          "improvement_descr_text" => "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers." }]
     end
 
+    let(:expected_sap_14_0_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0015",
+         "improvement_descr_text" => "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).",
+         "improvement_id" => "5",
+         "improvement_item" => 1,
+         "improvement_summary_text" => "Increase loft insulation to 270 mm",
+         "indicative_cost" => nil },
+       { "certificate_number" => "0000-0000-0000-0000-0015",
+         "improvement_descr_text" => "Improvement desc",
+         "improvement_id" => nil,
+         "improvement_item" => 2,
+         "improvement_summary_text" => nil,
+         "indicative_cost" => nil }]
+    end
+
+    let(:expected_sap_14_1_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0014",
+         "improvement_descr_text" => "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).",
+         "improvement_id" => "5",
+         "improvement_item" => 1,
+         "improvement_summary_text" => "Increase loft insulation to 270 mm",
+         "indicative_cost" => nil },
+       { "certificate_number" => "0000-0000-0000-0000-0014",
+         "improvement_descr_text" => "Improvement desc",
+         "improvement_id" => nil,
+         "improvement_item" => 2,
+         "improvement_summary_text" => nil,
+         "indicative_cost" => nil }]
+    end
+
+    let(:expected_sap_14_2_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0013",
+         "improvement_descr_text" => "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).",
+         "improvement_id" => "5",
+         "improvement_item" => 1,
+         "improvement_summary_text" => "Increase loft insulation to 270 mm",
+         "indicative_cost" => nil },
+       { "certificate_number" => "0000-0000-0000-0000-0013",
+         "improvement_descr_text" => "Improvement desc",
+         "improvement_id" => nil,
+         "improvement_item" => 2,
+         "improvement_summary_text" => nil,
+         "indicative_cost" => nil }]
+    end
+
     let(:expected_sap_15_0_data) do
       [{ "certificate_number" => "0000-0000-0000-0000-0012",
          "improvement_descr_text" =>
@@ -131,6 +185,21 @@ describe "Domestic Recommendations Report" do
     end
 
     context "when fetching SAP assessments" do
+      it "returns the recommendations for SAP 14.0" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0015" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_14_0_data
+      end
+
+      it "returns the recommendations for SAP 14.1" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0014" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_14_1_data
+      end
+
+      it "returns the recommendations for SAP 14.2" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0013" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_14_2_data
+      end
+
       it "returns the recommendations for SAP 15.0" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0012" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_sap_15_0_data
@@ -146,7 +215,7 @@ describe "Domestic Recommendations Report" do
 
     it "the grouped results the expected certificate_numbers" do
       group = data.group_by { |i| i["certificate_number"] }
-      expect(group.length).to eq 4
+      expect(group.length).to eq 7
     end
 
     it "does not include the rows for NI assessments" do
