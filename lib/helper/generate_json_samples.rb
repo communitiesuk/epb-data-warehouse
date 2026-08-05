@@ -59,7 +59,7 @@ class Helper::GenerateJsonSamples
   def self.get_sample_files
     samples_dir = "#{Dir.pwd}/spec/fixtures/samples"
     sample_files = Dir.glob("#{samples_dir}/**/*.xml")
-    rejected_files = %w[ac-cert redacted dec_exceeds 12 NI]
+    rejected_files = %w[ac-cert redacted dec_exceeds 11 NI]
     sample_files.reject do |absolute_path|
       local_path = Pathname(absolute_path).relative_path_from(Pathname(Dir.pwd)).to_s
       rejected_files.any? { local_path.include?(it) }

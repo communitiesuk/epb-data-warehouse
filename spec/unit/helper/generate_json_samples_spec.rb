@@ -112,7 +112,7 @@ describe Helper::GenerateJsonSamples do
     end
 
     it "returns all the expected sample files" do
-      expect(sample_files.length).to eq 47
+      expect(sample_files.length).to eq 49
     end
 
     it "files are being generated from the relevant xml samples" do
@@ -125,7 +125,7 @@ describe Helper::GenerateJsonSamples do
       end
     end
 
-    %w[ac-cert redacted dec_exceeds 12 NI].each do |i|
+    %w[ac-cert redacted dec_exceeds 11 NI].each do |i|
       it "files do not return an anything that contains #{i}" do
         # Do not test the full absolute path as that can include "14" on the ci server
         local_file_paths = sample_files.map { Pathname(it).relative_path_from(output_dir).to_s }
