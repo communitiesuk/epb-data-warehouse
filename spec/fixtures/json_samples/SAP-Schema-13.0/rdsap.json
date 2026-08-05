@@ -1,0 +1,240 @@
+{
+  "uprn": 12457,
+  "roofs": [
+    {
+      "description": "Slate roof",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "slate roof",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "walls": [
+    {
+      "description": "Brick walls",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "Brick walls",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "floors": [
+    {
+      "description": "Tiled floor",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    },
+    {
+      "description": "Tiled floor",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "status": "entered",
+  "windows": [
+    {
+      "description": "Glass window",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "lighting": {
+    "description": "Energy saving bulbs",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "postcode": "SW1A 2AA",
+  "hot_water": {
+    "description": "Gas boiler",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "post_town": "Whitbury",
+  "built_form": 1,
+  "created_at": "2025-08-18 20:54:31.000000",
+  "glazed_area": 1,
+  "region_code": 18,
+  "report_type": 2,
+  "sap_heating": {
+    "cylinder_size": 3,
+    "main_fuel_type": 10,
+    "heat_emitter_type": 0,
+    "water_heating_code": 903,
+    "water_heating_fuel": 10,
+    "secondary_fuel_type": 10,
+    "bedf_revision_number": 353,
+    "main_heating_control": 2401,
+    "main_heating_category": 7,
+    "sap_main_heating_code": 402,
+    "immersion_heating_type": 2,
+    "secondary_heating_type": 693,
+    "cylinder_insulation_type": 2,
+    "main_heating_data_source": 2,
+    "cylinder_insulation_thickness": 50
+  },
+  "sap_version": 9.82,
+  "schema_type": "SAP-Schema-13.0",
+  "uprn_source": "Energy Assessor",
+  "country_code": "EAW",
+  "main_heating": [
+    {
+      "description": "Gas boiler",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "dwelling_type": "Mid-terrace house",
+  "language_code": 1,
+  "property_type": 3,
+  "address_line_1": "1 Some Street",
+  "address_line_2": "Some Area",
+  "address_line_3": "Some County",
+  "schema_version": "LIG-16.1",
+  "assessment_type": "RdSAP",
+  "completion_date": "2020-05-04",
+  "inspection_date": "2020-05-04",
+  "extensions_count": 0,
+  "measurement_type": 1,
+  "sap_flat_details": {
+    "top_storey": "Y",
+    "storey_count": 3,
+    "flat_location": 1,
+    "floor_heat_loss": 3,
+    "heat_loss_corridor": 0
+  },
+  "total_floor_area": 69,
+  "transaction_type": 5,
+  "conservatory_type": 1,
+  "heated_room_count": 4,
+  "registration_date": "2020-05-04",
+  "restricted_access": 0,
+  "sap_energy_source": {
+    "main_gas": "Y",
+    "meter_type": 2,
+    "wind_turbines_count": 0,
+    "wind_turbines_terrain_type": 2
+  },
+  "secondary_heating": {
+    "description": "Electric heater",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "sap_building_parts": [
+    {
+      "identifier": "Main Dwelling",
+      "sap_room_in_roof": {
+        "floor_area": 18.3,
+        "insulation": 0,
+        "construction_age_band": "A"
+      },
+      "roof_construction": 4,
+      "wall_construction": 1,
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.45,
+          "floor_insulation": 1,
+          "total_floor_area": 31.26,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 13.28
+        },
+        {
+          "floor": 1,
+          "room_height": 2.32,
+          "total_floor_area": 31.26,
+          "heat_loss_perimeter": 13.28
+        }
+      ],
+      "wall_insulation_type": 4,
+      "construction_age_band": "A",
+      "roof_insulation_location": 4,
+      "roof_insulation_thickness": "NI"
+    },
+    {
+      "identifier": "Extension 1",
+      "roof_construction": 5,
+      "wall_construction": 3,
+      "building_part_number": 2,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.45,
+          "floor_insulation": 1,
+          "total_floor_area": 8.47,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 9.29
+        },
+        {
+          "floor": 1,
+          "room_height": 2.32,
+          "total_floor_area": 8.47,
+          "heat_loss_perimeter": 9.29
+        }
+      ],
+      "wall_insulation_type": 4,
+      "construction_age_band": "A",
+      "roof_insulation_location": 4,
+      "roof_insulation_thickness": "NI"
+    }
+  ],
+  "low_energy_lighting": 90,
+  "photovoltaic_supply": 0,
+  "solar_water_heating": "N",
+  "habitable_room_count": 4,
+  "heating_cost_current": 365.98,
+  "co2_emissions_current": 2.4,
+  "energy_rating_current": 50,
+  "lighting_cost_current": 123.45,
+  "main_heating_controls": [
+    {
+      "description": "Thermostat",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "multiple_glazing_type": 2,
+  "open_fireplaces_count": 0,
+  "has_hot_water_cylinder": "false",
+  "heating_cost_potential": 250.34,
+  "hot_water_cost_current": 200.4,
+  "mechanical_ventilation": 0,
+  "suggested_improvements": [
+    {
+      "sequence": 1,
+      "typical_saving": 360,
+      "improvement_category": 1,
+      "energy_performance_rating": 50,
+      "environmental_impact_rating": 50
+    },
+    {
+      "sequence": 2,
+      "typical_saving": 99,
+      "improvement_category": 2,
+      "improvement_description": "Improvement desc",
+      "energy_performance_rating": 60,
+      "environmental_impact_rating": 64
+    }
+  ],
+  "co2_emissions_potential": 1.4,
+  "energy_rating_potential": 72,
+  "lighting_cost_potential": 84.23,
+  "hot_water_cost_potential": 180.43,
+  "seller_commission_report": "Y",
+  "energy_consumption_current": 230,
+  "multiple_glazed_proportion": 65,
+  "calculation_software_version": "1.4.1.0",
+  "energy_consumption_potential": 88,
+  "environmental_impact_current": 52,
+  "current_energy_efficiency_band": "E",
+  "environmental_impact_potential": 70,
+  "has_heated_separate_conservatory": "false",
+  "potential_energy_efficiency_band": "C",
+  "co2_emissions_current_per_floor_area": 56
+}
