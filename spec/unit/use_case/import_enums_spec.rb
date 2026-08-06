@@ -274,7 +274,7 @@ describe UseCase::ImportEnums do
     end
 
     it "save the transaction type for all versions of SAP" do
-      sap_schemas = %w[SAP-Schema-14.0 SAP-Schema-14.1 SAP-Schema-14.2 SAP-Schema-15.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0]
+      sap_schemas = %w[SAP-Schema-13.0 SAP-Schema-14.0 SAP-Schema-14.1 SAP-Schema-14.2 SAP-Schema-15.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-16.2 SAP-Schema-16.3 SAP-Schema-17.0 SAP-Schema-17.1 SAP-Schema-18.0.0 SAP-Schema-19.0.0 SAP-Schema-19.1.0 SAP-Schema-19.2.0]
       expect(fetch_schemas(attribute_name:).sort).to eq sap_schemas
     end
 
@@ -407,6 +407,7 @@ describe UseCase::ImportEnums do
 
     it "save the transaction type for all versions of SAP" do
       sap_schemas = %w[
+        SAP-Schema-13.0
         SAP-Schema-14.0
         SAP-Schema-14.1
         SAP-Schema-14.2

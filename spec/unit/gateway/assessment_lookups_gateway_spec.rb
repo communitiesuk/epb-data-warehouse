@@ -184,7 +184,7 @@ describe Gateway::AssessmentLookupsGateway do
     end
 
     it "returns codes including the schema version" do
-      expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to eq %w[SAP-Schema-19.0.0 RdSAP-Schema-21.0.1 CEPC-8.0.0]
+      expect(results.uniq { |i| i["schema_version"] }.map { |i| i["schema_version"] }).to match_array %w[SAP-Schema-19.0.0 RdSAP-Schema-21.0.1 CEPC-8.0.0]
     end
 
     it "returns the expected columns" do
