@@ -1,44 +1,30 @@
 class AlterDomesticRrMview12Imp < ActiveRecord::Migration[8.1]
   def self.sql
-    <<-SQL
-     SELECT aav.assessment_id AS certificate_number,
-        items.sequence AS improvement_item,
-        (items.improvement_details ->> 'improvement_number'::text) AS improvement_id,
-        items.indicative_cost,
-        COALESCE(
-            items.improvement_summary,
-            (items.improvement_details -> 'improvement_texts' ->> 'improvement_summary'),
-            public.get_lookup_value('improvement_summary'::character varying, ((items.improvement_details ->> 'improvement_number'::text))::character varying, ((ad.document ->> 'assessment_type'::text))::character varying, s.schema_type)
-        )::character varying AS improvement_summary_text,
-        COALESCE(
-            items.improvement_description,
-            (items.improvement_details -> 'improvement_texts' ->> 'improvement_description'),
-            public.get_lookup_value('improvement_description'::character varying, ((items.improvement_details ->> 'improvement_number'::text))::character varying, ((ad.document ->> 'assessment_type'::text))::character varying, s.schema_type)
-        )::character varying AS improvement_descr_text
-       FROM ((((((public.assessment_attribute_values aav
-         CROSS JOIN LATERAL json_to_recordset(
-            CASE
-                WHEN (jsonb_typeof(aav."json") = 'array'::text) THEN (aav."json")::json
-                ELSE json_build_array((aav."json" -> 'improvement'::text))
-            END) items(
-                sequence integer,
-                indicative_cost character varying,
-                improvement_type character varying,
-                improvement_category character varying,
-                improvement_details json,
-                improvement_summary character varying,
-                improvement_description character varying
-            ))
-         JOIN public.assessment_documents ad ON (((ad.assessment_id)::text = (aav.assessment_id)::text)))
-         JOIN public.assessment_attributes aa ON ((aa.attribute_id = aav.attribute_id)))
-         JOIN ( SELECT aav1.assessment_id,
-                aav1.attribute_value AS schema_type
-               FROM (public.assessment_attribute_values aav1
-                 JOIN public.assessment_attributes a1 ON ((aav1.attribute_id = a1.attribute_id)))
-              WHERE ((a1.attribute_name)::text = 'schema_type'::text)) s ON (((s.assessment_id)::text = (aav.assessment_id)::text)))
-         JOIN public.assessments_country_ids aci ON (((aav.assessment_id)::text = (aci.assessment_id)::text)))
-         JOIN public.countries co ON ((aci.country_id = co.country_id)))
-      WHERE (((aa.attribute_name)::text = 'suggested_improvements'::text) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])))
+    <<~SQL
+          select
+          ad.assessment_id as certificate_number,
+          (elem ->> 'sequence')::int as IMPROVEMENT_ITEM,
+          elem -> 'improvement_details' ->> 'improvement_number'  as IMPROVEMENT_ID,
+          elem ->> 'indicative_cost' as INDICATIVE_COST,
+          COALESCE(
+                  elem ->> 'improvement_summary',
+                  elem -> 'improvement_details' -> 'improvement_texts' ->> 'improvement_summary',
+                  get_lookup_value('improvement_summary', (elem -> 'improvement_details' ->> 'improvement_number'),
+                                   ad.document ->> 'assessment_type', ad.document ->> 'schema_type')
+          ) as improvement_summary_text,
+          COALESCE(
+                  elem ->> 'improvement_description',
+                  elem -> 'improvement_details' -> 'improvement_texts' ->> 'improvement_description',
+                  get_lookup_value('improvement_description', (elem -> 'improvement_details' ->> 'improvement_number'),
+                                   ad.document ->> 'assessment_type', ad.document ->> 'schema_type')
+          ) as improvement_descr_text
+      from assessment_documents ad
+          join assessments_country_ids aci on ad.assessment_id = aci.assessment_id
+          join countries co on co.country_id = aci.country_id
+          cross join lateral jsonb_array_elements(ad.document -> 'suggested_improvements') AS elem
+      where co.country_code IN ('EAW', 'ENG', 'WLS')
+          AND  ad.document ->> 'assessment_type' IN ('SAP', 'RdSAP')
+          AND ad.document ->> 'suggested_improvements' is not null
     SQL
   end
 

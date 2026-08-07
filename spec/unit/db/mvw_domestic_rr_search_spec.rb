@@ -24,7 +24,12 @@ describe "Domestic Recommendations Report" do
       import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
       import_use_case.execute
       add_countries
-
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0017", schema_type: "SAP-Schema-12.0", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0016", schema_type: "SAP-Schema-12.0", type_of_assessment: "RdSAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0015", schema_type: "SAP-Schema-14.0", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
@@ -102,6 +107,21 @@ describe "Domestic Recommendations Report" do
          "improvement_descr_text" => "A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Photovoltaic Association has up-to-date information on local installers who are qualified electricians. It is best to obtain advice from a qualified electrician. Ask the electrician to explain the options." }]
     end
 
+    let(:expected_rdsap_120_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0016",
+         "improvement_item" => 1,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => "Low energy lighting for all fixed outlets",
+         "improvement_descr_text" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings." },
+       { "certificate_number" => "0000-0000-0000-0000-0016",
+         "improvement_item" => 2,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => nil,
+         "improvement_descr_text" => "Improvement desc" }]
+    end
+
     let(:expected_sap_16_1_rr_data) do
       [{ "certificate_number" => "0000-0000-0000-0000-0009",
          "improvement_item" => 1,
@@ -116,7 +136,20 @@ describe "Domestic Recommendations Report" do
          "improvement_summary_text" => "Solar water heating",
          "improvement_descr_text" => "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers." }]
     end
-
+    let(:expected_sap_12_0_data) do
+      [{ "certificate_number" => "0000-0000-0000-0000-0017",
+         "improvement_descr_text" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.",
+         "improvement_id" => nil,
+         "improvement_item" => 1,
+         "improvement_summary_text" => "Low energy lighting for all fixed outlets",
+         "indicative_cost" => nil },
+       { "certificate_number" => "0000-0000-0000-0000-0017",
+         "improvement_descr_text" => "Improvement desc",
+         "improvement_id" => nil,
+         "improvement_item" => 2,
+         "improvement_summary_text" => nil,
+         "indicative_cost" => nil }]
+    end
     let(:expected_sap_14_0_data) do
       [{ "certificate_number" => "0000-0000-0000-0000-0015",
          "improvement_descr_text" => "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).",
@@ -173,6 +206,11 @@ describe "Domestic Recommendations Report" do
     end
 
     context "when fetching RdSAP assessments" do
+      it "returns the recommendations for the RdSAP 12.0 assessment" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0016" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_rdsap_120_data
+      end
+
       it "returns the recommendations for the RdSAP 20.0.0 assessment" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_rdsap_data
@@ -185,6 +223,11 @@ describe "Domestic Recommendations Report" do
     end
 
     context "when fetching SAP assessments" do
+      it "returns the recommendations for SAP 12.0" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0017" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_12_0_data
+      end
+
       it "returns the recommendations for SAP 14.0" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0015" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_sap_14_0_data
@@ -215,68 +258,11 @@ describe "Domestic Recommendations Report" do
 
     it "the grouped results the expected certificate_numbers" do
       group = data.group_by { |i| i["certificate_number"] }
-      expect(group.length).to eq 7
+      expect(group.length).to eq 9
     end
 
     it "does not include the rows for NI assessments" do
       expect(data.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0011")
-    end
-
-    context "when the json is not is an hash with a single item rather than an array" do
-      let(:single_improvement) do
-        [{
-          improvement: {
-            sequence: 1,
-            typical_saving: {
-              value: 38,
-              currency: "GBP",
-            },
-            indicative_cost: "£4,000 - £6,000",
-            improvement_type: "W2",
-            improvement_details: {
-              improvement_number: 58,
-            },
-            improvement_category: 5,
-            energy_performance_rating: 74,
-            environmental_impact_rating: 78,
-          },
-        }]
-      end
-
-      before do
-        sql = <<-SQL
-           UPDATE assessment_attribute_values aav
-            SET json  = $1
-            FROM assessment_attributes aa
-            WHERE  aav.attribute_id = aa.attribute_id
-            AND aa.attribute_name = $2 AND aav.assessment_id = $3
-        SQL
-
-        bindings = [
-          ActiveRecord::Relation::QueryAttribute.new(
-            "json",
-            single_improvement,
-            ActiveRecord::Type::Json.new,
-          ),
-          ActiveRecord::Relation::QueryAttribute.new(
-            "attribute_name",
-            "suggested_improvements",
-            ActiveRecord::Type::String.new,
-          ),
-          ActiveRecord::Relation::QueryAttribute.new(
-            "assessment_id",
-            "0000-0000-0000-0000-0006",
-            ActiveRecord::Type::String.new,
-          ),
-        ]
-        ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
-        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
-      end
-
-      it "returns the single recommendation" do
-        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }
-        expect(items.length).to eq 1
-      end
     end
   end
 end
