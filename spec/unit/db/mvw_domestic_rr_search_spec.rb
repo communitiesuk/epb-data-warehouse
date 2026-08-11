@@ -30,6 +30,12 @@ describe "Domestic Recommendations Report" do
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0016", schema_type: "SAP-Schema-12.0", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0018", schema_type: "SAP-Schema-13.0", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0019", schema_type: "SAP-Schema-13.0", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0015", schema_type: "SAP-Schema-14.0", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
@@ -150,6 +156,39 @@ describe "Domestic Recommendations Report" do
          "improvement_summary_text" => nil,
          "indicative_cost" => nil }]
     end
+
+    let(:expected_rdsap_13_0_data) do
+      [{ "certificate_number" =>
+          "0000-0000-0000-0000-0019",
+         "improvement_item" => 1,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => "Increase hot water cylinder insulation",
+         "improvement_descr_text" => "Increasing the thickness of existing insulation up to 160 mm around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over the top of the existing insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast." },
+       { "certificate_number" => "0000-0000-0000-0000-0019",
+         "improvement_item" => 2,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => nil,
+         "improvement_descr_text" => "Improvement desc" }]
+    end
+    let(:expected_sap_13_0_data) do
+      [
+        { "certificate_number" => "0000-0000-0000-0000-0019",
+          "improvement_item" => 1,
+          "improvement_id" => nil,
+          "indicative_cost" => nil,
+          "improvement_summary_text" => "Increase hot water cylinder insulation",
+          "improvement_descr_text" => "Increasing the thickness of existing insulation up to 160 mm around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over the top of the existing insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast." },
+        { "certificate_number" => "0000-0000-0000-0000-0019",
+          "improvement_item" => 2,
+          "improvement_id" => nil,
+          "indicative_cost" => nil,
+          "improvement_summary_text" => nil,
+          "improvement_descr_text" => "Improvement desc" },
+      ]
+    end
+
     let(:expected_sap_14_0_data) do
       [{ "certificate_number" => "0000-0000-0000-0000-0015",
          "improvement_descr_text" => "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).",
@@ -211,6 +250,11 @@ describe "Domestic Recommendations Report" do
         expect(items).to eq expected_rdsap_120_data
       end
 
+      it "returns the recommendations for the RdSAP 13.0 assessment" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0019" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_rdsap_13_0_data
+      end
+
       it "returns the recommendations for the RdSAP 20.0.0 assessment" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_rdsap_data
@@ -223,6 +267,11 @@ describe "Domestic Recommendations Report" do
     end
 
     context "when fetching SAP assessments" do
+      it "returns the recommendations for SAP 13.0" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0019" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_13_0_data
+      end
+
       it "returns the recommendations for SAP 12.0" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0017" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_sap_12_0_data
@@ -258,7 +307,7 @@ describe "Domestic Recommendations Report" do
 
     it "the grouped results the expected certificate_numbers" do
       group = data.group_by { |i| i["certificate_number"] }
-      expect(group.length).to eq 9
+      expect(group.length).to eq 11
     end
 
     it "does not include the rows for NI assessments" do

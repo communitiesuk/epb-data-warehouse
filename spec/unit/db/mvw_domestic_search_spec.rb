@@ -103,6 +103,12 @@ describe "Domestic Materialized View" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0021", assessment_address_id:, schema_type: "SAP-Schema-14.0", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0022", assessment_address_id:, schema_type: "SAP-Schema-13.0", type_of_assessment:, type: "sap", different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0023", assessment_address_id:, schema_type: "SAP-Schema-13.0", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
+      "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
+    })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0024", assessment_address_id:, schema_type: "SAP-Schema-12.0", type_of_assessment:, type: "sap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
@@ -110,7 +116,7 @@ describe "Domestic Materialized View" do
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
 
-    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-15.0 SAP-Schema-14.2 SAP-Schema-14.1 SAP-Schema-14.0 SAP-Schema-12.0])
+    import_look_ups(schema_versions: %w[RdSAP-Schema-21.0.1 RdSAP-Schema-21.0.0 RdSAP-Schema-20.0.0 SAP-Schema-19.0.0 SAP-Schema-16.0 SAP-Schema-16.1 SAP-Schema-15.0 SAP-Schema-14.2 SAP-Schema-14.1 SAP-Schema-14.0 SAP-Schema-13.0 SAP-Schema-12.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search")
   end
 
@@ -133,12 +139,206 @@ describe "Domestic Materialized View" do
       0000-0000-0000-0000-0019
       0000-0000-0000-0000-0020
       0000-0000-0000-0000-0021
+      0000-0000-0000-0000-0022
+      0000-0000-0000-0000-0023
       0000-0000-0000-0000-0024
       0000-0000-0000-0000-0025
     ]
   end
 
   context "when checking data in the materialized view" do
+    let(:expected_sap_130_rdsap_data) do
+      { "certificate_number" => "0000-0000-0000-0000-0023",
+        "address1" => "1 Some Street",
+        "address2" => "Some Area",
+        "address3" => "Some County",
+        "address" => "1 Some Street, Some Area, Some County",
+        "postcode" => "SW10 0AA",
+        "inspection_date" => "2020-05-04",
+        "uprn" => 1245,
+        "environment_impact_potential" => "70",
+        "energy_consumption_current" => "230",
+        "energy_consumption_potential" => "88",
+        "environment_impact_current" => "52",
+        "co2_emissions_current" => "2.4",
+        "co2_emiss_curr_per_floor_area" => "56",
+        "co2_emissions_potential" => "1.4",
+        "total_floor_area" => "69",
+        "lodgement_date" => "2022-04-05",
+        "report_type" => "2",
+        "posttown" => "Whitbury",
+        "lodgement_datetime" => "2021-07-21 11:26:28",
+        "current_energy_efficiency" => "50",
+        "current_energy_rating" => "E",
+        "potential_energy_efficiency" => "72",
+        "potential_energy_rating" => "C",
+        "extension_count" => "0",
+        "number_open_fireplaces" => "0",
+        "number_heated_rooms" => "4",
+        "number_habitable_rooms" => "4",
+        "low_energy_lighting" => "90",
+        "low_energy_fixed_lighting_outlets_count" => nil,
+        "solar_water_heating_flag" => "N",
+        "mechanical_ventilation" => "natural",
+        "tenure" => nil,
+        "property_type" => "Maisonette",
+        "transaction_type" => "not sale or rental",
+        "construction_age_band" => "England and Wales: before 1900",
+        "built_form" => "Detached",
+        "energy_tariff" => "Single",
+        "glazed_type" => "double glazing installed during or after 2002",
+        "glazed_area" => "Normal",
+        "heat_loss_corridor" => "no corridor",
+        "main_fuel" => "electricity",
+        "unheated_corridor_length" => nil,
+        "floor_level" => nil,
+        "flat_top_storey" => "Y",
+        "flat_storey_count" => 2,
+        "mains_gas_flag" => "Y",
+        "photo_supply" => "0",
+        "wind_turbine_count" => 0,
+        "lighting_cost_current" => "123.45",
+        "lighting_cost_potential" => "84.23",
+        "heating_cost_current" => "365.98",
+        "heating_cost_potential" => "250.34",
+        "hot_water_cost_current" => "200.4",
+        "hot_water_cost_potential" => "180.43",
+        "multi_glaze_proportion" => "65",
+        "hotwater_description" => "Gas boiler",
+        "hot_water_energy_eff" => "N/A",
+        "hot_water_env_eff" => "N/A",
+        "floor_description" => "Tiled floor",
+        "floor_energy_eff" => "N/A",
+        "floor_env_eff" => "N/A",
+        "roof_description" => "Slate roof",
+        "roof_energy_eff" => "N/A",
+        "roof_env_eff" => "N/A",
+        "walls_description" => "Brick walls",
+        "walls_energy_eff" => "N/A",
+        "walls_env_eff" => "N/A",
+        "windows_description" => "Glass window",
+        "windows_energy_eff" => "N/A",
+        "windows_env_eff" => "N/A",
+        "secondheat_description" => "Electric heater",
+        "sheating_energy_eff" => "N/A",
+        "sheating_env_eff" => "N/A",
+        "mainheat_description" => "Gas boiler",
+        "mainheat_energy_eff" => "N/A",
+        "mainheat_env_eff" => "N/A",
+        "mainheatcont_description" => "Thermostat",
+        "mainheatc_energy_eff" => "N/A",
+        "mainheatc_env_eff" => "N/A",
+        "lighting_description" => "Energy saving bulbs",
+        "lighting_energy_eff" => "N/A",
+        "lighting_env_eff" => "N/A",
+        "fixed_lighting_outlets_count" => nil,
+        "floor_height" => "2.45",
+        "main_heating_controls" => "Thermostat",
+        "local_authority" => "E09000013",
+        "local_authority_label" => "Hammersmith and Fulham",
+        "constituency_label" => "Chelsea and Fulham",
+        "constituency" => "E14000629",
+        "country" => "England",
+        "region" => "E12000007",
+        "uprn_source" => "Energy Assessor" }
+    end
+
+    let(:expected_sap_130_sap_data) do
+      { "certificate_number" => "0000-0000-0000-0000-0022",
+        "address1" => "1 Some Street",
+        "address2" => "Some Area",
+        "address3" => "Some County",
+        "address" => "1 Some Street, Some Area, Some County",
+        "postcode" => "SW10 0AA",
+        "inspection_date" => "2020-05-04",
+        "uprn" => 1245,
+        "environment_impact_potential" => "93",
+        "energy_consumption_current" => "230",
+        "energy_consumption_potential" => "88",
+        "environment_impact_current" => "52",
+        "co2_emissions_current" => "2.4",
+        "co2_emiss_curr_per_floor_area" => "20",
+        "co2_emissions_potential" => "1.4",
+        "total_floor_area" => "69",
+        "lodgement_date" => "2022-04-05",
+        "report_type" => "3",
+        "posttown" => "Whitbury",
+        "lodgement_datetime" => "2021-07-21 11:26:28",
+        "current_energy_efficiency" => "50",
+        "current_energy_rating" => "E",
+        "potential_energy_efficiency" => "72",
+        "potential_energy_rating" => "C",
+        "extension_count" => nil,
+        "number_open_fireplaces" => "0",
+        "number_heated_rooms" => nil,
+        "number_habitable_rooms" => nil,
+        "low_energy_lighting" => "50",
+        "low_energy_fixed_lighting_outlets_count" => "4",
+        "solar_water_heating_flag" => nil,
+        "mechanical_ventilation" => nil,
+        "tenure" => nil,
+        "property_type" => "House",
+        "transaction_type" => "new dwelling",
+        "construction_age_band" => "1750",
+        "built_form" => "Semi-Detached",
+        "energy_tariff" => "standard tariff",
+        "glazed_type" => nil,
+        "glazed_area" => nil,
+        "heat_loss_corridor" => nil,
+        "main_fuel" => "Electricity: electricity sold to grid",
+        "unheated_corridor_length" => nil,
+        "floor_level" => nil,
+        "flat_top_storey" => "N",
+        "flat_storey_count" => 3,
+        "mains_gas_flag" => nil,
+        "photo_supply" => nil,
+        "wind_turbine_count" => 0,
+        "lighting_cost_current" => "123.45",
+        "lighting_cost_potential" => "84.23",
+        "heating_cost_current" => "365.98",
+        "heating_cost_potential" => "250.34",
+        "hot_water_cost_current" => "200.4",
+        "hot_water_cost_potential" => "180.43",
+        "multi_glaze_proportion" => nil,
+        "hotwater_description" => "Gas boiler",
+        "hot_water_energy_eff" => "N/A",
+        "hot_water_env_eff" => "N/A",
+        "floor_description" => "Tiled floor",
+        "floor_energy_eff" => "N/A",
+        "floor_env_eff" => "N/A",
+        "roof_description" => "Slate roof",
+        "roof_energy_eff" => "N/A",
+        "roof_env_eff" => "N/A",
+        "walls_description" => "Brick walls",
+        "walls_energy_eff" => "N/A",
+        "walls_env_eff" => "N/A",
+        "windows_description" => "Glass window",
+        "windows_energy_eff" => "N/A",
+        "windows_env_eff" => "N/A",
+        "secondheat_description" => "Electric heater",
+        "sheating_energy_eff" => "N/A",
+        "sheating_env_eff" => "N/A",
+        "mainheat_description" => "Gas boiler",
+        "mainheat_energy_eff" => "N/A",
+        "mainheat_env_eff" => "N/A",
+        "mainheatcont_description" => "Thermostat",
+        "mainheatc_energy_eff" => "N/A",
+        "mainheatc_env_eff" => "N/A",
+        "lighting_description" => "Energy saving bulbs",
+        "lighting_energy_eff" => "N/A",
+        "lighting_env_eff" => "N/A",
+        "fixed_lighting_outlets_count" => "8",
+        "floor_height" => "2.4",
+        "main_heating_controls" => "Thermostat",
+        "local_authority" => "E09000013",
+        "local_authority_label" => "Hammersmith and Fulham",
+        "constituency_label" => "Chelsea and Fulham",
+        "constituency" => "E14000629",
+        "country" => "England",
+        "region" => "E12000007",
+        "uprn_source" => "Energy Assessor" }
+    end
+
     let(:expected_sap_120_rdsap_data) do
       { "certificate_number" => "0000-0000-0000-0000-0025",
         "address1" => "1 Some Street",
@@ -1620,6 +1820,16 @@ describe "Domestic Materialized View" do
         "local_authority" => "E09000033",
         "local_authority_label" => "Westminster",
       )
+    end
+
+    it "returns a row with the required data for SAP 13.0 and of assessment_type sap" do
+      result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0022" }
+      expect(result).to eq expected_sap_130_sap_data
+    end
+
+    it "returns a row with the required data for SAP 13.0 and of assessment_type rdsap" do
+      result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0023" }
+      expect(result).to eq expected_sap_130_rdsap_data
     end
 
     it "returns a row with the required data for SAP 12.0 and of assessment_type sap" do
