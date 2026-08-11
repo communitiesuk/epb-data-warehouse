@@ -211,6 +211,7 @@
           <SAP:Orientation>0</SAP:Orientation>
           <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
           <SAP:Is-In-Smoke-Control-Area>unknown</SAP:Is-In-Smoke-Control-Area>
+          <SAP:Open-Fireplaces-Count>0</SAP:Open-Fireplaces-Count>
           <SAP:SAP-Heating>
             <SAP:Water-Heating-Code>901</SAP:Water-Heating-Code>
             <SAP:Water-Fuel-Type>1</SAP:Water-Fuel-Type>

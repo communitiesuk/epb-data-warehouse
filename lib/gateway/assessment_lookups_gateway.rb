@@ -126,7 +126,6 @@ module Gateway
     def valid_schema_version?(schema_version)
       is_valid = false
       version_number = schema_version.scan(/\d+/).first.to_i
-      return false if schema_version.include?("-NI-")
 
       if schema_version.include?("SAP")
         is_valid = true if version_number > 10
