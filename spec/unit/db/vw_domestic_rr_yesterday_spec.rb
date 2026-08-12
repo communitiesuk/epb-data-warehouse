@@ -35,16 +35,16 @@ describe "Domestic Recommendations Report Yesterday" do
     import_use_case.execute
     add_countries
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", schema_type: "SAP-Schema-16.1", type_of_assessment: "SAP", type: "sap", different_fields: {
-      "postcode": "SW10 0AA",
+      "postcode": "SW10 0AA", "country_id": 1
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "SAP-Schema-16.1", type_of_assessment: "SAP", type: "sap", different_fields: {
-      "postcode": "SW10 0AA",
+      "postcode": "SW10 0AA", "country_id": 1
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
-      "postcode": "SW10 0AA",
+      "postcode": "SW10 0AA", "country_id": 1
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "RdSAP-Schema-NI-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
-      "postcode": "BT1 0AA",
+      "postcode": "BT1 0AA", "country_id": 1
     })
   end
 
@@ -57,9 +57,9 @@ describe "Domestic Recommendations Report Yesterday" do
     let(:yesterday) { Date.today - 1 }
 
     before do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0003'", "SQL")
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_documents SET warehouse_created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0012'", "SQL")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0003'", "SQL")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0006'", "SQL")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0012'", "SQL")
     end
 
     it "returns the same columns as the mvw_domestic_rr_search" do
