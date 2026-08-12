@@ -451,6 +451,48 @@ describe Gateway::AssessmentSearchGateway do
         expect(search.find { |i| i["assessment_id"] == "7777-0000-0000-0011-9996" }["uprn"]).to be_nil
       end
     end
+
+    context "when the epc is opted out" do
+      let(:opted_out_doc) do
+        rdsap.merge({ "opt_out" => Time.now.utc.strftime("%F %T") })
+      end
+
+      before do
+        gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9996", document: opted_out_doc, country_id: 1)
+      end
+
+      it "does not save the document in the table" do
+        expect(search.length).to eq 0
+      end
+    end
+
+    context "when the epc is cancelled" do
+      let(:cancelled_doc) do
+        rdsap.merge({ "cancelled_at" => Time.now.utc.strftime("%F %T") })
+      end
+
+      before do
+        gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9996", document: cancelled_doc, country_id: 1)
+      end
+
+      it "does not save the document in the table" do
+        expect(search.length).to eq 0
+      end
+    end
+
+    context "when the epc is not for issue at" do
+      let(:not_for_issue_doc) do
+        rdsap.merge({ "not_for_issue_at" => Time.now.utc.strftime("%F %T") })
+      end
+
+      before do
+        gateway.insert_assessment(assessment_id: "9999-0000-0000-0000-9996", document: not_for_issue_doc, country_id: 1)
+      end
+
+      it "does not save the document in the table" do
+        expect(search.length).to eq 0
+      end
+    end
   end
 
   describe "#update_uprn" do

@@ -9,6 +9,7 @@ class Gateway::AssessmentSearchGateway
     document_clone.deep_symbolize_keys!
     return unless VALID_COUNTRY_IDS.include?(country_id)
     return if document_clone[:assessment_type] == AC_CERTIFICATE_TYPE
+    return if document_clone[:opt_out] || document_clone[:cancelled_at] || document_clone[:not_for_issue_at]
 
     created_at = document_clone[:created_at] || Time.now
     sql = <<-SQL
