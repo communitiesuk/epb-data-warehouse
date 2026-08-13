@@ -200,7 +200,6 @@ RSpec.describe "the parser and the SAP configuration" do
                       "schema_version" => "LIG-16.0",
                       "built_form" => 1,
                       "living_area" => 24.78,
-                      "open_fireplaces_count" => 0,
                       "orientation" => 0,
                       "conservatory_type" => 1,
                       "is_in_smoke_control_area" => "unknown",
