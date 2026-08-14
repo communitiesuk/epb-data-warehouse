@@ -129,7 +129,7 @@ module Gateway
       return false if schema_version.include?("-NI-")
 
       if schema_version.include?("SAP")
-        is_valid = true if version_number > 11
+        is_valid = true if version_number > 10
       elsif schema_version.include?("CEPC")
         is_valid = true if version_number > 6
       end
