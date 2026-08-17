@@ -408,6 +408,7 @@ describe UseCase::ImportEnums do
     it "save the property type for all versions of SAP" do
       sap_schemas = %w[
         SAP-Schema-11.0
+        SAP-Schema-11.2
         SAP-Schema-12.0
         SAP-Schema-13.0
         SAP-Schema-14.0
