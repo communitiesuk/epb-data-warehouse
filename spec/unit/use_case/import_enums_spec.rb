@@ -348,7 +348,7 @@ describe UseCase::ImportEnums do
                          RdSAP-Schema-20.0.0
                          RdSAP-Schema-21.0.0
                          RdSAP-Schema-21.0.1]
-      expect(fetch_schemas(attribute_name:).sort).to include(*rdsap_schemas)
+      expect(fetch_schemas(attribute_name:).grep(/^RdSAP/)).to match_array(rdsap_schemas)
     end
 
     it "save the enums from the RdSAP 17.0" do
@@ -426,7 +426,7 @@ describe UseCase::ImportEnums do
         SAP-Schema-19.1.0
         SAP-Schema-19.2.0
       ]
-      expect(fetch_schemas(attribute_name:).sort).to include(*sap_schemas)
+      expect(fetch_schemas(attribute_name:).grep(/^SAP/)).to match_array(sap_schemas)
     end
 
     it "save the enums from the sap 15.0" do
