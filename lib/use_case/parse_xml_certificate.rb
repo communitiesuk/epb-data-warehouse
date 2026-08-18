@@ -32,7 +32,7 @@ module UseCase
       when Array
         value.map { |v| deep_clean_strings(v) }
       when String
-        value.squish
+        value.length > 10_000 ? value.strip : value.squish
       else
         value
       end

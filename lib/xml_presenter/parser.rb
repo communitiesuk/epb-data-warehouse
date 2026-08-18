@@ -295,9 +295,7 @@ module XmlPresenter
     end
 
     def is_numeric?(string)
-      true if Float(string)
-    rescue StandardError
-      false
+      !!Float(string, exception: false)
     end
 
     def is_bool?(string)
