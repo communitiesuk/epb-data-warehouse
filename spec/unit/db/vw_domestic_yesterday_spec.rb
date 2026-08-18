@@ -67,5 +67,10 @@ describe "Domestic Report Yesterday" do
 
       expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0006 0000-0000-0000-0000-0008]
     end
+
+    it "does not return any rows for NI even if it has an address_id_updated audit log from yesterday" do
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0010", event_type: "address_id_updated", timestamp: yesterday)
+      expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0010")
+    end
   end
 end
