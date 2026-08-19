@@ -66,12 +66,18 @@ shared_examples "a file download API endpoint" do |file_name:, type:|
       before do
         allow(Container).to receive(:get_presigned_url_use_case).and_return(use_case)
         allow(use_case).to receive(:execute).and_raise(Errors::UriTooLong)
+        allow(Sentry).to receive(:capture_exception)
       end
 
       it "raises a server error" do
         response_body = JSON.parse(response.body)
         expect(response.status).to eq(500)
         expect(response_body["data"]["error"]).to include "Internal Server Error"
+      end
+
+      it "reports the error to Sentry" do
+        response
+        expect(Sentry).to have_received(:capture_exception).with(an_instance_of(Errors::UriTooLong))
       end
     end
   end

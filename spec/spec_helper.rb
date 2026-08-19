@@ -63,10 +63,6 @@ def gateway(name)
   Services.gateway name
 end
 
-def report_to_sentry(exception)
-  Sentry.capture_exception(exception)
-end
-
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new(iat: Time.now.to_i,

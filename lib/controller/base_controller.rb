@@ -80,5 +80,9 @@ module Controller
     def params_body(schema)
       @json_helper.convert_to_ruby_hash(params.to_json, schema:)
     end
+
+    def report_to_sentry(exception)
+      Sentry.capture_exception(exception) if defined?(Sentry)
+    end
   end
 end
