@@ -2027,7 +2027,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_110_sap_data
     end
 
-    it "returns a row with the required data for SAP 11.0 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 11.0 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0027" }
       expect(result).to eq expected_sap_110_rdsap_data
     end
@@ -2037,7 +2037,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_130_sap_data
     end
 
-    it "returns a row with the required data for SAP 13.0 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 13.0 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0023" }
       expect(result).to eq expected_sap_130_rdsap_data
     end
@@ -2047,7 +2047,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_120_sap_data
     end
 
-    it "returns a row with the required data for SAP 12.0 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 12.0 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0025" }
       expect(result).to eq expected_sap_120_rdsap_data
     end
@@ -2057,7 +2057,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_140_sap_data
     end
 
-    it "returns a row with the required data for SAP 14.0 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 14.0 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0021" }
       expect(result).to eq expected_sap_140_rdsap_data
     end
@@ -2067,7 +2067,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_141_sap_data
     end
 
-    it "returns a row with the required data for SAP 14.1 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 14.1 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0019" }
       expect(result).to eq expected_sap_141_rdsap_data
     end
@@ -2077,7 +2077,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_142_sap_data
     end
 
-    it "returns a row with the required data for SAP 14.2 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 14.2 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0017" }
       expect(result).to eq expected_sap_142_rdsap_data
     end
@@ -2087,12 +2087,12 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_150_sap_data
     end
 
-    it "returns a row with the required data for SAP 15.0 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 15.0 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0015" }
       expect(result).to eq expected_sap_150_rdsap_data
     end
 
-    it "returns a row with the required data for SAP 16.0 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 16.0 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0010" }
       expect(result).to eq expected_sap_160_rdsap_data
     end
@@ -2107,7 +2107,7 @@ describe "Domestic Materialized View" do
       expect(result).to eq expected_sap_161_sap_data
     end
 
-    it "returns a row with the required data for SAP 16.1 and of assessment_type rdsap" do
+    it "returns a row with the required data for RdSAP 16.1 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0013" }
       expect(result).to eq expected_sap_161_rdsap_data
     end

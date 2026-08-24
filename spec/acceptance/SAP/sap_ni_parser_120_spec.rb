@@ -112,6 +112,7 @@ RSpec.describe "the parser and the SAP configuration" do
                         "cylinder_size" => 1,
                       },
                       "sap_energy_source" => { "meter_type" => 2, "main_gas" => "Y", "wind_turbines_count" => 0, "wind_turbines_terrain_type" => 2 },
+                      "sap_flat_details" => { "heat_loss_corridor" => 2, "top_storey" => "N", "unheated_corridor_length" => 10.34 },
                       "photovoltaic_supply" => 0 }
       expect(use_case.execute(xml: rdsap,
                               schema_type: "SAP-Schema-NI-12.0",
@@ -195,6 +196,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "built_form" => 1,
                       "living_area" => 24.78,
                       "orientation" => 0,
+                      "open_fireplaces_count" => 0,
                       "conservatory_type" => 1,
                       "is_in_smoke_control_area" => "unknown",
                       "sap_heating" => {

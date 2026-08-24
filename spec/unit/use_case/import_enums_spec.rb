@@ -349,13 +349,22 @@ describe UseCase::ImportEnums do
     end
 
     it "save the transaction type for all versions of RdSAP" do
-      rdsap_schemas = %w[RdSAP-Schema-17.0
-                         RdSAP-Schema-17.1
-                         RdSAP-Schema-18.0
-                         RdSAP-Schema-19.0
-                         RdSAP-Schema-20.0.0
-                         RdSAP-Schema-21.0.0
-                         RdSAP-Schema-21.0.1]
+      rdsap_schemas = %w[
+        RdSAP-Schema-17.0
+        RdSAP-Schema-17.1
+        RdSAP-Schema-18.0
+        RdSAP-Schema-19.0
+        RdSAP-Schema-20.0.0
+        RdSAP-Schema-21.0.0
+        RdSAP-Schema-21.0.1
+        RdSAP-Schema-NI-17.3
+        RdSAP-Schema-NI-17.4
+        RdSAP-Schema-NI-18.0
+        RdSAP-Schema-NI-19.0
+        RdSAP-Schema-NI-20.0.0
+        RdSAP-Schema-NI-21.0.0
+        RdSAP-Schema-NI-21.0.1
+      ]
       expect(fetch_schemas(attribute_name:).grep(/^RdSAP/)).to match_array(rdsap_schemas)
     end
 
