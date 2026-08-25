@@ -154,18 +154,30 @@ describe "Domestic NI Materialized View" do
       "postcode": "BT12 4AA", "registration_date": "2023-03-05T12:00:00.000+00:00", "country_id": 3
     })
 
-    # SAP-Schema-NI-17.3 - RdSAP (RdSAP only schema)
-    add_assessment_eav(assessment_id: "1000-0000-0000-0000-1173", assessment_address_id:, schema_type: "SAP-Schema-NI-17.3", type_of_assessment: "SAP", different_fields: {
+    # HERE SAAAAAAAAAAPS
+
+    # SAP-Schema-NI-17.3 = SAP (SAP only schema)
+    add_assessment_eav(assessment_id: "1000-0000-0000-0000-0173", assessment_address_id:, schema_type: "SAP-Schema-NI-17.3", type_of_assessment: "SAP", different_fields: {
       "postcode": "BT13 3AA", "registration_date": "2023-04-05T12:00:00.000+00:00", "country_id": 3
     })
 
-    # SAP-Schema-NI-17.4 - RdSAP (RdSAP only schema)
-    add_assessment_eav(assessment_id: "1000-0000-0000-0000-1174", assessment_address_id:, schema_type: "SAP-Schema-NI-17.4", type_of_assessment: "SAP", different_fields: {
+    # RdSAP-Schema-NI-17.3 - RdSAP (RdSAP only schema)
+    add_assessment_eav(assessment_id: "1000-0000-0000-0000-1173", assessment_address_id:, schema_type: "RdSAP-Schema-NI-17.3", type_of_assessment: "RdSAP", different_fields: {
+      "postcode": "BT13 3AA", "registration_date": "2023-04-05T12:00:00.000+00:00", "country_id": 3
+    })
+
+    # SAP-Schema-NI-17.4 - SAP (SAP only schema)
+    add_assessment_eav(assessment_id: "1000-0000-0000-0000-0174", assessment_address_id:, schema_type: "SAP-Schema-NI-17.4", type_of_assessment: "SAP", different_fields: {
       "postcode": "BT14 7AA", "registration_date": "2023-05-05T12:00:00.000+00:00", "country_id": 3
     })
 
-    # SAP-Schema-NI-18.0.0 - RdSAP (RdSAP only schema)
-    add_assessment_eav(assessment_id: "1000-0000-0000-0000-1180", assessment_address_id:, schema_type: "SAP-Schema-NI-18.0.0", type_of_assessment: "SAP", different_fields: {
+    # RdSAP-Schema-NI-17.4 - RdSAP (RdSAP only schema)
+    add_assessment_eav(assessment_id: "1000-0000-0000-0000-1174", assessment_address_id:, schema_type: "RdSAP-Schema-NI-17.4", type_of_assessment: "RdSAP", different_fields: {
+      "postcode": "BT14 7AA", "registration_date": "2023-05-05T12:00:00.000+00:00", "country_id": 3
+    })
+
+    # RdSAP-Schema-NI-18.0.0 - RdSAP (RdSAP only schema)
+    add_assessment_eav(assessment_id: "1000-0000-0000-0000-1180", assessment_address_id:, schema_type: "RdSAP-Schema-NI-18.0", type_of_assessment: "RdSAP", different_fields: {
       "postcode": "BT15 2AA", "registration_date": "2023-06-05T12:00:00.000+00:00", "country_id": 3
     })
 
@@ -183,9 +195,10 @@ describe "Domestic NI Materialized View" do
       SAP-Schema-NI-17.0
       SAP-Schema-NI-17.1
       SAP-Schema-NI-17.2
+      SAP-Schema-NI-17.3
       RdSAP-Schema-NI-17.3
       RdSAP-Schema-NI-17.4
-      RdSAP-Schema-NI-18.0.0
+      RdSAP-Schema-NI-18.0
     ])
 
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_ni_search")
@@ -483,7 +496,7 @@ describe "Domestic NI Materialized View" do
         "low_energy_fixed_lighting_outlets_count" => nil,
         "low_energy_lighting" => "82",
         "main_fuel" => "electricity",
-        )
+      )
     end
 
     let(:expected_ni_141_sap_data) do
@@ -620,8 +633,7 @@ describe "Domestic NI Materialized View" do
         "constituency" => nil,
         "country" => "Northern Ireland",
         "region" => nil,
-        "uprn_source" => "Energy Assessor",
-      }
+        "uprn_source" => "Energy Assessor" }
     end
 
     let(:expected_ni_150_rdsap_data) do
@@ -1681,8 +1693,8 @@ describe "Domestic NI Materialized View" do
         "uprn_source" => "Energy Assessor" }
     end
 
-    let(:expected_ni_173_rdsap_data) do
-      { "certificate_number" => "1000-0000-0000-0000-1173",
+    let(:expected_ni_173_sap_data) do
+      { "certificate_number" => "1000-0000-0000-0000-0173",
         "address1" => "1b Address Lane",
         "address2" => "Localtion Place",
         "address3" => nil,
@@ -1714,20 +1726,21 @@ describe "Domestic NI Materialized View" do
         "low_energy_fixed_lighting_outlets_count" => "20",
         "solar_water_heating_flag" => nil,
         "mechanical_ventilation" => nil,
-        "tenure" => nil,
+        "tenure" => "unknown",
         "property_type" => nil,
-        "transaction_type" => nil,
+        "transaction_type" => "New dwelling",
         "construction_age_band" => "2014",
-        "built_form" => nil,
-        "energy_tariff" => nil,
+        "built_form" => "Semi-Detached",
+        "energy_tariff" => "standard tariff",
         "glazed_type" => nil,
         "glazed_area" => nil,
         "heat_loss_corridor" => nil,
-        "main_fuel" => nil,
+        "main_fuel" => "Oil: heating oil",
         "unheated_corridor_length" => nil,
         "floor_level" => nil,
         "flat_top_storey" => "N",
         "flat_storey_count" => 2,
+        # HERE
         "mains_gas_flag" => nil,
         "photo_supply" => nil,
         "wind_turbine_count" => 0,
@@ -1739,32 +1752,32 @@ describe "Domestic NI Materialized View" do
         "hot_water_cost_potential" => "158",
         "multi_glaze_proportion" => nil,
         "hotwater_description" => "From main system",
-        "hot_water_energy_eff" => nil,
-        "hot_water_env_eff" => nil,
+        "hot_water_energy_eff" => "Average",
+        "hot_water_env_eff" => "Average",
         "floor_description" => "Average thermal transmittance 0.13 W/m²K",
-        "floor_energy_eff" => nil,
-        "floor_env_eff" => nil,
+        "floor_energy_eff" => "Very Good",
+        "floor_env_eff" => "Very Good",
         "roof_description" => "Average thermal transmittance 0.11 W/m²K",
-        "roof_energy_eff" => nil,
-        "roof_env_eff" => nil,
+        "roof_energy_eff" => "Very Good",
+        "roof_env_eff" => "Very Good",
         "walls_description" => "Average thermal transmittance 0.21 W/m²K",
-        "walls_energy_eff" => nil,
-        "walls_env_eff" => nil,
+        "walls_energy_eff" => "Very Good",
+        "walls_env_eff" => "Very Good",
         "windows_description" => "High performance glazing",
-        "windows_energy_eff" => nil,
-        "windows_env_eff" => nil,
+        "windows_energy_eff" => "Very Good",
+        "windows_env_eff" => "Very Good",
         "secondheat_description" => "Room heaters, wood logs",
-        "sheating_energy_eff" => nil,
-        "sheating_env_eff" => nil,
+        "sheating_energy_eff" => "N/A",
+        "sheating_env_eff" => "N/A",
         "mainheat_description" => "Boiler and radiators, oil",
-        "mainheat_energy_eff" => nil,
-        "mainheat_env_eff" => nil,
+        "mainheat_energy_eff" => "Good",
+        "mainheat_env_eff" => "Good",
         "mainheatcont_description" => "Time and temperature zone control",
-        "mainheatc_energy_eff" => nil,
-        "mainheatc_env_eff" => nil,
+        "mainheatc_energy_eff" => "Very Good",
+        "mainheatc_env_eff" => "Very Good",
         "lighting_description" => "Low energy lighting in all fixed outlets",
-        "lighting_energy_eff" => nil,
-        "lighting_env_eff" => nil,
+        "lighting_energy_eff" => "Very Good",
+        "lighting_env_eff" => "Very Good",
         "fixed_lighting_outlets_count" => "20",
         "floor_height" => "2.55",
         "main_heating_controls" => "Time and temperature zone control",
@@ -1777,8 +1790,105 @@ describe "Domestic NI Materialized View" do
         "uprn_source" => "Energy Assessor" }
     end
 
-    let(:expected_ni_174_rdsap_data) do
-      { "certificate_number" => "1000-0000-0000-0000-1174",
+    let(:expected_ni_173_rdsap_data) do
+      { "certificate_number" => "1000-0000-0000-0000-1173",
+        "address" => "7, Virtual Lane",
+        "address1" => "7, Virtual Lane",
+        "address2" => nil,
+        "address3" => nil,
+        "postcode" => "BT13 3AA",
+        "inspection_date" => "2015-08-11",
+        "uprn" => 1245,
+        "energy_consumption_current" => "140",
+        "energy_consumption_potential" => "125",
+        "environment_impact_current" => "59",
+        "environment_impact_potential" => "64",
+        "co2_emiss_curr_per_floor_area" => "39",
+        "co2_emissions_current" => "6.8",
+        "co2_emissions_potential" => "6.1",
+        "total_floor_area" => "175",
+        "lodgement_date" => "2023-04-05",
+        "report_type" => "2",
+        "posttown" => "BELFAST",
+        "lodgement_datetime" => "2021-07-21 11:26:28",
+        "current_energy_efficiency" => "70",
+        "current_energy_rating" => "C",
+        "potential_energy_efficiency" => "73",
+        "potential_energy_rating" => "C",
+        "extension_count" => "0",
+        "number_open_fireplaces" => "0",
+        "number_heated_rooms" => "7",
+        "number_habitable_rooms" => "7",
+        "low_energy_lighting" => "63",
+        "low_energy_fixed_lighting_outlets_count" => "10",
+        "solar_water_heating_flag" => "N",
+        "mechanical_ventilation" => "natural",
+        "tenure" => "owner-occupied",
+        "property_type" => "House",
+        "transaction_type" => "Marketed sale",
+        "construction_age_band" => "England and Wales: 2007-2011",
+        "built_form" => "Detached",
+        "energy_tariff" => "Single",
+        "glazed_area" => "Normal",
+        "glazed_type" => "double glazing installed during or after 2002",
+        "heat_loss_corridor" => nil,
+        "main_fuel" => "oil (not community)",
+        "unheated_corridor_length" => nil,
+        "floor_level" => nil,
+        "flat_top_storey" => "N",
+        "flat_storey_count" => 2,
+        "mains_gas_flag" => "N",
+        "photo_supply" => "0",
+        "wind_turbine_count" => 0,
+        "lighting_cost_current" => "121",
+        "lighting_cost_potential" => "88",
+        "heating_cost_current" => "852",
+        "heating_cost_potential" => "788",
+        "hot_water_cost_current" => "208",
+        "hot_water_cost_potential" => "169",
+        "multi_glaze_proportion" => "100",
+        "hotwater_description" => "From main system, no cylinder thermostat",
+        "hot_water_energy_eff" => "Poor",
+        "hot_water_env_eff" => "Poor",
+        "floor_description" => "Solid, insulated (assumed)",
+        "floor_energy_eff" => "N/A",
+        "floor_env_eff" => "N/A",
+        "roof_description" => "Pitched, insulated (assumed)",
+        "roof_energy_eff" => "Good",
+        "roof_env_eff" => "Good",
+        "walls_description" => "Cavity wall, as built, insulated (assumed)",
+        "walls_energy_eff" => "Good",
+        "walls_env_eff" => "Good",
+        "windows_description" => "Fully double glazed",
+        "windows_energy_eff" => "Good",
+        "windows_env_eff" => "Good",
+        "secondheat_description" => "Room heaters, coal",
+        "sheating_energy_eff" => "N/A",
+        "sheating_env_eff" => "N/A",
+        "mainheat_description" => "Boiler and radiators, oil",
+        "mainheat_energy_eff" => "Average",
+        "mainheat_env_eff" => "Average",
+        "mainheatcont_description" => "Programmer and at least two room thermostats",
+        "mainheatc_energy_eff" => "Good",
+        "mainheatc_env_eff" => "Good",
+        "lighting_description" => "Low energy lighting in 63% of fixed outlets",
+        "lighting_energy_eff" => "Good",
+        "lighting_env_eff" => "Good",
+        "fixed_lighting_outlets_count" => "16",
+        "floor_height" => "2.4",
+        "main_heating_controls" => "Programmer and at least two room thermostats",
+        # HERE
+        "local_authority" => nil,
+        "local_authority_label" => nil,
+        "constituency_label" => nil,
+        "constituency" => nil,
+        "country" => "Northern Ireland",
+        "region" => nil,
+        "uprn_source" => "Energy Assessor" }
+    end
+
+    let(:expected_ni_174_sap_data) do
+      { "certificate_number" => "1000-0000-0000-0000-0174",
         "address1" => "12,Addess Lane",
         "address2" => nil,
         "address3" => nil,
@@ -1872,94 +1982,189 @@ describe "Domestic NI Materialized View" do
         "region" => nil,
         "uprn_source" => "Energy Assessor" }
     end
+    let(:expected_ni_174_rdsap_data) do
+      { "certificate_number" => "1000-0000-0000-0000-1174",
+        "address1" => "36 Nowhere Street",
+        "address2" => nil,
+        "address3" => nil,
+        "address" => "36 Nowhere Street",
+        "postcode" => "BT14 7AA",
+        "inspection_date" => "2017-06-01",
+        "uprn" => 1245,
+        "environment_impact_potential" => "42",
+        "energy_consumption_current" => "432",
+        "energy_consumption_potential" => "261",
+        "environment_impact_current" => "21",
+        "co2_emissions_current" => "11",
+        "co2_emiss_curr_per_floor_area" => "109",
+        "co2_emissions_potential" => "6.4",
+        "total_floor_area" => "100",
+        "lodgement_date" => "2023-05-05",
+        "report_type" => "2",
+        "posttown" => "BELFAST",
+        "lodgement_datetime" => "2021-07-21 11:26:28",
+        "current_energy_efficiency" => "21",
+        "current_energy_rating" => "F",
+        "potential_energy_efficiency" => "48",
+        "potential_energy_rating" => "E",
+        "extension_count" => "1",
+        "number_open_fireplaces" => "2",
+        "number_heated_rooms" => "5",
+        "number_habitable_rooms" => "5",
+        "low_energy_lighting" => "8",
+        "low_energy_fixed_lighting_outlets_count" => "1",
+        "solar_water_heating_flag" => "N",
+        "mechanical_ventilation" => "natural",
+        "tenure" => "owner-occupied",
+        "property_type" => "House",
+        "transaction_type" => "Marketed sale",
+        "construction_age_band" => "England and Wales: 1950-1966",
+        "built_form" => "Semi-Detached",
+        "energy_tariff" => "Single",
+        "glazed_type" => "not defined",
+        "glazed_area" => "Normal",
+        "heat_loss_corridor" => nil,
+        "main_fuel" => "oil (not community)",
+        "unheated_corridor_length" => nil,
+        "floor_level" => nil,
+        "flat_top_storey" => "N",
+        "flat_storey_count" => 2,
+        "mains_gas_flag" => "N",
+        "photo_supply" => "0",
+        "wind_turbine_count" => 0,
+        "lighting_cost_current" => "121",
+        "lighting_cost_potential" => "63",
+        "heating_cost_current" => "1259",
+        "heating_cost_potential" => "890",
+        "hot_water_cost_current" => "361",
+        "hot_water_cost_potential" => "118",
+        "multi_glaze_proportion" => "0",
+        "hotwater_description" => "From main system, no cylinder thermostat",
+        "hot_water_energy_eff" => "Very Poor",
+        "hot_water_env_eff" => "Very Poor",
+        "floor_description" => "Suspended, no insulation (assumed)",
+        "floor_energy_eff" => "N/A",
+        "floor_env_eff" => "N/A",
+        "roof_description" => "Pitched, no insulation (assumed)",
+        "roof_energy_eff" => "Very Poor",
+        "roof_env_eff" => "Very Poor",
+        "walls_description" => "Cavity wall, filled cavity",
+        "walls_energy_eff" => "Good",
+        "walls_env_eff" => "Good",
+        "windows_description" => "Single glazed",
+        "windows_energy_eff" => "Very Poor",
+        "windows_env_eff" => "Very Poor",
+        "secondheat_description" => "Room heaters, electric",
+        "sheating_energy_eff" => "N/A",
+        "sheating_env_eff" => "N/A",
+        "mainheat_description" => "Boiler and radiators, oil",
+        "mainheat_energy_eff" => "Poor",
+        "mainheat_env_eff" => "Average",
+        "mainheatcont_description" => "Programmer, no room thermostat",
+        "mainheatc_energy_eff" => "Very Poor",
+        "mainheatc_env_eff" => "Very Poor",
+        "lighting_description" => "Low energy lighting in 8% of fixed outlets",
+        "lighting_energy_eff" => "Very Poor",
+        "lighting_env_eff" => "Very Poor",
+        "fixed_lighting_outlets_count" => "12",
+        "floor_height" => "2.4",
+        "main_heating_controls" => "Programmer, no room thermostat",
+        "local_authority" => nil,
+        "local_authority_label" => nil,
+        "constituency_label" => nil,
+        "constituency" => nil,
+        "country" => "Northern Ireland",
+        "region" => nil,
+        "uprn_source" => "Energy Assessor" }
+    end
 
     let(:expected_ni_180_rdsap_data) do
       { "certificate_number" => "1000-0000-0000-0000-1180",
-        "address1" => "999 Letsbe Avenue",
-        "address2" => "Anydistrict",
+        "address1" => "83, Virtual Lane",
+        "address2" => nil,
         "address3" => nil,
-        "address" => "999 Letsbe Avenue, Anydistrict",
+        "address" => "83, Virtual Lane",
         "postcode" => "BT15 2AA",
-        "inspection_date" => "2020-09-12",
+        "inspection_date" => "2017-11-13",
         "uprn" => 1245,
-        "environment_impact_potential" => "82",
-        "energy_consumption_current" => "104",
-        "energy_consumption_potential" => "104",
-        "environment_impact_current" => "82",
-        "co2_emissions_current" => "1.8",
-        "co2_emiss_curr_per_floor_area" => "20",
-        "co2_emissions_potential" => "1.8",
-        "total_floor_area" => "90",
+        "environment_impact_potential" => "31",
+        "energy_consumption_current" => "455",
+        "energy_consumption_potential" => "278",
+        "environment_impact_current" => "11",
+        "co2_emissions_current" => "25.0",
+        "co2_emiss_curr_per_floor_area" => "118",
+        "co2_emissions_potential" => "15.0",
+        "total_floor_area" => "217",
         "lodgement_date" => "2023-06-05",
-        "report_type" => "3",
+        "report_type" => "2",
         "posttown" => "BELFAST",
         "lodgement_datetime" => "2021-07-21 11:26:28",
-        "current_energy_efficiency" => "80",
-        "current_energy_rating" => "C",
-        "potential_energy_efficiency" => "80",
-        "potential_energy_rating" => "C",
-        "extension_count" => nil,
-        "number_open_fireplaces" => "0",
-        "number_heated_rooms" => nil,
-        "number_habitable_rooms" => nil,
-        "low_energy_lighting" => "100",
-        "low_energy_fixed_lighting_outlets_count" => "15",
-        "solar_water_heating_flag" => nil,
-        "mechanical_ventilation" => nil,
-        "tenure" => nil,
-        "property_type" => nil,
-        "transaction_type" => nil,
-        "construction_age_band" => "2020",
-        "built_form" => nil,
-        "energy_tariff" => nil,
-        "glazed_type" => nil,
-        "glazed_area" => nil,
+        "current_energy_efficiency" => "11",
+        "current_energy_rating" => "G",
+        "potential_energy_efficiency" => "37",
+        "potential_energy_rating" => "F",
+        "extension_count" => "1",
+        "number_open_fireplaces" => "3",
+        "number_heated_rooms" => "8",
+        "number_habitable_rooms" => "8",
+        "low_energy_lighting" => "0",
+        "low_energy_fixed_lighting_outlets_count" => "0",
+        "solar_water_heating_flag" => "N",
+        "mechanical_ventilation" => "natural",
+        "tenure" => "owner-occupied",
+        "property_type" => "House",
+        "transaction_type" => "Marketed sale",
+        "construction_age_band" => "England and Wales: before 1900",
+        "built_form" => "Detached",
+        "energy_tariff" => "Single",
+        "glazed_type" => "not defined",
+        "glazed_area" => "Normal",
         "heat_loss_corridor" => nil,
-        "main_fuel" => nil,
+        "main_fuel" => "oil (not community)",
         "unheated_corridor_length" => nil,
-        "floor_level" => "2",
+        "floor_level" => nil,
         "flat_top_storey" => "N",
-        "flat_storey_count" => 1,
-        "mains_gas_flag" => nil,
-        "photo_supply" => nil,
+        "flat_storey_count" => 2,
+        "mains_gas_flag" => "N",
+        "photo_supply" => "0",
         "wind_turbine_count" => 0,
-        "lighting_cost_current" => "71",
-        "lighting_cost_potential" => "71",
-        "heating_cost_current" => "354",
-        "heating_cost_potential" => "354",
-        "hot_water_cost_current" => "79",
-        "hot_water_cost_potential" => "79",
-        "multi_glaze_proportion" => nil,
-        "hotwater_description" => "From main system",
-        "hot_water_energy_eff" => nil,
-        "hot_water_env_eff" => nil,
-        "floor_description" => "Average thermal transmittance 0.13 W/m²K",
-        "floor_energy_eff" => nil,
-        "floor_env_eff" => nil,
-        "roof_description" => "(other premises above)",
-        "roof_energy_eff" => nil,
-        "roof_env_eff" => nil,
-        "walls_description" => "Average thermal transmittance 0.21 W/m²K",
-        "walls_energy_eff" => nil,
-        "walls_env_eff" => nil,
-        "windows_description" => "High performance glazing",
-        "windows_energy_eff" => nil,
-        "windows_env_eff" => nil,
-        "secondheat_description" => "None",
-        "sheating_energy_eff" => nil,
-        "sheating_env_eff" => nil,
-        "mainheat_description" => "Boiler and radiators, mains gas",
-        "mainheat_energy_eff" => nil,
-        "mainheat_env_eff" => nil,
-        "mainheatcont_description" => "Time and temperature zone control by suitable arrangement of plumbing and electrical services",
-        "mainheatc_energy_eff" => nil,
-        "mainheatc_env_eff" => nil,
-        "lighting_description" => "Low energy lighting in all fixed outlets",
-        "lighting_energy_eff" => nil,
-        "lighting_env_eff" => nil,
-        "fixed_lighting_outlets_count" => "15",
-        "floor_height" => "2.5",
-        "main_heating_controls" => "Time and temperature zone control by suitable arrangement of plumbing and electrical services",
+        "lighting_cost_current" => "202",
+        "lighting_cost_potential" => "101",
+        "heating_cost_current" => "3120",
+        "heating_cost_potential" => "1978",
+        "hot_water_cost_current" => "219",
+        "hot_water_cost_potential" => "115",
+        "multi_glaze_proportion" => "0",
+        "hotwater_description" => "From main system, no cylinder thermostat",
+        "hot_water_energy_eff" => "Very Poor",
+        "hot_water_env_eff" => "Very Poor",
+        "floor_description" => "Suspended, no insulation (assumed)",
+        "floor_energy_eff" => "N/A",
+        "floor_env_eff" => "N/A",
+        "roof_description" => "Pitched, 100 mm loft insulation",
+        "roof_energy_eff" => "Average",
+        "roof_env_eff" => "Average",
+        "walls_description" => "Solid brick, as built, no insulation (assumed)",
+        "walls_energy_eff" => "Very Poor",
+        "walls_env_eff" => "Very Poor",
+        "windows_description" => "Single glazed",
+        "windows_energy_eff" => "Very Poor",
+        "windows_env_eff" => "Very Poor",
+        "secondheat_description" => "Room heaters, dual fuel (mineral and wood)",
+        "sheating_energy_eff" => "N/A",
+        "sheating_env_eff" => "N/A",
+        "mainheat_description" => "Boiler and radiators, oil",
+        "mainheat_energy_eff" => "Poor",
+        "mainheat_env_eff" => "Average",
+        "mainheatcont_description" => "Programmer, no room thermostat",
+        "mainheatc_energy_eff" => "Very Poor",
+        "mainheatc_env_eff" => "Very Poor",
+        "lighting_description" => "No low energy lighting",
+        "lighting_energy_eff" => "Very Poor",
+        "lighting_env_eff" => "Very Poor",
+        "fixed_lighting_outlets_count" => "31",
+        "floor_height" => "2.8",
+        "main_heating_controls" => "Programmer, no room thermostat",
         "local_authority" => nil,
         "local_authority_label" => nil,
         "constituency_label" => nil,
@@ -2091,10 +2296,22 @@ describe "Domestic NI Materialized View" do
       expect(result).to eq expected_ni_173_rdsap_data
     end
 
+    # SAP-Schema-NI-17.3 test (SAP only)
+    it "returns a row with the required data for SAP-NI 17.3 and of assessment_type sap" do
+      result = query_result.find { |i| i["certificate_number"] == "1000-0000-0000-0000-0173" }
+      expect(result).to eq expected_ni_173_sap_data
+    end
+
     # RdSAP-Schema-NI-17.4 test (RdSAP only)
     it "returns a row with the required data for RdSAP-NI 17.4 and of assessment_type rdsap" do
       result = query_result.find { |i| i["certificate_number"] == "1000-0000-0000-0000-1174" }
       expect(result).to eq expected_ni_174_rdsap_data
+    end
+
+    # SAP-Schema-NI-17.4 test (SAP only)
+    it "returns a row with the required data for SAP-NI 17.4 and of assessment_type sap" do
+      result = query_result.find { |i| i["certificate_number"] == "1000-0000-0000-0000-0174" }
+      expect(result).to eq expected_ni_174_sap_data
     end
 
     # RdSAP-Schema-NI-18.0.0 test (RdSAP only)

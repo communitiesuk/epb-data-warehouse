@@ -166,8 +166,14 @@
       "attribute_name": "tenure",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "//Tenure",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{16**,NI-16**,NI-17.[012]}/Messages/ExternalDefinitions.xml",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{16**,NI-16.1,NI-17.[012]}/Messages/ExternalDefinitions.xml",
       "node_hash": { "Tenure-Code": "Tenure-Text" }
+    },
+    {
+      "attribute_name": "tenure",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "TenureCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-NI-{17.[34],18.0.0}/SAP/UDT/SharedDomains.xsd"
     },
     {
       "attribute_name": "transaction_type",
