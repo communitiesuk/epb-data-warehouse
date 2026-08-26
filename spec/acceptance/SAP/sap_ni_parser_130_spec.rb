@@ -169,6 +169,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "main_heating_controls" => [
                         { "energy_efficiency_rating" => 0, "description" => "Thermostat", "environmental_efficiency_rating" => 0 },
                       ],
+                      "open_fireplaces_count" => 0,
                       "secondary_heating" => { "energy_efficiency_rating" => 0, "description" => "Electric heater", "environmental_efficiency_rating" => 0 },
                       "hot_water" => { "energy_efficiency_rating" => 0, "description" => "Gas boiler", "environmental_efficiency_rating" => 0 },
                       "lighting" => { "energy_efficiency_rating" => 0, "description" => "Energy saving bulbs", "environmental_efficiency_rating" => 0 },

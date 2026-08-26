@@ -292,6 +292,11 @@
             <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
           </SAP-Energy-Source>
           <Photovoltaic-Supply>0</Photovoltaic-Supply>
+          <SAP-Flat-Details>
+            <Top-Storey>N</Top-Storey>
+            <Heat-Loss-Corridor>2</Heat-Loss-Corridor>
+            <Unheated-Corridor-Length>10.34</Unheated-Corridor-Length>
+          </SAP-Flat-Details>
         </SAP-Property-Details>
       </SAP-Data>
       <Insurance-Details>
