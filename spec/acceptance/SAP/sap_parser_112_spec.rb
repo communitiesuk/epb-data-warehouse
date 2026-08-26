@@ -125,7 +125,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "heating_cost_potential" => 250.34,
                       "hot_water_cost_current" => 200.4,
                       "hot_water_cost_potential" => 180.43,
-                      "suggested_improvements" => [{ "sequence" => 1, "improvement_category" => 1, "improvement_type" => "A", "typical_saving" => 360, "energy_performance_rating" => 50, "environmental_impact_rating" => 50 }, { "sequence" => 2, "improvement_category" => 2, "improvement_type" => "B", "improvement_description" => "Improvement desc", "typical_saving" => 99, "energy_performance_rating" => 60, "environmental_impact_rating" => 64 }],
+                      "suggested_improvements" => [{ "sequence" => 1, "improvement_category" => 1, "improvement_type" => "A", "improvement_summary" => "Low energy lighting for all fixed outlets", "improvement_description" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.", "typical_saving" => 360, "energy_performance_rating" => 50, "environmental_impact_rating" => 50 }, { "sequence" => 2, "improvement_category" => 2, "improvement_type" => "B", "improvement_description" => "Improvement desc", "typical_saving" => 99, "energy_performance_rating" => 60, "environmental_impact_rating" => 64 }],
                       "data_type" => 2,
                       "built_form" => 2,
                       "living_area" => 11.92,

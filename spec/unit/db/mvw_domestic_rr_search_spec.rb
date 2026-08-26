@@ -24,6 +24,12 @@ describe "Domestic Recommendations Report" do
       import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
       import_use_case.execute
       add_countries
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0021", schema_type: "SAP-Schema-11.2", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
+      add_assessment_eav(assessment_id: "0000-0000-0000-0000-0020", schema_type: "SAP-Schema-11.2", type_of_assessment: "SAP", type: "sap", different_fields: {
+        "postcode": "SW10 0AA", "country_id": 1
+      })
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0017", schema_type: "SAP-Schema-12.0", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })
@@ -121,6 +127,22 @@ describe "Domestic Recommendations Report" do
          "improvement_summary_text" => "Low energy lighting for all fixed outlets",
          "improvement_descr_text" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings." },
        { "certificate_number" => "0000-0000-0000-0000-0016",
+         "improvement_item" => 2,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => nil,
+         "improvement_descr_text" => "Improvement desc" }]
+    end
+
+    let(:expected_rdsap_112_data) do
+      [{ "certificate_number" =>
+          "0000-0000-0000-0000-0021",
+         "improvement_item" => 1,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => nil,
+         "improvement_descr_text" => "Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss. The insulation material is pumped into the gap through small holes that are drilled into the outer walls, and the holes are made good afterwards. As specialist machinery is used to fill the cavity, a professional installation company should carry out this work. Such 'approved contractors' should carry out a thorough survey before commencing work to be sure that this type of insulation is right for this home. They should also provide a guarantee for the work and handle any building control issues." },
+       { "certificate_number" => "0000-0000-0000-0000-0021",
          "improvement_item" => 2,
          "improvement_id" => nil,
          "indicative_cost" => nil,
@@ -244,7 +266,28 @@ describe "Domestic Recommendations Report" do
          "indicative_cost" => "??18" }]
     end
 
+    let(:expected_sap_11_2_data) do
+      [{ "certificate_number" =>
+          "0000-0000-0000-0000-0020",
+         "improvement_item" => 1,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => "Low energy lighting for all fixed outlets",
+         "improvement_descr_text" => "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings." },
+       { "certificate_number" => "0000-0000-0000-0000-0020",
+         "improvement_item" => 2,
+         "improvement_id" => nil,
+         "indicative_cost" => nil,
+         "improvement_summary_text" => nil,
+         "improvement_descr_text" => "Improvement desc" }]
+    end
+
     context "when fetching RdSAP assessments" do
+      it "returns the recommendations for the RdSAP 11.2 assessment" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0021" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_rdsap_112_data
+      end
+
       it "returns the recommendations for the RdSAP 12.0 assessment" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0016" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_rdsap_120_data
@@ -267,6 +310,11 @@ describe "Domestic Recommendations Report" do
     end
 
     context "when fetching SAP assessments" do
+      it "returns the recommendations for SAP 11.2" do
+        items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0020" }.sort_by { |i| i["improvement_item"] }
+        expect(items).to eq expected_sap_11_2_data
+      end
+
       it "returns the recommendations for SAP 13.0" do
         items = data.select { |i| i["certificate_number"] == "0000-0000-0000-0000-0019" }.sort_by { |i| i["improvement_item"] }
         expect(items).to eq expected_sap_13_0_data
@@ -307,7 +355,7 @@ describe "Domestic Recommendations Report" do
 
     it "the grouped results the expected certificate_numbers" do
       group = data.group_by { |i| i["certificate_number"] }
-      expect(group.length).to eq 11
+      expect(group.length).to eq 13
     end
 
     it "does not include the rows for NI assessments" do
