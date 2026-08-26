@@ -10,7 +10,10 @@ help: ## Print help documentation
 	@echo -e "Makefile Help for epb-data-warehouse"
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-format: ## Runs Rubocop with the GOV.UK rules
+lint:
+	@bundle exec rubocop
+
+format:
 	@bundle exec rubocop --autocorrect
 
 setup-db: ## Creates local development and test databases
