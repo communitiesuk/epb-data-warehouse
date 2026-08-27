@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_152247) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_27_152247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -151,6 +151,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_152247) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "version_month", limit: 7, null: false
+  end
+
+  create_table "pre-lookups", id: false, force: :cascade do |t|
   end
 
   add_foreign_key "assessment_attribute_lookups", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
