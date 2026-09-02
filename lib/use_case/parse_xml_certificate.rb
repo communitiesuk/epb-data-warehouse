@@ -93,6 +93,7 @@ module UseCase
         "CEPC-6.0" => XmlPresenter::Cepc::Cepc60ExportConfiguration,
         "CEPC-5.1" => XmlPresenter::Cepc::Cepc51ExportConfiguration,
         "CEPC-5.0" => XmlPresenter::Cepc::Cepc50ExportConfiguration,
+        "CEPC-4.0" => XmlPresenter::Cepc::Cepc40ExportConfiguration,
         "CEPC-NI-8.0.0" => XmlPresenter::Cepc::Cepc800NiExportConfiguration,
       }
       export_config_file[schema_type]
