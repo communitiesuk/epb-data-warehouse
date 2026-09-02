@@ -1,6 +1,6 @@
 module XmlPresenter
   module Cepc
-    class Cepc51ExportConfiguration < Cepc50Base
+    class Cepc50ExportConfiguration < Cepc50Base
       setup
     end
   end

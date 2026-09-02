@@ -1,6 +1,6 @@
 module XmlPresenter
   module Cepc
-    class Cepc51Base < XmlPresenter::ToWarehouse::BaseConfiguration
+    class Cepc50Base < XmlPresenter::ToWarehouse::BaseConfiguration
       def self.setup
         excludes %w[
           Insurance-Details
