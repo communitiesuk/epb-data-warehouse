@@ -112,7 +112,7 @@ describe Helper::GenerateJsonSamples do
     end
 
     it "returns all the expected sample files" do
-      expect(sample_files.length).to eq 58
+      expect(sample_files.length).to eq 63
     end
 
     it "files are being generated from the relevant xml samples" do
