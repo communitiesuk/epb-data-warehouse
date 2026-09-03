@@ -412,7 +412,7 @@ describe "Domestic NI Materialized View" do
         "construction_age_band" => "A",
         "built_form" => "Detached",
         "energy_tariff" => "Single",
-        "glazed_type" => nil,
+        "glazed_type" => "post or during 2002",
         "glazed_area" => "Normal",
         "heat_loss_corridor" => "no corridor",
         "main_fuel" => "electricity",
