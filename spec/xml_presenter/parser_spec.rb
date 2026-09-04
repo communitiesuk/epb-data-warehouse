@@ -24,6 +24,16 @@ RSpec.describe XmlPresenter::Parser do
     end
   end
 
+  context "with bases and excludes defined" do
+    let(:parser) { described_class.new bases: %w[Base], excludes: %w[Exclude] }
+
+    it "does not append excludes to bases" do
+      xml = "<Root><Id>ID123</Id><Base><Node-1>value 1</Node-1><Node-2>value 2</Node-2></Base></Root>"
+      parser.parse(xml)
+      expect(parser.instance_variable_get(:@bases)).to eq %w[Base]
+    end
+  end
+
   context "with nodes excluded" do
     let(:parser) { described_class.new excludes: %w[Node-2] }
 

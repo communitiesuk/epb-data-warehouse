@@ -101,16 +101,17 @@ module XmlPresenter
 
   class AssessmentDocument < Nokogiri::XML::SAX::Document
     def initialize(excludes: [], includes: [], bases: [], preferred_keys: {}, list_nodes: [], rootless_list_nodes: {}, root_node: nil, ignored_attributes: [], nodes_ignoring_attributes: [], string_nodes: [])
-      @excludes = excludes
-      @includes = includes
-      @bases = bases
       @preferred_keys = preferred_keys
-      @list_nodes = list_nodes
       @rootless_list_nodes = rootless_list_nodes
       @root_node = root_node
       @ignored_attributes = ignored_attributes
       @nodes_ignoring_attributes = nodes_ignoring_attributes
-      @string_nodes = string_nodes
+      @base_names = (bases + excludes).to_set
+      @excludes = excludes.to_set
+      @includes = includes.to_set
+      @list_nodes = list_nodes.to_set
+      @string_nodes = string_nodes.to_set
+
       super()
     end
 
@@ -206,7 +207,7 @@ module XmlPresenter
       @value_buffer = []
       @unstripped_first_value_chunk = nil
       @attrs = []
-      @encountered = []
+      @encountered = Set.new
     end
 
     def as_key(name)
@@ -287,7 +288,7 @@ module XmlPresenter
     end
 
     def is_base?(name)
-      @bases.concat(@excludes).include?(name) || name == @source_position[0]
+      @base_names.include?(name) || name == @source_position[0]
     end
 
     def force_string_node?
