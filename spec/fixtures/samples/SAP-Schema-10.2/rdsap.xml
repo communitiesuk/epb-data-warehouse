@@ -202,6 +202,7 @@
           <Photovoltaic-Supply>0</Photovoltaic-Supply>
           <Property-Type>3</Property-Type>
           <Double-Glazing-Installed>2</Double-Glazing-Installed>
+          <Double-Glazed-Proportion>0</Double-Glazed-Proportion>
           <Mechanical-Ventliation>0</Mechanical-Ventliation>
           <Solar-Water-Heating>N</Solar-Water-Heating>
           <SAP-Building-Parts>

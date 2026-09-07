@@ -54,6 +54,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "measurement_type" => 1,
                       "open_fireplaces_count" => 0,
                       "photovoltaic_supply" => 0,
+                      "double_glazed_proportion" => 0,
                       "double_glazing_installed" => 2,
                       "mechanical_ventilation" => 0,
                       "solar_water_heating" => "N",

@@ -201,6 +201,7 @@
   "co2_emissions_potential": 1.4,
   "energy_rating_potential": 72,
   "lighting_cost_potential": 84.23,
+  "double_glazed_proportion": 0,
   "double_glazing_installed": 2,
   "hot_water_cost_potential": 180.43,
   "seller_commission_report": "Y",
