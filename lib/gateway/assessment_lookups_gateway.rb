@@ -128,7 +128,7 @@ module Gateway
       version_number = schema_version.scan(/\d+/).first.to_i
 
       if schema_version.include?("SAP")
-        is_valid = true if version_number > 10
+        is_valid = true if version_number > 9
       elsif schema_version.include?("CEPC")
         is_valid = true if version_number > 4
       end

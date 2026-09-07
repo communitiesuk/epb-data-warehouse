@@ -17,6 +17,12 @@
       "xsd_path": "/api/schemas/xml/SAP-Schema-1[123456]**/SAP-EPC/UDT/SharedDomains.xsd"
     },
     {
+      "attribute_name": "property_type",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "PropertyTypeCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**}/UDT/SharedDomains.xsd"
+    },
+    {
       "attribute_name": "transaction_type",
       "type_of_assessment": "SAP",
       "xsd_node_name": "//Transaction-Type",
