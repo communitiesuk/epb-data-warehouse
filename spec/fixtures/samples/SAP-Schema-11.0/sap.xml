@@ -195,6 +195,9 @@
       <SAP05:SAP05-Data>
         <SAP05:Data-Type>2</SAP05:Data-Type>
         <SAP05:SAP-Property-Details>
+          <SAP05:SAP-Flat-Details>
+            <SAP05:Level>1</SAP05:Level>
+          </SAP05:SAP-Flat-Details>
           <SAP05:Property-Type>0</SAP05:Property-Type>
           <SAP05:Built-Form>2</SAP05:Built-Form>
           <SAP05:Living-Area>11.92</SAP05:Living-Area>

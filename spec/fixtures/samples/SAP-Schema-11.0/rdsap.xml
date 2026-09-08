@@ -230,7 +230,11 @@
                   <Room-Height>2.32</Room-Height>
                 </SAP-Floor-Dimension>
               </SAP-Floor-Dimensions>
+              <SAP-Room-In-Roof>
+                <Floor-Area>18.3</Floor-Area>
+              </SAP-Room-In-Roof>
             </SAP-Building-Part>
+
             <SAP-Building-Part>
               <Identifier>Extension 1</Identifier>
               <Wall-Construction>3</Wall-Construction>
@@ -279,6 +283,7 @@
             <Flat-Location>01</Flat-Location>
             <Storey-Count>3</Storey-Count>
             <Top-Storey>Y</Top-Storey>
+            <Unheated-Corridor-Length quantity="String">0</Unheated-Corridor-Length>
             <Heat-Loss-Corridor>0</Heat-Loss-Corridor>
             <Floor-Heat-Loss>3</Floor-Heat-Loss>
           </SAP-Flat-Details>
