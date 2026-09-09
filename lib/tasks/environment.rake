@@ -8,5 +8,5 @@ task :environment do
   ActiveRecord::Tasks::DatabaseTasks.seed_loader = LookupSeed.new
   ActiveRecord.schema_format = :sql
   # Do not dump the schema in production or CI as it needs pgdump in the path
-  ActiveRecord.dump_schema_after_migration = false if ENV.fetch("RACK_ENV", nil) == "production" || ENV.fetch("CI", nil) == "true"
+  ActiveRecord.dump_schema_after_migration = false if ENV.fetch("APP_ENV", nil) == "production" || ENV.fetch("CI", nil) == "true"
 end
