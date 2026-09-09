@@ -22,16 +22,15 @@
   },
   "homepage": "https://github.com/communitiesuk/epb-data-warehouse#readme",
   "engines": {
-    "node": "~22"
+    "node": "^24 || ^22"
   },
   "dependencies": {
     "csv-parse": "^7.0.2",
     "csv-stream": "^0.2.0",
-    "fast-xml-parser": "^5.11.0",
-    "node-fetch": "^3.3.2",
+    "fast-xml-parser": "^5.11.1",
+    "got": "^16.0.0",
     "pg": "^8.23.0",
     "pg-promise": "^12.7.1",
-    "got": "^15",
     "unzipper": "^0.12.5"
   }
 }

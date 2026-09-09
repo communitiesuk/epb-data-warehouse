@@ -129,7 +129,11 @@
     "storey_count": 3,
     "flat_location": 1,
     "floor_heat_loss": 3,
-    "heat_loss_corridor": 0
+    "heat_loss_corridor": 0,
+    "unheated_corridor_length": {
+      "value": 0,
+      "quantity": "String"
+    }
   },
   "heated_room_count": 4,
   "registration_date": "2020-05-04",
@@ -146,6 +150,9 @@
   "sap_building_parts": [
     {
       "identifier": "Main Dwelling",
+      "sap_room_in_roof": {
+        "floor_area": 18.3
+      },
       "construction_year": "C",
       "roof_construction": 2,
       "wall_construction": 1,

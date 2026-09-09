@@ -132,6 +132,9 @@
     "flueless_gas_fires_count": 0,
     "mechanical_vent_specific_fan_power": 0.0
   },
+  "sap_flat_details": {
+    "level": 1
+  },
   "conservatory_type": 1,
   "registration_date": "2020-05-04",
   "restricted_access": 0,

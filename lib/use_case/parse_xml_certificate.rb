@@ -72,7 +72,6 @@ module UseCase
         "SAP-Schema-12.0" => XmlPresenter::Sap::Sap142ExportConfiguration,
         "SAP-Schema-11.2" => XmlPresenter::Sap::Sap110NiExportConfiguration,
         "SAP-Schema-11.0" => XmlPresenter::Sap::Sap110NiExportConfiguration,
-        "SAP-Schema-10.2" => XmlPresenter::Sap::Sap110NiExportConfiguration,
         "SAP-Schema-NI-18.0.0" => XmlPresenter::Sap::Sap1800NiExportConfiguration,
         "SAP-Schema-NI-17.4" => XmlPresenter::Sap::Sap174NiExportConfiguration,
         "SAP-Schema-NI-17.3" => XmlPresenter::Sap::Sap173NiExportConfiguration,

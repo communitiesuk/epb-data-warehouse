@@ -13,7 +13,7 @@
       "attribute_name": "energy_tariff",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "ElectricMeterTypeCode",
-        "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[1234567]**}/UDT/SAP-Domains.xsd"
+        "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[1234567]**}/UDT/SAP-Domains.xsd"
     },
     {
       "attribute_name": "glazed_area",
@@ -30,7 +30,7 @@
       "attribute_name": "glazed_area",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "GlazedAreaCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[1234567]**}/UDT/SAP-Domains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[1234567]**}/UDT/SAP-Domains.xsd"
     },
     {
       "attribute_name": "glazed_type",
@@ -60,7 +60,7 @@
       "attribute_name": "glazed_type",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "GlazingInstalledCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{NI-,}1[01]*/UDT/SharedDomains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{NI-,}11*/UDT/SharedDomains.xsd"
     },
     {
       "attribute_name": "heat_loss_corridor",
@@ -71,7 +71,7 @@
       "attribute_name": "heat_loss_corridor",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "HeatLossCorridorCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
     },
     {
       "attribute_name": "main_fuel",
@@ -87,7 +87,7 @@
       "attribute_name": "main_fuel",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "HeatingFuelTypeCode",
-        "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SharedDomains.xsd"
+        "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SharedDomains.xsd"
     },
     {
       "attribute_name": "construction_age_band",
@@ -103,7 +103,7 @@
       "attribute_name": "construction_age_band",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "ConstructionDateCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
     },
     {
       "attribute_name": "mechanical_ventilation",
@@ -119,7 +119,7 @@
       "attribute_name": "mechanical_ventilation",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "VentilationTypeCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
     },
     {
       "attribute_name": "property_type",
@@ -141,7 +141,7 @@
       "attribute_name": "property_type",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "PropertyTypeCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[1234567]**}/UDT/SharedDomains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[1234567]**}/SAP-EPC/UDT/SharedDomains.xsd"
     },
     {
       "attribute_name": "tenure",
@@ -356,7 +356,7 @@
       "attribute_name": "water_heating_fuel",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "HeatingFuelTypeCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[1234567]**}/UDT/SharedDomains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[1234567]**}/UDT/SharedDomains.xsd"
     },
     {
       "attribute_name": "built_form",
@@ -372,7 +372,7 @@
       "attribute_name": "built_form",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "SAP-BuiltFormCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[123456]**,NI-17.[012]}/UDT/SAP-Domains.xsd"
     },
     {
       "attribute_name": "energy_efficiency_rating",
@@ -388,7 +388,7 @@
       "attribute_name": "energy_efficiency_rating",
       "type_of_assessment": "RdSAP",
       "xsd_node_name": "EnergyEfficiencySummaryCode",
-      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[0123456]**,NI-1[123456]**,NI-17.[012]}/UDT/EPC-Domains.xsd"
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[123456]**,NI-1[123456]**,NI-17.[012]}/UDT/EPC-Domains.xsd"
 
     },
     {
