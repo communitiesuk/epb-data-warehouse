@@ -62,3 +62,6 @@ build-iPhoneSimulator/
 # node stuff
 node_modules
 /dump.rdb
+
+# Prevent accidental re-committing after the structure.sql change
+/db/schema.rb
