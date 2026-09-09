@@ -1,4 +1,4 @@
-describe "Delete SAP 15 certificates from assessment_search rake" do
+describe "Delete schema type certificates from assessment_search rake" do
   include_context "when lodging XML"
 
   before do
@@ -6,7 +6,7 @@ describe "Delete SAP 15 certificates from assessment_search rake" do
   end
 
   context "when calling the rake task" do
-    subject(:task) { get_task("one_off:delete_sap_15_assessment_search") }
+    subject(:task) { get_task("one_off:delete_schema_type_assessment_search") }
 
     let(:results) do
       ActiveRecord::Base.connection.exec_query(
@@ -30,10 +30,22 @@ describe "Delete SAP 15 certificates from assessment_search rake" do
       })
     end
 
-    it "deletes only SAP 15.0 certificates" do
-      task.invoke
-      expect(results.length).to eq(2)
-      expect(results { |i| i["assessment_id"] }.map { |i| i["assessment_id"] }).to eq %w[0000-0000-0000-0000-0002 0000-0000-0000-0000-0003]
+    context "when deleting SAP 15.0" do
+      it "deletes only SAP 15.0 certificates" do
+        ENV["SCHEMA_TYPE"] = "SAP-Schema-15.0"
+        task.invoke
+        expect(results.length).to eq(2)
+        expect(results.map { it["assessment_id"] }).to eq %w[0000-0000-0000-0000-0002 0000-0000-0000-0000-0003]
+      end
+    end
+
+    context "when deleting SAP 19.0.0" do
+      it "deletes only SAP 19.0.0 certificates" do
+        ENV["SCHEMA_TYPE"] = "SAP-Schema-19.0.0"
+        task.invoke
+        expect(results.length).to eq(3)
+        expect(results.map { it["assessment_id"] }).to eq %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0003]
+      end
     end
   end
 end
