@@ -606,7 +606,7 @@ CREATE MATERIALIZED VIEW public.mvw_avg_co2_emissions AS
     avg(((ad.document ->> 'co2_emissions_current_per_floor_area'::text))::double precision) AS avg_co2_emission,
     to_char((((ad.document ->> 'registration_date'::text))::date)::timestamp with time zone, 'YYYY-MM'::text) AS year_month,
         CASE
-            WHEN ((co.country_code)::text = ANY ((ARRAY['ENG'::character varying, 'WLS'::character varying, 'NIR'::character varying])::text[])) THEN co.country_name
+            WHEN ((co.country_code)::text = ANY (ARRAY[('ENG'::character varying)::text, ('WLS'::character varying)::text, ('NIR'::character varying)::text])) THEN co.country_name
             WHEN ((co.country_code)::text = 'EAW'::text) THEN 'England'::character varying
             ELSE 'Other'::character varying
         END AS country,
@@ -615,10 +615,10 @@ CREATE MATERIALIZED VIEW public.mvw_avg_co2_emissions AS
    FROM ((public.assessment_documents ad
      JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
-  WHERE (((((ad.document ->> 'assessment_type'::text))::character varying)::text = ANY ((ARRAY['SAP'::character varying, 'RdSAP'::character varying])::text[])) AND ((ad.document ->> 'registration_date'::text) >= '2020-10-01'::text))
+  WHERE (((((ad.document ->> 'assessment_type'::text))::character varying)::text = ANY (ARRAY[('SAP'::character varying)::text, ('RdSAP'::character varying)::text])) AND ((ad.document ->> 'registration_date'::text) >= '2020-10-01'::text))
   GROUP BY (to_char((((ad.document ->> 'registration_date'::text))::date)::timestamp with time zone, 'YYYY-MM'::text)),
         CASE
-            WHEN ((co.country_code)::text = ANY ((ARRAY['ENG'::character varying, 'WLS'::character varying, 'NIR'::character varying])::text[])) THEN co.country_name
+            WHEN ((co.country_code)::text = ANY (ARRAY[('ENG'::character varying)::text, ('WLS'::character varying)::text, ('NIR'::character varying)::text])) THEN co.country_name
             WHEN ((co.country_code)::text = 'EAW'::text) THEN 'England'::character varying
             ELSE 'Other'::character varying
         END, (ad.document ->> 'assessment_type'::text)
@@ -751,7 +751,7 @@ CREATE MATERIALIZED VIEW public.mvw_commercial_rr_search AS
                     co.country_id
                    FROM (public.assessment_search s
                      JOIN public.countries co ON ((s.country_id = co.country_id)))
-                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'CEPC-RR'::text) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])))))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'CEPC-RR'::text) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])))))
         )
  SELECT cte.assessment_id AS certificate_number,
     cte.payback_type,
@@ -821,7 +821,7 @@ CREATE MATERIALIZED VIEW public.mvw_commercial_search AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
-  WHERE ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[]))
+  WHERE ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text]))
   WITH NO DATA;
 
 
@@ -863,7 +863,7 @@ CREATE MATERIALIZED VIEW public.mvw_dec_rr_search AS
                     co.country_id
                    FROM (public.assessment_search s
                      JOIN public.countries co ON ((s.country_id = co.country_id)))
-                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'DEC-RR'::text) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])))))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'DEC-RR'::text) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])))))
         )
  SELECT cte.assessment_id AS certificate_number,
     cte.payback_type,
@@ -952,7 +952,7 @@ CREATE MATERIALIZED VIEW public.mvw_dec_search AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
-  WHERE ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[]))
+  WHERE ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text]))
   WITH NO DATA;
 
 
@@ -992,13 +992,13 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_ni_search AS
     COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
     (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
     (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
-    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id) / NULLIF(public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
                 END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
-    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT (sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
@@ -1065,7 +1065,7 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_ni_search AS
     public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
-    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
     COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
     public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
@@ -1103,7 +1103,7 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_rr_search AS
      JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
      JOIN public.countries co ON ((co.country_id = aci.country_id)))
      CROSS JOIN LATERAL jsonb_array_elements((ad.document -> 'suggested_improvements'::text)) elem(value))
-  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])) AND ((ad.document ->> 'suggested_improvements'::text) IS NOT NULL))
+  WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])) AND ((ad.document ->> 'suggested_improvements'::text) IS NOT NULL))
   WITH NO DATA;
 
 
@@ -1155,13 +1155,13 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_search AS
     COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
     (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
     (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
-    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id) / NULLIF(public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
                 END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
-    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT (sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
@@ -1228,7 +1228,7 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_search AS
     public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
-    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
     COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
     public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
@@ -1246,7 +1246,7 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_search AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
-  WHERE ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[]))
+  WHERE ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text]))
   WITH NO DATA;
 
 
@@ -1413,7 +1413,7 @@ CREATE VIEW public.vw_commercial_rr_yesterday AS
                     co.country_id
                    FROM (public.assessment_search s
                      JOIN public.countries co ON ((s.country_id = co.country_id)))
-                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'CEPC-RR'::text) AND ((s.created_at)::date = (CURRENT_DATE - 1)) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])))))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'CEPC-RR'::text) AND ((s.created_at)::date = (CURRENT_DATE - 1)) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])))))
         )
  SELECT cte.assessment_id AS certificate_number,
     cte.payback_type,
@@ -1482,7 +1482,7 @@ CREATE VIEW public.vw_commercial_yesterday AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
-  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
+  WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
             l.event_type,
             l."timestamp",
             l.id
@@ -1528,7 +1528,7 @@ CREATE VIEW public.vw_dec_rr_yesterday AS
                     co.country_id
                    FROM (public.assessment_search s
                      JOIN public.countries co ON ((s.country_id = co.country_id)))
-                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'DEC-RR'::text) AND ((s.created_at)::date = (CURRENT_DATE - 1)) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])))))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'DEC-RR'::text) AND ((s.created_at)::date = (CURRENT_DATE - 1)) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])))))
         )
  SELECT cte.assessment_id AS certificate_number,
     cte.payback_type,
@@ -1616,7 +1616,7 @@ CREATE VIEW public.vw_dec_yesterday AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
-  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
+  WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
             l.event_type,
             l."timestamp",
             l.id
@@ -1657,13 +1657,13 @@ CREATE VIEW public.vw_domestic_base AS
     COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
     (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
     (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
-    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id) / NULLIF(public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
                 END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
-    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT (sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
@@ -1730,7 +1730,7 @@ CREATE VIEW public.vw_domestic_base AS
     public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
-    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
     COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
     public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
@@ -1748,7 +1748,7 @@ CREATE VIEW public.vw_domestic_base AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
-  WHERE ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[]));
+  WHERE ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text]));
 
 
 --
@@ -1787,13 +1787,13 @@ CREATE VIEW public.vw_domestic_ni_yesterday AS
     COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
     (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
     (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
-    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id) / NULLIF(public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
                 END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
-    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT (sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
@@ -1860,7 +1860,7 @@ CREATE VIEW public.vw_domestic_ni_yesterday AS
     public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
-    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
     COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
     public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
@@ -1902,7 +1902,7 @@ CREATE VIEW public.vw_domestic_rr_yesterday AS
      JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
      JOIN public.countries co ON ((co.country_id = aci.country_id)))
      CROSS JOIN LATERAL jsonb_array_elements((ad.document -> 'suggested_improvements'::text)) elem(value))
-  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])) AND ((ad.document ->> 'suggested_improvements'::text) IS NOT NULL) AND ((s.created_at)::date = (CURRENT_DATE - 1)));
+  WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])) AND ((ad.document ->> 'suggested_improvements'::text) IS NOT NULL) AND ((s.created_at)::date = (CURRENT_DATE - 1)));
 
 
 --
@@ -1941,13 +1941,13 @@ CREATE VIEW public.vw_domestic_yesterday AS
     COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
     (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
     (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
-    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id) / NULLIF(public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
                 END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
-    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT (sum(
                 CASE
                     WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
                     ELSE NULL::integer
@@ -2014,7 +2014,7 @@ CREATE VIEW public.vw_domestic_yesterday AS
     public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
     public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
-    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values(ARRAY[('cfl_fixed_lighting_bulbs_count'::text)::character varying, ('led_fixed_lighting_bulbs_count'::text)::character varying, ('low_energy_fixed_lighting_bulbs_count'::text)::character varying, ('incandescent_fixed_lighting_bulbs_count'::text)::character varying], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
            FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
     COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
     public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
@@ -2032,7 +2032,7 @@ CREATE VIEW public.vw_domestic_yesterday AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
-  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
+  WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
             l.event_type,
             l."timestamp",
             l.id
@@ -2054,7 +2054,7 @@ CREATE VIEW public.vw_export_documents_2008 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2008)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2008)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2071,7 +2071,7 @@ CREATE VIEW public.vw_export_documents_2009 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2009)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2009)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2088,7 +2088,7 @@ CREATE VIEW public.vw_export_documents_2010 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2010)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2010)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2105,7 +2105,7 @@ CREATE VIEW public.vw_export_documents_2011 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2011)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2011)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2122,7 +2122,7 @@ CREATE VIEW public.vw_export_documents_2012 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2012)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2012)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2139,7 +2139,7 @@ CREATE VIEW public.vw_export_documents_2013 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2013)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2013)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2156,7 +2156,7 @@ CREATE VIEW public.vw_export_documents_2014 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2014)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2014)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2173,7 +2173,7 @@ CREATE VIEW public.vw_export_documents_2015 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2015)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2015)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2190,7 +2190,7 @@ CREATE VIEW public.vw_export_documents_2016 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2016)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2016)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2207,7 +2207,7 @@ CREATE VIEW public.vw_export_documents_2017 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2017)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2017)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2224,7 +2224,7 @@ CREATE VIEW public.vw_export_documents_2018 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2018)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2018)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2241,7 +2241,7 @@ CREATE VIEW public.vw_export_documents_2019 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2019)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2019)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2258,7 +2258,7 @@ CREATE VIEW public.vw_export_documents_2020 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2020)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2020)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2275,7 +2275,7 @@ CREATE VIEW public.vw_export_documents_2021 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2021)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2021)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2292,7 +2292,7 @@ CREATE VIEW public.vw_export_documents_2022 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2022)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2022)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2309,7 +2309,7 @@ CREATE VIEW public.vw_export_documents_2023 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2023)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2023)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2326,7 +2326,7 @@ CREATE VIEW public.vw_export_documents_2024 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2024)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2024)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2343,7 +2343,7 @@ CREATE VIEW public.vw_export_documents_2025 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2025)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2025)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2360,7 +2360,7 @@ CREATE VIEW public.vw_export_documents_2026 AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((EXTRACT(year FROM s.registration_date) = (2026)::numeric) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((EXTRACT(year FROM s.registration_date) = (2026)::numeric) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
@@ -2377,7 +2377,7 @@ CREATE VIEW public.vw_json_documents_yesterday AS
    FROM ((public.assessment_documents ad
      JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
      JOIN public.countries co ON ((s.country_id = co.country_id)))
-  WHERE ((((ad.warehouse_created_at)::date = (CURRENT_DATE - 1)) OR ((ad.updated_at)::date = (CURRENT_DATE - 1))) AND ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])));
+  WHERE ((((ad.warehouse_created_at)::date = (CURRENT_DATE - 1)) OR ((ad.updated_at)::date = (CURRENT_DATE - 1))) AND ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])));
 
 
 --
