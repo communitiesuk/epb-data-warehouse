@@ -181,9 +181,9 @@
             <SAP:Typical-Saving>360</SAP:Typical-Saving>
             <SAP:Energy-Performance-Rating>50</SAP:Energy-Performance-Rating>
             <SAP:Environmental-Impact-Rating>50</SAP:Environmental-Impact-Rating>
-            <SAP:Improvement-Summary></SAP:Improvement-Summary>
+            <SAP:Improvement-Summary>Water heating</SAP:Improvement-Summary>
             <SAP:Improvement-Heading></SAP:Improvement-Heading>
-            <SAP:Improvement-Description></SAP:Improvement-Description>
+            <SAP:Improvement-Description>This is an improvement description</SAP:Improvement-Description>
           </SAP:Improvement>
           <SAP:Improvement>
             <SAP:Sequence>2</SAP:Sequence>
@@ -192,7 +192,7 @@
             <SAP:Typical-Saving>99</SAP:Typical-Saving>
             <SAP:Energy-Performance-Rating>60</SAP:Energy-Performance-Rating>
             <SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
-            <SAP:Improvement-Summary></SAP:Improvement-Summary>
+            <SAP:Improvement-Summary>Solar Panels</SAP:Improvement-Summary>
             <SAP:Improvement-Heading></SAP:Improvement-Heading>
             <SAP:Improvement-Description>Improvement desc</SAP:Improvement-Description>
           </SAP:Improvement>

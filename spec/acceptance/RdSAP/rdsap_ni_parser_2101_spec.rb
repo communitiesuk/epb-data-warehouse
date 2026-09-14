@@ -112,7 +112,8 @@ RSpec.describe "the parser and the rdsap configuration" do
                           "indicative_cost" => 1000,
                           "improvement_details" =>
                             { "improvement_texts" =>
-                                { "improvement_description" => "Improvement desc" } } }],
+                                { "improvement_description" => "Improvement desc",
+                                  "improvement_summary" => "Water heating" } } }],
                       "renewable_heat_incentive" =>
                        { "space_heating_existing_dwelling" => 13_120,
                          "water_heating" => 2285,

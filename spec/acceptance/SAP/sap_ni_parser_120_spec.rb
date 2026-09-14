@@ -187,8 +187,8 @@ RSpec.describe "the parser and the SAP configuration" do
                       "hot_water_cost_current" => 200.4,
                       "hot_water_cost_potential" => 180.43,
                       "suggested_improvements" => [
-                        { "sequence" => 1, "improvement_category" => 1, "improvement_type" => "A", "typical_saving" => 360, "energy_performance_rating" => 50, "environmental_impact_rating" => 50 },
-                        { "sequence" => 2, "improvement_category" => 2, "improvement_type" => "B", "improvement_description" => "Improvement desc", "typical_saving" => 99, "energy_performance_rating" => 60, "environmental_impact_rating" => 64 },
+                        { "sequence" => 1, "improvement_category" => 1, "improvement_type" => "A", "typical_saving" => 360, "energy_performance_rating" => 50, "environmental_impact_rating" => 50, "improvement_description" => "This is an improvement description", "improvement_summary" => "Water heating" },
+                        { "sequence" => 2, "improvement_category" => 2, "improvement_type" => "B", "improvement_description" => "Improvement desc", "improvement_summary" => "Solar Panels", "typical_saving" => 99, "energy_performance_rating" => 60, "environmental_impact_rating" => 64 },
                       ],
                       "lzc_energy_sources" => [11],
                       "data_type" => 2,

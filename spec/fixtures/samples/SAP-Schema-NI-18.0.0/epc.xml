@@ -163,6 +163,44 @@
       <Hot-Water-Cost-Current currency="GBP">79</Hot-Water-Cost-Current>
       <Hot-Water-Cost-Potential currency="GBP">79</Hot-Water-Cost-Potential>
     </Energy-Use>
+    <Suggested-Improvements>
+      <Improvement>
+        <Sequence>1</Sequence>
+        <Improvement-Category>3</Improvement-Category>
+        <Improvement-Type>N</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>19</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">25</Typical-Saving>
+        <Indicative-Cost>£4,000 - £6,000</Indicative-Cost>
+        <Energy-Performance-Rating>84</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>87</Environmental-Impact-Rating>
+      </Improvement>
+      <Improvement>
+        <Sequence>2</Sequence>
+        <Improvement-Category>3</Improvement-Category>
+        <Improvement-Type>U</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>34</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">321</Typical-Saving>
+        <Indicative-Cost>£11,000 - £20,000</Indicative-Cost>
+        <Energy-Performance-Rating>93</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>95</Environmental-Impact-Rating>
+      </Improvement>
+      <Improvement>
+        <Sequence>3</Sequence>
+        <Improvement-Category>3</Improvement-Category>
+        <Improvement-Type>V</Improvement-Type>
+        <Improvement-Details>
+          <Improvement-Number>44</Improvement-Number>
+        </Improvement-Details>
+        <Typical-Saving currency="GBP">114</Typical-Saving>
+        <Indicative-Cost>£1,500 - £4,000</Indicative-Cost>
+        <Energy-Performance-Rating>96</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>98</Environmental-Impact-Rating>
+      </Improvement>
+    </Suggested-Improvements>
   </Energy-Assessment>
   <SAP09-Data>
     <Data-Type>2</Data-Type>
