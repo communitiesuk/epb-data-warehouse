@@ -15,6 +15,9 @@ phases:
       - echo Build started on `date`
       - echo Building the Paketo image...
       - pack build ebpr-data-warehouse-image --builder paketobuildpacks/ubuntu-noble-builder --buildpack paketo-buildpacks/nodejs --buildpack paketo-buildpacks/ruby --default-process rake
+      # Ensure ruby and npm/node is available on the entrypoint for running tasks
+      - docker run --rm --entrypoint launcher ebpr-register-api-image ruby --version
+      - docker run --rm --entrypoint launcher ebpr-data-warehouse-image npm --version
 
   post_build:
     commands:
