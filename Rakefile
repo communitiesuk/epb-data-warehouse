@@ -32,7 +32,7 @@ end
 
 Sentry.init do |config|
   config.environment = ENV["STAGE"]
-  config.include_local_variables = true
+  config.data_collection.stack_frame_variables = true
 end
 
 # Add main entrypoint as default rake
