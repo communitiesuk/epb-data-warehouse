@@ -3,7 +3,6 @@ namespace :one_off do
   task :delete_schema_type_assessment_search do
     schema_type = ENV["SCHEMA_TYPE"]
 
-    Gateway::AssessmentSearchGateway.new
     sql = <<~SQL
       DELETE FROM assessment_search s
       WHERE EXISTS (
