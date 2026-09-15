@@ -957,6 +957,26 @@ CREATE MATERIALIZED VIEW public.mvw_dec_search AS
 
 
 --
+-- Name: mvw_domestic_ni_rr_search; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_ni_rr_search AS
+ SELECT ad.assessment_id AS certificate_number,
+    ((elem.value ->> 'sequence'::text))::integer AS improvement_item,
+    ((elem.value -> 'improvement_details'::text) ->> 'improvement_number'::text) AS improvement_id,
+    (elem.value ->> 'indicative_cost'::text) AS indicative_cost,
+    COALESCE((elem.value ->> 'improvement_summary'::text), (((elem.value -> 'improvement_details'::text) -> 'improvement_texts'::text) ->> 'improvement_summary'::text), (public.get_lookup_value('improvement_summary'::character varying, (((elem.value -> 'improvement_details'::text) ->> 'improvement_number'::text))::character varying, ((ad.document ->> 'assessment_type'::text))::character varying, ((ad.document ->> 'schema_type'::text))::character varying))::text) AS improvement_summary_text,
+    COALESCE((elem.value ->> 'improvement_description'::text), (((elem.value -> 'improvement_details'::text) -> 'improvement_texts'::text) ->> 'improvement_description'::text), (public.get_lookup_value('improvement_description'::character varying, (((elem.value -> 'improvement_details'::text) ->> 'improvement_number'::text))::character varying, ((ad.document ->> 'assessment_type'::text))::character varying, ((ad.document ->> 'schema_type'::text))::character varying))::text) AS improvement_descr_text
+   FROM ((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((co.country_id = aci.country_id)))
+     CROSS JOIN LATERAL jsonb_array_elements((ad.document -> 'suggested_improvements'::text)) elem(value))
+  WHERE (((co.country_code)::text = 'NIR'::text) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])) AND ((ad.document ->> 'suggested_improvements'::text) IS NOT NULL))
+  WITH NO DATA;
+
+
+--
 -- Name: mvw_domestic_ni_search; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
@@ -1749,6 +1769,25 @@ CREATE VIEW public.vw_domestic_base AS
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
   WHERE ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text]));
+
+
+--
+-- Name: vw_domestic_ni_rr_yesterday; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vw_domestic_ni_rr_yesterday AS
+ SELECT ad.assessment_id AS certificate_number,
+    ((elem.value ->> 'sequence'::text))::integer AS improvement_item,
+    ((elem.value -> 'improvement_details'::text) ->> 'improvement_number'::text) AS improvement_id,
+    (elem.value ->> 'indicative_cost'::text) AS indicative_cost,
+    COALESCE((elem.value ->> 'improvement_summary'::text), (((elem.value -> 'improvement_details'::text) -> 'improvement_texts'::text) ->> 'improvement_summary'::text), (public.get_lookup_value('improvement_summary'::character varying, (((elem.value -> 'improvement_details'::text) ->> 'improvement_number'::text))::character varying, ((ad.document ->> 'assessment_type'::text))::character varying, ((ad.document ->> 'schema_type'::text))::character varying))::text) AS improvement_summary_text,
+    COALESCE((elem.value ->> 'improvement_description'::text), (((elem.value -> 'improvement_details'::text) -> 'improvement_texts'::text) ->> 'improvement_description'::text), (public.get_lookup_value('improvement_description'::character varying, (((elem.value -> 'improvement_details'::text) ->> 'improvement_number'::text))::character varying, ((ad.document ->> 'assessment_type'::text))::character varying, ((ad.document ->> 'schema_type'::text))::character varying))::text) AS improvement_descr_text
+   FROM ((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((co.country_id = aci.country_id)))
+     CROSS JOIN LATERAL jsonb_array_elements((ad.document -> 'suggested_improvements'::text)) elem(value))
+  WHERE (((co.country_code)::text = 'NIR'::text) AND ((ad.document ->> 'assessment_type'::text) = ANY (ARRAY['SAP'::text, 'RdSAP'::text])) AND ((ad.document ->> 'suggested_improvements'::text) IS NOT NULL) AND ((ad.warehouse_created_at)::date = (CURRENT_DATE - 1)));
 
 
 --
@@ -2973,6 +3012,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260910160945'),
 ('20260908141211'),
 ('20260904091525'),
 ('20260903113117'),
