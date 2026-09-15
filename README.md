@@ -1,4 +1,5 @@
 # epb-data-warehouse
+
 EPBR Data storage application. Takes data stored in EPB-Register-Api database and stores it a database constructed on the [EAV data model](https://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model)
 
 ## Prerequisites
@@ -8,57 +9,31 @@ EPBR Data storage application. Takes data stored in EPB-Register-Api database an
 * Bundler (run `gem install bundler`)
 
 ## Installing
+
 `bundle install`
 
-## Creating a local database
+### Creating a local database
 
-Ensure you have Postgres 14+ installed. If you are working on a Mac, [this tutorial](https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb) will take you through the process.
+Ensure you have Postgres 18 installed and available on localhost.  Additional ensure that `pg_dump` is in your path.
 
-Be sure that `DATABASE_URL` is set, for example
+If your database is not on the default port, or requires a password these can be set by exporting `PGPORT` and `DOCKER_POSTGRES_PASSWORD`
+
+```bash
+# Setup the database
+make setup-db
+
+# setup seed data
+make seed-test-data
+make seed-stats-data
 ```
-DATABASE_URL="postgresql://postgres@localhost:5432/epb_eav_development"
-```
-
-Once you have set this up, run the command
-
-`make setup-db`
-
-This creates the database schema and runs the migrations scripts.
-
-To seed the development database with attribute data and attribute values for the three test certificates stored in the local directory  `/spec/fixtures/json_export/`, please run the following cmd:
-
-`bundle exec rake seed_test_data`
-
-Once that database is set up and seed data has been imported you can use the crosstab function of postgres to extract data into a 2-d dataset. Examples can be found in `lib/gateway/assessment_attributes_gateway.rb`
-A more comprehensive example can be found in the db migrations `db/migrate/20210802122736_add_open_data_export_view.rb` This creates a postgres view called 
-
-that export the data in the format required by Open Data Communities. The run this view use the following psql command:
-
-`SELECT * FROM vw_open_data_export`
-
-## Running Code against Postgres In Container
-
-If want to run your code against a version of postgres other than that already installed, you can specifiy a port in your nake commands
-
-E.g To run the code base against Postgres v17 and you have Postgres 14 installed:
-
-Installed Postgres 17 docker image:
-
-`docker run -d -p 5431:5432  --name postgres-17 -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_USER=postgres  postgres:17`
-
-This command exposes postgres 17 on port 5431
-
-To run code against this version 
-
-`PGPORT=5431 make setup-db
-PGPORT=5431 make test`
-
 
 ## Code Formatting
 
 To run Rubocop on its own, run:
 
+```bash
 make format
+```
 
 ## DataWarehouse API Service
 
@@ -89,10 +64,8 @@ To generate the test file run
 
 NB This will only need to be run if you want to change the existing test data.
 
-environmental_impact_current 
+## JSON Samples 
 
-
-## Json Samples 
 The code base contains code samples of every type of EPC certificate type and schema version that is supported for publication
 
 The json samples matches the output of the API endpoint `/api/certificate/` which will vary depending on the certificate type and schema version
@@ -108,3 +81,90 @@ To recreate the data in the json samples run the following command:
 This will delete the existing file and recreate based on any changes made to XML samples.
 
 If changes are made to json being exported the rake will need to updated to reflect these changes.
+
+## Environmental variables
+
+#### `APP_ENV`
+
+Set the [Sintra environment](https://sinatrarb.com/intro.html#environments).
+Should be one of "production", "development" or "test".
+
+Sinatra will fallback to `RACK_ENV` or "development" if unset.
+
+#### `RAILS_ENV`
+
+Sets the active record environment. This should be one of "production", "development" or "test".  It will default to
+"development" if unset.
+
+#### `RACK_ENV`
+
+Used by rackup to choose the [default middleware stack](https://github.com/rack/rackup/blob/f3fa1d6ada90e9e7aa1f712488ddde87ea2a2075/lib/rackup/server.rb#L273).
+Should be one of "development" (default) or "deployment". If set to any other value no middleware stack is loaded.
+
+#### `STAGE`
+
+The EPB environment. Can be one of "test", "development", "integration", "staging" or "production".
+
+- Sets the unleash feature flag service app name to `toggles-#{stage}`
+- Sets the Sentry environment
+- When "production" prevents some destructive rake tasks from running
+
+#### `DATABASE_URL`
+
+The postgres URL of the database.
+
+This is set in some of the `make` tasks and not overridable
+ 
+#### `DOCKER_POSTGRES_PASSWORD`
+
+The database password. Only used to build the `DATABASE_URL` in some `make` tasks
+
+#### `PGPORT`
+
+The database port. Only used to build the `DATABASE_URL` in some `make` tasks
+
+#### `EPB_API_URL`
+
+The url of the register api service.
+ 
+#### `EPB_AUTH_CLIENT_ID`
+
+The client id for connecting to the API services.
+
+#### `EPB_AUTH_CLIENT_SECRET`
+
+The client secret for connecting to the API services.
+
+#### `EPB_AUTH_SERVER`
+
+The URL of the auth server for connecting to the API services.
+
+#### `EPB_UNLEASH_URI`
+
+The URL of the unleash feature flag service.
+
+#### `EPB_UNLEASH_AUTH_TOKEN`
+
+Authentication token for the unleash feature flag service.
+
+#### `EPB_DATA_USER_CREDENTIAL_TABLE_NAME`
+
+DynamoDB table name containing the user credentials.
+
+#### `EPB_QUEUES_URI`
+
+URI of the redis server used for queues
+
+#### `JWT_ISSUER`
+
+Issuer for the JWT encoded auth token.
+
+#### `JWT_SECRET`
+
+Secret for the JWT encoded auth token.
+
+#### `AWS_S3_USER_DATA_BUCKET_NAME`
+
+S3 bucket containing the generated data downloads.
+
+If `APP_ENV` is not set to "production" then a stubbed S3 client will be used.
