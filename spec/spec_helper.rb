@@ -89,6 +89,12 @@ def stub_bearer_token_access
   header("Authorization", "Bearer valid-bearer-token")
 end
 
+# This method is required as a global
+# TODO: Refactor so this is not required as a top level method
+def report_to_sentry(exception)
+  Sentry.capture_exception(exception) if defined?(Sentry)
+end
+
 ENV["DATABASE_URL"] = "postgresql://postgres:#{ENV['DOCKER_POSTGRES_PASSWORD']}@localhost:5432/epb_eav_test"
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 

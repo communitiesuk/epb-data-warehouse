@@ -62,76 +62,67 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
   end
 
   context "when transforming the epc xml using the parser" do
-    context "when the schema type is known" do
-      it "clears the assessment from the recovery list" do
-        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({
-          schemaType: "RdSAP-Schema-20.0.0",
-          assessmentAddressId: "UPRN-000000000000",
-          typeOfAssessment: "RdSAP",
-          optOut: false,
-          createdAt: "2021-07-21T11:26:28.045Z",
-          cancelledAt: "2021-09-05T14:34:56.634Z",
-          hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
-          greenDeal: false,
-        })
+    it "clears the assessment from the recovery list" do
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({
+        schemaType: "RdSAP-Schema-20.0.0",
+        assessmentAddressId: "UPRN-000000000000",
+        typeOfAssessment: "RdSAP",
+        optOut: false,
+        createdAt: "2021-07-21T11:26:28.045Z",
+        hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
+        greenDeal: false,
+      })
+      use_case.execute(assessment_id, queue_name: :assessments)
+      expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
+    end
+
+    it "produces the expected data structure" do
+      allow(certificate_gateway).to receive(:fetch_meta_data).and_return({
+        schemaType: "RdSAP-Schema-20.0.0",
+        assessmentAddressId: "UPRN-000000000000",
+        typeOfAssessment: "RdSAP",
+        optOut: false,
+        cancelled_at: nil,
+        not_for_issue_at: nil,
+        createdAt: "2021-07-21T11:26:28.045Z",
+        greenDeal: false,
+      })
+      use_case.execute(assessment_id, queue_name: :assessments)
+      expect(import_certificate_data_use_case).to have_received(:execute).with(
+        assessment_id:,
+        certificate_data: include({
+          "calculation_software_version" => "13.05r16",
+          "created_at" => "2021-07-21 11:26:28",
+          "schema_type" => "RdSAP-Schema-20.0.0",
+          "assessment_type" => "RdSAP",
+        }),
+        country_id: nil,
+      )
+    end
+
+    context "when the certificate is opted out" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: true,
+                                                                             createdAt: "2021-07-21T11:26:28.045Z",
+                                                                             greenDeal: false })
+      end
+
+      it "forms together certificate data and passes it into the import certificate data use case" do
         use_case.execute(assessment_id, queue_name: :assessments)
-        expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
-      end
-
-      context "when the certificate is opted out" do
-        before do
-          allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
-                                                                               assessmentAddressId: "UPRN-000000000000",
-                                                                               typeOfAssessment: "RdSAP",
-                                                                               optOut: true,
-                                                                               createdAt: "2021-07-21T11:26:28.045Z",
-                                                                               cancelledAt: "2021-09-05T14:34:56.634Z",
-                                                                               greenDeal: false })
-        end
-
-        it "forms together certificate data and passes it into the import certificate data use case" do
-          use_case.execute(assessment_id, queue_name: :assessments)
-          expect(import_certificate_data_use_case).to have_received(:execute).with(
-            assessment_id:,
-            certificate_data: include({
-              "calculation_software_version" => "13.05r16",
-              "created_at" => "2021-07-21 11:26:28",
-              "cancelled_at" => "2021-09-05 14:34:56",
-              "opt_out" => Time.now.utc.strftime("%F %T"),
-              "schema_type" => "RdSAP-Schema-20.0.0",
-              "assessment_type" => "RdSAP",
-            }),
-            country_id: nil,
-          )
-        end
-      end
-
-      context "when the certificate is not opted out or cancelled" do
-        before do
-          allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
-                                                                               assessmentAddressId: "UPRN-000000000000",
-                                                                               typeOfAssessment: "RdSAP",
-                                                                               optOut: false,
-                                                                               createdAt: "2021-07-21T11:26:28.045Z",
-                                                                               greenDeal: false })
-          use_case.execute(assessment_id, queue_name: :assessments)
-        end
-
-        it "does not produce a data structure containing a cancelled_at key" do
-          expect(import_certificate_data_use_case).to have_received(:execute).with(
-            assessment_id:,
-            certificate_data: match(does_not_contain_key("cancelled_at")),
-            country_id: nil,
-          )
-        end
-
-        it "does not produce a data structure containing an opt_out key" do
-          expect(import_certificate_data_use_case).to have_received(:execute).with(
-            assessment_id:,
-            certificate_data: match(does_not_contain_key("opt_out")),
-            country_id: nil,
-          )
-        end
+        expect(import_certificate_data_use_case).to have_received(:execute).with(
+          assessment_id:,
+          certificate_data: include({
+            "calculation_software_version" => "13.05r16",
+            "created_at" => "2021-07-21 11:26:28",
+            "opt_out" => Time.now.utc.strftime("%F %T"),
+            "schema_type" => "RdSAP-Schema-20.0.0",
+            "assessment_type" => "RdSAP",
+          }),
+          country_id: nil,
+        )
       end
     end
 
@@ -192,6 +183,46 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
       end
     end
 
+    context "when the assessment is cancelled" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: false,
+                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
+                                                                             createdAt: nil })
+        use_case.execute(assessment_id, queue_name: :assessments)
+      end
+
+      it "does not trigger an import" do
+        expect(import_certificate_data_use_case).not_to have_received(:execute)
+      end
+
+      it "clears the assessment from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
+      end
+    end
+
+    context "when the assessment is not for issue" do
+      before do
+        allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
+                                                                             assessmentAddressId: "UPRN-000000000000",
+                                                                             typeOfAssessment: "RdSAP",
+                                                                             optOut: false,
+                                                                             notForIssueAt: "2021-09-05T14:34:56.634Z",
+                                                                             createdAt: nil })
+        use_case.execute(assessment_id, queue_name: :assessments)
+      end
+
+      it "does not trigger an import" do
+        expect(import_certificate_data_use_case).not_to have_received(:execute)
+      end
+
+      it "clears the assessment from the recovery list" do
+        expect(recovery_list_gateway).to have_received(:clear_assessment).with(payload: assessment_id, queue: :assessments)
+      end
+    end
+
     context "when the certificate has a hashed assessment id" do
       before do
         allow(certificate_gateway).to receive(:fetch_meta_data).and_return({ schemaType: "RdSAP-Schema-20.0.0",
@@ -199,7 +230,6 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: true,
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
-                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2" })
       end
 
@@ -210,7 +240,6 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           certificate_data: include({
             "calculation_software_version" => "13.05r16",
             "created_at" => "2021-07-21 11:26:28",
-            "cancelled_at" => "2021-09-05 14:34:56",
             "opt_out" => Time.now.utc.strftime("%F %T"),
             "schema_type" => "RdSAP-Schema-20.0.0",
             "assessment_type" => "RdSAP",
@@ -228,7 +257,6 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: true,
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
-                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
                                                                              countryId: 1 })
         use_case.execute(assessment_id, queue_name: :assessments)
@@ -246,7 +274,6 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: true,
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
-                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
                                                                              countryId: nil })
         use_case.execute(assessment_id, queue_name: :assessments)
@@ -264,7 +291,6 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
                                                                              typeOfAssessment: "RdSAP",
                                                                              optOut: true,
                                                                              createdAt: "2021-07-21T11:26:28.045Z",
-                                                                             cancelledAt: "2021-09-05T14:34:56.634Z",
                                                                              hashedAssessmentId: "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",
                                                                              countryId: nil,
                                                                              greenDeal: true })

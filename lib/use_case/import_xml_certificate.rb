@@ -42,12 +42,10 @@ module UseCase
       end
 
       raise UnimportableAssessment if fetch_error.is_a?(Errors::AssessmentGone)
-
       raise fetch_error if fetch_error
-
       raise StandardError if xml.nil? || meta_data.nil?
-
       raise UnimportableAssessment if should_exclude?(meta_data:)
+      raise UnimportableAssessment if is_cancelled?(meta_data:)
 
       if @assessment_attribute_gateway.assessment_exists(assessment_id)
         Helper::Stopwatch.log_elapsed_time @logger, "deleted EAV attributes for assessment #{assessment_id}" do
@@ -68,7 +66,6 @@ module UseCase
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_type"] = meta_data[:typeOfAssessment]
       certificate["hashed_assessment_id"] = meta_data[:hashedAssessmentId] if meta_data[:hashedAssessmentId]
-      certificate["cancelled_at"] = Helper::DateTime.convert_atom_to_db_datetime(meta_data[:cancelledAt]) unless meta_data[:cancelledAt].nil?
       certificate["opt_out"] = Time.now.utc.strftime("%F %T") if meta_data[:optOut]
 
       country_id = meta_data[:countryId]
