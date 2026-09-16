@@ -103,7 +103,7 @@
   "sap_flat_details": {
     "top_storey": "Y",
     "storey_count": 3,
-    "flat_location": 1,
+    "flat_location": "01",
     "floor_heat_loss": 3,
     "heat_loss_corridor": 0
   },

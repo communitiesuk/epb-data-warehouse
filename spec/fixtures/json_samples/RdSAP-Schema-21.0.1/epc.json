@@ -211,7 +211,7 @@
     "level": 1,
     "top_storey": "N",
     "storey_count": 3,
-    "flat_location": 1,
+    "flat_location": "01",
     "heat_loss_corridor": 2,
     "unheated_corridor_length": {
       "value": 10,

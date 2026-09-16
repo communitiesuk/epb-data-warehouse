@@ -43,7 +43,7 @@ describe Helper::GenerateJsonSamples do
         "inspection_date" => "2020-05-04",
         "extensions_count" => 0,
         "measurement_type" => 1,
-        "sap_flat_details" => { "level" => 1, "top_storey" => "N", "storey_count" => 3, "flat_location" => 1, "heat_loss_corridor" => 2, "unheated_corridor_length" => 10 },
+        "sap_flat_details" => { "flat_location" => "01", "heat_loss_corridor" => 2, "level" => 1, "storey_count" => 3, "top_storey" => "N", "unheated_corridor_length" => 10 },
         "total_floor_area" => 55,
         "transaction_type" => 1,
         "conservatory_type" => 1,

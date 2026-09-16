@@ -121,7 +121,7 @@
   "sap_flat_details": {
     "level": 2,
     "top_storey": "N",
-    "flat_location": 1,
+    "flat_location": "01",
     "heat_loss_corridor": 0
   },
   "total_floor_area": 55,

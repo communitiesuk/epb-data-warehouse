@@ -133,6 +133,9 @@
     "flueless_gas_fires_count": 0,
     "mechanical_vent_specific_fan_power": 0.0
   },
+  "sap_flat_details": {
+    "level": 3
+  },
   "total_floor_area": 69,
   "transaction_type": 6,
   "conservatory_type": 1,

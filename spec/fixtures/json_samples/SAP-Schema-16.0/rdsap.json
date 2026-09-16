@@ -99,6 +99,12 @@
   "inspection_date": "2012-09-27",
   "extensions_count": 1,
   "measurement_type": 1,
+  "sap_flat_details": {
+    "level": 2,
+    "top_storey": "N",
+    "flat_location": "01",
+    "heat_loss_corridor": 0
+  },
   "total_floor_area": 107,
   "transaction_type": 1,
   "conservatory_type": 1,

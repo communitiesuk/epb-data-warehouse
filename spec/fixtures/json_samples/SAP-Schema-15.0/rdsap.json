@@ -96,8 +96,10 @@
   "measurement_type": 1,
   "sap_flat_details": {
     "level": 3,
-    "heat_loss_corridor": 0,
-    "unheated_corridor_length": 10
+    "top_storey": "Y",
+    "flat_location": "02",
+    "heat_loss_corridor": 2,
+    "unheated_corridor_length": 7.74
   },
   "total_floor_area": 63,
   "transaction_type": 4,
