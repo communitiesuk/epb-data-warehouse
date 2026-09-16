@@ -395,6 +395,27 @@
       "attribute_name": "transaction_type",
       "type_of_assessment": "CEPC",
       "xsd_node_name": "TransactionType"
+    },
+    {
+      "attribute_name": "flat_level",
+      "type_of_assessment": "SAP",
+      "xsd_node_name": "SAP-FlatLevelCode"
+    },
+    {
+      "attribute_name": "flat_level",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "FlatLevelCode"
+    },
+    {
+      "attribute_name": "block_storey",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "BlockStoreyCode"
+    },
+    {
+      "attribute_name": "block_storey",
+      "type_of_assessment": "RdSAP",
+      "xsd_node_name": "BlockStoreyCode",
+      "xsd_path": "/api/schemas/xml/SAP-Schema-{1[23456]**,NI-1[1234567]**}/UDT/SharedDomains.xsd"
     }
   ],
 

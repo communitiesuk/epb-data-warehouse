@@ -84,7 +84,7 @@ describe Gateway::AssessmentLookupsGateway do
     end
 
     let(:expected) do
-      %w[built_form construction_age_band cylinder_insulation_thickness energy_efficiency_rating energy_tariff glazed_area glazed_type heat_loss_corridor improvement_description improvement_summary main_fuel mechanical_ventilation property_type tenure transaction_type ventilation_type water_heating_fuel]
+      %w[block_storey built_form construction_age_band cylinder_insulation_thickness energy_efficiency_rating energy_tariff flat_level glazed_area glazed_type heat_loss_corridor improvement_description improvement_summary main_fuel mechanical_ventilation property_type tenure transaction_type ventilation_type water_heating_fuel]
     end
 
     it "returns a list of lookups" do
@@ -176,11 +176,11 @@ describe Gateway::AssessmentLookupsGateway do
     end
 
     let(:look_up_codes) do
-      %w[built_form construction_age_band cylinder_insulation_thickness energy_efficiency_rating energy_tariff glazed_area glazed_type heat_loss_corridor improvement_description improvement_summary main_fuel mechanical_ventilation property_type tenure transaction_type ventilation_type water_heating_fuel]
+      %w[block_storey built_form construction_age_band cylinder_insulation_thickness energy_efficiency_rating energy_tariff flat_level glazed_area glazed_type heat_loss_corridor improvement_description improvement_summary main_fuel mechanical_ventilation property_type tenure transaction_type ventilation_type water_heating_fuel]
     end
 
     it "returns all the rows for look ups loaded" do
-      expect(results.length).to eq 557
+      expect(results.length).to eq 589
     end
 
     it "returns codes including the schema version" do
