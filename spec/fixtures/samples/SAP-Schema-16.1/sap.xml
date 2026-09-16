@@ -400,6 +400,9 @@
             <SAP:Extract-Fans-Count>3</SAP:Extract-Fans-Count>
             <SAP:PSV-Count>0</SAP:PSV-Count>
           </SAP:SAP-Ventilation>
+          <SAP05:SAP-Flat-Details>
+            <SAP05:Level>3</SAP05:Level>
+          </SAP05:SAP-Flat-Details>
         </SAP:SAP-Property-Details>
       </SAP:SAP09-Data>
       <SAP:PDF/>

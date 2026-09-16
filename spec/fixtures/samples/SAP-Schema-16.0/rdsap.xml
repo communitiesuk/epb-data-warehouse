@@ -263,6 +263,12 @@
           </HIP:SAP-Energy-Source>
           <HIP:Heated-Room-Count>5</HIP:Heated-Room-Count>
           <HIP:Low-Energy-Lighting>67</HIP:Low-Energy-Lighting>
+          <HIP:SAP-Flat-Details>
+            <HIP:Level>2</HIP:Level>
+            <HIP:Flat-Location>01</HIP:Flat-Location>
+            <HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
+            <HIP:Top-Storey>N</HIP:Top-Storey>
+          </HIP:SAP-Flat-Details>
         </HIP:SAP-Property-Details>
       </SAP:SAP-Data>
       <SAP:Report-Header>

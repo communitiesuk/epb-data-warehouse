@@ -148,7 +148,7 @@ RSpec.describe "the parser and the rdsap configuration" do
                       "solar_water_heating" => "N",
                       "conservatory_type" => 1,
                       "sap_flat_details" =>
-                       { "flat_location" => 1,
+                       { "flat_location" => "01",
                          "storey_count" => 3,
                          "level" => 1,
                          "top_storey" => "N",

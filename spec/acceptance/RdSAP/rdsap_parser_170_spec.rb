@@ -136,7 +136,7 @@ RSpec.describe "the parser and the RdSAP configuration for 17.0" do
                           "roof_insulation_location" => "ND",
                           "roof_insulation_thickness" => "ND",
                           "wall_dry_lined" => "N" }],
-                      "sap_flat_details" => { "level" => 2, "flat_location" => 1, "heat_loss_corridor" => 0, "top_storey" => "N" },
+                      "sap_flat_details" => { "level" => 2, "flat_location" => "01", "heat_loss_corridor" => 0, "top_storey" => "N" },
                       "sap_heating" =>
                        { "water_heating_code" => 903,
                          "water_heating_fuel" => 29,

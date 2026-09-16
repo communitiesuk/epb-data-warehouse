@@ -273,9 +273,11 @@
 					<HIP:Solar-Water-Heating>N</HIP:Solar-Water-Heating>
 					<HIP:Conservatory-Type>3</HIP:Conservatory-Type>
 					<HIP:SAP-Flat-Details>
+						<HIP:Flat-Location>02</HIP:Flat-Location>
+						<HIP:Heat-Loss-Corridor>2</HIP:Heat-Loss-Corridor>
+						<HIP:Unheated-Corridor-Length>7.74</HIP:Unheated-Corridor-Length>
 						<HIP:Level>3</HIP:Level>
-						<HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
-						<HIP:Unheated-Corridor-Length>10</HIP:Unheated-Corridor-Length>
+						<HIP:Top-Storey>Y</HIP:Top-Storey>
 					</HIP:SAP-Flat-Details>
 					<HIP:SAP-Building-Parts>
 						<HIP:SAP-Building-Part>

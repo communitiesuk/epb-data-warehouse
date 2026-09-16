@@ -196,6 +196,7 @@ RSpec.describe "the parser and the SAP configuration" do
                           { "rooms_with_bath_and_or_shower" => 1,
                             "rooms_with_mixer_shower_no_bath" => 0,
                             "rooms_with_bath_and_mixer_shower" => 0 } },
+                      "sap_flat_details" => { "flat_location" => "01", "heat_loss_corridor" => 0, "level" => 2, "top_storey" => "N" },
                       "sap_energy_source" =>
                        { "meter_type" => 2,
                          "main_gas" => "Y",
@@ -472,6 +473,7 @@ RSpec.describe "the parser and the SAP configuration" do
                           "frame_factor" => 0.7,
                           "u_value" => 1.9 },
                         { "name" => 4, "data_source" => 2, "type" => 2, "glazing_type" => 6, "u_value" => 1.9 }],
+                      "sap_flat_details" => { "level" => 3 },
                       "sap_ventilation" =>
                        { "open_fireplaces_count" => 0,
                          "open_flues_count" => 0,

@@ -394,6 +394,9 @@
             <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>38</SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
             <SAP:Electricity-Tariff>1</SAP:Electricity-Tariff>
           </SAP:SAP-Energy-Source>
+          <SAP:SAP-Flat-Details>
+            <SAP:Level>3</SAP:Level>
+          </SAP:SAP-Flat-Details>
         </SAP:SAP-Property-Details>
       </SAP:SAP05-Data>
       <SAP:PDF/>

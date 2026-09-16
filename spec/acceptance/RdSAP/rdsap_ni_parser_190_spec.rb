@@ -183,6 +183,7 @@ RSpec.describe "parsing with an NI RdSAP configuration" do
                           { "rooms_with_bath_and_or_shower" => 1,
                             "rooms_with_mixer_shower_no_bath" => 0,
                             "rooms_with_bath_and_mixer_shower" => 1 } },
+                      "sap_flat_details" => { "flat_location" => "01", "heat_loss_corridor" => 2, "level" => 1, "storey_count" => 3, "top_storey" => "N", "unheated_corridor_length" => 10 },
                       "sap_energy_source" =>
                        { "meter_type" => 2,
                          "mains_gas" => "Y",

@@ -307,6 +307,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                          "is_cylinder_in_heated_space" => "true",
                          "is_hot_water_separately_timed" => "true",
                          "has_solar_panel" => "false" },
+                      "sap_flat_details" => { "level" => 3 },
                       "sap_energy_source" =>
                        { "wind_turbines_count" => 0,
                          "wind_turbine_terrain_type" => 1,

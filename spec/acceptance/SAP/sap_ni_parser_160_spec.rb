@@ -357,6 +357,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                       "address_line_1" => "1, Some Street",
                       "post_town" => "Posttown",
                       "postcode" => "BT6 3ED",
+                      "sap_flat_details" => { "flat_location" => "02", "heat_loss_corridor" => 2, "level" => 3, "top_storey" => "Y", "unheated_corridor_length" => 7.74 },
                       "uprn" => 5_555_555_555 }
 
       result = use_case.execute(xml: rdsap,
@@ -1404,6 +1405,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                           "frame_type" => 2,
                           "solar_transmittance" => 0.76,
                           "u_value" => 1.8 }],
+                      "sap_flat_details" => { "level" => 3 },
                       "sap_ventilation" =>
                        { "open_fireplaces_count" => 0,
                          "open_flues_count" => 0,

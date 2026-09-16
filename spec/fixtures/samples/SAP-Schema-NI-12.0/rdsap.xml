@@ -293,9 +293,11 @@
           </SAP-Energy-Source>
           <Photovoltaic-Supply>0</Photovoltaic-Supply>
           <SAP-Flat-Details>
-            <Top-Storey>N</Top-Storey>
-            <Heat-Loss-Corridor>2</Heat-Loss-Corridor>
-            <Unheated-Corridor-Length>10.34</Unheated-Corridor-Length>
+            <Flat-Location>01</Flat-Location>
+            <Storey-Count>3</Storey-Count>
+            <Top-Storey>Y</Top-Storey>
+            <Heat-Loss-Corridor>0</Heat-Loss-Corridor>
+            <Floor-Heat-Loss>3</Floor-Heat-Loss>
           </SAP-Flat-Details>
         </SAP-Property-Details>
       </SAP-Data>

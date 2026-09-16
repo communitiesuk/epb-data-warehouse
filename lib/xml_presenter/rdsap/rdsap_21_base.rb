@@ -62,6 +62,7 @@ module XmlPresenter
           Address-Line-2
           Address-Line-3
           Address-Line-4
+          Flat-Location
         ]
       end
     end

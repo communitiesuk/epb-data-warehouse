@@ -255,6 +255,13 @@
             </HIP:SAP-Building-Part>
           </HIP:SAP-Building-Parts>
           <HIP:Open-Fireplaces-Count>0</HIP:Open-Fireplaces-Count>
+          <HIP:SAP-Flat-Details>
+            <HIP:Flat-Location>02</HIP:Flat-Location>
+            <HIP:Heat-Loss-Corridor>2</HIP:Heat-Loss-Corridor>
+            <HIP:Unheated-Corridor-Length>7.74</HIP:Unheated-Corridor-Length>
+            <HIP:Level>3</HIP:Level>
+            <HIP:Top-Storey>Y</HIP:Top-Storey>
+          </HIP:SAP-Flat-Details>
         </HIP:SAP-Property-Details>
       </HIP:SAP-Data>
       <HIP:ExternalDefinitions-Revision-Number xmlns:HIP="DCLG-HIP">3.0</HIP:ExternalDefinitions-Revision-Number>

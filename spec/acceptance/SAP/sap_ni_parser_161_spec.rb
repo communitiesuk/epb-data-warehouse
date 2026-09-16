@@ -241,6 +241,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                          "cylinder_thermostat" => "N",
                          "has_fixed_air_conditioning" => "false",
                          "wwhrs" => { "rooms_with_bath_and_or_shower" => 1, "rooms_with_mixer_shower_no_bath" => 0, "rooms_with_bath_and_mixer_shower" => 0 } },
+                      "sap_flat_details" => { "flat_location" => "02", "heat_loss_corridor" => 2, "level" => 3, "top_storey" => "Y", "unheated_corridor_length" => 7.74 },
                       "sap_energy_source" =>
                        { "meter_type" => 2, "main_gas" => "N", "wind_turbines_count" => 0, "wind_turbines_terrain_type" => 2, "photovoltaic_supply" => { "percent_roof_area" => 0 } } }
 
@@ -433,6 +434,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland)" do
                          "has_cylinder_thermostat" => "true",
                          "is_hot_water_separately_timed" => "true",
                          "has_solar_panel" => "false" },
+                      "sap_flat_details" => { "level" => 3 },
                       "sap_energy_source" =>
                        { "pv_peak_power" => 0,
                          "wind_turbines_count" => 0,

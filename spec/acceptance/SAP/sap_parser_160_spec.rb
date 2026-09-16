@@ -158,6 +158,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       "scheme_assessor_id" => 0,
                       "address_line_1" => "11, Street Road",
                       "post_town" => "Town",
+                      "sap_flat_details" => { "flat_location" => "01", "heat_loss_corridor" => 0, "level" => 2, "top_storey" => "N" },
                       "postcode" => "AA1 1AA",
                       "uprn" => 0 }
 

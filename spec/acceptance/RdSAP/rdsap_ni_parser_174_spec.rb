@@ -242,14 +242,8 @@ RSpec.describe "parsing with an NI RdSAP configuration (17.4)" do
                           { "rooms_with_bath_and_or_shower" => 1,
                             "rooms_with_mixer_shower_no_bath" => 0,
                             "rooms_with_bath_and_mixer_shower" => 0 } },
-                      "sap_energy_source" =>
-                       { "meter_type" => 2,
-                         "mains_gas" => "N",
-                         "wind_turbines_count" => 0,
-                         "wind_turbines_terrain_type" => 2,
-                         "photovoltaic_supply" =>
-                          { "none_or_no_details" =>
-                             { "percent_roof_area" => 0, "pv_connection" => 0 } } } }
+                      "sap_energy_source" => { "mains_gas" => "N", "meter_type" => 2, "photovoltaic_supply" => { "none_or_no_details" => { "percent_roof_area" => 0, "pv_connection" => 0 } }, "wind_turbines_count" => 0, "wind_turbines_terrain_type" => 2 },
+                      "sap_flat_details" => { "flat_location" => "01", "heat_loss_corridor" => 2, "level" => 1, "storey_count" => 3, "top_storey" => "N", "unheated_corridor_length" => 10 } }
 
       expect(use_case.execute(xml: rdsap,
                               schema_type: "RdSAP-Schema-NI-17.4",

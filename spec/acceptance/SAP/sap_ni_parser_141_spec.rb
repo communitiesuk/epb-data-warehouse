@@ -96,6 +96,7 @@ RSpec.describe "the parser and the SAP configuration" do
                       ],
                       "sap_heating" => { "main_heating_category" => 2, "main_heating_data_source" => 1, "boiler_index_number" => 9716, "main_fuel_type" => 10, "main_heating_control" => 2106, "boiler_flue_type" => 2, "heat_emitter_type" => 1, "water_heating_code" => 901, "water_heating_fuel" => 10, "cylinder_size" => 1 },
                       "sap_energy_source" => { "meter_type" => 2, "main_gas" => "Y", "wind_turbines_count" => 0, "wind_turbines_terrain_type" => 2 },
+                      "sap_flat_details" => { "flat_location" => "01", "floor_heat_loss" => 3, "heat_loss_corridor" => 0, "storey_count" => 3, "top_storey" => "Y" },
                       "photovoltaic_supply" => 0 }
 
       expect(use_case.execute(xml: rdsap,

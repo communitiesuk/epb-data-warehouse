@@ -110,7 +110,7 @@ RSpec.describe "parsing with an NI RdSAP configuration" do
 
                       "sap_flat_details" =>
                        { "level" => 2,
-                         "flat_location" => 1,
+                         "flat_location" => "01",
                          "top_storey" => "N",
                          "heat_loss_corridor" => 2,
                          "unheated_corridor_length" => 1.2 },

@@ -409,6 +409,12 @@
           <HIP:Door-Count>2</HIP:Door-Count>
           <HIP:Insulated-Door-Count>0</HIP:Insulated-Door-Count>
           <HIP:Percent-Draughtproofed>100</HIP:Percent-Draughtproofed>
+          <HIP:SAP-Flat-Details>
+            <HIP:Level>2</HIP:Level>
+            <HIP:Flat-Location>01</HIP:Flat-Location>
+            <HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
+            <HIP:Top-Storey>N</HIP:Top-Storey>
+          </HIP:SAP-Flat-Details>
         </HIP:SAP-Property-Details>
       </SAP:SAP-Data>
       <SAP:Insurance-Details>

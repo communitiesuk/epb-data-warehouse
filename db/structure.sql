@@ -1091,7 +1091,7 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_ni_search AS
     public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
     public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
     COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
-    ((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) AS floor_level,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
     COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
         CASE
             WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
@@ -1254,7 +1254,7 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_search AS
     public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
     public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
     COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
-    ((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) AS floor_level,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
     COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
         CASE
             WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
@@ -1955,7 +1955,7 @@ CREATE VIEW public.vw_domestic_ni_yesterday AS
     public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
     public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
     COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
-    ((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) AS floor_level,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
     COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
         CASE
             WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
@@ -2109,7 +2109,7 @@ CREATE VIEW public.vw_domestic_yesterday AS
     public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
     public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
     COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
-    ((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) AS floor_level,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
     COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
         CASE
             WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
@@ -3113,6 +3113,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260915164643'),
 ('20260915153537'),
 ('20260910160945'),
 ('20260908141211'),

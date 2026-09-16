@@ -207,6 +207,7 @@ RSpec.describe "the parser and the SAP configuration (for Northern Ireland" do
                       "scheme_assessor_id" => "SCHE020202",
                       "address_line_1" => "12 Lane Street",
                       "post_town" => "POSTTOWN",
+                      "sap_flat_details" => { "flat_location" => "02", "heat_loss_corridor" => 2, "level" => 3, "top_storey" => "Y", "unheated_corridor_length" => 7.74 },
                       "postcode" => "BT1 1AA",
                       "uprn" => 555_555_555 }
 
