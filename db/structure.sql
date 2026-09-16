@@ -626,6 +626,57 @@ CREATE MATERIALIZED VIEW public.mvw_avg_co2_emissions AS
 
 
 --
+-- Name: mvw_commercial_ni_rr_search; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_commercial_ni_rr_search AS
+ WITH cte AS (
+         SELECT ad.assessment_id,
+            t.pubseq,
+            t.payback_type,
+            t.rr_json,
+            (ad.document ->> 'related_rrn'::text) AS related_certificate_number
+           FROM (public.assessment_documents ad
+             CROSS JOIN LATERAL ( VALUES (1,'SHORT'::text,(ad.document -> 'short_payback'::text)), (2,'MEDIUM'::text,(ad.document -> 'medium_payback'::text)), (3,'LONG'::text,(ad.document -> 'long_payback'::text)), (4,'OTHER'::text,(ad.document -> 'other_payback'::text))) t(pubseq, payback_type, rr_json))
+          WHERE (EXISTS ( SELECT s.assessment_id,
+                    s.address_line_1,
+                    s.address_line_2,
+                    s.address_line_3,
+                    s.address_line_4,
+                    s.post_town,
+                    s.postcode,
+                    s.current_energy_efficiency_rating,
+                    s.current_energy_efficiency_band,
+                    s.council,
+                    s.constituency,
+                    s.assessment_address_id,
+                    s.address,
+                    s.registration_date,
+                    s.assessment_type,
+                    s.created_at,
+                    s.uprn,
+                    s.schema_type,
+                    s.country_id,
+                    co.country_code,
+                    co.country_name,
+                    co.address_base_country_code,
+                    co.country_id
+                   FROM (public.assessment_search s
+                     JOIN public.countries co ON ((s.country_id = co.country_id)))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'CEPC-RR'::text) AND ((co.country_code)::text = 'NIR'::text))))
+        )
+ SELECT cte.assessment_id AS certificate_number,
+    cte.payback_type,
+    row_number() OVER (PARTITION BY cte.assessment_id ORDER BY cte.pubseq) AS recommendation_item,
+    items.recommendation_code,
+    items.recommendation,
+    cte.related_certificate_number
+   FROM (cte
+     CROSS JOIN LATERAL jsonb_to_recordset(cte.rr_json) items(co2_impact character varying, recommendation_code character varying, recommendation character varying))
+  WITH NO DATA;
+
+
+--
 -- Name: ons_postcode_directory; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1328,6 +1379,56 @@ ALTER SEQUENCE public.ons_postcode_directory_versions_id_seq OWNED BY public.ons
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: vw_commercial_ni_rr_yesterday; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vw_commercial_ni_rr_yesterday AS
+ WITH cte AS (
+         SELECT ad.assessment_id,
+            t.pubseq,
+            t.payback_type,
+            t.rr_json,
+            (ad.document ->> 'related_rrn'::text) AS related_certificate_number
+           FROM (public.assessment_documents ad
+             CROSS JOIN LATERAL ( VALUES (1,'SHORT'::text,(ad.document -> 'short_payback'::text)), (2,'MEDIUM'::text,(ad.document -> 'medium_payback'::text)), (3,'LONG'::text,(ad.document -> 'long_payback'::text)), (4,'OTHER'::text,(ad.document -> 'other_payback'::text))) t(pubseq, payback_type, rr_json))
+          WHERE (EXISTS ( SELECT s.assessment_id,
+                    s.address_line_1,
+                    s.address_line_2,
+                    s.address_line_3,
+                    s.address_line_4,
+                    s.post_town,
+                    s.postcode,
+                    s.current_energy_efficiency_rating,
+                    s.current_energy_efficiency_band,
+                    s.council,
+                    s.constituency,
+                    s.assessment_address_id,
+                    s.address,
+                    s.registration_date,
+                    s.assessment_type,
+                    s.created_at,
+                    s.uprn,
+                    s.schema_type,
+                    s.country_id,
+                    co.country_code,
+                    co.country_name,
+                    co.address_base_country_code,
+                    co.country_id
+                   FROM (public.assessment_search s
+                     JOIN public.countries co ON ((s.country_id = co.country_id)))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'CEPC-RR'::text) AND ((s.created_at)::date = (CURRENT_DATE - 1)) AND ((co.country_code)::text = 'NIR'::text))))
+        )
+ SELECT cte.assessment_id AS certificate_number,
+    cte.payback_type,
+    row_number() OVER (PARTITION BY cte.assessment_id ORDER BY cte.pubseq) AS recommendation_item,
+    items.recommendation_code,
+    items.recommendation,
+    cte.related_certificate_number
+   FROM (cte
+     CROSS JOIN LATERAL jsonb_to_recordset(cte.rr_json) items(co2_impact character varying, recommendation_code character varying, recommendation character varying));
 
 
 --
@@ -3012,6 +3113,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260915153537'),
 ('20260910160945'),
 ('20260908141211'),
 ('20260904091525'),
