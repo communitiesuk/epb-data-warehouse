@@ -12,19 +12,19 @@ module UseCase
 
     def execute(assessment_id:, certificate_data:, country_id: nil)
       save_eav_attributes(assessment_id:, certificate: certificate_data)
-      save_document_data(assessment_id:, certificate: certificate_data)
-      save_assessment_search_data(assessment_id:, certificate: certificate_data, country_id:)
-      if %w[CEPC DEC].include?(certificate_data["assessment_type"])
-        save_commercial_report_data(assessment_id:, related_rrn: certificate_data["related_rrn"])
+      @documents_gateway.add_assessment(assessment_id:, document: certificate_data)
+      unless certificate_data["opt_out"]
+        @assessment_search_gateway.insert_assessment(assessment_id:, document: certificate_data, country_id:)
+      end
+      if %w[CEPC DEC].include?(certificate_data["assessment_type"]) && certificate_data["related_rrn"]
+        @commercial_reports_gateway.insert_report(assessment_id:, related_rrn: certificate_data["related_rrn"])
       end
     end
 
   private
 
-    attr_accessor :assessment_attribute_gateway, :documents_gateway, :assessment_search_gateway, :commercial_reports_gateway
-
     def save_eav_attributes(assessment_id:, certificate:)
-      assessment_attribute_gateway.add_attribute_values(
+      @assessment_attribute_gateway.add_attribute_values(
         *certificate.map do |key, value|
           AttributeValue.new key.to_s, value, nil
         end,
@@ -32,18 +32,6 @@ module UseCase
       )
     rescue Boundary::BadAttributesWrite => e
       report_to_sentry e
-    end
-
-    def save_document_data(assessment_id:, certificate:)
-      documents_gateway.add_assessment(assessment_id:, document: certificate)
-    end
-
-    def save_assessment_search_data(assessment_id:, certificate:, country_id:)
-      assessment_search_gateway.insert_assessment(assessment_id:, document: certificate, country_id:)
-    end
-
-    def save_commercial_report_data(assessment_id:, related_rrn:)
-      commercial_reports_gateway.insert_report(assessment_id:, related_rrn:) unless related_rrn.nil?
     end
   end
 end

@@ -1,4 +1,4 @@
-describe UseCase::ImportXmlCertificate, :set_with_timecop do
+describe UseCase::ImportXmlCertificate do
   subject(:use_case) do
     described_class.new(
       import_certificate_data_use_case:,
@@ -117,7 +117,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           certificate_data: include({
             "calculation_software_version" => "13.05r16",
             "created_at" => "2021-07-21 11:26:28",
-            "opt_out" => Time.now.utc.strftime("%F %T"),
+            "opt_out" => true,
             "schema_type" => "RdSAP-Schema-20.0.0",
             "assessment_type" => "RdSAP",
           }),
@@ -240,7 +240,7 @@ describe UseCase::ImportXmlCertificate, :set_with_timecop do
           certificate_data: include({
             "calculation_software_version" => "13.05r16",
             "created_at" => "2021-07-21 11:26:28",
-            "opt_out" => Time.now.utc.strftime("%F %T"),
+            "opt_out" => true,
             "schema_type" => "RdSAP-Schema-20.0.0",
             "assessment_type" => "RdSAP",
             "hashed_assessment_id" => "6ebf834b9a43884e1436ec234ddf3cd04c6e55f90a3e94a42cc69c252b9ae7e2",

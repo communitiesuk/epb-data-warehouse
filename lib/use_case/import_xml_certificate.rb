@@ -66,7 +66,7 @@ module UseCase
       certificate["schema_type"] = meta_data[:schemaType]
       certificate["assessment_type"] = meta_data[:typeOfAssessment]
       certificate["hashed_assessment_id"] = meta_data[:hashedAssessmentId] if meta_data[:hashedAssessmentId]
-      certificate["opt_out"] = Time.now.utc.strftime("%F %T") if meta_data[:optOut]
+      certificate["opt_out"] = meta_data[:optOut]
 
       country_id = meta_data[:countryId]
       Helper::Stopwatch.log_elapsed_time @logger, "imported parsed assessment data for assessment #{assessment_id}" do
