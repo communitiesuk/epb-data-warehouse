@@ -75,6 +75,7 @@ describe "NI Commercial Recommendations Yesterday Report" do
     result = vw_yesterday.map { |row| row["certificate_number"] }.uniq
     expect(result).to include "0000-0000-0000-0000-0001"
     expect(result).to include "0000-0000-0000-0000-0004"
+    expect(result).not_to include "0000-0000-0000-0000-0002"
   end
 
   it "returns the correct recommendations for a CEPC recommendation report" do
