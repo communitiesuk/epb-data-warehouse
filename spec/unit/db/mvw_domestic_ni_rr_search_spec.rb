@@ -111,13 +111,13 @@ describe "Domestic NI Recommendations Report" do
   end
 
   let(:expected_ni_142_sap_data) do
-    [{ "certificate_number" => "1000-0000-0000-0000-1142",
+    [{ "certificate_number" => "1000-0000-0000-0000-0142",
        "improvement_descr_text" => "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank; any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure (particularly if installing insulation between rafters because a vapour control layer and ventilation above the insulation are required). Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).",
        "improvement_id" => "5",
        "improvement_item" => 1,
        "improvement_summary_text" => "Increase loft insulation to 270 mm",
        "indicative_cost" => nil },
-     { "certificate_number" => "1000-0000-0000-0000-1142",
+     { "certificate_number" => "1000-0000-0000-0000-0142",
        "improvement_descr_text" => "Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness (or to suit the space available) for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.",
        "improvement_id" => "1",
        "improvement_item" => 2,
@@ -417,14 +417,14 @@ describe "Domestic NI Recommendations Report" do
       expect(items).to eq expected_ni_140_rdsap_data
     end
 
-    it "returns the expected rows for RdSAP-NI 14.3" do
-      items = query_result.select { |i| i["certificate_number"] == ni_142_rdsap_assessment_id }
-      expect(items).to eq expected_ni_142_rdsap_data
+    it "returns the expected rows for SAP-NI 14.2" do
+      items = query_result.select { |i| i["certificate_number"] == ni_142_sap_assessment_id }
+      expect(items).to eq expected_ni_142_sap_data
     end
 
-    it "returns the expected rows for SAP-NI 14.3" do
+    it "returns the expected rows for RdSAP-NI 14.2" do
       items = query_result.select { |i| i["certificate_number"] == ni_142_rdsap_assessment_id }
-      expect(items).to eq expected_ni_142_sap_data
+      expect(items).to eq expected_ni_142_rdsap_data
     end
 
     it "returns the expected rows for SAP-NI 15.0" do
