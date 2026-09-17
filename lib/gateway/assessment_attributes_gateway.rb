@@ -60,11 +60,13 @@ module Gateway
     def add_attribute_values(*attribute_values, assessment_id:)
       values = attribute_values.reduce([]) do |carry, value|
         cast_value = CastValue.new value.value
-        carry + [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.fast_generate(cast_value.json) : nil]
+        carry.concat [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.fast_generate(cast_value.json) : nil]
       end
-      sql = ActiveRecord::Base.sanitize_sql_array(
-        ["INSERT INTO assessment_attribute_values (assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json) VALUES #{['(?,?,?,?,?,?)'] * attribute_values.length * ','} ON CONFLICT DO NOTHING"] + values,
-      )
+      sql = ActiveRecord::Base.sanitize_sql_array([<<~SQL, *values])
+        INSERT INTO assessment_attribute_values (
+          assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json
+        ) VALUES #{['(?,?,?,?,?,?)'] * attribute_values.length * ','} ON CONFLICT DO NOTHING
+      SQL
       ActiveRecord::Base.connection.exec_query(sql)
     rescue ActiveRecord::RecordNotUnique
       raise Boundary::BadAttributesWrite, "Error writing attributes for RRN #{assessment_id}"
