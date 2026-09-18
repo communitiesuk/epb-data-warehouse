@@ -70,35 +70,72 @@ describe UseCase::ImportCertificateData do
   end
 
   context "when the certificate is opted out" do
-    let(:certificate_data) do
-      {
-        "assessment_type" => "SAP",
-        "opt_out" => true,
-      }
+    context "when it is a domestic certificate" do
+      let(:certificate_data) do
+        {
+          "assessment_type" => "SAP",
+          "opt_out" => true,
+        }
+      end
+
+      before do
+        use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data, country_id: country_id)
+      end
+
+      it "saves the EAV attributes" do
+        expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+          described_class::AttributeValue.new("assessment_type", "SAP", nil),
+          described_class::AttributeValue.new("opt_out", true, nil),
+          assessment_id:,
+        )
+      end
+
+      it "saves the document" do
+        expect(documents_gateway).to have_received(:add_assessment).with(assessment_id:, document: certificate_data)
+      end
+
+      it "skips saving to the search table" do
+        expect(assessment_search_gateway).not_to have_received(:insert_assessment)
+      end
+
+      it "does not save to the commercial reports table" do
+        expect(commercial_reports_gateway).not_to have_received(:insert_report)
+      end
     end
 
-    before do
-      use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data, country_id: country_id)
-    end
+    context "when it is a non-domestic certificate" do
+      let(:certificate_data) do
+        {
+          "assessment_type" => "CEPC",
+          "related_rrn" => "0000-0000-0000-0000-2222",
+          "opt_out" => true,
+        }
+      end
 
-    it "saves the EAV attributes" do
-      expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
-        described_class::AttributeValue.new("assessment_type", "SAP", nil),
-        described_class::AttributeValue.new("opt_out", true, nil),
-        assessment_id:,
-      )
-    end
+      before do
+        use_case.execute(assessment_id: assessment_id, certificate_data: certificate_data, country_id: country_id)
+      end
 
-    it "saves the document" do
-      expect(documents_gateway).to have_received(:add_assessment).with(assessment_id:, document: certificate_data)
-    end
+      it "saves the EAV attributes" do
+        expect(assessment_attributes_gateway).to have_received(:add_attribute_values).with(
+          described_class::AttributeValue.new("assessment_type", "CEPC", nil),
+          described_class::AttributeValue.new("related_rrn", "0000-0000-0000-0000-2222", nil),
+          described_class::AttributeValue.new("opt_out", true, nil),
+          assessment_id:,
+        )
+      end
 
-    it "skips saving to the search table" do
-      expect(assessment_search_gateway).not_to have_received(:insert_assessment)
-    end
+      it "saves the document" do
+        expect(documents_gateway).to have_received(:add_assessment).with(assessment_id:, document: certificate_data)
+      end
 
-    it "does not save to the commercial reports table" do
-      expect(commercial_reports_gateway).not_to have_received(:insert_report)
+      it "skips saving to the search table" do
+        expect(assessment_search_gateway).not_to have_received(:insert_assessment)
+      end
+
+      it "does not save to the commercial reports table" do
+        expect(commercial_reports_gateway).to have_received(:insert_report)
+      end
     end
   end
 
