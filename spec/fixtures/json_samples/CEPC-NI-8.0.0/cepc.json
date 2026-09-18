@@ -1,0 +1,93 @@
+{
+  "ber": 67.09,
+  "ser": 42.07,
+  "ter": 23.2,
+  "tyr": 67.98,
+  "uprn": 12457,
+  "status": "entered",
+  "postcode": "BT4 3SR",
+  "post_town": "Belfast",
+  "created_at": "2025-08-18 20:54:31.000000",
+  "energy_use": {
+    "energy_consumption_current": 413.22
+  },
+  "issue_date": "2020-05-04",
+  "report_type": 3,
+  "schema_type": "CEPC-NI-8.0.0",
+  "uprn_source": "Energy Assessor",
+  "valid_until": "2026-05-04",
+  "asset_rating": 80,
+  "language_code": 1,
+  "property_type": "B1 Offices and Workshop businesses",
+  "address_line_1": "Some Unit",
+  "address_line_2": "2 Lonely Street",
+  "address_line_3": "Some Area",
+  "address_line_4": "Some County",
+  "assessment_type": "CEPC",
+  "inspection_date": "2020-05-04",
+  "ac_questionnaire": {
+    "ac_present": "No",
+    "ac_rated_output": {
+      "ac_kw_rating": 100
+    },
+    "ac_estimated_output": 3,
+    "ac_inspection_commissioned": 1
+  },
+  "calculation_tool": "CEPC Compute v0.2; SBEM, v4.1.h.0",
+  "formatted_report": "ZGVmYXVsdA==",
+  "is_heritage_site": "N",
+  "or_building_data": {
+    "hvac_system": "Yes",
+    "other_hvac_system": "Yes",
+    "internal_environment": "Yes",
+    "assessment_period_alignment": "Yes"
+  },
+  "transaction_type": 1,
+  "or_benchmark_data": {
+    "benchmarks": [
+      {
+        "floor_area": 403,
+        "benchmark_id": 1
+      }
+    ]
+  },
+  "registration_date": "2020-05-04",
+  "new_build_benchmark": 28,
+  "or_usable_floor_area": {
+    "ufa_1": {
+      "floor_area": 100
+    }
+  },
+  "or_energy_consumption": {
+    "anthracite": {
+      "end_date": "2030-12-25",
+      "estimate": 3,
+      "start_date": "2019-12-25",
+      "consumption": 12.6
+    }
+  },
+  "technical_information": {
+    "floor_area": 403,
+    "building_level": 3,
+    "main_heating_fuel": "Natural Gas",
+    "renewable_sources": "Renewable sources test",
+    "special_energy_uses": "Test sp",
+    "building_environment": "Air Conditioning",
+    "or_availability_date": "2020-01-04",
+    "other_fuel_description": "Test"
+  },
+  "or_assessment_end_date": "2030-05-14",
+  "renewable_energy_source": [
+    {
+      "name": "Solar panel",
+      "end_date": "2030-12-25",
+      "generation": 20,
+      "start_date": "2019-12-25",
+      "energy_type": 2
+    }
+  ],
+  "existing_stock_benchmark": 81,
+  "or_assessment_start_date": "2020-05-14",
+  "related_certificate_number": "4192-1535-8427-8844-6702",
+  "current_energy_efficiency_band": "D"
+}

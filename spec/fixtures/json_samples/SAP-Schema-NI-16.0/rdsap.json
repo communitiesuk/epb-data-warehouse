@@ -1,0 +1,559 @@
+{
+  "uprn": 12457,
+  "roofs": [
+    {
+      "description": "Pitched, no insulation",
+      "energy_efficiency_rating": 1,
+      "environmental_efficiency_rating": 1
+    },
+    {
+      "description": "Pitched, 100mm loft insulation",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    },
+    {
+      "description": "Flat, limited insulation (assumed)",
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2
+    }
+  ],
+  "walls": [
+    {
+      "description": "Granite or whinstone, as built, no insulation (assumed)",
+      "energy_efficiency_rating": 1,
+      "environmental_efficiency_rating": 1
+    },
+    {
+      "description": "Solid brick, as built, no insulation (assumed)",
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2
+    },
+    {
+      "description": "Cavity wall, as built, partial insulation (assumed)",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    }
+  ],
+  "floors": [
+    {
+      "description": "Solid, no insulation (assumed)",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "status": "entered",
+  "windows": [
+    {
+      "description": "Partial double glazing",
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2
+    }
+  ],
+  "addendum": {
+    "stone_walls": "true",
+    "cavity_fill_recommended": "true"
+  },
+  "lighting": {
+    "description": "No low energy lighting",
+    "energy_efficiency_rating": 1,
+    "environmental_efficiency_rating": 1
+  },
+  "postcode": "BT6 3ED",
+  "hot_water": {
+    "description": "From main system, no cylinder thermostat",
+    "energy_efficiency_rating": 2,
+    "environmental_efficiency_rating": 1
+  },
+  "post_town": "Posttown",
+  "built_form": 1,
+  "created_at": "2025-08-18 20:54:31.000000",
+  "door_count": 2,
+  "glazed_area": 1,
+  "region_code": 10,
+  "report_type": 2,
+  "sap_heating": {
+    "wwhrs": {
+      "rooms_with_bath_and_or_shower": 1,
+      "rooms_with_mixer_shower_no_bath": 0,
+      "rooms_with_bath_and_mixer_shower": 0
+    },
+    "cylinder_size": 2,
+    "water_heating_code": 901,
+    "water_heating_fuel": 28,
+    "cylinder_thermostat": "N",
+    "secondary_fuel_type": 9,
+    "main_heating_details": [
+      {
+        "has_fghrs": "N",
+        "main_fuel_type": 28,
+        "boiler_flue_type": 1,
+        "fan_flue_present": "N",
+        "heat_emitter_type": 1,
+        "main_heating_number": 1,
+        "main_heating_control": 2107,
+        "main_heating_category": 2,
+        "main_heating_fraction": 1,
+        "sap_main_heating_code": 125,
+        "main_heating_data_source": 2
+      }
+    ],
+    "secondary_heating_type": 631,
+    "cylinder_insulation_type": 1,
+    "has_fixed_air_conditioning": "false",
+    "cylinder_insulation_thickness": 12
+  },
+  "sap_version": 9.91,
+  "schema_type": "SAP-Schema-NI-16.0",
+  "uprn_source": "Energy Assessor",
+  "country_code": "NIR",
+  "main_heating": [
+    {
+      "description": "Boiler and radiators, oil",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    }
+  ],
+  "dwelling_type": "Detached bungalow",
+  "language_code": 1,
+  "property_type": 1,
+  "address_line_1": "1, Some Street",
+  "schema_version": "LIG-16.0",
+  "assessment_type": "RdSAP",
+  "completion_date": "2012-06-23",
+  "inspection_date": "2012-06-15",
+  "extensions_count": 4,
+  "measurement_type": 1,
+  "sap_flat_details": {
+    "level": 3,
+    "top_storey": "Y",
+    "flat_location": "02",
+    "heat_loss_corridor": 2,
+    "unheated_corridor_length": 7.74
+  },
+  "total_floor_area": 90,
+  "transaction_type": 4,
+  "conservatory_type": 1,
+  "heated_room_count": 4,
+  "registration_date": "2012-06-23",
+  "restricted_access": 1,
+  "sap_energy_source": {
+    "main_gas": "N",
+    "meter_type": 2,
+    "photovoltaic_supply": {
+      "percent_roof_area": 0
+    },
+    "wind_turbines_count": 0,
+    "wind_turbines_terrain_type": 3
+  },
+  "secondary_heating": {
+    "description": "Room heaters, dual fuel (mineral and wood)",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "lzc_energy_sources": [
+    9
+  ],
+  "sap_building_parts": [
+    {
+      "identifier": "Main Dwelling",
+      "wall_dry_lined": "Y",
+      "wall_thickness": 450,
+      "floor_heat_loss": 7,
+      "roof_construction": 4,
+      "wall_construction": 1,
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.35,
+          "floor_insulation": 1,
+          "total_floor_area": 29.42,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 9.24
+        }
+      ],
+      "wall_insulation_type": 5,
+      "construction_age_band": "A",
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 5,
+      "roof_insulation_thickness": "NI"
+    },
+    {
+      "identifier": "Extension 1",
+      "wall_dry_lined": "Y",
+      "wall_thickness": 450,
+      "floor_heat_loss": 7,
+      "roof_construction": 4,
+      "wall_construction": 1,
+      "building_part_number": 2,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.32,
+          "floor_insulation": 1,
+          "total_floor_area": 16.61,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 10.31
+        }
+      ],
+      "wall_insulation_type": 5,
+      "construction_age_band": "A",
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 2,
+      "roof_insulation_thickness": "100mm"
+    },
+    {
+      "identifier": "Extension 2",
+      "wall_dry_lined": "Y",
+      "wall_thickness": 200,
+      "floor_heat_loss": 7,
+      "roof_construction": 1,
+      "wall_construction": 3,
+      "building_part_number": 3,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.42,
+          "floor_insulation": 1,
+          "total_floor_area": 10.07,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 8.23
+        }
+      ],
+      "wall_insulation_type": 5,
+      "construction_age_band": "C",
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 4,
+      "roof_insulation_thickness": "ND"
+    },
+    {
+      "identifier": "Extension 3",
+      "wall_dry_lined": "N",
+      "wall_thickness": 175,
+      "floor_heat_loss": 7,
+      "roof_construction": 1,
+      "wall_construction": 3,
+      "building_part_number": 4,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.38,
+          "floor_insulation": 1,
+          "total_floor_area": 6.52,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 9.84
+        }
+      ],
+      "wall_insulation_type": 4,
+      "construction_age_band": "C",
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 4,
+      "roof_insulation_thickness": "ND"
+    },
+    {
+      "identifier": "Extension 4",
+      "wall_dry_lined": "N",
+      "wall_thickness": 315,
+      "floor_heat_loss": 7,
+      "roof_construction": 1,
+      "wall_construction": 4,
+      "building_part_number": 5,
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": 2.33,
+          "floor_insulation": 1,
+          "total_floor_area": 27.08,
+          "floor_construction": 1,
+          "heat_loss_perimeter": 15.85
+        }
+      ],
+      "wall_insulation_type": 4,
+      "construction_age_band": "F",
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": 4,
+      "roof_insulation_thickness": "ND"
+    }
+  ],
+  "low_energy_lighting": 0,
+  "solar_water_heating": "N",
+  "bedf_revision_number": 321,
+  "habitable_room_count": 4,
+  "heating_cost_current": {
+    "value": 1606,
+    "currency": "GBP"
+  },
+  "insulated_door_count": 0,
+  "co2_emissions_current": {
+    "value": 11,
+    "quantity": "tonnes per year"
+  },
+  "energy_rating_average": 57,
+  "energy_rating_current": 22,
+  "lighting_cost_current": {
+    "value": 96,
+    "currency": "GBP"
+  },
+  "main_heating_controls": [
+    {
+      "description": "Programmer, TRVs and bypass",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    }
+  ],
+  "multiple_glazing_type": 3,
+  "open_fireplaces_count": 1,
+  "has_hot_water_cylinder": "true",
+  "heating_cost_potential": {
+    "value": 919,
+    "currency": "GBP"
+  },
+  "hot_water_cost_current": {
+    "value": 313,
+    "currency": "GBP"
+  },
+  "mechanical_ventilation": 0,
+  "percent_draughtproofed": 36,
+  "suggested_improvements": [
+    {
+      "sequence": 1,
+      "typical_saving": {
+        "value": 203,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£100 - £350",
+      "improvement_type": "A",
+      "improvement_details": {
+        "improvement_number": 5
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 27,
+      "environmental_impact_rating": 21
+    },
+    {
+      "sequence": 2,
+      "typical_saving": {
+        "value": 56,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£500 - £1,500",
+      "improvement_type": "B",
+      "improvement_details": {
+        "improvement_number": 6
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 29,
+      "environmental_impact_rating": 22
+    },
+    {
+      "sequence": 3,
+      "typical_saving": {
+        "value": 38,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£15 - £30",
+      "improvement_type": "C",
+      "improvement_details": {
+        "improvement_number": 3
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 30,
+      "environmental_impact_rating": 23
+    },
+    {
+      "sequence": 4,
+      "typical_saving": {
+        "value": 23,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£80 - £120",
+      "improvement_type": "D",
+      "improvement_details": {
+        "improvement_number": 10
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 31,
+      "environmental_impact_rating": 24
+    },
+    {
+      "sequence": 5,
+      "typical_saving": {
+        "value": 37,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£50",
+      "improvement_type": "E",
+      "improvement_details": {
+        "improvement_number": 35
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 32,
+      "environmental_impact_rating": 24
+    },
+    {
+      "sequence": 6,
+      "typical_saving": {
+        "value": 40,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£200 - £400",
+      "improvement_type": "F",
+      "improvement_details": {
+        "improvement_number": 4
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 33,
+      "environmental_impact_rating": 25
+    },
+    {
+      "sequence": 7,
+      "typical_saving": {
+        "value": 103,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£350 - £450",
+      "improvement_type": "G",
+      "improvement_details": {
+        "improvement_number": 14
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 37,
+      "environmental_impact_rating": 28
+    },
+    {
+      "sequence": 8,
+      "typical_saving": {
+        "value": 142,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£800 - £1,200",
+      "improvement_type": "W",
+      "improvement_details": {
+        "improvement_number": 47
+      },
+      "improvement_category": 2,
+      "energy_performance_rating": 42,
+      "environmental_impact_rating": 32
+    },
+    {
+      "sequence": 9,
+      "typical_saving": {
+        "value": 268,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£2,200 - £3,000",
+      "improvement_type": "I",
+      "improvement_details": {
+        "improvement_number": 20
+      },
+      "improvement_category": 2,
+      "energy_performance_rating": 53,
+      "environmental_impact_rating": 41
+    },
+    {
+      "sequence": 10,
+      "typical_saving": {
+        "value": 46,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£4,000 - £6,000",
+      "improvement_type": "N",
+      "improvement_details": {
+        "improvement_number": 19
+      },
+      "improvement_category": 3,
+      "energy_performance_rating": 55,
+      "environmental_impact_rating": 43
+    },
+    {
+      "sequence": 11,
+      "typical_saving": {
+        "value": 56,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£3,300 - £6,500",
+      "improvement_type": "O",
+      "improvement_details": {
+        "improvement_number": 8
+      },
+      "improvement_category": 3,
+      "energy_performance_rating": 58,
+      "environmental_impact_rating": 46
+    },
+    {
+      "sequence": 12,
+      "typical_saving": {
+        "value": 92,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£4,000 - £14,000",
+      "improvement_type": "Q",
+      "improvement_details": {
+        "improvement_number": 7
+      },
+      "improvement_category": 3,
+      "energy_performance_rating": 61,
+      "environmental_impact_rating": 50
+    },
+    {
+      "sequence": 13,
+      "typical_saving": {
+        "value": 205,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£9,000 - £14,000",
+      "improvement_type": "U",
+      "improvement_details": {
+        "improvement_number": 34
+      },
+      "improvement_category": 3,
+      "energy_performance_rating": 71,
+      "environmental_impact_rating": 58
+    },
+    {
+      "sequence": 14,
+      "typical_saving": {
+        "value": 78,
+        "currency": "GBP"
+      },
+      "indicative_cost": "£1,500 - £4,000",
+      "improvement_type": "V",
+      "improvement_details": {
+        "improvement_number": 44
+      },
+      "improvement_category": 3,
+      "energy_performance_rating": 74,
+      "environmental_impact_rating": 61
+    }
+  ],
+  "co2_emissions_potential": {
+    "value": 6.3,
+    "quantity": "tonnes per year"
+  },
+  "energy_rating_potential": 53,
+  "lighting_cost_potential": {
+    "value": 48,
+    "currency": "GBP"
+  },
+  "hot_water_cost_potential": {
+    "value": 139,
+    "currency": "GBP"
+  },
+  "seller_commission_report": "Y",
+  "energy_consumption_current": 524,
+  "has_fixed_air_conditioning": "false",
+  "multiple_glazed_proportion": 35,
+  "calculation_software_version": 4.1,
+  "energy_consumption_potential": 289,
+  "environmental_impact_current": 16,
+  "fixed_lighting_outlets_count": 10,
+  "current_energy_efficiency_band": "F",
+  "environmental_impact_potential": 41,
+  "has_heated_separate_conservatory": "false",
+  "potential_energy_efficiency_band": "E",
+  "co2_emissions_current_per_floor_area": {
+    "value": 128,
+    "quantity": "kg/m2 per year"
+  },
+  "low_energy_fixed_lighting_outlets_count": 0
+}

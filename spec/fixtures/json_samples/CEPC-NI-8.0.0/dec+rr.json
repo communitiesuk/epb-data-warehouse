@@ -1,0 +1,127 @@
+{
+  "uprn": 12457,
+  "status": "entered",
+  "postcode": "BT7 1AA",
+  "post_town": "Anytown",
+  "created_at": "2025-08-18 20:54:31.000000",
+  "dec_status": 0,
+  "issue_date": "2020-11-12",
+  "methodology": "ORCalc",
+  "reason_type": 1,
+  "report_type": 1,
+  "schema_type": "CEPC-NI-8.0.0",
+  "uprn_source": "Energy Assessor",
+  "valid_until": "2020-12-17",
+  "language_code": 1,
+  "output_engine": "ORGen v4.0.4",
+  "property_type": "General Office",
+  "address_line_1": "1 Court Lane",
+  "address_line_2": "Made-Up District",
+  "address_line_3": "Fake Village",
+  "assessment_type": "DEC",
+  "inspection_date": "2020-11-12",
+  "this_assessment": {
+    "heating_co2": 32,
+    "energy_rating": 67,
+    "nominated_date": "2019-12-18",
+    "renewables_co2": 0,
+    "electricity_co2": 46
+  },
+  "ac_questionnaire": {
+    "ac_present": "Yes",
+    "ac_rated_output": {
+      "ac_rating_unknown_flag": 1
+    },
+    "ac_estimated_output": 1,
+    "ac_inspection_commissioned": 5
+  },
+  "calculation_tool": "CLG, ORCalc, v4.0.4",
+  "or_building_data": {
+    "hvac_system": "Radiators",
+    "internal_environment": "Heating and Natural Ventilation",
+    "assessment_period_alignment": "Start Of Main Heating Fuel Period"
+  },
+  "or_previous_data": {
+    "previous_rating_1": {
+      "or": 67,
+      "ormm": 12,
+      "oryyyy": 2018
+    },
+    "previous_rating_2": {
+      "or": 66,
+      "ormm": 12,
+      "oryyyy": 2017
+    }
+  },
+  "year1_assessment": {
+    "heating_co2": 35,
+    "energy_rating": 67,
+    "nominated_date": "2018-12-01",
+    "renewables_co2": 0,
+    "electricity_co2": 45
+  },
+  "year2_assessment": {
+    "heating_co2": 28,
+    "energy_rating": 66,
+    "nominated_date": "2017-12-01",
+    "renewables_co2": 0,
+    "electricity_co2": 48
+  },
+  "building_category": "C1;",
+  "or_benchmark_data": {
+    "benchmarks": [
+      {
+        "name": "Offices - cellular, naturally ventilated",
+        "tufa": 1536,
+        "benchmark": "General Office",
+        "floor_area": 1536,
+        "area_metric": "Gross floor area measured as RICS Gross Internal Area (GIA)",
+        "benchmark_id": 1,
+        "occupancy_level": "Standard Occupancy"
+      }
+    ],
+    "main_benchmark": "General Office"
+  },
+  "registration_date": "2020-11-12",
+  "location_description": "5 storey modern office building.",
+  "or_usable_floor_area": {
+    "ufa_1": {
+      "name": "Boiler-room",
+      "floor_area": 20
+    },
+    "total_ufa": 20
+  },
+  "or_energy_consumption": {
+    "oil": {
+      "end_date": "2019-11-01",
+      "estimate": 0,
+      "start_date": "2018-11-01",
+      "consumption": 120344
+    },
+    "electricity": {
+      "end_date": "2019-10-31",
+      "estimate": 0,
+      "start_date": "2018-11-01",
+      "consumption": 82812
+    }
+  },
+  "technical_information": {
+    "floor_area": 1536,
+    "main_heating_fuel": "Oil",
+    "building_environment": "Heating and Natural Ventilation",
+    "separately_metered_electric_heating": 0
+  },
+  "or_assessment_end_date": "2019-11-01",
+  "or_assessment_start_date": "2018-11-01",
+  "dec_annual_energy_summary": {
+    "typical_thermal_use": 121.13,
+    "renewables_electrical": 0,
+    "typical_electrical_use": 95,
+    "renewables_fuel_thermal": 0,
+    "annual_energy_use_electrical": 54.06,
+    "annual_energy_use_fuel_thermal": 78.35
+  },
+  "related_certificate_number": "0000-0000-0000-0000-0001",
+  "dec_related_party_disclosure": 3,
+  "current_energy_efficiency_band": "C"
+}

@@ -1,0 +1,319 @@
+{
+  "uprn": 12457,
+  "roofs": [
+    {
+      "description": "Average thermal transmittance 0.15 W/m²K",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
+    }
+  ],
+  "walls": [
+    {
+      "description": "Average thermal transmittance 0.28 W/m²K",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
+    }
+  ],
+  "floors": [
+    {
+      "description": "Average thermal transmittance 0.17 W/m²K",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
+    }
+  ],
+  "status": "entered",
+  "windows": {
+    "description": "High performance glazing",
+    "energy_efficiency_rating": 5,
+    "environmental_efficiency_rating": 5
+  },
+  "lighting": {
+    "description": "Low energy lighting in 38% of fixed outlets",
+    "energy_efficiency_rating": 3,
+    "environmental_efficiency_rating": 3
+  },
+  "postcode": "BT1 1AA",
+  "data_type": 2,
+  "hot_water": {
+    "description": "From main system",
+    "energy_efficiency_rating": 5,
+    "environmental_efficiency_rating": 5
+  },
+  "post_town": "FERGUS",
+  "built_form": 1,
+  "created_at": "2025-08-18 20:54:31.000000",
+  "living_area": 16.92,
+  "orientation": 0,
+  "region_code": 10,
+  "report_type": 3,
+  "sap_heating": {
+    "main_fuel_type": 1,
+    "has_solar_panel": "false",
+    "water_fuel_type": 1,
+    "combi_boiler_type": 1,
+    "heat_emitter_type": 1,
+    "water_heating_code": 901,
+    "boiler_index_number": 15425,
+    "is_flue_fan_present": "true",
+    "secondary_fuel_type": 1,
+    "main_heating_control": 2110,
+    "is_interlocked_system": "true",
+    "main_heating_category": 2,
+    "has_hot_water_cylinder": "false",
+    "main_heating_flue_type": 2,
+    "main_heating_data_source": 1,
+    "has_fixed_air_conditioning": "false",
+    "secondary_heating_category": 10,
+    "secondary_heating_flue_type": 1,
+    "has_delayed_start_thermostat": "false",
+    "load_or_weather_compensation": 0,
+    "secondary_heating_efficiency": 40,
+    "secondary_heating_make_model": "x",
+    "secondary_heating_data_source": 2,
+    "secondary_heating_test_method": "BS EN 613",
+    "is_central_heating_pump_in_heated_space": "true"
+  },
+  "sap_version": 9.81,
+  "schema_type": "SAP-Schema-NI-15.0",
+  "uprn_source": "Energy Assessor",
+  "country_code": "NIR",
+  "main_heating": [
+    {
+      "description": "Boiler and radiators, mains gas",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5
+    }
+  ],
+  "air_tightness": {
+    "description": "Air permeability 4.7 m³/h.m² (as tested)",
+    "energy_efficiency_rating": 4,
+    "environmental_efficiency_rating": 4
+  },
+  "dwelling_type": "Detached house",
+  "language_code": 1,
+  "property_type": 0,
+  "address_line_1": "3, Street Close",
+  "schema_version": "LIG-15.0",
+  "assessment_date": "2012-03-30",
+  "assessment_type": "SAP",
+  "completion_date": "2012-03-30",
+  "inspection_date": "2012-03-30",
+  "sap_ventilation": {
+    "pressure_test": 1,
+    "air_permeability": 4.69,
+    "fans_vents_count": 5,
+    "open_flues_count": 1,
+    "ventilation_type": 1,
+    "open_fireplaces_count": 0,
+    "sheltered_sides_count": 2,
+    "flueless_gas_fires_count": 0
+  },
+  "sap_flat_details": {
+    "level": 3
+  },
+  "total_floor_area": 136,
+  "transaction_type": 6,
+  "conservatory_type": 1,
+  "registration_date": "2012-03-30",
+  "restricted_access": 0,
+  "sap_energy_source": {
+    "pv_peak_power": 0,
+    "electricity_tariff": 1,
+    "wind_turbines_count": 0,
+    "wind_turbine_terrain_type": 1,
+    "low_energy_fixed_lighting_outlets_percentage": 38
+  },
+  "sap_opening_types": [
+    {
+      "name": "Doors (1)",
+      "type": 2,
+      "u_value": 2.35,
+      "frame_type": 2,
+      "data_source": 3,
+      "description": "front",
+      "glazing_gap": 3,
+      "glazing_type": 6,
+      "isargonfilled": "true"
+    },
+    {
+      "name": "Doors (2)",
+      "type": 2,
+      "u_value": 2.45,
+      "frame_type": 2,
+      "data_source": 3,
+      "description": "back",
+      "glazing_gap": 3,
+      "glazing_type": 4,
+      "isargonfilled": "true"
+    },
+    {
+      "name": "Windows (1)",
+      "type": 4,
+      "u_value": 1.6,
+      "frame_type": 2,
+      "data_source": 2,
+      "description": "side 2",
+      "glazing_gap": 3,
+      "frame_factor": 0.7,
+      "glazing_type": 4,
+      "isargonfilled": "true",
+      "solar_transmittance": 0.72
+    }
+  ],
+  "secondary_heating": {
+    "description": "Room heaters, mains gas",
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "lzc_energy_sources": [
+    9
+  ],
+  "sap_building_parts": [
+    {
+      "identifier": "Main Dwelling",
+      "overshading": 2,
+      "sap_openings": [
+        {
+          "name": "front",
+          "type": "Doors (1)",
+          "width": 1.91,
+          "height": 1,
+          "location": "Walls (1)",
+          "orientation": 0
+        },
+        {
+          "name": "back",
+          "type": "Doors (2)",
+          "width": 1.91,
+          "height": 1,
+          "location": "Walls (1)",
+          "orientation": 0
+        },
+        {
+          "name": "side 2",
+          "type": "Windows (1)",
+          "width": 7.25,
+          "height": 1,
+          "location": "Walls (1)",
+          "orientation": 0
+        },
+        {
+          "name": "front",
+          "type": "Windows (1)",
+          "width": 11.91,
+          "height": 1,
+          "location": "Walls (1)",
+          "orientation": 0
+        },
+        {
+          "name": "side 1",
+          "type": "Windows (1)",
+          "width": 7.68,
+          "height": 1,
+          "location": "Walls (1)",
+          "orientation": 0
+        },
+        {
+          "name": "back",
+          "type": "Windows (1)",
+          "width": 12.03,
+          "height": 1,
+          "location": "Walls (1)",
+          "orientation": 0
+        }
+      ],
+      "construction_year": 2012,
+      "sap_exposed_roofs": {
+        "sap_exposed_roof": {
+          "name": "Roof (3)",
+          "u_value": 0.19,
+          "total_roof_area": 13.11
+        }
+      },
+      "sap_exposed_walls": {
+        "sap_exposed_wall": {
+          "name": "Walls (1)",
+          "u_value": 0.28,
+          "wall_type": 2,
+          "total_wall_area": 183.59,
+          "is_curtain_walling": "false"
+        }
+      },
+      "building_part_number": 1,
+      "sap_floor_dimensions": [
+        {
+          "storey": 0,
+          "u_value": 0.17,
+          "floor_type": 2,
+          "storey_height": 2.4,
+          "heat_loss_area": 74,
+          "total_floor_area": 74
+        },
+        {
+          "storey": 1,
+          "u_value": 0,
+          "floor_type": 3,
+          "storey_height": 2.72,
+          "heat_loss_area": 0,
+          "total_floor_area": 62
+        }
+      ]
+    }
+  ],
+  "has_special_feature": "false",
+  "bedf_revision_number": 317,
+  "heating_cost_current": 401,
+  "co2_emissions_current": 2.8,
+  "energy_rating_current": 81,
+  "lighting_cost_current": 125,
+  "main_heating_controls": [
+    {
+      "description": "Time and temperature zone control",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4
+    }
+  ],
+  "has_hot_water_cylinder": "false",
+  "heating_cost_potential": 408,
+  "hot_water_cost_current": 132,
+  "suggested_improvements": [
+    {
+      "sequence": 1,
+      "typical_saving": 41,
+      "improvement_type": "E",
+      "improvement_details": {
+        "improvement_number": 35
+      },
+      "improvement_category": 1,
+      "energy_performance_rating": 82,
+      "environmental_impact_rating": 80
+    },
+    {
+      "sequence": 2,
+      "typical_saving": 212,
+      "improvement_type": "U",
+      "improvement_details": {
+        "improvement_number": 34
+      },
+      "improvement_category": 3,
+      "energy_performance_rating": 90,
+      "environmental_impact_rating": 87
+    }
+  ],
+  "co2_emissions_potential": 2.7,
+  "energy_rating_potential": 82,
+  "lighting_cost_potential": 77,
+  "hot_water_cost_potential": 132,
+  "is_in_smoke_control_area": "unknown",
+  "seller_commission_report": "Y",
+  "energy_consumption_current": 124,
+  "has_fixed_air_conditioning": "false",
+  "calculation_software_version": "Version: EES SAP 2005.018.04, November 2011",
+  "energy_consumption_potential": 118,
+  "environmental_impact_current": 79,
+  "current_energy_efficiency_band": "B",
+  "environmental_impact_potential": 80,
+  "has_heated_separate_conservatory": "false",
+  "potential_energy_efficiency_band": "B",
+  "co2_emissions_current_per_floor_area": 20
+}

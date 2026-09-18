@@ -1,0 +1,269 @@
+{
+  "uprn": 12457,
+  "roofs": [
+    {
+      "description": {
+        "value": "(another dwelling above)",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "walls": [
+    {
+      "description": {
+        "value": "Cavity wall, filled cavity",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3
+    }
+  ],
+  "floors": [
+    {
+      "description": {
+        "value": "(another dwelling below)",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0
+    }
+  ],
+  "status": "entered",
+  "tenure": 2,
+  "window": {
+    "description": {
+      "value": "Fully double glazed",
+      "language": "1"
+    },
+    "energy_efficiency_rating": 3,
+    "environmental_efficiency_rating": 3
+  },
+  "lighting": {
+    "description": {
+      "value": "Low energy lighting in all fixed outlets",
+      "language": "1"
+    },
+    "energy_efficiency_rating": 5,
+    "environmental_efficiency_rating": 5
+  },
+  "postcode": "BT20 1AA",
+  "hot_water": {
+    "description": {
+      "value": "Electric immersion, off-peak",
+      "language": "1"
+    },
+    "energy_efficiency_rating": 3,
+    "environmental_efficiency_rating": 2
+  },
+  "post_town": "FABRICATED TOWN",
+  "built_form": 5,
+  "created_at": "2025-08-18 20:54:31.000000",
+  "door_count": 1,
+  "glazed_area": 1,
+  "glazing_gap": 12,
+  "region_code": 10,
+  "report_type": 2,
+  "sap_heating": {
+    "cylinder_size": 2,
+    "water_heating_code": 903,
+    "water_heating_fuel": 29,
+    "instantaneous_wwhrs": {
+      "rooms_with_bath_and_or_shower": 1,
+      "rooms_with_mixer_shower_no_bath": 0,
+      "rooms_with_bath_and_mixer_shower": 0
+    },
+    "main_heating_details": [
+      {
+        "has_fghrs": "N",
+        "main_fuel_type": 29,
+        "heat_emitter_type": 0,
+        "emitter_temperature": "NA",
+        "main_heating_number": 1,
+        "main_heating_control": 2401,
+        "main_heating_category": 7,
+        "main_heating_fraction": 1,
+        "sap_main_heating_code": 401,
+        "mcs_installed_heat_pump": "false",
+        "main_heating_data_source": 2
+      }
+    ],
+    "immersion_heating_type": 1,
+    "cylinder_insulation_type": 1,
+    "has_fixed_air_conditioning": "false",
+    "cylinder_insulation_thickness": 38
+  },
+  "sap_version": 9.94,
+  "schema_type": "RdSAP-Schema-NI-20.0.0",
+  "uprn_source": "Energy Assessor",
+  "country_code": "NIR",
+  "main_heating": [
+    {
+      "description": {
+        "value": "Electric storage heaters",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 1
+    }
+  ],
+  "dwelling_type": {
+    "value": "Mid-floor flat",
+    "language": "1"
+  },
+  "language_code": 1,
+  "property_type": 2,
+  "address_line_1": "34 CENTRAL ROAD",
+  "assessment_type": "RdSAP",
+  "completion_date": "2020-09-28",
+  "inspection_date": "2020-09-28",
+  "extensions_count": 0,
+  "measurement_type": 1,
+  "sap_flat_details": {
+    "level": 2,
+    "top_storey": "N",
+    "flat_location": "01",
+    "heat_loss_corridor": 2,
+    "unheated_corridor_length": 1.2
+  },
+  "total_floor_area": 41,
+  "transaction_type": 8,
+  "conservatory_type": 1,
+  "heated_room_count": 3,
+  "pvc_window_frames": "true",
+  "registration_date": "2020-09-28",
+  "sap_energy_source": {
+    "mains_gas": "N",
+    "meter_type": 3,
+    "photovoltaic_supply": {
+      "none_or_no_details": {
+        "pv_connection": 0,
+        "percent_roof_area": 0
+      }
+    },
+    "wind_turbines_count": 0,
+    "wind_turbines_terrain_type": 2
+  },
+  "secondary_heating": {
+    "description": {
+      "value": "Portable electric heaters (assumed)",
+      "language": "1"
+    },
+    "energy_efficiency_rating": 0,
+    "environmental_efficiency_rating": 0
+  },
+  "lzc_energy_sources": [
+    11
+  ],
+  "sap_building_parts": [
+    {
+      "identifier": "Main Dwelling",
+      "wall_dry_lined": "N",
+      "wall_thickness": 300,
+      "floor_heat_loss": 6,
+      "roof_construction": 3,
+      "wall_construction": 4,
+      "building_part_number": 1,
+      "sap_alternative_wall": {
+        "wall_area": 2.88,
+        "sheltered_wall": "Y",
+        "wall_dry_lined": "N",
+        "wall_construction": 4,
+        "wall_insulation_type": 4,
+        "wall_thickness_measured": "N",
+        "wall_insulation_thickness": "NI"
+      },
+      "sap_floor_dimensions": [
+        {
+          "floor": 0,
+          "room_height": {
+            "value": 2.4,
+            "quantity": "metres"
+          },
+          "total_floor_area": {
+            "value": 41.18,
+            "quantity": "square metres"
+          },
+          "party_wall_length": {
+            "value": 5.8,
+            "quantity": "metres"
+          },
+          "heat_loss_perimeter": {
+            "value": 20,
+            "quantity": "metres"
+          }
+        }
+      ],
+      "wall_insulation_type": 2,
+      "construction_age_band": "E",
+      "party_wall_construction": 0,
+      "wall_thickness_measured": "Y",
+      "roof_insulation_location": "ND",
+      "roof_insulation_thickness": "ND",
+      "wall_insulation_thickness": "NI"
+    }
+  ],
+  "low_energy_lighting": 100,
+  "solar_water_heating": "N",
+  "habitable_room_count": 3,
+  "heating_cost_current": {
+    "value": 325,
+    "currency": "GBP"
+  },
+  "insulated_door_count": 0,
+  "co2_emissions_current": 2.5,
+  "energy_rating_average": 60,
+  "energy_rating_current": 75,
+  "lighting_cost_current": {
+    "value": 41,
+    "currency": "GBP"
+  },
+  "main_heating_controls": [
+    {
+      "description": {
+        "value": "Manual charge control",
+        "language": "1"
+      },
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2
+    }
+  ],
+  "multiple_glazing_type": 3,
+  "open_fireplaces_count": 0,
+  "has_hot_water_cylinder": "true",
+  "heating_cost_potential": {
+    "value": 325,
+    "currency": "GBP"
+  },
+  "hot_water_cost_current": {
+    "value": 163,
+    "currency": "GBP"
+  },
+  "mechanical_ventilation": 0,
+  "percent_draughtproofed": 100,
+  "co2_emissions_potential": 2.5,
+  "energy_rating_potential": 75,
+  "lighting_cost_potential": {
+    "value": 41,
+    "currency": "GBP"
+  },
+  "schema_version_original": "LIG-19.0",
+  "hot_water_cost_potential": {
+    "value": 163,
+    "currency": "GBP"
+  },
+  "energy_consumption_current": 359,
+  "has_fixed_air_conditioning": "false",
+  "multiple_glazed_proportion": 100,
+  "calculation_software_version": "v94.0.1.1",
+  "energy_consumption_potential": 359,
+  "environmental_impact_current": 61,
+  "fixed_lighting_outlets_count": 6,
+  "current_energy_efficiency_band": "C",
+  "environmental_impact_potential": 61,
+  "has_heated_separate_conservatory": "false",
+  "potential_energy_efficiency_band": "C",
+  "co2_emissions_current_per_floor_area": 61,
+  "low_energy_fixed_lighting_outlets_count": 6
+}
