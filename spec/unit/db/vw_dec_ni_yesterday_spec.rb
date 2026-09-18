@@ -1,0 +1,76 @@
+require_relative "../../shared_context/shared_lodgement"
+require_relative "../../shared_context/shared_ons_data"
+require_relative "../../shared_context/shared_data_export"
+
+describe "DEC NI Recommendations Report Yesterday" do
+  let(:date_start) { "2021-12-01" }
+  let(:date_end) { "2023-12-09" }
+  let(:search_arguments) do
+    { date_start:, date_end: }
+  end
+
+  include_context "when lodging XML"
+  include_context "when saving ons data"
+  include_context "when exporting data"
+
+  before(:all) do
+    import_postcode_directory_name
+    import_postcode_directory_data
+    add_countries
+    type_of_assessment = "DEC"
+    yesterday = Time.now - 1.day
+
+    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
+
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0005"
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0006"
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0011"
+    })
+
+    ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
+    ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0010'", "SQL")
+  end
+
+  context "when calling vw_dec_yesterday" do
+    let(:mvw_columns) { get_columns_from_view("mvw_dec_ni_search") }
+    let(:vw_columns) { get_columns_from_view("vw_dec_ni_yesterday") }
+
+    let(:vw_yesterday) { ActiveRecord::Base.connection.exec_query("SELECT * FROM vw_dec_ni_yesterday", "SQL").map { |result| result } }
+
+    let(:yesterday) { Time.now - 1.day }
+
+    it "returns the same columns as the mvw_dec_search" do
+      expect(vw_columns).to eq mvw_columns
+    end
+
+    it "returns only the dec data from yesterday" do
+      expect(vw_yesterday.length).to eq 1
+      expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
+    end
+
+    it "does not return any DEC for England from yesterday" do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0010'", "SQL")
+      expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0010")
+    end
+
+    it "includes the rows updated yesterday stored in the audit logs" do
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0002", event_type: "address_id_updated", timestamp: yesterday)
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0003", event_type: "address_id_updated", timestamp: Date.today)
+
+      expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
+    end
+
+    it "does not return any DEC for NI even if it has an address_id_updated audit log from yesterday" do
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0010", event_type: "address_id_updated", timestamp: yesterday)
+      expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0010")
+    end
+  end
+end

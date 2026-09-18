@@ -877,6 +877,137 @@ CREATE MATERIALIZED VIEW public.mvw_commercial_search AS
 
 
 --
+-- Name: mvw_dec_ni_rr_search; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_dec_ni_rr_search AS
+ WITH cte AS (
+         SELECT ad.assessment_id,
+            t.pubseq,
+            t.payback_type,
+            t.rr_json,
+            (ad.document ->> 'related_rrn'::text) AS related_certificate_number
+           FROM (public.assessment_documents ad
+             CROSS JOIN LATERAL ( VALUES (1,'SHORT'::text,(ad.document -> 'short_payback'::text)), (2,'MEDIUM'::text,(ad.document -> 'medium_payback'::text)), (3,'LONG'::text,(ad.document -> 'long_payback'::text)), (4,'OTHER'::text,(ad.document -> 'other_payback'::text))) t(pubseq, payback_type, rr_json))
+          WHERE (EXISTS ( SELECT s.assessment_id,
+                    s.address_line_1,
+                    s.address_line_2,
+                    s.address_line_3,
+                    s.address_line_4,
+                    s.post_town,
+                    s.postcode,
+                    s.current_energy_efficiency_rating,
+                    s.current_energy_efficiency_band,
+                    s.council,
+                    s.constituency,
+                    s.assessment_address_id,
+                    s.address,
+                    s.registration_date,
+                    s.assessment_type,
+                    s.created_at,
+                    s.uprn,
+                    s.schema_type,
+                    s.country_id,
+                    co.country_code,
+                    co.country_name,
+                    co.address_base_country_code,
+                    co.country_id
+                   FROM (public.assessment_search s
+                     JOIN public.countries co ON ((s.country_id = co.country_id)))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'DEC-RR'::text) AND ((co.country_code)::text = 'NIR'::text))))
+        )
+ SELECT cte.assessment_id AS certificate_number,
+    cte.payback_type,
+    row_number() OVER (PARTITION BY cte.assessment_id ORDER BY cte.pubseq) AS recommendation_item,
+    items.recommendation_code,
+    items.recommendation,
+    cte.related_certificate_number
+   FROM (cte
+     CROSS JOIN LATERAL jsonb_to_recordset(cte.rr_json) items(co2_impact character varying, recommendation_code character varying, recommendation character varying))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_dec_ni_search; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_dec_ni_search AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.post_town AS posttown,
+    s.postcode,
+    s.uprn,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'energy_rating'::text) AS current_operational_rating,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'energy_rating'::text) AS yr1_operational_rating,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'energy_rating'::text) AS yr2_operational_rating,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'electricity_co2'::text) AS electric_co2,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'heating_co2'::text) AS heating_co2,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'renewables_co2'::text) AS renewables_co2,
+    public.get_attribute_value('property_type'::character varying, ad.assessment_id) AS property_type,
+    public.get_attribute_value('inspection_date'::character varying, ad.assessment_id) AS inspection_date,
+    public.get_attribute_value('registration_date'::character varying, ad.assessment_id) AS lodgement_date,
+    (public.get_attribute_value('created_at'::character varying, ad.assessment_id))::timestamp without time zone AS lodgement_datetime,
+    (public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) ->> 'main_benchmark'::text) AS main_benchmark,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'main_heating_fuel'::text) AS main_heating_fuel,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'special_energy_uses'::text) AS special_energy_uses,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'renewable_sources'::text) AS renewable_sources,
+    (round(((public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'floor_area'::text))::numeric))::integer AS total_floor_area,
+    (((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text) AS occupancy_level,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_fuel_thermal'::text))::numeric))::integer AS annual_thermal_fuel_usage,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_fuel_usage,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_electrical'::text))::numeric))::integer AS annual_electrical_fuel_usage,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_use,
+    (public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_electrical_use'::text) AS typical_electrical_fuel_usage,
+    (public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'renewables_fuel_thermal'::text) AS renewables_fuel_thermal,
+    (public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'renewables_electrical'::text) AS renewables_electrical,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'electricity_co2'::text) AS yr1_electricity_co2,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'electricity_co2'::text) AS yr2_electricity_co2,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'heating_co2'::text) AS yr1_heating_co2,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'heating_co2'::text) AS yr2_heating_co2,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'renewables_co2'::text) AS yr1_renewables_co2,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'renewables_co2'::text) AS yr2_renewables_co2,
+        CASE (public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) ->> 'ac_present'::text)
+            WHEN 'Yes'::text THEN 'Y'::text
+            WHEN 'No'::text THEN 'N'::text
+            ELSE NULL::text
+        END AS aircon_present,
+        CASE
+            WHEN (((public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) -> 'ac_rated_output'::text) ->> 'ac_rating_unknown_flag'::text) = ANY (ARRAY['1'::text, 'true'::text])) THEN ''::text
+            ELSE ((public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) -> 'ac_rated_output'::text) ->> 'ac_kw_rating'::text)
+        END AS aircon_kw_rating,
+    (public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) ->> 'ac_estimated_output'::text) AS estimated_aircon_kw_rating,
+    (public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) ->> 'ac_inspection_commissioned'::text) AS ac_inspection_commissioned,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'building_environment'::text) AS building_environment,
+    public.get_attribute_value('building_category'::character varying, ad.assessment_id) AS building_category,
+    public.energy_band_calculator(((public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) -> 'energy_rating'::text))::integer, ((ad.document ->> 'assessment_type'::text))::character varying) AS operational_rating_band,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'nominated_date'::text) AS nominated_date,
+    public.get_attribute_value('or_assessment_end_date'::character varying, ad.assessment_id) AS or_assessment_end_date,
+    public.get_attribute_value('report_type'::character varying, ad.assessment_id) AS report_type,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'other_fuel_description'::text) AS other_fuel,
+    co.country_name AS country,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    os_la.area_code AS constituency,
+    s.constituency AS constituency_label,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM (((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('DEC'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN ( SELECT ad2.assessment_id,
+            (ad2.document ->> 'assessment_type'::text) AS assessment_type
+           FROM public.assessment_documents ad2) t ON (((t.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
+  WHERE ((co.country_code)::text = 'NIR'::text)
+  WITH NO DATA;
+
+
+--
 -- Name: mvw_dec_rr_search; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
@@ -1604,6 +1735,140 @@ CREATE VIEW public.vw_commercial_yesterday AS
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
   WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
+            l.event_type,
+            l."timestamp",
+            l.id
+           FROM public.audit_logs l
+          WHERE (((s.assessment_id)::text = (l.assessment_id)::text) AND ((l.event_type)::text = 'address_id_updated'::text) AND ((l."timestamp")::date = (CURRENT_DATE - 1)))))));
+
+
+--
+-- Name: vw_dec_ni_rr_yesterday; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vw_dec_ni_rr_yesterday AS
+ WITH cte AS (
+         SELECT ad.assessment_id,
+            t.pubseq,
+            t.payback_type,
+            t.rr_json,
+            (ad.document ->> 'related_rrn'::text) AS related_certificate_number
+           FROM (public.assessment_documents ad
+             CROSS JOIN LATERAL ( VALUES (1,'SHORT'::text,(ad.document -> 'short_payback'::text)), (2,'MEDIUM'::text,(ad.document -> 'medium_payback'::text)), (3,'LONG'::text,(ad.document -> 'long_payback'::text)), (4,'OTHER'::text,(ad.document -> 'other_payback'::text))) t(pubseq, payback_type, rr_json))
+          WHERE (EXISTS ( SELECT s.assessment_id,
+                    s.address_line_1,
+                    s.address_line_2,
+                    s.address_line_3,
+                    s.address_line_4,
+                    s.post_town,
+                    s.postcode,
+                    s.current_energy_efficiency_rating,
+                    s.current_energy_efficiency_band,
+                    s.council,
+                    s.constituency,
+                    s.assessment_address_id,
+                    s.address,
+                    s.registration_date,
+                    s.assessment_type,
+                    s.created_at,
+                    s.uprn,
+                    s.schema_type,
+                    s.country_id,
+                    co.country_code,
+                    co.country_name,
+                    co.address_base_country_code,
+                    co.country_id
+                   FROM (public.assessment_search s
+                     JOIN public.countries co ON ((s.country_id = co.country_id)))
+                  WHERE (((s.assessment_id)::text = (ad.assessment_id)::text) AND ((s.assessment_type)::text = 'DEC-RR'::text) AND ((s.created_at)::date = (CURRENT_DATE - 1)) AND ((co.country_code)::text = 'NIR'::text))))
+        )
+ SELECT cte.assessment_id AS certificate_number,
+    cte.payback_type,
+    row_number() OVER (PARTITION BY cte.assessment_id ORDER BY cte.pubseq) AS recommendation_item,
+    items.recommendation_code,
+    items.recommendation,
+    cte.related_certificate_number
+   FROM (cte
+     CROSS JOIN LATERAL jsonb_to_recordset(cte.rr_json) items(co2_impact character varying, recommendation_code character varying, recommendation character varying));
+
+
+--
+-- Name: vw_dec_ni_yesterday; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vw_dec_ni_yesterday AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.post_town AS posttown,
+    s.postcode,
+    s.uprn,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'energy_rating'::text) AS current_operational_rating,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'energy_rating'::text) AS yr1_operational_rating,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'energy_rating'::text) AS yr2_operational_rating,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'electricity_co2'::text) AS electric_co2,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'heating_co2'::text) AS heating_co2,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'renewables_co2'::text) AS renewables_co2,
+    public.get_attribute_value('property_type'::character varying, ad.assessment_id) AS property_type,
+    public.get_attribute_value('inspection_date'::character varying, ad.assessment_id) AS inspection_date,
+    public.get_attribute_value('registration_date'::character varying, ad.assessment_id) AS lodgement_date,
+    (public.get_attribute_value('created_at'::character varying, ad.assessment_id))::timestamp without time zone AS lodgement_datetime,
+    (public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) ->> 'main_benchmark'::text) AS main_benchmark,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'main_heating_fuel'::text) AS main_heating_fuel,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'special_energy_uses'::text) AS special_energy_uses,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'renewable_sources'::text) AS renewable_sources,
+    (round(((public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'floor_area'::text))::numeric))::integer AS total_floor_area,
+    (((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text) AS occupancy_level,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_fuel_thermal'::text))::numeric))::integer AS annual_thermal_fuel_usage,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_fuel_usage,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_electrical'::text))::numeric))::integer AS annual_electrical_fuel_usage,
+    (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_use,
+    (public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_electrical_use'::text) AS typical_electrical_fuel_usage,
+    (public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'renewables_fuel_thermal'::text) AS renewables_fuel_thermal,
+    (public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'renewables_electrical'::text) AS renewables_electrical,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'electricity_co2'::text) AS yr1_electricity_co2,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'electricity_co2'::text) AS yr2_electricity_co2,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'heating_co2'::text) AS yr1_heating_co2,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'heating_co2'::text) AS yr2_heating_co2,
+    (public.get_attribute_json('year1_assessment'::character varying, ad.assessment_id) ->> 'renewables_co2'::text) AS yr1_renewables_co2,
+    (public.get_attribute_json('year2_assessment'::character varying, ad.assessment_id) ->> 'renewables_co2'::text) AS yr2_renewables_co2,
+        CASE (public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) ->> 'ac_present'::text)
+            WHEN 'Yes'::text THEN 'Y'::text
+            WHEN 'No'::text THEN 'N'::text
+            ELSE NULL::text
+        END AS aircon_present,
+        CASE
+            WHEN (((public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) -> 'ac_rated_output'::text) ->> 'ac_rating_unknown_flag'::text) = ANY (ARRAY['1'::text, 'true'::text])) THEN ''::text
+            ELSE ((public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) -> 'ac_rated_output'::text) ->> 'ac_kw_rating'::text)
+        END AS aircon_kw_rating,
+    (public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) ->> 'ac_estimated_output'::text) AS estimated_aircon_kw_rating,
+    (public.get_attribute_json('ac_questionnaire'::character varying, ad.assessment_id) ->> 'ac_inspection_commissioned'::text) AS ac_inspection_commissioned,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'building_environment'::text) AS building_environment,
+    public.get_attribute_value('building_category'::character varying, ad.assessment_id) AS building_category,
+    public.energy_band_calculator(((public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) -> 'energy_rating'::text))::integer, ((ad.document ->> 'assessment_type'::text))::character varying) AS operational_rating_band,
+    (public.get_attribute_json('this_assessment'::character varying, ad.assessment_id) ->> 'nominated_date'::text) AS nominated_date,
+    public.get_attribute_value('or_assessment_end_date'::character varying, ad.assessment_id) AS or_assessment_end_date,
+    public.get_attribute_value('report_type'::character varying, ad.assessment_id) AS report_type,
+    (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'other_fuel_description'::text) AS other_fuel,
+    co.country_name AS country,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    os_la.area_code AS constituency,
+    s.constituency AS constituency_label,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM (((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('DEC'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN ( SELECT ad2.assessment_id,
+            (ad2.document ->> 'assessment_type'::text) AS assessment_type
+           FROM public.assessment_documents ad2) t ON (((t.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
+  WHERE (((co.country_code)::text = 'NIR'::text) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
             l.event_type,
             l."timestamp",
             l.id
@@ -3113,6 +3378,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260917142635'),
 ('20260915164643'),
 ('20260915153537'),
 ('20260910160945'),
