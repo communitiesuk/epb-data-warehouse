@@ -1179,9 +1179,11 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_ni_search AS
     COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
     COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
     COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
-           FROM ( SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)))::numeric AS val
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
                 UNION ALL
-                 SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)))::numeric AS val) all_areas)) AS total_floor_area,
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
     to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
     (ad.document ->> 'report_type'::text) AS report_type,
     s.post_town AS posttown,
@@ -1342,9 +1344,11 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_search AS
     COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
     COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
     COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
-           FROM ( SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)))::numeric AS val
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
                 UNION ALL
-                 SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)))::numeric AS val) all_areas)) AS total_floor_area,
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
     to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
     (ad.document ->> 'report_type'::text) AS report_type,
     s.post_town AS posttown,
@@ -2177,9 +2181,11 @@ CREATE VIEW public.vw_domestic_ni_yesterday AS
     COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
     COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
     COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
-           FROM ( SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)))::numeric AS val
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
                 UNION ALL
-                 SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)))::numeric AS val) all_areas)) AS total_floor_area,
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
     to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
     (ad.document ->> 'report_type'::text) AS report_type,
     s.post_town AS posttown,
@@ -2331,9 +2337,11 @@ CREATE VIEW public.vw_domestic_yesterday AS
     COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
     COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
     COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
-           FROM ( SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)))::numeric AS val
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
                 UNION ALL
-                 SELECT (jsonb_array_elements_text(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)))::numeric AS val) all_areas)) AS total_floor_area,
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
     to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
     (ad.document ->> 'report_type'::text) AS report_type,
     s.post_town AS posttown,
@@ -3378,6 +3386,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260921150137'),
 ('20260917142635'),
 ('20260915164643'),
 ('20260915153537'),
