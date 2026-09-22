@@ -1,42 +1,29 @@
 require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
 
 describe "DEC NI Recommendations Report" do
   include_context "when lodging XML"
-  include_context "when saving ons data"
   include_context "when exporting data"
 
   context "when fetching data from mvw_dec_ni_rr_search" do
     before(:all) do
-      import_postcode_directory_name
-      import_postcode_directory_data
       add_countries
 
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
-      add_commercial(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0001", registration_date: Time.now
-      })
       add_commercial(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 3, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0000"
-      })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-4.0", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0003", registration_date: Time.now
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-5.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 3, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0002"
       })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0004", schema_type: "CEPC-5.1", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "SW10 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0005", registration_date: Time.now
-      })
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-6.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0004", registration_date: Time.now
       })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0010", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0011", registration_date: Time.now
-      })
       add_commercial(assessment_id: "0000-0000-0000-0000-0011", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0010"
+      })
+      add_commercial(assessment_id: "0000-0000-0000-0000-0013", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
+        "postcode": "SW1A 2AA", "country_id": 1, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0012"
       })
 
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_dec_ni_rr_search")
@@ -143,6 +130,10 @@ describe "DEC NI Recommendations Report" do
         "0000-0000-0000-0000-0005",
         "0000-0000-0000-0000-0011",
       )
+    end
+
+    it "does not return non-NI DEC-RR certificates" do
+      expect(certificate_numbers).not_to include("0000-0000-0000-0000-0013")
     end
 
     it "returns the NI DEC certificate number as the related certificate number only" do

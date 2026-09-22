@@ -1,40 +1,24 @@
 require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
 
 describe "DEC NI Recommendations Yesterday Report" do
   include_context "when lodging XML"
-  include_context "when saving ons data"
   include_context "when exporting data"
 
   context "when fetching data from vw_dec_ni_rr_yesterday" do
     before(:all) do
-      import_postcode_directory_name
-      import_postcode_directory_data
       add_countries
       yesterday = Date.today - 1
 
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
-      add_commercial(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0001"
-      })
       add_commercial(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0000"
-      })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-5.1", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0003"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-5.1", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0002"
       })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0004", schema_type: "CEPC-6.0", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0005"
-      })
       add_commercial(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-6.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0004"
-      })
-      add_commercial(assessment_id: "0000-0000-0000-0000-0010", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC", type: "dec", different_fields: {
-        "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0011"
       })
       add_commercial(assessment_id: "0000-0000-0000-0000-0011", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "BT1 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0010"
@@ -99,7 +83,7 @@ describe "DEC NI Recommendations Yesterday Report" do
       expect(result).to eq expected_report
     end
 
-    it "does not return NI DEC-RR from yesterday when it was not created yesterday" do
+    it "does not return a non-NI DEC-RR updated yesterday" do
       result = vw_yesterday.map { |row| row["certificate_number"] }
       expect(result).not_to include("0000-0000-0000-0000-0011")
     end

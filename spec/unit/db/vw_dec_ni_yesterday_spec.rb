@@ -1,8 +1,7 @@
 require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
 
-describe "DEC NI Recommendations Report Yesterday" do
+describe "DEC NI Report Yesterday" do
   let(:date_start) { "2021-12-01" }
   let(:date_end) { "2023-12-09" }
   let(:search_arguments) do
@@ -10,12 +9,9 @@ describe "DEC NI Recommendations Report Yesterday" do
   end
 
   include_context "when lodging XML"
-  include_context "when saving ons data"
   include_context "when exporting data"
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
     add_countries
     type_of_assessment = "DEC"
     yesterday = Time.now - 1.day
@@ -23,16 +19,19 @@ describe "DEC NI Recommendations Report Yesterday" do
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
 
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
-      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
+      "postcode" => "BT1 0AA", "country_id": 3
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", different_fields: {
-      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0005"
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", different_fields: {
-      "postcode" => "BT1 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0006"
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "BT1 0AA", "country_id": 3
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
-      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0011"
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1
     })
 
     ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0001'", "SQL")
@@ -56,8 +55,7 @@ describe "DEC NI Recommendations Report Yesterday" do
       expect(vw_yesterday[0]["certificate_number"]).to eq("0000-0000-0000-0000-0001")
     end
 
-    it "does not return any DEC for England from yesterday" do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessment_search SET created_at = '#{yesterday}' WHERE assessment_id = '0000-0000-0000-0000-0010'", "SQL")
+    it "does not return any non-NI DEC from yesterday" do
       expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0010")
     end
 
@@ -68,9 +66,9 @@ describe "DEC NI Recommendations Report Yesterday" do
       expect(vw_yesterday.map { |i| i["certificate_number"] }.sort!).to eq %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
     end
 
-    it "does not return any DEC for NI even if it has an address_id_updated audit log from yesterday" do
-      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0010", event_type: "address_id_updated", timestamp: yesterday)
-      expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0010")
+    it "does not return any non-NI DEC even if it has an address_id_updated audit log from yesterday" do
+      Gateway::AuditLogsGateway.new.insert_log(assessment_id: "0000-0000-0000-0000-0011", event_type: "address_id_updated", timestamp: yesterday)
+      expect(vw_yesterday.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0011")
     end
   end
 end

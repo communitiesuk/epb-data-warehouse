@@ -1,5 +1,4 @@
 require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
 require_relative "../../shared_context/shared_data_export"
 
 describe "DEC NI Report" do
@@ -199,16 +198,15 @@ describe "DEC NI Report" do
       "occupancy_level" => "level",
       "uprn" => "200000000008".to_i,
       "uprn_source" => "Energy Assessor",
+      "estimated_aircon_kw_rating" => nil,
+      "posttown" => "Belfast",
     )
   end
 
   include_context "when lodging XML"
-  include_context "when saving ons data"
   include_context "when exporting data"
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
     add_countries
     type_of_assessment = "DEC"
 
@@ -220,23 +218,23 @@ describe "DEC NI Report" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-7.1", type_of_assessment:, type: "dec+rr", different_fields: {
       "postcode" => "BT10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0005"
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "dec", different_fields: {
-      "postcode" => "BT10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0006", "assessment_address_id" => "UPRN-200000000008"
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "BT10 0AA", "country_id": 3, "assessment_address_id" => "UPRN-200000000008"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "CEPC-4.0", type_of_assessment:, assessment_address_id: "UPRN-200000000004", type: "dec", different_fields: {
-      "postcode" => "BT10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
+      "postcode" => "BT10 0AA", "country_id": 3
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-5.0", type_of_assessment:, assessment_address_id: "RRN-0000-0000-0000-0000-0005", type: "dec", different_fields: {
-      "postcode" => "BT10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
+      "postcode" => "BT10 0AA", "country_id": 3
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0051", schema_type: "CEPC-5.1", type_of_assessment:, assessment_address_id: "UPRN-200000000051", type: "dec", different_fields: {
-      "postcode" => "BT10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
+      "postcode" => "BT10 0AA", "country_id": 3
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "CEPC-6.0", type_of_assessment:, assessment_address_id: "UPRN-200000000006", type: "dec", different_fields: {
-      "postcode" => "BT10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0004"
+      "postcode" => "BT10 0AA", "country_id": 3
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0020", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "dec", different_fields: {
-      "postcode" => "SW10 0AA", "country_id": 3, "related_rrn" => "0000-0000-0000-0000-0021"
+      "postcode" => "SW10 0AA", "country_id": 1
     })
 
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_dec_ni_search")
@@ -252,7 +250,7 @@ describe "DEC NI Report" do
     expect(result).to eq expected_dec_7_1_data
   end
 
-  it "returns a dataset with the required data for dec CEPC 8.0.0" do
+  it "returns a dataset with the required data for dec CEPC NI 8.0.0" do
     result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0003" }
     expect(result).to eq expected_dec_8_data
   end
@@ -272,14 +270,9 @@ describe "DEC NI Report" do
     expect(result).to eq expected_dec_6_data
   end
 
-  it "does not return any DEC for NI" do
+  it "does not return any non-NI DECs" do
     expect(query_result.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0020")
-  end
-
-  context "when an assessment has a certificate_number value saved into the assessment_address_id attribute" do
-    it "returns a nil value for the uprn" do
-      expect(query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0001" }["uprn"]).to be_nil
-    end
+    expect(query_result.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0021")
   end
 
   context "when checking the columns of the materialized view" do
