@@ -107,7 +107,7 @@ GEM
     http-form_data (2.3.0)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    io-event (1.21.1)
+    io-event (1.22.0)
     jmespath (1.6.2)
     json (2.21.2)
     json-schema (6.2.0)
