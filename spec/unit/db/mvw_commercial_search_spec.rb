@@ -12,7 +12,8 @@ describe "Commercial Materialized View" do
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_commercial_search")
   end
-  let(:cepc_expected_data) do
+
+  let(:cepc_800_expected_data) do
     { "certificate_number" => "0000-0000-0000-0000-0006",
       "estimated_aircon_kw_rating" => "3",
       "address1" => "60 Maple Syrup Road",
@@ -54,6 +55,182 @@ describe "Commercial Materialized View" do
       "uprn_source" => nil }
   end
 
+  let(:cepc_31_expected_data) do
+    {
+      "ac_inspection_commissioned" => nil,
+      "address" => "Some Unit, 2 Lonely Street, Some Area",
+      "address1" => "Some Unit",
+      "address2" => "2 Lonely Street",
+      "address3" => "Some Area",
+      "aircon_kw_rating" => nil,
+      "aircon_present" => nil,
+      "asset_rating" => "80",
+      "asset_rating_band" => "D",
+      "building_emissions" => nil,
+      "building_environment" => "Air Conditioning",
+      "building_level" => "3",
+      "certificate_number" => "0000-0000-0000-0000-0002",
+      "constituency" => "E14000629",
+      "constituency_label" => "Chelsea and Fulham",
+      "estimated_aircon_kw_rating" => nil,
+      "existing_stock_benchmark" => "81",
+      "floor_area" => "403",
+      "inspection_date" => "2020-05-04",
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "lodgement_date" => "2020-05-04",
+      "lodgement_datetime" => "2021-07-21 11:26:28",
+      "main_heating_fuel" => "Natural Gas",
+      "new_build_benchmark" => "28",
+      "other_fuel_desc" => "Test",
+      "postcode" => "SW10 0AA",
+      "posttown" => "Whitbury",
+      "primary_energy_value" => nil,
+      "property_type" => "B1 Offices and Workshop businesses",
+      "renewable_sources" => "Renewable sources test",
+      "report_type" => "3",
+      "special_energy_uses" => "Test sp",
+      "standard_emissions" => nil,
+      "target_emissions" => nil,
+      "transaction_type" => nil,
+      "typical_emissions" => nil,
+      "uprn" => 31,
+      "uprn_source" => "Energy Assessor",
+    }
+  end
+
+  let(:cepc_40_expected_data) do
+    {
+      "ac_inspection_commissioned" => "1",
+      "address" => "Some Unit, 2 Lonely Street, Some Area",
+      "address1" => "Some Unit",
+      "address2" => "2 Lonely Street",
+      "address3" => "Some Area",
+      "aircon_kw_rating" => "100",
+      "aircon_present" => "No",
+      "asset_rating" => "80",
+      "asset_rating_band" => "D",
+      "building_emissions" => nil,
+      "building_environment" => "Air Conditioning",
+      "building_level" => "3",
+      "certificate_number" => "0000-0000-0000-0000-0003",
+      "constituency" => "E14000629",
+      "constituency_label" => "Chelsea and Fulham",
+      "estimated_aircon_kw_rating" => "3",
+      "existing_stock_benchmark" => "81",
+      "floor_area" => "403",
+      "inspection_date" => "2020-05-04",
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "lodgement_date" => "2020-05-04",
+      "lodgement_datetime" => "2021-07-21 11:26:28",
+      "main_heating_fuel" => "Natural Gas",
+      "new_build_benchmark" => "28",
+      "other_fuel_desc" => "Test",
+      "postcode" => "SW10 0AA",
+      "posttown" => "Whitbury",
+      "primary_energy_value" => nil,
+      "property_type" => "B1 Offices and Workshop businesses",
+      "renewable_sources" => "Renewable sources test",
+      "report_type" => "3",
+      "special_energy_uses" => "Test sp",
+      "standard_emissions" => nil,
+      "target_emissions" => nil,
+      "transaction_type" => nil,
+      "typical_emissions" => nil,
+      "uprn" => 40,
+      "uprn_source" => "Energy Assessor",
+    }
+  end
+
+  let(:cepc_50_expected_data) do
+    {
+      "ac_inspection_commissioned" => "1",
+      "address" => "Some Unit, 2 Lonely Street, Some Area",
+      "address1" => "Some Unit",
+      "address2" => "2 Lonely Street",
+      "address3" => "Some Area",
+      "aircon_kw_rating" => "100",
+      "aircon_present" => "No",
+      "asset_rating" => "80",
+      "asset_rating_band" => "D",
+      "building_emissions" => "67.09",
+      "building_environment" => "Air Conditioning",
+      "building_level" => "3",
+      "certificate_number" => "0000-0000-0000-0000-0004",
+      "constituency" => "E14000629",
+      "constituency_label" => "Chelsea and Fulham",
+      "estimated_aircon_kw_rating" => "3",
+      "existing_stock_benchmark" => "81",
+      "floor_area" => "403",
+      "inspection_date" => "2020-05-04",
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "lodgement_date" => "2020-05-04",
+      "lodgement_datetime" => "2021-07-21 11:26:28",
+      "main_heating_fuel" => "Natural Gas",
+      "new_build_benchmark" => "28",
+      "other_fuel_desc" => "Test",
+      "postcode" => "SW10 0AA",
+      "posttown" => "Whitbury",
+      "primary_energy_value" => nil,
+      "property_type" => "B1 Offices and Workshop businesses",
+      "renewable_sources" => "Renewable sources test",
+      "report_type" => "3",
+      "special_energy_uses" => "Test sp",
+      "standard_emissions" => "42.07",
+      "target_emissions" => "23.2",
+      "transaction_type" => "Mandatory issue (Marketed sale).",
+      "typical_emissions" => "67.98",
+      "uprn" => 50,
+      "uprn_source" => "Energy Assessor",
+    }
+  end
+
+  let(:cepc_71_expected_data) do
+    {
+      "ac_inspection_commissioned" => "1",
+      "address" => "Some Unit, 2 Lonely Street, Some Area",
+      "address1" => "Some Unit",
+      "address2" => "2 Lonely Street",
+      "address3" => "Some Area",
+      "aircon_kw_rating" => "100",
+      "aircon_present" => "No",
+      "asset_rating" => "80",
+      "asset_rating_band" => "D",
+      "building_emissions" => "67.09",
+      "building_environment" => "Air Conditioning",
+      "building_level" => "3",
+      "certificate_number" => "0000-0000-0000-0000-0005",
+      "constituency" => "E14000629",
+      "constituency_label" => "Chelsea and Fulham",
+      "estimated_aircon_kw_rating" => "3",
+      "existing_stock_benchmark" => "81",
+      "floor_area" => "403",
+      "inspection_date" => "2020-05-04",
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "lodgement_date" => "2020-05-04",
+      "lodgement_datetime" => "2021-07-21 11:26:28",
+      "main_heating_fuel" => "Natural Gas",
+      "new_build_benchmark" => "28",
+      "other_fuel_desc" => "Test",
+      "postcode" => "SW10 0AA",
+      "posttown" => "Whitbury",
+      "primary_energy_value" => "413.22",
+      "property_type" => "B1 Offices and Workshop businesses",
+      "renewable_sources" => "Renewable sources test",
+      "report_type" => "3",
+      "special_energy_uses" => "Test sp",
+      "standard_emissions" => "42.07",
+      "target_emissions" => "23.2",
+      "transaction_type" => "Mandatory issue (Marketed sale).",
+      "typical_emissions" => "67.98",
+      "uprn" => 71,
+      "uprn_source" => "Energy Assessor",
+    }
+  end
+
   before(:all) do
     import_postcode_directory_name
     import_postcode_directory_data
@@ -66,34 +243,64 @@ describe "Commercial Materialized View" do
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0007"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0009", schema_type: "CEPC-8.0.0", type_of_assessment:, type: "cepc", different_fields: {
-      "postcode" => "SW10 0AA", "related_rrn" => "0000-0000-0000-0000-0006", "country_id": 1, "assessment_address_id" => "UPRN-000000000000"
+      "postcode" => "SW10 0AA", "country_id": 1, "assessment_address_id" => "UPRN-000000000000"
     })
 
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "CEPC-7.0", type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
-      "postcode" => "SW10 0AA", "related_rrn" => "0000-0000-0000-0000-0006", "country_id": 1, "assessment_address_id" => "UPRN-000000000000"
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0002", schema_type: "CEPC-3.1", type_of_assessment:, type: "cepc", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1, "assessment_address_id" => "UPRN-000000000031"
     })
-    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0003", schema_type: "CEPC-4.0", type_of_assessment:, type: "cepc", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1, "assessment_address_id" => "UPRN-000000000040"
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0004", schema_type: "CEPC-5.0", type_of_assessment:, type: "cepc", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1, "assessment_address_id" => "UPRN-000000000050"
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0005", schema_type: "CEPC-7.1", type_of_assessment:, type: "cepc", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0020", "assessment_address_id" => "UPRN-000000000071"
+    })
+
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "CEPC", type: "cepc-rr", different_fields: {
       "postcode" => "BT1 0AA", "country_id": 3, "assessment_address_id" => "UPRN-000000000000"
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "SAP-Schema-19.0.0", type_of_assessment: "SAP", different_fields: {
       "postcode": "SW10 0AA", "country_id": 2
     })
 
-    import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
+    import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.1 CEPC-7.0 CEPC-5.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_commercial_search")
   end
 
-  it "returns a dataset with 2 commercial EPCs" do
-    expect(query_result.length).to eq 2
+  it "returns a dataset with 6 commercial EPCs" do
+    expect(query_result.length).to eq 6
   end
 
   it "does not return any commercial EPCs for NI" do
     expect(query_result.map { |i| i["certificate_number"] }).not_to include("0000-0000-0000-0000-0008")
   end
 
-  it "returns a the expected data for a CEPC" do
+  it "returns a the expected data for a CEPC-8.0.0" do
     result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0006" }
-    expect(result).to eq cepc_expected_data
+    expect(result).to eq cepc_800_expected_data
+  end
+
+  it "returns a the expected data for a CEPC-3.1" do
+    result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0002" }
+    expect(result).to eq cepc_31_expected_data
+  end
+
+  it "returns a the expected data for a CEPC-4.0" do
+    result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0003" }
+    expect(result).to eq cepc_40_expected_data
+  end
+
+  it "returns a the expected data for a CEPC-5.0" do
+    result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0004" }
+    expect(result).to eq cepc_50_expected_data
+  end
+
+  it "returns a the expected data for a CEPC-7.1" do
+    result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0005" }
+    expect(result).to eq cepc_71_expected_data
   end
 
   context "when an assessment has a URPN value in the assessment_address_id attribute" do
@@ -119,13 +326,12 @@ describe "Commercial Materialized View" do
       )
     end
 
-    it "inserts a new commercial report record" do
-      expect(commercial_reports_result.length).to eq 2
-      expect(commercial_reports_result.first["assessment_id"]).to eq "0000-0000-0000-0000-0006"
+    it "contains assessment that have related RRN data" do
+      expect(commercial_reports_result.map { |i| i["assessment_id"] }).to eq %w[0000-0000-0000-0000-0005 0000-0000-0000-0000-0006]
     end
 
-    it "inserts a new commercial report record with the correct related_certificate_number" do
-      expect(commercial_reports_result.first["related_rrn"]).to eq "0000-0000-0000-0000-0007"
+    it "links to the related RRN" do
+      expect(commercial_reports_result.find { |i| i["assessment_id"] == "0000-0000-0000-0000-0006" }["related_rrn"]).to eq "0000-0000-0000-0000-0007"
     end
   end
 end
