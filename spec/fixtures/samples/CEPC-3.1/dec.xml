@@ -95,7 +95,7 @@
         <HVAC-System></HVAC-System>
       </OR-Building-Data>
       <OR-Benchmark-Data>
-        <Main-Benchmark></Main-Benchmark>
+        <Main-Benchmark>Office</Main-Benchmark>
         <Benchmark-1>
           <Name></Name>
           <Area-Metric></Area-Metric>

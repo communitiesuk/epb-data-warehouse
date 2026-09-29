@@ -955,7 +955,7 @@ CREATE MATERIALIZED VIEW public.mvw_dec_ni_search AS
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'special_energy_uses'::text) AS special_energy_uses,
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'renewable_sources'::text) AS renewable_sources,
     (round(((public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'floor_area'::text))::numeric))::integer AS total_floor_area,
-    (((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text) AS occupancy_level,
+    COALESCE((((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text), ((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmark-1'::text) ->> 'occupancy_level'::text)) AS occupancy_level,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_fuel_thermal'::text))::numeric))::integer AS annual_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_electrical'::text))::numeric))::integer AS annual_electrical_fuel_usage,
@@ -1086,7 +1086,7 @@ CREATE MATERIALIZED VIEW public.mvw_dec_search AS
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'special_energy_uses'::text) AS special_energy_uses,
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'renewable_sources'::text) AS renewable_sources,
     (round(((public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'floor_area'::text))::numeric))::integer AS total_floor_area,
-    (((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text) AS occupancy_level,
+    COALESCE((((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text), ((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmark-1'::text) ->> 'occupancy_level'::text)) AS occupancy_level,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_fuel_thermal'::text))::numeric))::integer AS annual_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_electrical'::text))::numeric))::integer AS annual_electrical_fuel_usage,
@@ -1134,7 +1134,7 @@ CREATE MATERIALIZED VIEW public.mvw_dec_search AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
-  WHERE ((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text]))
+  WHERE ((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[]))
   WITH NO DATA;
 
 
@@ -1824,7 +1824,7 @@ CREATE VIEW public.vw_dec_ni_yesterday AS
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'special_energy_uses'::text) AS special_energy_uses,
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'renewable_sources'::text) AS renewable_sources,
     (round(((public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'floor_area'::text))::numeric))::integer AS total_floor_area,
-    (((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text) AS occupancy_level,
+    COALESCE((((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text), ((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmark-1'::text) ->> 'occupancy_level'::text)) AS occupancy_level,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_fuel_thermal'::text))::numeric))::integer AS annual_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_electrical'::text))::numeric))::integer AS annual_electrical_fuel_usage,
@@ -1958,7 +1958,7 @@ CREATE VIEW public.vw_dec_yesterday AS
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'special_energy_uses'::text) AS special_energy_uses,
     (public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'renewable_sources'::text) AS renewable_sources,
     (round(((public.get_attribute_json('technical_information'::character varying, ad.assessment_id) ->> 'floor_area'::text))::numeric))::integer AS total_floor_area,
-    (((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text) AS occupancy_level,
+    COALESCE((((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmarks'::text) -> 0) ->> 'occupancy_level'::text), ((public.get_attribute_json('or_benchmark_data'::character varying, ad.assessment_id) -> 'benchmark-1'::text) ->> 'occupancy_level'::text)) AS occupancy_level,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_fuel_thermal'::text))::numeric))::integer AS annual_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'typical_thermal_use'::text))::numeric))::integer AS typical_thermal_fuel_usage,
     (round(((public.get_attribute_json('dec_annual_energy_summary'::character varying, ad.assessment_id) ->> 'annual_energy_use_electrical'::text))::numeric))::integer AS annual_electrical_fuel_usage,
@@ -2006,7 +2006,7 @@ CREATE VIEW public.vw_dec_yesterday AS
      JOIN public.countries co ON ((aci.country_id = co.country_id)))
      LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
      LEFT JOIN public.ons_postcode_directory_names os_la ON (((ons.westminster_parliamentary_constituency_code)::text = (os_la.area_code)::text)))
-  WHERE (((co.country_code)::text = ANY (ARRAY[('EAW'::character varying)::text, ('ENG'::character varying)::text, ('WLS'::character varying)::text])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (((s.created_at)::date = (CURRENT_DATE - 1)) OR (EXISTS ( SELECT l.assessment_id,
             l.event_type,
             l."timestamp",
             l.id
@@ -3386,6 +3386,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260929102503'),
 ('20260921150137'),
 ('20260917142635'),
 ('20260915164643'),

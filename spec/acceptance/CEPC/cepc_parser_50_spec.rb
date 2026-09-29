@@ -107,7 +107,7 @@ describe "the parser and the CEPC configuration for schema 5.0" do
                       "occupier" => "Primary School",
                       "or_assessment_end_date" => "2020-05-01",
                       "or_assessment_start_date" => "2020-05-01",
-                      "or_benchmark_data" => { "benchmark_1" => { "floor_area" => 10, "occupancy_level" => "level" } },
+                      "or_benchmark_data" => { "benchmark_1" => { "floor_area" => 10, "occupancy_level" => "level" }, "main_benchmark" => "Office" },
                       "or_energy_consumption" => { "electricity" => { "consumption" => 422_480, "end_date" => "2008-01-31", "estimate" => 1, "start_date" => "2007-01-31" }, "gas" => { "consumption" => 310_400, "end_date" => "2007-12-18", "estimate" => 0, "start_date" => "2007-01-18" } },
                       "or_previous_data" => { "asset_rating" => 100 },
                       "output_engine" => "MWW-91.1.1",

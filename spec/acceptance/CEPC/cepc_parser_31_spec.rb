@@ -90,7 +90,7 @@ describe "the parser and the CEPC configuration for schema 3.1" do
                       "occupier" => "Primary School",
                       "or_assessment_end_date" => "2020-05-01",
                       "or_assessment_start_date" => "2020-05-01",
-                      "or_benchmark_data" => { "benchmark_1" => { "benchmark" => "General office", "floor_area" => 10, "occupancy_level" => "level", "total_equivalent" => 3000 } },
+                      "or_benchmark_data" => { "benchmark_1" => { "benchmark" => "General office", "floor_area" => 10, "occupancy_level" => "level", "total_equivalent" => 3000 }, "main_benchmark" => "Office" },
                       "or_energy_consumption" => { "electricity" => { "consumption" => 422_480, "end_date" => "2008-07-31", "estimate" => 1, "start_date" => "2007-01-31" }, "gas" => { "consumption" => 310_400, "end_date" => "2007-12-18", "estimate" => 0, "start_date" => "2007-01-18" } },
                       "or_previous_data" => { "asset_rating" => 100 },
                       "post_town" => "Whitbury",

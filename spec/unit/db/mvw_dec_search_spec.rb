@@ -8,6 +8,122 @@ describe "DEC Report" do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_dec_search")
   end
 
+  let(:expected_dec_3_1_data) do
+    {
+      "ac_inspection_commissioned" => nil,
+      "address" => "Some Unit, 2 Lonely Street, Some Area",
+      "address1" => "Some Unit",
+      "address2" => "2 Lonely Street",
+      "address3" => "Some Area",
+      "aircon_kw_rating" => nil,
+      "aircon_present" => nil,
+      "annual_electrical_fuel_usage" => 1,
+      "annual_thermal_fuel_usage" => 1,
+      "building_category" => "C1",
+      "building_environment" => "Heating and Natural Ventilation",
+      "certificate_number" => "0000-0000-0000-0000-0011",
+      "constituency" => "E14000629",
+      "constituency_label" => "Chelsea and Fulham",
+      "country" => "England",
+      "current_operational_rating" => "1",
+      "electric_co2" => "7",
+      "estimated_aircon_kw_rating" => nil,
+      "heating_co2" => "3",
+      "inspection_date" => "2020-05-04",
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "lodgement_date" => "2020-05-04",
+      "lodgement_datetime" => "2021-07-21 11:26:28.045000000 0000",
+      "main_benchmark" => "Office",
+      "main_heating_fuel" => "Natural Gas",
+      "nominated_date" => "2020-01-01",
+      "occupancy_level" => "level",
+      "operational_rating_band" => "A",
+      "or_assessment_end_date" => "2020-05-01",
+      "other_fuel" => "other",
+      "postcode" => "SW10 0AA",
+      "posttown" => "Whitbury",
+      "property_type" => "B1 Offices and Workshop businesses",
+      "renewable_sources" => nil,
+      "renewables_co2" => "0",
+      "renewables_electrical" => "1",
+      "renewables_fuel_thermal" => "1",
+      "report_type" => "1",
+      "special_energy_uses" => "special",
+      "total_floor_area" => 99,
+      "typical_electrical_fuel_usage" => "1",
+      "typical_thermal_fuel_usage" => 1,
+      "typical_thermal_use" => 1,
+      "uprn" => nil,
+      "uprn_source" => nil,
+      "yr1_electricity_co2" => "10",
+      "yr1_heating_co2" => "5",
+      "yr1_operational_rating" => "24",
+      "yr1_renewables_co2" => "1",
+      "yr2_electricity_co2" => "15",
+      "yr2_heating_co2" => "10",
+      "yr2_operational_rating" => "40",
+      "yr2_renewables_co2" => "2",
+    }
+  end
+  let(:expected_dec_5_data) do
+    {
+      "ac_inspection_commissioned" => "1",
+      "address" => "Some Unit, 2 Lonely Street, Some Area",
+      "address1" => "Some Unit",
+      "address2" => "2 Lonely Street",
+      "address3" => "Some Area",
+      "aircon_kw_rating" => "1",
+      "aircon_present" => "Y",
+      "annual_electrical_fuel_usage" => 1,
+      "annual_thermal_fuel_usage" => 1,
+      "building_category" => "C1",
+      "building_environment" => "Heating and Natural Ventilation",
+      "certificate_number" => "0000-0000-0000-0000-0012",
+      "constituency" => "E14000629",
+      "constituency_label" => "Chelsea and Fulham",
+      "country" => "England",
+      "current_operational_rating" => "1",
+      "electric_co2" => "7",
+      "estimated_aircon_kw_rating" => "1",
+      "heating_co2" => "3",
+      "inspection_date" => "2020-05-04",
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "lodgement_date" => "2020-05-04",
+      "lodgement_datetime" => "2021-07-21 11:26:28.045000000 +0000",
+      "main_benchmark" => "Office",
+      "main_heating_fuel" => "Natural Gas",
+      "nominated_date" => "2020-01-01",
+      "occupancy_level" => "level",
+      "operational_rating_band" => "A",
+      "or_assessment_end_date" => "2020-05-01",
+      "other_fuel" => "other",
+      "postcode" => "SW10 0AA",
+      "posttown" => "Whitbury",
+      "property_type" => "B1 Offices and Workshop businesses",
+      "renewable_sources" => nil,
+      "renewables_co2" => "0",
+      "renewables_electrical" => "1",
+      "renewables_fuel_thermal" => "1",
+      "report_type" => "1",
+      "special_energy_uses" => "special",
+      "total_floor_area" => 99,
+      "typical_electrical_fuel_usage" => "1",
+      "typical_thermal_fuel_usage" => 1,
+      "typical_thermal_use" => 1,
+      "uprn" => nil,
+      "uprn_source" => nil,
+      "yr1_electricity_co2" => "10",
+      "yr1_heating_co2" => "5",
+      "yr1_operational_rating" => "24",
+      "yr1_renewables_co2" => "1",
+      "yr2_electricity_co2" => "15",
+      "yr2_heating_co2" => "10",
+      "yr2_operational_rating" => "40",
+      "yr2_renewables_co2" => "2",
+    }
+  end
   let(:expected_dec_7_data) do
     { "certificate_number" => "0000-0000-0000-0000-0001",
       "constituency" => "E14000629",
@@ -165,6 +281,12 @@ describe "DEC Report" do
     type_of_assessment = "DEC"
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0011", schema_type: "CEPC-3.1", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1
+    })
+    add_assessment_eav(assessment_id: "0000-0000-0000-0000-0012", schema_type: "CEPC-5.0", type_of_assessment:, type: "dec", different_fields: {
+      "postcode" => "SW10 0AA", "country_id": 1
+    })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-7.0", type_of_assessment:, type: "dec+rr", different_fields: {
       "postcode" => "SW10 0AA", "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0004"
     })
@@ -180,6 +302,16 @@ describe "DEC Report" do
 
     import_look_ups(schema_versions: %w[CEPC-8.0.0 CEPC-7.0])
     Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_dec_search")
+  end
+
+  it "returns a dataset with the required data for dec CEPC 3.1" do
+    result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0011" }
+    expect(result).to eq expected_dec_3_1_data
+  end
+
+  it "returns a dataset with the required data for dec CEPC 5.0" do
+    result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0012" }
+    expect(result).to eq expected_dec_5_data
   end
 
   it "returns a dataset with the required data for dec CEPC 7.0" do

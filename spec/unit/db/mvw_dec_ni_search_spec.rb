@@ -130,7 +130,7 @@ describe "DEC NI Report" do
       "main_benchmark" => nil,
       "main_heating_fuel" => "Natural Gas",
       "nominated_date" => "2020-01-01",
-      "occupancy_level" => nil,
+      "occupancy_level" => "level",
       "operational_rating_band" => "A",
       "or_assessment_end_date" => "2020-05-01",
       "other_fuel" => "other",
@@ -163,7 +163,6 @@ describe "DEC NI Report" do
   let(:expected_dec_4_data) do
     expected_dec_common_data.merge(
       "certificate_number" => "0000-0000-0000-0000-0004",
-      "occupancy_level" => nil,
       "uprn" => "200000000004".to_i,
       "uprn_source" => "Energy Assessor",
     )
@@ -172,7 +171,7 @@ describe "DEC NI Report" do
   let(:expected_dec_5_data) do
     expected_dec_common_data.merge(
       "certificate_number" => "0000-0000-0000-0000-0005",
-      "occupancy_level" => nil,
+      "main_benchmark" => "Office",
     )
   end
 
