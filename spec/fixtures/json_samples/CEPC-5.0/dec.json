@@ -59,7 +59,8 @@
     "benchmark_1": {
       "floor_area": 10,
       "occupancy_level": "level"
-    }
+    },
+    "main_benchmark": "Office"
   },
   "registration_date": "2020-05-04",
   "building_complexity": "Level 3",

@@ -50,7 +50,8 @@
       "floor_area": 10,
       "occupancy_level": "level",
       "total_equivalent": 3000
-    }
+    },
+    "main_benchmark": "Office"
   },
   "registration_date": "2020-05-04",
   "or_energy_consumption": {
