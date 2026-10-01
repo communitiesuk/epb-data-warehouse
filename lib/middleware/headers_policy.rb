@@ -10,8 +10,8 @@ module Middleware
 
     def call(env)
       status, headers, body = @app.call(env)
-      headers["Strict-Transport-Security"] = "max-age=300; includeSubDomains; preload"
-      headers["Cache-Control"] = "no-store"
+      headers["strict-transport-security"] = "max-age=300; includeSubDomains; preload"
+      headers["cache-control"] = "no-store"
       headers.delete "x-frame-options"
       headers.delete "x-xss-protection"
       [status, headers, body]

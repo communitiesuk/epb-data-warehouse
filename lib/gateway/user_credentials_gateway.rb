@@ -53,11 +53,19 @@ module Gateway
     end
 
     def get_dynamo_db_client
-      case ENV["APP_ENV"]
-      when "local", nil
-        Aws::DynamoDB::Client.new(stub_responses: true)
-      else
+      if ENV["APP_ENV"] == "production"
         Aws::DynamoDB::Client.new(region: "eu-west-2")
+      elsif ENV.fetch("APP_ENV", "development") == "development" && ENV["AWS_ENDPOINT_URL_DYNAMODB"]
+        Aws::DynamoDB::Client.new(
+          endpoint: ENV["AWS_ENDPOINT_URL_DYNAMODB"],
+          region: "eu-west-2",
+          credentials: Aws::Credentials.new(
+            ENV["AWS_ACCESS_KEY_ID"],
+            ENV["AWS_SECRET_ACCESS_KEY"],
+          ),
+        )
+      else
+        Aws::DynamoDB::Client.new(stub_responses: true)
       end
     end
   end
