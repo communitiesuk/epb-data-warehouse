@@ -75,13 +75,6 @@ def get_valid_jwt(scopes = [], sup = {})
   token.encode ENV["JWT_SECRET"]
 end
 
-def clear_materialized_views
-  Gateway::MaterializedViewsGateway.new.fetch_all.each do |view|
-    sql = "REFRESH MATERIALIZED VIEW #{view} WITH NO DATA;"
-    ActiveRecord::Base.connection.exec_query(sql, "SQL")
-  end
-end
-
 def stub_bearer_token_access
   authenticate_user_use_case = instance_double(UseCase::AuthenticateUser)
   allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)

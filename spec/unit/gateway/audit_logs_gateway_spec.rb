@@ -1,10 +1,6 @@
 describe Gateway::AuditLogsGateway do
   subject(:gateway) { described_class.new }
 
-  before do
-    clear_materialized_views
-  end
-
   describe "#insert_logs" do
     let(:logs) do
       ActiveRecord::Base.connection.exec_query(
