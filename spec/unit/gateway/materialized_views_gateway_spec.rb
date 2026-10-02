@@ -20,6 +20,10 @@ describe Gateway::MaterializedViewsGateway do
         mvw_domestic_rr_search
         mvw_domestic_search
       ]
+
+      views.concat(
+        (2008..2026).map { |year| "mvw_domestic_search_#{year}" },
+      )
       expect(fetch_all).to be_an(Array)
       expect(fetch_all.sort).to eq(views.sort)
     end

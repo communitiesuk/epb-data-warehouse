@@ -1457,6 +1457,2533 @@ CREATE MATERIALIZED VIEW public.mvw_domestic_search AS
 
 
 --
+-- Name: mvw_domestic_search_2008; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2008 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2008-01-01'::date) AND (s.registration_date < '2009-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2009; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2009 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2009-01-01'::date) AND (s.registration_date < '2010-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2010; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2010 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2010-01-01'::date) AND (s.registration_date < '2011-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2011; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2011 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2011-01-01'::date) AND (s.registration_date < '2012-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2012; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2012 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2012-01-01'::date) AND (s.registration_date < '2013-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2013; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2013 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2013-01-01'::date) AND (s.registration_date < '2014-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2014; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2014 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2014-01-01'::date) AND (s.registration_date < '2015-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2015; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2015 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2015-01-01'::date) AND (s.registration_date < '2016-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2016; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2016 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2016-01-01'::date) AND (s.registration_date < '2017-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2017; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2017 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2017-01-01'::date) AND (s.registration_date < '2018-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2018; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2018 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2018-01-01'::date) AND (s.registration_date < '2019-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2019; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2019 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2019-01-01'::date) AND (s.registration_date < '2020-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2020; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2020 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2020-01-01'::date) AND (s.registration_date < '2021-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2021; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2021 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2021-01-01'::date) AND (s.registration_date < '2022-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2022; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2022 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2022-01-01'::date) AND (s.registration_date < '2023-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2023; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2023 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2023-01-01'::date) AND (s.registration_date < '2024-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2024; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2024 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2024-01-01'::date) AND (s.registration_date < '2025-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2025; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2025 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2025-01-01'::date) AND (s.registration_date < '2026-01-01'::date))
+  WITH NO DATA;
+
+
+--
+-- Name: mvw_domestic_search_2026; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.mvw_domestic_search_2026 AS
+ SELECT ad.assessment_id AS certificate_number,
+    s.address_line_1 AS address1,
+    s.address_line_2 AS address2,
+    s.address_line_3 AS address3,
+    concat_ws(', '::text, s.address_line_1, s.address_line_2, s.address_line_3) AS address,
+    s.postcode,
+    (ad.document ->> 'inspection_date'::text) AS inspection_date,
+    s.uprn,
+    (ad.document ->> 'environmental_impact_potential'::text) AS environment_impact_potential,
+    (ad.document ->> 'energy_consumption_current'::text) AS energy_consumption_current,
+    (ad.document ->> 'energy_consumption_potential'::text) AS energy_consumption_potential,
+    (ad.document ->> 'environmental_impact_current'::text) AS environment_impact_current,
+    COALESCE(((ad.document -> 'co2_emissions_current'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current'::text)) AS co2_emissions_current,
+    COALESCE(((ad.document -> 'co2_emissions_current_per_floor_area'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_current_per_floor_area'::text)) AS co2_emiss_curr_per_floor_area,
+    COALESCE(((ad.document -> 'co2_emissions_potential'::text) ->> 'value'::text), (ad.document ->> 'co2_emissions_potential'::text)) AS co2_emissions_potential,
+    COALESCE((ad.document ->> 'total_floor_area'::text), ( SELECT (round(sum(all_areas.val)))::text AS round
+           FROM ( SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_floor_dimensions"[*]."total_floor_area"'::jsonpath)) area(value)
+                UNION ALL
+                 SELECT COALESCE(((area.value ->> 'value'::text))::numeric, ((area.value #>> '{}'::text[]))::numeric) AS val
+                   FROM jsonb_array_elements(jsonb_path_query_array(ad.document, '$."sap_building_parts"[*]."sap_room_in_roof"."floor_area"'::jsonpath)) area(value)) all_areas)) AS total_floor_area,
+    to_char(s.registration_date, 'yyyy-mm-dd'::text) AS lodgement_date,
+    (ad.document ->> 'report_type'::text) AS report_type,
+    s.post_town AS posttown,
+    to_char(((ad.document ->> 'created_at'::text))::timestamp with time zone, 'YYYY-MM-DD HH24:MI:SS'::text) AS lodgement_datetime,
+    (s.current_energy_efficiency_rating)::character varying AS current_energy_efficiency,
+    s.current_energy_efficiency_band AS current_energy_rating,
+    (ad.document ->> 'energy_rating_potential'::text) AS potential_energy_efficiency,
+    public.energy_band_calculator(((ad.document ->> 'energy_rating_potential'::text))::integer, s.assessment_type) AS potential_energy_rating,
+    (ad.document ->> 'extensions_count'::text) AS extension_count,
+    COALESCE((ad.document ->> 'open_fireplaces_count'::text), (ad.document ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_chimneys_count'::text), ((ad.document -> 'sap_ventilation'::text) ->> 'open_fireplaces_count'::text)) AS number_open_fireplaces,
+    (ad.document ->> 'heated_room_count'::text) AS number_heated_rooms,
+    (ad.document ->> 'habitable_room_count'::text) AS number_habitable_rooms,
+    COALESCE((ad.document ->> 'low_energy_lighting'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_percentage'::text), (round(((public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id) / NULLIF(public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id), (0)::numeric)) * (100)::numeric)))::text, ( SELECT (round(((((sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::numeric)::double precision / NULLIF(sum(((sl.value ->> 'lighting_outlets'::text))::double precision), (0)::double precision)) * (100)::double precision)))::text AS round
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_lighting,
+    COALESCE((ad.document ->> 'low_energy_fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'low_energy_fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT (sum(
+                CASE
+                    WHEN (((sl.value ->> 'lighting_efficacy'::text))::double precision > (65)::double precision) THEN ((sl.value ->> 'lighting_outlets'::text))::integer
+                    ELSE NULL::integer
+                END))::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS low_energy_fixed_lighting_outlets_count,
+    (ad.document ->> 'solar_water_heating'::text) AS solar_water_heating_flag,
+    public.get_lookup_value('mechanical_ventilation'::character varying, ((ad.document ->> 'mechanical_ventilation'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mechanical_ventilation,
+    public.get_lookup_value('tenure'::character varying, ((ad.document ->> 'tenure'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS tenure,
+    public.get_lookup_value('property_type'::character varying, ((ad.document ->> 'property_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS property_type,
+    public.get_lookup_value('transaction_type'::character varying, ((ad.document ->> 'transaction_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS transaction_type,
+    public.fn_construction_age_band(ad.document, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS construction_age_band,
+    public.get_lookup_value('built_form'::character varying, ((ad.document ->> 'built_form'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS built_form,
+        CASE
+            WHEN ((s.assessment_type)::text = 'RdSAP'::text) THEN public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'meter_type'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+            ELSE public.get_lookup_value('energy_tariff'::character varying, (((ad.document -> 'sap_energy_source'::text) ->> 'electricity_tariff'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)
+        END AS energy_tariff,
+    public.get_lookup_value('glazed_type'::character varying, (COALESCE((ad.document ->> 'multiple_glazing_type'::text), (ad.document ->> 'double_glazing_installed'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_type,
+    public.get_lookup_value('glazed_area'::character varying, ((ad.document ->> 'glazed_area'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS glazed_area,
+    public.get_lookup_value('heat_loss_corridor'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'heat_loss_corridor'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS heat_loss_corridor,
+    public.get_lookup_value('main_fuel'::character varying, (COALESCE(((ad.document -> 'sap_heating'::text) ->> 'main_fuel_type'::text), ((((ad.document -> 'sap_heating'::text) -> 'main_heating_details'::text) -> 0) ->> 'main_fuel_type'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS main_fuel,
+    COALESCE((((ad.document -> 'sap_flat_details'::text) -> 'unheated_corridor_length'::text) ->> 'value'::text), ((ad.document -> 'sap_flat_details'::text) ->> 'unheated_corridor_length'::text)) AS unheated_corridor_length,
+    COALESCE(public.get_lookup_value('block_storey'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'flat_location'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying), public.get_lookup_value('flat_level'::character varying, (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying)) AS floor_level,
+    COALESCE(((ad.document -> 'sap_flat_details'::text) ->> 'top_storey'::text),
+        CASE
+            WHEN (((ad.document -> 'sap_flat_details'::text) ->> 'level'::text) = '3'::text) THEN 'Y'::text
+            ELSE 'N'::text
+        END) AS flat_top_storey,
+    jsonb_array_length((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text)) AS flat_storey_count,
+    COALESCE(((ad.document -> 'sap_energy_source'::text) ->> 'mains_gas'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'main_gas'::text)) AS mains_gas_flag,
+    COALESCE(((((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) -> 'none_or_no_details'::text) ->> 'percent_roof_area'::text), (((ad.document -> 'sap_energy_source'::text) -> 'photovoltaic_supply'::text) ->> 'percent_roof_area'::text), (ad.document ->> 'photovoltaic_supply'::text)) AS photo_supply,
+    COALESCE((((ad.document -> 'sap_energy_source'::text) ->> 'wind_turbines_count'::text))::integer, jsonb_array_length(((ad.document -> 'sap_energy_source'::text) -> 'wind_turbines'::text))) AS wind_turbine_count,
+    COALESCE(((ad.document -> 'lighting_cost_current'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_current'::text)) AS lighting_cost_current,
+    COALESCE(((ad.document -> 'lighting_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'lighting_cost_potential'::text)) AS lighting_cost_potential,
+    COALESCE(((ad.document -> 'heating_cost_current'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_current'::text)) AS heating_cost_current,
+    COALESCE(((ad.document -> 'heating_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'heating_cost_potential'::text)) AS heating_cost_potential,
+    COALESCE(((ad.document -> 'hot_water_cost_current'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_current'::text)) AS hot_water_cost_current,
+    COALESCE(((ad.document -> 'hot_water_cost_potential'::text) ->> 'value'::text), (ad.document ->> 'hot_water_cost_potential'::text)) AS hot_water_cost_potential,
+    COALESCE((ad.document ->> 'multiple_glazed_percentage'::text), (ad.document ->> 'multiple_glazed_proportion'::text), (ad.document ->> 'double_glazed_proportion'::text)) AS multi_glaze_proportion,
+    public.fn_clean_description((COALESCE((((ad.document -> 'hot_water'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'hot_water'::text) ->> 'description'::text)))::character varying) AS hotwater_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'hot_water'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS hot_water_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'floors'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'floors'::text) -> 0) ->> 'description'::text)))::character varying) AS floor_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'floors'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS floor_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'roofs'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'roofs'::text) -> 0) ->> 'description'::text)))::character varying) AS roof_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'roofs'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS roof_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'walls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'walls'::text) -> 0) ->> 'description'::text)))::character varying) AS walls_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'walls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS walls_env_eff,
+    public.fn_clean_description((COALESCE(((ad.document -> 'window'::text) ->> 'description'::text), (((ad.document -> 'window'::text) -> 0) ->> 'description'::text), ((ad.document -> 'windows'::text) ->> 'description'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'description'::text)))::character varying) AS windows_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'energy_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'energy_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'energy_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (COALESCE(((ad.document -> 'window'::text) ->> 'environmental_efficiency_rating'::text), ((ad.document -> 'windows'::text) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'window'::text) -> 0) ->> 'environmental_efficiency_rating'::text), (((ad.document -> 'windows'::text) -> 0) ->> 'environmental_efficiency_rating'::text)))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS windows_env_eff,
+    COALESCE((((ad.document -> 'secondary_heating'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'secondary_heating'::text) ->> 'description'::text)) AS secondheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'secondary_heating'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS sheating_env_eff,
+    ( SELECT public.fn_clean_description((COALESCE(string_agg(((mh.value -> 'description'::text) ->> 'value'::text), ', '::text), string_agg((mh.value ->> 'description'::text), ', '::text)))::character varying) AS mainheat_description
+           FROM jsonb_array_elements((ad.document -> 'main_heating'::text)) mh(value)) AS mainheat_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheat_env_eff,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS mainheatcont_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, ((((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS mainheatc_env_eff,
+    public.fn_clean_description((COALESCE((((ad.document -> 'lighting'::text) -> 'description'::text) ->> 'value'::text), ((ad.document -> 'lighting'::text) ->> 'description'::text)))::character varying) AS lighting_description,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'energy_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_energy_eff,
+    public.get_lookup_value('energy_efficiency_rating'::character varying, (((ad.document -> 'lighting'::text) ->> 'environmental_efficiency_rating'::text))::character varying, s.assessment_type, ((ad.document ->> 'schema_type'::text))::character varying) AS lighting_env_eff,
+    COALESCE((ad.document ->> 'fixed_lighting_outlets_count'::text), ((ad.document -> 'sap_energy_source'::text) ->> 'fixed_lighting_outlets_count'::text), (public.sum_attribute_values((ARRAY['cfl_fixed_lighting_bulbs_count'::text, 'led_fixed_lighting_bulbs_count'::text, 'low_energy_fixed_lighting_bulbs_count'::text, 'incandescent_fixed_lighting_bulbs_count'::text])::character varying[], ad.assessment_id))::text, ( SELECT ((sum(COALESCE(((sl.value ->> 'lighting_outlets'::text))::integer, 0)))::integer)::text AS sum
+           FROM jsonb_array_elements(((ad.document -> 'sap_lighting'::text) -> 0)) sl(value))) AS fixed_lighting_outlets_count,
+    COALESCE(((((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) -> 'room_height'::text) ->> 'value'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'storey_height'::text), (((ad.document -> 'sap_building_parts'::text) -> 0) ->> 'room_height'::text), (((((ad.document -> 'sap_building_parts'::text) -> 0) -> 'sap_floor_dimensions'::text) -> 0) ->> 'room_height'::text)) AS floor_height,
+    public.fn_clean_description((COALESCE(((((ad.document -> 'main_heating_controls'::text) -> 0) -> 'description'::text) ->> 'value'::text), (((ad.document -> 'main_heating_controls'::text) -> 0) ->> 'description'::text)))::character varying) AS main_heating_controls,
+    ons.local_authority_code AS local_authority,
+    s.council AS local_authority_label,
+    s.constituency AS constituency_label,
+    os_p.area_code AS constituency,
+    co.country_name AS country,
+    ons.region_code AS region,
+    public.fn_uprn_source(((ad.document ->> 'assessment_address_id'::text))::character varying, ad.matched_uprn) AS uprn_source
+   FROM ((((((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN ( VALUES ('SAP'::text), ('RdSAP'::text)) vals(t) ON (((s.assessment_type)::text = vals.t)))
+     JOIN public.assessments_country_ids aci ON (((ad.assessment_id)::text = (aci.assessment_id)::text)))
+     JOIN public.countries co ON ((aci.country_id = co.country_id)))
+     LEFT JOIN public.ons_postcode_directory ons ON (((s.postcode)::text = (ons.postcode)::text)))
+     LEFT JOIN public.ons_postcode_directory_names os_p ON (((ons.westminster_parliamentary_constituency_code)::text = (os_p.area_code)::text)))
+  WHERE (((co.country_code)::text = ANY ((ARRAY['EAW'::character varying, 'ENG'::character varying, 'WLS'::character varying])::text[])) AND (s.registration_date >= '2026-01-01'::date) AND (s.registration_date < '2027-01-01'::date))
+  WITH NO DATA;
+
+
+--
 -- Name: ons_postcode_directory_names_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -3386,6 +5913,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20261001142402'),
 ('20260929102503'),
 ('20260921150137'),
 ('20260917142635'),

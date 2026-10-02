@@ -9,22 +9,203 @@ describe "Domestic Materialized View" do
   include_context "when exporting data"
   include_context "when saving enum data to lookup tables"
 
-  let(:date_start) { "2021-12-01" }
-  let(:date_end) { "2023-12-09" }
-
-  let(:date_filtered_results) do
-    query_result.select { |i| i["lodgement_date"] >= date_start && i["lodgement_date"] <= date_end }
-  end
-
-  let(:filter_args) do
-    { query_result:, date_start:, date_end: }
-  end
-
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_domestic_search ORDER BY certificate_number")
   end
   let(:expected_columns) do
     %w[address address1 address2 address3 built_form certificate_number co2_emiss_curr_per_floor_area co2_emissions_current co2_emissions_potential constituency constituency_label construction_age_band country current_energy_efficiency current_energy_rating energy_consumption_current energy_consumption_potential energy_tariff environment_impact_current environment_impact_potential extension_count fixed_lighting_outlets_count flat_storey_count flat_top_storey floor_description floor_energy_eff floor_env_eff floor_height floor_level glazed_area glazed_type heat_loss_corridor heating_cost_current heating_cost_potential hot_water_cost_current hot_water_cost_potential hot_water_energy_eff hot_water_env_eff hotwater_description inspection_date lighting_cost_current lighting_cost_potential lighting_description lighting_energy_eff lighting_env_eff local_authority local_authority_label lodgement_date lodgement_datetime low_energy_fixed_lighting_outlets_count low_energy_lighting main_fuel main_heating_controls mainheat_description mainheat_energy_eff mainheat_env_eff mainheatc_energy_eff mainheatc_env_eff mainheatcont_description mains_gas_flag mechanical_ventilation multi_glaze_proportion number_habitable_rooms number_heated_rooms number_open_fireplaces photo_supply postcode posttown potential_energy_efficiency potential_energy_rating property_type region report_type roof_description roof_energy_eff roof_env_eff secondheat_description sheating_energy_eff sheating_env_eff solar_water_heating_flag tenure total_floor_area transaction_type unheated_corridor_length uprn uprn_source walls_description walls_energy_eff walls_env_eff wind_turbine_count windows_description windows_energy_eff windows_env_eff]
+  end
+  let(:expected_sap_1900_data) do
+    { "certificate_number" => "0000-0000-0000-0000-0001",
+      "address" => "1 Some Street, Some Area, Some County",
+      "address1" => "1 Some Street",
+      "address2" => "Some Area",
+      "address3" => "Some County",
+      "postcode" => "SW10 0AA",
+      "country" => "England",
+      "region" => "E12000007",
+      "report_type" => "3",
+      "total_floor_area" => "165",
+      "built_form" => "Mid-Terrace",
+      "inspection_date" => "2022-05-09",
+      "environment_impact_current" => "94",
+      "energy_consumption_current" => "59",
+      "energy_consumption_potential" => "53",
+      "environment_impact_potential" => "96",
+      "co2_emiss_curr_per_floor_area" => "5.6",
+      "co2_emissions_current" => "2.4",
+      "co2_emissions_potential" => "1.4",
+      "lighting_cost_current" => "123.45",
+      "lighting_cost_potential" => "84.23",
+      "heating_cost_current" => "365.98",
+      "heating_cost_potential" => "250.34",
+      "hot_water_cost_current" => "200.4",
+      "hot_water_cost_potential" => "180.43",
+      "main_heating_controls" => "Programmer, room thermostat and TRVs",
+      "multi_glaze_proportion" => "100",
+      "hotwater_description" => "From main system, waste water heat recovery",
+      "hot_water_energy_eff" => "Good",
+      "hot_water_env_eff" => "Average",
+      "floor_description" => "Average thermal transmittance 0.12 W/m²K",
+      "floor_energy_eff" => "Very Good",
+      "floor_env_eff" => "Very Good",
+      "windows_description" => "High performance glazing",
+      "windows_energy_eff" => "N/A",
+      "windows_env_eff" => "Very Good",
+      "walls_description" => "Average thermal transmittance 0.18 W/m²K",
+      "walls_energy_eff" => "Very Good",
+      "walls_env_eff" => "Very Good",
+      "secondheat_description" => "Electric heater",
+      "sheating_energy_eff" => "N/A",
+      "sheating_env_eff" => "N/A",
+      "roof_description" => "Average thermal transmittance 0.13 W/m²K",
+      "roof_energy_eff" => "Very Good",
+      "roof_env_eff" => "Very Good",
+      "mainheat_description" => "Boiler and radiators, electric",
+      "mainheat_energy_eff" => "Average",
+      "mainheat_env_eff" => "Poor",
+      "mainheatc_energy_eff" => "Good",
+      "mainheatc_env_eff" => "Good",
+      "mainheatcont_description" => "Programmer, room thermostat and TRVs",
+      "lighting_description" => "Energy saving bulbs",
+      "lighting_energy_eff" => "N/A",
+      "lighting_env_eff" => "N/A",
+      "main_fuel" => "Electricity: electricity, unspecified tariff",
+      "wind_turbine_count" => 1,
+      "mechanical_ventilation" => nil,
+      "lodgement_date" => "2022-05-09",
+      "posttown" => "Whitbury",
+      "construction_age_band" => "England and Wales: before 1900",
+      "tenure" => "owner-occupied",
+      "lodgement_datetime" => "2021-07-21 11:26:28",
+      "fixed_lighting_outlets_count" => "18",
+      "low_energy_fixed_lighting_outlets_count" => "17",
+      "current_energy_efficiency" => "72",
+      "current_energy_rating" => "C",
+      "potential_energy_efficiency" => "72",
+      "potential_energy_rating" => "C",
+      "extension_count" => nil,
+      "flat_storey_count" => 3,
+      "flat_top_storey" => "N",
+      "floor_level" => "ground floor",
+      "glazed_area" => nil,
+      "heat_loss_corridor" => nil,
+      "low_energy_lighting" => "94",
+      "mains_gas_flag" => nil,
+      "number_habitable_rooms" => nil,
+      "number_heated_rooms" => nil,
+      "number_open_fireplaces" => "0",
+      "unheated_corridor_length" => nil,
+      "uprn" => 1245,
+      "energy_tariff" => "24 hour",
+      "floor_height" => "2.8",
+      "glazed_type" => nil,
+      "photo_supply" => nil,
+      "solar_water_heating_flag" => nil,
+      "local_authority" => "E09000013",
+      "local_authority_label" => "Hammersmith and Fulham",
+      "constituency_label" => "Chelsea and Fulham",
+      "constituency" => "E14000629",
+      "transaction_type" => "Marketed sale",
+      "property_type" => "House",
+      "uprn_source" => "Energy Assessor" }
+  end
+  let(:expected_rdsap_2000_data) do
+    expected_sap_1900_data.merge(
+      "address" => "1 Some Street",
+      "address2" => nil,
+      "address3" => nil,
+      "report_type" => "2",
+      "built_form" => "Semi-Detached",
+      "co2_emiss_curr_per_floor_area" => "20",
+      "environment_impact_current" => "52",
+      "environment_impact_potential" => "74",
+      "extension_count" => "0",
+      "construction_age_band" => "England and Wales: 2007-2011",
+      "current_energy_efficiency" => "50",
+      "current_energy_rating" => "E",
+      "energy_consumption_current" => "230",
+      "energy_consumption_potential" => "88",
+      "energy_tariff" => "Single",
+      "fixed_lighting_outlets_count" => "16",
+      "flat_storey_count" => 2,
+      "flat_top_storey" => "N",
+      "floor_description" => "Suspended, no insulation (assumed)",
+      "floor_energy_eff" => "N/A",
+      "floor_env_eff" => "N/A",
+      "floor_level" => "1st",
+      "floor_height" => "2.45",
+      "glazed_area" => "Normal",
+      "glazed_type" => "double glazing installed during or after 2002",
+      "photo_supply" => "50",
+      "solar_water_heating_flag" => "N",
+      "main_heating_controls" => "Programmer, room thermostat and TRVs",
+      "heating_cost_current" => "365.98",
+      "heating_cost_potential" => "250.34",
+      "heat_loss_corridor" => "unheated corridor",
+      "hot_water_cost_current" => "200.4",
+      "hot_water_cost_potential" => "180.43",
+      "hotwater_description" => "From main system",
+      "hot_water_env_eff" => "Good",
+      "inspection_date" => "2020-05-04",
+      "lighting_cost_current" => "123.45",
+      "lighting_cost_potential" => "84.23",
+      "lighting_description" => "Low energy lighting in 50% of fixed outlets",
+      "lighting_energy_eff" => "Good",
+      "lighting_env_eff" => "Good",
+      "lodgement_date" => "2020-05-06",
+      "low_energy_lighting" => "100",
+      "low_energy_fixed_lighting_outlets_count" => "16",
+      "main_fuel" => "mains gas (not community)",
+      "mains_gas_flag" => "Y",
+      "mainheat_description" => "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
+      "mainheat_env_eff" => "Very Poor",
+      "mechanical_ventilation" => "natural",
+      "multi_glaze_proportion" => "100",
+      "number_habitable_rooms" => "5",
+      "number_heated_rooms" => "5",
+      "number_open_fireplaces" => "0",
+      "roof_description" => "Pitched, 25 mm loft insulation",
+      "roof_energy_eff" => "Poor",
+      "roof_env_eff" => "Poor",
+      "certificate_number" => "0000-0000-0000-0000-0006",
+      "secondheat_description" => "Room heaters, electric",
+      "total_floor_area" => "55",
+      "uprn" => nil,
+      "unheated_corridor_length" => "10",
+      "walls_description" => "Solid brick, as built, no insulation (assumed)",
+      "walls_energy_eff" => "Very Poor",
+      "walls_env_eff" => "Very Poor",
+      "wind_turbine_count" => 0,
+      "windows_description" => "Fully double glazed",
+      "windows_energy_eff" => "Average",
+      "windows_env_eff" => "Average",
+      "local_authority" => "E09000013",
+      "uprn_source" => nil,
+    )
+  end
+  let(:expected_rdsap_2101_data) do
+    expected_rdsap_2000_data.merge(
+      "certificate_number" => "0000-0000-0000-0000-0009",
+      "construction_age_band" => "England and Wales: 2022 onwards",
+      "fixed_lighting_outlets_count" => "31",
+      "glazed_area" => nil,
+      "glazed_type" => nil,
+      "inspection_date" => "2025-04-04",
+      "lodgement_date" => "2021-12-06",
+      "low_energy_fixed_lighting_outlets_count" => "31",
+      "low_energy_lighting" => "100",
+      "mechanical_ventilation" => "positive input from outside",
+      "number_open_fireplaces" => "1",
+      "photo_supply" => "0",
+      "transaction_type" => "Grant scheme",
+      "unheated_corridor_length" => "10",
+      "postcode" => "SW1A 2AA",
+      "constituency" => "E14001172",
+      "constituency_label" => "Cities of London and Westminster",
+      "local_authority" => "E09000033",
+      "local_authority_label" => "Westminster",
+    )
   end
 
   before(:all) do
@@ -58,7 +239,7 @@ describe "Domestic Materialized View" do
       "registration_date": "2020-05-06T23:59:59.000+00:00", "postcode": "SW10 0AA", "country_id": 1
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0007", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
-      "postcode": "ML9 9AR", "country_id": 1
+      "postcode": "ML9 9AR", "country_id": 5
     })
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0008", schema_type: "RdSAP-Schema-21.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "SW1A 2AA", "country_id": 1
@@ -93,7 +274,6 @@ describe "Domestic Materialized View" do
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0018", assessment_address_id:, schema_type: "SAP-Schema-14.1", type_of_assessment:, type: "sap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
-
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0019", assessment_address_id:, schema_type: "SAP-Schema-14.1", type_of_assessment: "RdSAP", type: "rdsap", different_fields: {
       "postcode": "SW10 0AA", "registration_date": "2022-04-05T12:00:00.000+00:00", "country_id": 1
     })
@@ -121,16 +301,22 @@ describe "Domestic Materialized View" do
   end
 
   it "returns the correct columns" do
-    expect(mview_columns("mvw_domestic_search").sort.map(&:downcase)).to eq expected_columns.sort
+    expect(mview_columns("mvw_domestic_search_2020").sort.map(&:downcase)).to eq expected_columns.sort
   end
 
   it "returns rows for each assessment in England & Wales ordered by certificate_number" do
-    expect(date_filtered_results.pluck("certificate_number")).to eq %w[
+    expect(query_result.pluck("certificate_number")).to eq %w[
       0000-0000-0000-0000-0000
       0000-0000-0000-0000-0001
       0000-0000-0000-0000-0002
+      0000-0000-0000-0000-0004
+      0000-0000-0000-0000-0006
       0000-0000-0000-0000-0008
       0000-0000-0000-0000-0009
+      0000-0000-0000-0000-0010
+      0000-0000-0000-0000-0011
+      0000-0000-0000-0000-0012
+      0000-0000-0000-0000-0013
       0000-0000-0000-0000-0014
       0000-0000-0000-0000-0015
       0000-0000-0000-0000-0016
@@ -915,102 +1101,6 @@ describe "Domestic Materialized View" do
         "uprn_source" => "Energy Assessor" }
     end
 
-    let(:expected_sap_1900_data) do
-      { "certificate_number" => "0000-0000-0000-0000-0001",
-        "address" => "1 Some Street, Some Area, Some County",
-        "address1" => "1 Some Street",
-        "address2" => "Some Area",
-        "address3" => "Some County",
-        "postcode" => "SW10 0AA",
-        "country" => "England",
-        "region" => "E12000007",
-        "report_type" => "3",
-        "total_floor_area" => "165",
-        "built_form" => "Mid-Terrace",
-        "inspection_date" => "2022-05-09",
-        "environment_impact_current" => "94",
-        "energy_consumption_current" => "59",
-        "energy_consumption_potential" => "53",
-        "environment_impact_potential" => "96",
-        "co2_emiss_curr_per_floor_area" => "5.6",
-        "co2_emissions_current" => "2.4",
-        "co2_emissions_potential" => "1.4",
-        "lighting_cost_current" => "123.45",
-        "lighting_cost_potential" => "84.23",
-        "heating_cost_current" => "365.98",
-        "heating_cost_potential" => "250.34",
-        "hot_water_cost_current" => "200.4",
-        "hot_water_cost_potential" => "180.43",
-        "main_heating_controls" => "Programmer, room thermostat and TRVs",
-        "multi_glaze_proportion" => "100",
-        "hotwater_description" => "From main system, waste water heat recovery",
-        "hot_water_energy_eff" => "Good",
-        "hot_water_env_eff" => "Average",
-        "floor_description" => "Average thermal transmittance 0.12 W/m²K",
-        "floor_energy_eff" => "Very Good",
-        "floor_env_eff" => "Very Good",
-        "windows_description" => "High performance glazing",
-        "windows_energy_eff" => "N/A",
-        "windows_env_eff" => "Very Good",
-        "walls_description" => "Average thermal transmittance 0.18 W/m²K",
-        "walls_energy_eff" => "Very Good",
-        "walls_env_eff" => "Very Good",
-        "secondheat_description" => "Electric heater",
-        "sheating_energy_eff" => "N/A",
-        "sheating_env_eff" => "N/A",
-        "roof_description" => "Average thermal transmittance 0.13 W/m²K",
-        "roof_energy_eff" => "Very Good",
-        "roof_env_eff" => "Very Good",
-        "mainheat_description" => "Boiler and radiators, electric",
-        "mainheat_energy_eff" => "Average",
-        "mainheat_env_eff" => "Poor",
-        "mainheatc_energy_eff" => "Good",
-        "mainheatc_env_eff" => "Good",
-        "mainheatcont_description" => "Programmer, room thermostat and TRVs",
-        "lighting_description" => "Energy saving bulbs",
-        "lighting_energy_eff" => "N/A",
-        "lighting_env_eff" => "N/A",
-        "main_fuel" => "Electricity: electricity, unspecified tariff",
-        "wind_turbine_count" => 1,
-        "mechanical_ventilation" => nil,
-        "lodgement_date" => "2022-05-09",
-        "posttown" => "Whitbury",
-        "construction_age_band" => "England and Wales: before 1900",
-        "tenure" => "owner-occupied",
-        "lodgement_datetime" => "2021-07-21 11:26:28",
-        "fixed_lighting_outlets_count" => "18",
-        "low_energy_fixed_lighting_outlets_count" => "17",
-        "current_energy_efficiency" => "72",
-        "current_energy_rating" => "C",
-        "potential_energy_efficiency" => "72",
-        "potential_energy_rating" => "C",
-        "extension_count" => nil,
-        "flat_storey_count" => 3,
-        "flat_top_storey" => "N",
-        "floor_level" => "ground floor",
-        "glazed_area" => nil,
-        "heat_loss_corridor" => nil,
-        "low_energy_lighting" => "94",
-        "mains_gas_flag" => nil,
-        "number_habitable_rooms" => nil,
-        "number_heated_rooms" => nil,
-        "number_open_fireplaces" => "0",
-        "unheated_corridor_length" => nil,
-        "uprn" => 1245,
-        "energy_tariff" => "24 hour",
-        "floor_height" => "2.8",
-        "glazed_type" => nil,
-        "photo_supply" => nil,
-        "solar_water_heating_flag" => nil,
-        "local_authority" => "E09000013",
-        "local_authority_label" => "Hammersmith and Fulham",
-        "constituency_label" => "Chelsea and Fulham",
-        "constituency" => "E14000629",
-        "transaction_type" => "Marketed sale",
-        "property_type" => "House",
-        "uprn_source" => "Energy Assessor" }
-    end
-
     let(:expected_sap_142_rdsap_data) do
       { "certificate_number" => "0000-0000-0000-0000-0017",
         "address1" => "1 Some Street",
@@ -1702,81 +1792,6 @@ describe "Domestic Materialized View" do
       )
     end
 
-    let(:expected_rdsap_2000_data) do
-      expected_sap_1900_data.merge(
-        "address" => "1 Some Street",
-        "address2" => nil,
-        "address3" => nil,
-        "report_type" => "2",
-        "built_form" => "Semi-Detached",
-        "co2_emiss_curr_per_floor_area" => "20",
-        "environment_impact_current" => "52",
-        "environment_impact_potential" => "74",
-        "extension_count" => "0",
-        "construction_age_band" => "England and Wales: 2007-2011",
-        "current_energy_efficiency" => "50",
-        "current_energy_rating" => "E",
-        "energy_consumption_current" => "230",
-        "energy_consumption_potential" => "88",
-        "energy_tariff" => "Single",
-        "fixed_lighting_outlets_count" => "16",
-        "flat_storey_count" => 2,
-        "flat_top_storey" => "N",
-        "floor_description" => "Suspended, no insulation (assumed)",
-        "floor_energy_eff" => "N/A",
-        "floor_env_eff" => "N/A",
-        "floor_level" => "1st",
-        "floor_height" => "2.45",
-        "glazed_area" => "Normal",
-        "glazed_type" => "double glazing installed during or after 2002",
-        "photo_supply" => "50",
-        "solar_water_heating_flag" => "N",
-        "main_heating_controls" => "Programmer, room thermostat and TRVs",
-        "heating_cost_current" => "365.98",
-        "heating_cost_potential" => "250.34",
-        "heat_loss_corridor" => "unheated corridor",
-        "hot_water_cost_current" => "200.4",
-        "hot_water_cost_potential" => "180.43",
-        "hotwater_description" => "From main system",
-        "hot_water_env_eff" => "Good",
-        "inspection_date" => "2020-05-04",
-        "lighting_cost_current" => "123.45",
-        "lighting_cost_potential" => "84.23",
-        "lighting_description" => "Low energy lighting in 50% of fixed outlets",
-        "lighting_energy_eff" => "Good",
-        "lighting_env_eff" => "Good",
-        "lodgement_date" => "2020-05-06",
-        "low_energy_lighting" => "100",
-        "low_energy_fixed_lighting_outlets_count" => "16",
-        "main_fuel" => "mains gas (not community)",
-        "mains_gas_flag" => "Y",
-        "mainheat_description" => "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
-        "mainheat_env_eff" => "Very Poor",
-        "mechanical_ventilation" => "natural",
-        "multi_glaze_proportion" => "100",
-        "number_habitable_rooms" => "5",
-        "number_heated_rooms" => "5",
-        "number_open_fireplaces" => "0",
-        "roof_description" => "Pitched, 25 mm loft insulation",
-        "roof_energy_eff" => "Poor",
-        "roof_env_eff" => "Poor",
-        "certificate_number" => "0000-0000-0000-0000-0006",
-        "secondheat_description" => "Room heaters, electric",
-        "total_floor_area" => "55",
-        "uprn" => nil,
-        "unheated_corridor_length" => "10",
-        "walls_description" => "Solid brick, as built, no insulation (assumed)",
-        "walls_energy_eff" => "Very Poor",
-        "walls_env_eff" => "Very Poor",
-        "wind_turbine_count" => 0,
-        "windows_description" => "Fully double glazed",
-        "windows_energy_eff" => "Average",
-        "windows_env_eff" => "Average",
-        "local_authority" => "E09000013",
-        "uprn_source" => nil,
-      )
-    end
-
     let(:expected_rdsap_2100_data) do
       expected_rdsap_2000_data.merge(
         "certificate_number" => "0000-0000-0000-0000-0008",
@@ -1792,30 +1807,6 @@ describe "Domestic Materialized View" do
         "number_open_fireplaces" => "1",
         "photo_supply" => "0",
         "transaction_type" => "Grant scheme",
-        "postcode" => "SW1A 2AA",
-        "constituency" => "E14001172",
-        "constituency_label" => "Cities of London and Westminster",
-        "local_authority" => "E09000033",
-        "local_authority_label" => "Westminster",
-      )
-    end
-
-    let(:expected_rdsap_2101_data) do
-      expected_rdsap_2000_data.merge(
-        "certificate_number" => "0000-0000-0000-0000-0009",
-        "construction_age_band" => "England and Wales: 2022 onwards",
-        "fixed_lighting_outlets_count" => "31",
-        "glazed_area" => nil,
-        "glazed_type" => nil,
-        "inspection_date" => "2025-04-04",
-        "lodgement_date" => "2021-12-06",
-        "low_energy_fixed_lighting_outlets_count" => "31",
-        "low_energy_lighting" => "100",
-        "mechanical_ventilation" => "positive input from outside",
-        "number_open_fireplaces" => "1",
-        "photo_supply" => "0",
-        "transaction_type" => "Grant scheme",
-        "unheated_corridor_length" => "10",
         "postcode" => "SW1A 2AA",
         "constituency" => "E14001172",
         "constituency_label" => "Cities of London and Westminster",
@@ -1925,7 +1916,7 @@ describe "Domestic Materialized View" do
     end
   end
 
-  context "when an assessment has a no value saved into the assessment_address_id attribute" do
+  context "when an assessment has no value saved into the assessment_address_id attribute" do
     it "returns a nil value for the uprn" do
       expect(query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0000" }["uprn"]).to be_nil
     end
@@ -1936,6 +1927,60 @@ describe "Domestic Materialized View" do
 
     it "does not include the assessment in the results" do
       expect(query_result.find { |i| i["certificate_number"] == ni_assessment_id }).to be_nil
+    end
+  end
+
+  context "when checking data from yearly materialized views" do
+    let(:query_result) do
+      query = (2020..2024)
+                .map { |year| "SELECT * FROM mvw_domestic_search_#{year}" }
+                .join(" UNION ")
+
+      query = "#{query} ORDER BY certificate_number"
+      ActiveRecord::Base.connection.exec_query(query)
+    end
+
+    before(:all) do
+      (2020..2024).each do |year|
+        Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_search_#{year}")
+      end
+    end
+
+    it "returns the correct columns" do
+      expect(mview_columns("mvw_domestic_search_2020").sort.map(&:downcase)).to eq expected_columns.sort
+    end
+
+    it "returns rows for each assessment in England & Wales ordered by certificate_number" do
+      expect(query_result.pluck("certificate_number")).to eq %w[
+        0000-0000-0000-0000-0000
+        0000-0000-0000-0000-0001
+        0000-0000-0000-0000-0002
+        0000-0000-0000-0000-0004
+        0000-0000-0000-0000-0006
+        0000-0000-0000-0000-0008
+        0000-0000-0000-0000-0009
+        0000-0000-0000-0000-0010
+        0000-0000-0000-0000-0011
+        0000-0000-0000-0000-0012
+        0000-0000-0000-0000-0013
+        0000-0000-0000-0000-0014
+        0000-0000-0000-0000-0015
+        0000-0000-0000-0000-0016
+        0000-0000-0000-0000-0017
+        0000-0000-0000-0000-0018
+        0000-0000-0000-0000-0019
+        0000-0000-0000-0000-0020
+        0000-0000-0000-0000-0021
+        0000-0000-0000-0000-0022
+        0000-0000-0000-0000-0023
+        0000-0000-0000-0000-0024
+        0000-0000-0000-0000-0025
+      ]
+    end
+
+    it "returns a row with the required data for RdSAP 21.0.1" do
+      result = query_result.find { |i| i["certificate_number"] == "0000-0000-0000-0000-0009" }
+      expect(result).to eq expected_rdsap_2101_data
     end
   end
 end
