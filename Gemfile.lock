@@ -113,7 +113,7 @@ GEM
     io-event (1.22.1)
     jmespath (1.6.2)
     json (2.21.2)
-    json-schema (6.2.0)
+    json-schema (6.2.1)
       addressable (~> 2.8)
       bigdecimal (>= 3.1, < 5)
     jwt (3.2.0)
