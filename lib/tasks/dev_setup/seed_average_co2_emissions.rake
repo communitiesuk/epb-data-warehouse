@@ -26,4 +26,6 @@ task :seed_average_co2_emissions do
       Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id: rrn, country_id: 1)
     end
   end
+
+  Gateway::AverageCo2EmissionsGateway.new.refresh
 end
