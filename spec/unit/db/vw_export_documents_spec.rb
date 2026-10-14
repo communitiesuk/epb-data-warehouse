@@ -115,7 +115,7 @@ describe "VwExportDocuments" do
 
   context "when generating redacted documents tables" do
     let(:redacted_table_names) do
-      sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name LIKE 'vw_export_documents_%';"
+      sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name LIKE 'vw_export_documents_2%';"
       result = ActiveRecord::Base.connection.exec_query(sql)
       result
     end

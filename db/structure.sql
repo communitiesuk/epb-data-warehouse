@@ -5304,6 +5304,40 @@ CREATE VIEW public.vw_export_documents_2026 AS
 
 
 --
+-- Name: vw_export_documents_ni; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vw_export_documents_ni AS
+ SELECT ad.assessment_id AS certificate_number,
+    public.fn_export_json_document(ad.document, ad.matched_uprn) AS document,
+    ad.warehouse_created_at,
+    ad.updated_at,
+    s.assessment_type,
+    (EXTRACT(year FROM s.registration_date))::integer AS year
+   FROM ((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN public.countries co ON ((s.country_id = co.country_id)))
+  WHERE ((co.country_code)::text = 'NIR'::text);
+
+
+--
+-- Name: vw_json_documents_ni_yesterday; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vw_json_documents_ni_yesterday AS
+ SELECT ad.assessment_id AS certificate_number,
+    public.fn_export_json_document(ad.document, ad.matched_uprn) AS document,
+    ad.warehouse_created_at,
+    ad.updated_at,
+    s.assessment_type,
+    (EXTRACT(year FROM s.registration_date))::integer AS year
+   FROM ((public.assessment_documents ad
+     JOIN public.assessment_search s ON (((s.assessment_id)::text = (ad.assessment_id)::text)))
+     JOIN public.countries co ON ((s.country_id = co.country_id)))
+  WHERE (((co.country_code)::text = 'NIR'::text) AND (((ad.warehouse_created_at)::date = (CURRENT_DATE - 1)) OR ((ad.updated_at)::date = (CURRENT_DATE - 1))));
+
+
+--
 -- Name: vw_json_documents_yesterday; Type: VIEW; Schema: public; Owner: -
 --
 
@@ -5913,6 +5947,7 @@ ALTER TABLE ONLY public.assessment_attribute_lookups
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20261013161413'),
 ('20261001142402'),
 ('20260929102503'),
 ('20260921150137'),
