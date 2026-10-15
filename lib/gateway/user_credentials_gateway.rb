@@ -3,7 +3,7 @@ require "aws-sdk-dynamodb"
 module Gateway
   class UserCredentialsGateway
     def initialize(dynamo_db_client: nil)
-      table_name = ENV["EPB_DATA_USER_CREDENTIAL_TABLE_NAME"]
+      table_name = ENV.fetch("EPB_DATA_USER_CREDENTIAL_V2_TABLE_NAME")
       client = dynamo_db_client || get_dynamo_db_client
       @dynamo_resource = Aws::DynamoDB::Resource.new(client: client)
       @table = @dynamo_resource.table(table_name)
@@ -11,12 +11,11 @@ module Gateway
 
     def bearer_token_exists?(bearer_token)
       params = {
-        index_name: "BearerTokenIndex",
-        key_condition_expression: "BearerToken = :bearer_token",
-        expression_attribute_values: { ":bearer_token" => bearer_token },
+        index_name: "GSI1_PK_Index",
+        key_condition_expression: "GSI1_PK = :token",
+        expression_attribute_values: { ":token" => "TOKEN##{bearer_token}" },
       }
-      response = @table.client.query(
-        table_name: @table.name,
+      response = @table.query(
         **params,
       )
       response.items.any?
@@ -25,7 +24,7 @@ module Gateway
     def get_opt_in_users
       emails = []
       params = {
-        filter_expression: "OptOut = :o",
+        filter_expression: "Attributes.OptOut = :o",
         expression_attribute_values: {
           ":o" => false,
         },
@@ -33,7 +32,7 @@ module Gateway
 
       scan_all_pages(params) do |items|
         items.each do |item|
-          emails << item["EmailAddress"] unless item["EmailAddress"].nil?
+          emails << item["Attributes"]["EmailAddress"] unless item["Attributes"]["EmailAddress"].nil?
         end
       end
 

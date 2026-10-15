@@ -5,8 +5,7 @@ describe Gateway::UserCredentialsGateway do
 
   let(:dynamo_db_client) do
     Aws::DynamoDB::Client.new(
-      region: "eu-west-2",
-      credentials: Aws::Credentials.new("fake_access_key_id", "fake_secret_access_key"),
+      stub_responses: true,
     )
   end
 
@@ -14,81 +13,39 @@ describe Gateway::UserCredentialsGateway do
     "4AzwlHwpNp46ydvLN31bSVpCN3CQbvee050P7aERWXFbgzFJckPfZXqFmcR0GFxT"
   end
 
-  before do
-    WebMock.enable!
-  end
-
-  describe "#bearer_token_exists?" do
-    context "when the token exists" do
-      let(:expected_query_body) do
-        {
-          "TableName": "test_users_table",
-          "IndexName": "BearerTokenIndex",
-          "KeyConditionExpression": "BearerToken = :bearer_token",
-          "ExpressionAttributeValues": {
-            ":bearer_token": { "S": token },
-          },
-        }.to_json
-      end
-
-      let(:query_response) do
-        {
-          "Items" => [
+  describe "#bearer_token_exists" do
+    context "when checking for an existing token" do
+      before do
+        dynamo_db_client.stub_responses(:query, {
+          items: [
             {
-              "UserId" => { "S" => "user_id" },
-              "OneLoginSub" => { "S" => "mock-sub-id" },
-              "CreatedAt" => { "S" => Time.now.to_s },
-              "BearerToken" => { "S" => token },
+              "UserId" => "user_id",
+              "GSI1_PK" => "TOKEN##{token}",
             },
           ],
-          "Count" => 1,
-        }.to_json
-      end
-
-      before do
-        WebMock.stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com")
-               .with(body: expected_query_body,
-                     headers: {
-                       "X-Amz-Target" => "DynamoDB_20120810.Query",
-                     })
-               .to_return(status: 200, body: query_response)
+          count: 1,
+        })
       end
 
       it "returns true" do
         expect(gateway.bearer_token_exists?(token)).to be(true)
+
+        query_request = dynamo_db_client.api_requests.find { |req| req[:operation_name] == :query }
+        expect(query_request[:params][:key_condition_expression]).to eq("GSI1_PK = :token")
+        expect(query_request[:params][:expression_attribute_values]).to eq({ ":token" => { s: "TOKEN##{token}" } })
       end
     end
 
-    context "when the token does not exist" do
-      let(:expected_query_body) do
-        {
-          "TableName": "test_users_table",
-          "IndexName": "BearerTokenIndex",
-          "KeyConditionExpression": "BearerToken = :bearer_token",
-          "ExpressionAttributeValues": {
-            ":bearer_token": { "S": "invalid-token" },
-          },
-        }.to_json
-      end
-
-      let(:query_response) do
-        {
-          "Items" => [],
-          "Count" => 0,
-        }.to_json
-      end
-
+    context "when checking for a none existent token" do
       before do
-        WebMock.stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com")
-               .with(body: expected_query_body,
-                     headers: {
-                       "X-Amz-Target" => "DynamoDB_20120810.Query",
-                     })
-               .to_return(status: 200, body: query_response)
+        dynamo_db_client.stub_responses(:query, {
+          items: [],
+          count: 0,
+        })
       end
 
       it "returns false" do
-        expect(gateway.bearer_token_exists?("invalid-token")).to be(false)
+        expect(gateway.bearer_token_exists?("missing-sub-id")).to be(false)
       end
     end
   end
@@ -102,39 +59,32 @@ describe Gateway::UserCredentialsGateway do
       "mock-sub-id"
     end
 
-    let(:query_response) do
-      {
-        "Items" => [
+    before do
+      dynamo_db_client.stub_responses(:scan, {
+        items: [
           {
-            "UserId" => { "S" => user_id },
-            "OneLoginSub" => { "S" => sub_id },
-            "CreatedAt" => { "S" => Time.now.to_s },
-            "EmailAddress" => { "S" => "encrypted_email_1" },
-            "OptOut" => { "BOOL" => false },
-            "BearerToken" => { "S" => "the-bearer-token" },
+            "UserId" => "user_id",
+            "Type" => "PROFILE",
+            "Attributes" => {
+              "CreatedAt" => "created_at",
+              "EmailAddress" => "encrypted_email_1",
+              "OptOut" => false,
+            },
+            "GSI1_PK" => "ONELOGIN#sub_id_1",
           },
           {
-            "UserId" => { "S" => user_id },
-            "OneLoginSub" => { "S" => sub_id },
-            "CreatedAt" => { "S" => Time.now.to_s },
-            "EmailAddress" => { "S" => "encrypted_email_2" },
-            "OptOut" => { "BOOL" => false },
-            "BearerToken" => { "S" => "the-bearer-token" },
+            "UserId" => "user_id_2",
+            "Type" => "PROFILE",
+            "Attributes" => {
+              "CreatedAt" => "created_at",
+              "EmailAddress" => "encrypted_email_2",
+              "OptOut" => false,
+            },
+            "GSI1_PK" => "ONELOGIN#sub_id_2",
           },
         ],
-        "Count" => 2,
-      }.to_json
-    end
-
-    before do
-      stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com/")
-        .with(
-          headers: {
-            "Host" => "dynamodb.eu-west-2.amazonaws.com",
-            "X-Amz-Target" => "DynamoDB_20120810.Scan",
-          },
-        )
-        .to_return(status: 200, body: query_response, headers: {})
+        count: 2,
+      })
     end
 
     it "returns data for user who have not opted out" do
@@ -174,14 +124,40 @@ describe Gateway::UserCredentialsGateway do
       end
 
       before do
-        stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com/")
-          .with(
-            headers: {
-              "Host" => "dynamodb.eu-west-2.amazonaws.com",
-              "X-Amz-Target" => "DynamoDB_20120810.Scan",
+        dynamo_db_client.stub_responses(:scan, {
+          items: [
+            {
+              "UserId" => "user_id",
+              "Type" => "PROFILE",
+              "Attributes" => {
+                "CreatedAt" => "created_at",
+                "EmailAddress" => "encrypted_email_1",
+                "OptOut" => false,
+              },
+              "GSI1_PK" => "ONELOGIN#sub_id_1",
             },
-          )
-          .to_return(status: 200, body: query_response, headers: {})
+            {
+              "UserId" => "user_id_2",
+              "Type" => "PROFILE",
+              "Attributes" => {
+                "CreatedAt" => "created_at",
+                "EmailAddress" => "encrypted_email_2",
+                "OptOut" => false,
+              },
+              "GSI1_PK" => "ONELOGIN#sub_id_2",
+            },
+            {
+              "UserId" => "user_id_3",
+              "Type" => "PROFILE",
+              "Attributes" => {
+                "CreatedAt" => "created_at",
+                "OptOut" => false,
+              },
+              "GSI1_PK" => "ONELOGIN#sub_id_3",
+            },
+          ],
+          count: 2,
+        })
       end
 
       it "returns the emails" do
@@ -190,70 +166,55 @@ describe Gateway::UserCredentialsGateway do
     end
 
     context "when email results are paginated" do
-      let(:first_page_query_body) do
-        {
-          "FilterExpression": "OptOut = :o",
-          "ExpressionAttributeValues": { ":o": { "BOOL": false } },
-          "TableName": "test_users_table",
-        }.to_json
-      end
-
-      let(:second_page_query_body) do
-        {
-          "FilterExpression": "OptOut = :o",
-          "ExpressionAttributeValues": { ":o": { "BOOL": false } },
-          "ExclusiveStartKey": { "UserId": { "S": user_id } },
-          "TableName": "test_users_table",
-        }.to_json
-      end
-
-      let(:first_page_response) do
-        {
-          "Items" => [
-            {
-              "UserId" => { "S" => user_id },
-              "OneLoginSub" => { "S" => sub_id },
-              "CreatedAt" => { "S" => Time.now.to_s },
-              "EmailAddress" => { "S" => "encrypted_email_1" },
-              "OptOut" => { "BOOL" => false },
-              "BearerToken" => { "S" => "the-bearer-token" },
-            },
-          ],
-          "Count" => 1,
-          "LastEvaluatedKey" => { "UserId" => { "S" => user_id } },
-        }.to_json
-      end
-
-      let(:second_page_response) do
-        {
-          "Items" => [
-            {
-              "UserId" => { "S" => user_id },
-              "OneLoginSub" => { "S" => sub_id },
-              "CreatedAt" => { "S" => Time.now.to_s },
-              "EmailAddress" => { "S" => "encrypted_email_2" },
-              "OptOut" => { "BOOL" => false },
-              "BearerToken" => { "S" => "the-bearer-token" },
-            },
-          ],
-          "Count" => 1,
-        }.to_json
+      let(:last_evaluated_key) do
+        { "UserId" => "user_id_1" }
       end
 
       before do
-        stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com/")
-          .with(body: first_page_query_body,
-                headers: { "X-Amz-Target" => "DynamoDB_20120810.Scan" })
-          .to_return(status: 200, body: first_page_response)
-
-        stub_request(:post, "https://dynamodb.eu-west-2.amazonaws.com/")
-          .with(body: second_page_query_body,
-                headers: { "X-Amz-Target" => "DynamoDB_20120810.Scan" })
-          .to_return(status: 200, body: second_page_response)
+        dynamo_db_client.stub_responses(
+          :scan,
+          {
+            items: [
+              {
+                "UserId" => "user_id_1",
+                "Type" => "PROFILE",
+                "Attributes" => {
+                  "CreatedAt" => "created_at",
+                  "EmailAddress" => "encrypted_email_1",
+                  "OptOut" => false,
+                },
+                "GSI1_PK" => "ONELOGIN#sub_id_1",
+              },
+            ],
+            count: 1,
+            last_evaluated_key: last_evaluated_key,
+          },
+          {
+            items: [
+              {
+                "UserId" => "user_id_2",
+                "Type" => "PROFILE",
+                "Attributes" => {
+                  "CreatedAt" => "created_at",
+                  "EmailAddress" => "encrypted_email_2",
+                  "OptOut" => false,
+                },
+                "GSI1_PK" => "ONELOGIN#sub_id_2",
+              },
+            ],
+            count: 1,
+          },
+        )
       end
 
-      it "returns emails from all pages" do
+      it "returns emails from all pages and forwards exclusive_start_key on subsequent scans" do
         expect(gateway.get_opt_in_users).to eq %w[encrypted_email_1 encrypted_email_2]
+
+        scan_requests = dynamo_db_client.api_requests.select { |req| req[:operation_name] == :scan }
+
+        expect(scan_requests.count).to eq(2)
+        expect(scan_requests[0][:params][:exclusive_start_key]).to be_nil
+        expect(scan_requests[1][:params][:exclusive_start_key]).to eq({ "UserId" => { s: "user_id_1" } })
       end
     end
   end
