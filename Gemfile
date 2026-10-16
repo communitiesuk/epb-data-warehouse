@@ -13,7 +13,7 @@ group :test do
   gem "rubocop-govuk", "~> 5.2", require: false
   gem "rubocop-performance", "~> 1.21", require: false
   gem "timecop", "~> 0.9"
-  gem "webmock", "~> 3.26"
+  gem "webmock", "~> 3.30"
 end
 
 group :development do
