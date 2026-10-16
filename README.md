@@ -147,7 +147,7 @@ The URL of the unleash feature flag service.
 
 Authentication token for the unleash feature flag service.
 
-#### `EPB_DATA_USER_CREDENTIAL_TABLE_NAME`
+#### `EPB_DATA_USER_CREDENTIAL_V2_TABLE_NAME`
 
 DynamoDB table name containing the user credentials.
 
