@@ -24,6 +24,7 @@ module Gateway
     def get_opt_in_users
       emails = []
       params = {
+        projection_expression: "Attributes.EmailAddress",
         filter_expression: "Attributes.OptOut = :o",
         expression_attribute_values: {
           ":o" => false,
@@ -32,7 +33,8 @@ module Gateway
 
       scan_all_pages(params) do |items|
         items.each do |item|
-          emails << item["Attributes"]["EmailAddress"] unless item["Attributes"]["EmailAddress"].nil?
+          email = item.dig("Attributes", "EmailAddress")
+          emails << email if email
         end
       end
 
