@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/communitiesuk/epb-data-warehouse#readme",
   "engines": {
-    "node": "^24 || ^22"
+    "node": "^24.22.0 || ^22"
   },
   "dependencies": {
     "csv-parse": "^7.0.3",
