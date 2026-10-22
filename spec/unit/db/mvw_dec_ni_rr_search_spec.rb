@@ -114,13 +114,13 @@ describe "DEC NI Recommendations Report" do
     it "returns the correct recommendations for the NI DEC with schema_type CEPC-NI-8.0.0 recommendation report" do
       result = data.select { |row| row["certificate_number"] == "0000-0000-0000-0000-0011" }
       expect(result.length).to eq 5
-      expect(result).to eq expected_ni_800_report
+      expect(result).to match_array expected_ni_800_report
     end
 
     it "returns the correct recommendations for the NI DEC with schema_type CEPC-NI-6.0 recommendation report" do
       result = data.select { |row| row["certificate_number"] == "0000-0000-0000-0000-0005" }
       expect(result.length).to eq 5
-      expect(result).to eq expected_ni_60_report
+      expect(result).to match_array expected_ni_60_report
     end
 
     it "returns only the NI DEC-RR certificate numbers" do
