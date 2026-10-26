@@ -62,6 +62,7 @@ describe "DEC NI Report" do
       "yr2_renewables_co2" => "0",
       "uprn_source" => nil }
   end
+
   let(:expected_dec_7_1_data) do
     expected_dec_7_data.merge(
       "certificate_number" => "0000-0000-0000-0000-0002",
@@ -204,6 +205,7 @@ describe "DEC NI Report" do
 
   include_context "when lodging XML"
   include_context "when exporting data"
+  include_context "with ons directory data"
 
   before(:all) do
     add_countries

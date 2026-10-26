@@ -130,7 +130,19 @@ RSpec.configure do |config|
   end
 
   config.before do
-    DatabaseCleaner.strategy = [:truncation, { only: %w[assessment_attribute_values assessment_documents assessments_country_ids assessment_search audit_logs] }]
+    DatabaseCleaner.strategy = [
+      :truncation,
+      { only: %w[
+        assessment_attribute_values
+        assessment_documents
+        assessments_country_ids
+        assessment_search
+        audit_logs
+        ons_postcode_directory
+        ons_postcode_directory_names
+        ons_postcode_directory_versions
+      ] },
+    ]
     DatabaseCleaner.start
   end
 

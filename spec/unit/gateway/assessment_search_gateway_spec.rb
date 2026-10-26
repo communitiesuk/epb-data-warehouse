@@ -5,7 +5,7 @@ describe Gateway::AssessmentSearchGateway do
   subject(:gateway) { described_class.new }
 
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
 
   let(:search) do
     ActiveRecord::Base.connection.exec_query(
@@ -23,11 +23,6 @@ describe Gateway::AssessmentSearchGateway do
   let(:rdsap) do
     parse_assessment(assessment_id: "9999-0000-0000-0000-9996", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", assessment_address_id: "UPRN-1000000001245",
                      different_fields: { "postcode" => "SW10 0AA", "created_at" => created_at, "registration_date" => "2020-05-04" })
-  end
-
-  before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
   end
 
   describe "#insert_assessment" do

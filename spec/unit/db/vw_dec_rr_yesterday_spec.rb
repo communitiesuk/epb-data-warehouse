@@ -6,13 +6,11 @@ require_relative "../../shared_context/shared_recommendations"
 describe "DEC Recommendations Yesterday Report" do
   include_context "when fetching recommendations report"
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
   include_context "when exporting data"
 
   context "when fetching data from vw_dec_yesterday_rr" do
     before(:all) do
-      import_postcode_directory_name
-      import_postcode_directory_data
       add_countries
       schema_type = "CEPC-8.0.0"
       yesterday = Date.today - 1

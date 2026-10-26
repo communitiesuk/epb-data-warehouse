@@ -5,7 +5,7 @@ describe Gateway::ExportHeatPumpsGateway do
   subject(:gateway) { described_class.new }
 
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
 
   before(:all) do
     type_of_assessment = "SAP"
@@ -62,8 +62,6 @@ describe Gateway::ExportHeatPumpsGateway do
     air_and_ground_source = [{ "description": { "value": "Ground source heat pump, underfloor, electric", "language": "1" }, "energy_efficiency_rating": 5, "environmental_efficiency_rating": 5 },
                              { "description": "Air source heat pump, warm air, electric", "energy_efficiency_rating": 2, "environmental_efficiency_rating": 4 }]
 
-    import_postcode_directory_name
-    import_postcode_directory_data
     import_enums "spec/config/attribute_enum_property_type.json"
     add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:)
     add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
@@ -159,8 +157,6 @@ describe Gateway::ExportHeatPumpsGateway do
   end
 
   describe "#fetch_by_local_authority" do
-    include_context "when saving ons data"
-
     let(:expected_values) do
       [{ "local_authority" => nil,
          "number_of_assessments" => 9 },
