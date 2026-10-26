@@ -5,7 +5,7 @@ require_relative "../../shared_context/shared_import_enums"
 
 describe "Domestic Materialized View" do
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
   include_context "when exporting data"
   include_context "when saving enum data to lookup tables"
 
@@ -209,8 +209,6 @@ describe "Domestic Materialized View" do
   end
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
     type_of_assessment = "SAP"
     assessment_address_id = "UPRN-000000001245"
     schema_type = "SAP-Schema-19.0.0"

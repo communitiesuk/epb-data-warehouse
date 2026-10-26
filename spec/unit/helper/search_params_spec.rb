@@ -1,4 +1,6 @@
 describe Helper::SearchParams, type: :helper do
+  include_context "with ons directory data"
+
   let(:search_arguments) do
     { date_start: "2023-12-01", date_end: "2023-12-23" }
   end

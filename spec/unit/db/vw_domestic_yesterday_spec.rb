@@ -12,12 +12,10 @@ describe "Domestic Report Yesterday" do
 
   include_context "when fetching recommendations report"
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
   include_context "when exporting data"
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
     add_countries
 
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {

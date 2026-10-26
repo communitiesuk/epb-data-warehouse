@@ -18,6 +18,8 @@ end
 
 require_relative "../shared_context/shared_lodgement"
 describe "Backfill assessment_search table rake" do
+  include_context "with ons directory data"
+
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:backfill_assessment_search") }
 

@@ -6,7 +6,7 @@ require_relative "../../shared_context/shared_recommendations"
 describe "Domestic NI Recommendations Report Yesterday" do
   include_context "when fetching recommendations report"
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
   include_context "when exporting data"
 
   let(:query_result) do
@@ -23,9 +23,6 @@ describe "Domestic NI Recommendations Report Yesterday" do
   let(:ni_not_yesterday_assessment_id) { "0000-0000-0000-0000-0006" }
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
-
     config_path = "spec/config/attribute_improvements_map.json"
     config_gateway = Gateway::XsdConfigGateway.new(config_path)
     import_use_case = UseCase::ImportEnums.new(

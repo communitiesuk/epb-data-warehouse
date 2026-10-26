@@ -2,11 +2,9 @@ shared_context "when requesting a search endpoint" do |property_type|
   include RSpecDataWarehouseApiServiceMixin
 
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
     add_countries
 
     country_id = 1

@@ -5,7 +5,7 @@ require_relative "../../shared_context/shared_import_enums"
 
 describe "Commercial Materialized View" do
   include_context "when lodging XML"
-  include_context "when saving ons data"
+  include_context "with ons directory data"
   include_context "when exporting data"
   include_context "when saving enum data to lookup tables"
 
@@ -364,8 +364,6 @@ describe "Commercial Materialized View" do
   end
 
   before(:all) do
-    import_postcode_directory_name
-    import_postcode_directory_data
     add_countries
 
     type_of_assessment = "CEPC"
