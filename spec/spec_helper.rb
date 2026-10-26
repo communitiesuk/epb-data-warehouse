@@ -16,6 +16,7 @@ require "mock_redis"
 require "webmock/rspec"
 require "timecop"
 require "sentry-ruby"
+require "rspec/snapshot"
 
 require_relative "samples"
 require_relative "test_loader"
