@@ -28,7 +28,7 @@
     "csv-parse": "^7.0.3",
     "csv-stream": "^0.2.0",
     "fast-xml-parser": "^5.11.2",
-    "got": "^16.0.0",
+    "got": "^16.1.0",
     "pg": "^8.23.1",
     "pg-promise": "^12.7.1",
     "unzipper": "^0.12.5"
