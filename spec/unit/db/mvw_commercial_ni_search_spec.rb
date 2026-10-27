@@ -8,6 +8,7 @@ describe "Commercial Materialized View" do
   include_context "with ons directory data"
   include_context "when exporting data"
   include_context "when saving enum data to lookup tables"
+  include_context "with country data"
 
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_commercial_ni_search")
@@ -364,8 +365,6 @@ describe "Commercial Materialized View" do
   end
 
   before(:all) do
-    add_countries
-
     type_of_assessment = "CEPC"
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")

@@ -13,6 +13,7 @@ describe "Domestic Recommendations Report" do
   include_context "when fetching recommendations report"
   include_context "when lodging XML"
   include_context "with ons directory data"
+  include_context "with country data"
   include_context "when exporting data"
 
   describe "#fetch_rr" do
@@ -21,7 +22,6 @@ describe "Domestic Recommendations Report" do
       config_gateway = Gateway::XsdConfigGateway.new(config_path)
       import_use_case = UseCase::ImportEnums.new(assessment_lookups_gateway: Gateway::AssessmentLookupsGateway.new, xsd_presenter: XmlPresenter::Xsd.new, assessment_attribute_gateway: Gateway::AssessmentAttributesGateway.new, xsd_config_gateway: config_gateway)
       import_use_case.execute
-      add_countries
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0017", schema_type: "SAP-Schema-12.0", type_of_assessment: "SAP", type: "sap", different_fields: {
         "postcode": "SW10 0AA", "country_id": 1
       })

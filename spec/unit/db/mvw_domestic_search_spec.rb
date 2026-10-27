@@ -8,6 +8,7 @@ describe "Domestic Materialized View" do
   include_context "with ons directory data"
   include_context "when exporting data"
   include_context "when saving enum data to lookup tables"
+  include_context "with country data"
 
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_domestic_search ORDER BY certificate_number")
@@ -212,7 +213,6 @@ describe "Domestic Materialized View" do
     type_of_assessment = "SAP"
     assessment_address_id = "UPRN-000000001245"
     schema_type = "SAP-Schema-19.0.0"
-    add_countries
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports")
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0000", assessment_address_id: "RRN-000000001245", schema_type:, type_of_assessment:, different_fields: {

@@ -6,11 +6,11 @@ describe Gateway::ExportHeatPumpsGateway do
 
   include_context "when lodging XML"
   include_context "with ons directory data"
+  include_context "with country data"
 
   before(:all) do
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
-    add_countries
     air_source_description = [{
       "description": {
         "value": "Air source heat pump, Underfloor heating and radiators, pipes in screed above insulation, electric",

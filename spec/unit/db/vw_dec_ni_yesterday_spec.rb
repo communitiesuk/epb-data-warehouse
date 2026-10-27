@@ -10,9 +10,9 @@ describe "DEC NI Report Yesterday" do
 
   include_context "when lodging XML"
   include_context "when exporting data"
+  include_context "with country data"
 
   before(:all) do
-    add_countries
     type_of_assessment = "DEC"
     yesterday = Time.now - 1.day
 

@@ -3,6 +3,7 @@ require_relative "../../shared_context/shared_lodgement"
 describe "ReportingController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"
+  include_context "with country data"
 
   context "when requesting a response from /api/avg-co2-emissions" do
     let(:expected_data) do
@@ -15,7 +16,6 @@ describe "ReportingController" do
     before do
       type_of_assessment = "SAP"
       schema_type = "SAP-Schema-19.0.0"
-      add_countries
       add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
         "co2_emissions_current_per_floor_area": 5,
       })

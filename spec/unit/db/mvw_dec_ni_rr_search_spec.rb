@@ -4,11 +4,10 @@ require_relative "../../shared_context/shared_data_export"
 describe "DEC NI Recommendations Report" do
   include_context "when lodging XML"
   include_context "when exporting data"
+  include_context "with country data"
 
   context "when fetching data from mvw_dec_ni_rr_search" do
     before(:all) do
-      add_countries
-
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")
       add_commercial(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment: "DEC-RR", type: "dec-rr", different_fields: {
         "postcode": "SW10 0AA", "country_id": 3, registration_date: Time.now, "related_rrn": "0000-0000-0000-0000-0000"

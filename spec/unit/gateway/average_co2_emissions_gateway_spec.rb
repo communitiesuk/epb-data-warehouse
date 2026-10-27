@@ -4,11 +4,11 @@ describe Gateway::AverageCo2EmissionsGateway do
   subject(:gateway) { described_class.new }
 
   include_context "when lodging XML"
+  include_context "with country data"
 
   before(:all) do
     type_of_assessment = "SAP"
     schema_type = "SAP-Schema-19.0.0"
-    add_countries
     add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
       "co2_emissions_current_per_floor_area": 5,
     })

@@ -88,23 +88,6 @@ shared_context "when lodging XML" do
     Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_or_create_by(assessment_id:, country_id:)
   end
 
-  def add_countries
-    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
-
-    insert_sql = <<-SQL
-            INSERT INTO countries(country_id, country_code, country_name, address_base_country_code)
-            VALUES  (1, 'ENG', 'England' ,'["E"]'::jsonb),
-                    (2, 'WLS', 'Wales', '{}'::jsonb),
-                    (3, 'NIR', 'Northern Ireland', '["N"]'::jsonb),
-                    (4, 'EAW', 'England and Wales', '["E", "W"]'::jsonb),
-                    (5, 'SCT', 'Scotland', '["S"]'::jsonb),
-                    (42,'', 'Channel Islands', '["L"]'::jsonb),
-                    (7,'NR', 'Not Recorded', null)
-
-    SQL
-    ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
-  end
-
   def add_heat_pump_data(document)
     document.merge!(
       { "transaction_type": 6,

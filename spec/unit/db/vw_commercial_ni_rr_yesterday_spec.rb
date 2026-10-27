@@ -4,10 +4,9 @@ require_relative "../../shared_context/shared_data_export"
 describe "NI Commercial Recommendations Yesterday Report" do
   include_context "when lodging XML"
   include_context "when exporting data"
+  include_context "with country data"
 
   before(:all) do
-    add_countries
-
     type_of_assessment = "CEPC-RR"
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "cepc-rr", different_fields: {
       "postcode" => "BT10 0AA", "country_id": 3, "related_rrn": "0000-0000-0000-0000-0000"

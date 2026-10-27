@@ -7,11 +7,11 @@ describe "Commercial Recommendations Report" do
   include_context "when fetching recommendations report"
   include_context "when lodging XML"
   include_context "with ons directory data"
+  include_context "with country data"
   include_context "when exporting data"
 
   context "when fetching data from mvw_commercial_rr" do
     before(:all) do
-      add_countries
       schema_type = "CEPC-8.0.0"
 
       add_commercial(assessment_id: "0000-0000-0000-0000-0000", schema_type: "CEPC-3.1", type_of_assessment: "CEPC-RR", type: "cepc-rr", different_fields: {

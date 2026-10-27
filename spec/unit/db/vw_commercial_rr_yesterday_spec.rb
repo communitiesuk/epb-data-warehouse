@@ -8,10 +8,10 @@ describe "Commercial Recommendations Yesterday Report" do
   include_context "when lodging XML"
   include_context "with ons directory data"
   include_context "when exporting data"
+  include_context "with country data"
 
   context "when fetching data from vw_commercial_yesterday_rr" do
     before(:all) do
-      add_countries
       schema_type = "CEPC-8.0.0"
 
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")

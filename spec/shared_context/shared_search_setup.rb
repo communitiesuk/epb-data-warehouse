@@ -3,10 +3,9 @@ shared_context "when requesting a search endpoint" do |property_type|
 
   include_context "when lodging XML"
   include_context "with ons directory data"
+  include_context "with country data"
 
   before(:all) do
-    add_countries
-
     country_id = 1
 
     type_of_assessment = case property_type

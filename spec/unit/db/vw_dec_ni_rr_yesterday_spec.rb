@@ -4,10 +4,10 @@ require_relative "../../shared_context/shared_data_export"
 describe "DEC NI Recommendations Yesterday Report" do
   include_context "when lodging XML"
   include_context "when exporting data"
+  include_context "with country data"
 
   context "when fetching data from vw_dec_ni_rr_yesterday" do
     before(:all) do
-      add_countries
       yesterday = Date.today - 1
 
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")

@@ -2,11 +2,10 @@ require_relative "../../shared_context/shared_lodgement"
 
 describe "Commercial NI Recommendation Report Search" do
   include_context "when lodging XML"
+  include_context "with country data"
 
   context "when fetching data from commercial recommendation reports for NI" do
     before(:all) do
-      add_countries
-
       type_of_assessment = "CEPC-RR"
 
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-NI-8.0.0", type_of_assessment:, type: "cepc-rr", different_fields: {

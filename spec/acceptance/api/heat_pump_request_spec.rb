@@ -3,6 +3,7 @@ require_relative "../../shared_context/shared_lodgement"
 describe "HeatPumpController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"
+  include_context "with country data"
 
   context "when requesting a response from /api/heat-pump-counts/floor-area" do
     let(:response) do
@@ -30,10 +31,6 @@ describe "HeatPumpController" do
       [{ "totalFloorArea" => "BETWEEN 0 AND 50", "numberOfAssessments" => 1 },
        { "totalFloorArea" => "BETWEEN 151 AND 200", "numberOfAssessments" => 1 },
        { "totalFloorArea" => "BETWEEN 51 AND 100", "numberOfAssessments" => 1 }]
-    end
-
-    before(:all) do
-      add_countries
     end
 
     before do

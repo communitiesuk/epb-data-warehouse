@@ -8,6 +8,7 @@ describe "Domestic NI Recommendations Report Yesterday" do
   include_context "when lodging XML"
   include_context "with ons directory data"
   include_context "when exporting data"
+  include_context "with country data"
 
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM vw_domestic_ni_rr_yesterday ORDER BY certificate_number, improvement_item", "SQL").map { |result| result }
@@ -32,7 +33,6 @@ describe "Domestic NI Recommendations Report Yesterday" do
       xsd_config_gateway: config_gateway,
     )
     import_use_case.execute
-    add_countries
 
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0010", schema_type: "RdSAP-Schema-21.0.1", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "SW10 0AA", "country_id": 1

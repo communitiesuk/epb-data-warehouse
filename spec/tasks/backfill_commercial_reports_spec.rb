@@ -9,6 +9,7 @@ describe "Backfill commercial_reports table rake" do
     subject(:task) { get_task("one_off:backfill_commercial_reports") }
 
     include_context "when lodging XML"
+    include_context "with country data"
 
     let(:result) do
       ActiveRecord::Base.connection.exec_query(
@@ -17,8 +18,6 @@ describe "Backfill commercial_reports table rake" do
     end
 
     before(:all) do
-      add_countries
-
       add_assessment_eav(assessment_id: "0000-0000-0000-0000-0001", schema_type: "CEPC-8.0.0", type_of_assessment: "CEPC", type: "cepc", different_fields: {
         "country_id": 1, "related_rrn" => "0000-0000-0000-0000-0011"
       })

@@ -14,10 +14,9 @@ describe "Domestic NI Report Yesterday" do
   include_context "when lodging XML"
   include_context "with ons directory data"
   include_context "when exporting data"
+  include_context "with country data"
 
   before(:all) do
-    add_countries
-
     add_assessment_eav(assessment_id: "0000-0000-0000-0000-0006", schema_type: "RdSAP-Schema-NI-20.0.0", type_of_assessment: "RdSAP", type: "epc", different_fields: {
       "postcode": "BT1 1AA", "country_id": 3
     })

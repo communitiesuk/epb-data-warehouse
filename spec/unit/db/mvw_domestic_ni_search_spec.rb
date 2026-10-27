@@ -8,6 +8,7 @@ describe "Domestic NI Materialized View" do
   include_context "with ons directory data"
   include_context "when exporting data"
   include_context "when saving enum data to lookup tables"
+  include_context "with country data"
 
   let(:date_start) { "2021-12-01" }
   let(:date_end) { "2023-12-09" }
@@ -31,7 +32,6 @@ describe "Domestic NI Materialized View" do
   before(:all) do
     type_of_assessment = "SAP"
     assessment_address_id = "UPRN-000000001245"
-    add_countries
 
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports")
 
