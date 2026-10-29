@@ -76,7 +76,7 @@ The data for the samples is based on the corresponding XML sample. These files c
 
 To recreate the data in the json samples run the following command: 
 
-`rake dev_setup:generate_json_examples`
+`bundle exec rake dev_setup:generate_json_examples`
 
 This will delete the existing file and recreate based on any changes made to XML samples.
 

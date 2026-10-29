@@ -52,8 +52,8 @@ class Helper::GenerateJsonSamples
     is_commercial = type.include?("cepc") || type.include?("dec")
     version_number = schema_type.scan(/\d+/).first.to_i
     is_old_sap = schema_type.start_with?("SAP") && version_number <= 16
-    rrn = is_commercial || is_old_sap ? xml.at("//*[local-name() = 'RRN']").children : xml.at("RRN")
-    rrn.to_s
+    rrn = is_commercial || is_old_sap ? xml.at("//*[local-name() = 'RRN']") : xml.at("RRN")
+    rrn.text
   end
 
   def self.get_sample_files

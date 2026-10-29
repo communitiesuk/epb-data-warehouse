@@ -37,7 +37,19 @@ describe "DomesticSearchController" do
       end
     end
 
-    context "when the certificate request is invalid" do
+    context "when requesting a certificate without hypens" do
+      let(:response) do
+        get "/api/certificate?certificate_number=00000000000000000000"
+      end
+
+      it "returns the certificate" do
+        expect(response.status).to eq(200)
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]).to be_a(Hash)
+      end
+    end
+
+    context "when the certificate cannot be found" do
       let(:response) do
         get "/api/certificate?certificate_number=0000-0000-0000-0000-0001"
       end
@@ -47,6 +59,18 @@ describe "DomesticSearchController" do
       end
 
       it "raises an error for the missing assessment" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["data"]["error"]).to include "Certificate not found"
+      end
+    end
+
+    context "when the certificate number is invalid" do
+      let(:response) do
+        get "/api/certificate?certificate_number=xxx"
+      end
+
+      it "returns a 404 when the assessment is not found" do
+        expect(response.status).to eq(404)
         response_body = JSON.parse(response.body)
         expect(response_body["data"]["error"]).to include "Certificate not found"
       end

@@ -81,18 +81,20 @@ module Gateway
     end
 
     def fetch_by_id(assessment_id:)
+      assessment_id = Helper::Rrn.format(assessment_id)
+
       if Helper::Toggles.enabled?("data_warehouse_enable_NI_data")
         sql_join = ""
         sql_ni_condition = ""
       else
-        sql_join = <<~SQL_JOIN
+        sql_join = <<~SQL_JOIN.squish
           LEFT JOIN assessments_country_ids aci ON aci.assessment_id = ad.assessment_id
           JOIN countries co ON co.country_id = aci.country_id
         SQL_JOIN
 
         sql_ni_condition = " AND co.country_code IN ('ENG', 'WLS', 'EAW')"
       end
-      sql = <<-SQL
+      sql = <<~SQL.squish
         SELECT
           fn_export_json_document(document, matched_uprn) as document,
           (document->>'registration_date')::timestamp as registration_date
@@ -112,7 +114,6 @@ module Gateway
       ]
       result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       return nil if result.empty?
-
       return nil unless check_id_in_assessment_search(assessment_id:, registration_date: result.first["registration_date"])
 
       JSON.parse(result.first["document"], symbolize_names: true)
