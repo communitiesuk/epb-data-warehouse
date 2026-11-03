@@ -37,7 +37,7 @@ describe "DomesticSearchController" do
       end
     end
 
-    context "when requesting a certificate without hypens" do
+    context "when requesting a certificate without hyphens" do
       let(:response) do
         get "/api/certificate?certificate_number=00000000000000000000"
       end
