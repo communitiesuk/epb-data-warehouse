@@ -5,8 +5,15 @@ require "benchmark"
 RSpec.describe "import_ons_postcode_directory" do
   subject(:task) { get_task("import_ons_postcode_directory") }
 
+  let(:zip_url) { "https://ons/data" }
+
   before(:context) { DatabaseCleaner.start }
   after(:context) { DatabaseCleaner.clean }
+
+  before do
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with("ZIP_URL").and_return(zip_url)
+  end
 
   it "truncates the tables and imports expected data" do
     stub_request(:get, "https://ons/data").to_return(status: 200, body: File.new("spec/fixtures/ons_data/ONSPD_TEST.zip"), headers: {})
@@ -31,7 +38,7 @@ RSpec.describe "import_ons_postcode_directory" do
     end
 
     expect {
-      task.invoke("https://ons/data")
+      task.invoke
     }.to output(<<~OUTPUT).to_stdout
       Downloaded zip (66.7 KB) in 0.14 seconds
       Saved 7 Country records
@@ -61,24 +68,25 @@ RSpec.describe "import_ons_postcode_directory" do
     stub_request(:get, "https://ons/data").to_return(status: 200, body: File.new("spec/fixtures/ons_data/ONSPD_TEST.zip"), headers: {})
 
     expect {
-      task.invoke("https://ons/data")
+      task.invoke
     }.to output.to_stdout
   end
 
   it "errors if the url is not supplied" do
-    expect { task.invoke }.to raise_error "zip file url not supplied"
+    allow(ENV).to receive(:fetch).with("ZIP_URL").and_call_original
+    expect { task.invoke }.to raise_error KeyError, 'key not found: "ZIP_URL"'
   end
 
   it "errors if the downloaded file returns a non-200 status" do
     stub_request(:get, "https://ons/data").to_return(status: 500, body: "", headers: {})
 
-    expect { task.invoke("https://ons/data") }.to raise_error "unexpected http response: 500  "
+    expect { task.invoke }.to raise_error "unexpected http response: 500  "
   end
 
   it "errors if the downloaded file responds with an infinite redirect loop" do
     stub_request(:get, "https://ons/data").to_return(status: 304, headers: { location: "https://ons/data" })
 
-    expect { task.invoke("https://ons/data") }.to raise_error "too many redirects"
+    expect { task.invoke }.to raise_error "too many redirects"
   end
 
   it "errors if the downloaded file is empty" do
@@ -86,7 +94,7 @@ RSpec.describe "import_ons_postcode_directory" do
 
     expect {
       expect {
-        task.invoke("https://ons/data")
+        task.invoke
       }.to output.to_stdout
     }.to raise_error "return file is empty"
   end
@@ -96,7 +104,7 @@ RSpec.describe "import_ons_postcode_directory" do
 
     expect {
       expect {
-        task.invoke("https://ons/data")
+        task.invoke
       }.to output.to_stdout
     }.to raise_error "data file not found"
   end
@@ -106,7 +114,7 @@ RSpec.describe "import_ons_postcode_directory" do
 
     expect {
       expect {
-        task.invoke("https://ons/data")
+        task.invoke
       }.to output.to_stdout
     }.to raise_error "name files not found: PCON"
   end

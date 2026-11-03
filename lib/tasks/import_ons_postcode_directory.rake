@@ -7,7 +7,7 @@ require "tempfile"
 require "benchmark"
 
 desc "Import ONS postcode data into the ons_postcode_directory tables"
-task :import_ons_postcode_directory, %i[url] do |_, args|
+task :import_ons_postcode_directory do
   name_files = {
     "CTRY" => "Country",
     "LAD" => "Local authority",
@@ -15,9 +15,7 @@ task :import_ons_postcode_directory, %i[url] do |_, args|
     "RGN" => "Region",
   }
 
-  raise "zip file url not supplied" unless args[:url]
-
-  uri = URI(args[:url])
+  uri = URI(ENV.fetch("ZIP_URL"))
 
   Tempfile.create(anonymous: true) do |file|
     file.binmode
