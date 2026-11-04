@@ -60,7 +60,7 @@ describe "DomesticSearchController" do
 
       it "raises an error for the missing assessment" do
         response_body = JSON.parse(response.body)
-        expect(response_body["data"]["error"]).to include "Certificate not found"
+        expect(response_body["data"]["error"]).to eq "Certificate not found"
       end
     end
 
@@ -69,10 +69,10 @@ describe "DomesticSearchController" do
         get "/api/certificate?certificate_number=xxx"
       end
 
-      it "returns a 404 when the assessment is not found" do
-        expect(response.status).to eq(404)
+      it "returns a 400 error" do
+        expect(response.status).to eq(400)
         response_body = JSON.parse(response.body)
-        expect(response_body["data"]["error"]).to include "Certificate not found"
+        expect(response_body["data"]["error"]).to eq "Invalid certificate number"
       end
     end
   end

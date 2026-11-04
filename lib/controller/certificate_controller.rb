@@ -6,6 +6,7 @@ module Controller
       properties: {
         certificate_number: {
           type: "string",
+          pattern: '^\d{4}-?\d{4}-?\d{4}-?\d{4}-?\d{4}$',
         },
       },
     }.freeze
@@ -19,6 +20,8 @@ module Controller
     rescue Errors::CertificateNotFound
       no_certificate_error = "Certificate not found"
       json_api_response code: 404, data: { error: no_certificate_error }
+    rescue Boundary::Json::ValidationError
+      json_api_response code: 400, data: { error: "Invalid certificate number" }
     rescue StandardError => e
       report_to_sentry(e)
       json_api_response code: 500, data: { errors: [{ code: e.message }] }
