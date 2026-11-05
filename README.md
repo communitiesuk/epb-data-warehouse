@@ -168,3 +168,7 @@ Secret for the JWT encoded auth token.
 S3 bucket containing the generated data downloads.
 
 If `APP_ENV` is not set to "production" then a stubbed S3 client will be used.
+
+#### `COVERAGE`
+
+If "true", a coverage report will be generated when the rspec tests are run.

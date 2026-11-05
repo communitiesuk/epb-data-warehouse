@@ -41,7 +41,7 @@ task :default do
 end
 
 # Adds project rake files
-Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
+Dir.glob("lib/tasks/**/*.rake").each { load File.expand_path(it) }
 
 ENV["DATABASE_URL"] = "postgresql://localhost:5432/epb_eav_development" if ENV["DATABASE_URL"].nil? && ENV["STAGE"].nil?
 

@@ -13,6 +13,7 @@ group :test do
   gem "rspec-snapshot", "~> 2.2"
   gem "rubocop-govuk", "~> 5.2", require: false
   gem "rubocop-performance", "~> 1.21", require: false
+  gem "simplecov", "~>1.3.2"
   gem "timecop", "~> 0.9"
   gem "webmock", "~> 3.34"
 end
