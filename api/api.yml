@@ -43,7 +43,7 @@ paths:
           required: true
           schema:
             type: string
-            pattern: "^\d{4}-?\d{4}-?\d{4}-?\d{4}-?\d{4}$"
+            pattern: '^\d{4}-?\d{4}-?\d{4}-?\d{4}-?\d{4}$'
             example: "0000-1672-0000-1732-0000"
       responses:
         '200':
