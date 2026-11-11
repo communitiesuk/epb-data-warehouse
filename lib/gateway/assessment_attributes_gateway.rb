@@ -57,6 +57,25 @@ module Gateway
       end
     end
 
+    # Inserts the attribute value, or overwrites it if one already exists for this assessment.
+    # Atomic, so safe when several workers write the same attribute for the same assessment concurrently.
+    def upsert_attribute_value(
+      assessment_id:,
+      attribute_name:,
+      attribute_value:,
+      parent_name: nil
+    )
+      return if attribute_value.to_s.empty? || attribute_name.to_s == RRN
+
+      attribute_id = attributes.id_for(attribute_name, parent_name:)
+      insert_attribute_value(
+        assessment_id:,
+        attribute_id:,
+        attribute_value:,
+        overwrite_existing: true,
+      )
+    end
+
     def add_attribute_values(*attribute_values, assessment_id:)
       values = attribute_values.reduce([]) do |carry, value|
         cast_value = CastValue.new value.value
@@ -440,11 +459,21 @@ module Gateway
       false
     end
 
-    def insert_attribute_value(assessment_id:, attribute_id:, attribute_value:)
+    def insert_attribute_value(assessment_id:, attribute_id:, attribute_value:, overwrite_existing: false)
       sql = <<-SQL
               INSERT INTO assessment_attribute_values(assessment_id, attribute_id, attribute_value, attribute_value_int, attribute_value_float, json)
               VALUES($1, $2, $3, $4, $5, $6)
       SQL
+
+      if overwrite_existing
+        sql += <<-SQL
+              ON CONFLICT (attribute_id, assessment_id) DO UPDATE
+              SET attribute_value = EXCLUDED.attribute_value,
+                  attribute_value_int = EXCLUDED.attribute_value_int,
+                  attribute_value_float = EXCLUDED.attribute_value_float,
+                  json = EXCLUDED.json
+        SQL
+      end
 
       cast_value = CastValue.new attribute_value
 
