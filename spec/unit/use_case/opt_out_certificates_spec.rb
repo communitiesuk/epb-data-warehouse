@@ -12,7 +12,7 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
 
   let(:database_gateway) do
     database_gateway = instance_double(Gateway::AssessmentAttributesGateway)
-    allow(database_gateway).to receive(:add_attribute_value)
+    allow(database_gateway).to receive(:upsert_attribute_value)
     allow(database_gateway).to receive(:delete_attribute_value)
     database_gateway
   end
@@ -85,8 +85,8 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
       end
 
       it "saves 3 opted out certificate to the EAV store" do
-        expect(database_gateway).to have_received(:delete_attribute_value).exactly(3).times
-        expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
+        expect(database_gateway).to have_received(:upsert_attribute_value).exactly(3).times
+        expect(database_gateway).not_to have_received(:delete_attribute_value)
       end
 
       it "saves 3 opted out certificates to the document store" do
@@ -116,11 +116,11 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
       end
 
       it "performs a save for each of the 3 certificates on the EAV store" do
-        expect(database_gateway).to have_received(:add_attribute_value).exactly(3).times
+        expect(database_gateway).to have_received(:upsert_attribute_value).exactly(3).times
       end
 
-      it "performs a delete for each of the 3 certificates to ensure it can write a value, plus a delete of the opt_out attribute for one certificate" do
-        expect(database_gateway).to have_received(:delete_attribute_value).exactly(4).times
+      it "deletes the opt_out attribute only for the opted in certificate" do
+        expect(database_gateway).to have_received(:delete_attribute_value).with(assessment_id: "0000-9999-0000-0000-0001", attribute_name: "opt_out").exactly(1).times
       end
 
       it "performs a save for each of the 3 certificates on the document store" do
@@ -161,7 +161,7 @@ describe UseCase::OptOutCertificates, :set_with_timecop do
       end
 
       it "saves the two non-erroring opted out certificates to the EAV store" do
-        expect(database_gateway).to have_received(:add_attribute_value).exactly(2).times
+        expect(database_gateway).to have_received(:upsert_attribute_value).exactly(2).times
       end
 
       it "saves the two non-erroring opted out certificates to the document store" do
