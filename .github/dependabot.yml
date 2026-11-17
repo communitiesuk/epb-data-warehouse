@@ -12,12 +12,6 @@ updates:
         patterns:
           - 'active*'
 
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
