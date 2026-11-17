@@ -7,7 +7,7 @@ ruby "4.0.9"
 source "https://rubygems.org"
 group :test do
   gem "database_cleaner-active_record", "~> 2.1"
-  gem "mock_redis", "~> 0.55"
+  gem "mock_redis", "~> 0.56"
   gem "rack-test", "~> 2.2.0"
   gem "rspec", "~> 3.12"
   gem "rspec-snapshot", "~> 2.2"
