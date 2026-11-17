@@ -43,8 +43,8 @@ GEM
       jmespath (~> 1, >= 1.6.1)
       logger
       rexml (~> 3.4, >= 3.4.2)
-    aws-sdk-dynamodb (1.178.0)
-      aws-sdk-core (~> 3, >= 3.260.0)
+    aws-sdk-dynamodb (1.185.0)
+      aws-sdk-core (~> 3, >= 3.268.0)
       aws-sigv4 (~> 1.5)
     aws-sdk-kms (1.136.0)
       aws-sdk-core (~> 3, >= 3.260.0)
@@ -327,7 +327,7 @@ DEPENDENCIES
   activerecord (~> 8.1)
   activesupport (~> 8.1)
   async (~> 2.46)
-  aws-sdk-dynamodb (~> 1.178)
+  aws-sdk-dynamodb (~> 1.185)
   aws-sdk-kms (~> 1)
   aws-sdk-s3 (= 1.235.0)
   benchmark
