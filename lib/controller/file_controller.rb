@@ -87,9 +87,6 @@ module Controller
       redirect s3_url
     rescue Errors::FileNotFound
       json_api_response code: 404, data: { error: "File not found" }
-    rescue StandardError => e
-      report_to_sentry(e)
-      json_api_response code: 500, data: { error: "Internal Server Error" }
     end
 
     def get_s3_file_info(file_name)
@@ -97,9 +94,6 @@ module Controller
       json_api_response data: return_data
     rescue Errors::FileNotFound
       json_api_response code: 404, data: { error: "File not found" }
-    rescue StandardError => e
-      report_to_sentry(e)
-      json_api_response code: 500, data: { error: "Internal Server Error" }
     end
   end
 end

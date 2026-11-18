@@ -22,9 +22,6 @@ module Controller
       json_api_response code: 404, data: { error: no_certificate_error }
     rescue Boundary::Json::ValidationError
       json_api_response code: 400, data: { error: "Invalid certificate number" }
-    rescue StandardError => e
-      report_to_sentry(e)
-      json_api_response code: 500, data: { errors: [{ code: e.message }] }
     end
   end
 end

@@ -28,9 +28,6 @@ module Controller
     rescue Boundary::NoData
       no_data_error = "No audit logs could be found for that query"
       json_api_response code: 404, data: { error: no_data_error }
-    rescue StandardError => e
-      report_to_sentry(e)
-      json_api_response code: 500, data: { errors: [{ code: e.message }] }
     end
   end
 end

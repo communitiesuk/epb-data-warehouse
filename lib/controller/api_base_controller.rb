@@ -107,9 +107,6 @@ module Controller
     rescue Errors::OutOfPageSizeRangeError
       page_size_message = "The requested page size #{params[:page_size]} is out of range. Please provide a page size between 1 and 5000"
       json_api_response code: 400, data: { error: page_size_message }
-    rescue StandardError => e
-      report_to_sentry(e)
-      json_api_response code: 500, data: { errors: [{ code: e.message }] }
     end
 
     def get_count(assessment_type:)
@@ -125,9 +122,6 @@ module Controller
       use_case = Container.count_certificates_use_case
       result = use_case.execute(**execute_params)
       json_api_response code: 200, data: { count: result }
-    rescue StandardError => e
-      report_to_sentry(e)
-      json_api_response code: 500, data: { errors: [{ code: e.message }] }
     end
   end
 end

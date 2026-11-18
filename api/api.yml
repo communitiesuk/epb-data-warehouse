@@ -63,15 +63,6 @@ paths:
                     type: string
                 example:
                   error: "Certificate not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                errors:
-                  - code: "Unexpected error message here"
 
   /api/codes:
     get:
@@ -190,15 +181,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 error: "No audit logs could be found for that query"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                errors:
-                  - code: "Unexpected error message here"
 
   /api/domestic/search:
     get:
@@ -367,15 +349,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 error: "No certificates could be found for that query"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                errors:
-                  - code: "Unexpected error message here"
 
   /api/non-domestic/search:
     get:
@@ -545,15 +518,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 error: "No certificates could be found for that query"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                errors:
-                  - code: "Unexpected error message here"
 
   /api/display/search:
     get:
@@ -723,15 +687,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 error: "No certificates could be found for that query"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                errors:
-                  - code: "Unexpected error message here"
 
   /api/files/domestic/csv:
     get:
@@ -764,17 +719,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/domestic/csv/info:
     get:
@@ -806,17 +750,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/domestic/json:
     get:
@@ -849,17 +782,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/domestic/json/info:
     get:
@@ -891,17 +813,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/non-domestic/csv:
     get:
@@ -934,17 +845,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/non-domestic/csv/info:
     get:
@@ -976,17 +876,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/non-domestic/json:
     get:
@@ -1019,17 +908,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/non-domestic/json/info:
     get:
@@ -1061,17 +939,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/non-domestic-recommendations/json:
     get:
@@ -1104,17 +971,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/non-domestic-recommendations/json/info:
     get:
@@ -1146,17 +1002,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/display/csv:
     get:
@@ -1189,17 +1034,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/display/csv/info:
     get:
@@ -1231,18 +1065,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
-
 
   /api/files/display/json:
     get:
@@ -1275,18 +1097,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
-
 
   /api/files/display/json/info:
     get:
@@ -1318,17 +1128,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/display-recommendations/json:
     get:
@@ -1361,17 +1160,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
   /api/files/display-recommendations/json/info:
     get:
@@ -1403,17 +1191,6 @@ paths:
                     type: string
                 example:
                   error: "File not found"
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                example:
-                  error: "Internal Server Error"
 
 components:
   securitySchemes:

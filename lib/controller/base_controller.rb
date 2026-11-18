@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "sinatra"
 require "sinatra/activerecord"
 require "epb-auth-tools"
@@ -15,6 +17,7 @@ module Controller
       register Sinatra::Reloader
       also_reload "lib/**/*.rb"
       set :host_authorization, { permitted_hosts: [] }
+      set :show_exceptions, false
     end
 
     set(:auth_token_has_all) do |*scopes|
@@ -47,6 +50,17 @@ module Controller
     rescue Errors::MissingBearerToken
       halt 403, { errors: [{ code: "UNAUTHORISED", title: "You are not authenticated" }] }.to_json
     end
+
+    error do |exception|
+      if settings.environment == :development
+        json_response(error_details(exception), 500)
+      else
+        status 500
+        "SERVER ERROR"
+      end
+    end
+
+  private
 
     def json_api_response(
       code: 200,
@@ -83,6 +97,15 @@ module Controller
 
     def report_to_sentry(exception)
       Sentry.capture_exception(exception) if defined?(Sentry)
+    end
+
+    def error_details(exception)
+      {
+        type: exception.class.name,
+        message: exception.message,
+        backtrace: exception&.backtrace&.select { it.start_with?(File.expand_path("..", __dir__)) },
+        cause: exception.cause && error_details(exception.cause),
+      }.compact
     end
   end
 end
