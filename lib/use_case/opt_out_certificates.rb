@@ -56,8 +56,7 @@ module UseCase
   private
 
     def save_attribute_to_stores(assessment_id:, attribute:, value:)
-      @assessment_attribute_gateway.delete_attribute_value(assessment_id:, attribute_name: attribute)
-      @assessment_attribute_gateway.add_attribute_value(assessment_id:, attribute_name: attribute, attribute_value: value)
+      @assessment_attribute_gateway.upsert_attribute_value(assessment_id:, attribute_name: attribute, attribute_value: value)
       @documents_gateway.set_top_level_attribute(assessment_id:, top_level_attribute: attribute, new_value: value)
       @audit_logs_gateway.insert_log(assessment_id:, event_type: attribute, timestamp: value)
     end

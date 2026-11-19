@@ -440,6 +440,25 @@ describe Gateway::AssessmentAttributesGateway do
     end
   end
 
+  context "when upserting an attribute value" do
+    it "inserts the value when none exists" do
+      gateway.upsert_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "opt_in", attribute_value: "2026-01-01 00:00:00")
+      expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute: "opt_in")).to eq("2026-01-01 00:00:00")
+    end
+
+    it "overwrites an existing value for the same assessment without raising an error" do
+      gateway.add_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "opt_in", attribute_value: "2026-01-01 00:00:00")
+      gateway.upsert_attribute_value(assessment_id: "0000-0000-0000-0000-0002", attribute_name: "opt_in", attribute_value: "2026-01-01 00:00:00")
+
+      expect {
+        gateway.upsert_attribute_value(assessment_id: "0000-0000-0000-0000-0001", attribute_name: "opt_in", attribute_value: "2026-02-02 00:00:00")
+      }.not_to raise_error
+
+      expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0001", attribute: "opt_in")).to eq("2026-02-02 00:00:00")
+      expect(gateway.fetch_attribute_by_assessment(assessment_id: "0000-0000-0000-0000-0002", attribute: "opt_in")).to eq("2026-01-01 00:00:00")
+    end
+  end
+
   context "when there is no data present" do
     it "returns false when cheking a certificate has attribute data" do
       expect(gateway.assessment_exists("0000-0000-0000-0000-0001")).to be(false)
