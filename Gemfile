@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
-
 ruby "4.0.10"
 
 source "https://rubygems.org"
+
 group :test do
   gem "database_cleaner-active_record", "~> 2.1"
+  gem "debug"
   gem "mock_redis", "~> 0.56"
   gem "rack-test", "~> 2.3.0"
   gem "rspec", "~> 3.12"
