@@ -16,13 +16,13 @@ module Controller
       },
     }.freeze
 
-    get "/api/codes" do
+    get "/api/codes", has_bearer_token: true do
       use_case = Container.fetch_look_ups_use_case
       result = use_case.execute
       json_api_response code: 200, data: result
     end
 
-    get "/api/codes/info" do
+    get "/api/codes/info", has_bearer_token: true do
       execute_params = {
         name: params[:code],
         schema_version: params[:schemaVersion],
