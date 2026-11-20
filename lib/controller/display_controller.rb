@@ -4,7 +4,7 @@ module Controller
       get_count(assessment_type: %w[DEC])
     end
 
-    get "/api/display/search" do
+    get "/api/display/search", has_bearer_token: true do
       get_search_result(assessment_type: %w[DEC])
     end
   end
