@@ -25,6 +25,7 @@ shared_examples "a file download API endpoint" do |file_name:, type:|
 
       it "returns 403" do
         expect(response.status).to eq(403)
+        expect(response.content_type).to eq "application/json"
         expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
       end
     end
@@ -38,6 +39,7 @@ shared_examples "a file download API endpoint" do |file_name:, type:|
 
       it "returns forbidden" do
         expect(response.status).to eq(403)
+        expect(response.content_type).to eq "application/json"
         expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
       end
     end
@@ -132,6 +134,7 @@ shared_examples "a file info API endpoint" do |file_name:, type:|
 
     it "returns 403" do
       expect(response.status).to eq(403)
+      expect(response.content_type).to eq "application/json"
       expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
     end
   end
@@ -139,6 +142,7 @@ shared_examples "a file info API endpoint" do |file_name:, type:|
   context "when the request is not authorized" do
     it "returns 403" do
       expect(response.status).to eq(403)
+      expect(response.content_type).to eq "application/json"
       expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
     end
   end

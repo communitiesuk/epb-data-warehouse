@@ -48,6 +48,7 @@ module Controller
 
       end
     rescue Errors::MissingBearerToken
+      content_type :json
       halt 403, { errors: [{ code: "UNAUTHORISED", title: "You are not authenticated" }] }.to_json
     end
 
