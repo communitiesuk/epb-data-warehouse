@@ -1,6 +1,9 @@
 describe "CodesController" do
   include RSpecDataWarehouseApiServiceMixin
 
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "codes"
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "codes/info?code=built_form"
+
   context "when requesting a response from /api/codes" do
     context "when the response is a success" do
       let(:use_case) do
@@ -93,7 +96,4 @@ describe "CodesController" do
       end
     end
   end
-
-  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "codes"
-  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "codes/info?code=built_form"
 end

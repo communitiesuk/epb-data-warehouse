@@ -4,9 +4,9 @@ describe "DomesticSearchController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"
 
-  let(:assessment_id) do
-    "0000-0000-0000-0000-0000"
-  end
+  let(:assessment_id) { "0000-0000-0000-0000-0000" }
+
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "certificate?certificate_number=0000-0000-0000-0000-0000"
 
   context "when the request is authorized" do
     before do
@@ -76,6 +76,4 @@ describe "DomesticSearchController" do
       end
     end
   end
-
-  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "certificate?certificate_number=0000-0000-0000-0000-0000"
 end

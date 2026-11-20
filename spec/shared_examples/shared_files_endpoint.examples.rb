@@ -19,12 +19,26 @@ shared_examples "a file download API endpoint" do |file_name:, type:|
     end
 
     context "when the request is not authorized" do
-      let(:no_auth_header_response) do
+      let(:response) do
         get "/api/files/#{file_name}/#{type}"
       end
 
       it "returns 403" do
-        expect(no_auth_header_response.status).to eq(403)
+        expect(response.status).to eq(403)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
+      end
+    end
+
+    context "when the request is using an invalid bearer token" do
+      let(:response) do
+        allow(authenticate_user_use_case).to receive(:execute).with("foo").and_return(false)
+        header("Authorization", "Bearer foo")
+        get "/api/files/#{file_name}/#{type}"
+      end
+
+      it "returns forbidden" do
+        expect(response.status).to eq(403)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
       end
     end
 
@@ -108,9 +122,24 @@ shared_examples "a file info API endpoint" do |file_name:, type:|
     end
   end
 
+  context "when the request has an invalid bearer token" do
+    before do
+      authenticate_user_use_case = instance_double(UseCase::AuthenticateUser)
+      allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+      allow(authenticate_user_use_case).to receive(:execute).and_return(false)
+      header("Authorization", "Bearer invalid-bearer-token")
+    end
+
+    it "returns 403" do
+      expect(response.status).to eq(403)
+      expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
+    end
+  end
+
   context "when the request is not authorized" do
     it "returns 403" do
       expect(response.status).to eq(403)
+      expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
     end
   end
 end

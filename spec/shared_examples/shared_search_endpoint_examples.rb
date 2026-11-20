@@ -432,6 +432,32 @@ shared_examples "a search API endpoint" do |type:|
         end
       end
     end
+
+    context "when using an invalid token" do
+      let(:response) do
+        authenticate_user_use_case = instance_double(UseCase::AuthenticateUser)
+        allow(Container).to receive(:authenticate_user_use_case).and_return(authenticate_user_use_case)
+        allow(authenticate_user_use_case).to receive(:execute).and_return(false)
+        header("Authorization", "Bearer invalid-bearer-token")
+        get "/api/#{type}/search"
+      end
+
+      it "returns forbidden" do
+        expect(response.status).to eq(403)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
+      end
+    end
+
+    context "without a token" do
+      let(:response) do
+        get("/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01")
+      end
+
+      it "returns unauthorized" do
+        expect(response.status).to eq(401)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "Auth::Errors::TokenDecodeError" }])
+      end
+    end
   end
 end
 
@@ -477,6 +503,29 @@ shared_examples "a count API endpoint" do |type:|
 
       it "raises an error due to the missing token" do
         expect(response.body).to include "You are not authorised to perform this request"
+      end
+    end
+
+    context "with an invalid a token" do
+      let(:response) do
+        header("Authorization", "Bearer foo")
+        get("/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01")
+      end
+
+      it "returns forbidden" do
+        expect(response.status).to eq(401)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "Auth::Errors::TokenDecodeError" }])
+      end
+    end
+
+    context "without a token" do
+      let(:response) do
+        get("/api/#{type}/count?date_start=2018-01-01&date_end=2025-01-01")
+      end
+
+      it "returns unauthorized" do
+        expect(response.status).to eq(401)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "Auth::Errors::TokenMissing" }])
       end
     end
   end

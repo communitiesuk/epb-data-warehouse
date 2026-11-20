@@ -1,5 +1,8 @@
 describe "DeltasController" do
   include RSpecDataWarehouseApiServiceMixin
+
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "api/deltas?date_start=2018-01-01&date_end=2018-02-01"
+
   context "when requesting a response from /api/deltas" do
     let(:audit_logs_gateway) do
       Gateway::AuditLogsGateway.new
@@ -128,6 +131,4 @@ describe "DeltasController" do
       end
     end
   end
-
-  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "api/deltas?date_start=2018-01-01&date_end=2018-02-01"
 end

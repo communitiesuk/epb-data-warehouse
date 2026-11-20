@@ -49,5 +49,28 @@ describe "ReportingController" do
         expect(response_body["data"].sort).to eq(expected_data.sort)
       end
     end
+
+    context "without a bearer token" do
+      let(:response) do
+        get("/api/avg-co2-emissions")
+      end
+
+      it "returns unauthorized" do
+        expect(response.status).to eq(401)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "Auth::Errors::TokenMissing" }])
+      end
+    end
+
+    context "with an invalid bearer token" do
+      let(:response) do
+        header("Authorization", "Bearer foo")
+        get("/api/avg-co2-emissions")
+      end
+
+      it "returns authorized" do
+        expect(response.status).to eq(401)
+        expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "Auth::Errors::TokenDecodeError" }])
+      end
+    end
   end
 end
