@@ -62,6 +62,29 @@ describe "Add a partition to the assessment_search table for next month" do
       end
     end
 
+    context "when the current date is Nov 2025" do
+      before { Timecop.travel(Date.parse("2025-11-15 12:00:00")) }
+      after { Timecop.return }
+
+      let(:insert_row) do
+        sql = <<~SQL
+          INSERT INTO test_table(assessment_id, registration_date)
+          VALUES ('1',  make_date(2025, 12, 31))
+        SQL
+        ActiveRecord::Base.connection.exec_query(sql)
+      end
+
+      it "adds a partition for Dec 2025" do
+        task.invoke
+        expect(get_partitions(table_name)).to include("test_table_y2025m12")
+      end
+
+      it "allows an insertion for the last day of Dec 2025 without error" do
+        task.invoke
+        expect { insert_row }.not_to raise_error
+      end
+    end
+
     context "when the table passed in is not found" do
       before do
         ENV["TABLE_NAME"] = "blah"

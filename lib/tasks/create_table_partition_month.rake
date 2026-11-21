@@ -1,12 +1,9 @@
 desc "Add a partition to the assessment_search table for the next month"
 task :create_table_partition_month do
   table_name = ENV["TABLE_NAME"] || "assessment_search"
-  date_next_month = (Time.now + 1.month)
-  next_month   =  date_next_month.month
-  this_year    = Time.now.month < 12 ? Time.now.year : Time.now.year + 1
-  partition_name = "#{table_name}_y#{this_year}m#{next_month}"
-  start_date  = Time.new(this_year, next_month, 1)
-  end_date    = Time.new(this_year, next_month + 1, 1)
+  start_date = (Time.now + 1.month).beginning_of_month
+  end_date = start_date.next_month
+  partition_name = "#{table_name}_y#{start_date.year}m#{start_date.month}"
 
   raise Boundary::InvalidArgument, "table #{table_name} is not found" unless AddPartition.table_exists?(table_name)
 
