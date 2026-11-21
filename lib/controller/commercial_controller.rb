@@ -4,7 +4,7 @@ module Controller
       get_count(assessment_type: %w[CEPC])
     end
 
-    get "/api/non-domestic/search" do
+    get "/api/non-domestic/search", has_bearer_token: true do
       get_search_result(assessment_type: %w[CEPC])
     end
   end

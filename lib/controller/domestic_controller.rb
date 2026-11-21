@@ -4,7 +4,7 @@ module Controller
       get_count(assessment_type: %w[SAP RdSAP])
     end
 
-    get "/api/domestic/search" do
+    get "/api/domestic/search", has_bearer_token: true do
       get_search_result(assessment_type: %w[SAP RdSAP])
     end
   end

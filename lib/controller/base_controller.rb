@@ -6,6 +6,8 @@ require "epb-auth-tools"
 
 module Controller
   class BaseController < Sinatra::Base
+    # WARNING - do not place before and after handlers in BaseController
+
     def initialize(app = nil, **_kwargs)
       super
       @json_helper = Helper::JsonHelper.new
@@ -34,10 +36,8 @@ module Controller
       end
     end
 
-    before do
-      excluded_paths = %w[/api/domestic/count /api/non-domestic/count /api/display/count /api/heat-pump-counts/floor-area /api/avg-co2-emissions /healthcheck /]
-      unless excluded_paths.include?(request.path)
-
+    set(:has_bearer_token) do |_|
+      condition do
         auth_header = env["HTTP_AUTHORIZATION"]
 
         raise Errors::MissingBearerToken if auth_header.nil? || !auth_header.include?("Bearer")
@@ -45,11 +45,10 @@ module Controller
         bearer_token = auth_header.sub("Bearer ", "")
         authenticated = Container.authenticate_user_use_case.execute(bearer_token)
         raise Errors::MissingBearerToken unless authenticated
-
+      rescue Errors::MissingBearerToken
+        content_type :json
+        halt 403, { errors: [{ code: "UNAUTHORISED", title: "You are not authenticated" }] }.to_json
       end
-    rescue Errors::MissingBearerToken
-      content_type :json
-      halt 403, { errors: [{ code: "UNAUTHORISED", title: "You are not authenticated" }] }.to_json
     end
 
     error do |exception|
