@@ -17,9 +17,9 @@ describe UseCase::FetchAverageCo2Emissions do
 
   let(:fetched_all_values) do
     [
-      { "avg_co2_emission" => 9,  "year_month" => "2022-03" },
-      { "avg_co2_emission" => 25,  "year_month" => "2022-04" },
-      { "avg_co2_emission" => 45,  "year_month" => "2022-05" },
+      { "avg_co2_emission" => 9, "year_month" => "2022-03" },
+      { "avg_co2_emission" => 25, "year_month" => "2022-04" },
+      { "avg_co2_emission" => 45, "year_month" => "2022-05" },
     ]
   end
 

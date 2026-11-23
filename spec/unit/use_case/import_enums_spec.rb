@@ -307,14 +307,14 @@ describe UseCase::ImportEnums do
       result = data.each_with_object({}) do |row, hash|
         hash[row["lookup_key"].to_i] = row["lookup_value"]
       end
-      expectation = {  1 => "Marketed sale",
-                       2 => "Non-marketed sale",
-                       5 => "None of the above",
-                       6 => "New dwelling",
-                       8 => "Rental",
-                       9 => "Assessment for Green Deal",
-                       10 => "Following Green Deal",
-                       11 => "FiT application" }
+      expectation = { 1 => "Marketed sale",
+                      2 => "Non-marketed sale",
+                      5 => "None of the above",
+                      6 => "New dwelling",
+                      8 => "Rental",
+                      9 => "Assessment for Green Deal",
+                      10 => "Following Green Deal",
+                      11 => "FiT application" }
 
       expect(result).to eq(expectation)
     end
@@ -387,11 +387,11 @@ describe UseCase::ImportEnums do
       result = data.each_with_object({}) do |row, hash|
         hash[row["lookup_key"].to_i] = row["lookup_value"]
       end
-      expectation = {  0 => "House",
-                       1 => "Bungalow",
-                       2 => "Flat",
-                       3 => "Maisonette",
-                       4 => "Park home" }
+      expectation = { 0 => "House",
+                      1 => "Bungalow",
+                      2 => "Flat",
+                      3 => "Maisonette",
+                      4 => "Park home" }
 
       expect(result).to eq(expectation)
     end
@@ -462,10 +462,10 @@ describe UseCase::ImportEnums do
       result = data.each_with_object({}) do |row, hash|
         hash[row["lookup_key"].to_i] = row["lookup_value"]
       end
-      expectation = {  0 => "House",
-                       1 => "Bungalow",
-                       2 => "Flat",
-                       3 => "Maisonette" }
+      expectation = { 0 => "House",
+                      1 => "Bungalow",
+                      2 => "Flat",
+                      3 => "Maisonette" }
 
       expect(result).to eq(expectation)
     end

@@ -96,17 +96,17 @@ describe Gateway::AssessmentLookupsGateway do
     let(:expected) do
       [{ "key" => "1", "value" => "Detached", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
        { "key" => "2", "value" => "Semi-Detached", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
-       { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
-       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
-       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
-       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1",  "assessment_type" => "RdSAP" },
+       { "key" => "3", "value" => "End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+       { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
        { "key" => "NR", "value" => "Not Recorded", "schema_version" => "RdSAP-Schema-21.0.1", "assessment_type" => "RdSAP" },
        { "key" => "1", "value" => "Detached", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
        { "key" => "2", "value" => "Semi-Detached", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
        { "key" => "3", "value" => "End-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
        { "key" => "4", "value" => "Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
-       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0",  "assessment_type" => "SAP" },
-       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0",  "assessment_type" => "SAP" }]
+       { "key" => "5", "value" => "Enclosed End-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" },
+       { "key" => "6", "value" => "Enclosed Mid-Terrace", "schema_version" => "SAP-Schema-19.0.0", "assessment_type" => "SAP" }]
     end
 
     context "when filtering by name" do

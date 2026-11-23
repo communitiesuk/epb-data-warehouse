@@ -11,7 +11,7 @@ group :test do
   gem "rack-test", "~> 2.3.0"
   gem "rspec", "~> 3.12"
   gem "rspec-snapshot", "~> 2.2"
-  gem "rubocop-govuk", "~> 5.2", require: false
+  gem "rubocop-govuk", "~> 6.0", require: false
   gem "rubocop-performance", "~> 1.21", require: false
   gem "simplecov", "~>1.3.2"
   gem "timecop", "~> 0.9"
@@ -39,7 +39,7 @@ gem "epb-auth-tools", "~> 1.2.1"
 gem "epb_view_models", "~> 2.9.2"
 gem "json-schema", "~> 6.2"
 gem "nokogiri", "~> 1.19"
-gem "parallel", "~> 1.28"
+gem "parallel", "~> 2.3"
 gem "pg", "~> 1.7"
 gem "puma", "~> 8.1"
 gem "rackup", "~> 2.1"
