@@ -63,11 +63,7 @@ describe "Domestic Recommendations Report" do
       Gateway::MaterializedViewsGateway.new.refresh(name: "mvw_domestic_rr_search")
     end
 
-    let(:data) do
-      retry_mview(name: "mvw_domestic_rr_search") do
-        fetch_rr
-      end
-    end
+    let(:data) { fetch_rr }
 
     let(:expected_rdsap_data) do
       [{ "certificate_number" => "0000-0000-0000-0000-0006",

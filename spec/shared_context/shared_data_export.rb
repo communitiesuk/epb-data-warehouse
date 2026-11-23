@@ -21,22 +21,6 @@ shared_context "when exporting data" do
     ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |result| result["attname"] }
   end
 
-  def retry_mview(name:, max_attempts: 5)
-    attempts = 0
-    begin
-      attempts += 1
-      yield
-    rescue StandardError => e
-      if attempts < max_attempts
-        sleep(1) # Optional: Add delay between retries
-        Gateway::MaterializedViewsGateway.new.refresh(name:)
-        retry
-      else
-        raise "Operation failed after #{max_attempts} attempts. Last error: #{e.message}"
-      end
-    end
-  end
-
   def mview_columns(mvw_name)
     sql = <<-SQL
         SELECT a.attname
