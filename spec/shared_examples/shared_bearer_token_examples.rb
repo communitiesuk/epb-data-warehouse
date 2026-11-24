@@ -30,5 +30,9 @@ shared_examples "when checking an endpoint requires bearer token access" do |end
       expect(last_response.content_type).to eq "application/json"
       expect(JSON.parse(last_response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
     end
+
+    it "authenticated once" do
+      expect(authenticate_user_use_case).to have_received(:execute).once
+    end
   end
 end

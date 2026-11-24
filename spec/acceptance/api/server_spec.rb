@@ -9,24 +9,12 @@ describe "ApiService" do
     end
   end
 
-  context "when getting a response from an unknown route without authorisation" do
+  context "when getting a response from an unknown route" do
     let(:response) do
       get "/does-not-exist"
     end
 
-    it "returns status 200" do
-      expect(response.status).to eq(403)
-      expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authenticated" }])
-    end
-  end
-
-  context "when getting a response from an unknown route with authorisation" do
-    let(:response) do
-      stub_bearer_token_access
-      get "/does-not-exist"
-    end
-
-    it "returns status 200" do
+    it "returns status 404" do
       expect(response.status).to eq(404)
       expect(response.body).to eq "<h1>Not Found</h1>"
     end

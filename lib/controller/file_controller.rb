@@ -1,81 +1,81 @@
 module Controller
   class FileController < BaseController
-    get "/api/files/domestic/csv" do
+    get "/api/files/domestic/csv", has_bearer_token: true do
       file_name = "full-load/domestic-csv.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/domestic/csv/info" do
+    get "/api/files/domestic/csv/info", has_bearer_token: true do
       file_name = "full-load/domestic-csv.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/domestic/json" do
+    get "/api/files/domestic/json", has_bearer_token: true do
       file_name = "full-load/domestic-json.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/domestic/json/info" do
+    get "/api/files/domestic/json/info", has_bearer_token: true do
       file_name = "full-load/domestic-json.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/non-domestic/csv" do
+    get "/api/files/non-domestic/csv", has_bearer_token: true do
       file_name = "full-load/non-domestic-csv.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/non-domestic/csv/info" do
+    get "/api/files/non-domestic/csv/info", has_bearer_token: true do
       file_name = "full-load/non-domestic-csv.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/non-domestic/json" do
+    get "/api/files/non-domestic/json", has_bearer_token: true do
       file_name = "full-load/non-domestic-json.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/non-domestic/json/info" do
+    get "/api/files/non-domestic/json/info", has_bearer_token: true do
       file_name = "full-load/non-domestic-json.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/non-domestic-recommendations/json" do
+    get "/api/files/non-domestic-recommendations/json", has_bearer_token: true do
       file_name = "full-load/non-domestic-recommendations-json.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/non-domestic-recommendations/json/info" do
+    get "/api/files/non-domestic-recommendations/json/info", has_bearer_token: true do
       file_name = "full-load/non-domestic-recommendations-json.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/display/csv" do
+    get "/api/files/display/csv", has_bearer_token: true do
       file_name = "full-load/display-csv.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/display/csv/info" do
+    get "/api/files/display/csv/info", has_bearer_token: true do
       file_name = "full-load/display-csv.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/display/json" do
+    get "/api/files/display/json", has_bearer_token: true do
       file_name = "full-load/display-json.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/display/json/info" do
+    get "/api/files/display/json/info", has_bearer_token: true do
       file_name = "full-load/display-json.zip"
       get_s3_file_info(file_name)
     end
 
-    get "/api/files/display-recommendations/json" do
+    get "/api/files/display-recommendations/json", has_bearer_token: true do
       file_name = "full-load/display-recommendations-json.zip"
       redirect_to_s3_file(file_name)
     end
 
-    get "/api/files/display-recommendations/json/info" do
+    get "/api/files/display-recommendations/json/info", has_bearer_token: true do
       file_name = "full-load/display-recommendations-json.zip"
       get_s3_file_info(file_name)
     end

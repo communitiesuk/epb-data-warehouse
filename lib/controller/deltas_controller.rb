@@ -13,7 +13,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/deltas" do
+    get "/api/deltas", has_bearer_token: true do
       params_body SEARCH_SCHEMA
 
       use_case = Container.fetch_audit_logs_use_case
