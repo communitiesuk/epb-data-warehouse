@@ -9,7 +9,6 @@ module Controller
     def initialize(app = nil, **_kwargs)
       super
       @json_helper = Helper::JsonHelper.new
-      @camel_case_keys = true
     end
 
     configure :development do
@@ -66,24 +65,25 @@ module Controller
     def json_api_response(
       code: 200,
       data: {},
-      pagination: {}
+      pagination: {},
+      camel_case: true
     )
       response_data = { data: }
       response_data[:pagination] = pagination unless pagination.empty?
-      json_response(response_data, code)
+      json_response(response_data, code, camel_case:)
     end
 
-    def json_response(object, code = 200)
+    def json_response(object, code = 200, camel_case: true)
       content_type :json
       status code
 
       ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
 
-      convert_to_json(object)
+      convert_to_json(object, camel_case:)
     end
 
-    def convert_to_json(hash)
-      if @camel_case_keys
+    def convert_to_json(hash, camel_case: true)
+      if camel_case
         JSON.parse(hash.to_json).deep_transform_keys { |k|
           k.camelize(:lower)
         }.to_json
