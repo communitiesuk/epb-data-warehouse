@@ -181,7 +181,7 @@ GEM
       version_gem (~> 1.1, >= 1.1.17)
     ostruct (0.6.3)
     parallel (2.3.0)
-    parser (3.3.13.0)
+    parser (3.3.14.0)
       ast (~> 2.4.1)
       racc
     pg (1.7.0)
