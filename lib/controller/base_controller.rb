@@ -67,11 +67,15 @@ module Controller
 
     def json_response(hash, code = 200, camel_case: true)
       ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
-      hash = hash.as_json.deep_transform_keys { it.to_s.camelize(:lower) } if camel_case
 
       content_type :json
       status code
-      hash.to_json
+
+      if camel_case
+        Helper::JsonHelper.convert_to_json(hash)
+      else
+        hash.to_json
+      end
     end
 
     def params_body(schema)
