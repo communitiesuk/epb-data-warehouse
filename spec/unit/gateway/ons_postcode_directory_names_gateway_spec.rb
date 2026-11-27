@@ -11,7 +11,7 @@ describe Gateway::OnsPostcodeDirectoryNamesGateway do
 
   describe "councils" do
     let(:councils) do
-      [{ name: "Belfast", lower_name: "belfast" }, { name: "South Lanarkshire", lower_name: "south lanarkshire" }, { name: "Westminster", lower_name: "westminster" }, { name: "Hammersmith and Fulham", lower_name: "hammersmith and fulham" }]
+      [{ name: "Belfast", lower_name: "belfast" }, { lower_name: "cardiff", name: "Cardiff" }, { name: "South Lanarkshire", lower_name: "south lanarkshire" }, { name: "Westminster", lower_name: "westminster" }, { name: "Hammersmith and Fulham", lower_name: "hammersmith and fulham" }]
     end
 
     it "returns an array of councils" do
@@ -21,7 +21,7 @@ describe Gateway::OnsPostcodeDirectoryNamesGateway do
 
   describe "constituencies" do
     let(:constituencies) do
-      [{ name: "Belfast South", lower_name: "belfast south" }, { name: "Cities of London and Westminster", lower_name: "cities of london and westminster" }, { name: "Lanark and Hamilton East", lower_name: "lanark and hamilton east" }, { name: "Bury St Edmunds and Stowmarket", lower_name: "bury st edmunds and stowmarket" }, { name: "Chelsea and Fulham", lower_name: "chelsea and fulham" }]
+      [{ name: "Belfast South", lower_name: "belfast south" }, { lower_name: "cardiff south and penarth", name: "Cardiff South and Penarth" }, { name: "Cities of London and Westminster", lower_name: "cities of london and westminster" }, { name: "Lanark and Hamilton East", lower_name: "lanark and hamilton east" }, { name: "Bury St Edmunds and Stowmarket", lower_name: "bury st edmunds and stowmarket" }, { name: "Chelsea and Fulham", lower_name: "chelsea and fulham" }]
     end
 
     it "returns an array of constituencies" do
