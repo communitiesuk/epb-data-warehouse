@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_attribute_gateway"
-
 describe Gateway::AssessmentAttributesGateway do
   let(:gateway) { described_class.new }
   let(:attributes) do

@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 describe Gateway::AverageCo2EmissionsGateway do
   subject(:gateway) { described_class.new }
 

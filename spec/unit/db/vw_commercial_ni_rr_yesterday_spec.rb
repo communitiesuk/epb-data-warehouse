@@ -1,6 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_data_export"
-
 describe "NI Commercial Recommendations Yesterday Report" do
   include_context "when lodging XML"
   include_context "when exporting data"

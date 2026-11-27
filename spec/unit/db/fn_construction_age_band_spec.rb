@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_import_enums"
-
 describe "When extracting the construction age band from domestic data" do
   include_context "when saving enum data to lookup tables"
 

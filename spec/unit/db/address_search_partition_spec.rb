@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_partition"
-
 describe "Create Partition" do
   include_context "when partitioning a table"
 

@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 describe Domain::RedactedDocument do
   include_context "when lodging XML"
 

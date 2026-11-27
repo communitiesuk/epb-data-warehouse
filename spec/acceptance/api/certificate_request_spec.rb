@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 describe "DomesticSearchController" do
   include RSpecDataWarehouseApiServiceMixin
   include_context "when lodging XML"

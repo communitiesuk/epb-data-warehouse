@@ -1,11 +1,7 @@
-shared_context "when using energy_band_calculator method" do
+describe "energy_band_calculator postgres function" do
   def use_postgres_function(value, assessment_type)
     ActiveRecord::Base.connection.exec_query("SELECT energy_band_calculator(#{value}, '#{assessment_type}') as band")[0]["band"]
   end
-end
-
-describe "energy_band_calculator postgres function" do
-  include_context "when using energy_band_calculator method"
 
   context "when getting domestic bands for SAP" do
     it "returns a band of A from inputs greater than 91" do

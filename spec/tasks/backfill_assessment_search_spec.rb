@@ -1,4 +1,6 @@
-shared_context "when inserting epc documents" do
+describe "Backfill assessment_search table rake" do
+  include_context "with ons directory data"
+
   def save_new_epc(schema:, assessment_id:, assessment_type:, sample_type:, country_id: 1, created_at: nil, postcode: nil)
     sample = Samples.xml(schema, sample_type)
     use_case = UseCase::ParseXmlCertificate.new
@@ -14,16 +16,10 @@ shared_context "when inserting epc documents" do
     country_gateway = Gateway::AssessmentsCountryIdGateway.new
     country_gateway.insert(assessment_id:, country_id:) unless country_id.nil?
   end
-end
-
-require_relative "../shared_context/shared_lodgement"
-describe "Backfill assessment_search table rake" do
-  include_context "with ons directory data"
 
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:backfill_assessment_search") }
 
-    include_context "when inserting epc documents"
     after do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_attribute_values;")
     end

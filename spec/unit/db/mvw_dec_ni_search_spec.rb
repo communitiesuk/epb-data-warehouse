@@ -1,6 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_data_export"
-
 describe "DEC NI Report" do
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_dec_ni_search")

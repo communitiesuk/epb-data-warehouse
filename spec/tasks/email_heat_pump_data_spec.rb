@@ -1,4 +1,3 @@
-require_relative "../shared_context/shared_send_heat_pump"
 require "sentry-ruby"
 
 context "when calling the email heat pump rake task" do

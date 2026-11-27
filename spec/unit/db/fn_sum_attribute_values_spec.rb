@@ -1,14 +1,10 @@
-shared_context "when testing fn_sum_attribute_values" do
+describe "Create psql function to sum attribute values" do
   def sum_attribute_values_call(attributes)
     attr_string = attributes.map { |a| connection.quote(a) }.join(",")
     sql = "SELECT sum_attribute_values(ARRAY[#{attr_string}], #{connection.quote(assessment_id)}) AS total"
     result = connection.exec_query(sql).first["total"]
     result.nil? ? nil : result.to_i
   end
-end
-
-describe "Create psql function to sum attribute values" do
-  include_context "when testing fn_sum_attribute_values"
 
   let(:connection) { ActiveRecord::Base.connection }
   let(:assessment_attributes_gateway) { Gateway::AssessmentAttributesGateway.new }

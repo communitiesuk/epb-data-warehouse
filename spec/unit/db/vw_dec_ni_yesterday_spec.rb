@@ -1,6 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_data_export"
-
 describe "DEC NI Report Yesterday" do
   let(:date_start) { "2021-12-01" }
   let(:date_end) { "2023-12-09" }

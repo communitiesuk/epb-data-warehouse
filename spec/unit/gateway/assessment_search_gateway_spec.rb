@@ -1,6 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
-
 describe Gateway::AssessmentSearchGateway do
   subject(:gateway) { described_class.new }
 

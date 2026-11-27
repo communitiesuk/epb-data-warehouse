@@ -176,8 +176,7 @@ RSpec.configure do |config|
 
   config.after(:all, :set_with_timecop) { Timecop.return }
 
-  Dir[File.join(__dir__, "shared_context/**/*.rb")].sort.each { |f| require f }
-  Dir[File.join(__dir__, "shared_examples/**/*.rb")].sort.each { |f| require f }
-
   config.after(:all) { DatabaseCleaner.clean }
 end
+
+Dir[File.join(__dir__, "shared_{context,examples}/**/*.rb")].sort.each { require it }

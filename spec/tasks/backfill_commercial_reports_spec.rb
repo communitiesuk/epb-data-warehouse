@@ -1,5 +1,3 @@
-require_relative "../shared_context/shared_lodgement"
-
 describe "Backfill commercial_reports table rake" do
   before do
     ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE commercial_reports;")

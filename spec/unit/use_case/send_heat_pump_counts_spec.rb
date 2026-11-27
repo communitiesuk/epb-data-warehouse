@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_send_heat_pump"
-
 describe UseCase::SendHeatPumpCounts do
   include_context "when sending heat pump data"
 

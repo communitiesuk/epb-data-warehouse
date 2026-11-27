@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_json_document"
-
 describe "VwJsonDocumentsYesterday" do
   include_context "when exporting json data"
 

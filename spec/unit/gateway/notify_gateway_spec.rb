@@ -1,5 +1,4 @@
 describe Gateway::NotifyGateway do
-  require_relative "../../shared_context/shared_send_heat_pump"
   subject(:gateway) { described_class.new(notify_client) }
 
   include_context "when sending heat pump data"

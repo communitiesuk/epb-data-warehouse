@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 describe "Commercial NI Recommendation Report Search" do
   include_context "when lodging XML"
   include_context "with country data"

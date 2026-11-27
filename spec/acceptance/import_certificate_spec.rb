@@ -1,11 +1,3 @@
-shared_context "when getting attributes from db" do
-  def attributes_values_from_database(column, attribute)
-    ActiveRecord::Base.connection.exec_query(
-      "SELECT * FROM assessment_attribute_values WHERE #{column} = #{attribute}",
-    )
-  end
-end
-
 describe "Acceptance::ImportCertificate" do
   subject(:use_case) do
     UseCase::ImportCertificates.new import_xml_certificate_use_case:,
@@ -13,7 +5,11 @@ describe "Acceptance::ImportCertificate" do
                                     queues_gateway:
   end
 
-  include_context "when getting attributes from db"
+  def attributes_values_from_database(column, attribute)
+    ActiveRecord::Base.connection.exec_query(
+      "SELECT * FROM assessment_attribute_values WHERE #{column} = #{attribute}",
+    )
+  end
 
   let(:assessments_country_id_gateway) { instance_double(Gateway::AssessmentsCountryIdGateway) }
 

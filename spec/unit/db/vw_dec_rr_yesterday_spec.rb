@@ -1,8 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
-require_relative "../../shared_context/shared_data_export"
-require_relative "../../shared_context/shared_recommendations"
-
 describe "DEC Recommendations Yesterday Report" do
   include_context "when fetching recommendations report"
   include_context "when lodging XML"

@@ -1,5 +1,3 @@
-require_relative "../shared_context/shared_lodgement"
-
 describe "calling the rake to delete any rows from assessment_search" do
   include_context "when lodging XML"
 

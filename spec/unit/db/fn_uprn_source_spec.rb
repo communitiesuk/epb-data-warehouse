@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_json_document"
-
 describe "Create psql function to get URPN source" do
   include_context "when exporting json data"
   let(:assessment_id) { "0000-0000-0000-0000-0000" }

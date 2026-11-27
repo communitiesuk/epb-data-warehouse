@@ -1,8 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
-require_relative "../../shared_context/shared_data_export"
-require_relative "../../shared_context/shared_import_enums"
-
 describe "DEC Report" do
   let(:query_result) do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM mvw_dec_search")

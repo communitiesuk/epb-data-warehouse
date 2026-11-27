@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_s3_stubs"
-
 describe Gateway::MultipartStorageGateway do
   context "when storage is initialised" do
     subject(:storage_gateway) do

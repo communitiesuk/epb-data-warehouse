@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_import_enums"
-
 describe Gateway::AssessmentLookupsGateway do
   subject(:gateway) { described_class.new }
 

@@ -1,8 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-require_relative "../../shared_context/shared_ons_data"
-require_relative "../../shared_context/shared_data_export"
-require_relative "../../shared_context/shared_import_enums"
-
 describe "Commercial Materialized View" do
   include_context "when lodging XML"
   include_context "with ons directory data"

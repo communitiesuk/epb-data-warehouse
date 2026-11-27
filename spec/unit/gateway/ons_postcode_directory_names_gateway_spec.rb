@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_ons_data"
-
 describe Gateway::OnsPostcodeDirectoryNamesGateway do
   subject(:gateway) { described_class.new }
 

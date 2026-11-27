@@ -1,5 +1,3 @@
-require_relative "../shared_context/shared_lodgement"
-
 describe "rake to call the update created at values" do
   context "when calling the rake task" do
     subject(:task) { get_task("one_off:push_missing_epc_to_queue") }
