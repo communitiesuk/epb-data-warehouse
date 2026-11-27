@@ -17,18 +17,18 @@ describe "ReportingController" do
       type_of_assessment = "SAP"
       schema_type = "SAP-Schema-19.0.0"
       add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:, different_fields: {
-        "co2_emissions_current_per_floor_area": 5,
+        "co2_emissions_current_per_floor_area" => 5,
       })
       add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
-        "co2_emissions_current_per_floor_area": 10,
+        "co2_emissions_current_per_floor_area" => 10,
       })
       add_assessment(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
-        "co2_emissions_current_per_floor_area": 15,
+        "co2_emissions_current_per_floor_area" => 15,
       })
       add_assessment(assessment_id: "0000-0000-0000-0000-0005", schema_type:, type_of_assessment:, different_fields: {
-        "co2_emissions_current_per_floor_area": 10,
+        "co2_emissions_current_per_floor_area" => 10,
         "postcode" => "BT1 1AA",
-        "registration_date": "2022-03-01",
+        "registration_date" => "2022-03-01",
       })
 
       ActiveRecord::Base.connection.exec_query("REFRESH MATERIALIZED VIEW mvw_avg_co2_emissions", "SQL")

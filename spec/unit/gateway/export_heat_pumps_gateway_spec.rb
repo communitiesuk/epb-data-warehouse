@@ -63,68 +63,70 @@ describe Gateway::ExportHeatPumpsGateway do
                              { "description": "Air source heat pump, warm air, electric", "energy_efficiency_rating": 2, "environmental_efficiency_rating": 4 }]
 
     import_enums "spec/config/attribute_enum_property_type.json"
+
     add_assessment(assessment_id: "0000-0000-0000-0000-0000", schema_type:, type_of_assessment:)
     add_assessment(assessment_id: "0000-0000-0000-0000-0001", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": air_source_description,
-      "total_floor_area": 34,
-      "postcode": "ML9 9AR",
+      "main_heating" => air_source_description,
+      "total_floor_area" => 34,
+      "postcode" => "CF10 2WB",
     })
     add_assessment(assessment_id: "0000-0000-0000-0000-0002", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": duplicate_ground_source_description,
-      "property_type": 1,
-      "total_floor_area": 59,
-      "postcode": "ML9 9AR",
+      "main_heating" => duplicate_ground_source_description,
+      "property_type" => 1,
+      "total_floor_area" => 59,
+      "postcode" => "CF10 2WB",
     })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => welsh_ground_source_description,
+      "total_floor_area" => 101,
+      "postcode" => "SW10 0AA",
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0008", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => air_source_second_description,
+      "total_floor_area" => 251,
+      "postcode" => "SW10 0AA",
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => welsh_air_source_description,
+      "property_type" => 2,
+      "total_floor_area" => 208,
+      "postcode" => "W6 9ZD",
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => mixed_exhaust_air_source_description,
+      "property_type" => 3,
+      "total_floor_area" => 122,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0011", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => exhaust_air_mev_source_description,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0012", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => water_source_description,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0013", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => solar_description,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0014", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => electric_description,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0015", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => community_description,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0016", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => exhaust_air_source,
+    })
+    add_assessment(assessment_id: "0000-0000-0000-0000-0017", schema_type:, type_of_assessment:, different_fields: {
+      "main_heating" => air_and_ground_source,
+    })
+    # assessments expected to be excluded
     add_commercial_assessment
-    add_ni_assessment(assessment_id: "0000-0000-0000-0000-0004", different_fields: {
-      "postcode": "ML9 9AR",
+    add_assessment(assessment_id: "0000-0000-0000-0000-0004", schema_type:, type_of_assessment:, different_fields: {
+      "postcode" => "ML9 9AR",
     })
     add_non_new_dwelling_sap(assessment_id: "0000-0000-0000-0000-0005")
     add_assessment_out_of_date_range(assessment_id: "0000-0000-0000-0000-0006")
-    add_assessment(assessment_id: "0000-0000-0000-0000-0007", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": welsh_ground_source_description,
-      "total_floor_area": 101,
-      "postcode": "SW10 0AA",
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0008", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": air_source_second_description,
-      "total_floor_area": 251,
-      "postcode": "SW10 0AA",
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0009", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": welsh_air_source_description,
-      "property_type": 2,
-      "total_floor_area": 208,
-      "postcode": "W6 9ZD",
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0010", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": mixed_exhaust_air_source_description,
-      "property_type": 3,
-      "total_floor_area": 122,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0011", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": exhaust_air_mev_source_description,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0012", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": water_source_description,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0013", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": solar_description,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0014", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": electric_description,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0015", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": community_description,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0016", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": exhaust_air_source,
-    })
-    add_assessment(assessment_id: "0000-0000-0000-0000-0017", schema_type:, type_of_assessment:, different_fields: {
-      "main_heating": air_and_ground_source,
-    })
     add_ni_assessment(assessment_id: "0000-0000-0000-0000-0018", different_fields: {
-      "postcode": "BT10 0AA",
+      "postcode" => "BT10 0AA",
     })
   end
 
@@ -137,7 +139,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(expected_values - gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
+      expect(gateway.fetch_by_property_type(start_date: "2022-05-01", end_date: "2022-05-31")).to match_array(expected_values)
     end
   end
 
@@ -152,7 +154,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(expected_values - gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
+      expect(gateway.fetch_by_floor_area(start_date: "2022-05-01", end_date: "2022-05-31")).to match_array(expected_values)
     end
   end
 
@@ -160,26 +162,26 @@ describe Gateway::ExportHeatPumpsGateway do
     let(:expected_values) do
       [{ "local_authority" => nil,
          "number_of_assessments" => 9 },
-       { "local_authority" => "South Lanarkshire",
+       { "local_authority" => "Cardiff",
          "number_of_assessments" => 2 },
        { "local_authority" => "Hammersmith and Fulham",
          "number_of_assessments" => 3 }]
     end
 
     it "has the expected values" do
-      expect(expected_values - gateway.fetch_by_local_authority(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
+      expect(gateway.fetch_by_local_authority(start_date: "2022-05-01", end_date: "2022-05-31")).to match_array(expected_values)
     end
   end
 
   describe "#fetch_by_parliamentary_constituency" do
     let(:expected_values) do
       [{ "number_of_assessments" => 3, "westminster_parliamentary_constituency" => "Chelsea and Fulham" },
-       { "number_of_assessments" => 2, "westminster_parliamentary_constituency" => "Lanark and Hamilton East" },
+       { "number_of_assessments" => 2, "westminster_parliamentary_constituency" => "Cardiff South and Penarth" },
        { "number_of_assessments" => 9, "westminster_parliamentary_constituency" => nil }]
     end
 
     it "has the expected values" do
-      expect(expected_values - gateway.fetch_by_parliamentary_constituency(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
+      expect(gateway.fetch_by_parliamentary_constituency(start_date: "2022-05-01", end_date: "2022-05-31")).to match_array(expected_values)
     end
   end
 
@@ -197,7 +199,7 @@ describe Gateway::ExportHeatPumpsGateway do
     end
 
     it "has the expected values" do
-      expect(expected_values - gateway.fetch_by_description(start_date: "2022-05-01", end_date: "2022-05-31")).to eq []
+      expect(gateway.fetch_by_description(start_date: "2022-05-01", end_date: "2022-05-31")).to match_array(expected_values)
     end
   end
 end

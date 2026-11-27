@@ -42,7 +42,7 @@ shared_context "when lodging XML" do
 
     document = parse_xml_to_json(xml:, assessment_id:)
     add_heat_pump_data(document) if add_heat_pump_data
-    document.merge!(different_fields) unless different_fields.nil?
+    document.merge!(different_fields.transform_keys(&:to_s)) unless different_fields.nil?
     document.merge!(meta_data_sample)
     Gateway::DocumentsGateway.new.add_assessment(assessment_id:, document:)
     add_assessment_country_id(assessment_id:, document:)
@@ -82,6 +82,8 @@ shared_context "when lodging XML" do
                    3
                  when /^ML/
                    5
+                 when /^CF/
+                   2
                  else
                    1
                  end
@@ -90,12 +92,12 @@ shared_context "when lodging XML" do
 
   def add_heat_pump_data(document)
     document.merge!(
-      { "transaction_type": 6,
-        "main_heating":
+      { "transaction_type" => 6,
+        "main_heating" =>
           [{
-            "description": "Ground source heat pump, underfloor, electric",
-            "energy_efficiency_rating": 5,
-            "environmental_efficiency_rating": 5,
+            "description" => "Ground source heat pump, underfloor, electric",
+            "energy_efficiency_rating" => 5,
+            "environmental_efficiency_rating" => 5,
           }] },
     )
   end

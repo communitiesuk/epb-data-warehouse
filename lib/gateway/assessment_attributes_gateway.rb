@@ -60,7 +60,7 @@ module Gateway
     def add_attribute_values(*attribute_values, assessment_id:)
       values = attribute_values.reduce([]) do |carry, value|
         cast_value = CastValue.new value.value
-        carry.concat [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.fast_generate(cast_value.json) : nil]
+        carry.concat [assessment_id, attributes.id_for(value.name, parent_name: value.parent_name), cast_value.string, cast_value.int, cast_value.float, cast_value.json ? JSON.generate(cast_value.json) : nil]
       end
       sql = ActiveRecord::Base.sanitize_sql_array([<<~SQL, *values])
         INSERT INTO assessment_attribute_values (
